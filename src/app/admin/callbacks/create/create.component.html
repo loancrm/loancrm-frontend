@@ -1,0 +1,298 @@
+<div>
+  <div>
+    <div class="card fixed-card">
+      <div class="d-flex justify-content-between">
+        <div class="pointer-cursor" (click)="goBack()">
+          <span class="back-btn-icon me-2"
+            ><i class="pi pi-arrow-left fw-bold"></i
+          ></span>
+          <span class="me-1">
+            <img
+              src="../../../../assets/images/menu/addcallback.png"
+              alt="Default Image"
+              class=""
+              style="height: 35px; width: 40px"
+            />
+          </span>
+          <b>
+            <span class="back-btn-text text-capitalize">{{ heading }}</span>
+          </b>
+        </div>
+      </div>
+    </div>
+    <div class="bread-crumb">
+      <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!loading">
+  <div class="p-fluid" *ngIf="loanType == 'lap' || loanType == 'homeLoan'">
+    <!-- <div class="container p-3">
+      <div class="row justify-content-center align-items-center mt-2">
+        <div class="col-md-6 col-lg-4">
+          <div class="field-radiobutton form-check">
+            <p-radioButton
+              name="employmentStatus"
+              value="employed"
+              [(ngModel)]="employmentStatus"
+              inputId="employed"
+              class="form-check-input"
+            ></p-radioButton>
+            <label for="employed" class="form-check-label">Employed</label>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="field-radiobutton form-check">
+            <p-radioButton
+              name="employmentStatus"
+              value="self-employed"
+              [(ngModel)]="employmentStatus"
+              inputId="selfEmployed"
+              class="form-check-input"
+            ></p-radioButton>
+            <label for="selfEmployed" class="form-check-label"
+              >Self-Employed</label
+            >
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <div class="employment-selection">
+      <h3>Select Employment Type</h3>
+      <div class="options">
+        <label
+          class="option-card"
+          [class.selected]="employmentStatus === 'employed'"
+        >
+          <input
+            type="radio"
+            name="employment"
+            value="employed"
+            [(ngModel)]="employmentStatus"
+          />
+          <img src="../../../../assets/images/employed.jpg" alt="Employed" />
+          <span>Employed</span>
+        </label>
+
+        <label
+          class="option-card"
+          [class.selected]="employmentStatus === 'self-employed'"
+        >
+          <input
+            type="radio"
+            name="employment"
+            value="self-employed"
+            [(ngModel)]="employmentStatus"
+          />
+          <img
+            src="../../../../assets/images/self-employed.png"
+            alt="Self Employed"
+          />
+          <span>Self-Employed</span>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="!loading">
+  <div
+    class="card callback-form m-2"
+    *ngIf="
+      loanType === 'businessLoan' ||
+      (loanType === 'homeLoan' && employmentStatus === 'self-employed') ||
+      (loanType === 'lap' && employmentStatus === 'self-employed') ||
+      loanType === 'personalLoan' ||
+      (loanType === 'homeLoan' && employmentStatus === 'employed') ||
+      (loanType === 'lap' && employmentStatus === 'employed')
+    "
+  >
+    <form
+      class="login-form"
+      [formGroup]="callBackForm"
+      novalidate
+      (ngSubmit)="onSubmit(callBackForm.value)"
+    >
+      <div class="row">
+        <div class="col-md-4">
+          <img
+            src="../../../../assets/images/leads/6.jpg"
+            width="400"
+            height="290"
+            class="icon"
+            alt="Callbacks Icon"
+          />
+        </div>
+        <div class="col-md-8">
+          <div class="row mt-2">
+            <!-- Business Name (For Self-Employed) -->
+            <div
+              class="col-md-4 mt-2"
+              *ngIf="employmentStatus === 'self-employed'"
+            >
+              <div>
+                <div class="my-1">
+                  <label
+                    >Business Name&nbsp;<span class="text-danger"
+                      >*</span
+                    ></label
+                  >
+                </div>
+                <input
+                  pInputText
+                  class="rounded-lg"
+                  type="text"
+                  formControlName="businessName"
+                  placeholder="Enter Business Name"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+
+            <!-- Person Name (For Employed) -->
+            <div class="col-md-4 mt-2" *ngIf="employmentStatus === 'employed'">
+              <div>
+                <div class="my-1">
+                  <label
+                    >Person Name&nbsp;<span class="text-danger">*</span></label
+                  >
+                </div>
+                <input
+                  pInputText
+                  class="rounded-lg"
+                  type="text"
+                  formControlName="businessName"
+                  placeholder="Enter Person Name"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+            <div class="col-md-4 mt-2">
+              <div>
+                <div class="my-1">
+                  <label>Phone&nbsp;<span class="text-danger">*</span></label>
+                </div>
+                <input
+                  pInputText
+                  class="rounded-lg"
+                  type="text"
+                  placeholder="Enter Phone"
+                  formControlName="phone"
+                  autocomplete="off"
+                  maxlength="10"
+                />
+              </div>
+            </div>
+            <!-- Callback Date -->
+            <div class="col-md-4 mt-2">
+              <div>
+                <div class="my-1">
+                  <label
+                    >Callback Date&nbsp;<span class="text-danger"
+                      >*</span
+                    ></label
+                  >
+                </div>
+                <p-calendar
+                  formControlName="date"
+                  dateFormat="yy-mm-dd"
+                  placeholder="Select Callback Date"
+                  [showIcon]="true"
+                  appendTo="body"
+                  [readonlyInput]="true"
+                  [showButtonBar]="true"
+                ></p-calendar>
+              </div>
+            </div>
+
+            <!-- Sourced By (For User Types other than '3') -->
+            <div
+              class="col-md-4 mt-2"
+              *ngIf="userDetails?.userType && userDetails.userType !== '3'"
+            >
+              <div>
+                <div class="my-1">
+                  <label
+                    >Sourced By&nbsp;<span class="text-danger">*</span></label
+                  >
+                </div>
+                <p-dropdown
+                  [options]="leadUsers"
+                  formControlName="sourcedBy"
+                  optionLabel="name"
+                  optionValue="id"
+                  appendTo="body"
+                  [showClear]="true"
+                  placeholder="Select Sourced By"
+                  [dropdownIcon]="'fa fa-caret-down'"
+                ></p-dropdown>
+              </div>
+            </div>
+
+            <!-- Created On (For User Types other than '3') -->
+            <div
+              class="col-md-4 mt-2"
+              *ngIf="userDetails?.userType && userDetails.userType !== '3'"
+            >
+              <div>
+                <div class="my-1">
+                  <label>Created On</label>
+                </div>
+                <p-calendar
+                  formControlName="createdOn"
+                  placeholder="Select Created On Date"
+                  [showIcon]="true"
+                  appendTo="body"
+                  dateFormat="yy-mm-dd"
+                  [showButtonBar]="true"
+                ></p-calendar>
+              </div>
+            </div>
+
+            <!-- Remarks -->
+            <div class="col-12">
+              <div class="my-1">
+                <label>Remarks&nbsp;<span class="text-danger">*</span></label>
+              </div>
+              <textarea
+                pInputTextarea
+                class="rounded-lg"
+                placeholder="Enter Remarks"
+                formControlName="remarks"
+                autocomplete="off"
+                [autoResize]="true"
+              ></textarea>
+            </div>
+
+            <!-- Buttons -->
+            <div class="d-flex justify-content-center">
+              <div class="d-flex mt-3 mb-3">
+                <button
+                  pButton
+                  pRipple
+                  type="button"
+                  class="p-button-info me-2"
+                  (click)="goBack()"
+                >
+                  Go Back
+                </button>
+                <button
+                  pButton
+                  pRipple
+                  type="submit"
+                  [disabled]="!callBackForm.valid"
+                  class="p-button-primary"
+                >
+                  {{ actionType === "create" ? "Add" : "Update" }} Callback
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div *ngIf="loading">
+  <app-preloader></app-preloader>
+</div>

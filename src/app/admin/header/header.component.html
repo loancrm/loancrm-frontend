@@ -1,0 +1,122 @@
+<div class="card p-2">
+  <div class="d-flex justify-content-between flex-wrap align-items-center">
+    <!-- Centered logo area (if used) -->
+    <div class="w-100 d-flex justify-content-center mb-2 desktop-only">
+      <!-- Optional logo area -->
+      <!--
+      <div class="d-flex align-items-center company-logo" *ngIf="!sidebarCollapsed">
+        <img src="../../../assets/images/logo.svg" alt="LoanCRM" class="logo" />
+      </div>
+      -->
+    </div>
+
+    <!-- Searchbox -->
+    <div
+      class="searchbox d-flex align-items-center mb-2"
+      *ngIf="userDetails?.userType && userDetails.userType !== '3'"
+    >
+      <div class="input-group custom-search" style="width: 200px">
+        <span class="input-group-text searchbtn">
+          <img
+            src="../../../assets/images/icons/search.svg"
+            alt="Search"
+            style="width: 14px; height: 14px"
+          />
+        </span>
+        <input
+          type="text"
+          class="form-control small-input"
+          placeholder="Find Something"
+          aria-label="Search"
+          [(ngModel)]="businessNameToSearch"
+          (keyup.enter)="filterWithBusinessName()"
+        />
+      </div>
+    </div>
+
+    <!-- Profile & Sidebar -->
+    <div class="flex desktop-only justify-content-center align-items-center">
+      <p-sidebar
+        [(visible)]="sidebarVisible"
+        position="right"
+        class="desktop-only"
+      >
+        <div class="border-0 rounded-4 p-4 mx-auto text-center my-account-card">
+          <h4 class="fw-bold mb-4">My Account</h4>
+          <div class="d-flex justify-content-center mb-3">
+            <img
+              [src]="
+                userDetails?.userImage?.length
+                  ? '//' + userDetails.userImage[0]
+                  : '../../../../assets/images/profile/profile.png'
+              "
+              class="rounded-circle shadow-sm profile-img"
+              [style.height.px]="80"
+              [style.width.px]="80"
+              style="object-fit: cover"
+              alt="Profile"
+            />
+          </div>
+          <div class="fw-semibold fs-5 text-dark text-capitalize mb-1">
+            {{ userDetails.name | capitalizeFirst }}
+          </div>
+          <div class="text-muted text-capitalize mb-4 small">
+            {{ getUserRoleName(userDetails.userType) }}
+          </div>
+          <div
+            class="d-flex flex-column flex-sm-row justify-content-center gap-2"
+          >
+            <button
+              class="btn custom-primary-btn"
+              (click)="viewUser(userDetails.id)"
+            >
+              <i class="fa fa-user me-2"></i>View Profile
+            </button>
+            <button class="btn btn-outline-danger" (click)="userLogout()">
+              <i class="fa fa-sign-out me-2"></i>Logout
+            </button>
+          </div>
+        </div>
+      </p-sidebar>
+
+      <div
+        class="d-flex profile1 align-items-center justify-content-center"
+        (click)="sidebarVisible = true"
+      >
+        <div class="text-start me-2">
+          <p class="profile text-capitalize text-nowrap mb-0">
+            {{ userDetails.name | capitalizeFirst }}
+          </p>
+          <small class="text-muted designation text-nowrap">{{
+            getUserRoleName(userDetails.userType)
+          }}</small>
+        </div>
+        <img
+          [src]="
+            userDetails?.userImage?.length
+              ? '//' + userDetails.userImage[0]
+              : '../../../../assets/images/profile/profile.png'
+          "
+          alt="Profile"
+          class="employeeImage"
+          [style.height.px]="45"
+          [style.width.px]="45"
+          style="object-fit: cover"
+        />
+      </div>
+    </div>
+
+    <!-- Mobile Menu Icon -->
+    <div
+      class="mobile-only d-flex align-items-center hide-on-desktop"
+      (click)="showSidebarMenu()"
+    >
+      <!-- <i class="pi pi-bars"></i> -->
+        <img
+    src="../../../assets/images/icons/menubar.svg"
+    alt="Menu"
+    style="width: 26px; height: 26px"
+  />
+    </div>
+  </div>
+</div>

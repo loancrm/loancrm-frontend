@@ -1,0 +1,688 @@
+<div>
+  <div class="p-1 m-2 fixed-card">
+    <div class="d-flex justify-content-between">
+      <div
+        class="d-flex align-items-center justify-content-center pointer-cursor"
+        (click)="goBack()"
+      >
+        <!-- <span class="back-btn-icon me-2"
+          ><i class="pi pi-arrow-left fw-bold"></i
+        ></span> -->
+        <span class="me-2 d-flex align-items-center">
+          <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
+        </span>
+        <!-- <span class="me-1">
+          <img
+            src="../../../assets/images/menu/rejects.png"
+            alt="Default Image"
+            class=""
+            style="height: 35px; width: 40px"
+          />
+        </span> -->
+        <b>
+          <span class="back-btn-text">Rejects </span>
+        </b>
+        <!-- <span class="back-btn-text text-capitalize">Rejected Leads</span> -->
+      </div>
+    </div>
+  </div>
+  <!-- <div class="bread-crumb">
+    <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
+  </div> -->
+  <div class="file-upload-steps text-capitalize m-2">
+    <p-tabMenu
+      [model]="items"
+      class="tabdesign"
+      [activeItem]="activeItem"
+      (activeItemChange)="onActiveItemChange($event)"
+    ></p-tabMenu>
+    <div *ngIf="leads">
+      <div *ngIf="activeItem && activeItem.name">
+        <div *ngIf="activeItem.name == 'inHouseRejects'">
+          <p-table
+            #leadsTable
+            [value]="leads"
+            [lazy]="true"
+            (onLazyLoad)="loadLeads($event)"
+            dataKey="id"
+            [showCurrentPageReport]="true"
+            [rowsPerPageOptions]="[10, 25, 50]"
+            [paginator]="true"
+            [rows]="10"
+            [totalRecords]="totalLeadsCount"
+            [loading]="apiLoading"
+            responsiveLayout="scroll"
+            scrollHeight="flex"
+            class="p-datatable-striped"
+            [globalFilterFields]="[
+              'referenceNo',
+              'customer.firstName',
+              'partner.partnerName',
+              'status'
+            ]"
+            styleClass="p-datatable-customers "
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} In House Rejected leads"
+          >
+            <ng-template pTemplate="caption">
+              <div class="row">
+                <div class="col-md-4 mt-2 no-padding-small">
+                  <div class="p-inputgroup">
+                    <input
+                      type="text"
+                      pInputText
+                      placeholder="Search File with Business Name"
+                      [(ngModel)]="businessNameToSearch"
+                      (ngModelChange)="
+                        inputValueChangeEvent('loanId', businessNameToSearch)
+                      "
+                      (keyup.enter)="filterWithBusinessName()"
+                    />
+                    <button
+                      type="button"
+                      pButton
+                      icon="pi pi-search"
+                      class="p-button-primary"
+                      [disabled]="!businessNameToSearch"
+                      (click)="filterWithBusinessName()"
+                    ></button>
+                  </div>
+                </div>
+                <div class="col-md-4 mt-2 no-padding-small">
+                  <div class="p-inputgroup">
+                    <input
+                      type="text"
+                      pInputText
+                      placeholder="Search File with Mobile Number"
+                      [(ngModel)]="mobileNumberToSearch"
+                      (ngModelChange)="
+                        inputValueChangeEvent('loanId', mobileNumberToSearch)
+                      "
+                      (keyup.enter)="filterWithMobileNumber()"
+                    />
+                    <button
+                      type="button"
+                      pButton
+                      icon="pi pi-search"
+                      class="p-button-primary"
+                      [disabled]="!mobileNumberToSearch"
+                      (click)="filterWithMobileNumber()"
+                    ></button>
+                  </div>
+                </div>
+                <div class="col-md-4 mt-2 no-padding-small text-right">
+                  <div class="d-flex">
+                    <div class="flex-grow-1 me-2">
+                      <div class="p-inputgroup">
+                        <p-dropdown
+                          styleClass="text-left"
+                          [style]="{ width: '100%' }"
+                          [options]="leadUsers"
+                          (onChange)="statusChange($event)"
+                          [dropdownIcon]="'fa fa-caret-down'"
+                          [(ngModel)]="selectedSourcedByStatus"
+                          optionLabel="name"
+                          dataKey="name"
+                          appendTo="body"
+                          [filter]="true"
+                          filterPlaceholder="Search..."
+                        >
+                        </p-dropdown>
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-center pointer-cursor">
+                      <app-filter
+                        [position]="'right'"
+                        [iconColor]="'#33009C'"
+                        [iconSize]="'28px!important'"
+                        (filterEvent)="applyConfigFilters($event)"
+                        [filterConfig]="filterConfig"
+                        [showFilterIndication]="appliedFilter"
+                        pTooltip="Filter"
+                        tooltipPosition="top"
+                      >
+                      </app-filter>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th class="text-nowrap">Lead Id</th>
+                <th class="text-nowrap">Business Name</th>
+                <th class="text-nowrap">Business Entity</th>
+                <th class="text-nowrap">Contact Person</th>
+                <th>City</th>
+                <th class="text-nowrap">Sourced By</th>
+                <th class="text-nowrap">Created Date</th>
+                <th class="text-nowrap">Remarks</th>
+                <th>Actions</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-lead>
+              <tr class="text-capitalize">
+                <td>
+                  <span class="table-column-data" *ngIf="lead.leadId">{{
+                    lead.id
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data" *ngIf="lead.businessName">{{
+                    lead.businessName | capitalizeFirst
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data" *ngIf="lead.businessEntity">{{
+                    getEntityName(lead.businessEntity)
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data" *ngIf="lead.contactPerson">{{
+                    lead.contactPerson | capitalizeFirst
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data" *ngIf="lead.city">{{
+                    lead.city | capitalizeFirst
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data" *ngIf="lead.sourcedBy">{{
+                    getSourceName(lead.sourcedBy) | capitalizeFirst
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data" *ngIf="lead.createdOn">{{
+                    lead.createdOn | date : "mediumDate"
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data" *ngIf="lead.creditSummary">{{
+                    lead.creditSummary | capitalizeFirst
+                  }}</span>
+                </td>
+                <td>
+                  <div class="text-center">
+                    <div class="d-flex">
+                      <p-menu
+                        appendTo="body"
+                        #menu
+                        [model]="actionItems(lead)"
+                        [popup]="true"
+                      ></p-menu>
+                      <!-- <button
+                        pButton
+                        type="button"
+                        class="custom-btn"
+                        (click)="menu.toggle($event)"
+                        icon="fas fa-bars"
+                        pTooltip="Actions"
+                        tooltipPosition="top"
+                      ></button> -->
+
+                      <img
+                        src="../../../assets/images/icons/menu.svg"
+                        width="24px"
+                        height="24px"
+                        pTooltip="Actions"
+                        tooltipPosition="top"
+                        (click)="menu.toggle($event)"
+                      />
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr class="text-center">
+                <td colspan="10" class="text-center fw-bold">
+                  <img
+                    src="../../../assets/images/menu/no-data.gif"
+                    width="200"
+                    height="200"
+                  />
+                  <p>No Rejected Leads Found</p>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+        <div *ngIf="activeItem.name == 'bankerRejects'">
+          <p-table
+            #leadsTablebank
+            [value]="leads"
+            [lazy]="true"
+            (onLazyLoad)="loadBankRejectedLeads($event)"
+            dataKey="id"
+            [showCurrentPageReport]="true"
+            [rowsPerPageOptions]="[10, 25, 50]"
+            [paginator]="true"
+            [rows]="10"
+            [totalRecords]="totalLeadsCount"
+            [loading]="apiLoading"
+            responsiveLayout="scroll"
+            scrollHeight="flex"
+            class="p-datatable-striped"
+            [globalFilterFields]="[
+              'referenceNo',
+              'customer.firstName',
+              'partner.partnerName',
+              'status'
+            ]"
+            styleClass="p-datatable-customers "
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Banks Rejected leads"
+          >
+            <ng-template pTemplate="caption">
+              <div class="row">
+                <div class="col-md-4 mt-2 no-padding-small">
+                  <div class="p-inputgroup">
+                    <input
+                      type="text"
+                      pInputText
+                      placeholder="Search File with Business Name"
+                      [(ngModel)]="businessNameToSearchforbank"
+                      (ngModelChange)="
+                        inputValueChangeEventforbank(
+                          'loanId',
+                          businessNameToSearchforbank
+                        )
+                      "
+                      (keyup.enter)="filterWithBusinessNameforBank()"
+                    />
+                    <button
+                      type="button"
+                      pButton
+                      icon="pi pi-search"
+                      class="p-button-primary"
+                      [disabled]="!businessNameToSearchforbank"
+                      (click)="filterWithBusinessNameforBank()"
+                    ></button>
+                  </div>
+                </div>
+                <div class="col-md-4 mt-2 no-padding-small">
+                  <div class="p-inputgroup">
+                    <input
+                      type="text"
+                      pInputText
+                      placeholder="Search File with Mobile Number"
+                      [(ngModel)]="mobileNumberToSearchforbank"
+                      (ngModelChange)="
+                        inputValueChangeEventforbank(
+                          'loanId',
+                          mobileNumberToSearchforbank
+                        )
+                      "
+                      (keyup.enter)="filterWithMobileNumberforbank()"
+                    />
+                    <button
+                      type="button"
+                      pButton
+                      icon="pi pi-search"
+                      class="p-button-primary"
+                      [disabled]="!mobileNumberToSearchforbank"
+                      (click)="filterWithMobileNumberforbank()"
+                    ></button>
+                  </div>
+                </div>
+                <div class="col-md-4 mt-2 no-padding-small text-right">
+                  <div class="d-flex">
+                    <div class="flex-grow-1 me-2">
+                      <div class="p-inputgroup">
+                        <p-dropdown
+                          styleClass="text-left"
+                          [style]="{ width: '100%' }"
+                          [options]="leadUsers"
+                          (onChange)="statusChangeforbank($event)"
+                          [dropdownIcon]="'fa fa-caret-down'"
+                          [(ngModel)]="selectedSourcedByStatusforbank"
+                          optionLabel="name"
+                          dataKey="name"
+                          appendTo="body"
+                          [filter]="true"
+                          filterPlaceholder="Search..."
+                        >
+                        </p-dropdown>
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-center pointer-cursor">
+                      <app-filter
+                        [position]="'right'"
+                        [iconColor]="'#33009C'"
+                        [iconSize]="'28px!important'"
+                        (filterEvent)="applyConfigFiltersforbank($event)"
+                        [filterConfig]="filterConfig"
+                        [showFilterIndication]="appliedFilterforbank"
+                        pTooltip="Filter"
+                        tooltipPosition="top"
+                      >
+                      </app-filter>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th class="text-nowrap">Lead Id</th>
+                <th class="text-nowrap">Business Name</th>
+                <th class="text-nowrap">Business Entity</th>
+                <th class="text-nowrap">Contact Person</th>
+                <th>City</th>
+                <th class="text-nowrap">Sourced By</th>
+                <th class="text-nowrap">Created Date</th>
+                <th class="text-nowrap">Login Date</th>
+                <th>Actions</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-lead>
+              <tr class="text-capitalize">
+                <td>
+                  <span class="table-column-data" *ngIf="lead.leadId">{{
+                    lead.id
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data" *ngIf="lead.businessName">{{
+                    lead.businessName | capitalizeFirst
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data" *ngIf="lead.businessEntity">{{
+                    getEntityName(lead.businessEntity)
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data" *ngIf="lead.contactPerson">{{
+                    lead.contactPerson | capitalizeFirst
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data" *ngIf="lead.city">{{
+                    lead.city | capitalizeFirst
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data" *ngIf="lead.sourcedBy">{{
+                    getSourceName(lead.sourcedBy) | capitalizeFirst
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data" *ngIf="lead.createdOn">{{
+                    lead.createdOn | date : "mediumDate"
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data" *ngIf="lead.loginDate">{{
+                    lead.loginDate | date : "mediumDate"
+                  }}</span>
+                </td>
+                <td>
+                  <div class="text-center">
+                    <div class="d-flex">
+                      <p-menu
+                        appendTo="body"
+                        #bankmenu
+                        [model]="actionItemsforBank(lead)"
+                        [popup]="true"
+                      ></p-menu>
+                      <!-- <button
+                        pButton
+                        type="button"
+                        class="custom-btn"
+                        (click)="bankmenu.toggle($event)"
+                        icon="fas fa-bars"
+                        pTooltip="Actions"
+                        tooltipPosition="top"
+                      ></button> -->
+
+                      <img
+                        src="../../../assets/images/icons/menu.svg"
+                        width="24px"
+                        height="24px"
+                        pTooltip="Actions"
+                        tooltipPosition="top"
+                        (click)="bankmenu.toggle($event)"
+                      />
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr class="text-center">
+                <td colspan="10" class="text-center fw-bold">
+                  <img
+                    src="../../../assets/images/menu/no-data.gif"
+                    width="200"
+                    height="200"
+                  />
+                  <p>No Rejected Leads Found</p>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+        <div *ngIf="activeItem.name == 'cni'">
+          <p-table
+            #leadsTablecni
+            [value]="leads"
+            [lazy]="true"
+            (onLazyLoad)="loadCNIRejectedLeads($event)"
+            dataKey="id"
+            [showCurrentPageReport]="true"
+            [rowsPerPageOptions]="[10, 25, 50]"
+            [paginator]="true"
+            [rows]="10"
+            [totalRecords]="totalLeadsCount"
+            [loading]="apiLoading"
+            responsiveLayout="scroll"
+            scrollHeight="flex"
+            class="p-datatable-striped"
+            [globalFilterFields]="[
+              'referenceNo',
+              'customer.firstName',
+              'partner.partnerName',
+              'status'
+            ]"
+            styleClass="p-datatable-customers "
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Cni leads"
+          >
+            <ng-template pTemplate="caption">
+              <div class="row">
+                <div class="col-md-4 mt-2 no-padding-small">
+                  <div class="p-inputgroup">
+                    <input
+                      type="text"
+                      pInputText
+                      placeholder="Search File with Business Name"
+                      [(ngModel)]="businessNameToSearchcni"
+                      (ngModelChange)="
+                        inputValueChangeEventcni(
+                          'loanId',
+                          businessNameToSearchcni
+                        )
+                      "
+                      (keyup.enter)="filterWithBusinessNameforCNI()"
+                    />
+                    <button
+                      type="button"
+                      pButton
+                      icon="pi pi-search"
+                      class="p-button-primary"
+                      [disabled]="!businessNameToSearchcni"
+                      (click)="filterWithBusinessNameforCNI()"
+                    ></button>
+                  </div>
+                </div>
+                <div class="col-md-4 mt-2 no-padding-small">
+                  <div class="p-inputgroup">
+                    <input
+                      type="text"
+                      pInputText
+                      placeholder="Search File with Mobile Number"
+                      [(ngModel)]="mobileNumberToSearchcni"
+                      (ngModelChange)="
+                        inputValueChangeEventcni(
+                          'loanId',
+                          mobileNumberToSearchcni
+                        )
+                      "
+                      (keyup.enter)="filterWithMobileNumbercni()"
+                    />
+                    <button
+                      type="button"
+                      pButton
+                      icon="pi pi-search"
+                      class="p-button-primary"
+                      [disabled]="!mobileNumberToSearchcni"
+                      (click)="filterWithMobileNumbercni()"
+                    ></button>
+                  </div>
+                </div>
+                <div class="col-md-4 mt-2 no-padding-small text-right">
+                  <div class="d-flex">
+                    <div class="flex-grow-1 me-2">
+                      <div class="p-inputgroup">
+                        <p-dropdown
+                          styleClass="text-left"
+                          [style]="{ width: '100%' }"
+                          [options]="leadUsers"
+                          (onChange)="statusChangeforcni($event)"
+                          [dropdownIcon]="'fa fa-caret-down'"
+                          [(ngModel)]="selectedSourcedByStatusforcni"
+                          optionLabel="name"
+                          dataKey="name"
+                          appendTo="body"
+                          [filter]="true"
+                          filterPlaceholder="Search..."
+                        >
+                        </p-dropdown>
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-center pointer-cursor">
+                      <app-filter
+                        [position]="'right'"
+                        [iconColor]="'#33009C'"
+                        [iconSize]="'28px!important'"
+                        (filterEvent)="applyConfigFiltersforcni($event)"
+                        [filterConfig]="filterConfig"
+                        [showFilterIndication]="appliedFilterforcni"
+                        pTooltip="Filter"
+                        tooltipPosition="top"
+                      >
+                      </app-filter>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th class="text-nowrap">Lead Id</th>
+                <th class="text-nowrap">Business Name</th>
+                <th class="text-nowrap">Business Entity</th>
+                <th class="text-nowrap">Contact Person</th>
+                <th>City</th>
+                <th class="text-nowrap">Sourced By</th>
+                <th class="text-nowrap">Created Date</th>
+                <th class="text-nowrap">Login Date</th>
+                <th class="text-nowrap">Approval Date</th>
+                <th>Actions</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-lead>
+              <tr class="text-capitalize">
+                <td>
+                  <span class="table-column-data" *ngIf="lead.leadId">{{
+                    lead.id
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data" *ngIf="lead.businessName">{{
+                    lead.businessName | capitalizeFirst
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data" *ngIf="lead.businessEntity">{{
+                    getEntityName(lead.businessEntity)
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data" *ngIf="lead.contactPerson">{{
+                    lead.contactPerson | capitalizeFirst
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data" *ngIf="lead.city">{{
+                    lead.city | capitalizeFirst
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data" *ngIf="lead.sourcedBy">{{
+                    getSourceName(lead.sourcedBy) | capitalizeFirst
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data" *ngIf="lead.createdOn">{{
+                    lead.createdOn | date : "mediumDate"
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data" *ngIf="lead.loginDate">{{
+                    lead.loginDate | date : "mediumDate"
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data" *ngIf="lead.approvalDate">{{
+                    lead.approvalDate | date : "mediumDate"
+                  }}</span>
+                </td>
+                <td>
+                  <div class="text-center">
+                    <div class="d-flex">
+                      <p-menu
+                        appendTo="body"
+                        #cnimenu
+                        [model]="actionItemsforCni(lead)"
+                        [popup]="true"
+                      ></p-menu>
+                      <!-- <button
+                        pButton
+                        type="button"
+                        class="custom-btn"
+                        (click)="cnimenu.toggle($event)"
+                        icon="fas fa-bars"
+                        pTooltip="Actions"
+                        tooltipPosition="top"
+                      ></button> -->
+                      <img
+                        src="../../../assets/images/icons/menu.svg"
+                        width="24px"
+                        height="24px"
+                        pTooltip="Actions"
+                        tooltipPosition="top"
+                        (click)="cnimenu.toggle($event)"
+                      />
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr class="text-center">
+                <td colspan="10" class="text-center fw-bold">
+                  <img
+                    src="../../../assets/images/menu/no-data.gif"
+                    width="200"
+                    height="200"
+                  />
+                  <p>No Rejected Leads Found</p>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

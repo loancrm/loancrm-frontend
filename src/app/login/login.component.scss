@@ -1,0 +1,136 @@
+// .background-radial-gradient {
+//   background-color: hsl(218, 41%, 15%);
+//   background-image: radial-gradient(
+//       650px circle at 0% 0%,
+//       hsl(218, 41%, 35%) 15%,
+//       hsl(218, 41%, 30%) 35%,
+//       hsl(218, 41%, 20%) 75%,
+//       hsl(218, 41%, 19%) 80%,
+//       transparent 100%
+//     ),
+//     radial-gradient(
+//       1250px circle at 100% 100%,
+//       hsl(218, 41%, 45%) 15%,
+//       hsl(218, 41%, 30%) 35%,
+//       hsl(218, 41%, 20%) 75%,
+//       hsl(218, 41%, 19%) 80%,
+//       transparent 100%
+//     );
+// }
+
+.background-radial-gradient {
+  background-color: #29415b;
+  background-image: radial-gradient(
+      650px circle at 0% 0%,
+      #3a5b7b 15%,
+      /* lighter */ #35516f 35%,
+      /* slightly lighter */ #2c4562 75%,
+      /* mid-dark */ #2b425e 80%,
+      /* dark */ transparent 100%
+    ),
+    radial-gradient(
+      1250px circle at 100% 100%,
+      #4b6c8f 15%,
+      /* even lighter */ #35516f 35%,
+      #2c4562 75%,
+      #2b425e 80%,
+      transparent 100%
+    );
+}
+
+#radius-shape-1 {
+  height: 220px;
+  width: 220px;
+  top: -60px;
+  left: -130px;
+  background: radial-gradient(#44006b, #ad1fff);
+  overflow: hidden;
+}
+
+#radius-shape-2 {
+  border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
+  bottom: -60px;
+  right: -110px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(#44006b, #ad1fff);
+  overflow: hidden;
+}
+
+// #radius-shape-1 {
+//   height: 220px;
+//   width: 220px;
+//   top: -60px;
+//   left: -130px;
+//   background: radial-gradient(#ee7846, #ff9e7b);
+//   overflow: hidden;
+// }
+
+// #radius-shape-2 {
+//   border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
+//   bottom: -60px;
+//   right: -110px;
+//   width: 300px;
+//   height: 300px;
+//   background: radial-gradient(#ee7846, #ff9e7b);
+//   overflow: hidden;
+// }
+
+.bg-glass {
+  background-color: #f8f0e5;
+  backdrop-filter: saturate(200%) blur(25px);
+}
+
+.contact-links img {
+  width: 50px;
+  height: 50px;
+}
+.contact-links .links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+}
+.contact-links img:hover {
+  transform: scale(1.35);
+}
+
+.link {
+  margin-right: 15px;
+}
+
+.link:last-child {
+  margin-right: 0;
+}
+
+.card-logo {
+  font-weight: bold;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.typing-text-container {
+  overflow: hidden;
+  border-right: 0.1em solid hsl(218, 41%, 19%) 80%;
+  white-space: nowrap;
+  animation: typing-animation 5s steps(40, end) infinite;
+}
+
+@keyframes typing-animation {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+.custom-icon {
+  color: #33009c;
+}
+.p-button-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,1483 @@
+<div>
+  <div>
+    <div class="card fixed-card">
+      <div class="d-flex justify-content-between">
+        <div class="pointer-cursor" (click)="goBack()">
+          <span class="back-btn-icon me-2"
+            ><i class="pi pi-arrow-left fw-bold"></i
+          ></span>
+          <span class="me-1">
+            <img
+              src="../../../../assets/images/menu/addlead"
+              alt="Default Image"
+              class=""
+              style="height: 35px; width: 40px"
+            />
+          </span>
+          <b>
+            <span class="back-btn-text text-capitalize">{{ heading }}</span>
+          </b>
+        </div>
+      </div>
+    </div>
+    <div class="bread-crumb">
+      <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="loading">
+  <app-preloader></app-preloader>
+</div>
+
+<div *ngIf="!loading">
+  <div class="p-fluid" *ngIf="loanType == 'lap' || loanType == 'homeLoan'">
+    <!-- <div class="container p-3">
+      <div class="row justify-content-center align-items-center mt-2">
+        <div class="col-md-6 col-lg-4">
+          <div class="field-radiobutton form-check">
+            <p-radioButton
+              name="employmentStatus"
+              value="employed"
+              [(ngModel)]="employmentStatus"
+              inputId="employed"
+              class="form-check-input"
+            ></p-radioButton>
+            <label for="employed" class="form-check-label">Employed</label>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="field-radiobutton form-check">
+            <p-radioButton
+              name="employmentStatus"
+              value="self-employed"
+              [(ngModel)]="employmentStatus"
+              inputId="selfEmployed"
+              class="form-check-input"
+            ></p-radioButton>
+            <label for="selfEmployed" class="form-check-label"
+              >Self-Employed</label
+            >
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <div class="employment-selection">
+      <h3>Select Employment Type</h3>
+      <div class="options">
+        <label
+          class="option-card"
+          [class.selected]="employmentStatus === 'employed'"
+        >
+          <input
+            type="radio"
+            name="employment"
+            value="employed"
+            [(ngModel)]="employmentStatus"
+          />
+          <img src="../../../../assets/images/employed.jpg" alt="Employed" />
+          <span>Employed</span>
+        </label>
+
+        <label
+          class="option-card"
+          [class.selected]="employmentStatus === 'self-employed'"
+        >
+          <input
+            type="radio"
+            name="employment"
+            value="self-employed"
+            [(ngModel)]="employmentStatus"
+          />
+          <img
+            src="../../../../assets/images/self-employed.png"
+            alt="Self Employed"
+          />
+          <span>Self-Employed</span>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-container
+  *ngIf="loanType == 'personalLoan' || employmentStatus == 'employed'"
+>
+  <div class="bg-color" *ngIf="!loading">
+    <p-steps
+      [model]="steps"
+      [(activeIndex)]="activeIndex"
+      [readonly]="false"
+      class="customsteps"
+      styleClass="custom-steps"
+    ></p-steps>
+    <form
+      class="login-form mt-3"
+      [formGroup]="leadForm"
+      novalidate
+      (ngSubmit)="onSubmit(leadForm.value)"
+    >
+      <div class="card custom-steps-card lead-card m-2">
+        <div *ngIf="activeIndex === 0">
+          <div class="py-3 px-4">
+            <div class="row">
+              <div class="col-md-4">
+                <img
+                  src="../../../../assets/images/leads/3.jpg"
+                  width="400"
+                  height="290"
+                  class="icon"
+                  alt="Contact Details Icon"
+                />
+              </div>
+              <div class="col-md-8">
+                <div class="">
+                  <h3 style="font-weight: bold; color: #64b5f6">
+                    Contact Details
+                  </h3>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label
+                          >Contact Person Name&nbsp;<span
+                            ><sup class="text-danger">*</sup></span
+                          ></label
+                        >
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        placeholder="Enter Contact Person Name"
+                        formControlName="contactPerson"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label
+                          >Primary Phone&nbsp;<span
+                            ><sup class="text-danger">*</sup></span
+                          ></label
+                        >
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        placeholder="Enter Phone"
+                        formControlName="primaryPhone"
+                        autocomplete="off"
+                        maxlength="10"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label>Secondary Phone</label>
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        placeholder="Enter Secondary Phone"
+                        formControlName="secondaryPhone"
+                        autocomplete="off"
+                        maxlength="10"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label>Email&nbsp;</label>
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="email"
+                        placeholder="Enter Business Email"
+                        formControlName="email"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="activeIndex === 1">
+          <div class="py-3 px-4">
+            <div class="row">
+              <div class="col-md-4">
+                <img
+                  src="../../../../assets/images/leads/2.jpg"
+                  width="400"
+                  height="290"
+                  class="icon"
+                  alt="Business Address Icon"
+                />
+              </div>
+              <div class="col-md-8">
+                <div class="">
+                  <h3 style="font-weight: bold; color: #64b5f6">
+                    Address Details
+                  </h3>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label>Address Line 1&nbsp;</label>
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        placeholder="Enter Address Line 1"
+                        formControlName="addressLine1"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label>Address Line 2</label>
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        placeholder="Enter Address Line 2"
+                        formControlName="addressLine2"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label
+                          >City&nbsp;<span
+                            ><sup class="text-danger">*</sup></span
+                          ></label
+                        >
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        placeholder="Enter City"
+                        formControlName="city"
+                        autocomplete="off"
+                        list="citySuggestions"
+                      />
+                      <datalist name="citySuggestions" id="citySuggestions">
+                        <option value="Hyderabad">Hyderabad</option>
+                        <option value="Adilabad">Adilabad</option>
+                        <option value="Nizamabad">Nizamabad</option>
+                        <option value="Karimnagar">Karimnagar</option>
+                        <option value="Warangal">Warangal</option>
+                        <option value="Guntur">Guntur</option>
+                        <option value="Vizag">Vizag</option>
+                      </datalist>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label>State&nbsp;</label>
+                      </div>
+                      <p-dropdown
+                        [options]="stateEntities"
+                        placeholder="Select State"
+                        formControlName="state"
+                        optionLabel="displayName"
+                        optionValue="name"
+                        [showClear]="true"
+                        appendTo="body"
+                        styleClass="w-100"
+                        [dropdownIcon]="'fa fa-caret-down'"
+                      ></p-dropdown>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label>Pincode&nbsp;</label>
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        placeholder="Enter Pincode"
+                        formControlName="pincode"
+                        autocomplete="off"
+                        maxlength="6"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="activeIndex === 2">
+          <div class="py-3 px-4">
+            <div class="row">
+              <div class="col-md-4">
+                <img
+                  src="../../../../assets/images/leads/10.jpg"
+                  width="400"
+                  height="290"
+                  class="icon"
+                  alt="Employment Details Icon"
+                />
+              </div>
+              <div class="col-md-8">
+                <div class="">
+                  <h3 style="font-weight: bold; color: #64b5f6">
+                    Employment Details
+                  </h3>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label
+                          >Company Name&nbsp;<span
+                            ><sup class="text-danger">*</sup></span
+                          ></label
+                        >
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        placeholder="Enter Company Name"
+                        formControlName="companyName"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label
+                          >Designation&nbsp;<span
+                            ><sup class="text-danger">*</sup></span
+                          ></label
+                        >
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        placeholder="Enter Designation"
+                        formControlName="designation"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label>
+                          Salary &nbsp;<span
+                            ><sup class="text-danger">*</sup></span
+                          ></label
+                        >
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        placeholder="Enter Salary"
+                        formControlName="salary"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label
+                          >Job Experience&nbsp;<span
+                            ><sup class="text-danger">*</sup></span
+                          ></label
+                        >
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="email"
+                        placeholder="Enter Job Experience"
+                        formControlName="jobExperience"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label
+                          >Company Address&nbsp;<span
+                            ><sup class="text-danger">*</sup></span
+                          ></label
+                        >
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="email"
+                        placeholder="Enter Company Address"
+                        formControlName="companyAddress"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="activeIndex === 3">
+          <div class="py-3 px-4">
+            <div class="row">
+              <div class="col-md-4">
+                <img
+                  src="../../../../assets/images/leads/4.jpg"
+                  width="400"
+                  height="290"
+                  class="icon"
+                  alt="Loan Details Icon"
+                />
+              </div>
+              <div class="col-md-8">
+                <div class="">
+                  <h3 style="font-weight: bold; color: #64b5f6">
+                    Loan Requirement
+                  </h3>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label class="text-success">Loan Requirement</label>
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        placeholder="Enter Loan Requirement"
+                        formControlName="loanRequirement"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2" *ngIf="loanType == 'lap'">
+                    <div>
+                      <div class="my-1">
+                        <label class="">Property Type</label>
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        placeholder="Enter Property Type"
+                        formControlName="propertyType"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2" *ngIf="loanType == 'lap'">
+                    <div>
+                      <div class="my-1">
+                        <label class="">Property Value</label>
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        placeholder="Enter Property Value"
+                        formControlName="propertyValue"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2" *ngIf="loanType == 'lap'">
+                    <div>
+                      <div class="my-1">
+                        <label class="">Property Location</label>
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        placeholder="Enter Property Location"
+                        formControlName="propertyLocation"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="activeIndex === 4">
+          <div class="py-3 px-4">
+            <div class="row">
+              <div class="col-md-4">
+                <img
+                  src="../../../../assets/images/leads/5.jpg"
+                  width="400"
+                  height="290"
+                  class="icon"
+                  alt="Other Details Icon"
+                />
+              </div>
+              <div class="col-md-8">
+                <div class="">
+                  <h3 style="font-weight: bold; color: #64b5f6">
+                    Other Details
+                  </h3>
+                </div>
+                <div class="row mt-2">
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label
+                          >Had Own House ?&nbsp;
+                          <span><sup class="text-danger">*</sup></span></label
+                        >
+                      </div>
+                      <p-dropdown
+                        [options]="booleanOptions"
+                        formControlName="hadOwnHouse"
+                        optionLabel="displayName"
+                        optionValue="name"
+                        [showClear]="true"
+                        styleClass="w-100"
+                        appendTo="body"
+                        placeholder="Had Own House ?"
+                        [dropdownIcon]="'fa fa-caret-down'"
+                      ></p-dropdown>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label
+                          >Existing Loan Details &nbsp;<span
+                            ><sup class="text-danger">*</sup></span
+                          ></label
+                        >
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        placeholder="Enter Existing Loan Details"
+                        formControlName="existingLoanDetails"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="col-md-4 mt-2"
+                    *ngIf="
+                      userDetails &&
+                      userDetails.userType &&
+                      userDetails.userType != '3'
+                    "
+                  >
+                    <div>
+                      <div class="my-1">
+                        <label>Lead Source&nbsp;</label>
+                      </div>
+                      <p-dropdown
+                        [options]="leadSources"
+                        formControlName="leadSource"
+                        optionLabel="name"
+                        optionValue="id"
+                        [showClear]="true"
+                        appendTo="body"
+                        styleClass="w-100"
+                        placeholder="Select Lead Source"
+                        [dropdownIcon]="'fa fa-caret-down'"
+                      ></p-dropdown>
+                    </div>
+                  </div>
+                  <div
+                    class="col-md-4 mt-2"
+                    *ngIf="
+                      userDetails &&
+                      userDetails.userType &&
+                      userDetails.userType != '3'
+                    "
+                  >
+                    <div>
+                      <div class="my-1">
+                        <label
+                          >Sourced By&nbsp;<span
+                            ><sup class="text-danger">*</sup></span
+                          ></label
+                        >
+                      </div>
+                      <p-dropdown
+                        [options]="leadUsers"
+                        formControlName="sourcedBy"
+                        optionLabel="name"
+                        optionValue="id"
+                        styleClass="w-100"
+                        appendTo="body"
+                        [showClear]="true"
+                        placeholder="Select Sourced By"
+                        [dropdownIcon]="'fa fa-caret-down'"
+                        [filter]="true"
+                        filterPlaceholder="Search..."
+                      ></p-dropdown>
+                    </div>
+                  </div>
+                  <!-- <div
+                    class="col-md-4 mt-2"
+                    *ngIf="
+                      userDetails &&
+                      userDetails.userType &&
+                      userDetails.userType != '3' &&
+                      actionType !== 'update'
+                    "
+                  >
+                    <div>
+                      <div class="my-1">
+                        <label>Created On &nbsp;</label>
+                      </div>
+                      <p-calendar
+                        formControlName="createdOn"
+                        placeholder="select Created on Date"
+                        [showIcon]="true"
+                        appendTo="body"
+                        [showTime]="true"
+                        [showSeconds]="true"
+                        [showButtonBar]="true"
+                      ></p-calendar>
+                    </div>
+                  </div> -->
+                  <div
+                    class="col-md-4 mt-2"
+                    *ngIf="
+                      userDetails &&
+                      userDetails.userType &&
+                      userDetails.userType != '3'
+                    "
+                  >
+                    <div>
+                      <div class="my-1">
+                        <label>Created On &nbsp;</label>
+                      </div>
+                      <p-calendar
+                        formControlName="createdOn"
+                        placeholder="select Created on Date"
+                        [showIcon]="true"
+                        appendTo="body"
+                        dateFormat="yy-mm-dd"
+                        [showButtonBar]="true"
+                      ></p-calendar>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label>
+                          Called From &nbsp;<span
+                            ><sup class="text-danger">*</sup></span
+                          ></label
+                        >
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        placeholder="Enter Bank Name "
+                        formControlName="calledFrom"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="my-1">
+                      <label
+                        >Remarks&nbsp;<span
+                          ><sup class="text-danger">*</sup></span
+                        ></label
+                      >
+                    </div>
+                    <textarea
+                      pInputTextarea
+                      class="rounded-lg"
+                      width
+                      placeholder="Enter Remarks"
+                      formControlName="remarks"
+                      autocomplete="off"
+                      [autoResize]="true"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between">
+          <button
+            pButton
+            type="button"
+            label="Previous"
+            (click)="activeIndex = activeIndex - 1"
+            [disabled]="activeIndex === 0"
+          ></button>
+          <button
+            pButton
+            type="button"
+            label="Next"
+            (click)="activeIndex = activeIndex + 1"
+            [disabled]="activeIndex === steps.length - 1"
+          ></button>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center">
+        <div class="d-flex mt-3 mb-5">
+          <button
+            pButton
+            pRipple
+            type="button"
+            class="p-button-info me-2"
+            (click)="goBack()"
+          >
+            Go Back
+          </button>
+          <button
+            pButton
+            pRipple
+            type="submit"
+            [disabled]="!leadForm.valid"
+            class="p-button-primary"
+          >
+            {{ actionType == "create" ? "Add" : "Update" }} Lead
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="employmentStatus == 'self-employed'">
+  <div class="bg-color" *ngIf="!loading">
+    <p-steps
+      [model]="stepsforBusiness"
+      [(activeIndex)]="activeIndex"
+      [readonly]="false"
+      class="customsteps"
+      styleClass="custom-steps"
+    ></p-steps>
+    <form
+      class="login-form mt-3"
+      [formGroup]="leadFormforBusiness"
+      novalidate
+      (ngSubmit)="onSubmit(leadFormforBusiness.value)"
+    >
+      <div class="card custom-steps-card lead-card m-2">
+        <div *ngIf="activeIndex === 0">
+          <div class="py-3 px-4">
+            <div class="row">
+              <div class="col-md-4">
+                <img
+                  src="../../../../assets/images/leads/1.jpg"
+                  width="400"
+                  height="290"
+                  class="icon"
+                  alt="Business Details Icon"
+                />
+              </div>
+              <div class="col-md-8">
+                <div class="">
+                  <h3 style="font-weight: bold; color: #64b5f6">
+                    Business Details
+                  </h3>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label
+                          >Business Name&nbsp;<span
+                            ><sup class="text-danger">*</sup></span
+                          ></label
+                        >
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        formControlName="businessName"
+                        placeholder="Enter Business Name"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label
+                          >Business Entity&nbsp;<span
+                            ><sup class="text-danger">*</sup></span
+                          ></label
+                        >
+                      </div>
+                      <p-dropdown
+                        [options]="businessEntities"
+                        formControlName="businessEntity"
+                        optionLabel="displayName"
+                        optionValue="name"
+                        appendTo="body"
+                        [showClear]="true"
+                        placeholder="Select Business Entity"
+                        [dropdownIcon]="'fa fa-caret-down'"
+                        styleClass="w-100"
+                      ></p-dropdown>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label
+                          >Business Vintage&nbsp;<span
+                            ><sup class="text-danger">*</sup></span
+                          ></label
+                        >
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        formControlName="businessVintage"
+                        placeholder="Enter Business Vintage"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label
+                          >Nature of Business&nbsp;
+                          <span><sup class="text-danger">*</sup></span></label
+                        >
+                      </div>
+                      <p-dropdown
+                        [options]="natureOfBusines"
+                        formControlName="natureofBusiness"
+                        optionLabel="displayName"
+                        optionValue="name"
+                        appendTo="body"
+                        [showClear]="true"
+                        placeholder="Select Nature Of Business"
+                        [dropdownIcon]="'fa fa-caret-down'"
+                        styleClass="w-100"
+                      ></p-dropdown>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label
+                          >Product &nbsp;<span
+                            ><sup class="text-danger">*</sup></span
+                          ></label
+                        >
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        formControlName="product"
+                        placeholder="Enter Product Name"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label
+                          >Business Turnover&nbsp;
+                          <span><sup class="text-danger">*</sup></span></label
+                        >
+                      </div>
+                      <p-dropdown
+                        [options]="businessTurnover"
+                        formControlName="businessTurnover"
+                        optionLabel="displayName"
+                        optionValue="name"
+                        [showClear]="true"
+                        appendTo="body"
+                        placeholder="Select Business Turnover"
+                        [dropdownIcon]="'fa fa-caret-down'"
+                        styleClass="w-100"
+                      ></p-dropdown>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="activeIndex === 1">
+          <div class="py-3 px-4">
+            <div class="row">
+              <div class="col-md-4">
+                <img
+                  src="../../../../assets/images/leads/2.jpg"
+                  width="400"
+                  height="290"
+                  class="icon"
+                  alt="Business Address Icon"
+                />
+              </div>
+              <div class="col-md-8">
+                <div class="">
+                  <h3 style="font-weight: bold; color: #64b5f6">
+                    Business Address
+                  </h3>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label>Address Line 1&nbsp;</label>
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        placeholder="Enter Address Line 1"
+                        formControlName="addressLine1"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label>Address Line 2</label>
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        placeholder="Enter Address Line 2"
+                        formControlName="addressLine2"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label
+                          >City&nbsp;<span
+                            ><sup class="text-danger">*</sup></span
+                          ></label
+                        >
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        placeholder="Enter City"
+                        formControlName="city"
+                        autocomplete="off"
+                        list="citySuggestions"
+                      />
+                      <datalist name="citySuggestions" id="citySuggestions">
+                        <option value="Hyderabad">Hyderabad</option>
+                        <option value="Adilabad">Adilabad</option>
+                        <option value="Nizamabad">Nizamabad</option>
+                        <option value="Karimnagar">Karimnagar</option>
+                        <option value="Warangal">Warangal</option>
+                        <option value="Guntur">Guntur</option>
+                        <option value="Vizag">Vizag</option>
+                      </datalist>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label>State&nbsp;</label>
+                      </div>
+                      <p-dropdown
+                        [options]="stateEntities"
+                        placeholder="Select State"
+                        formControlName="state"
+                        optionLabel="displayName"
+                        optionValue="name"
+                        appendTo="body"
+                        [showClear]="true"
+                        styleClass="w-100"
+                        [dropdownIcon]="'fa fa-caret-down'"
+                      ></p-dropdown>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label>Pincode&nbsp;</label>
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        placeholder="Enter Pincode"
+                        formControlName="pincode"
+                        autocomplete="off"
+                        maxlength="6"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="activeIndex === 2">
+          <div class="py-3 px-4">
+            <div class="row">
+              <div class="col-md-4">
+                <img
+                  src="../../../../assets/images/leads/3.jpg"
+                  width="400"
+                  height="290"
+                  class="icon"
+                  alt="Contact Details Icon"
+                />
+              </div>
+              <div class="col-md-8">
+                <div class="">
+                  <h3 style="font-weight: bold; color: #64b5f6">
+                    Contact Details
+                  </h3>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label
+                          >Contact Person Name&nbsp;<span
+                            ><sup class="text-danger">*</sup></span
+                          ></label
+                        >
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        placeholder="Enter Contact Person Name"
+                        formControlName="contactPerson"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label
+                          >Phone&nbsp;<span
+                            ><sup class="text-danger">*</sup></span
+                          ></label
+                        >
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        placeholder="Enter Phone"
+                        formControlName="primaryPhone"
+                        autocomplete="off"
+                        maxlength="10"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label>Secondary Phone</label>
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        placeholder="Enter Secondary Phone"
+                        formControlName="secondaryPhone"
+                        autocomplete="off"
+                        maxlength="10"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label>Business Email&nbsp;</label>
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="email"
+                        placeholder="Enter Business Email"
+                        formControlName="email"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="activeIndex === 3">
+          <div class="py-3 px-4">
+            <div class="row">
+              <div class="col-md-4">
+                <img
+                  src="../../../../assets/images/leads/4.jpg"
+                  width="400"
+                  height="290"
+                  class="icon"
+                  alt="Loan / OD Details Icon"
+                />
+              </div>
+              <div class="col-md-8">
+                <div class="">
+                  <h3 style="font-weight: bold; color: #64b5f6">
+                    Loan Requirement
+                  </h3>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label class="text-success">Loan Requirement</label>
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        placeholder="Enter Loan Requirement"
+                        formControlName="loanRequirement"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2" *ngIf="loanType == 'lap'">
+                    <div>
+                      <div class="my-1">
+                        <label class="">Property Type</label>
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        placeholder="Enter Property Type"
+                        formControlName="propertyType"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2" *ngIf="loanType == 'lap'">
+                    <div>
+                      <div class="my-1">
+                        <label class="">Property Value</label>
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        placeholder="Enter Property Value"
+                        formControlName="propertyValue"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2" *ngIf="loanType == 'lap'">
+                    <div>
+                      <div class="my-1">
+                        <label class="">Property Location</label>
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        placeholder="Enter Property Location"
+                        formControlName="propertyLocation"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="activeIndex === 4">
+          <div class="py-3 px-4">
+            <div class="row">
+              <div class="col-md-4">
+                <img
+                  src="../../../../assets/images/leads/5.jpg"
+                  width="400"
+                  height="290"
+                  class="icon"
+                  alt="Other Details Icon"
+                />
+              </div>
+              <div class="col-md-8">
+                <div class="">
+                  <h3 style="font-weight: bold; color: #64b5f6">
+                    Other Details
+                  </h3>
+                </div>
+                <div class="row mt-2">
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label
+                          >Had Own House ?&nbsp;
+                          <span><sup class="text-danger">*</sup></span></label
+                        >
+                      </div>
+                      <p-dropdown
+                        [options]="booleanOptions"
+                        formControlName="hadOwnHouse"
+                        optionLabel="displayName"
+                        optionValue="name"
+                        [showClear]="true"
+                        styleClass="w-100"
+                        appendTo="body"
+                        placeholder="Had Own House ?"
+                        [dropdownIcon]="'fa fa-caret-down'"
+                      ></p-dropdown>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label
+                          >Existing Loan Details &nbsp;<span
+                            ><sup class="text-danger">*</sup></span
+                          ></label
+                        >
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        placeholder="Enter Existing Loan Details"
+                        formControlName="existingLoanDetails"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+
+                  <div
+                    class="col-md-4 mt-2"
+                    *ngIf="
+                      userDetails &&
+                      userDetails.userType &&
+                      userDetails.userType != '3'
+                    "
+                  >
+                    <div>
+                      <div class="my-1">
+                        <label>Lead Source&nbsp;</label>
+                      </div>
+                      <p-dropdown
+                        [options]="leadSources"
+                        formControlName="leadSource"
+                        optionLabel="name"
+                        optionValue="id"
+                        [showClear]="true"
+                        styleClass="w-100"
+                        appendTo="body"
+                        placeholder="Select Lead Source"
+                        [dropdownIcon]="'fa fa-caret-down'"
+                      ></p-dropdown>
+                    </div>
+                  </div>
+                  <div
+                    class="col-md-4 mt-2"
+                    *ngIf="
+                      userDetails &&
+                      userDetails.userType &&
+                      userDetails.userType != '3'
+                    "
+                  >
+                    <div>
+                      <div class="my-1">
+                        <label
+                          >Sourced By&nbsp;<span
+                            ><sup class="text-danger">*</sup></span
+                          ></label
+                        >
+                      </div>
+                      <p-dropdown
+                        [options]="leadUsers"
+                        formControlName="sourcedBy"
+                        optionLabel="name"
+                        optionValue="id"
+                        appendTo="body"
+                        styleClass="w-100"
+                        [showClear]="true"
+                        placeholder="Select Sourced By"
+                        [dropdownIcon]="'fa fa-caret-down'"
+                        [filter]="true"
+                        filterPlaceholder="Search..."
+                      ></p-dropdown>
+                    </div>
+                  </div>
+                  <!-- <div
+                    class="col-md-4 mt-2"
+                    *ngIf="
+                      userDetails &&
+                      userDetails.userType &&
+                      userDetails.userType != '3' &&
+                      actionType !== 'update'
+                    "
+                  >
+                    <div>
+                      <div class="my-1">
+                        <label>Created On &nbsp;</label>
+                      </div>
+                      <p-calendar
+                        formControlName="createdOn"
+                        placeholder="select Created on Date"
+                        [showIcon]="true"
+                        appendTo="body"
+                        [showTime]="true"
+                        [showSeconds]="true"
+                        [showButtonBar]="true"
+                      ></p-calendar>
+                    </div>
+                  </div> -->
+                  <div
+                    class="col-md-4 mt-2"
+                    *ngIf="
+                      userDetails &&
+                      userDetails.userType &&
+                      userDetails.userType != '3'
+                    "
+                  >
+                    <div>
+                      <div class="my-1">
+                        <label>Created On &nbsp;</label>
+                      </div>
+                      <p-calendar
+                        formControlName="createdOn"
+                        placeholder="select Created on Date"
+                        [showIcon]="true"
+                        appendTo="body"
+                        dateFormat="yy-mm-dd"
+                        [showButtonBar]="true"
+                      ></p-calendar>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-2">
+                    <div>
+                      <div class="my-1">
+                        <label>
+                          Called From &nbsp;<span
+                            ><sup class="text-danger">*</sup></span
+                          ></label
+                        >
+                      </div>
+                      <input
+                        pInputText
+                        class="rounded-lg"
+                        type="text"
+                        placeholder="Enter Bank Name "
+                        formControlName="calledFrom"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="my-1">
+                      <label
+                        >Remarks&nbsp;<span
+                          ><sup class="text-danger">*</sup></span
+                        ></label
+                      >
+                    </div>
+                    <textarea
+                      pInputTextarea
+                      class="rounded-lg"
+                      width
+                      placeholder="Enter Remarks"
+                      formControlName="remarks"
+                      autocomplete="off"
+                      [autoResize]="true"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between">
+          <button
+            pButton
+            type="button"
+            label="Previous"
+            (click)="activeIndex = activeIndex - 1"
+            [disabled]="activeIndex === 0"
+          ></button>
+          <button
+            pButton
+            type="button"
+            label="Next"
+            (click)="activeIndex = activeIndex + 1"
+            [disabled]="activeIndex === steps.length - 1"
+          ></button>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center">
+        <div class="d-flex mt-3 mb-5">
+          <button
+            pButton
+            pRipple
+            type="button"
+            class="p-button-info me-2"
+            (click)="goBack()"
+          >
+            Go Back
+          </button>
+          <button
+            pButton
+            pRipple
+            type="submit"
+            [disabled]="!leadFormforBusiness.valid"
+            class="p-button-primary"
+          >
+            {{ actionType == "create" ? "Add" : "Update" }} Lead
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-container>

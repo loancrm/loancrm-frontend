@@ -1,0 +1,161 @@
+<section
+  class="background-radial-gradient overflow-hidden"
+  style="height: 100vh"
+>
+  <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5 mt-3">
+    <div class="row gx-lg-5 align-items-center mb-5">
+      <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
+        <h1
+          class="my-5 display-5 fw-bold ls-tight"
+          style="color: hsl(218, 81%, 95%)"
+        >
+          Welcome to our <br />
+          <div class="typing-text-container">
+            <span style="color: hsl(218, 81%, 75%)"> Loan CRM</span>
+          </div>
+        </h1>
+        <p class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%)">
+          <!-- CRM software technology for business loan DSA's, financial
+          consultancies, loan agents and direct lenders to efficiently operate
+          your business. -->
+
+          A simple and powerful CRM tool made for business loan DSAs, financial
+          consultants, loan agents, and lenders to manage leads, track progress,
+          and grow your loan business easily.
+        </p>
+      </div>
+      <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
+        <div
+          id="radius-shape-1"
+          class="position-absolute rounded-circle shadow-5-strong"
+        ></div>
+        <div
+          id="radius-shape-2"
+          class="position-absolute shadow-5-strong"
+        ></div>
+        <div class="card bg-glass">
+          <div class="card-body px-4 py-5 px-md-5">
+            <div class="card-logo">
+              <div class="d-flex">
+                <div class="me-2">
+                  <img
+                    src="../../assets/images/logo.svg"
+                    alt="Business Logo"
+                    width="150"
+                    height="35"
+                    class=""
+                  />
+                </div>
+                <!-- <div class="d-flex align-items-center" style="font-size: 25px">
+                  <span class="fw-bold" style="color: #29415b"
+                    >Loan <strong style="color: #ee7846">CRM</strong></span
+                  >
+                </div> -->
+              </div>
+            </div>
+            <div class="text-large text-left fw-medium mb-3">
+              <span class="text-capitalize">Hi, Welcome Back 👋</span>
+            </div>
+            <form
+              class="login-form"
+              [formGroup]="loginForm"
+              novalidate
+              (ngSubmit)="onSubmit(loginForm.value)"
+            >
+              <div data-mdb-input-init class="form-outline mb-4">
+                <input
+                  pInputText
+                  class="rounded-lg w-100"
+                  type="text"
+                  id="username"
+                  formControlName="username"
+                  placeholder="Username/Email"
+                  autocomplete="off"
+                />
+                <label class="form-label fw-medium" for="form3Example3"
+                  >Username/Email</label
+                >
+              </div>
+              <div data-mdb-input-init class="form-outline mb-4">
+                <div class="p-inputgroup">
+                  <input
+                    pInputText
+                    class="rounded-lg w-100"
+                    id="password"
+                    [type]="isPasswordVisible ? 'text' : 'password'"
+                    placeholder="Enter Password"
+                    formControlName="password"
+                    autocomplete="off"
+                  />
+                  <span
+                    class="p-inputgroup-addon"
+                    (click)="togglePasswordVisibility()"
+                  >
+                    <i
+                      class="pi custom-icon"
+                      [ngClass]="isPasswordVisible ? 'pi-eye-slash' : 'pi-eye'"
+                    ></i>
+                  </span>
+                </div>
+                <label class="form-label fw-medium" for="form3Example4"
+                  >Password</label
+                >
+              </div>
+              <button
+                type="submit"
+                pButton
+                pRipple
+                data-mdb-button-init
+                data-mdb-ripple-init
+                [disabled]="!loginForm.valid"
+                class="p-button-primary mb-4 w-100"
+                [class.disabled]="api_loading"
+              >
+                Sign In
+              </button>
+              <!-- <div class="contact-links">
+                <div class="links">
+                  <div class="link">
+                    <a href=""
+                      ><img
+                        src="../../../assets/images/Social-links/linkedin.png"
+                        alt="linkedin"
+                    /></a>
+                  </div>
+                  <div class="link">
+                    <a
+                      ><img
+                        src="../../../assets/images/Social-links/github.png"
+                        alt="github"
+                    /></a>
+                  </div>
+                  <div class="link">
+                    <a
+                      ><img
+                        src="../../../assets/images/Social-links/facebook.png"
+                        alt="facebook"
+                    /></a>
+                  </div>
+                  <div class="link">
+                    <a
+                      ><img
+                        src="../../../assets/images/Social-links/email.png"
+                        alt="email"
+                    /></a>
+                  </div>
+                  <div class="link">
+                    <a
+                      ><img
+                        src="../../../assets/images/Social-links/website.png"
+                        alt="website"
+                    /></a>
+                  </div>
+                </div>
+              </div> -->
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
