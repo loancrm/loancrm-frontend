@@ -9,8 +9,9 @@
 }
 
 label {
+  font-size: 14px;
   // font-weight: 600;
-  font-size: medium;
+  // font-size: medium;
 }
 .p-button-sm {
   width: 10px;
@@ -38,9 +39,9 @@ label {
   background-color: rgba(2, 5, 129, 0.91) !important;
 }
 
-.bg-color {
-  background: linear-gradient(#ebf4f6, #f4f7fd);
-}
+// .bg-color {
+//   background: linear-gradient(#ebf4f6, #f4f7fd);
+// }
 
 ::ng-deep .custom-steps {
   border-radius: 5px !important;
@@ -50,12 +51,12 @@ label {
   padding-top: 20px;
 }
 
-.custom-steps-card {
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-}
+// .custom-steps-card {
+//   border-radius: 10px;
+//   padding: 20px;
+//   // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+//   margin-bottom: 20px;
+// }
 
 ::ng-deep .custom-steps .p-steps {
   background-color: #f4f4f4;
@@ -163,4 +164,63 @@ label {
 .file-icon {
   color: #fff !important; /* Icon color */
   font-size: 25px;
+}
+
+.calendar-custom-img {
+  position: absolute;
+  right: 20px;
+  top: 75%;
+  transform: translateY(-50%);
+  height: 20px;
+  width: 20px;
+  // fill: #6c757d !important; /* grey color */
+  cursor: pointer;
+  filter: grayscale(100%) brightness(50%);
+  // opacity: 0.6;
+  // filter: brightness(0) invert(1);
+  // transition: opacity 0.2s ease;
+}
+
+// .calendar-custom-img:hover {
+//   // opacity: 1;
+// }
+
+::ng-deep .custom-steps-vertical.p-steps {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+::ng-deep .custom-steps-vertical .p-steps-item {
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+::ng-deep .custom-steps-vertical .p-steps-number {
+  margin-right: 0.5rem;
+  background: #007ad9;
+  color: white;
+  border-radius: 50%;
+  padding: 0.5rem 0.75rem;
+}
+
+::ng-deep .custom-steps-vertical .p-steps-title {
+  font-weight: 500;
+  color: #29415b;
+}
+.step-card {
+  background-color: #fff;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.step-card:hover {
+  background-color: rgb(191, 200, 210);
+}
+
+.active-step-card {
+  border-left: 5px solid #29415b;
+  background-color: #e9f5ff;
 }

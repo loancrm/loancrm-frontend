@@ -1,0 +1,160 @@
+<section
+  class="d-flex align-items-center justify-content-center min-vh-100 background-radial-gradient overflow-hidden"
+>
+  <div class="container px-4 py-5 px-md-5 text-center text-lg-start">
+    <div class="row gx-lg-5 align-items-center">
+      <!-- Left Content -->
+      <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
+        <h1
+          class="my-5 display-5 fw-bold ls-tight"
+          style="color: hsl(218, 81%, 95%)"
+        >
+          Join the <br />
+          <div class="typing-text-container">
+            <span style="color: hsl(218, 81%, 75%)">Loan CRM</span>
+          </div>
+        </h1>
+        <p class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%)">
+          Start your journey with our CRM built for DSAs, consultants, and loan
+          agents to manage leads and grow faster.
+        </p>
+      </div>
+
+      <!-- Register Card -->
+      <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
+        <div
+          id="radius-shape-1"
+          class="position-absolute rounded-circle shadow-5-strong"
+        ></div>
+        <div
+          id="radius-shape-2"
+          class="position-absolute shadow-5-strong"
+        ></div>
+
+        <div class="card">
+          <div class="card-body px-4 py-5 px-md-5">
+            <div class="card-logo d-flex mb-3">
+              <img
+                src="../../assets/images/logo.svg"
+                alt="Business Logo"
+                width="150"
+                height="35"
+              />
+            </div>
+
+            <div class="text-large text-left fw-medium mb-3">
+              <span class="text-capitalize">Create an account</span>
+            </div>
+
+            <form
+              class="register-form"
+              [formGroup]="registerForm"
+              (ngSubmit)="onSubmit(registerForm.value)"
+              novalidate
+            >
+              <!-- Full Name -->
+              <div class="form-outline mb-4">
+                <input
+                  pInputText
+                  type="text"
+                  formControlName="name"
+                  placeholder="Full Name"
+                  autocomplete="off"
+                  class="rounded-lg w-100"
+                />
+                <label class="form-label fw-medium">Full Name</label>
+              </div>
+
+              <!-- Email -->
+              <div class="form-outline mb-4">
+                <input
+                  pInputText
+                  type="email"
+                  formControlName="emailId"
+                  placeholder="Email address"
+                  autocomplete="off"
+                  class="rounded-lg w-100"
+                />
+                <label class="form-label fw-medium">Email address</label>
+              </div>
+
+              <!-- Phone Number -->
+              <div class="form-outline mb-4">
+                <input
+                  pInputText
+                  type="tel"
+                  formControlName="mobile"
+                  placeholder="Phone Number"
+                  autocomplete="off"
+                  class="rounded-lg w-100"
+                />
+                <label class="form-label fw-medium">Phone Number</label>
+              </div>
+
+              <!-- Company Name -->
+              <div class="form-outline mb-4">
+                <input
+                  pInputText
+                  type="text"
+                  formControlName="businessName"
+                  placeholder="Company Name"
+                  autocomplete="off"
+                  class="rounded-lg w-100"
+                />
+                <label class="form-label fw-medium">Company Name</label>
+              </div>
+
+              <!-- Password -->
+              <div class="form-outline mb-4">
+                <input
+                  pInputText
+                  [type]="isPasswordVisible ? 'text' : 'password'"
+                  formControlName="password"
+                  placeholder="Password"
+                  autocomplete="off"
+                  class="rounded-lg w-100"
+                />
+                <label class="form-label fw-medium">Password</label>
+              </div>
+
+              <!-- Confirm Password -->
+              <!-- <div class="form-outline mb-4">
+                <input
+                  pInputText
+                  [type]="isConfirmPasswordVisible ? 'text' : 'password'"
+                  formControlName="confirmPassword"
+                  placeholder="Confirm Password"
+                  autocomplete="off"
+                  class="rounded-lg w-100"
+                />
+                <label class="form-label fw-medium">Confirm Password</label>
+              </div> -->
+
+              <!-- Submit -->
+              <button
+                type="submit"
+                pButton
+                pRipple
+                [disabled]="!registerForm.valid"
+                class="p-button-primary mb-4 w-100 custom-button"
+              >
+                Register
+              </button>
+
+              <!-- Link to login -->
+              <div class="text-center">
+                <span class="text-muted">Already have an account?</span>
+                <a
+                  routerLink="/user/login"
+                  class="fw-bold text-primary text-decoration-none"
+                >
+                  Sign in here
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

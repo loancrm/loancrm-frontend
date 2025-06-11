@@ -93,6 +93,9 @@ export class CreateComponent {
   }
 
   ngOnInit() {
+    const userDetails =
+      this.localStorageService.getItemFromLocalStorage('userDetails');
+    this.userDetails = userDetails.user;
     this.createForm();
     this.getLeadSources();
     this.getUserRoles();
@@ -161,8 +164,8 @@ export class CreateComponent {
       userType: formValues.userType,
       userId: formValues.userId,
       joiningDate: formValues.joiningDate
-      ? this.moment(formValues.joiningDate).format('YYYY-MM-DD')
-      : null,
+        ? this.moment(formValues.joiningDate).format('YYYY-MM-DD')
+        : null,
     };
     formData['userImage'] = [];
     if (
@@ -246,7 +249,9 @@ export class CreateComponent {
           formData.append('files', file);
         }
       }
-      this.leadsService.uploadFiles(formData, fileType).subscribe(
+      console.log(this.userDetails)
+      const accountId = this.userDetails?.accountId || 'default'; // make sure accountId is available
+      this.leadsService.uploadFiles(formData, 'Users', fileType, accountId).subscribe(
         (response: any) => {
           if (response && response['links'] && response['links'].length > 0) {
             for (let i = 0; i < response['links'].length; i++) {

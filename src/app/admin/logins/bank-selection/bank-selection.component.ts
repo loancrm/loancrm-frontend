@@ -37,13 +37,13 @@ export class BankSelectionComponent implements OnInit {
   bankNameToSearch: string;
   version = projectConstantsLocal.VERSION_DESKTOP;
   programs: Program[] = [
-    { name: 'INCOME', imageUrl: '../../../assets/images/programs/income.png' },
+    { name: 'Income Surrogate', imageUrl: '../../../assets/images/programs/income.png' },
     {
-      name: 'BANKING',
+      name: 'Banking Surrogate',
       imageUrl: '../../../assets/images/programs/banking.png',
     },
-    { name: 'GST', imageUrl: '../../../assets/images/programs/gst.png' },
-    { name: 'OD', imageUrl: '../../../assets/images/programs/od1.png' },
+    { name: 'GST Surrogate', imageUrl: '../../../assets/images/programs/gst.png' },
+    { name: 'DOD Surrogate', imageUrl: '../../../assets/images/programs/od1.png' },
   ];
 
   banks: Bank[] = [];
@@ -54,7 +54,7 @@ export class BankSelectionComponent implements OnInit {
     private leadsService: LeadsService,
     private location: Location,
     private router: Router
-  ) {}
+  ) { }
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
       if (params && params['id']) {

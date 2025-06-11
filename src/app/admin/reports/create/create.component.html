@@ -160,6 +160,9 @@
   *ngIf="!loading && selectedReportConfig && selectedReportConfig.fields"
   class="no-select"
 >
+  <div class="bread-crumb m-2">
+    <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
+  </div>
   <div class="p-1 m-2">
     <div class="d-flex justify-content-between">
       <div
@@ -188,9 +191,6 @@
     </div>
   </div>
 
-  <div class="bread-crumb m-2">
-    <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
-  </div>
   <div class="card report-fields m-2">
     <div class="row">
       <ng-container

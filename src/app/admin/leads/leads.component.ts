@@ -218,6 +218,18 @@ export class LeadsComponent {
         label: `LAP (${this.totalLeadsCountArray?.LAPLoancount || 0})`,
         name: 'lap',
       },
+      {
+        label: `Professional Loans (0)`,
+        name: 'professionalLoans',
+      },
+      {
+        label: `Educational Loans (0)`,
+        name: 'educationlLoans',
+      },
+      {
+        label: `Car loans (0)`,
+        name: 'carLoan',
+      },
     ];
   }
 
@@ -262,7 +274,7 @@ export class LeadsComponent {
       'leadsActiveItem',
       event.name
     );
-    this.employmentStatus =this.getStatusItems();
+    this.employmentStatus = this.getStatusItems();
     this.loadEmploymentActiveItem();
   }
   onActiveEmploymentStatusChange(event: any) {
@@ -307,6 +319,11 @@ export class LeadsComponent {
       this.userDetails.userType &&
       this.userDetails.userType !== '3';
     if (lead.leadInternalStatus === 1) {
+      // menuItems[0].items.push({
+      //   label: 'Update',
+      //   icon: 'pi pi-sign-in',
+      //   command: () => this.updateLead(lead.id),
+      // });
       menuItems[0].items.push({
         label: 'Archive',
         icon: 'pi pi-sign-in',
@@ -1234,7 +1251,9 @@ export class LeadsComponent {
   // viewLead(leadId) {
   //   this.routingService.handleRoute('leads/profile/' + leadId, null);
   // }
-  viewLead(lead) {
+  viewLead(event: any) {
+    console.log('Row clicked:', event.data);
+    const lead = event.data
     const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
     if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
       this.routingService.handleRoute(`leads/profile/${loanType}/${lead.leadId}`, null);

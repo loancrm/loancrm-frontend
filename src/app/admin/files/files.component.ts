@@ -351,6 +351,18 @@ export class FilesComponent implements OnInit {
         label: `LAP (${this.totalLeadsCountArray?.LAPLoancount || 0})`,
         name: 'lap',
       },
+      {
+        label: `Professional Loans (0)`,
+        name: 'professionalLoans',
+      },
+      {
+        label: `Educational Loans (0)`,
+        name: 'educationlLoans',
+      },
+      {
+        label: `Car loans (0)`,
+        name: 'carLoan',
+      },
     ];
   }
   getStatusItems(): { label: string; name: string }[] {

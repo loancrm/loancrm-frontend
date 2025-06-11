@@ -288,6 +288,7 @@
                         src="../../../assets/images/icons/eye.svg"
                         width="24px"
                         height="24px"
+                        class="me-2"
                         pTooltip="View Lead"
                         tooltipPosition="top"
                         (click)="viewLeadProfile(lead.id)"
@@ -312,14 +313,15 @@
                         icon="fas fa-eye"
                         tooltipPosition="top"
                       ></button> -->
-                      <img
+                      <!-- <img
                         src="../../../assets/images/icons/eye.svg"
                         width="24px"
                         height="24px"
+                        class="me-2"
                         tooltipPosition="top"
                         (click)="viewLead(lead.id)"
                         pTooltip="View Files"
-                      />
+                      /> -->
                       <!-- <button
                         *ngIf="
                           userDetails?.userType &&
@@ -345,6 +347,7 @@
                         src="../../../assets/images/icons/upload-files.svg"
                         width="24px"
                         height="24px"
+                        class="me-2"
                         (click)="uploadLeadFiles(lead.id)"
                         pTooltip="Upload Files"
                         tooltipPosition="top"
@@ -580,6 +583,7 @@
                         src="../../../assets/images/icons/eye.svg"
                         width="24px"
                         height="24px"
+                        class="me-2"
                         (click)="viewLoanLead(lead.leadId)"
                         pTooltip="View"
                         tooltipPosition="top"
@@ -608,6 +612,7 @@
                         src="../../../assets/images/icons/eye.svg"
                         width="24px"
                         height="24px"
+                        class="me-2"
                         (click)="viewLoanLead(lead.leadId)"
                         pTooltip="View Files"
                         tooltipPosition="top"
@@ -632,6 +637,7 @@
                         src="../../../assets/images/icons/upload-files.svg"
                         width="24px"
                         height="24px"
+                        class="me-2"
                         (click)="uploadLoanLeadFiles(lead.leadId)"
                         pTooltip="Upload Files"
                         tooltipPosition="top"
@@ -978,6 +984,7 @@
                             src="../../../assets/images/icons/eye.svg"
                             width="24px"
                             height="24px"
+                            class="me-2"
                             (click)="viewLoanLead(lead.leadId)"
                             pTooltip="View"
                             tooltipPosition="top"
@@ -1006,6 +1013,7 @@
                             src="../../../assets/images/icons/eye.svg"
                             width="24px"
                             height="24px"
+                            class="me-2"
                             (click)="viewLoanLead(lead.leadId)"
                             pTooltip="View Files"
                             tooltipPosition="top"
@@ -1033,6 +1041,7 @@
                             src="../../../assets/images/icons/upload-files.svg"
                             width="24px"
                             height="24px"
+                            class="me-2"
                             (click)="uploadLoanLeadFiles(lead.leadId)"
                             pTooltip="Upload Files"
                             tooltipPosition="top"
@@ -1339,7 +1348,7 @@
                             userDetails.userType == '3'
                           "
                         >
-                          <button
+                          <!-- <button
                             pButton
                             pRipple
                             type="button"
@@ -1348,7 +1357,16 @@
                             pTooltip="View"
                             icon="fas fa-eye"
                             tooltipPosition="top"
-                          ></button>
+                          ></button> -->
+                          <img
+                            src="../../../assets/images/icons/eye.svg"
+                            width="24px"
+                            height="24px"
+                            class="me-2"
+                            (click)="viewLoanLead(lead.leadId)"
+                            pTooltip="View"
+                            tooltipPosition="top"
+                          />
                         </div>
                         <div
                           class="d-flex"
@@ -1372,6 +1390,7 @@
                             src="../../../assets/images/icons/eye.svg"
                             width="24px"
                             height="24px"
+                            class="me-2"
                             (click)="viewLoanLead(lead.leadId)"
                             pTooltip="View Files"
                             tooltipPosition="top"
@@ -1398,6 +1417,7 @@
                             src="../../../assets/images/icons/upload-files.svg"
                             width="24px"
                             height="24px"
+                            class="me-2"
                             (click)="uploadLoanLeadFiles(lead.leadId)"
                             pTooltip="Upload Files"
                             tooltipPosition="top"
@@ -1446,6 +1466,15 @@
             </div>
           </ng-container>
         </ng-container>
+      </div>
+       <div *ngIf="activeItem.name == 'professionalLoans'">
+        <p>Comming soon ....</p>
+      </div>
+      <div *ngIf="activeItem.name == 'educationlLoans'">
+        <p>Comming soon ....</p>
+      </div>
+      <div *ngIf="activeItem.name == 'carLoan'">
+        <p>Comming soon ....</p>
       </div>
     </div>
   </div>

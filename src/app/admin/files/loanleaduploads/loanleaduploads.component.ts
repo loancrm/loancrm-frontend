@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ToastService } from 'src/app/services/toast.service';
 import { LeadsService } from '../../leads/leads.service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { DateTimeProcessorService } from 'src/app/services/date-time-processor.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FileUploadComponent } from '../../file-upload/file-upload.component';
@@ -28,6 +29,7 @@ export class LoanleaduploadsComponent implements OnInit {
   companyName: any;
   panNumber: any;
   loanleads: any;
+  userDetails: any;
   version = projectConstantsLocal.VERSION_DESKTOP;
   breadCrumbItems: any = [];
   selectedFiles: any = {
@@ -104,6 +106,7 @@ export class LoanleaduploadsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private leadsService: LeadsService,
     private dialogService: DialogService,
+    private localStorageService: LocalStorageService,
     private dateTimeProcessor: DateTimeProcessorService
   ) {
     this.moment = this.dateTimeProcessor.getMoment();
@@ -131,6 +134,8 @@ export class LoanleaduploadsComponent implements OnInit {
     ];
   }
   ngOnInit() {
+    this.userDetails =
+      this.localStorageService.getItemFromLocalStorage('userDetails');
     this.updateItemsBasedOnCondition();
   }
   updateItemsBasedOnCondition() {
@@ -1003,7 +1008,7 @@ export class LoanleaduploadsComponent implements OnInit {
         ) {
           this.financialReturns[index]['presentIncomeReturns'].push(
             this.selectedFiles['presentIncomeReturns'][index]['uploadedFiles'][
-              i
+            i
             ]
           );
         }
@@ -1129,24 +1134,25 @@ export class LoanleaduploadsComponent implements OnInit {
           formData.append('files', file);
         }
       }
-      this.leadsService.uploadFiles(formData, this.leadId, fileType).subscribe(
+      const accountId = this.userDetails?.accountId || 'default';
+      this.leadsService.uploadFiles(formData, this.leadId, fileType, accountId).subscribe(
         (response: any) => {
           if (response && response['links'] && response['links'].length > 0) {
             for (let i = 0; i < response['links'].length; i++) {
               index || index == 0
                 ? this.selectedFiles[fileType][index]['links'].push(
-                    response['links'][i]
-                  )
+                  response['links'][i]
+                )
                 : this.selectedFiles[fileType]['links'].push(
-                    response['links'][i]
-                  );
+                  response['links'][i]
+                );
             }
             for (let i = 0; i < files.length; i++) {
               files[i]['fileuploaded'] = true;
               index || index == 0
                 ? this.selectedFiles[fileType][index]['filesData'].push(
-                    files[i]
-                  )
+                  files[i]
+                )
                 : this.selectedFiles[fileType]['filesData'].push(files[i]);
             }
             console.log(

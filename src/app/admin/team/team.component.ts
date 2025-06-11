@@ -183,6 +183,11 @@ export class TeamComponent implements OnInit {
     // const menuItems: MenuItem[] = [];
     const menuItems: any = [{ label: 'Actions', items: [] }];
     menuItems[0].items.push({
+      label: 'Update',
+      icon: 'pi pi-refresh',
+      command: () => this.updateUsers(team.id),
+    });
+    menuItems[0].items.push({
       label: team.status === 'Active' ? 'Deactivate' : 'Activate',
       icon: 'pi pi-refresh',
       command: () => this.updateStatus(team.id, team.status),
@@ -193,7 +198,7 @@ export class TeamComponent implements OnInit {
         icon: 'fa fa-trash',
         command: () => this.confirmDelete(team),
       });
-    } 
+    }
     return menuItems;
   }
 

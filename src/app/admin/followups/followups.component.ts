@@ -88,7 +88,11 @@ export class FollowupsComponent implements OnInit {
       this.userDetails &&
       this.userDetails.userType &&
       this.userDetails.userType !== '3';
-
+    // menuItems[0].items.push({
+    //   label: 'Update Lead',
+    //   icon: 'pi pi-sign-in',
+    //   command: () => this.updateLead(lead.id),
+    // });
     menuItems[0].items.push({
       label: 'Send To New Lead',
       icon: 'pi pi-sign-in',
@@ -239,9 +243,14 @@ export class FollowupsComponent implements OnInit {
     return '';
   }
 
-  viewLead(leadId) {
-    this.routingService.handleRoute('leads/profile/' + leadId, null);
+  viewLead(event: any) {
+    console.log('Row clicked:', event.data);
+    const lead = event.data;
+    this.routingService.handleRoute('leads/profile/' + lead.id, null);
   }
+  // viewLead(leadId) {
+  //   this.routingService.handleRoute('leads/profile/' + leadId, null);
+  // }
   updateLead(leadId) {
     this.routingService.handleRoute('leads/update/' + leadId, null);
   }

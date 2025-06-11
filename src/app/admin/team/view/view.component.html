@@ -1,4 +1,7 @@
 <div>
+    <div class="bread-crumb m-2">
+    <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
+  </div>
   <div class="p-1 m-2" *ngIf="userDetails">
     <div class="d-flex justify-content-between">
       <div class="pointer-cursor d-flex align-items-center" (click)="goBack()">
@@ -36,9 +39,9 @@
       </div>
     </div>
   </div>
-  <div class="bread-crumb m-2">
+  <!-- <div class="bread-crumb m-2">
     <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
-  </div>
+  </div> -->
 </div>
 <div *ngIf="loading">
   <app-preloader></app-preloader>
@@ -259,7 +262,7 @@
                 <div class="col-md-6 col-12" *ngIf="pieChartOptionsforFilter">
                   <br class="d-lg-none d-md-none" />
                   <div class="chart-container">
-                    <div class="chart-card">
+                    <div class="chart-card p-2">
                       <app-apex-charts
                         [chartOptions]="pieChartOptionsforFilter"
                       ></app-apex-charts>
@@ -286,7 +289,7 @@
                 <div class="col-md-6 col-12" *ngIf="amountBarChartOptions">
                   <br class="d-lg-none d-md-none" />
                   <div class="chart-container">
-                    <div class="chart-card">
+                    <div class="chart-card p-2">
                       <app-apex-charts
                         [chartOptions]="amountBarChartOptions"
                       ></app-apex-charts>

@@ -197,7 +197,7 @@
 
 .chart-container {
   position: relative;
-    border-radius: 5px;
+  border-radius: 5px;
   background-color: #fff;
 }
 .nodata {
@@ -219,18 +219,18 @@
   justify-content: center;
   align-items: center;
   counter-increment: item;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 
-  --shadow: rgba(41, 65, 91, 0.4) -5px 5px,
-            rgba(41, 65, 91, 0.3) -10px 10px,
-            rgba(41, 65, 91, 0.2) -15px 15px,
-            rgba(41, 65, 91, 0.1) -20px 20px,
-            rgba(41, 65, 91, 0.05) -25px 25px;
+  // --shadow: rgba(41, 65, 91, 0.4) -5px 5px,
+  //           rgba(41, 65, 91, 0.3) -10px 10px,
+  //           rgba(41, 65, 91, 0.2) -15px 15px,
+  //           rgba(41, 65, 91, 0.1) -20px 20px,
+  //           rgba(41, 65, 91, 0.05) -25px 25px;
 
-  box-shadow: var(--shadow);
+  // box-shadow: var(--shadow);
 }
 
 .white-icon {
-
   color: #fff !important;
   filter: brightness(0) invert(1); /* Optional fallback for dark mode */
 }

@@ -12,7 +12,7 @@ import { BehaviorSubject } from 'rxjs';
 export class LeadsService {
   moment: any;
   status: any;
-     private sidebarVisible = new BehaviorSubject<boolean>(true);
+  private sidebarVisible = new BehaviorSubject<boolean>(true);
   sidebarVisible$ = this.sidebarVisible.asObservable();
 
   // private socket: Socket;
@@ -125,6 +125,20 @@ export class LeadsService {
   createLead(data) {
     const url = 'leads';
     return this.serviceMeta.httpPost(url, data);
+  }
+
+  createAccount(data) {
+    console.log(data)
+    const url = 'accounts';
+    return this.serviceMeta.httpPost(url, data);
+  }
+  getAccountById(accountId, filter = {}) {
+    const url = 'accounts/' + accountId;
+    return this.serviceMeta.httpGet(url, null, filter);
+  }
+  deleteAccount(accountId, filter = {}) {
+    const url = 'accounts/' + accountId;
+    return this.serviceMeta.httpDelete(url, null, filter);
   }
   deleteLead(leadId, filter = {}) {
     const url = 'leads/' + leadId;
@@ -758,10 +772,11 @@ export class LeadsService {
   //   const url = `files/upload?type=${type}&leadId=${leadId}`;
   //   return this.serviceMeta.httpPost(url, data);
   // }
-  uploadFiles(data: FormData, leadId, type = 'default') {
+  uploadFiles(data: FormData, leadId, type = 'default', accountId: string,) {
     console.log(FormData);
     console.log(data);
-    const url = `https://files.thefintalk.in/files?type=${type}&leadId=${leadId}`;
+    const url = `http://localhost/files?type=${type}&leadId=${leadId}&accountId=${accountId}`
+    // const url = `https://files.thefintalk.in/files?type=${type}&leadId=${leadId}&accountId=${accountId}`;
     return this.serviceMeta.httpPost(url, data);
   }
 

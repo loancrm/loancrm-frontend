@@ -1,3 +1,6 @@
+<div class="bread-crumb m-2">
+  <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
+</div>
 <div class="p-1 m-2 fixed-card">
   <div class="d-flex justify-content-between">
     <div
@@ -24,9 +27,7 @@
     </div>
   </div>
 </div>
-<div class="bread-crumb m-2">
-  <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
-</div>
+
 <div *ngIf="loading">
   <app-preloader></app-preloader>
 </div>
@@ -44,9 +45,9 @@
           <div>
             <div class="row">
               <div class="">
-                <h3 style="font-weight: bold; color: #29415b">
+                <h5 style="font-weight: bold; color: #29415b">
                   Proprietor Details
-                </h3>
+                </h5>
               </div>
               <div class="col-md-4 mt-2">
                 <div>
@@ -146,7 +147,7 @@
               <div class="col-md-4 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success">Cibil Report&nbsp; </label>
+                    <label class="">Cibil Report&nbsp; </label>
                   </div>
                   <button
                     pButton
@@ -195,9 +196,9 @@
             *ngFor="let cibil of coApplicantCibil; let i = index"
           >
             <div class="d-flex">
-              <h3 style="font-weight: bold; color: #29415b">
+              <h5 style="font-weight: bold; color: #29415b">
                 Co-Applicant Details
-              </h3>
+              </h5>
             </div>
             <div class="col-md-4 mt-2">
               <div>
@@ -294,7 +295,7 @@
             <div class="col-md-4 mt-2">
               <div>
                 <div class="my-1">
-                  <label class="text-success">Cibil Report </label>
+                  <label class="">Cibil Report </label>
                 </div>
                 <div class="d-flex">
                   <button
@@ -369,9 +370,9 @@
           <div>
             <div class="row">
               <div class="p-3">
-                <h3 style="font-weight: bold; color: #29415b">
+                <h5 style="font-weight: bold; color: #29415b">
                   Proprietor KYCs
-                </h3>
+                </h5>
               </div>
               <div class="col-md-4 mt-2">
                 <div>
@@ -431,7 +432,7 @@
               <div class="col-md-3 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success">Pan Card&nbsp; </label>
+                    <label class="">Pan Card&nbsp; </label>
                   </div>
                   <button
                     pButton
@@ -476,7 +477,7 @@
               <div class="col-md-3 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success">Aadhar Card&nbsp; </label>
+                    <label class="">Aadhar Card&nbsp; </label>
                   </div>
                   <button
                     pButton
@@ -521,7 +522,7 @@
               <div class="col-md-3 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success">Applicant Photo&nbsp; </label>
+                    <label class="">Applicant Photo&nbsp; </label>
                   </div>
                   <button
                     pButton
@@ -566,7 +567,7 @@
               <div class="col-md-3 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success">Voter Id&nbsp; </label>
+                    <label class="">Voter Id&nbsp; </label>
                   </div>
                   <button
                     pButton
@@ -644,7 +645,7 @@
                 <div class="col-md-3 mt-2">
                   <div>
                     <div class="my-1">
-                      <label class="text-success">Attachments</label>
+                      <label class="">Attachments</label>
                     </div>
                     <div class="d-flex">
                       <button
@@ -711,9 +712,9 @@
             </div>
             <div class="row">
               <div class="p-3">
-                <h3 style="font-weight: bold; color: #29415b">
+                <h5 style="font-weight: bold; color: #29415b">
                   Co-Applicant KYCs
-                </h3>
+                </h5>
               </div>
               <div class="col-md-4 mt-2">
                 <div>
@@ -753,9 +754,7 @@
               <div class="col-md-3 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success"
-                      >Co-Applicant Photo&nbsp;
-                    </label>
+                    <label class="">Co-Applicant Photo&nbsp; </label>
                   </div>
                   <button
                     pButton
@@ -800,9 +799,7 @@
               <div class="col-md-3 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success"
-                      >Co-Applicant Pan Card&nbsp;
-                    </label>
+                    <label class="">Co-Applicant Pan Card&nbsp; </label>
                   </div>
                   <button
                     pButton
@@ -847,9 +844,7 @@
               <div class="col-md-3 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success"
-                      >Co-Applicant Aadhar Card&nbsp;
-                    </label>
+                    <label class="">Co-Applicant Aadhar Card&nbsp; </label>
                   </div>
                   <button
                     pButton
@@ -894,9 +889,7 @@
               <div class="col-md-3 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success"
-                      >Co-Applicant Voter Id&nbsp;
-                    </label>
+                    <label class="">Co-Applicant Voter Id&nbsp; </label>
                   </div>
                   <button
                     pButton
@@ -977,7 +970,7 @@
                 <div class="col-md-3 mt-2">
                   <div>
                     <div class="my-1">
-                      <label class="text-success">Attachments</label>
+                      <label class="">Attachments</label>
                     </div>
                     <div class="d-flex">
                       <button
@@ -1069,7 +1062,7 @@
               <div class="col-md-4 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success"> GST Certificate&nbsp; </label>
+                    <label class=""> GST Certificate&nbsp; </label>
                   </div>
                   <button
                     pButton
@@ -1114,9 +1107,7 @@
               <div class="col-md-4 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success">
-                      Labour / Trade License &nbsp;
-                    </label>
+                    <label class=""> Labour / Trade License &nbsp; </label>
                   </div>
                   <button
                     pButton
@@ -1161,7 +1152,7 @@
               <div class="col-md-4 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success">VAT / TIN / TOT&nbsp; </label>
+                    <label class="">VAT / TIN / TOT&nbsp; </label>
                   </div>
                   <button
                     pButton
@@ -1206,9 +1197,7 @@
               <div class="col-md-4 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success">
-                      MSME / UDYAM Certificate&nbsp;
-                    </label>
+                    <label class=""> MSME / UDYAM Certificate&nbsp; </label>
                   </div>
                   <button
                     pButton
@@ -1284,9 +1273,9 @@
               *ngFor="let kycs of partnerCibil; let i = index"
             >
               <div class="d-flex">
-                <h3 style="font-weight: bold; color: #29415b">
+                <h5 style="font-weight: bold; color: #29415b">
                   Partner-{{ i + 1 }} Cibil
-                </h3>
+                </h5>
                 <button
                   pButton
                   pRipple
@@ -1393,7 +1382,7 @@
               <div class="col-md-3 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success">Cibil Report </label>
+                    <label class="">Cibil Report </label>
                   </div>
                   <div class="d-flex">
                     <button
@@ -1477,9 +1466,9 @@
               *ngFor="let kycs of partnerKycs; let i = index"
             >
               <div class="d-flex">
-                <h3 style="font-weight: bold; color: #29415b">
+                <h5 style="font-weight: bold; color: #29415b">
                   Partner-{{ i + 1 }} KYC
-                </h3>
+                </h5>
                 <button
                   pButton
                   pRipple
@@ -1564,7 +1553,7 @@
               <div class="col-md-3 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success">PanCard</label>
+                    <label class="">PanCard</label>
                   </div>
                   <div class="d-flex">
                     <button
@@ -1618,7 +1607,7 @@
               <div class="col-md-3 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success">Aadhar Card</label>
+                    <label class="">Aadhar Card</label>
                   </div>
                   <div class="d-flex">
                     <button
@@ -1673,7 +1662,7 @@
               <div class="col-md-3 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success">Partner Photo</label>
+                    <label class="">Partner Photo</label>
                   </div>
                   <div class="d-flex">
                     <button
@@ -1727,7 +1716,7 @@
               <div class="col-md-3 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success"> Voter Id</label>
+                    <label class=""> Voter Id</label>
                   </div>
                   <div class="d-flex">
                     <button
@@ -1797,7 +1786,7 @@
               <div class="col-md-3 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success">Attachments</label>
+                    <label class="">Attachments</label>
                   </div>
                   <div class="d-flex">
                     <button
@@ -1874,7 +1863,7 @@
               <div class="col-md-3 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success">Attachments</label>
+                    <label class="">Attachments</label>
                   </div>
                   <div class="d-flex">
                     <button
@@ -1973,7 +1962,7 @@
               <div class="col-md-4 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success">Attachment</label>
+                    <label class="">Attachment</label>
                   </div>
                   <div class="d-flex">
                     <button
@@ -2025,7 +2014,7 @@
               <div class="col-md-4 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success">
+                    <label class="">
                       Firm Registration Certificate &nbsp;
                     </label>
                   </div>
@@ -2076,7 +2065,7 @@
               <div class="col-md-4 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success"> Partnership Deed&nbsp; </label>
+                    <label class=""> Partnership Deed&nbsp; </label>
                   </div>
                   <button
                     pButton
@@ -2121,7 +2110,7 @@
               <div class="col-md-4 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success">GST Certificate&nbsp; </label>
+                    <label class="">GST Certificate&nbsp; </label>
                   </div>
                   <button
                     pButton
@@ -2166,9 +2155,7 @@
               <div class="col-md-4 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success">
-                      MSME / UDYAM Certificate&nbsp;
-                    </label>
+                    <label class=""> MSME / UDYAM Certificate&nbsp; </label>
                   </div>
                   <button
                     pButton
@@ -2244,9 +2231,9 @@
               *ngFor="let kycs of directorCibil; let i = index"
             >
               <div class="d-flex">
-                <h3 style="font-weight: bold; color: #29415b">
+                <h5 style="font-weight: bold; color: #29415b">
                   Director-{{ i + 1 }} Cibil
-                </h3>
+                </h5>
                 <button
                   pButton
                   pRipple
@@ -2353,7 +2340,7 @@
               <div class="col-md-3 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success">Cibil Report </label>
+                    <label class="">Cibil Report </label>
                   </div>
                   <div class="d-flex">
                     <button
@@ -2438,9 +2425,9 @@
               *ngFor="let kycs of directorsKycs; let i = index"
             >
               <div class="d-flex">
-                <h3 style="font-weight: bold; color: #29415b">
+                <h5 style="font-weight: bold; color: #29415b">
                   Director-{{ i + 1 }} KYC
-                </h3>
+                </h5>
                 <button
                   pButton
                   pRipple
@@ -2525,7 +2512,7 @@
               <div class="col-md-3 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success">PanCard</label>
+                    <label class="">PanCard</label>
                   </div>
                   <div class="d-flex">
                     <button
@@ -2580,7 +2567,7 @@
               <div class="col-md-3 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success">Aadhar Card</label>
+                    <label class="">Aadhar Card</label>
                   </div>
                   <div class="d-flex">
                     <button
@@ -2635,7 +2622,7 @@
               <div class="col-md-3 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success">Director Photo</label>
+                    <label class="">Director Photo</label>
                   </div>
                   <div class="d-flex">
                     <button
@@ -2689,7 +2676,7 @@
               <div class="col-md-3 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success"> Voter Id</label>
+                    <label class=""> Voter Id</label>
                   </div>
                   <div class="d-flex">
                     <button
@@ -2760,7 +2747,7 @@
               <div class="col-md-3 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success">Attachments</label>
+                    <label class="">Attachments</label>
                   </div>
                   <div class="d-flex">
                     <button
@@ -2837,7 +2824,7 @@
               <div class="col-md-3 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success">Attachments</label>
+                    <label class="">Attachments</label>
                   </div>
                   <div class="d-flex">
                     <button
@@ -2937,7 +2924,7 @@
               <div class="col-md-4 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success">Attachment</label>
+                    <label class="">Attachment</label>
                   </div>
                   <div class="d-flex">
                     <button
@@ -2989,9 +2976,7 @@
               <div class="col-md-4 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success">
-                      Incorporation Certificate &nbsp;
-                    </label>
+                    <label class=""> Incorporation Certificate &nbsp; </label>
                   </div>
                   <button
                     pButton
@@ -3036,7 +3021,7 @@
               <div class="col-md-4 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success"> MOA and AOA&nbsp; </label>
+                    <label class=""> MOA and AOA&nbsp; </label>
                   </div>
                   <button
                     pButton
@@ -3081,7 +3066,7 @@
               <div class="col-md-4 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success">GST Certificate&nbsp; </label>
+                    <label class="">GST Certificate&nbsp; </label>
                   </div>
                   <button
                     pButton
@@ -3126,9 +3111,7 @@
               <div class="col-md-4 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success">
-                      MSME / Udyam Certificate&nbsp;
-                    </label>
+                    <label class=""> MSME / Udyam Certificate&nbsp; </label>
                   </div>
                   <button
                     pButton
@@ -3177,9 +3160,7 @@
               <div class="col-md-4 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="text-success">
-                      Share holding pattern &nbsp;
-                    </label>
+                    <label class=""> Share holding pattern &nbsp; </label>
                   </div>
                   <button
                     pButton
@@ -3239,7 +3220,7 @@
       <div *ngIf="activeItem.name == 'bankStatements'">
         <div>
           <div class="">
-            <h3 style="font-weight: bold; color: #29415b">Current Accounts</h3>
+            <h5 style="font-weight: bold; color: #29415b">Current Accounts</h5>
           </div>
           <div class="my-1 text-end">
             <button
@@ -3277,13 +3258,33 @@
                 <div class="my-1">
                   <label>From&nbsp; </label>
                 </div>
-                <p-calendar
+                <!-- <p-calendar
                   placeholder="Select From Date"
                   appendTo="body"
                   [showIcon]="true"
                   [(ngModel)]="statements['from']"
                   [showButtonBar]="true"
-                ></p-calendar>
+                ></p-calendar> -->
+                <div class="custom-calendar-wrapper w-100">
+                  <p-calendar
+                    #calendar
+                    [(ngModel)]="statements['from']"
+                    placeholder="Select From Date"
+                    [showIcon]="false"
+                    appendTo="body"
+                    dateFormat="yy-mm-dd"
+                    [showButtonBar]="true"
+                    styleClass=" w-100"
+                  ></p-calendar>
+
+                  <!-- Custom Calendar Image Icon -->
+                  <img
+                    src="../../../../assets/images/icons/calendar.svg"
+                    alt="Calendar Icon"
+                    class="calendar-custom-img"
+                    (click)="calendar.toggle()"
+                  />
+                </div>
               </div>
             </div>
             <div class="col-md-3 mt-2">
@@ -3291,19 +3292,39 @@
                 <div class="my-1">
                   <label>To&nbsp; </label>
                 </div>
-                <p-calendar
+                <!-- <p-calendar
                   [(ngModel)]="statements['to']"
                   appendTo="body"
                   placeholder="Select To Date"
                   [showIcon]="true"
                   [showButtonBar]="true"
-                ></p-calendar>
+                ></p-calendar> -->
+                <div class="custom-calendar-wrapper w-100">
+                  <p-calendar
+                    #calendar
+                    [(ngModel)]="statements['to']"
+                    placeholder="Select To Date"
+                    [showIcon]="false"
+                    appendTo="body"
+                    dateFormat="yy-mm-dd"
+                    [showButtonBar]="true"
+                    styleClass=" w-100"
+                  ></p-calendar>
+
+                  <!-- Custom Calendar Image Icon -->
+                  <img
+                    src="../../../../assets/images/icons/calendar.svg"
+                    alt="Calendar Icon"
+                    class="calendar-custom-img"
+                    (click)="calendar.toggle()"
+                  />
+                </div>
               </div>
             </div>
             <div class="col-md-3 mt-2">
               <div>
                 <div class="my-1">
-                  <label class="text-success">Attachments</label>
+                  <label class="">Attachments</label>
                 </div>
                 <div class="d-flex">
                   <button
@@ -3376,7 +3397,7 @@
         </div>
         <div>
           <div class="mt-4">
-            <h3 style="font-weight: bold; color: #29415b">OD Accounts</h3>
+            <h5 style="font-weight: bold; color: #29415b">OD Accounts</h5>
           </div>
           <div class="my-1 text-end">
             <button
@@ -3414,13 +3435,33 @@
                 <div class="my-1">
                   <label>From&nbsp; </label>
                 </div>
-                <p-calendar
+                <!-- <p-calendar
                   placeholder="Select From Date"
                   appendTo="body"
                   [showIcon]="true"
                   [(ngModel)]="statements['from']"
                   [showButtonBar]="true"
-                ></p-calendar>
+                ></p-calendar> -->
+                <div class="custom-calendar-wrapper w-100">
+                  <p-calendar
+                    #calendar
+                    [(ngModel)]="statements['from']"
+                    placeholder="Select From Date"
+                    [showIcon]="false"
+                    appendTo="body"
+                    dateFormat="yy-mm-dd"
+                    [showButtonBar]="true"
+                    styleClass=" w-100"
+                  ></p-calendar>
+
+                  <!-- Custom Calendar Image Icon -->
+                  <img
+                    src="../../../../assets/images/icons/calendar.svg"
+                    alt="Calendar Icon"
+                    class="calendar-custom-img"
+                    (click)="calendar.toggle()"
+                  />
+                </div>
               </div>
             </div>
             <div class="col-md-3 mt-2">
@@ -3428,19 +3469,39 @@
                 <div class="my-1">
                   <label>To&nbsp; </label>
                 </div>
-                <p-calendar
+                <!-- <p-calendar
                   [(ngModel)]="statements['to']"
                   appendTo="body"
                   placeholder="Select To Date"
                   [showIcon]="true"
                   [showButtonBar]="true"
-                ></p-calendar>
+                ></p-calendar> -->
+                <div class="custom-calendar-wrapper w-100">
+                  <p-calendar
+                    #calendar
+                    [(ngModel)]="statements['to']"
+                    placeholder="Select To Date"
+                    [showIcon]="false"
+                    appendTo="body"
+                    dateFormat="yy-mm-dd"
+                    [showButtonBar]="true"
+                    styleClass=" w-100"
+                  ></p-calendar>
+
+                  <!-- Custom Calendar Image Icon -->
+                  <img
+                    src="../../../../assets/images/icons/calendar.svg"
+                    alt="Calendar Icon"
+                    class="calendar-custom-img"
+                    (click)="calendar.toggle()"
+                  />
+                </div>
               </div>
             </div>
             <div class="col-md-3 mt-2">
               <div>
                 <div class="my-1">
-                  <label class="text-success">Attachments</label>
+                  <label class="">Attachments</label>
                 </div>
                 <div class="d-flex">
                   <button
@@ -3512,7 +3573,7 @@
             <div class="col-md-3 mt-2">
               <div>
                 <div class="my-1">
-                  <label class="text-success">OD Sanction letter</label>
+                  <label class="">OD Sanction letter</label>
                 </div>
                 <div class="d-flex">
                   <button
@@ -3614,7 +3675,7 @@
             <div class="col-md-3 mt-2">
               <div>
                 <div class="my-1">
-                  <label class="text-success">Attachments</label>
+                  <label class="">Attachments</label>
                 </div>
                 <div class="d-flex">
                   <button
@@ -3685,7 +3746,7 @@
             <div class="col-md-3 mt-2">
               <div>
                 <div class="my-1">
-                  <label class="text-success">Attachments</label>
+                  <label class="">Attachments</label>
                 </div>
                 <div class="d-flex">
                   <button
@@ -3787,13 +3848,33 @@
                 <div class="my-1">
                   <label>Filing Period&nbsp; </label>
                 </div>
-                <p-calendar
+                <!-- <p-calendar
                   placeholder="Select Filing Period"
                   appendTo="body"
                   [showIcon]="true"
                   [(ngModel)]="gstData['filingPeriod']"
                   [showButtonBar]="true"
-                ></p-calendar>
+                ></p-calendar> -->
+                 <div class="custom-calendar-wrapper w-100">
+                            <p-calendar
+                              #calendar
+                               [(ngModel)]="gstData['filingPeriod']"
+                              placeholder="Select Filing Period"
+                              [showIcon]="false"
+                              appendTo="body"
+                              dateFormat="yy-mm-dd"
+                              [showButtonBar]="true"
+                              styleClass=" w-100"
+                            ></p-calendar>
+
+                            <!-- Custom Calendar Image Icon -->
+                            <img
+                              src="../../../../assets/images/icons/calendar.svg"
+                              alt="Calendar Icon"
+                              class="calendar-custom-img"
+                              (click)="calendar.toggle()"
+                            />
+                          </div>
               </div>
             </div>
             <div class="col-md-3 mt-2">
@@ -3816,7 +3897,7 @@
             <div class="col-md-3 mt-2">
               <div>
                 <div class="my-1">
-                  <label class="text-success">GSTR-3B Attachments</label>
+                  <label class="">GSTR-3B Attachments</label>
                 </div>
                 <div class="d-flex">
                   <button
@@ -3970,13 +4051,33 @@
                   <label>EMI Closing Date&nbsp; </label>
                 </div>
                 <div class="d-flex">
-                  <p-calendar
+                  <!-- <p-calendar
                     placeholder="Select EMI Closing Date"
                     appendTo="body"
                     [showIcon]="true"
                     [(ngModel)]="loans['emiClosingDate']"
                     [showButtonBar]="true"
-                  ></p-calendar>
+                  ></p-calendar> -->
+                  <div class="custom-calendar-wrapper w-100">
+                            <p-calendar
+                              #calendar
+                              [(ngModel)]="loans['emiClosingDate']"
+                              placeholder="Select EMI Closing Date"
+                              [showIcon]="false"
+                              appendTo="body"
+                              dateFormat="yy-mm-dd"
+                              [showButtonBar]="true"
+                              styleClass=" w-100"
+                            ></p-calendar>
+
+                            <!-- Custom Calendar Image Icon -->
+                            <img
+                              src="../../../../assets/images/icons/calendar.svg"
+                              alt="Calendar Icon"
+                              class="calendar-custom-img"
+                              (click)="calendar.toggle()"
+                            />
+                          </div>
                   <button
                     pButton
                     pRipple
@@ -4021,7 +4122,7 @@
           <div class="col-md-3 mt-2">
             <div>
               <div class="my-1">
-                <label class="text-success">Residence Proof</label>
+                <label class="">Residence Proof</label>
               </div>
               <div class="d-flex">
                 <button
@@ -4074,7 +4175,9 @@
               <i class="pi pi-plus"></i>&nbsp;Add Additional Documents
             </button>
           </div>
-          <h3 style="font-weight: bold; color: #29415b">Other Documents</h3>
+          <h5 class="mt-4" style="font-weight: bold; color: #29415b">
+            Other Documents
+          </h5>
           <div
             class="row"
             *ngFor="let attachments of otherAttachments; let i = index"
@@ -4098,7 +4201,7 @@
             <div class="col-md-3 mt-2">
               <div>
                 <div class="my-1">
-                  <label class="text-success">Attachments</label>
+                  <label class="">Attachments</label>
                 </div>
                 <div class="d-flex">
                   <button

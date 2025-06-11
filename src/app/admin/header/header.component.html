@@ -1,4 +1,4 @@
-<div class="card p-2">
+<div class="card p-2 px-3">
   <div class="d-flex justify-content-between flex-wrap align-items-center">
     <!-- Centered logo area (if used) -->
     <div class="w-100 d-flex justify-content-center mb-2 desktop-only">
@@ -11,16 +11,44 @@
     </div>
 
     <!-- Searchbox -->
-    <div
-      class="searchbox d-flex align-items-center mb-2"
-      *ngIf="userDetails?.userType && userDetails.userType !== '3'"
-    >
-      <div class="input-group custom-search" style="width: 200px">
+    <!-- <div class="searchbox d-flex align-ite ms-center mb-2">
+      <div
+        class="input-group custom-search"
+        style="width: 200px"
+        *ngIf="userDetails?.userType && userDetails.userType !== '3'"
+      >
         <span class="input-group-text searchbtn">
           <img
             src="../../../assets/images/icons/search.svg"
             alt="Search"
             style="width: 14px; height: 14px"
+            onclick="filterWithBusinessName()"
+          />
+        </span>
+        <input
+          type="text"
+          class="form-control small-input"
+          placeholder="Find Something"
+          aria-label="Search"
+          [(ngModel)]="businessNameToSearch"
+          (keyup.enter)="filterWithBusinessName()"
+        />
+      </div>
+    </div> -->
+    <div class="searchbox d-flex align-items-center mb-2">
+      <div
+        class="input-group custom-search"
+        style="width: 200px"
+        *ngIf="userDetails?.userType && userDetails.userType !== '3'"
+      >
+        <span
+          class="input-group-text searchbtn"
+          (click)="filterWithBusinessName()"
+        >
+          <img
+            src="../../../assets/images/icons/search.svg"
+            alt="Search"
+            style="width: 14px; height: 14px; cursor: pointer"
           />
         </span>
         <input
@@ -112,11 +140,11 @@
       (click)="showSidebarMenu()"
     >
       <!-- <i class="pi pi-bars"></i> -->
-        <img
-    src="../../../assets/images/icons/menubar.svg"
-    alt="Menu"
-    style="width: 26px; height: 26px"
-  />
+      <img
+        src="../../../assets/images/icons/menubar.svg"
+        alt="Menu"
+        style="width: 26px; height: 26px"
+      />
     </div>
   </div>
 </div>

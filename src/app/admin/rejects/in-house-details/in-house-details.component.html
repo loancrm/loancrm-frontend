@@ -1,4 +1,7 @@
 <div>
+  <div class="bread-crumb m-2">
+    <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
+  </div>
   <div class="p-1 m-2" *ngIf="leads">
     <div class="d-flex justify-content-between">
       <div
@@ -21,9 +24,6 @@
         }}</span>
       </div>
     </div>
-  </div>
-  <div class="bread-crumb m-2">
-    <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
   </div>
 </div>
 <div class="container-fluid m-2">

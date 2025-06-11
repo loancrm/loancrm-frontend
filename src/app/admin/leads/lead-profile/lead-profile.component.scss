@@ -113,9 +113,9 @@
 ::ng-deep .bread-crumb .pi-home {
   color: #7a86b6 !important;
 }
-.card {
-  // box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
+// .card {
+//   // box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+// }
 
 ::ng-deep .custom-timeline .p-timeline-event-opposite {
   text-align: right;
@@ -126,7 +126,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #29415b;
+  // background-color: #ee7846;
   border-radius: 50%;
   width: 2.5rem;
   height: 2.5rem;
@@ -135,7 +135,7 @@
 
 ::ng-deep .custom-marker i {
   font-size: 1.2rem;
-  color: #fff;
+  color: #ee7846;
 }
 
 small {
@@ -298,5 +298,18 @@ small {
 //   font-size: 25px;
 // }
 .title-text {
+  font-size: 14px !important;
+}
+.tab-icon {
+  filter: brightness(0) invert(1);
+}
+.text-warning {
+  color: #bb5d5e !important;
+}
+// .timeline-icon {
+//   filter: brightness(0) invert(1);
+// }
+
+.fw-bold{
   font-size: 14px !important;
 }

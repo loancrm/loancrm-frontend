@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class ServiceMeta {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getJSON(path: any): Observable<any> {
     return this.http.get(path);

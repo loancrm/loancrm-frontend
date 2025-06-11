@@ -51,28 +51,10 @@ export class SidebarMenuComponent implements OnChanges {
   isMenuCollapsed = false;
   isSidebarVisible = true;
   businessNameToSearch: any;
- searchFilter: any = {};
+  searchFilter: any = {};
   currentTableEvent: any;
   loading: any;
-  menuItems = [
-    { label: 'Home', icon: '../../../assets/images/icons/home.svg', route: 'dashboard' },
-    { label: 'Leads', icon: '../../../assets/images/icons/leads.svg', route: 'leads' },
-    { label: 'Callbacks', icon: '../../../assets/images/icons/callbacks.svg', route: 'callbacks' },
-    { label: 'Follow Ups', icon: '../../../assets/images/icons/followups.svg', route: 'followups' },
-    { label: 'Files', icon: '../../../assets/images/icons/files.svg', route: 'files' },
-    { label: 'Credit Evaluation', icon: '../../../assets/images/icons/credit.svg', route: 'credit' },
-    { label: 'Logins', icon: '../../../assets/images/icons/logins.svg', route: 'logins' },
-    { label: 'File In Process', icon: '../../../assets/images/icons/filesinprocess.svg', route: 'filesinprocess' },
-    { label: 'Sanctions', icon: '../../../assets/images/icons/sanctions.svg', route: 'approvals' },
-    { label: 'Disbursals', icon: '../../../assets/images/icons/disbursal.svg', route: 'disbursals' },
-    { label: 'Rejects', icon: '../../../assets/images/icons/rejects.svg', route: 'rejects' },
-    { label: 'Team', icon: '../../../assets/images/icons/team.svg', route: 'team' },
-    { label: 'Lenders', icon: '../../../assets/images/icons/lender1.svg', route: 'bankers' },
-    { label: 'Reports', icon: '../../../assets/images/icons/reports.svg', route: 'reports' },
-    { label: 'Ip Address', icon: '../../../assets/images/icons/ipaddress.svg', route: 'ipAddress' },
-    { label: 'Settings', icon: '../../../assets/images/icons/Settings.svg', route: 'settings' },
-
-  ];
+  menuItems: any = [];
 
   constructor(
     private subscriptionService: SubscriptionService,
@@ -361,6 +343,24 @@ export class SidebarMenuComponent implements OnChanges {
         thumbnail: 'settings.png',
         showOutside: false,
       },
+    ];
+    this.menuItems = [
+      { label: 'Home', icon: '../../../assets/images/icons/home.svg', route: 'dashboard', condition: true, },
+      { label: 'Leads', icon: '../../../assets/images/icons/leads.svg', route: 'leads', condition: this.capabilities.leads, },
+      { label: 'Callbacks', icon: '../../../assets/images/icons/callbacks.svg', route: 'callbacks', condition: this.capabilities.callbacks, },
+      { label: 'Follow Ups', icon: '../../../assets/images/icons/followups.svg', route: 'followups', condition: this.capabilities.followups, },
+      { label: 'Files', icon: '../../../assets/images/icons/files.svg', route: 'files', condition: this.capabilities.files, },
+      { label: 'Credit Evaluation', icon: '../../../assets/images/icons/credit.svg', route: 'credit', condition: this.capabilities.credit, },
+      { label: 'Logins', icon: '../../../assets/images/icons/logins.svg', route: 'logins', condition: this.capabilities.logins, },
+      { label: 'File In Process', icon: '../../../assets/images/icons/filesinprocess.svg', route: 'filesinprocess', condition: this.capabilities.filesinprocess, },
+      { label: 'Sanctions', icon: '../../../assets/images/icons/sanctions.svg', route: 'approvals', condition: this.capabilities.approvals, },
+      { label: 'Disbursals', icon: '../../../assets/images/icons/disbursal.svg', route: 'disbursals', condition: this.capabilities.disbursals, },
+      { label: 'Rejects', icon: '../../../assets/images/icons/rejects.svg', route: 'rejects', condition: this.capabilities.rejects, },
+      { label: 'Users', icon: '../../../assets/images/icons/team.svg', route: 'team', condition: this.capabilities.team, },
+      { label: 'Lenders', icon: '../../../assets/images/icons/lender1.svg', route: 'bankers', condition: this.capabilities.bankers, },
+      { label: 'Reports', icon: '../../../assets/images/icons/reports.svg', route: 'reports', condition: this.capabilities.reports, },
+      { label: 'Ip Address', icon: '../../../assets/images/icons/ipaddress.svg', route: 'ipAddress', condition: this.capabilities.ipAddress, },
+      { label: 'Settings', icon: '../../../assets/images/icons/Settings.svg', route: 'settings' },
     ];
   }
 

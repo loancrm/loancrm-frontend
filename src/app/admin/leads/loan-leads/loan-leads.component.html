@@ -1,26 +1,29 @@
 <div>
   <div>
-    <div class="card fixed-card">
+    <div class="p-1 m-2">
       <div class="d-flex justify-content-between">
-        <div class="pointer-cursor" (click)="goBack()">
-          <span class="back-btn-icon me-2"
-            ><i class="pi pi-arrow-left fw-bold"></i
-          ></span>
-          <span class="me-1">
+        <div
+          class="d-flex align-items-center justify-content-center pointer-cursor"
+          (click)="goBack()"
+        >
+          <span class="me-2 d-flex align-items-center">
+            <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
+          </span>
+          <!-- <span class="me-1">
             <img
               src="../../../../assets/images/menu/addlead"
               alt="Default Image"
               class=""
               style="height: 35px; width: 40px"
             />
-          </span>
+          </span> -->
           <b>
             <span class="back-btn-text text-capitalize">{{ heading }}</span>
           </b>
         </div>
       </div>
     </div>
-    <div class="bread-crumb">
+    <div class="bread-crumb m-2">
       <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
     </div>
   </div>
@@ -103,7 +106,7 @@
 <ng-container
   *ngIf="loanType == 'personalLoan' || employmentStatus == 'employed'"
 >
-  <div class="bg-color" *ngIf="!loading">
+  <div class="bg-color m-2" *ngIf="!loading">
     <p-steps
       [model]="steps"
       [(activeIndex)]="activeIndex"
@@ -132,7 +135,7 @@
               </div>
               <div class="col-md-8">
                 <div class="">
-                  <h3 style="font-weight: bold; color: #64b5f6">
+                  <h3 style="font-weight: bold; color: #29415b">
                     Contact Details
                   </h3>
                 </div>
@@ -226,7 +229,7 @@
               </div>
               <div class="col-md-8">
                 <div class="">
-                  <h3 style="font-weight: bold; color: #64b5f6">
+                  <h3 style="font-weight: bold; color: #29415b">
                     Address Details
                   </h3>
                 </div>
@@ -344,7 +347,7 @@
               </div>
               <div class="col-md-8">
                 <div class="">
-                  <h3 style="font-weight: bold; color: #64b5f6">
+                  <h3 style="font-weight: bold; color: #29415b">
                     Employment Details
                   </h3>
                 </div>
@@ -463,7 +466,7 @@
               </div>
               <div class="col-md-8">
                 <div class="">
-                  <h3 style="font-weight: bold; color: #64b5f6">
+                  <h3 style="font-weight: bold; color: #29415b">
                     Loan Requirement
                   </h3>
                 </div>
@@ -547,7 +550,7 @@
               </div>
               <div class="col-md-8">
                 <div class="">
-                  <h3 style="font-weight: bold; color: #64b5f6">
+                  <h3 style="font-weight: bold; color: #29415b">
                     Other Details
                   </h3>
                 </div>
@@ -741,6 +744,7 @@
             pButton
             type="button"
             label="Previous"
+            class="p-button-info"
             (click)="activeIndex = activeIndex - 1"
             [disabled]="activeIndex === 0"
           ></button>
@@ -748,6 +752,7 @@
             pButton
             type="button"
             label="Next"
+            class="p-button-info"
             (click)="activeIndex = activeIndex + 1"
             [disabled]="activeIndex === steps.length - 1"
           ></button>
@@ -809,7 +814,7 @@
               </div>
               <div class="col-md-8">
                 <div class="">
-                  <h3 style="font-weight: bold; color: #64b5f6">
+                  <h3 style="font-weight: bold; color: #29415b">
                     Business Details
                   </h3>
                 </div>
@@ -954,7 +959,7 @@
               </div>
               <div class="col-md-8">
                 <div class="">
-                  <h3 style="font-weight: bold; color: #64b5f6">
+                  <h3 style="font-weight: bold; color: #29415b">
                     Business Address
                   </h3>
                 </div>
@@ -1071,7 +1076,7 @@
               </div>
               <div class="col-md-8">
                 <div class="">
-                  <h3 style="font-weight: bold; color: #64b5f6">
+                  <h3 style="font-weight: bold; color: #29415b">
                     Contact Details
                   </h3>
                 </div>
@@ -1165,7 +1170,7 @@
               </div>
               <div class="col-md-8">
                 <div class="">
-                  <h3 style="font-weight: bold; color: #64b5f6">
+                  <h3 style="font-weight: bold; color: #29415b">
                     Loan Requirement
                   </h3>
                 </div>
@@ -1249,7 +1254,7 @@
               </div>
               <div class="col-md-8">
                 <div class="">
-                  <h3 style="font-weight: bold; color: #64b5f6">
+                  <h3 style="font-weight: bold; color: #29415b">
                     Other Details
                   </h3>
                 </div>
@@ -1442,15 +1447,19 @@
         <div class="d-flex justify-content-between">
           <button
             pButton
+            pRipple
             type="button"
             label="Previous"
+            class="p-button-info"
             (click)="activeIndex = activeIndex - 1"
             [disabled]="activeIndex === 0"
           ></button>
           <button
             pButton
+            pRipple
             type="button"
             label="Next"
+            class="p-button-info"
             (click)="activeIndex = activeIndex + 1"
             [disabled]="activeIndex === steps.length - 1"
           ></button>

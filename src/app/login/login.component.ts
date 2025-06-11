@@ -43,14 +43,16 @@ export class LoginComponent {
     private toastService: ToastService,
     private router: Router,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) { }
   ngOnInit() {
     this.createForm();
   }
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;
   }
-  doForgotPassword() {}
+  doForgotPassword() {
+    this.router.navigate(['/user/forgot-password']);
+  }
   createForm() {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.compose([Validators.required])],

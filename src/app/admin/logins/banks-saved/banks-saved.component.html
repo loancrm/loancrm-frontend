@@ -1,4 +1,7 @@
 <div>
+  <div class="bread-crumb m-2">
+    <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
+  </div>
   <div class="p-1 m-2" *ngIf="leads">
     <div class="d-flex justify-content-between">
       <div
@@ -16,9 +19,6 @@
         </b>
       </div>
     </div>
-  </div>
-  <div class="bread-crumb m-2">
-    <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
   </div>
   <div *ngIf="loading">
     <app-preloader></app-preloader>
@@ -47,7 +47,7 @@
                 <td>{{ rowData.program }}</td>
                 <td>{{ rowData.bankName }}</td>
                 <td>
-                  <p-calendar
+                  <!-- <p-calendar
                     [(ngModel)]="rowData.loginDate"
                     [style]="{ width: '100%' }"
                     class="rounded-lg"
@@ -57,7 +57,26 @@
                     placeholder="Select Login Date"
                     autocomplete="off"
                     [showButtonBar]="true"
-                  ></p-calendar>
+                  ></p-calendar> -->
+                  <div class="custom-calendar-wrapper w-100">
+                    <p-calendar
+                      #calendar
+                      [(ngModel)]="rowData.loginDate"
+                      placeholder="Select Login Date"
+                      [showIcon]="false"
+                      appendTo="body"
+                      dateFormat="yy-mm-dd"
+                      [showButtonBar]="true"
+                      styleClass="w-100"
+                    ></p-calendar>
+
+                    <img
+                      src="../../../../assets/images/icons/calendar.svg"
+                      alt="Calendar Icon"
+                      class="calendar-custom-img"
+                      (click)="calendar.toggle()"
+                    />
+                  </div>
                 </td>
                 <td>
                   <p-dropdown

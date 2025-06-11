@@ -9,7 +9,8 @@
 }
 
 label {
-  font-weight: 600;
+  // font-weight: 600;
+  font-size: medium;
 }
 .p-button-sm {
   width: 10px;
@@ -50,7 +51,7 @@ label {
 }
 
 ::ng-deep .custom-steps .p-steps-item {
-  color: #020581;
+  color: #29415b;
   font-weight: bold;
 }
 
@@ -59,13 +60,13 @@ label {
 }
 
 ::ng-deep .custom-steps .p-steps-item .p-steps-number {
-  color: #020581;
+  color: #29415b;
   border-radius: 50%;
   padding: 5px 10px;
 }
 
 ::ng-deep .custom-steps .p-steps-item.p-highlight .p-steps-number {
-  background-color: #33009c;
+  background-color: #29415b;
   color: #fff;
 }
 
@@ -93,7 +94,8 @@ label {
 
 .field-radiobutton label {
   margin-left: 8px;
-  font-weight: 500;
+  // font-weight: 500;
+  font-size: medium;
 }
 
 @media (max-width: 768px) {
@@ -125,9 +127,9 @@ label {
   font-weight: bold !important;
 }
 
-.bg-color {
-  background: linear-gradient(#ebf4f6, #f4f7fd);
-}
+// .bg-color {
+//   background: linear-gradient(#ebf4f6, #f4f7fd);
+// }
 
 ::ng-deep .custom-steps {
   border-radius: 5px !important;
@@ -137,7 +139,7 @@ label {
 
 ::ng-deep .custom-steps .p-steps-item.p-highlight .p-steps-number {
   background-color: #f8fdcf;
-  color: #020581;
+  color: #29415b;
 }
 
 ::ng-deep .custom-steps .p-steps-item.p-disabled .p-steps-number {
@@ -161,16 +163,16 @@ label {
 }
 
 :host ::ng-deep .p-steps-item.p-highlight .p-steps-title {
-  color: #86d293;
+  color: #ee7846;
 }
 
 :host ::ng-deep .p-steps-item:not(.p-highlight) .p-steps-title {
-  color: #211c6a !important;
+  color: #29415b !important;
   font-weight: bold;
 }
 
 :host ::ng-deep .p-steps-item.p-highlight .p-menuitem-link {
-  background: #211c6a;
+  background: #29415b;
   border-color: #999999;
   box-shadow: 0 0 10px 1px rgba(48, 60, 193, 0.25);
 }
@@ -184,10 +186,10 @@ label {
     display: none !important;
   }
 }
-.lead-card {
-  background-color: #13003a;
-  color: #fff;
-}
+// .lead-card {
+//   background-color: #13003a;
+//   color: #fff;
+// }
 
 .employment-selection {
   text-align: center;
@@ -226,17 +228,17 @@ label {
 .option-card span {
   display: block;
   font-size: 16px;
-  font-weight: bold;
+  // font-weight: bold;
 }
 
 // .option-card:hover,
 .option-card.selected {
-  background: #13003a;
+  background: #29415b;
   color: white;
-  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+  // box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
 }
 
-.callback-form {
-  background-color: #13003a;
-  color: #fff;
-}
+// .callback-form {
+//   background-color: #13003a;
+//   color: #fff;
+// }

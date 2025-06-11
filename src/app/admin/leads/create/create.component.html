@@ -26,24 +26,31 @@
   <app-preloader></app-preloader>
 </div>
 <div class="bg-color" *ngIf="!loading">
-  <p-steps
-    [model]="steps"
-    [(activeIndex)]="activeIndex"
-    [readonly]="false"
-    class="customsteps"
-    styleClass="custom-steps"
-  ></p-steps>
-  <form
-    class="login-form mt-3"
-    [formGroup]="leadForm"
-    novalidate
-    (ngSubmit)="onSubmit(leadForm.value)"
-  >
-    <div class="card custom-steps-card lead-card m-2">
-      <div *ngIf="activeIndex === 0">
-        <div class="py-3 px-4">
-          <div class="row">
-            <div class="col-md-4">
+  <div class="container-fluid">
+    <div class="row g-2">
+      <div class="col-md-3">
+        <div
+          *ngFor="let step of steps; let i = index"
+          class="step-card m-2 p-3 rounded shadow-sm"
+          [ngClass]="{ 'active-step-card': activeIndex === i }"
+          (click)="activeIndex = i"
+        >
+          <h6 class="mb-0">{{ step.label }}</h6>
+        </div>
+      </div>
+
+      <div class="col-md-9">
+        <form
+          class="login-form"
+          [formGroup]="leadForm"
+          novalidate
+          (ngSubmit)="onSubmit(leadForm.value)"
+        >
+          <div class="card custom-steps-card lead-card">
+            <div *ngIf="activeIndex === 0">
+              <div class="p-2">
+                <div class="row">
+                  <!-- <div class="col-md-4">
               <img
                 src="../../../../assets/images/leads/1.jpg"
                 width="400"
@@ -51,144 +58,146 @@
                 class="icon"
                 alt="Business Details Icon"
               />
-            </div>
-            <div class="col-md-8">
-              <div class="">
-                <h3 style="font-weight: bold; color: #29415b">
-                  Business Details
-                </h3>
+            </div> -->
+                  <div class="col-md-12">
+                    <h5 style=" color: #29415b">
+                      Business Details
+                    </h5>
+                    <div class="row">
+                      <div class="col-md-4 mt-2">
+                        <div>
+                          <div class="my-1">
+                            <label
+                              >Business Name&nbsp;<span
+                                ><sup class="text-danger">*</sup></span
+                              ></label
+                            >
+                          </div>
+                          <input
+                            pInputText
+                            class="rounded-lg"
+                            type="text"
+                            formControlName="businessName"
+                            placeholder="Enter Business Name"
+                            autocomplete="off"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-4 mt-2">
+                        <div>
+                          <div class="my-1">
+                            <label
+                              >Business Entity&nbsp;<span
+                                ><sup class="text-danger">*</sup></span
+                              ></label
+                            >
+                          </div>
+                          <p-dropdown
+                            [options]="businessEntities"
+                            formControlName="businessEntity"
+                            optionLabel="displayName"
+                            optionValue="name"
+                            [showClear]="true"
+                            appendTo="body"
+                            placeholder="Select Business Entity"
+                            [dropdownIcon]="'fa fa-caret-down'"
+                            styleClass="w-100"
+                          ></p-dropdown>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mt-2">
+                        <div>
+                          <div class="my-1">
+                            <label
+                              >Business Vintage&nbsp;<span
+                                ><sup class="text-danger">*</sup></span
+                              ></label
+                            >
+                          </div>
+                          <input
+                            pInputText
+                            class="rounded-lg"
+                            type="text"
+                            formControlName="businessOperatingSince"
+                            placeholder="Enter Business Vintage"
+                            autocomplete="off"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-4 mt-2">
+                        <div>
+                          <div class="my-1">
+                            <label
+                              >Nature of Business&nbsp;
+                              <span
+                                ><sup class="text-danger">*</sup></span
+                              ></label
+                            >
+                          </div>
+                          <p-dropdown
+                            [options]="natureOfBusines"
+                            formControlName="natureOfBusiness"
+                            optionLabel="displayName"
+                            optionValue="name"
+                            [showClear]="true"
+                            appendTo="body"
+                            placeholder="Select Nature Of Business"
+                            [dropdownIcon]="'fa fa-caret-down'"
+                            styleClass="w-100"
+                          ></p-dropdown>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mt-2">
+                        <div>
+                          <div class="my-1">
+                            <label
+                              >Product &nbsp;<span
+                                ><sup class="text-danger">*</sup></span
+                              ></label
+                            >
+                          </div>
+                          <input
+                            pInputText
+                            class="rounded-lg"
+                            type="text"
+                            formControlName="product"
+                            placeholder="Enter Product Name"
+                            autocomplete="off"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-4 mt-2">
+                        <div>
+                          <div class="my-1">
+                            <label
+                              >Business Turnover&nbsp;
+                              <span
+                                ><sup class="text-danger">*</sup></span
+                              ></label
+                            >
+                          </div>
+                          <p-dropdown
+                            [options]="businessTurnover"
+                            formControlName="businessTurnover"
+                            optionLabel="displayName"
+                            optionValue="name"
+                            [showClear]="true"
+                            appendTo="body"
+                            placeholder="Select Business Turnover"
+                            [dropdownIcon]="'fa fa-caret-down'"
+                            styleClass="w-100"
+                          ></p-dropdown>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="row mt-3">
-                <div class="col-md-4 mt-2">
-                  <div>
-                    <div class="my-1">
-                      <label
-                        >Business Name&nbsp;<span
-                          ><sup class="text-danger">*</sup></span
-                        ></label
-                      >
-                    </div>
-                    <input
-                      pInputText
-                      class="rounded-lg"
-                      type="text"
-                      formControlName="businessName"
-                      placeholder="Enter Business Name"
-                      autocomplete="off"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-4 mt-2">
-                  <div>
-                    <div class="my-1">
-                      <label
-                        >Business Entity&nbsp;<span
-                          ><sup class="text-danger">*</sup></span
-                        ></label
-                      >
-                    </div>
-                    <p-dropdown
-                      [options]="businessEntities"
-                      formControlName="businessEntity"
-                      optionLabel="displayName"
-                      optionValue="name"
-                      [showClear]="true"
-                      appendTo="body"
-                      placeholder="Select Business Entity"
-                      [dropdownIcon]="'fa fa-caret-down'"
-                      styleClass="w-100"
-                    ></p-dropdown>
-                  </div>
-                </div>
-                <div class="col-md-4 mt-2">
-                  <div>
-                    <div class="my-1">
-                      <label
-                        >Business Vintage&nbsp;<span
-                          ><sup class="text-danger">*</sup></span
-                        ></label
-                      >
-                    </div>
-                    <input
-                      pInputText
-                      class="rounded-lg"
-                      type="text"
-                      formControlName="businessOperatingSince"
-                      placeholder="Enter Business Vintage"
-                      autocomplete="off"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-4 mt-2">
-                  <div>
-                    <div class="my-1">
-                      <label
-                        >Nature of Business&nbsp;
-                        <span><sup class="text-danger">*</sup></span></label
-                      >
-                    </div>
-                    <p-dropdown
-                      [options]="natureOfBusines"
-                      formControlName="natureOfBusiness"
-                      optionLabel="displayName"
-                      optionValue="name"
-                      [showClear]="true"
-                      appendTo="body"
-                      placeholder="Select Nature Of Business"
-                      [dropdownIcon]="'fa fa-caret-down'"
-                      styleClass="w-100"
-                    ></p-dropdown>
-                  </div>
-                </div>
-                <div class="col-md-4 mt-2">
-                  <div>
-                    <div class="my-1">
-                      <label
-                        >Product &nbsp;<span
-                          ><sup class="text-danger">*</sup></span
-                        ></label
-                      >
-                    </div>
-                    <input
-                      pInputText
-                      class="rounded-lg"
-                      type="text"
-                      formControlName="product"
-                      placeholder="Enter Product Name"
-                      autocomplete="off"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-4 mt-2">
-                  <div>
-                    <div class="my-1">
-                      <label
-                        >Business Turnover&nbsp;
-                        <span><sup class="text-danger">*</sup></span></label
-                      >
-                    </div>
-                    <p-dropdown
-                      [options]="businessTurnover"
-                      formControlName="businessTurnover"
-                      optionLabel="displayName"
-                      optionValue="name"
-                      [showClear]="true"
-                      appendTo="body"
-                      placeholder="Select Business Turnover"
-                      [dropdownIcon]="'fa fa-caret-down'"
-                      styleClass="w-100"
-                    ></p-dropdown>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div *ngIf="activeIndex === 1">
-        <div class="py-3 px-4">
-          <div class="row">
-            <div class="col-md-4">
+            <div *ngIf="activeIndex === 1">
+              <div class="p-2">
+                <div class="row">
+                  <!-- <div class="col-md-4">
               <img
                 src="../../../../assets/images/leads/2.jpg"
                 width="400"
@@ -196,116 +205,116 @@
                 class="icon"
                 alt="Business Address Icon"
               />
-            </div>
-            <div class="col-md-8">
-              <div class="">
-                <h3 style="font-weight: bold; color: #29415b">
-                  Business Address
-                </h3>
+            </div> -->
+                  <div class="col-md-12">
+                    <div class="">
+                      <h5 style=" color: #29415b">
+                        Business Address
+                      </h5>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4 mt-2">
+                        <div>
+                          <div class="my-1">
+                            <label>Address Line 1&nbsp;</label>
+                          </div>
+                          <input
+                            pInputText
+                            class="rounded-lg"
+                            type="text"
+                            placeholder="Enter Address Line 1"
+                            formControlName="addressLine1"
+                            autocomplete="off"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-4 mt-2">
+                        <div>
+                          <div class="my-1">
+                            <label>Address Line 2</label>
+                          </div>
+                          <input
+                            pInputText
+                            class="rounded-lg"
+                            type="text"
+                            placeholder="Enter Address Line 2"
+                            formControlName="addressLine2"
+                            autocomplete="off"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-4 mt-2">
+                        <div>
+                          <div class="my-1">
+                            <label
+                              >City&nbsp;<span
+                                ><sup class="text-danger">*</sup></span
+                              ></label
+                            >
+                          </div>
+                          <input
+                            pInputText
+                            class="rounded-lg"
+                            type="text"
+                            placeholder="Enter City"
+                            formControlName="city"
+                            autocomplete="off"
+                            list="citySuggestions"
+                          />
+                          <datalist name="citySuggestions" id="citySuggestions">
+                            <option value="Hyderabad">Hyderabad</option>
+                            <option value="Adilabad">Adilabad</option>
+                            <option value="Nizamabad">Nizamabad</option>
+                            <option value="Karimnagar">Karimnagar</option>
+                            <option value="Warangal">Warangal</option>
+                            <option value="Guntur">Guntur</option>
+                            <option value="Vizag">Vizag</option>
+                          </datalist>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mt-2">
+                        <div>
+                          <div class="my-1">
+                            <label>State&nbsp;</label>
+                          </div>
+                          <p-dropdown
+                            [options]="stateEntities"
+                            placeholder="Select State"
+                            formControlName="state"
+                            optionLabel="displayName"
+                            optionValue="name"
+                            [showClear]="true"
+                            appendTo="body"
+                            styleClass="w-100"
+                            [dropdownIcon]="'fa fa-caret-down'"
+                          ></p-dropdown>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mt-2">
+                        <div>
+                          <div class="my-1">
+                            <label>Pincode&nbsp;</label>
+                          </div>
+                          <input
+                            pInputText
+                            class="rounded-lg"
+                            type="text"
+                            placeholder="Enter Pincode"
+                            formControlName="pincode"
+                            autocomplete="off"
+                            maxlength="6"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="row mt-3">
-                <div class="col-md-4 mt-2">
-                  <div>
-                    <div class="my-1">
-                      <label>Address Line 1&nbsp;</label>
-                    </div>
-                    <input
-                      pInputText
-                      class="rounded-lg"
-                      type="text"
-                      placeholder="Enter Address Line 1"
-                      formControlName="addressLine1"
-                      autocomplete="off"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-4 mt-2">
-                  <div>
-                    <div class="my-1">
-                      <label>Address Line 2</label>
-                    </div>
-                    <input
-                      pInputText
-                      class="rounded-lg"
-                      type="text"
-                      placeholder="Enter Address Line 2"
-                      formControlName="addressLine2"
-                      autocomplete="off"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-4 mt-2">
-                  <div>
-                    <div class="my-1">
-                      <label
-                        >City&nbsp;<span
-                          ><sup class="text-danger">*</sup></span
-                        ></label
-                      >
-                    </div>
-                    <input
-                      pInputText
-                      class="rounded-lg"
-                      type="text"
-                      placeholder="Enter City"
-                      formControlName="city"
-                      autocomplete="off"
-                      list="citySuggestions"
-                    />
-                    <datalist name="citySuggestions" id="citySuggestions">
-                      <option value="Hyderabad">Hyderabad</option>
-                      <option value="Adilabad">Adilabad</option>
-                      <option value="Nizamabad">Nizamabad</option>
-                      <option value="Karimnagar">Karimnagar</option>
-                      <option value="Warangal">Warangal</option>
-                      <option value="Guntur">Guntur</option>
-                      <option value="Vizag">Vizag</option>
-                    </datalist>
-                  </div>
-                </div>
-                <div class="col-md-4 mt-2">
-                  <div>
-                    <div class="my-1">
-                      <label>State&nbsp;</label>
-                    </div>
-                    <p-dropdown
-                      [options]="stateEntities"
-                      placeholder="Select State"
-                      formControlName="state"
-                      optionLabel="displayName"
-                      optionValue="name"
-                      [showClear]="true"
-                      appendTo="body"
-                      styleClass="w-100"
-                      [dropdownIcon]="'fa fa-caret-down'"
-                    ></p-dropdown>
-                  </div>
-                </div>
-                <div class="col-md-4 mt-2">
-                  <div>
-                    <div class="my-1">
-                      <label>Pincode&nbsp;</label>
-                    </div>
-                    <input
-                      pInputText
-                      class="rounded-lg"
-                      type="text"
-                      placeholder="Enter Pincode"
-                      formControlName="pincode"
-                      autocomplete="off"
-                      maxlength="6"
-                    />
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div *ngIf="activeIndex === 2">
-        <div class="py-3 px-4">
-          <div class="row">
-            <div class="col-md-4">
+            <div *ngIf="activeIndex === 2">
+              <div class="p-2">
+                <div class="row">
+                  <!-- <div class="col-md-4">
               <img
                 src="../../../../assets/images/leads/3.jpg"
                 width="400"
@@ -313,93 +322,93 @@
                 class="icon"
                 alt="Contact Details Icon"
               />
-            </div>
-            <div class="col-md-8">
-              <div class="">
-                <h3 style="font-weight: bold; color: #29415b">
-                  Contact Details
-                </h3>
+            </div> -->
+                  <div class="col-md-12">
+                    <div class="">
+                      <h5 style=" color: #29415b">
+                        Contact Details
+                      </h5>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4 mt-2">
+                        <div>
+                          <div class="my-1">
+                            <label
+                              >Contact Person Name&nbsp;<span
+                                ><sup class="text-danger">*</sup></span
+                              ></label
+                            >
+                          </div>
+                          <input
+                            pInputText
+                            class="rounded-lg"
+                            type="text"
+                            placeholder="Enter Contact Person Name"
+                            formControlName="contactPerson"
+                            autocomplete="off"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-4 mt-2">
+                        <div>
+                          <div class="my-1">
+                            <label
+                              >Phone&nbsp;<span
+                                ><sup class="text-danger">*</sup></span
+                              ></label
+                            >
+                          </div>
+                          <input
+                            pInputText
+                            class="rounded-lg"
+                            type="text"
+                            placeholder="Enter Phone"
+                            formControlName="primaryPhone"
+                            autocomplete="off"
+                            maxlength="10"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-4 mt-2">
+                        <div>
+                          <div class="my-1">
+                            <label>Secondary Phone</label>
+                          </div>
+                          <input
+                            pInputText
+                            class="rounded-lg"
+                            type="text"
+                            placeholder="Enter Secondary Phone"
+                            formControlName="secondaryPhone"
+                            autocomplete="off"
+                            maxlength="10"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-4 mt-2">
+                        <div>
+                          <div class="my-1">
+                            <label>Business Email&nbsp;</label>
+                          </div>
+                          <input
+                            pInputText
+                            class="rounded-lg"
+                            type="email"
+                            placeholder="Enter Business Email"
+                            formControlName="businessEmail"
+                            autocomplete="off"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="row mt-3">
-                <div class="col-md-4 mt-2">
-                  <div>
-                    <div class="my-1">
-                      <label
-                        >Contact Person Name&nbsp;<span
-                          ><sup class="text-danger">*</sup></span
-                        ></label
-                      >
-                    </div>
-                    <input
-                      pInputText
-                      class="rounded-lg"
-                      type="text"
-                      placeholder="Enter Contact Person Name"
-                      formControlName="contactPerson"
-                      autocomplete="off"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-4 mt-2">
-                  <div>
-                    <div class="my-1">
-                      <label
-                        >Phone&nbsp;<span
-                          ><sup class="text-danger">*</sup></span
-                        ></label
-                      >
-                    </div>
-                    <input
-                      pInputText
-                      class="rounded-lg"
-                      type="text"
-                      placeholder="Enter Phone"
-                      formControlName="primaryPhone"
-                      autocomplete="off"
-                      maxlength="10"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-4 mt-2">
-                  <div>
-                    <div class="my-1">
-                      <label>Secondary Phone</label>
-                    </div>
-                    <input
-                      pInputText
-                      class="rounded-lg"
-                      type="text"
-                      placeholder="Enter Secondary Phone"
-                      formControlName="secondaryPhone"
-                      autocomplete="off"
-                      maxlength="10"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-4 mt-2">
-                  <div>
-                    <div class="my-1">
-                      <label>Business Email&nbsp;</label>
-                    </div>
-                    <input
-                      pInputText
-                      class="rounded-lg"
-                      type="email"
-                      placeholder="Enter Business Email"
-                      formControlName="businessEmail"
-                      autocomplete="off"
-                    />
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div *ngIf="activeIndex === 3">
-        <div class="py-3 px-4">
-          <div class="row">
-            <div class="col-md-4">
+            <div *ngIf="activeIndex === 3">
+              <div class="p-2">
+                <div class="row">
+                  <!-- <div class="col-md-4">
               <img
                 src="../../../../assets/images/leads/4.jpg"
                 width="400"
@@ -407,54 +416,54 @@
                 class="icon"
                 alt="Loan / OD Details Icon"
               />
-            </div>
-            <div class="col-md-8">
-              <div class="">
-                <h3 style="font-weight: bold; color: #29415b">
-                  Loan / OD Requirement
-                </h3>
-              </div>
-              <div class="row mt-3">
-                <div class="col-md-4 mt-2">
-                  <div>
-                    <div class="my-1">
-                      <label class="text-success">Loan Requirement</label>
+            </div> -->
+                  <div class="col-md-12">
+                    <div class="">
+                      <h5 style=" color: #29415b">
+                        Loan / OD Requirement
+                      </h5>
                     </div>
-                    <input
-                      pInputText
-                      class="rounded-lg"
-                      type="text"
-                      placeholder="Enter Loan Requirement"
-                      formControlName="loanRequirement"
-                      autocomplete="off"
-                    />
+                    <div class="row">
+                      <div class="col-md-4 mt-2">
+                        <div>
+                          <div class="my-1">
+                            <label class="text-success">Loan Requirement</label>
+                          </div>
+                          <input
+                            pInputText
+                            class="rounded-lg"
+                            type="text"
+                            placeholder="Enter Loan Requirement"
+                            formControlName="loanRequirement"
+                            autocomplete="off"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-4 mt-2">
+                        <div>
+                          <div class="my-1">
+                            <label class="text-success">OD Requirement</label>
+                          </div>
+                          <input
+                            pInputText
+                            class="rounded-lg"
+                            type="text"
+                            placeholder="Enter OD Requirement"
+                            formControlName="odRequirement"
+                            autocomplete="off"
+                          />
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div class="col-md-4 mt-2">
-                  <div>
-                    <div class="my-1">
-                      <label class="text-success">OD Requirement</label>
-                    </div>
-                    <input
-                      pInputText
-                      class="rounded-lg"
-                      type="text"
-                      placeholder="Enter OD Requirement"
-                      formControlName="odRequirement"
-                      autocomplete="off"
-                    />
-                  </div>
-                </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <div *ngIf="activeIndex === 4">
-        <div class="py-3 px-4">
-          <div class="row">
-            <div class="col-md-4">
+            <div *ngIf="activeIndex === 4">
+              <div class="p-2">
+                <div class="row">
+                  <!-- <div class="col-md-4">
               <img
                 src="../../../../assets/images/leads/5.jpg"
                 width="400"
@@ -462,255 +471,284 @@
                 class="icon"
                 alt="Other Details Icon"
               />
-            </div>
-            <div class="col-md-8">
-              <div class="">
-                <h3 style="font-weight: bold; color: #29415b">Other Details</h3>
-              </div>
-              <div class="row mt-2">
-                <div class="col-md-4 mt-2">
-                  <div>
-                    <div class="my-1">
-                      <label
-                        >Had Own House ?&nbsp;
-                        <span><sup class="text-danger">*</sup></span></label
+            </div> -->
+                  <div class="col-md-12">
+                    <div class="">
+                      <h5 style=" color: #29415b">
+                        Other Details
+                      </h5>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4 mt-2">
+                        <div>
+                          <div class="my-1">
+                            <label
+                              >Had Own House ?&nbsp;
+                              <span
+                                ><sup class="text-danger">*</sup></span
+                              ></label
+                            >
+                          </div>
+                          <p-dropdown
+                            [options]="booleanOptions"
+                            formControlName="hadOwnHouse"
+                            optionLabel="displayName"
+                            optionValue="name"
+                            [showClear]="true"
+                            appendTo="body"
+                            styleClass="w-100"
+                            placeholder="Had Own House ?"
+                            [dropdownIcon]="'fa fa-caret-down'"
+                          ></p-dropdown>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mt-2">
+                        <div>
+                          <div class="my-1">
+                            <label
+                              >Existing Loan Details &nbsp;<span
+                                ><sup class="text-danger">*</sup></span
+                              ></label
+                            >
+                          </div>
+                          <input
+                            pInputText
+                            class="rounded-lg"
+                            type="text"
+                            placeholder="Enter Existing Loan Details"
+                            formControlName="existingLoanDetails"
+                            autocomplete="off"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-4 mt-2" *ngIf="actionType == 'update'">
+                        <div>
+                          <div class="my-1">
+                            <label class="text-success">Audio Files</label>
+                          </div>
+                          <button
+                            pButton
+                            pRipple
+                            type="button"
+                            class="p-button-info me-2"
+                            (click)="uploadFiles('audioFiles', 'audio/*')"
+                          >
+                            <i class="pi pi-upload"></i>&nbsp;Upload Files
+                          </button>
+                        </div>
+                        <div
+                          *ngIf="
+                            leadData &&
+                            leadData[0]?.audioFiles &&
+                            leadData[0]?.audioFiles.length > 0
+                          "
+                          class="mt-2"
+                        >
+                          <span
+                            *ngFor="let file of leadData[0]?.audioFiles"
+                            class="file-wrapper"
+                          >
+                            <a [href]="'//' + file" target="_blank">
+                              <i
+                                [class]="getFileIcon(file.split('.').pop())"
+                                class="file-icon me-2"
+                              ></i>
+                            </a>
+                            <button
+                              pButton
+                              *ngIf="this.capabilities.delete"
+                              type="button"
+                              class="p-button-danger delete-btn p-button-sm"
+                              (click)="confirmDelete(file)"
+                            >
+                              <i class="pi pi-times"></i>
+                            </button>
+                          </span>
+                        </div>
+                      </div>
+                      <div
+                        class="col-md-4 mt-2"
+                        *ngIf="
+                          userDetails &&
+                          userDetails.userType &&
+                          userDetails.userType != '3'
+                        "
                       >
-                    </div>
-                    <p-dropdown
-                      [options]="booleanOptions"
-                      formControlName="hadOwnHouse"
-                      optionLabel="displayName"
-                      optionValue="name"
-                      [showClear]="true"
-                      appendTo="body"
-                      styleClass="w-100"
-                      placeholder="Had Own House ?"
-                      [dropdownIcon]="'fa fa-caret-down'"
-                    ></p-dropdown>
-                  </div>
-                </div>
-                <div class="col-md-4 mt-2">
-                  <div>
-                    <div class="my-1">
-                      <label
-                        >Existing Loan Details &nbsp;<span
-                          ><sup class="text-danger">*</sup></span
-                        ></label
+                        <div>
+                          <div class="my-1">
+                            <label>Lead Source&nbsp;</label>
+                          </div>
+                          <p-dropdown
+                            [options]="leadSources"
+                            formControlName="leadSource"
+                            optionLabel="name"
+                            optionValue="id"
+                            [showClear]="true"
+                            appendTo="body"
+                            styleClass="w-100"
+                            placeholder="Select Lead Source"
+                            [dropdownIcon]="'fa fa-caret-down'"
+                          ></p-dropdown>
+                        </div>
+                      </div>
+                      <div
+                        class="col-md-4 mt-2"
+                        *ngIf="
+                          userDetails &&
+                          userDetails.userType &&
+                          userDetails.userType != '3'
+                        "
                       >
-                    </div>
-                    <input
-                      pInputText
-                      class="rounded-lg"
-                      type="text"
-                      placeholder="Enter Existing Loan Details"
-                      formControlName="existingLoanDetails"
-                      autocomplete="off"
-                    />
-                  </div>
-                </div>
-                <div class="col-md-4 mt-2" *ngIf="actionType == 'update'">
-                  <div>
-                    <div class="my-1">
-                      <label class="text-success">Audio Files</label>
-                    </div>
-                    <button
-                      pButton
-                      pRipple
-                      type="button"
-                      class="p-button-info me-2"
-                      (click)="uploadFiles('audioFiles', 'audio/*')"
-                    >
-                      <i class="pi pi-upload"></i>&nbsp;Upload Files
-                    </button>
-                  </div>
-                  <div
-                    *ngIf="
-                      leadData &&
-                      leadData[0]?.audioFiles &&
-                      leadData[0]?.audioFiles.length > 0
-                    "
-                    class="mt-2"
-                  >
-                    <span
-                      *ngFor="let file of leadData[0]?.audioFiles"
-                      class="file-wrapper"
-                    >
-                      <a [href]="'//' + file" target="_blank">
-                        <i
-                          [class]="getFileIcon(file.split('.').pop())"
-                          class="file-icon me-2"
-                        ></i>
-                      </a>
-                      <button
-                        pButton
-                        *ngIf="this.capabilities.delete"
-                        type="button"
-                        class="p-button-danger delete-btn p-button-sm"
-                        (click)="confirmDelete(file)"
+                        <div>
+                          <div class="my-1">
+                            <label
+                              >Sourced By&nbsp;<span
+                                ><sup class="text-danger">*</sup></span
+                              ></label
+                            >
+                          </div>
+                          <p-dropdown
+                            [options]="leadUsers"
+                            formControlName="sourcedBy"
+                            optionLabel="name"
+                            optionValue="id"
+                            styleClass="w-100"
+                            appendTo="body"
+                            [showClear]="true"
+                            placeholder="Select Sourced By"
+                            [dropdownIcon]="'fa fa-caret-down'"
+                            [filter]="true"
+                            filterPlaceholder="Search..."
+                          ></p-dropdown>
+                        </div>
+                      </div>
+                      <div
+                        class="col-md-4 mt-2"
+                        *ngIf="
+                          userDetails &&
+                          userDetails.userType &&
+                          userDetails.userType != '3'
+                        "
                       >
-                        <i class="pi pi-times"></i>
-                      </button>
-                    </span>
-                  </div>
-                </div>
-                <div
-                  class="col-md-4 mt-2"
-                  *ngIf="
-                    userDetails &&
-                    userDetails.userType &&
-                    userDetails.userType != '3'
-                  "
-                >
-                  <div>
-                    <div class="my-1">
-                      <label>Lead Source&nbsp;</label>
-                    </div>
-                    <p-dropdown
-                      [options]="leadSources"
-                      formControlName="leadSource"
-                      optionLabel="name"
-                      optionValue="id"
-                      [showClear]="true"
-                      appendTo="body"
-                      styleClass="w-100"
-                      placeholder="Select Lead Source"
-                      [dropdownIcon]="'fa fa-caret-down'"
-                    ></p-dropdown>
-                  </div>
-                </div>
-                <div
-                  class="col-md-4 mt-2"
-                  *ngIf="
-                    userDetails &&
-                    userDetails.userType &&
-                    userDetails.userType != '3'
-                  "
-                >
-                  <div>
-                    <div class="my-1">
-                      <label
-                        >Sourced By&nbsp;<span
-                          ><sup class="text-danger">*</sup></span
-                        ></label
-                      >
-                    </div>
-                    <p-dropdown
-                      [options]="leadUsers"
-                      formControlName="sourcedBy"
-                      optionLabel="name"
-                      optionValue="id"
-                      styleClass="w-100"
-                      appendTo="body"
-                      [showClear]="true"
-                      placeholder="Select Sourced By"
-                      [dropdownIcon]="'fa fa-caret-down'"
-                      [filter]="true"
-                      filterPlaceholder="Search..."
-                    ></p-dropdown>
-                  </div>
-                </div>
-                <div
-                  class="col-md-4 mt-2"
-                  *ngIf="
-                    userDetails &&
-                    userDetails.userType &&
-                    userDetails.userType != '3'
-                  "
-                >
-                  <div>
-                    <div class="my-1">
-                      <label>Created On &nbsp;</label>
-                    </div>
-                    <p-calendar
+                        <div>
+                          <div class="my-1">
+                            <label>Created On &nbsp;</label>
+                          </div>
+                          <!-- <p-calendar
                       formControlName="createdOn"
                       placeholder="select Created on Date"
                       [showIcon]="true"
                       appendTo="body"
                       dateFormat="yy-mm-dd"
                       [showButtonBar]="true"
-                    ></p-calendar>
-                  </div>
-                </div>
-                <div class="col-md-4 mt-2">
-                  <div>
-                    <div class="my-1">
-                      <label>
-                        Called From &nbsp;<span
-                          ><sup class="text-danger">*</sup></span
-                        ></label
-                      >
+                    ></p-calendar> -->
+                          <div class="custom-calendar-wrapper w-100">
+                            <p-calendar
+                              #calendar
+                              formControlName="createdOn"
+                              placeholder="Select Created On Date"
+                              [showIcon]="false"
+                              appendTo="body"
+                              dateFormat="yy-mm-dd"
+                              [showButtonBar]="true"
+                              styleClass=" w-100"
+                            ></p-calendar>
+
+                            <!-- Custom Calendar Image Icon -->
+                            <img
+                              src="../../../../assets/images/icons/calendar.svg"
+                              alt="Calendar Icon"
+                              class="calendar-custom-img"
+                              (click)="calendar.toggle()"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mt-2">
+                        <div>
+                          <div class="my-1">
+                            <label>
+                              Called From &nbsp;<span
+                                ><sup class="text-danger">*</sup></span
+                              ></label
+                            >
+                          </div>
+                          <input
+                            pInputText
+                            class="rounded-lg"
+                            type="text"
+                            placeholder="Enter Bank Name "
+                            formControlName="calledFrom"
+                            autocomplete="off"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="my-1">
+                          <label
+                            >Remarks&nbsp;<span
+                              ><sup class="text-danger">*</sup></span
+                            ></label
+                          >
+                        </div>
+                        <textarea
+                          pInputTextarea
+                          class="rounded-lg"
+                          width
+                          placeholder="Enter Remarks"
+                          formControlName="remarks"
+                          autocomplete="off"
+                          [autoResize]="true"
+                        ></textarea>
+                      </div>
                     </div>
-                    <input
-                      pInputText
-                      class="rounded-lg"
-                      type="text"
-                      placeholder="Enter Bank Name "
-                      formControlName="calledFrom"
-                      autocomplete="off"
-                    />
                   </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="my-1">
-                    <label
-                      >Remarks&nbsp;<span
-                        ><sup class="text-danger">*</sup></span
-                      ></label
-                    >
-                  </div>
-                  <textarea
-                    pInputTextarea
-                    class="rounded-lg"
-                    width
-                    placeholder="Enter Remarks"
-                    formControlName="remarks"
-                    autocomplete="off"
-                    [autoResize]="true"
-                  ></textarea>
                 </div>
               </div>
             </div>
+            <div class="d-flex justify-content-between">
+              <button
+                pButton
+                type="button"
+                label="Previous"
+                class="p-button-info"
+                (click)="activeIndex = activeIndex - 1"
+                [disabled]="activeIndex === 0"
+              ></button>
+              <button
+                pButton
+                type="button"
+                label="Next"
+                class="p-button-info"
+                (click)="activeIndex = activeIndex + 1"
+                [disabled]="activeIndex === steps.length - 1"
+              ></button>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="d-flex justify-content-between">
-        <button
-          pButton
-          type="button"
-          label="Previous"
-          (click)="activeIndex = activeIndex - 1"
-          [disabled]="activeIndex === 0"
-        ></button>
-        <button
-          pButton
-          type="button"
-          label="Next"
-          (click)="activeIndex = activeIndex + 1"
-          [disabled]="activeIndex === steps.length - 1"
-        ></button>
-      </div>
-    </div>
-    <div class="d-flex justify-content-center">
-      <div class="d-flex mt-3 mb-5">
-        <button
-          pButton
-          pRipple
-          type="button"
-          class="p-button-info me-2"
-          (click)="goBack()"
-        >
-          Go Back
-        </button>
-        <button
-          pButton
-          pRipple
-          type="submit"
-          [disabled]="!leadForm.valid"
-          class="p-button-primary"
-        >
-          {{ actionType == "create" ? "Add" : "Update" }} Lead
-        </button>
+          <div class="d-flex justify-content-center">
+            <div class="d-flex mt-3 mb-5">
+              <button
+                pButton
+                pRipple
+                type="button"
+                class="p-button-info me-2"
+                (click)="goBack()"
+              >
+                Go Back
+              </button>
+              <button
+                pButton
+                pRipple
+                type="submit"
+                [disabled]="!leadForm.valid"
+                class="p-button-primary"
+              >
+                {{ actionType == "create" ? "Add" : "Update" }} Lead
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
-  </form>
+  </div>
 </div>

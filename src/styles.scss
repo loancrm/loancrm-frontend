@@ -4,10 +4,12 @@
 // @import url("https://fonts.googleapis.com/css2?family=Figtree&display=swap");
 @import "primeicons/primeicons.css";
 @import "@fortawesome/fontawesome-free/css/all.css";
-
+// @import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+// @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap");
+
 *:not(.pi, .fas, .fa, .mat-icon) {
-  font-family: "Roboto", sans-serif !important;
+  font-family: "Nunito Sans", "Open Sans", "Roboto", sans-serif !important;
   line-height: 1.42857143;
   letter-spacing: 0.2px !important;
 }
@@ -29,6 +31,12 @@
 .fs-30 {
   font-size: 30px !important;
 }
+.p-breadcrumb {
+  background: none !important;
+  border: none !important;
+  border-radius: 6px;
+  padding: 0.5rem !important;
+}
 
 .fs-35 {
   font-size: 35px !important;
@@ -39,9 +47,9 @@
 }
 
 .p-button {
-  padding: 0.5rem 1rem !important;
+  padding: 0.3rem 0.7rem !important;
   border-radius: 3px !important;
-  font-weight: 500 !important;
+  font-weight: 400 !important;
 }
 
 .card {
@@ -67,7 +75,7 @@
 }
 
 .p-inputtext {
-  padding: 8px !important;
+  padding: 5px !important;
 }
 
 .btn-primary {
@@ -84,6 +92,12 @@
   border-color: #29415b !important;
   border-radius: 8px !important;
   // box-shadow: 3px 3px 6px #bdcdfa !important; /* X Y blur color */
+}
+.p-button-info {
+  background-color: transparent !important;
+  color: #29415b !important;
+  border: 2px solid #29415b !important;
+  border-radius: 8px !important;
 }
 
 .shadow-image {
@@ -154,13 +168,14 @@ body {
 
 body {
   margin: 0;
-  font-family: "Roboto", "Helvetica Neue", sans-serif;
+  font-family: "Nunito Sans", "Open Sans", "Roboto", "Helvetica Neue",
+    sans-serif;
 }
 
 .file-icon {
-  color: #33009c; /* Icon color */
+  color: #ee7846; /* Icon color */
   // background-color: #fff; /* Light background that pairs well */
-  font-size: 30px;
+  font-size: 24px;
   // border-radius: 50%; /* Makes it circular */
   // box-shadow: 3px #bdcdfa;
   // box-shadow: 6px 6px #bdcdfa !important;
@@ -176,7 +191,7 @@ body {
   color: #ffb200;
 }
 .p-dialog .p-dialog-header .p-dialog-title {
-  color: #29415B;
+  color: #29415b;
 }
 
 .p-dialog .p-button:focus {
@@ -274,6 +289,5 @@ body {
 .back-btn-text {
   color: #29415b;
 }
-.back-btn-icon{
-
-}
+// .back-btn-icon {
+// }

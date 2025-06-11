@@ -383,7 +383,10 @@
     *ngIf="userDetails?.userType && userDetails.userType !== '3'"
   >
     <div class="input-group custom-search" style="min-width: 180px">
-      <span class="input-group-text searchbtn">
+      <span
+        class="input-group-text searchbtn"
+        (click)="filterWithBusinessName()"
+      >
         <img
           src="../../../assets/images/icons/search.svg"
           alt="Search"
@@ -401,7 +404,7 @@
     </div>
   </div>
   <!-- Sidebar Menu Items -->
-  <div class="flex-grow-1 overflow-auto mt-2">
+  <div class="flex-grow-1 overflow-auto mt-2" *ngIf="menuItems">
     <ul class="nav flex-column sidebar-menu">
       <li class="nav-item" *ngFor="let item of menuItems">
         <a
@@ -410,7 +413,8 @@
           routerLinkActive="active"
           [queryParams]="{ v: version }"
           [routerLinkActiveOptions]="{ exact: true }"
-          (click)="closeSidebar()"
+          (click)="showMenuSection()"
+          *ngIf="item.condition"
         >
           <img
             [src]="item.icon"

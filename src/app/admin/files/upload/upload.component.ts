@@ -8,7 +8,7 @@ import { DateTimeProcessorService } from 'src/app/services/date-time-processor.s
 import { FileUploadComponent } from '../../file-upload/file-upload.component';
 import { LeadsService } from '../../leads/leads.service';
 import { ConfirmationService } from 'primeng/api';
-
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
@@ -248,6 +248,7 @@ export class UploadComponent implements OnInit {
   labourTradeLicense: any = [];
   capabilities: any;
   vatTinTot: any = [];
+  userDetails: any;
   msmeUdyamCertificate: any = [];
   totalEMIAmount: number | null = null;
   totalGSTR3Bscale: number | null = null;
@@ -258,6 +259,7 @@ export class UploadComponent implements OnInit {
     private leadsService: LeadsService,
     private dialogService: DialogService,
     private location: Location,
+    private localStorageService: LocalStorageService,
     private confirmationService: ConfirmationService,
     private dateTimeProcessor: DateTimeProcessorService
   ) {
@@ -291,6 +293,9 @@ export class UploadComponent implements OnInit {
   }
 
   ngOnInit() {
+    const userDetails =
+      this.localStorageService.getItemFromLocalStorage('userDetails');
+    this.userDetails = userDetails.user;
     this.items = [
       { label: 'KYCs', name: 'kycs' },
       { label: 'Cibil', name: 'cibil' },
@@ -1169,7 +1174,7 @@ export class UploadComponent implements OnInit {
             'coApplicantOtherDocuments'
           ].push(
             this.selectedFiles['coApplicantOtherDocuments'][index][
-              'uploadedFiles'
+            'uploadedFiles'
             ][i]
           );
         }
@@ -1572,7 +1577,7 @@ export class UploadComponent implements OnInit {
         ) {
           this.coApplicantCibil[index]['coApplicantCibilReport'].push(
             this.selectedFiles['coApplicantCibilReport'][index][
-              'uploadedFiles'
+            'uploadedFiles'
             ][i]
           );
         }
@@ -1663,7 +1668,7 @@ export class UploadComponent implements OnInit {
       }
     );
   }
-  goToNext(activeItem) {}
+  goToNext(activeItem) { }
   addcurrentAccountStatementsRow() {
     let data = {
       name: '',
@@ -1932,7 +1937,7 @@ export class UploadComponent implements OnInit {
         ) {
           this.currentAccountStatements[index]['currentAccountStatements'].push(
             this.selectedFiles['currentAccountStatements'][index][
-              'uploadedFiles'
+            'uploadedFiles'
             ][i]
           );
         }
@@ -2068,7 +2073,7 @@ export class UploadComponent implements OnInit {
         ) {
           this.financialReturns[index]['presentIncomeReturns'].push(
             this.selectedFiles['presentIncomeReturns'][index]['uploadedFiles'][
-              i
+            i
             ]
           );
         }
@@ -2217,7 +2222,7 @@ export class UploadComponent implements OnInit {
         ) {
           this.partnerKycs[index]['partnerotherDocuments1'].push(
             this.selectedFiles['partnerotherDocuments1'][index][
-              'uploadedFiles'
+            'uploadedFiles'
             ][i]
           );
         }
@@ -2245,7 +2250,7 @@ export class UploadComponent implements OnInit {
         ) {
           this.partnerKycs[index]['partnerotherDocuments2'].push(
             this.selectedFiles['partnerotherDocuments2'][index][
-              'uploadedFiles'
+            'uploadedFiles'
             ][i]
           );
         }
@@ -2396,7 +2401,7 @@ export class UploadComponent implements OnInit {
         ) {
           this.directorsKycs[index]['directorotherDocuments1'].push(
             this.selectedFiles['directorotherDocuments1'][index][
-              'uploadedFiles'
+            'uploadedFiles'
             ][i]
           );
         }
@@ -2424,7 +2429,7 @@ export class UploadComponent implements OnInit {
         ) {
           this.directorsKycs[index]['directorotherDocuments2'].push(
             this.selectedFiles['directorotherDocuments2'][index][
-              'uploadedFiles'
+            'uploadedFiles'
             ][i]
           );
         }
@@ -2640,24 +2645,26 @@ export class UploadComponent implements OnInit {
           formData.append('files', file);
         }
       }
-      this.leadsService.uploadFiles(formData, this.leadId, fileType).subscribe(
+      const accountId = this.userDetails?.accountId || 'default'; // make sure accountId is available
+
+      this.leadsService.uploadFiles(formData, this.leadId, fileType, accountId).subscribe(
         (response: any) => {
           if (response && response['links'] && response['links'].length > 0) {
             for (let i = 0; i < response['links'].length; i++) {
               index || index == 0
                 ? this.selectedFiles[fileType][index]['links'].push(
-                    response['links'][i]
-                  )
+                  response['links'][i]
+                )
                 : this.selectedFiles[fileType]['links'].push(
-                    response['links'][i]
-                  );
+                  response['links'][i]
+                );
             }
             for (let i = 0; i < files.length; i++) {
               files[i]['fileuploaded'] = true;
               index || index == 0
                 ? this.selectedFiles[fileType][index]['filesData'].push(
-                    files[i]
-                  )
+                  files[i]
+                )
                 : this.selectedFiles[fileType]['filesData'].push(files[i]);
             }
             console.log(

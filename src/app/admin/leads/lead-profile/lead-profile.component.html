@@ -264,13 +264,13 @@
                 class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center w-100"
               >
                 <!-- Business Name -->
-                <h4 class="mb-2 mb-md-0">
+                <h5 class="mb-2 mb-md-0">
                   <b>
                     {{
                       (leadsData.leadData.businessName | capitalizeFirst) || "-"
                     }}</b
                   >
-                </h4>
+                </h5>
 
                 <!-- Status Badge -->
                 <div class="d-flex gap-2 align-items-center">
@@ -295,7 +295,12 @@
                   class="d-flex align-items-center gap-2"
                   *ngIf="leadsData?.leadData?.primaryPhone"
                 >
-                  <i class="fas fa-phone"></i>
+                  <img
+                    src="../../../../assets/images/icons/Phone.svg"
+                    alt="Phone"
+                    width="20"
+                    height="20"
+                  />
 
                   {{
                     userDetails.userType == 3
@@ -317,7 +322,14 @@
                   class="d-flex align-items-center gap-2 text-lowercase"
                   *ngIf="leadsData.leadData.businessEmail"
                 >
-                  <i class="fas fa-envelope"></i>
+                  <!-- <i class="fas fa-envelope"></i> -->
+                  <img
+                    src="../../../../assets/images/icons/mail.svg"
+                    alt="Mail"
+                    width="20"
+                    height="20"
+                  />
+
                   {{ leadsData.leadData.businessEmail }}
                 </span>
 
@@ -326,7 +338,13 @@
                   class="d-flex align-items-center gap-2"
                   *ngIf="leadsData.leadData.city"
                 >
-                  <i class="fas fa-map-marker-alt"></i>
+                  <!-- <i class="fas fa-map-marker-alt"></i> -->
+                  <img
+                    src="../../../../assets/images/icons/location.svg"
+                    alt="City"
+                    width="20"
+                    height="20"
+                  />
                   {{ leadsData.leadData.city | capitalizeFirst }}
                 </span>
               </small>
@@ -526,7 +544,14 @@
                   data-bs-target="#partials"
                   type="button"
                 >
-                  <i class="fas fa-file-alt me-1"></i> Partials
+                  <img
+                    src="../../../../assets/images/icons/files.svg"
+                    alt="File"
+                    width="20"
+                    height="20"
+                    class="me-1 tab-icon"
+                  />
+                  Partials
                 </button>
               </li>
               <li class="nav-item" role="presentation">
@@ -536,7 +561,14 @@
                   data-bs-target="#loanDetails"
                   type="button"
                 >
-                  <i class="fas fa-id-card me-1"></i> KYC's
+                  <img
+                    src="../../../../assets/images/icons/kyc.svg"
+                    alt="File"
+                    width="20"
+                    height="20"
+                    class="me-1 tab-icon"
+                  />
+                  KYC's
                 </button>
               </li>
               <li class="nav-item" role="presentation">
@@ -546,7 +578,13 @@
                   data-bs-target="#businessRecords"
                   type="button"
                 >
-                  <i class="fas fa-briefcase me-1"></i> Business Records
+                  <img
+                    src="../../../../assets/images/icons/business.svg"
+                    alt="File"
+                    width="20"
+                    height="20"
+                    class="me-1 tab-icon"
+                  />Business Records
                 </button>
               </li>
               <li class="nav-item" role="presentation">
@@ -556,7 +594,13 @@
                   data-bs-target="#creditDetails"
                   type="button"
                 >
-                  <i class="fas fa-chart-line me-1"></i> Credit Evaluation
+                  <img
+                    src="../../../../assets/images/icons/credit.svg"
+                    alt="File"
+                    width="20"
+                    height="20"
+                    class="me-1 tab-icon"
+                  />Credit Evaluation
                 </button>
               </li>
               <li class="nav-item" role="presentation">
@@ -566,7 +610,14 @@
                   data-bs-target="#lenderDetails"
                   type="button"
                 >
-                  <i class="fas fa-bank me-1"></i> Lender
+                  <img
+                    src="../../../../assets/images/icons/lender1.svg"
+                    alt="File"
+                    width="20"
+                    height="20"
+                    class="me-1 tab-icon"
+                  />
+                  Lender
                 </button>
               </li>
             </ul>
@@ -3090,16 +3141,22 @@
                         <th class="text-nowrap">Login Date</th>
                         <th class="text-nowrap">Login Status</th>
                         <th class="text-nowrap">Login Remarks</th>
-                        <th class="text-nowrap">Approval Date</th>
+                        <th class="text-nowrap">Sanction Date</th>
                         <th class="text-nowrap">Sanctioned Amount</th>
                         <th class="text-nowrap">Sanction Status</th>
-                        <th class="text-nowrap">Saction Remarks</th>
-
+                        <th class="text-nowrap">Sanction Remarks</th>
+                        <th class="text-nowrap">LAN</th>
+                        <th class="text-nowrap">ROI</th>
+                        <th class="text-nowrap">Tenure</th>
+                        <th class="text-nowrap">Process Code</th>
+                        <th class="text-nowrap">Product Type</th>
                         <th class="text-nowrap">Disbursal Date</th>
                         <th class="text-nowrap">Disbursed Amount</th>
+                        <th class="text-nowrap">Sanction Letter</th>
+                        <th class="text-nowrap">Repayment Schedule</th>
+
                       </tr>
                     </ng-template>
-
                     <!-- Body Template -->
                     <ng-template let-item pTemplate="body">
                       <tr>
@@ -3130,7 +3187,13 @@
                           }}
                         </td>
                         <td>{{ item.approvedStatus || "-" }}</td>
-                        <td>{{ item.approvalRemarks || "-" }}</td>
+                        <td>{{ item.approvedRemarks || "-" }}</td>
+
+                        <td>{{ item.lan || "-" }}</td>
+                        <td>{{ item.roi || "-" }}</td>
+                        <td>{{ item.tenure || "-" }}</td>
+                        <td>{{ item.processCode || "-" }}</td>
+                        <td>{{ item.productTypeName || "-" }}</td>
                         <td>
                           {{
                             item.disbursalDate
@@ -3145,6 +3208,38 @@
                               : "-"
                           }}
                         </td>
+                          <td>
+                                    <div class="d-flex flex-wrap gap-2">
+                                      <a
+                                        *ngFor="let file of item.sanctionedLetter"
+                                        [href]="'//' + file"
+                                        target="_blank"
+                                      >
+                                        <i
+                                          [class]="
+                                            getFileIcon(file.split('.').pop())
+                                          "
+                                          class="file-icon me-2"
+                                        ></i>
+                                      </a>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="d-flex flex-wrap gap-2">
+                                      <a
+                                        *ngFor="let file of item.repaymentSchedule"
+                                        [href]="'//' + file"
+                                        target="_blank"
+                                      >
+                                        <i
+                                          [class]="
+                                            getFileIcon(file.split('.').pop())
+                                          "
+                                          class="file-icon me-2"
+                                        ></i>
+                                      </a>
+                                    </div>
+                                  </td>
                       </tr>
                     </ng-template>
                   </p-table>
@@ -3217,7 +3312,13 @@
             >
               <ng-template pTemplate="marker" let-event>
                 <span class="custom-marker">
-                  <i class="{{ event.icon }}"></i>
+                  <img
+                    [src]="event.image"
+                    alt="Event Icon"
+                    width="20"
+                    height="20"
+                    class="timeline-icon"
+                  />
                 </span>
               </ng-template>
 

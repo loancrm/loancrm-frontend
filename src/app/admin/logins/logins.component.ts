@@ -591,6 +591,11 @@ export class LoginsComponent {
             icon: 'pi pi-credit-card',
             command: () => this.evaluateCredit(lead.id),
           },
+          {
+            label: 'Bank Selection',
+            icon: 'pi pi-sign-in',
+            command: () => this.bankSelection(lead.id),
+          },
         ],
       },
     ];

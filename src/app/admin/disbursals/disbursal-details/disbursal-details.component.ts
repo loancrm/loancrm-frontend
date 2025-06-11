@@ -6,7 +6,7 @@ import { Location } from '@angular/common';
 import { FileUploadComponent } from '../../file-upload/file-upload.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { projectConstantsLocal } from 'src/app/constants/project-constants';
-
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 interface FormDetail {
   id: number;
   program: string;
@@ -23,6 +23,7 @@ interface FormDetail {
 export class DisbursalDetailsComponent implements OnInit {
   leads: any = null;
   loading: any;
+  userDetails: any;
   leadId: string | null = null;
   disbursalDetails: any[] = [];
   selectedFiles: any = {
@@ -51,10 +52,14 @@ export class DisbursalDetailsComponent implements OnInit {
     private dialogService: DialogService,
     private leadsService: LeadsService,
     private toastService: ToastService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private localStorageService: LocalStorageService,
+  ) { }
 
   ngOnInit(): void {
+    const userDetails =
+      this.localStorageService.getItemFromLocalStorage('userDetails');
+    this.userDetails = userDetails.user;
     this.leadId = this.route.snapshot.paramMap.get('id');
     if (this.leadId) {
       this.getLeadById(this.leadId);
@@ -198,7 +203,8 @@ export class DisbursalDetailsComponent implements OnInit {
           formData.append('files', file);
         }
       }
-      this.leadsService.uploadFiles(formData, this.leadId, fileType).subscribe(
+      const accountId = this.userDetails?.accountId || 'default';
+      this.leadsService.uploadFiles(formData, this.leadId, fileType, accountId).subscribe(
         (response: any) => {
           if (response && response['links'] && response['links'].length > 0) {
             if (index || index === 0) {
@@ -221,18 +227,18 @@ export class DisbursalDetailsComponent implements OnInit {
             for (let i = 0; i < response['links'].length; i++) {
               index || index === 0
                 ? this.selectedFiles[fileType][index]['links'].push(
-                    response['links'][i]
-                  )
+                  response['links'][i]
+                )
                 : this.selectedFiles[fileType]['links'].push(
-                    response['links'][i]
-                  );
+                  response['links'][i]
+                );
             }
             for (let i = 0; i < files.length; i++) {
               files[i]['fileuploaded'] = true;
               index || index === 0
                 ? this.selectedFiles[fileType][index]['filesData'].push(
-                    files[i]
-                  )
+                  files[i]
+                )
                 : this.selectedFiles[fileType]['filesData'].push(files[i]);
             }
             if (index || index === 0) {

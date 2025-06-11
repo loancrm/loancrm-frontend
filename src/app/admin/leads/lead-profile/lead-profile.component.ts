@@ -25,7 +25,7 @@ export class LeadProfileComponent implements OnInit {
   version = projectConstantsLocal.VERSION_DESKTOP;
   leadInternalStatusList: any = projectConstantsLocal.LEAD_INTERNAL_STATUS;
   businessEntities: any = projectConstantsLocal.BUSINESS_ENTITIES;
-  timelineEvents: { date: Date | null; title: string; icon: string; }[];
+  timelineEvents: { date: Date | null; title: string; image: string; }[];
   constructor(
     private route: ActivatedRoute,
     private leadsService: LeadsService,
@@ -120,12 +120,12 @@ export class LeadProfileComponent implements OnInit {
   }
   setTimelineDates(): void {
     const baseTimeline = [
-      { title: 'Lead Created', icon: 'pi pi-user-plus' },
-      { title: 'Files Uploaded', icon: 'pi pi-file' },
-      { title: 'Credit Evaluation', icon: 'pi pi-search' },
-      { title: 'Login', icon: 'pi pi-building' },
-      { title: 'Approved', icon: 'pi pi-check-circle' },
-      { title: 'Disbursed', icon: 'pi pi-money-bill' }
+      { title: 'Lead Created', image: 'assets/images/icons/leads.svg' },
+      { title: 'Files Uploaded', image: 'assets/images/icons/files.svg' },
+      { title: 'Credit Evaluation', image: 'assets/images/icons/credit.svg' },
+      { title: 'Login', image: 'assets/images/icons/logins.svg' },
+      { title: 'Approved', image: 'assets/images/icons/sanctions.svg' },
+      { title: 'Disbursed', image: 'assets/images/icons/disbursal.svg' }
     ];
 
     this.timelineEvents = baseTimeline.map(item => {
