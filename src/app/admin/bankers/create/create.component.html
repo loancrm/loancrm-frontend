@@ -1,5 +1,8 @@
 <div>
   <div>
+    <div class="bread-crumb m-2">
+      <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
+    </div>
     <div class="p-1 m-2 fixed-card">
       <div class="d-flex justify-content-between">
         <div
@@ -24,16 +27,16 @@
         </div>
       </div>
     </div>
-    <div class="bread-crumb m-2">
+    <!-- <div class="bread-crumb m-2">
       <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
-    </div>
+    </div> -->
   </div>
 </div>
 
 <div class="card lead-form m-2" *ngIf="!loading">
   <form [formGroup]="BankerForm" (ngSubmit)="onSubmit(BankerForm.value)">
     <div class="row">
-      <div class="col-md-4 p-4">
+      <!-- <div class="col-md-4 p-4">
         <img
           src="../../../../assets/images/leads/7.jpg"
           width="400"
@@ -41,8 +44,8 @@
           class="icon"
           alt="lenders Icon"
         />
-      </div>
-      <div class="col-md-8">
+      </div> -->
+      <div class="col-md-12">
         <div class="row">
           <div class="col-md-4 mt-3">
             <label for="name"
@@ -126,7 +129,7 @@
             [formGroupName]="i"
             class="mb-3"
           >
-            <h5 style="font-weight: bold; color: #29415B">
+            <h5 style="font-weight: bold; color: #29415b">
               Branch {{ i + 1 }} Details
             </h5>
             <div class="row">

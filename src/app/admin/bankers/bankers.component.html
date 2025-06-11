@@ -64,7 +64,7 @@
         'status'
       ]"
       styleClass="p-datatable-customers"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Bankers"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Lenders"
     >
       <ng-template pTemplate="caption">
         <div class="row">
@@ -129,10 +129,7 @@
             }}</span>
           </td>
           <td>
-            <span
-              class="table-column-data text-center"
-              *ngIf="bankers.imageFiles"
-            >
+            <span class="table-column-data" *ngIf="bankers.imageFiles">
               <div
                 *ngIf="
                   bankers && bankers.imageFiles && bankers.imageFiles.length > 0
@@ -160,10 +157,7 @@
                   </ng-container>
                 </span>
               </div>
-              <div
-                *ngIf="bankers && bankers.imageFiles.length == 0"
-                class="text-center"
-              >
+              <div *ngIf="bankers && bankers.imageFiles.length == 0" class="">
                 <img
                   src="../../../../assets/images/menu/noImage.png"
                   style="height: 50px; width: 100px"
@@ -208,14 +202,15 @@
                   icon="fas fa-eye"
                   tooltipPosition="top"
                 ></button> -->
-                <img
+                <!-- <img
                   src="../../../assets/images/icons/eye.svg"
                   width="24px"
                   height="24px"
+                  class="me-2"
                   tooltipPosition="top"
                   (click)="viewLead(bankers.id)"
                   pTooltip="View Lender"
-                />
+                /> -->
                 <!-- <button
                   pButton
                   pRipple
@@ -227,14 +222,15 @@
                   tooltipPosition="top"
                 ></button> -->
 
-                <img
+                <!-- <img
                   src="../../../assets/images/icons/edit.svg"
                   width="24px"
                   height="24px"
+                  class="me-2"
                   (click)="updateBankers(bankers.id)"
                   pTooltip="Update Lender"
                   tooltipPosition="top"
-                />
+                /> -->
                 <!-- <button
                   pButton
                   pRipple
@@ -249,6 +245,7 @@
                   src="../../../assets/images/icons/lender1.svg"
                   width="24px"
                   height="24px"
+                  class="me-2"
                   (click)="viewLoginsDone(bankers.id)"
                   pTooltip="View Logins Done"
                   tooltipPosition="top"

@@ -1,27 +1,61 @@
 <div>
+  <!-- <div class="bread-crumb m-2">
+    <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
+  </div> -->
+  <ul class="breadcrumb">
+    <li *ngFor="let item of breadCrumbItems">
+      <a
+        *ngIf="item.routerLink"
+        [routerLink]="item.routerLink"
+        [queryParams]="item.queryParams"
+      >
+        <img
+          *ngIf="item.svgIcon"
+          [src]="item.svgIcon"
+          alt="icon"
+          width="16"
+          height="16"
+        />
+        <i *ngIf="item.icon" [class]="item.icon"></i>
+        {{ item.label }}
+      </a>
+      <span *ngIf="!item.routerLink">
+        <img
+          *ngIf="item.svgIcon"
+          [src]="item.svgIcon"
+          alt="icon"
+          width="16"
+          height="16"
+        />
+        <i *ngIf="item.icon" [class]="item.icon"></i>
+        {{ item.label }}
+      </span>
+    </li>
+  </ul>
+
   <div>
-    <div class="card fixed-card">
+    <div class="p-1 m-2">
       <div class="d-flex justify-content-between">
-        <div class="pointer-cursor" (click)="goBack()">
-          <span class="back-btn-icon me-2"
-            ><i class="pi pi-arrow-left fw-bold"></i
-          ></span>
-          <span class="me-1">
+        <div
+          class="d-flex align-items-center justify-content-center pointer-cursor"
+          (click)="goBack()"
+        >
+          <span class="me-2 d-flex align-items-center">
+            <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
+          </span>
+          <!-- <span class="me-1">
             <img
               src="../../../../assets/images/menu/addcallback.png"
               alt="Default Image"
               class=""
               style="height: 35px; width: 40px"
             />
-          </span>
+          </span> -->
           <b>
             <span class="back-btn-text text-capitalize">{{ heading }}</span>
           </b>
         </div>
       </div>
-    </div>
-    <div class="bread-crumb">
-      <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
     </div>
   </div>
 </div>
@@ -114,7 +148,7 @@
       (ngSubmit)="onSubmit(callBackForm.value)"
     >
       <div class="row">
-        <div class="col-md-4">
+        <!-- <div class="col-md-4">
           <img
             src="../../../../assets/images/leads/6.jpg"
             width="400"
@@ -122,12 +156,12 @@
             class="icon"
             alt="Callbacks Icon"
           />
-        </div>
-        <div class="col-md-8">
+        </div> -->
+        <div class="col-md-12">
           <div class="row mt-2">
             <!-- Business Name (For Self-Employed) -->
             <div
-              class="col-md-4 mt-2"
+              class="col-md-3 mt-2"
               *ngIf="employmentStatus === 'self-employed'"
             >
               <div>
@@ -150,7 +184,7 @@
             </div>
 
             <!-- Person Name (For Employed) -->
-            <div class="col-md-4 mt-2" *ngIf="employmentStatus === 'employed'">
+            <div class="col-md-3 mt-2" *ngIf="employmentStatus === 'employed'">
               <div>
                 <div class="my-1">
                   <label
@@ -167,7 +201,7 @@
                 />
               </div>
             </div>
-            <div class="col-md-4 mt-2">
+            <div class="col-md-3 mt-2">
               <div>
                 <div class="my-1">
                   <label>Phone&nbsp;<span class="text-danger">*</span></label>
@@ -184,7 +218,7 @@
               </div>
             </div>
             <!-- Callback Date -->
-            <div class="col-md-4 mt-2">
+            <div class="col-md-3 mt-2">
               <div>
                 <div class="my-1">
                   <label
@@ -193,7 +227,7 @@
                     ></label
                   >
                 </div>
-                <p-calendar
+                <!-- <p-calendar
                   formControlName="date"
                   dateFormat="yy-mm-dd"
                   placeholder="Select Callback Date"
@@ -201,13 +235,34 @@
                   appendTo="body"
                   [readonlyInput]="true"
                   [showButtonBar]="true"
-                ></p-calendar>
+                ></p-calendar> -->
+                <div class="custom-calendar-wrapper w-100">
+                  <p-calendar
+                    #calendar
+                    formControlName="date"
+                    placeholder="Select Callback Date"
+                    [showIcon]="false"
+                    appendTo="body"
+                    dateFormat="yy-mm-dd"
+                    [readonlyInput]="true"
+                    [showButtonBar]="true"
+                    styleClass=" w-100"
+                  ></p-calendar>
+
+                  <!-- Custom Calendar Image Icon -->
+                  <img
+                    src="../../../../assets/images/icons/calendar.svg"
+                    alt="Calendar Icon"
+                    class="calendar-custom-img"
+                    (click)="calendar.toggle()"
+                  />
+                </div>
               </div>
             </div>
 
             <!-- Sourced By (For User Types other than '3') -->
             <div
-              class="col-md-4 mt-2"
+              class="col-md-3 mt-2"
               *ngIf="userDetails?.userType && userDetails.userType !== '3'"
             >
               <div>
@@ -231,21 +286,41 @@
 
             <!-- Created On (For User Types other than '3') -->
             <div
-              class="col-md-4 mt-2"
+              class="col-md-3 mt-2"
               *ngIf="userDetails?.userType && userDetails.userType !== '3'"
             >
               <div>
                 <div class="my-1">
                   <label>Created On</label>
                 </div>
-                <p-calendar
+                <!-- <p-calendar
                   formControlName="createdOn"
                   placeholder="Select Created On Date"
                   [showIcon]="true"
                   appendTo="body"
                   dateFormat="yy-mm-dd"
                   [showButtonBar]="true"
-                ></p-calendar>
+                ></p-calendar> -->
+                <div class="custom-calendar-wrapper w-100">
+                  <p-calendar
+                    #calendar
+                    formControlName="createdOn"
+                    placeholder="Select Created On Date"
+                    [showIcon]="false"
+                    appendTo="body"
+                    dateFormat="yy-mm-dd"
+                    [showButtonBar]="true"
+                    styleClass=" w-100"
+                  ></p-calendar>
+
+                  <!-- Custom Calendar Image Icon -->
+                  <img
+                    src="../../../../assets/images/icons/calendar.svg"
+                    alt="Calendar Icon"
+                    class="calendar-custom-img"
+                    (click)="calendar.toggle()"
+                  />
+                </div>
               </div>
             </div>
 

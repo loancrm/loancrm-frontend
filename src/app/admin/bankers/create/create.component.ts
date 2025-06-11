@@ -91,6 +91,9 @@ export class CreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    const userDetails =
+      this.localStorageService.getItemFromLocalStorage('userDetails');
+    this.userDetails = userDetails.user;
     this.createForm();
     this.capabilities = this.leadsService.getUserRbac();
     console.log(this.capabilities);
@@ -263,7 +266,8 @@ export class CreateComponent implements OnInit {
           formData.append('files', file);
         }
       }
-      this.leadsService.uploadFiles(formData, fileType).subscribe(
+      const accountId = this.userDetails?.accountId || 'default'; // make sure accountId is available
+      this.leadsService.uploadFiles(formData, 'Bankers', fileType, accountId).subscribe(
         (response: any) => {
           if (response && response['links'] && response['links'].length > 0) {
             for (let i = 0; i < response['links'].length; i++) {

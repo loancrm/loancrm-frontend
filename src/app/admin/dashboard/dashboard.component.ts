@@ -57,6 +57,7 @@ export class DashboardComponent implements OnInit {
   dropdownOptions: any[] = [];
   bardropdownOptions: any[] = [];
   leadUsers: any = [];
+  allleadUsers: any = [];
   selectedSoucedByStatus: any;
   totalLastWeekLeadsCount: any = 0;
   totalLastWeekCallbackCount: any = 0;
@@ -72,8 +73,8 @@ export class DashboardComponent implements OnInit {
   userDetails: any;
   moment: any;
   greetingMessage = '';
-  chartDisplayMessage1 = '../../../../assets/images/menu/not found.gif';
-  image = '../../../../assets/images/menu/not found.gif';
+  chartDisplayMessage1 = '../../../../assets/images/menu/no-data.gif';
+  image = '../../../../assets/images/menu/no-data.gif';
   currentMonth: string;
   previousMonth: string;
   twoMonthsAgo: string;
@@ -81,17 +82,9 @@ export class DashboardComponent implements OnInit {
   userName: string | null = null;
   sanctionedAmounts: number[] = [];
   disbursedAmounts: number[] = [];
+  monthLabels: any = []
   currentTableEvent: any;
-  tableData = [
-    { businessName: 'John Doe Enterprises', sourcedBy: 'Alice Johnson' },
-    { businessName: 'Jane Smith Co.', sourcedBy: 'Bob Martin' },
-    { businessName: 'Sam Wilson LLC', sourcedBy: 'Charlie Kim' },
-    { businessName: 'Linda Jones Inc.', sourcedBy: 'Diana Ross' },
-    { businessName: 'Mark Lee Group', sourcedBy: 'Evan Scott' },
-    { businessName: 'Tom Ford Ltd.', sourcedBy: 'Fiona Clark' },
-    { businessName: 'Emma Watson Partners', sourcedBy: 'George Hill' },
-    { businessName: 'Chris Evans Ventures', sourcedBy: 'Hannah Lee' }
-  ];
+  selectedDropdownOption: any = null;
 
 
   constructor(
@@ -106,6 +99,7 @@ export class DashboardComponent implements OnInit {
     this.moment = this.dateTimeProcessor.getMoment();
 
     this.getLeadUsers();
+    this.getAllLeadUsers();
   }
   ngOnInit(): void {
     this.currentMonth = this.getMonthName(0);
@@ -139,6 +133,7 @@ export class DashboardComponent implements OnInit {
   }
   onRowSelect(event: any) {
     console.log('Row clicked:', event.data);
+    this.routingService.handleRoute('leads/profile/' + event.data.id, null);
     // You can also open a dialog or navigate based on `event.data`
   }
   loadData() {
@@ -157,8 +152,8 @@ export class DashboardComponent implements OnInit {
     this.getFIPProcessDistinctLeadsCountforFilter();
     this.combineServiceCalls();
     this.getTotalAmountSums();
-    this.getMonthWiseLeadCountStatus();
-    this.getMonthWiseCallBacksCount();
+    // this.getMonthWiseLeadCountStatus();
+    // this.getMonthWiseCallBacksCount();
     console.log(this.loading);
   }
 
@@ -189,53 +184,63 @@ export class DashboardComponent implements OnInit {
   fetchAllAmounts() {
     this.sanctionedAmounts = [];
     this.disbursedAmounts = [];
-    forkJoin([
-      this.getAmountsForMonth(5), // 5 months ago
-      this.getAmountsForMonth(4), // 4 months ago
-      this.getAmountsForMonth(3), // 3 months ago
-      this.getAmountsForMonth(2), // 2 months ago
-      this.getAmountsForMonth(1), // Last month
-      this.getAmountsForMonth(0), // Current month
-    ]).subscribe(
-      (results: any) => {
+    this.monthLabels = [];
+
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const currentDate = new Date();
+
+    const observables: any[] = [];
+
+    for (let i = 5; i >= 0; i--) {
+      const date = new Date(currentDate.getFullYear(), currentDate.getMonth() - i, 1);
+      const label = monthNames[date.getMonth()] + " " + date.getFullYear();
+      this.monthLabels.push(label);
+
+      observables.push(this.getAmountsForMonth(i));
+    }
+
+    forkJoin(observables).subscribe(
+      (results) => {
         results.forEach((result, index) => {
           this.disbursedAmounts[index] = result.disbursed;
           this.sanctionedAmounts[index] = result.sanctioned;
         });
-        this.setChartOptions();
+
+        this.setChartOptions(); // Make sure to use this.monthLabels in your chart
       },
       (error) => {
         this.toastService.showError('An error occurred while fetching amounts');
       }
     );
   }
-  getMonthWiseLeadCountStatus(filter = {}) {
-    this.leadsService?.getMonthWiseLeadCountStatus(filter)?.subscribe(
-      (teamsCount) => {
-        this.monthWiseLeadCountStatus = teamsCount;
-        this.months = this.monthWiseLeadCountStatus.months;
-        this.monthwiseLeadCount = this.monthWiseLeadCountStatus.leadCounts;
-        this.setChartOptions();
-      },
-      (error: any) => {
-        this.toastService.showError(error);
-      }
-    );
-  }
 
-  getMonthWiseCallBacksCount(filter = {}) {
-    this.leadsService?.getMonthWiseCallBacksCount(filter)?.subscribe(
-      (teamsCount) => {
-        this.monthWiseCallbackCountStatus = teamsCount;
-        this.monthwiseCallbackCount =
-          this.monthWiseCallbackCountStatus.callbackCounts;
-        this.setChartOptions();
-      },
-      (error: any) => {
-        this.toastService.showError(error);
-      }
-    );
-  }
+  // getMonthWiseLeadCountStatus(filter = {}) {
+  //   this.leadsService?.getMonthWiseLeadCountStatus(filter)?.subscribe(
+  //     (teamsCount) => {
+  //       this.monthWiseLeadCountStatus = teamsCount;
+  //       this.months = this.monthWiseLeadCountStatus.months;
+  //       this.monthwiseLeadCount = this.monthWiseLeadCountStatus.leadCounts;
+  //       this.setChartOptions();
+  //     },
+  //     (error: any) => {
+  //       this.toastService.showError(error);
+  //     }
+  //   );
+  // }
+
+  // getMonthWiseCallBacksCount(filter = {}) {
+  //   this.leadsService?.getMonthWiseCallBacksCount(filter)?.subscribe(
+  //     (teamsCount) => {
+  //       this.monthWiseCallbackCountStatus = teamsCount;
+  //       this.monthwiseCallbackCount =
+  //         this.monthWiseCallbackCountStatus.callbackCounts;
+  //       this.setChartOptions();
+  //     },
+  //     (error: any) => {
+  //       this.toastService.showError(error);
+  //     }
+  //   );
+  // }
 
   getTotalAmountSums(filter = {}) {
     forkJoin({
@@ -367,7 +372,7 @@ export class DashboardComponent implements OnInit {
       }
     }
     this.leadsService.getDisbursalLeadCount(filter).subscribe(
-      (response) => {
+      (response: any) => {
         this.disbursalCountforFilter = response;
         this.setBarChartOptionsForFilter();
       },
@@ -420,7 +425,7 @@ export class DashboardComponent implements OnInit {
       }
     }
     this.leadsService.getFIPProcessDistinctLeadsCount(filter).subscribe(
-      (response) => {
+      (response: any) => {
         this.fiProcessCountforFilter = response;
         this.setBarChartOptionsForFilter();
         this.loading = false;
@@ -440,7 +445,7 @@ export class DashboardComponent implements OnInit {
       }
     }
     this.leadsService.getApprovedLeadCount(filter).subscribe(
-      (response) => {
+      (response: any) => {
         this.approvalCountforFilter = response;
         this.setBarChartOptionsForFilter();
       },
@@ -483,18 +488,21 @@ export class DashboardComponent implements OnInit {
         cniLeadsCount,
         bankrejectLeadsCount,
         teamCount,
-      ]) => {
+      ]: any) => {
         this.totalFilesCount = filesCount;
         // this.totalPartialCount = partialCount;
         this.totalCreditCount = creditCount;
-        this.totalRejectsCount = rejectsCount;
+        this.totalRejectsCount = rejectsCount || 0;
         this.bankersCount = bankersCount;
         this.loginsCount = loginsCount;
         this.fiProcessCount = fiProcessCount;
-        this.totalcniLeadsCount = cniLeadsCount;
-        this.totalbankrejectLeadsCount = bankrejectLeadsCount;
+        this.totalcniLeadsCount = cniLeadsCount || 0;
+        // this.totalbankrejectLeadsCount = bankrejectLeadsCount?.count ?? 0;
+        this.totalbankrejectLeadsCount = bankrejectLeadsCount || 0;
         this.teamCount = teamCount;
-
+        console.log(this.totalRejectsCount)
+        console.log(this.totalcniLeadsCount)
+        console.log(this.totalbankrejectLeadsCount)
         this.updateCountsAnalytics();
         this.setChartOptions();
       },
@@ -778,15 +786,23 @@ export class DashboardComponent implements OnInit {
       {
         name: 'rejects',
         displayName: 'Rejects',
-        count:
-          this.totalRejectsCount +
-          this.totalbankrejectLeadsCount +
-          this.totalcniLeadsCount,
+        count: (this.totalRejectsCount || 0) + (this.totalbankrejectLeadsCount || 0) + (this.totalcniLeadsCount || 0)
+        ,
         routerLink: 'rejects',
         condition: this.capabilities.rejects,
         backgroundColor: '#FAE5E6',
         color: '#BB5D5E',
         icon: '../../../assets/images/icons/rejects.svg'
+      },
+      {
+        name: 'team',
+        displayName: 'Users',
+        count: this.teamCount,
+        routerLink: 'team',
+        condition: this.capabilities.team,
+        backgroundColor: '#FF7948',
+        color: '#4878AC',
+        icon: '../../../assets/images/icons/team.svg'
       },
 
       // {
@@ -833,6 +849,9 @@ export class DashboardComponent implements OnInit {
         labels: ['leads', 'callbacks'],
       },
     ];
+    this.selectedDropdownOption = this.dropdownOptions[0];
+    // Trigger chart update
+    this.onChangeDropdown(this.selectedDropdownOption);
   }
   setChartData(option: any) {
     if (option && option.value && option.labels) {
@@ -842,23 +861,38 @@ export class DashboardComponent implements OnInit {
       console.error('Invalid option or missing value property.');
     }
   }
-  onChangeDropdown(event: any) {
-    const selectedOption = event.target.value;
-    const option = this.dropdownOptions.find(
-      (opt) => opt.label === selectedOption
-    );
+  // onChangeDropdown(event: any) {
+  //   const selectedOption = event.target.value;
+  //   const option = this.dropdownOptions.find(
+  //     (opt) => opt.label === selectedOption
+  //   );
 
-    if (option) {
-      this.setChartData(option);
-      const totalValues = option.value.reduce(
+  //   if (option) {
+  //     this.setChartData(option);
+  //     const totalValues = option.value.reduce(
+  //       (total, currentValue) => total + currentValue,
+  //       0
+  //     );
+  //     if (totalValues === 0) {
+  //       this.chartDisplayMessage = this.image;
+  //     } else {
+  //       this.chartDisplayMessage = '';
+  //     }
+  //   } else {
+  //     this.chartDisplayMessage = '';
+  //   }
+  // }
+
+  onChangeDropdown(selectedOption: any) {
+    if (selectedOption && selectedOption.value) {
+      this.setChartData(selectedOption);
+
+      const totalValues = selectedOption.value.reduce(
         (total, currentValue) => total + currentValue,
         0
       );
-      if (totalValues === 0) {
-        this.chartDisplayMessage = this.image;
-      } else {
-        this.chartDisplayMessage = '';
-      }
+
+      this.chartDisplayMessage = totalValues === 0 ? this.image : '';
     } else {
       this.chartDisplayMessage = '';
     }
@@ -870,6 +904,19 @@ export class DashboardComponent implements OnInit {
         this.leadUsers = [{ name: 'All' }, ...leadUsers];
       },
       (error: any) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
+  getAllLeadUsers(filter = {}) {
+    this.loading = true;
+    this.leadsService.getUsers(filter).subscribe(
+      (leadUsers: any) => {
+        this.allleadUsers = [{ name: 'All' }, ...leadUsers];
+        this.loading = false;
+      },
+      (error: any) => {
+        this.loading = false;
         this.toastService.showError(error);
       }
     );
@@ -919,7 +966,7 @@ export class DashboardComponent implements OnInit {
       chart: {
         height: 300,
         type: 'bar',
-        toolbar: { show: true },
+        toolbar: { show: false },
         events: {
           dataPointSelection: (event, chartContext, config) => {
             if (
@@ -1135,13 +1182,21 @@ export class DashboardComponent implements OnInit {
   }
 
   getSourceName(userId) {
-    if (this.leadUsers && this.leadUsers.length > 0) {
-      let leadUserName = this.leadUsers.filter(
+    if (this.allleadUsers && this.allleadUsers.length > 0) {
+      let leadUserName = this.allleadUsers.filter(
         (leadUser) => leadUser.id == userId
       );
       return (leadUserName && leadUserName[0] && leadUserName[0].name) || '';
     }
     return '';
+  }
+  get allCountsZero(): boolean {
+    const allSanctionedZero = this.sanctionedAmounts?.every(val => val === 0);
+    const allDisbursedZero = this.disbursedAmounts?.every(val => val === 0);
+    return (
+      allSanctionedZero &&
+      allDisbursedZero
+    );
   }
   setChartOptions() {
     this.leadsCallbacksChartOptions = {
@@ -1158,7 +1213,7 @@ export class DashboardComponent implements OnInit {
       chart: {
         height: 400,
         type: 'area',
-        toolbar: { show: true },
+        toolbar: { show: false },
         // background: '#33009C',
       },
       colors: ['#33009C', '#ff0043'],
@@ -1181,7 +1236,7 @@ export class DashboardComponent implements OnInit {
       },
       markers: { size: 1 },
       xaxis: {
-        categories: this.months,
+        categories: this.monthLabels,
         title: {
           text: 'Month Wise',
           // style: {
@@ -1270,7 +1325,7 @@ export class DashboardComponent implements OnInit {
       chart: {
         height: 345,
         type: 'radialBar',
-        toolbar: { show: true },
+        toolbar: { show: false },
       },
       labels: ['Leads', 'Callbacks'], // Custom labels for chart and legend
       plotOptions: {
@@ -1337,7 +1392,7 @@ export class DashboardComponent implements OnInit {
       chart: {
         height: 300,
         type: 'bar',
-        toolbar: { show: true },
+        toolbar: { show: false },
         events: {
           dataPointSelection: (event, chartContext, config) => {
             if (
@@ -1347,7 +1402,7 @@ export class DashboardComponent implements OnInit {
             ) {
               const seriesIndex = config.seriesIndex;
               const dataPointIndex = config.dataPointIndex;
-              const clickedMonth = this.months[dataPointIndex];
+              const clickedMonth = this.monthLabels[dataPointIndex];
               const selectedDate = this.moment(clickedMonth, 'MMM YYYY');
               const startDate = selectedDate
                 .startOf('month')
@@ -1389,7 +1444,7 @@ export class DashboardComponent implements OnInit {
       },
       markers: { size: 1 },
       xaxis: {
-        categories: this.months,
+        categories: this.monthLabels,
         title: {
           text: 'Month',
           // style: {

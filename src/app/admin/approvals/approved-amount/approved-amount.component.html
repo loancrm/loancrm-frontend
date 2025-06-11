@@ -1,4 +1,7 @@
 <div>
+  <div class="bread-crumb m-2">
+    <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
+  </div>
   <div class="p-1 m-2" *ngIf="leads">
     <div class="d-flex justify-content-between">
       <div
@@ -16,9 +19,6 @@
         </b>
       </div>
     </div>
-  </div>
-  <div class="bread-crumb m-2">
-    <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
   </div>
   <div *ngIf="loading">
     <app-preloader></app-preloader>
@@ -43,7 +43,7 @@
               <th style="min-width: 100px">Tenure</th>
               <th style="min-width: 200px">Process Code</th>
               <th style="min-width: 200px">Product type</th>
-              <th style="min-width: 200px">Approval Date</th>
+              <th>Approval Date</th>
               <th style="min-width: 200px">Disbursed Date</th>
               <th style="min-width: 150px">Status</th>
               <th style="min-width: 250px">Remarks</th>
@@ -131,7 +131,7 @@
                 ></p-dropdown>
               </td>
               <td>
-                <p-calendar
+                <!-- <p-calendar
                   [(ngModel)]="rowData.approvalDate"
                   [style]="{ width: '100%' }"
                   class="rounded-lg"
@@ -141,7 +141,27 @@
                   placeholder="Select Approval Date"
                   autocomplete="off"
                   [showButtonBar]="true"
-                ></p-calendar>
+                ></p-calendar> -->
+                <div class="custom-calendar-wrapper w-100">
+                  <p-calendar
+                    #calendar
+                    [(ngModel)]="rowData.approvalDate"
+                    placeholder="Select Approval Date"
+                    [showIcon]="false"
+                    appendTo="body"
+                    dateFormat="yy-mm-dd"
+                    [showButtonBar]="true"
+                    [style]="{ width: '100%' }"
+                  ></p-calendar>
+
+                  <!-- Custom Calendar Image Icon -->
+                  <img
+                    src="../../../../assets/images/icons/calendar.svg"
+                    alt="Calendar Icon"
+                    class="calendar-custom-img"
+                    (click)="calendar.toggle()"
+                  />
+                </div>
               </td>
               <td>
                 <p-calendar

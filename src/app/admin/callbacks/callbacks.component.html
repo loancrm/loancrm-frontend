@@ -1,15 +1,15 @@
 <div>
   <div class="p-1 m-2">
     <div class="d-flex justify-content-between">
-   <div
-  class="d-flex align-items-center justify-content-center pointer-cursor"
-  (click)="goBack()"
->
-  <span class="me-2 d-flex align-items-center">
-    <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
-  </span>
-  <b class="back-btn-text">Callbacks</b>
-</div>
+      <div
+        class="d-flex align-items-center justify-content-center pointer-cursor"
+        (click)="goBack()"
+      >
+        <span class="me-2 d-flex align-items-center">
+          <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
+        </span>
+        <b class="back-btn-text">Callbacks</b>
+      </div>
 
       <!-- <div>
         <button
@@ -247,7 +247,7 @@
                   class="text-center d-flex"
                   *ngIf="callback.callbackInternalStatus !== 3"
                 >
-                  <div class="d-flex mr-3">
+                  <div class="d-flex">
                     <!-- <button
                       pButton
                       pRipple
@@ -262,6 +262,7 @@
                       src="../../../assets/images/icons/edit.svg"
                       width="24px"
                       height="24px"
+                      class="me-2"
                       (click)="updateCallBack(callback.id)"
                       pTooltip="Update Callback"
                       tooltipPosition="top"
@@ -524,9 +525,6 @@
                     color: getStatusColor(
                       getStatusName(callback.callbackInternalStatus)
                     ).textColor,
-                    'background-color': getStatusColor(
-                      getStatusName(callback.callbackInternalStatus)
-                    ).backgroundColor
                   }"
                 >
                   {{ getStatusName(callback.callbackInternalStatus) }}
@@ -537,8 +535,8 @@
                   class="text-center d-flex"
                   *ngIf="callback.callbackInternalStatus !== 3"
                 >
-                  <div class="d-flex mr-3">
-                    <button
+                  <div class="d-flex ">
+                    <!-- <button
                       pButton
                       pRipple
                       type="button"
@@ -547,7 +545,16 @@
                       pTooltip="Update Callback"
                       icon="fas fa-pen-to-square"
                       tooltipPosition="top"
-                    ></button>
+                    ></button> -->
+                    <img
+                      src="../../../assets/images/icons/edit.svg"
+                      width="24px"
+                      height="24px"
+                      class="me-2"
+                      (click)="updateCallBack(callback.id)"
+                      pTooltip="Update Callback"
+                      tooltipPosition="top"
+                    />
                   </div>
                   <p-menu
                     appendTo="body"
@@ -555,7 +562,7 @@
                     [model]="actionItems(callback, 'personal')"
                     [popup]="true"
                   ></p-menu>
-                  <button
+                  <!-- <button
                     pButton
                     type="button"
                     class="custom-btn"
@@ -563,7 +570,15 @@
                     icon="fas fa-bars"
                     pTooltip="Actions"
                     tooltipPosition="top"
-                  ></button>
+                  ></button> -->
+                  <img
+                    src="../../../assets/images/icons/menu.svg"
+                    width="24px"
+                    height="24px"
+                    pTooltip="Actions"
+                    tooltipPosition="top"
+                    (click)="menu.toggle($event)"
+                  />
                 </div>
                 <div
                   class="text-center d-flex"
@@ -844,9 +859,6 @@
                           color: getStatusColor(
                             getStatusName(callback.callbackInternalStatus)
                           ).textColor,
-                          'background-color': getStatusColor(
-                            getStatusName(callback.callbackInternalStatus)
-                          ).backgroundColor
                         }"
                       >
                         {{ getStatusName(callback.callbackInternalStatus) }}
@@ -857,8 +869,8 @@
                         class="text-center d-flex"
                         *ngIf="callback.callbackInternalStatus !== 3"
                       >
-                        <div class="d-flex mr-3">
-                          <button
+                        <div class="d-flex ">
+                          <!-- <button
                             pButton
                             pRipple
                             type="button"
@@ -867,7 +879,16 @@
                             pTooltip="Update Callback"
                             icon="fas fa-pen-to-square"
                             tooltipPosition="top"
-                          ></button>
+                          ></button> -->
+                          <img
+                            src="../../../assets/images/icons/edit.svg"
+                            width="24px"
+                            height="24px"
+                            class="me-2"
+                            (click)="updateCallBack(callback.id)"
+                            pTooltip="Update Callback"
+                            tooltipPosition="top"
+                          />
                         </div>
                         <p-menu
                           appendTo="body"
@@ -875,7 +896,7 @@
                           [model]="getHomeActionItems(callback)"
                           [popup]="true"
                         ></p-menu>
-                        <button
+                        <!-- <button
                           pButton
                           type="button"
                           class="custom-btn"
@@ -883,7 +904,15 @@
                           icon="fas fa-bars"
                           pTooltip="Actions"
                           tooltipPosition="top"
-                        ></button>
+                        ></button> -->
+                        <img
+                          src="../../../assets/images/icons/menu.svg"
+                          width="24px"
+                          height="24px"
+                          pTooltip="Actions"
+                          tooltipPosition="top"
+                          (click)="menu.toggle($event)"
+                        />
                       </div>
                       <div
                         class="text-center d-flex"
@@ -1176,9 +1205,7 @@
                           color: getStatusColor(
                             getStatusName(callback.callbackInternalStatus)
                           ).textColor,
-                          'background-color': getStatusColor(
-                            getStatusName(callback.callbackInternalStatus)
-                          ).backgroundColor
+
                         }"
                       >
                         {{ getStatusName(callback.callbackInternalStatus) }}
@@ -1189,8 +1216,8 @@
                         class="text-center d-flex"
                         *ngIf="callback.callbackInternalStatus !== 3"
                       >
-                        <div class="d-flex mr-3">
-                          <button
+                        <div class="d-flex ">
+                          <!-- <button
                             pButton
                             pRipple
                             type="button"
@@ -1199,7 +1226,16 @@
                             pTooltip="Update Callback"
                             icon="fas fa-pen-to-square"
                             tooltipPosition="top"
-                          ></button>
+                          ></button> -->
+                            <img
+                        src="../../../assets/images/icons/edit.svg"
+                        width="24px"
+                        height="24px"
+                         class="me-2"
+                         (click)="updateCallBack(callback.id)"
+                            pTooltip="Update Callback"
+                        tooltipPosition="top"
+                      />
                         </div>
                         <p-menu
                           appendTo="body"
@@ -1207,7 +1243,7 @@
                           [model]="getLapActionItems(callback)"
                           [popup]="true"
                         ></p-menu>
-                        <button
+                        <!-- <button
                           pButton
                           type="button"
                           class="custom-btn"
@@ -1215,7 +1251,15 @@
                           icon="fas fa-bars"
                           pTooltip="Actions"
                           tooltipPosition="top"
-                        ></button>
+                        ></button> -->
+                         <img
+                        src="../../../assets/images/icons/menu.svg"
+                        width="24px"
+                        height="24px"
+                        pTooltip="Actions"
+                        tooltipPosition="top"
+                        (click)="menu.toggle($event)"
+                      />
                       </div>
                       <div
                         class="text-center d-flex"
@@ -1251,6 +1295,15 @@
             </div>
           </ng-container>
         </ng-container>
+      </div>
+       <div *ngIf="activeItem.name == 'professionalLoans'">
+        <p>Comming soon ....</p>
+      </div>
+      <div *ngIf="activeItem.name == 'educationlLoans'">
+        <p>Comming soon ....</p>
+      </div>
+      <div *ngIf="activeItem.name == 'carLoan'">
+        <p>Comming soon ....</p>
       </div>
 
       <!-- <div

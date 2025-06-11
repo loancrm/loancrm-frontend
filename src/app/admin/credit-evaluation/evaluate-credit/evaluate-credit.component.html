@@ -1,34 +1,41 @@
 <div>
-  <div class="card fixed-card">
-    <div class="pointer-cursor d-flex" (click)="goBack()">
-      <div class="me-2 pt-1">
+  <div class="bread-crumb m-2">
+    <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
+  </div>
+  <div class="p-1 m-2">
+    <div class="d-flex justify-content-between">
+      <div
+        class="d-flex align-items-center justify-content-center pointer-cursor"
+        (click)="goBack()"
+      >
+        <!-- <div class="me-2 pt-1">
         <i class="pi pi-arrow-left"></i>
-      </div>
-      <span class="me-1">
+      </div> -->
+        <span class="me-2 d-flex align-items-center">
+          <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
+        </span>
+        <!-- <span class="me-1">
         <img
           src="../../../../assets/images/menu/evaluate-credit"
           alt="Default Image"
           class=""
           style="height: 35px; width: 40px"
         />
-      </span>
+      </span> -->
 
-      <div
-        *ngIf="leadData && leadData[0]?.businessName"
-        class="fw-bold back-btn-text text-capitalize"
-      >
-        &nbsp;Credit Assessing for
-        {{ leadData[0]?.businessName | capitalizeFirst }}
+        <div
+          *ngIf="leadData && leadData[0]?.businessName"
+          class="fw-bold back-btn-text text-capitalize"
+        >
+          &nbsp;Credit Assessing for
+          {{ leadData[0]?.businessName | capitalizeFirst }}
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="bread-crumb">
-    <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
-  </div>
-
-  <div class="lead-data" *ngIf="leadData">
-    <div class="row">
+  <div class="lead-data m-2" *ngIf="leadData">
+    <div class="row g-2">
       <div class="col-md-6">
         <div class="detail-card">
           <div class="card p-4">
@@ -481,9 +488,6 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="row mt-5">
       <div class="col-md-6">
         <div class="detail-card">
           <div class="card p-4">
@@ -674,8 +678,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="row mt-5 dscr_ratio">
       <div class="col-md-12">
         <div class="card">
           <div class="business-info card-header text-center mb-3">
@@ -1063,8 +1065,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="row mt-5 balance_sheet">
       <div class="col-md-12">
         <div class="card">
           <div class="business-info card-header text-center mb-3">
@@ -1205,15 +1205,13 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="row mt-5 gst_program">
-      <div class="col-md-12">
+      <div class="col-md-6">
         <div class="card">
           <div class="business-info card-header text-center mb-3">
             <h4>Calculation for GST Program</h4>
           </div>
           <div class="row">
-            <div class="col-md-3 mt-2">
+            <div class="col-md-4 mt-2">
               <div class="input-container">
                 <div class="my-1">
                   <label>GST Turnover:&nbsp;</label>
@@ -1229,7 +1227,7 @@
                 />
               </div>
             </div>
-            <div class="col-md-3 mt-2">
+            <div class="col-md-4 mt-2">
               <div class="input-container">
                 <div class="my-1">
                   <label>Margin Interest (%):&nbsp;</label>
@@ -1245,7 +1243,7 @@
                 />
               </div>
             </div>
-            <div class="col-md-3 mt-2">
+            <div class="col-md-4 mt-2">
               <div class="input-container">
                 <div class="my-1">
                   <label>Months :&nbsp;</label>
@@ -1289,16 +1287,13 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="row mt-5 bto_program">
-      <div class="col-md-12">
+      <div class="col-md-6">
         <div class="card">
           <div class="business-info card-header text-center mb-3">
             <h4>Calculation for BTO Program</h4>
           </div>
           <div class="row">
-            <div class="col-md-3 mt-2">
+            <div class="col-md-4 mt-2">
               <div class="input-container">
                 <div class="my-1">
                   <label>Banking Turnover:&nbsp;</label>
@@ -1314,7 +1309,7 @@
                 />
               </div>
             </div>
-            <div class="col-md-3 mt-2">
+            <div class="col-md-4 mt-2">
               <div class="input-container">
                 <div class="my-1">
                   <label>Margin Interest (%):&nbsp;</label>
@@ -1330,7 +1325,7 @@
                 />
               </div>
             </div>
-            <div class="col-md-3 mt-2">
+            <div class="col-md-4 mt-2">
               <div class="input-container">
                 <div class="my-1">
                   <label>Months :&nbsp;</label>
@@ -1374,8 +1369,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="row mt-5">
       <div class="col-md-6">
         <div class="detail-card">
           <div class="card p-4">
@@ -1530,8 +1523,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="row mt-5">
       <div class="col-md-6">
         <div class="detail-card">
           <div class="card p-4">

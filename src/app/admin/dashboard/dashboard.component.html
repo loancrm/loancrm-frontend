@@ -62,29 +62,36 @@
       </ng-container>
     </div> -->
 
-    <div class="d-flex flex-wrap gap-2 p-1 text-capitalize">
-      <div
-        *ngFor="let card of countsAnalytics"
-        class="card shadow-sm d-flex flex-row align-items-center pointer-cursor justify-content-between px-3 py-2"
-        (click)="goToRoute(card.routerLink)"
-        style="flex: 0 0 calc(20% - 0.5rem); max-width: calc(20% - 0.5rem)"
-      >
-        <div>
-          <h6 class="card-heading mb-1">{{ card.name }}</h6>
-          <h4 class="card-count mb-0">{{ card.count }}</h4>
-        </div>
+    <div class="container-fluid text-capitalize p-0">
+      <div class="row g-2">
         <div
-          class="rounded-circle d-flex align-items-center justify-content-center dashboardicon"
-          [ngStyle]="{ 'background-color': card.color }"
-          style="width: 40px; height: 40px"
+          class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"
+          *ngFor="let card of countsAnalytics"
         >
-          <img
-            [src]="card.icon"
-            alt="{{ card.name }}"
-            width="24"
-            style="filter: brightness(0) invert(1)"
-            height="24"
-          />
+          <ng-container *ngIf="card.condition">
+            <div
+              class="card shadow-sm d-flex flex-row align-items-center justify-content-between px-3 py-2 pointer-cursor h-100"
+              (click)="goToRoute(card.routerLink)"
+            >
+              <div>
+                <h6 class="card-heading mb-1">{{ card.displayName }}</h6>
+                <h4 class="card-count mb-0">{{ card.count }}</h4>
+              </div>
+              <div
+                class="rounded-circle d-flex align-items-center justify-content-center dashboardicon"
+                [ngStyle]="{ 'background-color': card.color }"
+                style="width: 40px; height: 40px"
+              >
+                <img
+                  [src]="card.icon"
+                  alt="{{ card.name }}"
+                  width="24"
+                  height="24"
+                  style="filter: brightness(0) invert(1)"
+                />
+              </div>
+            </div>
+          </ng-container>
         </div>
       </div>
     </div>
@@ -96,15 +103,27 @@
       <div class="col-md-6 col-12" *ngIf="pieChartOptions">
         <br class="d-lg-none d-md-none" />
         <div class="card">
-          <div class="dropdown-position">
-            <select class="dropdown" (change)="onChangeDropdown($event)">
+          <div class="dropdown-container">
+            <!-- <select class="dropdown" (change)="onChangeDropdown($event)">
               <option
                 *ngFor="let option of dropdownOptions"
                 [value]="option.label"
               >
                 {{ option.label }}
               </option>
-            </select>
+            </select> -->
+            <p-dropdown
+              [options]="dropdownOptions"
+              optionLabel="label"
+              [(ngModel)]="selectedDropdownOption"
+              [dropdownIcon]="'fa fa-caret-down'"
+              (onChange)="onChangeDropdown($event)"
+              filterPlaceholder="Search..."
+              [appendTo]="'body'"
+              [panelStyle]="{ left: 'auto', right: '0' }"
+              placeholder="Select an option"
+              class="w-100"
+            ></p-dropdown>
           </div>
           <div>
             <app-apex-charts [chartOptions]="pieChartOptions"></app-apex-charts>
@@ -119,7 +138,7 @@
       </div>
     </div>
     <div
-      class="row mt-2"
+      class="row g-3 mt-2"
       *ngIf="userDetails && userDetails.userType && userDetails.userType != '3'"
     >
       <!-- <div class="col-md-6 col-12" *ngIf="leadsCallbacksChartOptions">
@@ -132,7 +151,7 @@
         </div>
       </div> -->
       <div class="col-md-6 col-12" *ngIf="AgentWiseBarChartOptions">
-        <br class="d-lg-none d-md-none" />
+        <!-- <br class="d-lg-none d-md-none" /> -->
         <div class="card chart-container">
           <div class="dropdown-container">
             <p-dropdown
@@ -170,8 +189,13 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6">
-        <div class="mb-3 card text-capitalize">
+      <div class="col-md-6 position-relative">
+        <!-- Custom Loader Overlay -->
+        <div *ngIf="apiLoading" class="custom-loader-overlay">
+          <app-preloader></app-preloader>
+        </div>
+
+        <div class="card rounded-3 p-3 mb-3" style="height: 350px">
           <p-table
             [value]="filesInProcessleads"
             class="outlined-table"
@@ -181,20 +205,23 @@
             (onRowSelect)="onRowSelect($event)"
             [totalRecords]="fiProcessCount"
             [scrollable]="true"
-            [loading]="apiLoading"
+            [loading]="false"
             [rowsPerPageOptions]="[10, 25, 50]"
             [paginator]="true"
             [rows]="10"
             scrollHeight="240px"
-            [style]="{ cursor: 'pointer' }"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords}  Files In Process "
+            [style]="{ cursor: 'pointer', 'min-height': '310px' }"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Files In Process"
           >
+            <!-- Header -->
             <ng-template pTemplate="header">
               <tr>
                 <th>Business Name</th>
                 <th>Sourced By</th>
               </tr>
             </ng-template>
+
+            <!-- Body -->
             <ng-template pTemplate="body" let-rowData>
               <tr [pSelectableRow]="rowData">
                 <td>{{ rowData.businessName | capitalizeFirst }}</td>
@@ -203,67 +230,96 @@
                 </td>
               </tr>
             </ng-template>
+
+            <!-- Empty Message -->
+            <ng-template pTemplate="emptymessage">
+              <tr class="text-center">
+                <td colspan="10" class="text-center fw-bold">
+                  <img
+                    src="../../../assets/images/menu/no-data.gif"
+                    width="200"
+                    height="200"
+                  />
+                  <p>No Files In Process</p>
+                </td>
+              </tr>
+            </ng-template>
           </p-table>
         </div>
       </div>
-    </div>
-    <div
-      class="row"
-      *ngIf="userDetails && userDetails.userType && userDetails.userType != '3'"
-    >
-      <div class="col-md-12 col-12">
-        <div class="row mt-3">
-          <ng-container>
-            <div
-              class="col-md-8 col-12"
-              *ngIf="ApprovedDisbursedAmountChartOptions"
-            >
-              <br class="d-lg-none d-md-none" />
-              <div class="card">
-                <app-apex-charts
-                  [chartOptions]="ApprovedDisbursedAmountChartOptions"
-                ></app-apex-charts>
-              </div>
-            </div>
-          </ng-container>
-          <div class="col-md-4 col-12" *ngIf="pieChartOptions">
-            <br class="d-lg-none d-md-none" />
-            <div class="card">
-              <div class="dropdown-position">
-                <select class="dropdown" (change)="onChangeDropdown($event)">
+      <div class="col-md-8 col-12" *ngIf="ApprovedDisbursedAmountChartOptions">
+        <br class="d-lg-none d-md-none" />
+        <div class="card">
+          <app-apex-charts
+            [chartOptions]="ApprovedDisbursedAmountChartOptions"
+          ></app-apex-charts>
+          <span *ngIf="allCountsZero">
+            <img [src]="chartDisplayMessage1" alt="No Data Available" />
+          </span>
+        </div>
+      </div>
+      <div class="col-md-4 col-12" *ngIf="pieChartOptions">
+        <!-- <br class="d-lg-none d-md-none" /> -->
+        <div class="card">
+          <div class="dropdown-container">
+            <!-- <select class="dropdown" (change)="onChangeDropdown($event)">
                   <option
                     *ngFor="let option of dropdownOptions"
                     [value]="option.label"
                   >
                     {{ option.label }}
                   </option>
-                </select>
-              </div>
-              <div>
-                <app-apex-charts
-                  [chartOptions]="pieChartOptions"
-                ></app-apex-charts>
-                <span
-                  ><img
-                    [src]="chartDisplayMessage"
-                    *ngIf="chartDisplayMessage"
-                    alt="No Data Available"
-                /></span>
-              </div>
-            </div>
+                </select> -->
+
+            <p-dropdown
+              [options]="dropdownOptions"
+              styleClass="text-left"
+              optionLabel="label"
+              [(ngModel)]="selectedDropdownOption"
+              [dropdownIcon]="'fa fa-caret-down'"
+              (onChange)="onChangeDropdown($event.value)"
+              placeholder="Select an option"
+              filterPlaceholder="Search..."
+              [appendTo]="'body'"
+              [panelStyle]="{ left: 'auto', right: '0' }"
+              class="w-100"
+            ></p-dropdown>
+          </div>
+          <div>
+            <app-apex-charts [chartOptions]="pieChartOptions"></app-apex-charts>
+            <span
+              ><img
+                [src]="chartDisplayMessage"
+                *ngIf="chartDisplayMessage"
+                alt="No Data Available"
+            /></span>
           </div>
         </div>
       </div>
-      <br />
+      <!-- <div
+        class="row"
+        *ngIf="
+          userDetails && userDetails.userType && userDetails.userType != '3'
+        "
+      > -->
+      <!-- <div class="col-md-12 col-12">
+          <div class="row mt-3">
+            <ng-container>
+
+            </ng-container>
+
+          </div>
+        </div> -->
+      <!-- <br /> -->
+      <!-- </div> -->
     </div>
-    <br />
+    <footer class="footer-card text-center text-lg-start mx-2 my-4">
+      <div class="text-center">
+        © 2024 <span style="color: #ee7846">Loan CRM</span>&nbsp;<b
+          style="color: #51c297"
+        ></b
+        >. | All Rights Reserved
+      </div>
+    </footer>
   </div>
-  <footer class="footer-card text-center text-lg-start mx-2 mb-4">
-    <div class="text-center">
-      © 2024 <span style="color: #ee7846">Loan CRM</span>&nbsp;<b
-        style="color: #51c297"
-      ></b
-      >. | All Rights Reserved
-    </div>
-  </footer>
 </div>

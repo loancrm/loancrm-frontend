@@ -1,4 +1,7 @@
 <div>
+  <div class="bread-crumb m-2">
+    <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
+  </div>
   <div class="m-2 p-1" *ngIf="bankers">
     <div class="d-flex justify-content-between">
       <div
@@ -22,16 +25,16 @@
       </div>
     </div>
   </div>
-
+  <!--
   <div class="bread-crumb m-2">
     <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
-  </div>
+  </div> -->
   <div *ngIf="loading">
     <app-preloader></app-preloader>
   </div>
 
   <div class="bg-color">
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
         <div class="col-md-6">
           <div class="card p-4 banker-profile">
@@ -88,7 +91,7 @@
                   </div>
                   <div class="">
                     <label class="bankerid">Banker ID:&nbsp;</label>
-                    <span style="color: orange">{{ bankers.bankerId }}</span>
+                    <span style="color: #ee7846">{{ bankers.bankerId }}</span>
                   </div>
                   <div>
                     <label class="bankStatus">Status:&nbsp;</label>
