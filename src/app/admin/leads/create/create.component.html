@@ -81,6 +81,12 @@
                             placeholder="Enter Business Name"
                             autocomplete="off"
                           />
+                           <!-- Error message for invalid BusinessName -->
+                          <div *ngIf="leadForm.get('businessName')?.invalid && (leadForm.get('businessName')?.touched || leadForm.get('businessName')?.dirty)">
+                            <small class="text-danger" *ngIf="leadForm.get('businessName')?.errors?.['required']">
+                              Business Name is required.
+                            </small>
+                          </div>
                         </div>
                       </div>
                       <div class="col-md-4 mt-2">
@@ -103,6 +109,12 @@
                             [dropdownIcon]="'fa fa-caret-down'"
                             styleClass="w-100"
                           ></p-dropdown>
+                          <!-- Error message for invalid Business Entity -->
+                        <div *ngIf="leadForm.get('businessEntity')?.invalid && (leadForm.get('businessEntity')?.touched || leadForm.get('businessEntity')?.dirty)">
+                          <small class="text-danger" *ngIf="leadForm.get('businessEntity')?.errors?.['required']">
+                            Business Entity is required.
+                          </small>
+                        </div>
                         </div>
                       </div>
                       <div class="col-md-4 mt-2">
@@ -122,6 +134,12 @@
                             placeholder="Enter Business Vintage"
                             autocomplete="off"
                           />
+                          <!-- Error message for invalid Business Vintage -->
+                          <div *ngIf="leadForm.get('businessOperatingSince')?.invalid && (leadForm.get('businessOperatingSince')?.touched || leadForm.get('businessOperatingSince')?.dirty)">
+                            <small class="text-danger" *ngIf="leadForm.get('businessOperatingSince')?.errors?.['required']">
+                              Business Vintage is required.
+                            </small>
+                          </div>
                         </div>
                       </div>
                       <div class="col-md-4 mt-2">
@@ -145,6 +163,12 @@
                             [dropdownIcon]="'fa fa-caret-down'"
                             styleClass="w-100"
                           ></p-dropdown>
+                          <!-- Error message for invalid Nature Of Business -->
+                          <div *ngIf="leadForm.get('natureOfBusiness')?.invalid && (leadForm.get('natureOfBusiness')?.touched || leadForm.get('natureOfBusiness')?.dirty)">
+                            <small class="text-danger" *ngIf="leadForm.get('natureOfBusiness')?.errors?.['required']">
+                              Nature Of Business is required.
+                            </small>
+                          </div>
                         </div>
                       </div>
                       <div class="col-md-4 mt-2">
@@ -164,6 +188,12 @@
                             placeholder="Enter Product Name"
                             autocomplete="off"
                           />
+                          <!-- Error message for invalid Nature Of Business -->
+                          <div *ngIf="leadForm.get('product')?.invalid && (leadForm.get('product')?.touched || leadForm.get('product')?.dirty)">
+                            <small class="text-danger" *ngIf="leadForm.get('product')?.errors?.['required']">
+                              Product Name is required.
+                            </small>
+                          </div>
                         </div>
                       </div>
                       <div class="col-md-4 mt-2">
@@ -187,6 +217,12 @@
                             [dropdownIcon]="'fa fa-caret-down'"
                             styleClass="w-100"
                           ></p-dropdown>
+                          <!-- Error message for invalid Business Turnover -->
+                          <div *ngIf="leadForm.get('businessTurnover')?.invalid && (leadForm.get('businessTurnover')?.touched || leadForm.get('businessTurnover')?.dirty)">
+                            <small class="text-danger" *ngIf="leadForm.get('businessTurnover')?.errors?.['required']">
+                              Business Turnover is required.
+                            </small>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -270,6 +306,12 @@
                             <option value="Guntur">Guntur</option>
                             <option value="Vizag">Vizag</option>
                           </datalist>
+                          <!-- Error message for invalid City -->
+                          <div *ngIf="leadForm.get('city')?.invalid && (leadForm.get('city')?.touched || leadForm.get('city')?.dirty)">
+                            <small class="text-danger" *ngIf="leadForm.get('city')?.errors?.['required']">
+                              City is required.
+                            </small>
+                          </div>
                         </div>
                       </div>
                       <div class="col-md-4 mt-2">
@@ -347,6 +389,12 @@
                             formControlName="contactPerson"
                             autocomplete="off"
                           />
+                          <!-- Error message for invalid City -->
+                          <div *ngIf="leadForm.get('contactPerson')?.invalid && (leadForm.get('contactPerson')?.touched || leadForm.get('contactPerson')?.dirty)">
+                            <small class="text-danger" *ngIf="leadForm.get('contactPerson')?.errors?.['required']">
+                              Contact Person Name is required.
+                            </small>
+                          </div>
                         </div>
                       </div>
                       <div class="col-md-4 mt-2">
@@ -367,6 +415,14 @@
                             autocomplete="off"
                             maxlength="10"
                           />
+                          <div *ngIf="leadForm.get('primaryPhone')?.invalid && (leadForm.get('primaryPhone')?.touched || leadForm.get('primaryPhone')?.dirty)">
+                            <small class="text-danger" *ngIf="leadForm.get('primaryPhone')?.errors?.['required']">
+                              Phone number is required.
+                            </small>
+                            <small class="text-danger" *ngIf="leadForm.get('primaryPhone')?.errors?.['pattern']">
+                              Invalid phone number.Please enter a valid mobile number
+                            </small>
+                          </div>
                         </div>
                       </div>
                       <div class="col-md-4 mt-2">
@@ -500,6 +556,12 @@
                             placeholder="Had Own House ?"
                             [dropdownIcon]="'fa fa-caret-down'"
                           ></p-dropdown>
+                          <!-- Error message for Had Own House -->
+                          <div *ngIf="leadForm.get('hadOwnHouse')?.invalid && (leadForm.get('hadOwnHouse')?.touched || leadForm.get('hadOwnHouse')?.dirty)">
+                            <small class="text-danger" *ngIf="leadForm.get('hadOwnHouse')?.errors?.['required']">
+                              Had Own House is required.
+                            </small>
+                          </div>
                         </div>
                       </div>
                       <div class="col-md-4 mt-2">
@@ -519,6 +581,12 @@
                             formControlName="existingLoanDetails"
                             autocomplete="off"
                           />
+                          <!-- Error message for Existing Loan Details -->
+                          <div *ngIf="leadForm.get('existingLoanDetails')?.invalid && (leadForm.get('existingLoanDetails')?.touched || leadForm.get('existingLoanDetails')?.dirty)">
+                            <small class="text-danger" *ngIf="leadForm.get('existingLoanDetails')?.errors?.['required']">
+                              Existing Loan Details is required.
+                            </small>
+                          </div>
                         </div>
                       </div>
                       <div class="col-md-4 mt-2" *ngIf="actionType == 'update'">
@@ -620,6 +688,12 @@
                             [filter]="true"
                             filterPlaceholder="Search..."
                           ></p-dropdown>
+                          <!-- Error message for Existing Sourced By -->
+                          <div *ngIf="leadForm.get('sourcedBy')?.invalid && (leadForm.get('sourcedBy')?.touched || leadForm.get('sourcedBy')?.dirty)">
+                            <small class="text-danger" *ngIf="leadForm.get('sourcedBy')?.errors?.['required']">
+                              Sourced By is required.
+                            </small>
+                          </div>
                         </div>
                       </div>
                       <div
@@ -681,6 +755,12 @@
                             formControlName="calledFrom"
                             autocomplete="off"
                           />
+                           <!-- Error message for Bank Name -->
+                          <div *ngIf="leadForm.get('calledFrom')?.invalid && (leadForm.get('calledFrom')?.touched || leadForm.get('calledFrom')?.dirty)">
+                            <small class="text-danger" *ngIf="leadForm.get('calledFrom')?.errors?.['required']">
+                              Bank Name is required.
+                            </small>
+                          </div>
                         </div>
                       </div>
                       <div class="col-md-12">
@@ -700,6 +780,12 @@
                           autocomplete="off"
                           [autoResize]="true"
                         ></textarea>
+                        <!-- Error message for Remarks -->
+                          <div *ngIf="leadForm.get('remarks')?.invalid && (leadForm.get('remarks')?.touched || leadForm.get('remarks')?.dirty)">
+                            <small class="text-danger" *ngIf="leadForm.get('remarks')?.errors?.['required']">
+                              Remarks is required.
+                            </small>
+                          </div>
                       </div>
                     </div>
                   </div>

@@ -1140,11 +1140,6 @@ export class LeadsComponent {
     }
   }
 
-  applyFilters(searchFilter = {}) {
-    this.searchFilter = searchFilter;
-    this.loadLeads(this.currentTableEvent);
-  }
-
   applyFiltersHome(searchFilterForHome = {}) {
     this.searchFilterForHome = searchFilterForHome;
     this.loadLoanLeads('home');
@@ -1163,10 +1158,33 @@ export class LeadsComponent {
     this.searchFilterForLapSelf = searchFilterForLapSelf;
     this.loadLoanLeads('lapself');
   }
-  filterWithBusinessName() {
-    let searchFilter = { 'businessName-like': this.businessNameToSearch };
-    this.applyFilters(searchFilter);
+ filterWithBusinessName() {
+  let searchFilter = {};
+
+  const trimmedInput = this.businessNameToSearch?.trim() || '';
+
+  if (this.isPhoneNumber(trimmedInput)) {
+    console.log("Detected phone number:", trimmedInput);
+    searchFilter = { 'primaryPhone-like': trimmedInput };
+  } else {
+    console.log("Detected business name:", trimmedInput);
+    searchFilter = { 'businessName-like': trimmedInput };
   }
+
+  console.log("Search Filter Object:", searchFilter);
+  this.applyFilters(searchFilter);
+}
+
+isPhoneNumber(value: string): boolean {
+  const phoneNumberPattern = /^[6-9]\d{9}$/;
+  return phoneNumberPattern.test(value.trim());
+}
+
+applyFilters(searchFilter = {}) {
+  this.searchFilter = searchFilter;
+  this.loadLeads(this.currentTableEvent); // This should re-trigger the table data with the filter
+}
+
 
   filterWithPersonNameForHome() {
     let searchFilterForHome = {

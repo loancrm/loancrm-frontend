@@ -80,24 +80,28 @@
               'referenceNo',
               'customer.firstName',
               'partner.partnerName',
-              'status'
+              'status',
+              'businessName',
+              'primaryPhone'
             ]"
             styleClass="p-datatable-customers "
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} leads"
           >
             <ng-template pTemplate="caption">
+              <!-------Adding one searchbar in business name and phone number-->
               <div class="row">
                 <div class="col-md-4 mt-2 no-padding-small">
                   <div class="p-inputgroup">
                     <input
                       type="text"
                       pInputText
-                      placeholder="Search Lead with Business Name"
+                      placeholder="Search for Leads by Business Name/Phone Number"
                       [(ngModel)]="businessNameToSearch"
                       (ngModelChange)="
                         inputValueChangeEvent('loanId', businessNameToSearch)
                       "
                       (keyup.enter)="filterWithBusinessName()"
+                      
                     />
                     <button
                       type="button"

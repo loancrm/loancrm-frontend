@@ -194,8 +194,9 @@ export class LoanLeadsComponent {
       primaryPhone: [
         '',
         Validators.compose([
-          Validators.required,
-          Validators.pattern(/^\d{10}$/),
+        Validators.required,
+        Validators.pattern(/^[6-9]\d{9}$/),
+
         ]),
       ],
       secondaryPhone: [''],
@@ -227,8 +228,8 @@ export class LoanLeadsComponent {
       primaryPhone: [
         '',
         Validators.compose([
-          Validators.required,
-          Validators.pattern(/^\d{10}$/),
+        Validators.required,
+        Validators.pattern(/^[6-9]\d{9}$/),
         ]),
       ],
       secondaryPhone: [''],

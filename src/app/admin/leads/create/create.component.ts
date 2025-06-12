@@ -142,6 +142,23 @@ export class CreateComponent {
     this.capabilities = this.leadsService.getUserRbac();
     console.log(this.capabilities);
     this.createForm();
+    const phoneControl = this.leadForm.get('primaryPhone');
+    phoneControl?.valueChanges.subscribe(value => {
+      // Only trigger validation when exactly 10 digits are entered
+      if (value && value.length === 10) {
+        const isValid = /^[6-9]\d{9}$/.test(value); // Starts with 6-9 and 10 digits
+        if (!isValid) {
+          phoneControl.setErrors({ pattern: true });
+        } else {
+          phoneControl.setErrors(null); // Valid number
+        }
+      } else {
+        // Clear pattern error for incomplete input
+        if (phoneControl?.hasError('pattern')) {
+          phoneControl.setErrors(null);
+        }
+      }
+    });
   }
 
   onStepChange(event: any) {
@@ -161,7 +178,7 @@ export class CreateComponent {
         '',
         Validators.compose([
           Validators.required,
-          Validators.pattern(/^\d{10}$/),
+          // Validators.pattern(/^[6789]\d{9}$/),
         ]),
       ],
       secondaryPhone: [''],
