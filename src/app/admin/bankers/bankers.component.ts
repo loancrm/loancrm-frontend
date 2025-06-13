@@ -58,11 +58,11 @@ export class BankersComponent implements OnInit {
   }
   actionItems(bankers: any): MenuItem[] {
     const menuItems: any = [{ label: 'Actions', items: [] }];
-    menuItems[0].items.push({
-      label: 'view',
-      icon: 'pi pi-sign-in',
-      command: () => this.viewLead(bankers.id),
-    });
+    // menuItems[0].items.push({
+    //   label: 'view',
+    //   icon: 'pi pi-sign-in',
+    //   command: () => this.viewLead(bankers.id),
+    // });
     menuItems[0].items.push({
       label: 'Update',
       icon: 'pi pi-sign-in',
@@ -125,8 +125,12 @@ export class BankersComponent implements OnInit {
   revertBankersToNew(bankers) {
     this.changeBankersStatus(bankers.id, 1);
   }
-  viewLead(leadId) {
-    this.routingService.handleRoute('bankers/banker-profile/' + leadId, null);
+  // viewLead(leadId) {
+  //   this.routingService.handleRoute('bankers/banker-profile/' + leadId, null);
+  // }
+  viewLead(event) {
+    const lender = event.data
+    this.routingService.handleRoute('bankers/banker-profile/' + lender.id, null);
   }
   viewLoginsDone(leadId) {
     this.routingService.handleRoute('bankers/loginsDone/' + leadId, null);

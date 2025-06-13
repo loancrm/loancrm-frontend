@@ -42,6 +42,8 @@
             [value]="leads"
             [lazy]="true"
             (onLazyLoad)="loadLeads($event)"
+            (onRowSelect)="viewLeadProfile($event)"
+            selectionMode="single"
             dataKey="id"
             [showCurrentPageReport]="true"
             [rowsPerPageOptions]="[10, 25, 50]"
@@ -194,7 +196,7 @@
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-lead>
-              <tr class="text-capitalize">
+              <tr class="text-capitalize" [pSelectableRow]="lead">
                 <td>
                   <span class="table-column-data" *ngIf="lead.leadId">{{
                     lead.id
@@ -373,7 +375,7 @@
                         height="24px"
                         pTooltip="Actions"
                         tooltipPosition="top"
-                        (click)="menu.toggle($event)"
+                        (click)="menu.toggle($event); $event.stopPropagation()"
                       />
                     </div>
                   </div>
@@ -1467,7 +1469,7 @@
           </ng-container>
         </ng-container>
       </div>
-       <div *ngIf="activeItem.name == 'professionalLoans'">
+      <div *ngIf="activeItem.name == 'professionalLoans'">
         <p>Comming soon ....</p>
       </div>
       <div *ngIf="activeItem.name == 'educationlLoans'">
