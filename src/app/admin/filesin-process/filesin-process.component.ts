@@ -289,7 +289,10 @@ export class FilesinProcessComponent implements OnInit {
     let searchFilter = { 'primaryPhone-like': this.mobileNumberToSearch };
     this.applyFilters(searchFilter);
   }
-
+  viewLead(event) {
+    const lead = event.data
+    this.routingService.handleRoute('leads/profile/' + lead.id, null);
+  }
   inputValueChangeEvent(dataType, value) {
     if (value == '') {
       this.searchFilter = {};

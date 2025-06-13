@@ -512,8 +512,9 @@ export class LoginsComponent {
     return '';
   }
 
-  viewLead(leadId) {
-    this.routingService.handleRoute('leads/profile/' + leadId, null);
+  viewLead(event) {
+    const lead = event.data
+    this.routingService.handleRoute('leads/profile/' + lead.id, null);
   }
 
   bankSelection(leadId) {
@@ -529,11 +530,11 @@ export class LoginsComponent {
       {
         label: 'Actions',
         items: [
-          {
-            label: 'View  Lead',
-            icon: 'pi pi-eye',
-            command: () => this.viewLead(lead.id),
-          },
+          // {
+          //   label: 'View  Lead',
+          //   icon: 'pi pi-eye',
+          //   command: () => this.viewLead(lead.id),
+          // },
           {
             label: 'View Files',
             icon: 'pi pi-file',
@@ -564,11 +565,11 @@ export class LoginsComponent {
 
           ...(this.userDetails?.userType && this.userDetails.userType == '1'
             ? [
-              {
-                label: 'View  Lead',
-                icon: 'pi pi-eye',
-                command: () => this.viewLead(lead.id),
-              },
+              // {
+              //   label: 'View  Lead',
+              //   icon: 'pi pi-eye',
+              //   command: () => this.viewLead(lead.id),
+              // },
               {
                 label: 'View Files',
                 icon: 'pi pi-file',

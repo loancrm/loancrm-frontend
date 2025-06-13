@@ -585,8 +585,9 @@ export class RejectsComponent implements OnInit {
     return '';
   }
 
-  viewLead(leadId) {
-    this.routingService.handleRoute('leads/profile/' + leadId, null);
+  viewLead(event) {
+    const lead = event.data
+    this.routingService.handleRoute('leads/profile/' + lead.id, null);
   }
 
   rejectsDetails(leadId) {
@@ -606,11 +607,11 @@ export class RejectsComponent implements OnInit {
       {
         label: 'Actions',
         items: [
-          {
-            label: 'View',
-            icon: 'pi pi-eye',
-            command: () => this.viewLead(lead.id),
-          },
+          // {
+          //   label: 'View',
+          //   icon: 'pi pi-eye',
+          //   command: () => this.viewLead(lead.id),
+          // },
           {
             label: 'Rejects Details',
             icon: 'pi pi-info-circle',
@@ -637,11 +638,11 @@ export class RejectsComponent implements OnInit {
       {
         label: 'Actions',
         items: [
-          {
-            label: 'View',
-            icon: 'pi pi-eye',
-            command: () => this.viewLead(lead.id),
-          },
+          // {
+          //   label: 'View',
+          //   icon: 'pi pi-eye',
+          //   command: () => this.viewLead(lead.id),
+          // },
           {
             label: 'Rejects Details',
             icon: 'pi pi-info-circle',
@@ -657,11 +658,11 @@ export class RejectsComponent implements OnInit {
       {
         label: 'Actions',
         items: [
-          {
-            label: 'View',
-            icon: 'pi pi-eye',
-            command: () => this.viewLead(lead.id),
-          },
+          // {
+          //   label: 'View',
+          //   icon: 'pi pi-eye',
+          //   command: () => this.viewLead(lead.id),
+          // },
           {
             label: 'Rejects Details',
             icon: 'pi pi-info-circle',

@@ -290,8 +290,9 @@ export class DisbursalsComponent implements OnInit {
       this.leadsTable.reset();
     }
   }
-  viewLead(leadId) {
-    this.routingService.handleRoute('leads/profile/' + leadId, null);
+  viewLead(event) {
+    const lead = event.data
+    this.routingService.handleRoute('leads/profile/' + lead.id, null);
   }
   loadLeads(event) {
     this.currentTableEvent = event;
@@ -379,11 +380,11 @@ export class DisbursalsComponent implements OnInit {
       {
         label: 'Actions',
         items: [
-          {
-            label: 'View',
-            icon: 'pi pi-eye',
-            command: () => this.viewLead(lead.id),
-          },
+          // {
+          //   label: 'View',
+          //   icon: 'pi pi-eye',
+          //   command: () => this.viewLead(lead.id),
+          // },
           {
             label: 'Disbursed Details',
             icon: 'pi pi-info-circle',

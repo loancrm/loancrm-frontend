@@ -36,6 +36,8 @@
       [value]="leads"
       [lazy]="true"
       (onLazyLoad)="loadLeads($event)"
+      (onRowSelect)="viewLead($event)"
+      selectionMode="single"
       dataKey="id"
       [showCurrentPageReport]="true"
       [rowsPerPageOptions]="[10, 25, 50]"
@@ -159,7 +161,7 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-lead>
-        <tr class="text-capitalize">
+        <tr class="text-capitalize" [pSelectableRow]="lead">
           <td>
             <span class="table-column-data" *ngIf="lead.leadId">{{
               lead.id
@@ -236,7 +238,7 @@
                   src="../../../assets/images/icons/lender1.svg"
                   width="24px"
                   height="24px"
-                  (click)="bankSelection(lead.id)"
+                  (click)="bankSelection(lead.id); $event.stopPropagation()"
                   pTooltip="Bank Selection"
                   tooltipPosition="top"
                 />

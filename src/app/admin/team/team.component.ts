@@ -182,11 +182,11 @@ export class TeamComponent implements OnInit {
   actionItems(team: any): MenuItem[] {
     // const menuItems: MenuItem[] = [];
     const menuItems: any = [{ label: 'Actions', items: [] }];
-    menuItems[0].items.push({
-      label: 'Update',
-      icon: 'pi pi-refresh',
-      command: () => this.updateUsers(team.id),
-    });
+    // menuItems[0].items.push({
+    //   label: 'Update',
+    //   icon: 'pi pi-refresh',
+    //   command: () => this.updateUsers(team.id),
+    // });
     menuItems[0].items.push({
       label: team.status === 'Active' ? 'Deactivate' : 'Activate',
       icon: 'pi pi-refresh',
@@ -293,8 +293,9 @@ export class TeamComponent implements OnInit {
   updateUsers(userId) {
     this.routingService.handleRoute('team/update/' + userId, null);
   }
-  viewUser(userId) {
-    this.routingService.handleRoute('team/view/' + userId, null);
+  viewUser(event) {
+    const user = event.data
+    this.routingService.handleRoute('team/view/' + user.id, null);
   }
   goBack() {
     this.location.back();

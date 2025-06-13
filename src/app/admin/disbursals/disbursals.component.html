@@ -1,11 +1,13 @@
 <div>
   <div class="m-2 p-1 fixed-card">
     <div class="d-flex justify-content-between">
-      <div   class="d-flex align-items-center justify-content-center pointer-cursor"
- (click)="goBack()">
-     <span class="me-2 d-flex align-items-center">
-    <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
-  </span>
+      <div
+        class="d-flex align-items-center justify-content-center pointer-cursor"
+        (click)="goBack()"
+      >
+        <span class="me-2 d-flex align-items-center">
+          <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
+        </span>
         <!-- <span class="me-1">
           <img
             src="../../../assets/images/menu/disbursal.png"
@@ -30,6 +32,8 @@
       [value]="leads"
       [lazy]="true"
       (onLazyLoad)="loadLeads($event)"
+      (onRowSelect)="viewLead($event)"
+      selectionMode="single"
       dataKey="id"
       [showCurrentPageReport]="true"
       [rowsPerPageOptions]="[10, 25, 50]"
@@ -152,7 +156,7 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-lead>
-        <tr class="text-capitalize">
+        <tr class="text-capitalize" [pSelectableRow]="lead">
           <td>
             <span class="table-column-data" *ngIf="lead.leadId">{{
               lead.id
@@ -212,7 +216,7 @@
                   height="24px"
                   pTooltip="Actions"
                   tooltipPosition="top"
-                  (click)="menu.toggle($event)"
+                  (click)="menu.toggle($event); $event.stopPropagation()"
                 />
               </div>
             </div>

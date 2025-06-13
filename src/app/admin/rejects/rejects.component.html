@@ -43,7 +43,9 @@
             #leadsTable
             [value]="leads"
             [lazy]="true"
+            selectionMode="single"
             (onLazyLoad)="loadLeads($event)"
+            (onRowSelect)="viewLead($event)"
             dataKey="id"
             [showCurrentPageReport]="true"
             [rowsPerPageOptions]="[10, 25, 50]"
@@ -160,7 +162,7 @@
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-lead>
-              <tr class="text-capitalize">
+              <tr class="text-capitalize" [pSelectableRow]="lead">
                 <td>
                   <span class="table-column-data" *ngIf="lead.leadId">{{
                     lead.id
@@ -226,7 +228,7 @@
                         height="24px"
                         pTooltip="Actions"
                         tooltipPosition="top"
-                        (click)="menu.toggle($event)"
+                        (click)="menu.toggle($event); $event.stopPropagation()"
                       />
                     </div>
                   </div>
@@ -253,6 +255,8 @@
             [value]="leads"
             [lazy]="true"
             (onLazyLoad)="loadBankRejectedLeads($event)"
+            (onRowSelect)="viewLead($event)"
+            selectionMode="single"
             dataKey="id"
             [showCurrentPageReport]="true"
             [rowsPerPageOptions]="[10, 25, 50]"
@@ -375,7 +379,7 @@
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-lead>
-              <tr class="text-capitalize">
+              <tr class="text-capitalize" [pSelectableRow]="lead">
                 <td>
                   <span class="table-column-data" *ngIf="lead.leadId">{{
                     lead.id
@@ -441,7 +445,9 @@
                         height="24px"
                         pTooltip="Actions"
                         tooltipPosition="top"
-                        (click)="bankmenu.toggle($event)"
+                        (click)="
+                          bankmenu.toggle($event); $event.stopPropagation()
+                        "
                       />
                     </div>
                   </div>
@@ -468,6 +474,8 @@
             [value]="leads"
             [lazy]="true"
             (onLazyLoad)="loadCNIRejectedLeads($event)"
+            (onRowSelect)="viewLead($event)"
+            selectionMode="single"
             dataKey="id"
             [showCurrentPageReport]="true"
             [rowsPerPageOptions]="[10, 25, 50]"
@@ -591,7 +599,7 @@
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-lead>
-              <tr class="text-capitalize">
+              <tr class="text-capitalize" [pSelectableRow]="lead">
                 <td>
                   <span class="table-column-data" *ngIf="lead.leadId">{{
                     lead.id
@@ -661,7 +669,9 @@
                         height="24px"
                         pTooltip="Actions"
                         tooltipPosition="top"
-                        (click)="cnimenu.toggle($event)"
+                        (click)="
+                          cnimenu.toggle($event); $event.stopPropagation()
+                        "
                       />
                     </div>
                   </div>

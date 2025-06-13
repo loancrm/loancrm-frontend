@@ -446,11 +446,11 @@ export class FilesComponent implements OnInit {
       this.userDetails &&
       this.userDetails.userType &&
       this.userDetails.userType !== '5';
-    menuItems[0].items.push({
-      label: 'View Lead',
-      icon: 'pi pi-eye',
-      command: () => this.viewLeadProfile(lead.id),
-    },);
+    // menuItems[0].items.push({
+    //   label: 'View Lead',
+    //   icon: 'pi pi-eye',
+    //   command: () => this.viewLeadProfile(lead.id),
+    // },);
     if (lead.leadInternalStatus === 3) {
       menuItems[0].items.push({
         label: 'Send to Leads',
@@ -904,8 +904,9 @@ export class FilesComponent implements OnInit {
   viewLead(leadId) {
     this.routingService.handleRoute('files/view/' + leadId, null);
   }
-  viewLeadProfile(leadId) {
-    this.routingService.handleRoute('leads/profile/' + leadId, null);
+  viewLeadProfile(event) {
+    const lead = event.data
+    this.routingService.handleRoute('leads/profile/' + lead.id, null);
   }
 
   viewLoanLead(leadId) {

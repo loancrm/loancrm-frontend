@@ -46,7 +46,9 @@
       #bankersTable
       [value]="bankers"
       [lazy]="true"
+      selectionMode="single"
       (onLazyLoad)="loadBankers($event)"
+      (onRowSelect)="viewLead($event)"
       dataKey="id"
       [showCurrentPageReport]="true"
       [rowsPerPageOptions]="[10, 25, 50]"
@@ -120,6 +122,7 @@
       </ng-template>
       <ng-template pTemplate="body" let-bankers>
         <tr
+          [pSelectableRow]="bankers"
           class="text-capitalize"
           [ngClass]="{ 'disabled-row': bankers.disabled }"
         >
@@ -272,7 +275,7 @@
                 height="24px"
                 pTooltip="Actions"
                 tooltipPosition="top"
-                (click)="menu.toggle($event)"
+                (click)="menu.toggle($event); $event.stopPropagation()"
               />
             </div>
           </td>

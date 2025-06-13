@@ -372,8 +372,9 @@ export class CreditEvaluationComponent implements OnInit {
     return '';
   }
 
-  viewLead(leadId) {
-    this.routingService.handleRoute('leads/profile/' + leadId, null);
+  viewLead(event) {
+    const lead = event.data;
+    this.routingService.handleRoute('leads/profile/' + lead.id, null);
   }
 
   actionItems(lead: any): MenuItem[] {
@@ -381,11 +382,11 @@ export class CreditEvaluationComponent implements OnInit {
       {
         label: 'Actions',
         items: [
-          {
-            label: 'View',
-            icon: 'pi pi-eye',
-            command: () => this.viewLead(lead.id),
-          },
+          // {
+          //   label: 'View',
+          //   icon: 'pi pi-eye',
+          //   command: () => this.viewLead(lead.id),
+          // },
           {
             label: 'Send to files',
             icon: 'pi pi-sign-in',
