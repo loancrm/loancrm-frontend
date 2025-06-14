@@ -109,15 +109,25 @@ export class ExtendhttpInterceptor implements HttpInterceptor {
     const authToken = this.localStorageService.getItemFromLocalStorage('accessToken');
     const clientIp = this.localStorageService.getItemFromLocalStorage('clientIp') || '';
 
-    const headers: any = {};
-    if (authToken) headers['Authorization'] = `Bearer ${authToken}`;
-    if (!request.url.startsWith('http')) headers['mysystem-IP'] = clientIp;
-
+    if (authToken) {
+      request = request.clone({
+        setHeaders: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+    }
     request = request.clone({
       url: request.url.startsWith('http')
         ? request.url
         : projectConstantsLocal.BASE_URL + request.url,
-      setHeaders: headers,
+      responseType: 'json',
+      ...(request.url.startsWith('http')
+        ? {}
+        : {
+          setHeaders: {
+            'mysystem-IP': clientIp,
+          },
+        }),
     });
 
     return next.handle(request).pipe(

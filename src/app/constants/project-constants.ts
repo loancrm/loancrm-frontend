@@ -179,7 +179,7 @@ export const projectConstantsLocal = {
     { displayName: 'Service Provider', name: 'service provider' },
     { displayName: 'Constructions', name: 'constructions' },
   ],
-  BASE_URL: 'http://localhost:5000/',
-  // BASE_URL: 'https://rest.thefintalk.in:5000/',
+  // BASE_URL: 'http://localhost:5002/',
+  BASE_URL: 'https://rest.thefintalk.in:5002/',
   VERSION_DESKTOP: '0.0.0',
 };
