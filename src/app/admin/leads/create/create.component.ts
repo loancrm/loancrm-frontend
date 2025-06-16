@@ -133,7 +133,7 @@ export class CreateComponent {
     this.getLeadUsers();
   }
 
-  ngOnInit() {  
+  ngOnInit() {
     this.today = new Date();
     let userDetails =
       this.localStorageService.getItemFromLocalStorage('userDetails');
@@ -504,7 +504,7 @@ export class CreateComponent {
         }
       }
       const accountId = this.userDetails?.accountId || 'default'; // make sure accountId is available
-      this.leadsService.uploadFiles(formData, this.leadId, accountId, fileType).subscribe(
+      this.leadsService.uploadFiles(formData, this.leadId, fileType, accountId).subscribe(
         (response: any) => {
           if (response && response['links'] && response['links'].length > 0) {
             for (let i = 0; i < response['links'].length; i++) {

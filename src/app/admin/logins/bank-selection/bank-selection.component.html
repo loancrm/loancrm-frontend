@@ -32,35 +32,34 @@
   <div *ngIf="loading">
     <app-preloader></app-preloader>
   </div>
-  <div class="container-fluid m-2 p-1" *ngIf="!loading">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="fw-medium" style="color: #29415b; font-size: 28px">
-          <p>Select Program:</p>
-        </div>
-        <div class="d-flex flex-wrap justify-content-center">
-          <div
-            *ngFor="let program of programs"
-            class="col-md-3 d-flex justify-content-center"
-          >
-            <div class="card program w-100">
-              <label class="d-flex justify-content-start">
-                <p-radioButton
-                  type="radio"
-                  name="program"
-                  class="me-2"
-                  [(ngModel)]="selectedProgram"
-                  [value]="program.name"
-                ></p-radioButton>
-                <span class="fw-medium" style="font-size: 16px">
-                  {{ program.name }}
-                </span>
-              </label>
-            </div>
+  <div class="m-2" *ngIf="!loading">
+    <div class="">
+      <div class="fw-medium" style="color: #29415b; font-size: 18px">
+        <p>Select Program:</p>
+      </div>
+      <div class="d-flex flex-wrap justify-content-center">
+        <div
+          *ngFor="let program of programs"
+          class="col-md-3 d-flex justify-content-center"
+        >
+          <div class="card program w-100">
+            <label class="d-flex justify-content-start">
+              <p-radioButton
+                type="radio"
+                name="program"
+                class="me-2"
+                [(ngModel)]="selectedProgram"
+                [value]="program.name"
+              ></p-radioButton>
+              <span class="fw-medium" style="font-size: 16px">
+                {{ program.name }}
+              </span>
+            </label>
           </div>
         </div>
       </div>
-      <!-- <div class="col-md-3 text-center">
+    </div>
+    <!-- <div class="col-md-3 text-center">
         <div
           class="fw-bold m-2 p-2"
           style="color: rgba(2, 5, 129, 0.91); font-size: 30px"
@@ -89,77 +88,76 @@
           </div>
         </div>
       </div> -->
-      <div class="col-md-12">
-        <div class="d-flex align-items-center m-2 p-2 justify-content-between">
-          <div class="fw-medium" style="color: #29415b; font-size: 28px">
-            <p class="m-0">Select Banks</p>
-          </div>
-        </div>
-        <div class="card d-flex flex-wrap mt-4">
-          <!-- Search Input -->
-          <div class="p-inputgroup mx-1" style="flex-grow: 1; max-width: 400px">
-            <input
-              type="text"
-              pInputText
-              placeholder="Search For Banks..."
-              [(ngModel)]="bankNameToSearch"
-              (input)="filterBanks()"
-              style="width: 100%"
-            />
-            <button
-              type="button"
-              pButton
-              icon="pi pi-search"
-              class="p-button-primary"
-              [disabled]="!bankNameToSearch"
-              (click)="filterWithBankName()"
-            ></button>
-          </div>
 
-          <!-- Bank Cards -->
-          <div class="row w-100">
-            <div
-              *ngFor="let bank of filteredBanks"
-              class="col-12 col-sm-6 col-md-3 mb-4 d-flex justify-content-center"
-            >
-              <div class="card bank w-100" style="max-width: 220px">
-                <label class="d-flex flex-column align-items-center">
-                  <div
-                    class="d-flex justify-content-center align-items-center mb-2"
-                  >
-                    <input
-                      type="checkbox"
-                      class="styled-checkbox me-2"
-                      [(ngModel)]="bank.selected"
-                      (change)="toggleSelected(bank)"
+    <div class="d-flex align-items-center justify-content-between p-2">
+      <div class="fw-medium" style="color: #29415b; font-size: 18px">
+        <p class="m-0">Select Banks</p>
+      </div>
+    </div>
+    <div class="card d-flex flex-wrap border-0">
+      <!-- Search Input -->
+      <div class="p-inputgroup m-2" style="flex-grow: 1; max-width: 400px">
+        <input
+          type="text"
+          pInputText
+          placeholder="Search For Banks..."
+          [(ngModel)]="bankNameToSearch"
+          (input)="filterBanks()"
+          style="width: 100%"
+        />
+        <button
+          type="button"
+          pButton
+          icon="pi pi-search"
+          class="p-button-primary"
+          [disabled]="!bankNameToSearch"
+          (click)="filterWithBankName()"
+        ></button>
+      </div>
+
+      <!-- Bank Cards -->
+      <div class="row w-100">
+        <div
+          *ngFor="let bank of filteredBanks"
+          class="col-12 col-sm-6 col-md-3 my-4 d-flex justify-content-center"
+        >
+          <div class="card bank w-100" style="max-width: 220px">
+            <label class="d-flex flex-column align-items-center">
+              <div
+                class="d-flex justify-content-center align-items-center mb-2"
+              >
+                <input
+                  type="checkbox"
+                  class="styled-checkbox me-2"
+                  [(ngModel)]="bank.selected"
+                  (change)="toggleSelected(bank)"
+                />
+                <a>
+                  <img
+                    *ngIf="
+                      bank.imageUrl && bank.imageUrl.length > 0;
+                      else noImage
+                    "
+                    [src]="'//' + bank.imageUrl"
+                    alt="Bank Logo"
+                    style="height: 60px; width: 116px"
+                  />
+                  <ng-template #noImage>
+                    <img
+                      src="../../../../assets/images/menu/noImage.png"
+                      alt="No Image"
+                      style="height: 30px; width: 80px"
                     />
-                    <a>
-                      <img
-                        *ngIf="
-                          bank.imageUrl && bank.imageUrl.length > 0;
-                          else noImage
-                        "
-                        [src]="'//' + bank.imageUrl"
-                        alt="Bank Logo"
-                        style="height: 60px; width: 116px"
-                      />
-                      <ng-template #noImage>
-                        <img
-                          src="../../../../assets/images/menu/noImage.png"
-                          alt="No Image"
-                          style="height: 30px; width: 80px"
-                        />
-                      </ng-template>
-                    </a>
-                  </div>
-                  <!-- <span class="text-center">{{ bank.name }}</span> -->
-                </label>
+                  </ng-template>
+                </a>
               </div>
-            </div>
+              <span class="text-capitalize text-center">{{ bank.name }}</span>
+            </label>
           </div>
         </div>
       </div>
     </div>
+
     <div class="row my-4">
       <div class="col text-center">
         <button

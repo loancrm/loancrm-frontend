@@ -7,7 +7,7 @@ import { Location } from '@angular/common';
 import { RoutingService } from '../../services/routing-service';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-leads',
@@ -92,6 +92,7 @@ export class LeadsComponent {
     private toastService: ToastService,
     private location: Location,
     private route: ActivatedRoute,
+    private router: Router,
     private routingService: RoutingService,
     private confirmationService: ConfirmationService,
     private localStorageService: LocalStorageService
@@ -844,6 +845,9 @@ export class LeadsComponent {
 
   sendLeadToFollowUps(lead) {
     this.changeLeadStatus(lead.id, 16);
+    const targetUrl = 'user/followups';
+    const queryParams = { v: this.version };
+    this.router.navigate([targetUrl], { queryParams });
   }
   createleadDocumentsTable(lead) {
     this.loading = true;
@@ -1158,32 +1162,32 @@ export class LeadsComponent {
     this.searchFilterForLapSelf = searchFilterForLapSelf;
     this.loadLoanLeads('lapself');
   }
- filterWithBusinessName() {
-  let searchFilter = {};
+  filterWithBusinessName() {
+    let searchFilter = {};
 
-  const trimmedInput = this.businessNameToSearch?.trim() || '';
+    const trimmedInput = this.businessNameToSearch?.trim() || '';
 
-  if (this.isPhoneNumber(trimmedInput)) {
-    console.log("Detected phone number:", trimmedInput);
-    searchFilter = { 'primaryPhone-like': trimmedInput };
-  } else {
-    console.log("Detected business name:", trimmedInput);
-    searchFilter = { 'businessName-like': trimmedInput };
+    if (this.isPhoneNumber(trimmedInput)) {
+      console.log("Detected phone number:", trimmedInput);
+      searchFilter = { 'primaryPhone-like': trimmedInput };
+    } else {
+      console.log("Detected business name:", trimmedInput);
+      searchFilter = { 'businessName-like': trimmedInput };
+    }
+
+    console.log("Search Filter Object:", searchFilter);
+    this.applyFilters(searchFilter);
   }
 
-  console.log("Search Filter Object:", searchFilter);
-  this.applyFilters(searchFilter);
-}
+  isPhoneNumber(value: string): boolean {
+    const phoneNumberPattern = /^[6-9]\d{9}$/;
+    return phoneNumberPattern.test(value.trim());
+  }
 
-isPhoneNumber(value: string): boolean {
-  const phoneNumberPattern = /^[6-9]\d{9}$/;
-  return phoneNumberPattern.test(value.trim());
-}
-
-applyFilters(searchFilter = {}) {
-  this.searchFilter = searchFilter;
-  this.loadLeads(this.currentTableEvent); // This should re-trigger the table data with the filter
-}
+  applyFilters(searchFilter = {}) {
+    this.searchFilter = searchFilter;
+    this.loadLeads(this.currentTableEvent); // This should re-trigger the table data with the filter
+  }
 
 
   filterWithPersonNameForHome() {
