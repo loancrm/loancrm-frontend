@@ -19,7 +19,7 @@ export class RegisterComponent {
   constructor(private fb: FormBuilder,
     private toastService: ToastService,
     private leadsService: LeadsService,
-     private router: Router,
+    private router: Router,
     private routingService: RoutingService
   ) { }
 
@@ -40,7 +40,7 @@ export class RegisterComponent {
       return;
     }
 
-
+    this.loading = true;
     const formData = {
       name: formValues.name,
       emailId: formValues.emailId.toLowerCase(),
