@@ -133,7 +133,7 @@ export class CreateComponent {
     this.getLeadUsers();
   }
 
-  ngOnInit() {
+  ngOnInit() {  
     this.today = new Date();
     let userDetails =
       this.localStorageService.getItemFromLocalStorage('userDetails');

@@ -8,6 +8,7 @@ import { LeadsService } from '../leads/leads.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { LeadSearchComponent } from '../leadSearch/leadSearch.component';
 import { RoutingService } from 'src/app/services/routing-service';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-header',
@@ -28,6 +29,7 @@ export class HeaderComponent implements OnInit {
   notifications: { message: string, timestamp: Date }[] = [];
   showDropdown = false;
   constructor(
+    private confirmationService: ConfirmationService,
     private authService: AuthService,
     private toastService: ToastService,
     private localStorage: LocalStorageService,
@@ -64,18 +66,29 @@ export class HeaderComponent implements OnInit {
     //   }
     // });
   }
-  userLogout() {
-    this.authService
-      .doLogout()
-      .then(() => {
-        this.toastService.showSuccess('Logout Successful');
-        this.localStorage.clearAllFromLocalStorage();
-        this.router.navigate(['user', 'login']);
-      })
-      .catch((error) => {
-        this.toastService.showError(error);
-      });
-  }
+  confirmLogout(){
+  this.confirmationService.confirm({
+    message: `Are you sure you want to logout?`,
+    header: 'Confirm Logout',
+    icon: 'pi pi-sign-out',
+    accept: () => {
+      this.authService
+        .doLogout()
+        .then(() => {
+          this.toastService.showSuccess('Logout Successful');
+          this.localStorage.clearAllFromLocalStorage();
+          this.router.navigate(['user', 'login']);
+        })
+        .catch((error) => {
+          this.toastService.showError(error);
+        });
+    },
+    reject: () => {
+      this.toastService.showInfo('Logout cancelled');
+    }
+  });
+}
+
   viewUser(userId) {
     this.routingService.handleRoute('team/view/' + userId, null);
   }

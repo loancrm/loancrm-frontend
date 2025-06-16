@@ -24,6 +24,7 @@ import { LeadsService } from '../leads/leads.service';
 import { Router } from '@angular/router';
 import { LeadSearchComponent } from '../leadSearch/leadSearch.component';
 import { DialogService } from 'primeng/dynamicdialog';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-sidebar-menu',
@@ -57,6 +58,7 @@ export class SidebarMenuComponent implements OnChanges {
   menuItems: any = [];
 
   constructor(
+    private confirmationService: ConfirmationService,
     private subscriptionService: SubscriptionService,
     private renderer: Renderer2,
     private lStorageService: LocalStorageService,
@@ -433,17 +435,27 @@ export class SidebarMenuComponent implements OnChanges {
   //     });
   // }
 
-  userLogout() {
-    this.authService
-      .doLogout()
-      .then(() => {
-        this.toastService.showSuccess('Logout Successful');
-        this.localStorage.clearAllFromLocalStorage();
-        this.router.navigate(['user', 'login']);
-      })
-      .catch((error) => {
-        this.toastService.showError(error);
-      });
-  }
-  gotoAccountProfile() { }
+  confirmLogout(event: Event) {
+  event.preventDefault(); // prevent default <a> behavior
+  this.confirmationService.confirm({
+    message: 'Are you sure you want to logout?',
+    header: 'Confirm Logout',
+    icon: 'pi pi-sign-out',
+    accept: () => {
+      this.authService
+        .doLogout()
+        .then(() => {
+          this.toastService.showSuccess('Logout Successful');
+          this.localStorage.clearAllFromLocalStorage();
+          this.router.navigate(['user', 'login']);
+        })
+        .catch((error) => {
+          this.toastService.showError(error);
+        });
+    },
+    reject: () => {
+      this.toastService.showInfo('Logout cancelled');
+    }
+  });
+}
 }
