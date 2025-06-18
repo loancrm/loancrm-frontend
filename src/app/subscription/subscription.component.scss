@@ -1,0 +1,23 @@
+.card {
+  border-radius: 16px;
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.pricing-card-title {
+  font-size: 2rem;
+  font-weight: 600;
+}
+.plan-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.plan-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+}
+.plan-icon i {
+  font-size: 2rem;
+}

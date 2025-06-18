@@ -1,5 +1,5 @@
 <div>
-    <div class="bread-crumb m-2">
+  <div class="bread-crumb m-2">
     <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
   </div>
   <div class="p-1 m-2" *ngIf="userDetails">
@@ -144,7 +144,7 @@
 
           <!-- Other Details -->
           <div class="row mt-3 px-3">
-            <div class="col-md-3 col-sm-6 col-12 mb-3">
+            <!-- <div class="col-md-3 col-sm-6 col-12 mb-3">
               <div class="text-muted">Password</div>
               <div class="fw-medium">
                 {{
@@ -159,8 +159,11 @@
                   (click)="isPasswordVisible = !isPasswordVisible"
                 ></i>
               </div>
+            </div> -->
+            <div class="col-md-3 col-sm-6 col-12 mb-3">
+              <div class="text-muted">Phone Number</div>
+              <div class="fw-medium">{{ userDetails?.phone || "-" }}</div>
             </div>
-
             <div class="col-md-3 col-sm-6 col-12 mb-3">
               <div class="text-muted">Email</div>
               <div class="fw-medium">{{ userDetails?.email || "-" }}</div>

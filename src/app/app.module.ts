@@ -21,6 +21,7 @@ import { PreloaderModule } from './preloader/preloader.module';
 import { HomeModule } from './home/home.module';
 import { ContactModule } from './home/contact/contact.module';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { SubscriptionModule } from './subscription/subscription.module';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -39,6 +40,7 @@ export function tokenGetter() {
     ContactModule,
     PreloaderModule,
     ConfirmDialogModule,
+    SubscriptionModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

@@ -804,10 +804,10 @@ export class CreateComponent {
         element.field == 'timePeriod'
           ? element.defaultValue
             ? this.onTimePeriodChange(
-                { value: element.defaultValue },
-                element,
-                index
-              )
+              { value: element.defaultValue },
+              element,
+              index
+            )
             : ''
           : '';
       });
@@ -838,7 +838,7 @@ export class CreateComponent {
   getJsonKeys(json) {
     return Object.keys(json);
   }
-  routeTo() {}
+  routeTo() { }
 
   generateReport(reportType: string) {
     this.loading = true;
@@ -942,7 +942,7 @@ export class CreateComponent {
       },
       (error: any) => {
         this.toastService.showError(
-          'Error: ' + (error.message || 'Unknown error')
+          error
         );
         this.loading = false;
       }
@@ -978,7 +978,8 @@ export class CreateComponent {
       this.loading = true;
       this.leadsService.getUsers(filter).subscribe(
         (leadUsers: any) => {
-          this.leadUsers = [{ name: 'All' }, ...leadUsers];
+          // this.leadUsers = [{ name: 'All' }, ...leadUsers];
+          this.leadUsers = [...leadUsers];
           console.log(leadUsers);
           this.loading = false;
           resolve(true);
@@ -997,7 +998,8 @@ export class CreateComponent {
       this.loading = true;
       this.leadsService.getBanks(filter).subscribe(
         (response: any) => {
-          this.banks = [{ name: 'All' }, ...response];
+          // this.banks = [{ name: 'All' }, ...response];
+          this.banks = [...response];
           console.log(this.banks);
           this.loading = false;
           resolve(true);
@@ -1016,7 +1018,8 @@ export class CreateComponent {
       this.loading = true;
       this.leadsService.getDistinctLeads(filter).subscribe(
         (response: any) => {
-          this.files = [{ businessName: 'All', id: 1 }, ...response];
+          // this.files = [{ businessName: 'All', id: 1 }, ...response];
+          this.files = [...response];
           this.files = this.files.map((file) => {
             const formattedBusinessName = file.businessName
               .split(' ')

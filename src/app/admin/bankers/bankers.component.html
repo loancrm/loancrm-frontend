@@ -133,13 +133,13 @@
           </td>
           <td>
             <span class="table-column-data" *ngIf="bankers.imageFiles">
-              <div
+              <!-- <div
                 *ngIf="
                   bankers && bankers.imageFiles && bankers.imageFiles.length > 0
                 "
                 class="mt-2"
               >
-                <span *ngFor="let file of bankers.imageFiles">
+                <span *ngFor="let file of bankers.imageFiles[0]">
                   <ng-container *ngIf="isImageFile(file)">
                     <a [href]="'//' + file" target="_blank">
                       <img
@@ -165,7 +165,32 @@
                   src="../../../../assets/images/menu/noImage.png"
                   style="height: 50px; width: 100px"
                 />
-              </div>
+              </div> -->
+
+              <ng-container
+                *ngIf="
+                  bankers &&
+                    bankers.imageFiles &&
+                    bankers.imageFiles.length > 0;
+                  else defaultImage
+                "
+              >
+                <a>
+                  <img
+                    [src]="'//' + bankers.imageFiles[0]"
+                    alt="Image"
+                    class="img-thumbnail"
+                    style="height: 50px; width: 100px"
+                  />
+                </a>
+              </ng-container>
+              <ng-template #defaultImage>
+                <img
+                  src="../../../../assets/images/menu/noImage.png"
+                  alt="Default Image"
+                  style="height: 50px; width: 100px"
+                />
+              </ng-template>
             </span>
           </td>
           <td>

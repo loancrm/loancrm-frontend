@@ -132,13 +132,13 @@
                   [(ngModel)]="bank.selected"
                   (change)="toggleSelected(bank)"
                 />
-                <a>
+                <!-- <a>
                   <img
                     *ngIf="
-                      bank.imageUrl && bank.imageUrl.length > 0;
+                      bank && bank.imageUrl && bank.imageUrl.length > 0;
                       else noImage
                     "
-                    [src]="'//' + bank.imageUrl"
+                    [src]="'//' + bank.imageUrl[0]"
                     alt="Bank Logo"
                     style="height: 60px; width: 116px"
                   />
@@ -149,7 +149,30 @@
                       style="height: 30px; width: 80px"
                     />
                   </ng-template>
-                </a>
+                </a> -->
+
+                <ng-container
+                  *ngIf="
+                    bank && bank.imageUrl && bank.imageUrl.length > 0;
+                    else defaultImage
+                  "
+                >
+                  <a>
+                    <img
+                      [src]="'//' + bank.imageUrl[0]"
+                      alt="Bank Logo"
+                      style="height: 60px; width: 116px"
+                    />
+                  </a>
+                </ng-container>
+
+                <ng-template #defaultImage>
+                  <img
+                    src="../../../../assets/images/menu/noImage.png"
+                    alt="No Image"
+                    style="height: 60px; width: 116px"
+                  />
+                </ng-template>
               </div>
               <span class="text-capitalize text-center">{{ bank.name }}</span>
             </label>

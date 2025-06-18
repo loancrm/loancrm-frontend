@@ -314,6 +314,10 @@ export class LeadsService {
     const url = 'users';
     return this.serviceMeta.httpPost(url, data);
   }
+  createSubscription(data) {
+    const url = 'subscriptions';
+    return this.serviceMeta.httpPost(url, data);
+  }
   deleteUsers(userId, filter = {}) {
     const url = 'users/' + userId;
     return this.serviceMeta.httpDelete(url, null, filter);
@@ -336,6 +340,10 @@ export class LeadsService {
   }
   getUsersDetailsById(userId, filter = {}) {
     const url = 'users/' + userId;
+    return this.serviceMeta.httpGet(url, null, filter);
+  }
+  getSubscriptionById(accountId, filter = {}) {
+    const url = 'subscriptions/' + accountId;
     return this.serviceMeta.httpGet(url, null, filter);
   }
   getUserRbac() {
