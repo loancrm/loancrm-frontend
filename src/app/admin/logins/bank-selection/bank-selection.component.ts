@@ -12,7 +12,7 @@ interface Program {
 
 interface Bank {
   name: string;
-  imageUrl: [];
+  imageUrl: string[];
   selected: boolean;
   id: number;
 }

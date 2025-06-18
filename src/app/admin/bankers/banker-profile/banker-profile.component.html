@@ -42,7 +42,7 @@
               <div
                 class="col-md-4 d-flex justify-content-center align-items-center"
               >
-                <div
+                <!-- <div
                   *ngIf="
                     bankers &&
                     bankers.imageFiles &&
@@ -80,7 +80,32 @@
                     />
                     <p>No Image Found</p>
                   </tr>
-                </div>
+                </div> -->
+
+                <ng-container
+                  *ngIf="
+                    bankers &&
+                      bankers.imageFiles &&
+                      bankers.imageFiles.length > 0;
+                    else defaultImage
+                  "
+                >
+                  <a>
+                    <img
+                      [src]="'//' + bankers.imageFiles[0]"
+                      alt="Image"
+                      class="img-thumbnail"
+                      style="height: 120px; width: 240px"
+                    />
+                  </a>
+                </ng-container>
+                <ng-template #defaultImage>
+                  <img
+                    src="../../../../assets/images/menu/noImage.png"
+                    alt="Default Image"
+                    style="height: 120px; width: 240px"
+                  />
+                </ng-template>
               </div>
               <div class="col-md-8 text-center">
                 <div *ngIf="bankers">

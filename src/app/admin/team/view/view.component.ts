@@ -101,7 +101,7 @@ export class ViewComponent {
   filterConfig: any[] = [];
   filterConfigSanctions: any[] = [];
   filterConfigDisbursals: any[] = [];
-  chartDisplayMessage1 = '../../../../assets/images/menu/not found.gif';
+  chartDisplayMessage1 = '../../../../assets/images/menu/no-data.gif';
   loading: any;
   userId: string | null = null;
   userDetails: any = null;

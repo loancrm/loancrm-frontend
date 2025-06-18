@@ -3265,26 +3265,26 @@
                   [(ngModel)]="statements['from']"
                   [showButtonBar]="true"
                 ></p-calendar> -->
-                <div class="custom-calendar-wrapper w-100">
-                  <p-calendar
-                    #calendar
-                    [(ngModel)]="statements['from']"
-                    placeholder="Select From Date"
-                    [showIcon]="false"
-                    appendTo="body"
-                    dateFormat="yy-mm-dd"
-                    [showButtonBar]="true"
-                    styleClass=" w-100"
-                  ></p-calendar>
+            <div class="custom-calendar-wrapper w-100 position-relative">
+  <p-calendar
+    #calendar
+    [(ngModel)]="statements['from']"
+    placeholder="Select From Date"
+    [showIcon]="false"
+    appendTo="body"
+    dateFormat="yy-mm-dd"
+    [showButtonBar]="true"
+    styleClass="w-100 custom-calendar-input"
+  ></p-calendar>
 
-                  <!-- Custom Calendar Image Icon -->
-                  <img
-                    src="../../../../assets/images/icons/calendar.svg"
-                    alt="Calendar Icon"
-                    class="calendar-custom-img"
-                    (click)="calendar.toggle()"
-                  />
-                </div>
+  <!-- Custom Calendar Image Icon -->
+  <img
+    src="../../../../assets/images/icons/calendar.svg"
+    alt="Calendar Icon"
+    class="calendar-custom-img"
+    (click)="calendar.toggle()"
+  />
+</div>
               </div>
             </div>
             <div class="col-md-3 mt-2">
@@ -3299,7 +3299,7 @@
                   [showIcon]="true"
                   [showButtonBar]="true"
                 ></p-calendar> -->
-                <div class="custom-calendar-wrapper w-100">
+                <div class="custom-calendar-wrapper w-100 position-relative">
                   <p-calendar
                     #calendar
                     [(ngModel)]="statements['to']"
@@ -3442,7 +3442,7 @@
                   [(ngModel)]="statements['from']"
                   [showButtonBar]="true"
                 ></p-calendar> -->
-                <div class="custom-calendar-wrapper w-100">
+                <div class="custom-calendar-wrapper w-100 position-relative">
                   <p-calendar
                     #calendar
                     [(ngModel)]="statements['from']"
@@ -3476,7 +3476,7 @@
                   [showIcon]="true"
                   [showButtonBar]="true"
                 ></p-calendar> -->
-                <div class="custom-calendar-wrapper w-100">
+                <div class="custom-calendar-wrapper w-100 position-relative">
                   <p-calendar
                     #calendar
                     [(ngModel)]="statements['to']"
@@ -3855,7 +3855,7 @@
                   [(ngModel)]="gstData['filingPeriod']"
                   [showButtonBar]="true"
                 ></p-calendar> -->
-                 <div class="custom-calendar-wrapper w-100">
+                 <div class="custom-calendar-wrapper w-100 position-relative">
                             <p-calendar
                               #calendar
                                [(ngModel)]="gstData['filingPeriod']"
@@ -4058,7 +4058,7 @@
                     [(ngModel)]="loans['emiClosingDate']"
                     [showButtonBar]="true"
                   ></p-calendar> -->
-                  <div class="custom-calendar-wrapper w-100">
+                  <div class="custom-calendar-wrapper w-100 position-relative">
                             <p-calendar
                               #calendar
                               [(ngModel)]="loans['emiClosingDate']"

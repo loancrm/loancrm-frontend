@@ -2213,12 +2213,12 @@
                         <!-- PAN Number -->
                         <p
                           *ngIf="
-                            leadsData?.documents?.companyPan?.panNumber;
+                            leadsData?.documents?.companyPan[0]?.panNumber;
                             else noPanNumber
                           "
                         >
                           <strong>PAN Number:</strong>
-                          {{ leadsData?.documents?.companyPan?.panNumber }}
+                          {{ leadsData?.documents?.companyPan[0]?.panNumber }}
                         </p>
                         <ng-template #noPanNumber>
                           <div class="text-warning">
@@ -2229,7 +2229,7 @@
                         <!-- PAN Attachments -->
                         <ng-container
                           *ngIf="
-                            leadsData?.documents?.companyPan?.companyPan
+                            leadsData?.documents?.companyPan[0]?.companyPan
                               ?.length;
                             else noPanAttachment
                           "
@@ -2237,7 +2237,7 @@
                           <div class="d-flex flex-wrap gap-2">
                             <a
                               *ngFor="
-                                let file of leadsData?.documents?.companyPan
+                                let file of leadsData?.documents?.companyPan[0]
                                   ?.companyPan
                               "
                               [href]="'//' + file"
@@ -2450,12 +2450,12 @@
                         <!-- PAN Number -->
                         <p
                           *ngIf="
-                            leadsData?.documents?.firmPanCard?.firmPan;
+                            leadsData?.documents?.firmPanCard[0]?.firmPan;
                             else noPanNumber
                           "
                         >
                           <strong>PAN Number:</strong>
-                          {{ leadsData?.documents?.firmPanCard?.firmPan }}
+                          {{ leadsData?.documents?.firmPanCard[0]?.firmPan }}
                         </p>
                         <ng-template #noPanNumber>
                           <div class="text-warning">
@@ -2466,7 +2466,7 @@
                         <!-- PAN Attachments -->
                         <ng-container
                           *ngIf="
-                            leadsData?.documents?.firmPanCard?.firmPanCard
+                            leadsData?.documents?.firmPanCard[0]?.firmPanCard
                               ?.length;
                             else noPanAttachment
                           "
@@ -2474,7 +2474,7 @@
                           <div class="d-flex flex-wrap gap-2">
                             <a
                               *ngFor="
-                                let file of leadsData?.documents?.firmPanCard
+                                let file of leadsData?.documents?.firmPanCard[0]
                                   ?.firmPanCard
                               "
                               [href]="'//' + file"
@@ -2641,7 +2641,7 @@
                   </div>
 
                   <!-- VAT / TIN / TOT -->
-                  <div class="col-md-6 mb-4">
+                  <!-- <div class="col-md-6 mb-4">
                     <div class="card shadow-sm files-card">
                       <div class="card-body">
                         <h6 class="mb-3">MOA and AOA</h6>
@@ -2673,7 +2673,7 @@
                         </ng-template>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </div>
 

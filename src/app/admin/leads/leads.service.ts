@@ -314,6 +314,10 @@ export class LeadsService {
     const url = 'users';
     return this.serviceMeta.httpPost(url, data);
   }
+  createSubscription(data) {
+    const url = 'subscriptions';
+    return this.serviceMeta.httpPost(url, data);
+  }
   deleteUsers(userId, filter = {}) {
     const url = 'users/' + userId;
     return this.serviceMeta.httpDelete(url, null, filter);
@@ -336,6 +340,10 @@ export class LeadsService {
   }
   getUsersDetailsById(userId, filter = {}) {
     const url = 'users/' + userId;
+    return this.serviceMeta.httpGet(url, null, filter);
+  }
+  getSubscriptionById(accountId, filter = {}) {
+    const url = 'subscriptions/' + accountId;
     return this.serviceMeta.httpGet(url, null, filter);
   }
   getUserRbac() {
@@ -775,14 +783,17 @@ export class LeadsService {
   uploadFiles(data: FormData, leadId, type = 'default', accountId: string,) {
     console.log(FormData);
     console.log(data);
-    const url = `http://localhost/files?type=${type}&leadId=${leadId}&accountId=${accountId}`
-    // const url = `https://files.thefintalk.in/files?type=${type}&leadId=${leadId}&accountId=${accountId}`;
+    // const url = `http://localhost/files?type=${type}&leadId=${leadId}&accountId=${accountId}`
+    const url = `https://files.loancrm.org/files?type=${type}&leadId=${leadId}&accountId=${accountId}`;
     return this.serviceMeta.httpPost(url, data);
   }
 
   deleteFile(filePath: string) {
     console.log(filePath);
-    const url = `https://files.thefintalk.in/files?file_path=${encodeURIComponent(
+    // const url = `https://files.thefintalk.in/files?file_path=${encodeURIComponent(
+    //   filePath
+    // )}`;
+    const url = `https://files.loancrm.org/files?file_path=${encodeURIComponent(
       filePath
     )}`;
     console.log(url);

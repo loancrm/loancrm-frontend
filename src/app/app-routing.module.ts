@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth.guard';
+import { SubscriptionComponent } from './subscription/subscription.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/user/login', pathMatch: 'full' },
@@ -30,6 +31,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./reset-password/reset-password.module').then((m) => m.ResetPasswordModule),
   },
+  { path: 'user/choose-subscription', component: SubscriptionComponent },
 ];
 
 @NgModule({
