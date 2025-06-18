@@ -414,6 +414,7 @@
                             formControlName="primaryPhone"
                             autocomplete="off"
                             maxlength="10"
+                            minlength="10"
                           />
                           <div *ngIf="leadForm.get('primaryPhone')?.invalid && (leadForm.get('primaryPhone')?.touched || leadForm.get('primaryPhone')?.dirty)">
                             <small class="text-danger" *ngIf="leadForm.get('primaryPhone')?.errors?.['required']">
