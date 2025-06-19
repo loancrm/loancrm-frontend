@@ -49,7 +49,7 @@
             <form
               class="register-form"
               [formGroup]="registerForm"
-              (ngSubmit)="onSubmit(registerForm.value)"
+              (ngSubmit)="onSubmit()"
               novalidate
             >
               <!-- Full Name -->
@@ -63,6 +63,9 @@
                   class="rounded-lg w-100"
                 />
                 <label class="form-label fw-medium">Full Name</label>
+                <div *ngIf="submitted && name.invalid" class="text-danger">
+                  Full name is required.
+                </div>
               </div>
 
               <!-- Email -->
@@ -74,8 +77,13 @@
                   placeholder="Email address"
                   autocomplete="off"
                   class="rounded-lg w-100"
+                  [class.ng-invalid]="submitted && email.invalid"
                 />
                 <label class="form-label fw-medium">Email address</label>
+                <div *ngIf="submitted && email.errors" class="text-danger">
+                  <small *ngIf="email.errors['required']">Email is required.</small>
+                  <small *ngIf="email.errors['email']">Please enter a valid email address.</small>
+                </div>
               </div>
 
               <!-- Phone Number -->
@@ -87,8 +95,14 @@
                   placeholder="Phone Number"
                   autocomplete="off"
                   class="rounded-lg w-100"
+                  maxlength="10"
+                  [class.ng-invalid]="submitted && mobile.invalid"
                 />
                 <label class="form-label fw-medium">Phone Number</label>
+                <div *ngIf="submitted && mobile.errors" class="text-danger">
+                  <small *ngIf="mobile.errors['required']">Mobile number is required.</small>
+                  <small *ngIf="mobile.errors['pattern']">Enter a valid 10-digit mobile number.</small>
+                </div>
               </div>
 
               <!-- Company Name -->
@@ -102,6 +116,9 @@
                   class="rounded-lg w-100"
                 />
                 <label class="form-label fw-medium">Company Name</label>
+                <div *ngIf="submitted && businessName.invalid" class="text-danger">
+                  Company name is required.
+                </div>
               </div>
 
               <!-- Password -->
@@ -115,28 +132,26 @@
                   class="rounded-lg w-100"
                 />
                 <label class="form-label fw-medium">Password</label>
+                <button type="button" (click)="togglePasswordVisibility()" class="btn btn-link p-0">
+                  {{ isPasswordVisible ? 'Hide' : 'Show' }}
+                </button>
+                <div *ngIf="submitted && password.errors" class="text-danger">
+                  <small *ngIf="password.errors['required']">Password is required.</small>
+                  <small *ngIf="password.errors['pattern']">
+                    Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.
+                  </small>
+                  <small *ngIf="password.errors['minlength']">
+                    Password must be at least 6 characters.
+                  </small>
+                </div>
               </div>
-
-              <!-- Confirm Password -->
-              <!-- <div class="form-outline mb-4">
-                <input
-                  pInputText
-                  [type]="isConfirmPasswordVisible ? 'text' : 'password'"
-                  formControlName="confirmPassword"
-                  placeholder="Confirm Password"
-                  autocomplete="off"
-                  class="rounded-lg w-100"
-                />
-                <label class="form-label fw-medium">Confirm Password</label>
-              </div> -->
 
               <!-- Submit -->
               <button
                 type="submit"
                 pButton
                 pRipple
-                [class.disabled]="loading"
-                [disabled]="!registerForm.valid"
+                [disabled]="loading"
                 class="p-button-primary mb-4 w-100 custom-button"
               >
                 Register

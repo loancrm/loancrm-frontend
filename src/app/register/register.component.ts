@@ -1,79 +1,93 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from '../services/toast.service';
 import { LeadsService } from '../admin/leads/leads.service';
-import { RoutingService } from '../services/routing-service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
+  submitted = false;
   isPasswordVisible = false;
-  loading: any = false;
-  isConfirmPasswordVisible = false;
+  loading = false;
 
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private toastService: ToastService,
     private leadsService: LeadsService,
-    private router: Router,
-    private routingService: RoutingService
-  ) { }
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
       emailId: ['', [Validators.required, Validators.email]],
-      mobile: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
+      mobile: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
       businessName: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      // confirmPassword: ['', Validators.required],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/)
+      ]]
     });
   }
 
-  onSubmit(formValues): void {
+  get name() {
+    return this.registerForm.get('name')!;
+  }
+
+  get email() {
+    return this.registerForm.get('emailId')!;
+  }
+
+  get mobile() {
+    return this.registerForm.get('mobile')!;
+  }
+
+  get businessName() {
+    return this.registerForm.get('businessName')!;
+  }
+
+  get password() {
+    return this.registerForm.get('password')!;
+  }
+
+  onSubmit(): void {
+    this.submitted = true;
+
     if (this.registerForm.invalid) {
-      this.toastService.showError('Please fill all required fields correctly.');
       return;
     }
 
     this.loading = true;
+
     const formData = {
-      name: formValues.name,
-      emailId: formValues.emailId.toLowerCase(),
-      mobile: formValues.mobile,
-      businessName: formValues.businessName,
-      password: formValues.password,
+      name: this.name.value,
+      emailId: this.email.value.toLowerCase(),
+      mobile: this.mobile.value,
+      businessName: this.businessName.value,
+      password: this.password.value,
     };
 
-    // Optional image handling (if using image upload UI)
-
-    this.loading = true;
-    console.log(formData)
     this.leadsService.createAccount(formData).subscribe({
       next: (response) => {
         this.loading = false;
         this.toastService.showSuccess('Account created successfully');
         this.router.navigate(['/user/login']);
-        // this.routingService.handleRoute('user/login', null); // Replace 'accounts' with your desired route
       },
       error: (error) => {
         this.loading = false;
         const message = error?.error || 'Error creating account';
-        this.toastService.showError(error);
+        this.toastService.showError(message);
       }
     });
   }
 
-
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;
-  }
-
-  toggleConfirmPasswordVisibility() {
-    this.isConfirmPasswordVisible = !this.isConfirmPasswordVisible;
   }
 }
