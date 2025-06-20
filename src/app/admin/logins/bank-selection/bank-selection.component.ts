@@ -6,6 +6,7 @@ import { ToastService } from 'src/app/services/toast.service';
 import { projectConstantsLocal } from 'src/app/constants/project-constants';
 
 interface Program {
+  heading: string;
   name: string;
   imageUrl: string;
 }
@@ -37,13 +38,14 @@ export class BankSelectionComponent implements OnInit {
   bankNameToSearch: string;
   version = projectConstantsLocal.VERSION_DESKTOP;
   programs: Program[] = [
-    { name: 'Income Surrogate', imageUrl: '../../../assets/images/programs/income.png' },
+    { heading: 'Income Surrogate', name: 'INCOME', imageUrl: '../../../assets/images/programs/income.png' },
     {
-      name: 'Banking Surrogate',
+      heading: 'Banking Surrogate',
+      name: 'BANKING',
       imageUrl: '../../../assets/images/programs/banking.png',
     },
-    { name: 'GST Surrogate', imageUrl: '../../../assets/images/programs/gst.png' },
-    { name: 'DOD Surrogate', imageUrl: '../../../assets/images/programs/od1.png' },
+    { heading: 'GST Surrogate', name: 'GST', imageUrl: '../../../assets/images/programs/gst.png' },
+    { heading: 'DOD Surrogate', name: 'OD', imageUrl: '../../../assets/images/programs/od1.png' },
   ];
 
   banks: Bank[] = [];
