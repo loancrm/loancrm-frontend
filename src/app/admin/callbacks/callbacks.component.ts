@@ -1301,11 +1301,20 @@ this.HomeSelffilterConfig=this.filterConfig
   }
 
   filterWithPersonNameForHome() {
-    let searchFilterForHome = {
-      'businessName-like': this.personNameToSearchForHome,
-    };
+    let searchFilterForHome = {'businessName-like': this.personNameToSearchForHome,};
+
+    // const trimmedInput = this.personNameToSearchForHome?.trim() || '';
+    // if (this.isPhoneNumber(trimmedInput)){
+    //   console.log("Detected phone Number:", trimmedInput);
+    //   this.searchFilter ={'phone-like':trimmedInput}
+    // } else {
+    //   console.log("Detecyed Person name:",trimmedInput);
+    //   this.searchFilter ={"businessName-like": trimmedInput};
+    // }
+    // console.log("search Filter Object:", this.searchFilter);
     this.applyFiltersHome(searchFilterForHome);
   }
+
   filterWithPersonNameForLAP() {
     let searchFilterForLap = {
       'businessName-like': this.personNameToSearchForHome,
@@ -1560,12 +1569,36 @@ this.HomeSelffilterConfig=this.filterConfig
   }
 
   filterWithBusinessName() {
-    let searchFilter = { 'businessName-like': this.businessNameToSearch };
+    let searchFilter = {};
+    const trimmedInput = this.businessNameToSearch?.trim() || '';
+
+    if(this.isPhoneNumber(trimmedInput)){
+      console.log('Dectected Phone number:',trimmedInput);
+      searchFilter={'phone-like':trimmedInput}
+    } else{
+      console.log("Detected business name:", trimmedInput);
+      searchFilter ={'businessName-like': this.businessNameToSearch }
+    }
+      console.log("Search Filter Object:", searchFilter);
     this.applyFilters(searchFilter);
   }
 
+  isPhoneNumber(value:string):boolean{
+    const phoneNumberPattern=/^[6-9]\d{9}$/;
+    return phoneNumberPattern.test(value.trim())
+  }
+
   filterWithPersonName() {
-    let searchFilter = { 'businessName-like': this.personNameToSearch };
+    let searchFilter = {};
+    const trimmedInput = this.personNameToSearch?.trim() || '';
+    if(this.isPhoneNumber(trimmedInput)){
+      console.log('Detected phone number:', trimmedInput);
+      searchFilter = {'phone-like':trimmedInput}      
+    } else {
+      console.log("Detected Person Name:",trimmedInput);
+      searchFilter ={'businessName-like':trimmedInput}
+    }
+    console.log("search Filter Object:", searchFilter);
     this.applyFiltersForPersonal(searchFilter);
   }
 
