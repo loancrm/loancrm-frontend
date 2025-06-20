@@ -43,12 +43,12 @@ input {
 }
 
 /* Apply animation to the placeholder text */
-.p-inputgroup input::placeholder {
-  color: #7a86b6; /* Placeholder text color */
-  white-space: nowrap;
-  animation: move-placeholder 10s linear infinite; /* Animation effect */
-  opacity: 1; /* Ensure visibility */
-}
+// .p-inputgroup input::placeholder {
+//   color: #7a86b6; /* Placeholder text color */
+//   white-space: nowrap;
+//   animation: move-placeholder 10s linear infinite; /* Animation effect */
+//   opacity: 1; /* Ensure visibility */
+// }
 
 /* Keyframes to move the placeholder text */
 @keyframes move-placeholder {

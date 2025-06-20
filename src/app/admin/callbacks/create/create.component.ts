@@ -3,6 +3,7 @@ import {
   UntypedFormGroup,
   UntypedFormBuilder,
   Validators,
+  MinLengthValidator,
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DateTimeProcessorService } from '../../../services/date-time-processor.service';
@@ -22,6 +23,7 @@ export class CreateComponent {
   breadCrumbItems: any = [];
   leadUsers: any = [];
   callBackForm: UntypedFormGroup;
+  submitted=false
   callBackId: any;
   loading: any;
   callBackData: any;
@@ -120,7 +122,44 @@ export class CreateComponent {
     if (this.loanType == 'businessLoan') {
       this.employmentStatus = 'self-employed';
     }
+    const phoneControl = this.callBackForm.get('phone');
+    phoneControl?.valueChanges.subscribe(value=>{
+      if (value && value.length==10){
+        const isValid = /^[6-9]\d{9}$/.test(value);
+        if(!isValid){
+          phoneControl.setErrors({pattern:true});
+        }else{
+          phoneControl.setErrors(null);
+        }
+      }else{
+        if(phoneControl?.hasError('pattern')){
+          phoneControl.setErrors(null)
+        }
+      }
+    });
+    // const businessnameControl= this.callBackForm.get('businessName');
+    // businessnameControl?.valueChanges.subscribe(value=>{
+    //   if(value && value.length < 3){
+    //     const isValid = MinLengthValidator.test(value);
+    //     if(!isValid){
+    //       businessnameControl.setErrors({MinLengthValidator:true});
+    //     } else{
+    //       businessnameControl.setErrors(null);
+    //     }
+    //   } else {
+    //     if (businessnameControl?.hasError('MinLengthValidator')){
+    //       businessnameControl.setErrors(null)
+    //     }
+    //   }
+    // })
   }
+
+  get businessName(){
+    return this.callBackForm.get('businessName')
+  }
+
+
+
   getCallBackDetailsById(filter = {}) {
     return new Promise((resolve, reject) => {
       this.loading = true;
@@ -142,18 +181,19 @@ export class CreateComponent {
   }
   createForm() {
     this.callBackForm = this.formBuilder.group({
-      businessName: ['', Validators.compose([Validators.required])],
+      businessName: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
       // personName: ['', Validators.compose([Validators.required])],
       phone: [
         '',
         Validators.compose([
           Validators.required,
-          Validators.pattern(/^\d{10}$/),
+          Validators.minLength(10)
+          // Validators.pattern(/^[6-9]\d{9}$/),
         ]),
       ],
       sourcedBy: ['', Validators.compose([Validators.required])],
       date: ['', Validators.compose([Validators.required])],
-      remarks: ['', Validators.compose([Validators.required])],
+      remarks: ['', Validators.compose([Validators.required,Validators.minLength(3)])],
       createdOn: [''],
     });
     if (
@@ -166,6 +206,10 @@ export class CreateComponent {
     }
   }
   onSubmit(formValues) {
+    this.submitted=true;
+    if(this.callBackForm.invalid){
+      return
+    }
     let formData: any = {
       loanType: this.loanType,
       employmentStatus: this.employmentStatus,

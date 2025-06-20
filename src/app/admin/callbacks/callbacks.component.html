@@ -85,7 +85,7 @@
                   <input
                     type="text"
                     pInputText
-                    placeholder="Search Callback with Business Name"
+                    placeholder="Enter Business Name/Phone Number"
                     [(ngModel)]="businessNameToSearch"
                     (ngModelChange)="
                       inputValueChangeEvent('loanId', businessNameToSearch)
@@ -366,7 +366,7 @@
                   <input
                     type="text"
                     pInputText
-                    placeholder="Search Callback with Person Name"
+                    placeholder="Enter Person Name/Phone Number"
                     [(ngModel)]="personNameToSearch"
                     (ngModelChange)="
                       inputValueChangeEventForPersonal(
@@ -381,8 +381,8 @@
                     pButton
                     icon="pi pi-search"
                     class="p-button-primary"
-                    [disabled]="!businessNameToSearch"
-                    (click)="filterWithBusinessName()"
+                    [disabled]="!personNameToSearch"
+                    (click)="filterWithPersonName()"
                   ></button>
                 </div>
               </div>

@@ -179,7 +179,20 @@
                   formControlName="businessName"
                   placeholder="Enter Business Name"
                   autocomplete="off"
+                  minlength="3"
                 />
+              </div>
+              <div *ngIf="submitted && callBackForm.get('businessName')?.invalid">
+                <small
+                  class="text-danger"
+                  *ngIf="callBackForm.get('businessName')?.errors?.['required']">
+                  Business Name is Requried
+                </small>
+                <small
+                  class="text-danger"
+                  *ngIf="callBackForm.get('businessName')?.errors?.['minlength']">
+                  Enter BusinessName minimum 3 characters 
+                </small>
               </div>
             </div>
 
@@ -200,6 +213,18 @@
                   autocomplete="off"
                 />
               </div>
+              <div *ngIf="submitted && callBackForm.get('businessName')?.invalid">
+                <small
+                  class="text-danger"
+                  *ngIf="callBackForm.get('businessName')?.errors?.['required']">
+                  Person Name is Requried
+                </small>
+                <small
+                  class="text-danger"
+                  *ngIf="callBackForm.get('businessName')?.errors?.['minlength']">
+                  Enter Person Name minimum 3 characters 
+                </small>
+              </div>
             </div>
             <div class="col-md-3 mt-2">
               <div>
@@ -214,7 +239,26 @@
                   formControlName="phone"
                   autocomplete="off"
                   maxlength="10"
+                  minlength="10"
                 />
+              </div>
+              <div *ngIf="submitted && callBackForm.get('phone')?.invalid">
+                <small
+                  class="text-danger"
+                  *ngIf="callBackForm.get('phone')?.errors?.['required']">
+                  Phone Number is Requried
+                </small>
+                <small
+                  class="text-danger"
+                  *ngIf="callBackForm.get('phone')?.errors?.['pattern']">
+                    Invalid phone number.Please enter a valid mobile
+                    number
+                </small>
+                <small
+                  class="text-danger"
+                  *ngIf="callBackForm.get('phone')?.errors?.['minlength']">
+                  Please Enter 10 digits mobile number 
+                </small>
               </div>
             </div>
             <!-- Callback Date -->
@@ -258,6 +302,13 @@
                   />
                 </div>
               </div>
+              <div *ngIf="submitted && callBackForm.get('date')?.invalid">
+                <small
+                  class="text-danger"
+                  *ngIf="callBackForm.get('date')?.errors?.['required']">
+                  Callback Date is Requried
+                </small>
+              </div>
             </div>
 
             <!-- Sourced By (For User Types other than '3') -->
@@ -281,6 +332,13 @@
                   placeholder="Select Sourced By"
                   [dropdownIcon]="'fa fa-caret-down'"
                 ></p-dropdown>
+              </div>
+              <div *ngIf="submitted && callBackForm.get('sourcedBy')?.invalid">
+                <small
+                  class="text-danger"
+                  *ngIf="callBackForm.get('sourcedBy')?.errors?.['required']">
+                  Sourced By is Requried
+                </small>
               </div>
             </div>
 
@@ -338,6 +396,18 @@
                 [autoResize]="true"
               ></textarea>
             </div>
+            <div *ngIf="submitted && callBackForm.get('remarks')?.invalid">
+                <small
+                  class="text-danger"
+                  *ngIf="callBackForm.get('remarks')?.errors?.['required']">
+                  Remarks is Requried
+                </small>
+                <small
+                  class="text-danger"
+                  *ngIf="callBackForm.get('remarks')?.errors?.['minlength']">
+                  Enter Remarks minimum 3 characters 
+                </small>
+              </div>
 
             <!-- Buttons -->
             <div class="d-flex justify-content-center">
@@ -355,7 +425,7 @@
                   pButton
                   pRipple
                   type="submit"
-                  [disabled]="!callBackForm.valid"
+                  [disabled]="loading"
                   class="p-button-primary"
                 >
                   {{ actionType === "create" ? "Add" : "Update" }} Callback
