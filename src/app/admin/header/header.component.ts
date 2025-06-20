@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit {
   businessNameToSearch: any;
   currentTableEvent: any;
   loading: any;
-  notificationCount = 0;isMobile: boolean = false;
+  notificationCount = 0; isMobile: boolean = false;
   notifications: { message: string, timestamp: Date }[] = [];
   showDropdown = false;
   constructor(
@@ -47,10 +47,10 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-     this.isMobile = window.innerWidth < 768;
-  window.addEventListener('resize', () => {
     this.isMobile = window.innerWidth < 768;
-  });
+    window.addEventListener('resize', () => {
+      this.isMobile = window.innerWidth < 768;
+    });
     this.userDetails =
       this.localStorageService.getItemFromLocalStorage('userDetails');
     if (this.userDetails && this.userDetails.user) {
@@ -66,28 +66,40 @@ export class HeaderComponent implements OnInit {
     //   }
     // });
   }
-  confirmLogout(){
-  this.confirmationService.confirm({
-    message: `Are you sure you want to logout?`,
-    header: 'Confirm Logout',
-    icon: 'pi pi-sign-out',
-    accept: () => {
-      this.authService
-        .doLogout()
-        .then(() => {
-          this.toastService.showSuccess('Logout Successful');
-          this.localStorage.clearAllFromLocalStorage();
-          this.router.navigate(['user', 'login']);
-        })
-        .catch((error) => {
-          this.toastService.showError(error);
-        });
-    },
-    reject: () => {
-      this.toastService.showInfo('Logout cancelled');
-    }
-  });
-}
+  //   confirmLogout(){
+  //   this.confirmationService.confirm({
+  //     message: `Are you sure you want to logout?`,
+  //     header: 'Confirm Logout',
+  //     icon: 'pi pi-sign-out',
+  //     accept: () => {
+  //       this.authService
+  //         .doLogout()
+  //         .then(() => {
+  //           this.toastService.showSuccess('Logout Successful');
+  //           this.localStorage.clearAllFromLocalStorage();
+  //           this.router.navigate(['user', 'login']);
+  //         })
+  //         .catch((error) => {
+  //           this.toastService.showError(error);
+  //         });
+  //     },
+  //     reject: () => {
+  //       this.toastService.showInfo('Logout cancelled');
+  //     }
+  //   });
+  // }
+  userLogout() {
+    this.authService
+      .doLogout()
+      .then(() => {
+        this.toastService.showSuccess('Logout Successful');
+        this.localStorage.clearAllFromLocalStorage();
+        this.router.navigate(['user', 'login']);
+      })
+      .catch((error) => {
+        this.toastService.showError(error);
+      });
+  }
 
   viewUser(userId) {
     this.routingService.handleRoute('team/view/' + userId, null);

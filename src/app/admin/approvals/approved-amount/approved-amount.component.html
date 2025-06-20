@@ -44,8 +44,8 @@
               <th style="min-width: 200px">Process Code</th>
               <th style="min-width: 200px">Product type</th>
               <th style="min-width: 250px">Approval Date</th>
+              <th style="min-width: 250px">Status</th>
               <th style="min-width: 250px">Disbursed Date</th>
-              <th style="min-width: 150px">Status</th>
               <th style="min-width: 250px">Remarks</th>
             </tr>
           </ng-template>
@@ -164,6 +164,19 @@
                 </div>
               </td>
               <td>
+                <p-dropdown
+                  [options]="statusOptions"
+                  [style]="{ width: '100%' }"
+                  optionLabel="displayName"
+                  optionValue="name"
+                  [showClear]="true"
+                  appendTo="body"
+                  placeholder="Select Status"
+                  [dropdownIcon]="'fa fa-caret-down'"
+                  [(ngModel)]="rowData.approvedStatus"
+                ></p-dropdown>
+              </td>
+              <td>
                 <!-- <p-calendar
                   [(ngModel)]="rowData.disbursalDate"
                   [style]="{ width: '100%' }"
@@ -198,19 +211,6 @@
                     (click)="calendar.toggle()"
                   />
                 </div>
-              </td>
-              <td>
-                <p-dropdown
-                  [options]="statusOptions"
-                  [style]="{ width: '100%' }"
-                  optionLabel="displayName"
-                  optionValue="name"
-                  [showClear]="true"
-                  appendTo="body"
-                  placeholder="Select Status"
-                  [dropdownIcon]="'fa fa-caret-down'"
-                  [(ngModel)]="rowData.approvedStatus"
-                ></p-dropdown>
               </td>
               <td>
                 <textarea

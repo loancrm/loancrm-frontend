@@ -310,6 +310,30 @@ small {
 //   filter: brightness(0) invert(1);
 // }
 
-.fw-bold{
+.fw-bold {
   font-size: 14px !important;
+}
+.z-screen {
+  position: fixed;
+  top: 50px;
+  left: 250px;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999; /* Highest layering */
+  background-color: #ffffff;
+  padding: 1rem;
+  overflow: auto;
+}
+
+.fullscreen-wrapper {
+  transition: all 0.3s ease-in-out;
+}
+
+.table-container {
+  max-height: 100%;
+  overflow: auto;
+}
+
+.selected-row {
+  background-color: #d1e7dd !important; /* Light green */
 }

@@ -101,7 +101,6 @@
                         inputValueChangeEvent('loanId', businessNameToSearch)
                       "
                       (keyup.enter)="filterWithBusinessName()"
-                      
                     />
                     <button
                       type="button"
@@ -284,7 +283,7 @@
                         width="24px"
                         height="24px"
                         class="me-2"
-                        (click)="updateLead(lead.id);$event.stopPropagation()"
+                        (click)="updateLead(lead.id); $event.stopPropagation()"
                         pTooltip="Update Lead"
                         tooltipPosition="top"
                       />

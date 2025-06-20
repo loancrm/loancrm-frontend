@@ -38,7 +38,7 @@
     <div class="searchbox d-flex align-items-center mb-2">
       <div
         class="input-group custom-search"
-        style="width: 200px"
+        style="max-width: 300px"
         *ngIf="userDetails?.userType && userDetails.userType !== '3'"
       >
         <span
@@ -100,7 +100,7 @@
             >
               <i class="fa fa-user me-2"></i>View Profile
             </button>
-            <button class="btn btn-outline-danger" (click)="confirmLogout()">
+            <button class="btn btn-outline-danger" (click)="userLogout()">
               <i class="fa fa-sign-out me-2"></i>Logout
             </button>
           </div>

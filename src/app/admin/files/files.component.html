@@ -189,7 +189,7 @@
                 >
                   Sourced By
                 </th>
-                <th class="text-nowrap">Created Date</th>
+                <!-- <th class="text-nowrap">Created Date</th> -->
                 <th class="text-nowrap">Uploaded Date</th>
                 <th>Status</th>
                 <th>Actions</th>
@@ -243,11 +243,11 @@
                   }}</span>
                 </td>
 
-                <td>
+                <!-- <td>
                   <span class="table-column-data" *ngIf="lead.createdOn">{{
                     lead.createdOn | date : "mediumDate"
                   }}</span>
-                </td>
+                </td> -->
 
                 <td>
                   <span class="table-column-data" *ngIf="lead.uploadedDate">{{
@@ -379,6 +379,14 @@
                       />
                     </div>
                   </div>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="1" class="fw-semibold">Remarks</td>
+                <td colspan="10">
+                  <span class="table-column-data col-12" *ngIf="lead.remarks">{{
+                    lead.remarks | capitalizeFirst
+                  }}</span>
                 </td>
               </tr>
             </ng-template>

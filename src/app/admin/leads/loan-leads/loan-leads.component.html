@@ -157,12 +157,21 @@
                         formControlName="contactPerson"
                         autocomplete="off"
                       />
-                    <!-- Error message for invalid Contact Person Name -->
-                    <div *ngIf="leadForm.get('contactPerson')?.invalid && (leadForm.get('contactPerson')?.touched || leadForm.get('contactPerson')?.dirty)">
-                      <small class="text-danger" *ngIf="leadForm.get('contactPerson')?.errors?.['required']">
-                        Contact Person Name is required.
-                      </small>
-                    </div>
+                      <!-- Error message for invalid Contact Person Name -->
+                      <div
+                        *ngIf="
+                          leadForm.get('contactPerson')?.invalid &&
+                          (leadForm.get('contactPerson')?.touched ||
+                            leadForm.get('contactPerson')?.dirty)
+                        "
+                      >
+                        <small
+                          class="text-danger"
+                          *ngIf="leadForm.get('contactPerson')?.errors?.['required']"
+                        >
+                          Contact Person Name is required.
+                        </small>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-4 mt-2">
@@ -184,15 +193,26 @@
                         maxlength="10"
                       />
                       <!-- Error message for invalid Phone Number -->
-                    <div *ngIf="leadForm.get('primaryPhone')">
-                      <small class="text-danger" *ngIf="leadForm.get('primaryPhone')?.errors?.['required'] &&
-                              (leadForm.get('primaryPhone')?.touched || leadForm.get('primaryPhone')?.dirty)">
-                        Phone Number is required.
-                      </small>
-                      <small class="text-danger" *ngIf="leadForm.get('primaryPhone')?.value?.length === 10 && leadForm.get('primaryPhone')?.hasError('pattern')">
-                        Invalid phone number.Please enter a valid mobile number
-                      </small>
-                    </div>
+                      <div *ngIf="leadForm.get('primaryPhone')">
+                        <small
+                          class="text-danger"
+                          *ngIf="leadForm.get('primaryPhone')?.errors?.['required'] &&
+                              (leadForm.get('primaryPhone')?.touched || leadForm.get('primaryPhone')?.dirty)"
+                        >
+                          Phone Number is required.
+                        </small>
+                        <small
+                          class="text-danger"
+                          *ngIf="
+                            leadForm.get('primaryPhone')?.value?.length ===
+                              10 &&
+                            leadForm.get('primaryPhone')?.hasError('pattern')
+                          "
+                        >
+                          Invalid phone number.Please enter a valid mobile
+                          number
+                        </small>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-4 mt-2">
@@ -307,12 +327,21 @@
                         <option value="Guntur">Guntur</option>
                         <option value="Vizag">Vizag</option>
                       </datalist>
-                       <!-- Error message for invalid City -->
-                    <div *ngIf="leadForm.get('city')?.invalid && (leadForm.get('city')?.touched || leadForm.get('city')?.dirty)">
-                      <small class="text-danger" *ngIf="leadForm.get('city')?.errors?.['required']">
-                        City is required.
-                      </small>
-                    </div>
+                      <!-- Error message for invalid City -->
+                      <div
+                        *ngIf="
+                          leadForm.get('city')?.invalid &&
+                          (leadForm.get('city')?.touched ||
+                            leadForm.get('city')?.dirty)
+                        "
+                      >
+                        <small
+                          class="text-danger"
+                          *ngIf="leadForm.get('city')?.errors?.['required']"
+                        >
+                          City is required.
+                        </small>
+                      </div>
                     </div>
                   </div>
 
@@ -391,12 +420,21 @@
                         formControlName="companyName"
                         autocomplete="off"
                       />
-                       <!-- Error message for invalid Company Name -->
-                    <div *ngIf="leadForm.get('companyName')?.invalid && (leadForm.get('companyName')?.touched || leadForm.get('companyName')?.dirty)">
-                      <small class="text-danger" *ngIf="leadForm.get('companyName')?.errors?.['required']">
-                        Company Name is required.
-                      </small>
-                    </div>
+                      <!-- Error message for invalid Company Name -->
+                      <div
+                        *ngIf="
+                          leadForm.get('companyName')?.invalid &&
+                          (leadForm.get('companyName')?.touched ||
+                            leadForm.get('companyName')?.dirty)
+                        "
+                      >
+                        <small
+                          class="text-danger"
+                          *ngIf="leadForm.get('companyName')?.errors?.['required']"
+                        >
+                          Company Name is required.
+                        </small>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-4 mt-2">
@@ -416,19 +454,28 @@
                         formControlName="designation"
                         autocomplete="off"
                       />
-                    <!-- Error message for invalid Designation -->
-                    <div *ngIf="leadForm.get('designation')?.invalid && (leadForm.get('designation')?.touched || leadForm.get('designation')?.dirty)">
-                      <small class="text-danger" *ngIf="leadForm.get('designation')?.errors?.['required']">
-                        Designation is required.
-                      </small>
-                    </div>
+                      <!-- Error message for invalid Designation -->
+                      <div
+                        *ngIf="
+                          leadForm.get('designation')?.invalid &&
+                          (leadForm.get('designation')?.touched ||
+                            leadForm.get('designation')?.dirty)
+                        "
+                      >
+                        <small
+                          class="text-danger"
+                          *ngIf="leadForm.get('designation')?.errors?.['required']"
+                        >
+                          Designation is required.
+                        </small>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-4 mt-2">
                     <div>
                       <div class="my-1">
                         <label>
-                          Salary &nbsp;<span
+                          Salary (Monthly) &nbsp;<span
                             ><sup class="text-danger">*</sup></span
                           ></label
                         >
@@ -436,24 +483,33 @@
                       <input
                         pInputText
                         class="rounded-lg"
-                        type="text"
+                        type="number"
                         placeholder="Enter Salary"
                         formControlName="salary"
                         autocomplete="off"
                       />
                       <!-- Error message for invalid Salary -->
-                    <div *ngIf="leadForm.get('salary')?.invalid && (leadForm.get('salary')?.touched || leadForm.get('salary')?.dirty)">
-                      <small class="text-danger" *ngIf="leadForm.get('salary')?.errors?.['required']">
-                        Salary is required.
-                      </small>
-                    </div>
+                      <div
+                        *ngIf="
+                          leadForm.get('salary')?.invalid &&
+                          (leadForm.get('salary')?.touched ||
+                            leadForm.get('salary')?.dirty)
+                        "
+                      >
+                        <small
+                          class="text-danger"
+                          *ngIf="leadForm.get('salary')?.errors?.['required']"
+                        >
+                          Salary is required.
+                        </small>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-4 mt-2">
                     <div>
                       <div class="my-1">
                         <label
-                          >Job Experience&nbsp;<span
+                          >Job Experience (Years)&nbsp;<span
                             ><sup class="text-danger">*</sup></span
                           ></label
                         >
@@ -461,17 +517,26 @@
                       <input
                         pInputText
                         class="rounded-lg"
-                        type="email"
+                        type="number"
                         placeholder="Enter Job Experience"
                         formControlName="jobExperience"
                         autocomplete="off"
                       />
-                     <!-- Error message for invalid Job Experience -->
-                    <div *ngIf="leadForm.get('jobExperience')?.invalid && (leadForm.get('jobExperience')?.touched || leadForm.get('jobExperience')?.dirty)">
-                      <small class="text-danger" *ngIf="leadForm.get('jobExperience')?.errors?.['required']">
-                        Job Experience is required.
-                      </small>
-                    </div>
+                      <!-- Error message for invalid Job Experience -->
+                      <div
+                        *ngIf="
+                          leadForm.get('jobExperience')?.invalid &&
+                          (leadForm.get('jobExperience')?.touched ||
+                            leadForm.get('jobExperience')?.dirty)
+                        "
+                      >
+                        <small
+                          class="text-danger"
+                          *ngIf="leadForm.get('jobExperience')?.errors?.['required']"
+                        >
+                          Job Experience is required.
+                        </small>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-4 mt-2">
@@ -492,11 +557,20 @@
                         autocomplete="off"
                       />
                       <!-- Error message for invalid Company Address -->
-                    <div *ngIf="leadForm.get('companyAddress')?.invalid && (leadForm.get('companyAddress')?.touched || leadForm.get('companyAddress')?.dirty)">
-                      <small class="text-danger" *ngIf="leadForm.get('companyAddress')?.errors?.['required']">
-                        Company Address is required.
-                      </small>
-                    </div>
+                      <div
+                        *ngIf="
+                          leadForm.get('companyAddress')?.invalid &&
+                          (leadForm.get('companyAddress')?.touched ||
+                            leadForm.get('companyAddress')?.dirty)
+                        "
+                      >
+                        <small
+                          class="text-danger"
+                          *ngIf="leadForm.get('companyAddress')?.errors?.['required']"
+                        >
+                          Company Address is required.
+                        </small>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -627,11 +701,20 @@
                         [dropdownIcon]="'fa fa-caret-down'"
                       ></p-dropdown>
                       <!-- Error message for invalid Had Own House -->
-                    <div *ngIf="leadForm.get('hadOwnHouse')?.invalid && (leadForm.get('hadOwnHouse')?.touched || leadForm.get('hadOwnHouse')?.dirty)">
-                      <small class="text-danger" *ngIf="leadForm.get('hadOwnHouse')?.errors?.['required']">
-                        Had Own House is required.
-                      </small>
-                    </div>
+                      <div
+                        *ngIf="
+                          leadForm.get('hadOwnHouse')?.invalid &&
+                          (leadForm.get('hadOwnHouse')?.touched ||
+                            leadForm.get('hadOwnHouse')?.dirty)
+                        "
+                      >
+                        <small
+                          class="text-danger"
+                          *ngIf="leadForm.get('hadOwnHouse')?.errors?.['required']"
+                        >
+                          Had Own House is required.
+                        </small>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-4 mt-2">
@@ -651,12 +734,21 @@
                         formControlName="existingLoanDetails"
                         autocomplete="off"
                       />
-                    <!-- Error message for invalid Existing Loan Details -->
-                    <div *ngIf="leadForm.get('existingLoanDetails')?.invalid && (leadForm.get('existingLoanDetails')?.touched || leadForm.get('existingLoanDetails')?.dirty)">
-                      <small class="text-danger" *ngIf="leadForm.get('existingLoanDetails')?.errors?.['required']">
-                        Existing Loan Details is required.
-                      </small>
-                    </div>
+                      <!-- Error message for invalid Existing Loan Details -->
+                      <div
+                        *ngIf="
+                          leadForm.get('existingLoanDetails')?.invalid &&
+                          (leadForm.get('existingLoanDetails')?.touched ||
+                            leadForm.get('existingLoanDetails')?.dirty)
+                        "
+                      >
+                        <small
+                          class="text-danger"
+                          *ngIf="leadForm.get('existingLoanDetails')?.errors?.['required']"
+                        >
+                          Existing Loan Details is required.
+                        </small>
+                      </div>
                     </div>
                   </div>
                   <div
@@ -714,11 +806,20 @@
                         filterPlaceholder="Search..."
                       ></p-dropdown>
                       <!-- Error message for invalid Sourced By -->
-                    <div *ngIf="leadForm.get('sourcedBy')?.invalid && (leadForm.get('sourcedBy')?.touched || leadForm.get('sourcedBy')?.dirty)">
-                      <small class="text-danger" *ngIf="leadForm.get('sourcedBy')?.errors?.['required']">
-                        Sourced By is required.
-                      </small>
-                    </div>
+                      <div
+                        *ngIf="
+                          leadForm.get('sourcedBy')?.invalid &&
+                          (leadForm.get('sourcedBy')?.touched ||
+                            leadForm.get('sourcedBy')?.dirty)
+                        "
+                      >
+                        <small
+                          class="text-danger"
+                          *ngIf="leadForm.get('sourcedBy')?.errors?.['required']"
+                        >
+                          Sourced By is required.
+                        </small>
+                      </div>
                     </div>
                   </div>
                   <!-- <div
@@ -785,12 +886,21 @@
                         formControlName="calledFrom"
                         autocomplete="off"
                       />
-                       <!-- Error message for invalid Bank Name -->
-                    <div *ngIf="leadForm.get('calledFrom')?.invalid && (leadForm.get('calledFrom')?.touched || leadForm.get('calledFrom')?.dirty)">
-                      <small class="text-danger" *ngIf="leadForm.get('calledFrom')?.errors?.['required']">
-                        Bank Name is required.
-                      </small>
-                    </div>
+                      <!-- Error message for invalid Bank Name -->
+                      <div
+                        *ngIf="
+                          leadForm.get('calledFrom')?.invalid &&
+                          (leadForm.get('calledFrom')?.touched ||
+                            leadForm.get('calledFrom')?.dirty)
+                        "
+                      >
+                        <small
+                          class="text-danger"
+                          *ngIf="leadForm.get('calledFrom')?.errors?.['required']"
+                        >
+                          Bank Name is required.
+                        </small>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-12">
@@ -810,9 +920,18 @@
                       autocomplete="off"
                       [autoResize]="true"
                     ></textarea>
-                      <!-- Error message for invalid Remarks -->
-                    <div *ngIf="leadForm.get('remarks')?.invalid && (leadForm.get('remarks')?.touched || leadForm.get('remarks')?.dirty)">
-                      <small class="text-danger" *ngIf="leadForm.get('remarks')?.errors?.['required']">
+                    <!-- Error message for invalid Remarks -->
+                    <div
+                      *ngIf="
+                        leadForm.get('remarks')?.invalid &&
+                        (leadForm.get('remarks')?.touched ||
+                          leadForm.get('remarks')?.dirty)
+                      "
+                    >
+                      <small
+                        class="text-danger"
+                        *ngIf="leadForm.get('remarks')?.errors?.['required']"
+                      >
                         Remarks is required.
                       </small>
                     </div>
@@ -919,12 +1038,21 @@
                         placeholder="Enter Business Name"
                         autocomplete="off"
                       />
-                     <!-- Error message for invalid Contact Business Name -->
-                    <div *ngIf="leadFormforBusiness.get('businessName')?.invalid && (leadFormforBusiness.get('businessName')?.touched || leadFormforBusiness.get('businessName')?.dirty)">
-                      <small class="text-danger" *ngIf="leadFormforBusiness.get('businessName')?.errors?.['required']">
-                        Business Name is required.
-                      </small>
-                    </div>
+                      <!-- Error message for invalid Contact Business Name -->
+                      <div
+                        *ngIf="
+                          leadFormforBusiness.get('businessName')?.invalid &&
+                          (leadFormforBusiness.get('businessName')?.touched ||
+                            leadFormforBusiness.get('businessName')?.dirty)
+                        "
+                      >
+                        <small
+                          class="text-danger"
+                          *ngIf="leadFormforBusiness.get('businessName')?.errors?.['required']"
+                        >
+                          Business Name is required.
+                        </small>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-4 mt-2">
@@ -947,12 +1075,21 @@
                         [dropdownIcon]="'fa fa-caret-down'"
                         styleClass="w-100"
                       ></p-dropdown>
-                       <!-- Error message for invalid Business Entity -->
-                    <div *ngIf="leadFormforBusiness.get('businessEntity')?.invalid && (leadFormforBusiness.get('businessEntity')?.touched || leadFormforBusiness.get('businessEntity')?.dirty)">
-                      <small class="text-danger" *ngIf="leadFormforBusiness.get('businessEntity')?.errors?.['required']">
-                        Business Entity is required.
-                      </small>
-                    </div>
+                      <!-- Error message for invalid Business Entity -->
+                      <div
+                        *ngIf="
+                          leadFormforBusiness.get('businessEntity')?.invalid &&
+                          (leadFormforBusiness.get('businessEntity')?.touched ||
+                            leadFormforBusiness.get('businessEntity')?.dirty)
+                        "
+                      >
+                        <small
+                          class="text-danger"
+                          *ngIf="leadFormforBusiness.get('businessEntity')?.errors?.['required']"
+                        >
+                          Business Entity is required.
+                        </small>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-4 mt-2">
@@ -973,11 +1110,21 @@
                         autocomplete="off"
                       />
                       <!-- Error message for invalid Business Vintage -->
-                    <div *ngIf="leadFormforBusiness.get('businessVintage')?.invalid && (leadFormforBusiness.get('businessVintage')?.touched || leadFormforBusiness.get('businessVintagey')?.dirty)">
-                      <small class="text-danger" *ngIf="leadFormforBusiness.get('businessVintage')?.errors?.['required']">
-                        Business Vintage is required.
-                      </small>
-                    </div>
+                      <div
+                        *ngIf="
+                          leadFormforBusiness.get('businessVintage')?.invalid &&
+                          (leadFormforBusiness.get('businessVintage')
+                            ?.touched ||
+                            leadFormforBusiness.get('businessVintagey')?.dirty)
+                        "
+                      >
+                        <small
+                          class="text-danger"
+                          *ngIf="leadFormforBusiness.get('businessVintage')?.errors?.['required']"
+                        >
+                          Business Vintage is required.
+                        </small>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-4 mt-2">
@@ -999,12 +1146,23 @@
                         [dropdownIcon]="'fa fa-caret-down'"
                         styleClass="w-100"
                       ></p-dropdown>
-                       <!-- Error message for invalid Nature Of Business -->
-                    <div *ngIf="leadFormforBusiness.get('natureofBusiness')?.invalid && (leadFormforBusiness.get('natureofBusiness')?.touched || leadFormforBusiness.get('natureofBusiness')?.dirty)">
-                      <small class="text-danger" *ngIf="leadFormforBusiness.get('natureofBusiness')?.errors?.['required']">
-                        Nature Of Business is required.
-                      </small>
-                    </div>
+                      <!-- Error message for invalid Nature Of Business -->
+                      <div
+                        *ngIf="
+                          leadFormforBusiness.get('natureofBusiness')
+                            ?.invalid &&
+                          (leadFormforBusiness.get('natureofBusiness')
+                            ?.touched ||
+                            leadFormforBusiness.get('natureofBusiness')?.dirty)
+                        "
+                      >
+                        <small
+                          class="text-danger"
+                          *ngIf="leadFormforBusiness.get('natureofBusiness')?.errors?.['required']"
+                        >
+                          Nature Of Business is required.
+                        </small>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-4 mt-2">
@@ -1024,12 +1182,21 @@
                         placeholder="Enter Product Name"
                         autocomplete="off"
                       />
-                       <!-- Error message for invalid Product Name -->
-                    <div *ngIf="leadFormforBusiness.get('product')?.invalid && (leadFormforBusiness.get('product')?.touched || leadFormforBusiness.get('product')?.dirty)">
-                      <small class="text-danger" *ngIf="leadFormforBusiness.get('product')?.errors?.['required']">
-                        Product Name is required.
-                      </small>
-                    </div>
+                      <!-- Error message for invalid Product Name -->
+                      <div
+                        *ngIf="
+                          leadFormforBusiness.get('product')?.invalid &&
+                          (leadFormforBusiness.get('product')?.touched ||
+                            leadFormforBusiness.get('product')?.dirty)
+                        "
+                      >
+                        <small
+                          class="text-danger"
+                          *ngIf="leadFormforBusiness.get('product')?.errors?.['required']"
+                        >
+                          Product Name is required.
+                        </small>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-4 mt-2">
@@ -1051,12 +1218,23 @@
                         [dropdownIcon]="'fa fa-caret-down'"
                         styleClass="w-100"
                       ></p-dropdown>
-                       <!-- Error message for invalid Business Turnover -->
-                    <div *ngIf="leadFormforBusiness.get('businessTurnover')?.invalid && (leadFormforBusiness.get('businessTurnover')?.touched || leadFormforBusiness.get('businessTurnover')?.dirty)">
-                      <small class="text-danger" *ngIf="leadFormforBusiness.get('businessTurnover')?.errors?.['required']">
-                        Business Turnover is required.
-                      </small>
-                    </div>
+                      <!-- Error message for invalid Business Turnover -->
+                      <div
+                        *ngIf="
+                          leadFormforBusiness.get('businessTurnover')
+                            ?.invalid &&
+                          (leadFormforBusiness.get('businessTurnover')
+                            ?.touched ||
+                            leadFormforBusiness.get('businessTurnover')?.dirty)
+                        "
+                      >
+                        <small
+                          class="text-danger"
+                          *ngIf="leadFormforBusiness.get('businessTurnover')?.errors?.['required']"
+                        >
+                          Business Turnover is required.
+                        </small>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1140,12 +1318,21 @@
                         <option value="Guntur">Guntur</option>
                         <option value="Vizag">Vizag</option>
                       </datalist>
-                        <!-- Error message for invalid City -->
-                    <div *ngIf="leadFormforBusiness.get('city')?.invalid && (leadFormforBusiness.get('city')?.touched || leadFormforBusiness.get('city')?.dirty)">
-                      <small class="text-danger" *ngIf="leadFormforBusiness.get('city')?.errors?.['required']">
-                        City is required.
-                      </small>
-                    </div>
+                      <!-- Error message for invalid City -->
+                      <div
+                        *ngIf="
+                          leadFormforBusiness.get('city')?.invalid &&
+                          (leadFormforBusiness.get('city')?.touched ||
+                            leadFormforBusiness.get('city')?.dirty)
+                        "
+                      >
+                        <small
+                          class="text-danger"
+                          *ngIf="leadFormforBusiness.get('city')?.errors?.['required']"
+                        >
+                          City is required.
+                        </small>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-4 mt-2">
@@ -1223,12 +1410,21 @@
                         formControlName="contactPerson"
                         autocomplete="off"
                       />
-                       <!-- Error message for invalid Contact Person Name -->
-                    <div *ngIf="leadFormforBusiness.get('contactPerson')?.invalid && (leadFormforBusiness.get('contactPerson')?.touched || leadFormforBusiness.get('contactPerson')?.dirty)">
-                      <small class="text-danger" *ngIf="leadFormforBusiness.get('contactPerson')?.errors?.['required']">
-                        Contact Person Name is required.
-                      </small>
-                    </div>
+                      <!-- Error message for invalid Contact Person Name -->
+                      <div
+                        *ngIf="
+                          leadFormforBusiness.get('contactPerson')?.invalid &&
+                          (leadFormforBusiness.get('contactPerson')?.touched ||
+                            leadFormforBusiness.get('contactPerson')?.dirty)
+                        "
+                      >
+                        <small
+                          class="text-danger"
+                          *ngIf="leadFormforBusiness.get('contactPerson')?.errors?.['required']"
+                        >
+                          Contact Person Name is required.
+                        </small>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-4 mt-2">
@@ -1250,15 +1446,28 @@
                         maxlength="10"
                       />
                       <!-- Error message for invalid Phone Number -->
-                    <div *ngIf="leadFormforBusiness.get('primaryPhone')">
-                      <small class="text-danger" *ngIf="leadFormforBusiness.get('primaryPhone')?.errors?.['required'] &&
-                              (leadFormforBusiness.get('primaryPhone')?.touched || leadFormforBusiness.get('primaryPhone')?.dirty)">
-                        Phone Number is required.
-                      </small>
-                      <small class="text-danger" *ngIf="leadFormforBusiness.get('primaryPhone')?.value?.length === 10 && leadFormforBusiness.get('primaryPhone')?.hasError('pattern')">
-                        Invalid phone number.Please enter a valid mobile number
-                      </small>
-                    </div>
+                      <div *ngIf="leadFormforBusiness.get('primaryPhone')">
+                        <small
+                          class="text-danger"
+                          *ngIf="leadFormforBusiness.get('primaryPhone')?.errors?.['required'] &&
+                              (leadFormforBusiness.get('primaryPhone')?.touched || leadFormforBusiness.get('primaryPhone')?.dirty)"
+                        >
+                          Phone Number is required.
+                        </small>
+                        <small
+                          class="text-danger"
+                          *ngIf="
+                            leadFormforBusiness.get('primaryPhone')?.value
+                              ?.length === 10 &&
+                            leadFormforBusiness
+                              .get('primaryPhone')
+                              ?.hasError('pattern')
+                          "
+                        >
+                          Invalid phone number.Please enter a valid mobile
+                          number
+                        </small>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-4 mt-2">
@@ -1420,11 +1629,20 @@
                         [dropdownIcon]="'fa fa-caret-down'"
                       ></p-dropdown>
                       <!-- Error message for invalid Contact Had Own House -->
-                    <div *ngIf="leadFormforBusiness.get('hadOwnHouse')?.invalid && (leadFormforBusiness.get('hadOwnHouse')?.touched || leadForm.get('hadOwnHouse')?.dirty)">
-                      <small class="text-danger" *ngIf="leadFormforBusiness.get('hadOwnHouse')?.errors?.['required']">
-                        Had Own House is required.
-                      </small>
-                    </div>
+                      <div
+                        *ngIf="
+                          leadFormforBusiness.get('hadOwnHouse')?.invalid &&
+                          (leadFormforBusiness.get('hadOwnHouse')?.touched ||
+                            leadForm.get('hadOwnHouse')?.dirty)
+                        "
+                      >
+                        <small
+                          class="text-danger"
+                          *ngIf="leadFormforBusiness.get('hadOwnHouse')?.errors?.['required']"
+                        >
+                          Had Own House is required.
+                        </small>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-4 mt-2">
@@ -1445,11 +1663,23 @@
                         autocomplete="off"
                       />
                       <!-- Error message for invalid Contact Existing Loan Details -->
-                    <div *ngIf="leadFormforBusiness.get('existingLoanDetails')?.invalid && (leadFormforBusiness.get('existingLoanDetails')?.touched || leadFormforBusiness.get('existingLoanDetails')?.dirty)">
-                      <small class="text-danger" *ngIf="leadFormforBusiness.get('existingLoanDetails')?.errors?.['required']">
-                        Existing Loan Details is required.
-                      </small>
-                    </div>
+                      <div
+                        *ngIf="
+                          leadFormforBusiness.get('existingLoanDetails')
+                            ?.invalid &&
+                          (leadFormforBusiness.get('existingLoanDetails')
+                            ?.touched ||
+                            leadFormforBusiness.get('existingLoanDetails')
+                              ?.dirty)
+                        "
+                      >
+                        <small
+                          class="text-danger"
+                          *ngIf="leadFormforBusiness.get('existingLoanDetails')?.errors?.['required']"
+                        >
+                          Existing Loan Details is required.
+                        </small>
+                      </div>
                     </div>
                   </div>
 
@@ -1507,12 +1737,21 @@
                         [filter]="true"
                         filterPlaceholder="Search..."
                       ></p-dropdown>
-                       <!-- Error message for invalid Contact Existing Loan Details -->
-                    <div *ngIf="leadFormforBusiness.get('sourcedBy')?.invalid && (leadFormforBusiness.get('sourcedBy')?.touched || leadFormforBusiness.get('sourcedBy')?.dirty)">
-                      <small class="text-danger" *ngIf="leadFormforBusiness.get('sourcedBy')?.errors?.['required']">
-                        Sourced By is required.
-                      </small>
-                    </div>
+                      <!-- Error message for invalid Contact Existing Loan Details -->
+                      <div
+                        *ngIf="
+                          leadFormforBusiness.get('sourcedBy')?.invalid &&
+                          (leadFormforBusiness.get('sourcedBy')?.touched ||
+                            leadFormforBusiness.get('sourcedBy')?.dirty)
+                        "
+                      >
+                        <small
+                          class="text-danger"
+                          *ngIf="leadFormforBusiness.get('sourcedBy')?.errors?.['required']"
+                        >
+                          Sourced By is required.
+                        </small>
+                      </div>
                     </div>
                   </div>
                   <!-- <div
@@ -1579,12 +1818,21 @@
                         formControlName="calledFrom"
                         autocomplete="off"
                       />
-                        <!-- Error message for invalid Contact Existing Bank Name -->
-                    <div *ngIf="leadFormforBusiness.get('calledFrom')?.invalid && (leadFormforBusiness.get('calledFrom')?.touched || leadFormforBusiness.get('calledFrom')?.dirty)">
-                      <small class="text-danger" *ngIf="leadFormforBusiness.get('calledFrom')?.errors?.['required']">
-                        Bank Name is required.
-                      </small>
-                    </div>
+                      <!-- Error message for invalid Contact Existing Bank Name -->
+                      <div
+                        *ngIf="
+                          leadFormforBusiness.get('calledFrom')?.invalid &&
+                          (leadFormforBusiness.get('calledFrom')?.touched ||
+                            leadFormforBusiness.get('calledFrom')?.dirty)
+                        "
+                      >
+                        <small
+                          class="text-danger"
+                          *ngIf="leadFormforBusiness.get('calledFrom')?.errors?.['required']"
+                        >
+                          Bank Name is required.
+                        </small>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-12">
@@ -1604,9 +1852,18 @@
                       autocomplete="off"
                       [autoResize]="true"
                     ></textarea>
-                      <!-- Error message for invalid Contact Existing Remarks -->
-                    <div *ngIf="leadFormforBusiness.get('remarks')?.invalid && (leadFormforBusiness.get('remarks')?.touched || leadFormforBusiness.get('remarks')?.dirty)">
-                      <small class="text-danger" *ngIf="leadFormforBusiness.get('remarks')?.errors?.['required']">
+                    <!-- Error message for invalid Contact Existing Remarks -->
+                    <div
+                      *ngIf="
+                        leadFormforBusiness.get('remarks')?.invalid &&
+                        (leadFormforBusiness.get('remarks')?.touched ||
+                          leadFormforBusiness.get('remarks')?.dirty)
+                      "
+                    >
+                      <small
+                        class="text-danger"
+                        *ngIf="leadFormforBusiness.get('remarks')?.errors?.['required']"
+                      >
                         Remarks is required.
                       </small>
                     </div>

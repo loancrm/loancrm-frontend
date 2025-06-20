@@ -37,6 +37,7 @@ export const projectConstantsLocal = {
     { id: 1, name: 'disbursed', displayName: 'Disbursed' },
     { id: 2, name: 'cnis', displayName: 'CNI' },
     { id: 3, name: 'hold', displayName: 'Hold' },
+    { id: 4, name: 'agreement Done', displayName: 'Agreement Done' },
   ],
   PROCESS_CODES: [
     { id: 0, name: 'STARPOWERZ', displayName: 'STARPOWERZ' },

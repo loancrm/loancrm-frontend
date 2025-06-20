@@ -22,6 +22,10 @@ export class LeadProfileComponent implements OnInit {
   leadUsers: any = [];
   leadSources: any = [];
   userDetails: any;
+  selectedRows: any[] = [];
+  isFullscreen = false;
+  isEditingRemarks: boolean = false;
+  showTableDialog: boolean = false;
   version = projectConstantsLocal.VERSION_DESKTOP;
   leadInternalStatusList: any = projectConstantsLocal.LEAD_INTERNAL_STATUS;
   businessEntities: any = projectConstantsLocal.BUSINESS_ENTITIES;
@@ -87,6 +91,13 @@ export class LeadProfileComponent implements OnInit {
     const fileExtension = file.split('.').pop()?.toLowerCase();
     return !!fileExtension && imageExtensions.includes(fileExtension);
   }
+
+  toggleFullscreen() {
+    this.isFullscreen = !this.isFullscreen;
+  }
+  isRowSelected(item: any): boolean {
+    return this.selectedRows?.some(selected => selected.id === item.id);
+  }
   getAllLeadData(leadId: string) {
     this.loading = true;
     this.leadsService.getAllLeadData(leadId).subscribe(
@@ -103,6 +114,25 @@ export class LeadProfileComponent implements OnInit {
       }
     );
   }
+  saveRemarks(newRemark: string) {
+    this.isEditingRemarks = false;
+    const leadId = this.leadsData.leadData.id
+    const payload = {
+      businessName: this.leadsData.leadData.businessName,
+      remarks: newRemark
+    };
+
+    this.leadsService.updateLead(leadId, payload).subscribe({
+      next: () => {
+        this.toastService.showSuccess('Remarks updated successfully');
+      },
+      error: (err) => {
+        this.toastService.showError('Failed to update remarks');
+        console.error(err);
+      }
+    });
+  }
+
   convertToLakhsOrCrores(amount: number): string {
     if (amount >= 10000000) {
       const crores = amount / 10000000;

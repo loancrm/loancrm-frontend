@@ -150,7 +150,7 @@
           <th class="text-nowrap">Sanctioned Amount</th>
           <th class="text-nowrap">Disbursed Amount</th>
           <th class="text-nowrap">Sourced By</th>
-          <th class="text-nowrap">Created Date</th>
+          <!-- <th class="text-nowrap">Created Date</th> -->
           <th class="text-nowrap">Disbursed Date</th>
           <th>Actions</th>
         </tr>
@@ -182,11 +182,11 @@
               getSourceName(lead.sourcedBy) | capitalizeFirst
             }}</span>
           </td>
-          <td>
+          <!-- <td>
             <span class="table-column-data" *ngIf="lead.createdOn">{{
               lead.createdOn | date : "mediumDate"
             }}</span>
-          </td>
+          </td> -->
           <td>
             <span class="table-column-data" *ngIf="lead.disbursalDate">{{
               lead.disbursalDate | date : "mediumDate"

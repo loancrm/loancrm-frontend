@@ -148,8 +148,9 @@
           <th class="text-nowrap">Lead Id</th>
           <th class="text-nowrap">Business Name</th>
           <th>City</th>
+          <th class="text-nowrap">Sanction Amount</th>
           <th class="text-nowrap">Sourced By</th>
-          <th class="text-nowrap">Created Date</th>
+          <!-- <th class="text-nowrap">Created Date</th> -->
           <th class="text-nowrap">Approval Date</th>
           <th>Actions</th>
         </tr>
@@ -172,15 +173,20 @@
             }}</span>
           </td>
           <td>
+            <span class="table-column-data" *ngIf="lead.sanctionedAmount">{{
+              lead.sanctionedAmount | capitalizeFirst
+            }}</span>
+          </td>
+          <td>
             <span class="table-column-data" *ngIf="lead.sourcedBy">{{
               getSourceName(lead.sourcedBy) | capitalizeFirst
             }}</span>
           </td>
-          <td>
+          <!-- <td>
             <span class="table-column-data" *ngIf="lead.createdOn">{{
               lead.createdOn | date : "mediumDate"
             }}</span>
-          </td>
+          </td> -->
           <td>
             <span class="table-column-data" *ngIf="lead.approvalDate">{{
               lead.approvalDate | date : "mediumDate"

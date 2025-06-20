@@ -3265,26 +3265,25 @@
                   [(ngModel)]="statements['from']"
                   [showButtonBar]="true"
                 ></p-calendar> -->
-            <div class="custom-calendar-wrapper w-100 position-relative">
-  <p-calendar
-    #calendar
-    [(ngModel)]="statements['from']"
-    placeholder="Select From Date"
-    [showIcon]="false"
-    appendTo="body"
-    dateFormat="yy-mm-dd"
-    [showButtonBar]="true"
-    styleClass="w-100 custom-calendar-input"
-  ></p-calendar>
+                <div class="custom-calendar-wrapper w-100 position-relative">
+                  <p-calendar
+                    #calendar
+                    [(ngModel)]="statements['from']"
+                    placeholder="Select From Date"
+                    [showIcon]="false"
+                    appendTo="body"
+                    [showButtonBar]="true"
+                    styleClass="w-100 custom-calendar-input"
+                  ></p-calendar>
 
-  <!-- Custom Calendar Image Icon -->
-  <img
-    src="../../../../assets/images/icons/calendar.svg"
-    alt="Calendar Icon"
-    class="calendar-custom-img"
-    (click)="calendar.toggle()"
-  />
-</div>
+                  <!-- Custom Calendar Image Icon -->
+                  <img
+                    src="../../../../assets/images/icons/calendar.svg"
+                    alt="Calendar Icon"
+                    class="calendar-custom-img"
+                    (click)="calendar.toggle()"
+                  />
+                </div>
               </div>
             </div>
             <div class="col-md-3 mt-2">
@@ -3306,7 +3305,6 @@
                     placeholder="Select To Date"
                     [showIcon]="false"
                     appendTo="body"
-                    dateFormat="yy-mm-dd"
                     [showButtonBar]="true"
                     styleClass=" w-100"
                   ></p-calendar>
@@ -3449,7 +3447,6 @@
                     placeholder="Select From Date"
                     [showIcon]="false"
                     appendTo="body"
-                    dateFormat="yy-mm-dd"
                     [showButtonBar]="true"
                     styleClass=" w-100"
                   ></p-calendar>
@@ -3483,7 +3480,6 @@
                     placeholder="Select To Date"
                     [showIcon]="false"
                     appendTo="body"
-                    dateFormat="yy-mm-dd"
                     [showButtonBar]="true"
                     styleClass=" w-100"
                   ></p-calendar>
@@ -3855,26 +3851,25 @@
                   [(ngModel)]="gstData['filingPeriod']"
                   [showButtonBar]="true"
                 ></p-calendar> -->
-                 <div class="custom-calendar-wrapper w-100 position-relative">
-                            <p-calendar
-                              #calendar
-                               [(ngModel)]="gstData['filingPeriod']"
-                              placeholder="Select Filing Period"
-                              [showIcon]="false"
-                              appendTo="body"
-                              dateFormat="yy-mm-dd"
-                              [showButtonBar]="true"
-                              styleClass=" w-100"
-                            ></p-calendar>
+                <div class="custom-calendar-wrapper w-100 position-relative">
+                  <p-calendar
+                    #calendar
+                    [(ngModel)]="gstData['filingPeriod']"
+                    placeholder="Select Filing Period"
+                    [showIcon]="false"
+                    appendTo="body"
+                    [showButtonBar]="true"
+                    styleClass=" w-100"
+                  ></p-calendar>
 
-                            <!-- Custom Calendar Image Icon -->
-                            <img
-                              src="../../../../assets/images/icons/calendar.svg"
-                              alt="Calendar Icon"
-                              class="calendar-custom-img"
-                              (click)="calendar.toggle()"
-                            />
-                          </div>
+                  <!-- Custom Calendar Image Icon -->
+                  <img
+                    src="../../../../assets/images/icons/calendar.svg"
+                    alt="Calendar Icon"
+                    class="calendar-custom-img"
+                    (click)="calendar.toggle()"
+                  />
+                </div>
               </div>
             </div>
             <div class="col-md-3 mt-2">
@@ -4059,25 +4054,24 @@
                     [showButtonBar]="true"
                   ></p-calendar> -->
                   <div class="custom-calendar-wrapper w-100 position-relative">
-                            <p-calendar
-                              #calendar
-                              [(ngModel)]="loans['emiClosingDate']"
-                              placeholder="Select EMI Closing Date"
-                              [showIcon]="false"
-                              appendTo="body"
-                              dateFormat="yy-mm-dd"
-                              [showButtonBar]="true"
-                              styleClass=" w-100"
-                            ></p-calendar>
+                    <p-calendar
+                      #calendar
+                      [(ngModel)]="loans['emiClosingDate']"
+                      placeholder="Select EMI Closing Date"
+                      [showIcon]="false"
+                      appendTo="body"
+                      [showButtonBar]="true"
+                      styleClass=" w-100"
+                    ></p-calendar>
 
-                            <!-- Custom Calendar Image Icon -->
-                            <img
-                              src="../../../../assets/images/icons/calendar.svg"
-                              alt="Calendar Icon"
-                              class="calendar-custom-img"
-                              (click)="calendar.toggle()"
-                            />
-                          </div>
+                    <!-- Custom Calendar Image Icon -->
+                    <img
+                      src="../../../../assets/images/icons/calendar.svg"
+                      alt="Calendar Icon"
+                      class="calendar-custom-img"
+                      (click)="calendar.toggle()"
+                    />
+                  </div>
                   <button
                     pButton
                     pRipple

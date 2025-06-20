@@ -8,6 +8,8 @@ import { CapitalizeFirstPipe } from "src/app/pipes/capitalize.pipe";
 import { TimelineModule } from "primeng/timeline";
 import { TableModule } from "primeng/table";
 import { PanelModule } from "primeng/panel";
+import { DialogModule } from "primeng/dialog";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 const routes: Routes = [{ path: "", component: LeadProfileComponent }];
 
 @NgModule({
@@ -19,6 +21,9 @@ const routes: Routes = [{ path: "", component: LeadProfileComponent }];
     PreloaderModule,
     TimelineModule,
     TableModule,
+    DialogModule,
+    FormsModule,
+    ReactiveFormsModule,
     PanelModule,
     [RouterModule.forChild(routes)]
   ],

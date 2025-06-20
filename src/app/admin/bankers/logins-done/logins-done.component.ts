@@ -5,6 +5,7 @@ import { ToastService } from 'src/app/services/toast.service';
 import { LeadsService } from '../../leads/leads.service';
 import { Table } from 'primeng/table';
 import { projectConstantsLocal } from 'src/app/constants/project-constants';
+import { RoutingService } from 'src/app/services/routing-service';
 @Component({
   selector: 'app-logins-done',
   templateUrl: './logins-done.component.html',
@@ -26,7 +27,8 @@ export class LoginsDoneComponent implements OnInit {
     private leadsService: LeadsService,
     private location: Location,
     private toastService: ToastService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private routingService: RoutingService
   ) {
     this.breadCrumbItems = [
       {
@@ -112,6 +114,28 @@ export class LoginsDoneComponent implements OnInit {
         this.toastService.showError(error);
       }
     );
+  }
+  viewLead(event: any) {
+    console.log('Row clicked:', event.data);
+    const lead = event.data;
+    this.routingService.handleRoute('leads/profile/' + lead.leadId, null);
+  }
+  onRowEditSave(event: any) {
+    const lender = event.data;
+
+    const payload = {
+
+      fipRemarks: lender.fipRemarks,
+    };
+
+    this.leadsService.updateFipRemark(lender.id, payload).subscribe({
+      next: () => {
+        this.toastService.showError('Remark updated successfully');
+      },
+      error: () => {
+        this.toastService.showError('Failed to update remark');
+      },
+    });
   }
   goBack() {
     this.location.back();

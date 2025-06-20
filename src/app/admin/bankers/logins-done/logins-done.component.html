@@ -42,8 +42,13 @@
         #lenderTable
         [value]="loginsDone"
         [lazy]="true"
-        (onLazyLoad)="loadLeads($event)"
+        editable="true"
+        [editMode]="'cell'"
         dataKey="id"
+        (onEditComplete)="onRowEditSave($event)"
+        selectionMode="single"
+        (onLazyLoad)="loadLeads($event)"
+        (onRowSelect)="viewLead($event)"
         [showCurrentPageReport]="true"
         [rowsPerPageOptions]="[10, 25, 50]"
         [paginator]="true"
@@ -55,7 +60,7 @@
         class="p-datatable-striped"
         [globalFilterFields]="['leadName', 'program', 'status', 'remarks']"
         styleClass="p-datatable-customers"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords}  logins Done"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} logins Done"
       >
         <ng-template pTemplate="caption">
           <div class="row">
@@ -81,38 +86,44 @@
                 ></button>
               </div>
             </div>
-            <div class="col-md-4 mt-2 no-padding-small"></div>
-            <div class="col-md-4 mt-2 no-padding-small text-right"></div>
           </div>
         </ng-template>
-        <ng-template pTemplate="header" let-columns>
+
+        <ng-template pTemplate="header">
           <tr>
             <th>Lead Name</th>
             <th>Program</th>
+            <th>Login Date</th>
             <th>Status</th>
-            <th>Remarks</th>
+            <th pEditableColumnField="fipRemarks">Remarks</th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-lender>
-          <tr class="text-capitalize">
-            <td>
-              <span class="table-column-data">{{
-                lender.businessName | capitalizeFirst
-              }}</span>
-            </td>
-            <td>
-              <span class="table-column-data">{{ lender.program }}</span>
-            </td>
-            <td>
-              <span class="table-column-data">{{ lender.fipStatus }}</span>
-            </td>
-            <td>
-              <span class="table-column-data">{{
-                lender.fipRemarks | capitalizeFirst
-              }}</span>
+
+        <ng-template pTemplate="body" let-lender let-editing="editing">
+          <tr class="text-capitalize" [pSelectableRow]="lender">
+            <td>{{ lender.businessName | capitalizeFirst }}</td>
+            <td>{{ lender.program }}</td>
+            <td>{{ lender.loginDate }}</td>
+            <td>{{ lender.fipStatus }}</td>
+            <td pEditableColumn pEditableColumnField="fipRemarks">
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input
+                    type="text"
+                    pInputText
+                    [(ngModel)]="lender.fipRemarks"
+                    class="form-control"
+                    autofocus
+                  />
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{ lender.fipRemarks }}
+                </ng-template>
+              </p-cellEditor>
             </td>
           </tr>
         </ng-template>
+
         <ng-template pTemplate="emptymessage">
           <tr class="text-center">
             <td colspan="5" class="text-center fw-bold">
