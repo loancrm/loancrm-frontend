@@ -64,7 +64,7 @@
       >
         <ng-template pTemplate="caption">
           <div class="row">
-            <div class="col-md-4 mt-2 no-padding-small">
+            <div class="col-md-3 mt-2 no-padding-small">
               <div class="p-inputgroup">
                 <input
                   type="text"
@@ -76,14 +76,29 @@
                   "
                   (keyup.enter)="filterWithBusinessName()"
                 />
-                <button
+                <!-- <button
                   type="button"
                   pButton
                   icon="pi pi-search"
                   class="p-button-primary"
                   [disabled]="!businessNameToSearch"
                   (click)="filterWithBusinessName()"
-                ></button>
+                ></button> -->
+                <button
+                  type="button"
+                  pButton
+                  class="p-button-primary"
+                  [disabled]="!businessNameToSearch"
+                  (click)="filterWithBusinessName()"
+                >
+                  <img
+                    src="assets/images/icons/search.svg"
+                    alt="Search"
+                    width="16"
+                    height="16"
+                    style="vertical-align: middle"
+                  />
+                </button>
               </div>
             </div>
           </div>
@@ -105,7 +120,16 @@
             <td>{{ lender.program }}</td>
             <td>{{ lender.loginDate }}</td>
             <td>{{ lender.fipStatus }}</td>
-            <td pEditableColumn pEditableColumnField="fipRemarks">
+            <!-- <td
+              pEditableColumn
+              pEditableColumnField="fipRemarks"
+              (click)="$event.stopPropagation()"
+            > -->
+            <td
+              pEditableColumn
+              pEditableColumnField="fipRemarks"
+           
+            >
               <p-cellEditor>
                 <ng-template pTemplate="input">
                   <input

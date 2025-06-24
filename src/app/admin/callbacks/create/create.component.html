@@ -1,8 +1,8 @@
 <div>
-  <!-- <div class="bread-crumb m-2">
+  <div class="bread-crumb m-2">
     <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
-  </div> -->
-  <ul class="breadcrumb">
+  </div>
+  <!-- <ul class="breadcrumb">
     <li *ngFor="let item of breadCrumbItems">
       <a
         *ngIf="item.routerLink"
@@ -31,7 +31,7 @@
         {{ item.label }}
       </span>
     </li>
-  </ul>
+  </ul> -->
 
   <div>
     <div class="p-1 m-2">
@@ -105,7 +105,7 @@
             value="employed"
             [(ngModel)]="employmentStatus"
           />
-          <img src="../../../../assets/images/employed.jpg" alt="Employed" />
+          <!-- <img src="../../../../assets/images/employed.jpg" alt="Employed" /> -->
           <span>Employed</span>
         </label>
 
@@ -119,10 +119,10 @@
             value="self-employed"
             [(ngModel)]="employmentStatus"
           />
-          <img
+          <!-- <img
             src="../../../../assets/images/self-employed.png"
             alt="Self Employed"
-          />
+          /> -->
           <span>Self-Employed</span>
         </label>
       </div>
@@ -182,16 +182,20 @@
                   minlength="3"
                 />
               </div>
-              <div *ngIf="submitted && callBackForm.get('businessName')?.invalid">
+              <div
+                *ngIf="submitted && callBackForm.get('businessName')?.invalid"
+              >
                 <small
                   class="text-danger"
-                  *ngIf="callBackForm.get('businessName')?.errors?.['required']">
+                  *ngIf="callBackForm.get('businessName')?.errors?.['required']"
+                >
                   Business Name is Requried
                 </small>
                 <small
                   class="text-danger"
-                  *ngIf="callBackForm.get('businessName')?.errors?.['minlength']">
-                  Enter BusinessName minimum 3 characters 
+                  *ngIf="callBackForm.get('businessName')?.errors?.['minlength']"
+                >
+                  Enter BusinessName minimum 3 characters
                 </small>
               </div>
             </div>
@@ -213,16 +217,20 @@
                   autocomplete="off"
                 />
               </div>
-              <div *ngIf="submitted && callBackForm.get('businessName')?.invalid">
+              <div
+                *ngIf="submitted && callBackForm.get('businessName')?.invalid"
+              >
                 <small
                   class="text-danger"
-                  *ngIf="callBackForm.get('businessName')?.errors?.['required']">
+                  *ngIf="callBackForm.get('businessName')?.errors?.['required']"
+                >
                   Person Name is Requried
                 </small>
                 <small
                   class="text-danger"
-                  *ngIf="callBackForm.get('businessName')?.errors?.['minlength']">
-                  Enter Person Name minimum 3 characters 
+                  *ngIf="callBackForm.get('businessName')?.errors?.['minlength']"
+                >
+                  Enter Person Name minimum 3 characters
                 </small>
               </div>
             </div>
@@ -245,19 +253,21 @@
               <div *ngIf="submitted && callBackForm.get('phone')?.invalid">
                 <small
                   class="text-danger"
-                  *ngIf="callBackForm.get('phone')?.errors?.['required']">
+                  *ngIf="callBackForm.get('phone')?.errors?.['required']"
+                >
                   Phone Number is Requried
                 </small>
                 <small
                   class="text-danger"
-                  *ngIf="callBackForm.get('phone')?.errors?.['pattern']">
-                    Invalid phone number.Please enter a valid mobile
-                    number
+                  *ngIf="callBackForm.get('phone')?.errors?.['pattern']"
+                >
+                  Invalid phone number.Please enter a valid mobile number
                 </small>
                 <small
                   class="text-danger"
-                  *ngIf="callBackForm.get('phone')?.errors?.['minlength']">
-                  Please Enter 10 digits mobile number 
+                  *ngIf="callBackForm.get('phone')?.errors?.['minlength']"
+                >
+                  Please Enter 10 digits mobile number
                 </small>
               </div>
             </div>
@@ -305,7 +315,8 @@
               <div *ngIf="submitted && callBackForm.get('date')?.invalid">
                 <small
                   class="text-danger"
-                  *ngIf="callBackForm.get('date')?.errors?.['required']">
+                  *ngIf="callBackForm.get('date')?.errors?.['required']"
+                >
                   Callback Date is Requried
                 </small>
               </div>
@@ -329,6 +340,8 @@
                   optionValue="id"
                   appendTo="body"
                   [showClear]="true"
+                  [filter]="true"
+                  filterPlaceholder="Search..."
                   placeholder="Select Sourced By"
                   [dropdownIcon]="'fa fa-caret-down'"
                 ></p-dropdown>
@@ -336,7 +349,8 @@
               <div *ngIf="submitted && callBackForm.get('sourcedBy')?.invalid">
                 <small
                   class="text-danger"
-                  *ngIf="callBackForm.get('sourcedBy')?.errors?.['required']">
+                  *ngIf="callBackForm.get('sourcedBy')?.errors?.['required']"
+                >
                   Sourced By is Requried
                 </small>
               </div>
@@ -397,17 +411,19 @@
               ></textarea>
             </div>
             <div *ngIf="submitted && callBackForm.get('remarks')?.invalid">
-                <small
-                  class="text-danger"
-                  *ngIf="callBackForm.get('remarks')?.errors?.['required']">
-                  Remarks is Requried
-                </small>
-                <small
-                  class="text-danger"
-                  *ngIf="callBackForm.get('remarks')?.errors?.['minlength']">
-                  Enter Remarks minimum 3 characters 
-                </small>
-              </div>
+              <small
+                class="text-danger"
+                *ngIf="callBackForm.get('remarks')?.errors?.['required']"
+              >
+                Remarks is Requried
+              </small>
+              <small
+                class="text-danger"
+                *ngIf="callBackForm.get('remarks')?.errors?.['minlength']"
+              >
+                Enter Remarks minimum 3 characters
+              </small>
+            </div>
 
             <!-- Buttons -->
             <div class="d-flex justify-content-center">

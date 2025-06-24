@@ -90,29 +90,44 @@
             <ng-template pTemplate="caption">
               <!-------Adding one searchbar in business name and phone number-->
               <div class="row">
-                <div class="col-md-4 mt-2 no-padding-small">
+                <div class="col-md-3 mt-2 no-padding-small">
                   <div class="p-inputgroup">
                     <input
                       type="text"
                       pInputText
-                      placeholder="Search for Leads by Business Name/Phone Number"
+                      placeholder="Enter Business Name or Phone Number"
                       [(ngModel)]="businessNameToSearch"
                       (ngModelChange)="
                         inputValueChangeEvent('loanId', businessNameToSearch)
                       "
                       (keyup.enter)="filterWithBusinessName()"
                     />
-                    <button
+                    <!-- <button
                       type="button"
                       pButton
                       icon="pi pi-search"
                       class="p-button-primary"
                       [disabled]="!businessNameToSearch"
                       (click)="filterWithBusinessName()"
-                    ></button>
+                    ></button> -->
+                    <button
+                      type="button"
+                      pButton
+                      class="p-button-primary"
+                      [disabled]="!businessNameToSearch"
+                      (click)="filterWithBusinessName()"
+                    >
+                      <img
+                        src="assets/images/icons/search.svg"
+                        alt="Search"
+                        width="16"
+                        height="16"
+                        style="vertical-align: middle"
+                      />
+                    </button>
                   </div>
                 </div>
-                <div class="col-md-4 mt-2 no-padding-small">
+                <div class="col-md-3 mt-2 no-padding-small">
                   <div
                     class="p-inputgroup"
                     *ngIf="
@@ -138,7 +153,7 @@
                     </p-dropdown>
                   </div>
                 </div>
-                <div class="col-md-4 mt-2 no-padding-small text-right">
+                <div class="col-md-3 mt-2 no-padding-small text-right">
                   <div class="d-flex">
                     <div class="flex-grow-1 me-2">
                       <p-dropdown
@@ -348,8 +363,10 @@
             [value]="loanLeads"
             [sortOrder]="-1"
             [lazy]="true"
+            selectionMode="single"
             (onLazyLoad)="loadLeadsforPersonal($event)"
             dataKey="id"
+            (onRowSelect)="viewLead($event)"
             [showCurrentPageReport]="true"
             [rowsPerPageOptions]="[10, 25, 50]"
             [paginator]="true"
@@ -370,7 +387,7 @@
           >
             <ng-template pTemplate="caption">
               <div class="row">
-                <div class="col-md-4 mt-2 no-padding-small">
+                <div class="col-md-3 mt-2 no-padding-small">
                   <div class="p-inputgroup">
                     <input
                       type="text"
@@ -385,17 +402,32 @@
                       "
                       (keyup.enter)="filterWithBusinessNameForPersonal()"
                     />
-                    <button
+                    <!-- <button
                       type="button"
                       pButton
                       icon="pi pi-search"
                       class="p-button-primary"
                       [disabled]="!businessNameToSearchForPersonal"
                       (click)="filterWithBusinessNameForPersonal()"
-                    ></button>
+                    ></button> -->
+                    <button
+                      type="button"
+                      pButton
+                      class="p-button-primary"
+                      [disabled]="!businessNameToSearchForPersonal"
+                      (click)="filterWithBusinessNameForPersonal()"
+                    >
+                      <img
+                        src="assets/images/icons/search.svg"
+                        alt="Search"
+                        width="16"
+                        height="16"
+                        style="vertical-align: middle"
+                      />
+                    </button>
                   </div>
                 </div>
-                <div class="col-md-4 mt-2 no-padding-small">
+                <div class="col-md-3 mt-2 no-padding-small">
                   <div
                     class="p-inputgroup"
                     *ngIf="
@@ -421,7 +453,7 @@
                     </p-dropdown>
                   </div>
                 </div>
-                <div class="col-md-4 mt-2 no-padding-small text-right">
+                <div class="col-md-3 mt-2 no-padding-small text-right">
                   <div class="d-flex">
                     <div class="flex-grow-1 me-2">
                       <p-dropdown
@@ -478,7 +510,7 @@
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-lead>
-              <tr>
+              <tr [pSelectableRow]="lead">
                 <td>
                   <span class="table-column-data" *ngIf="lead.leadId">{{
                     lead.leadId
@@ -552,7 +584,7 @@
                         icon="fas fa-eye"
                         tooltipPosition="top"
                       ></button> -->
-                      <img
+                      <!-- <img
                         src="../../../assets/images/icons/eye.svg"
                         width="24px"
                         height="24px"
@@ -560,7 +592,7 @@
                         (click)="viewLead(lead)"
                         pTooltip="View Lead"
                         tooltipPosition="top"
-                      />
+                      /> -->
                       <!-- <button
                         pButton
                         pRipple
@@ -601,7 +633,7 @@
                         height="24px"
                         pTooltip="Actions"
                         tooltipPosition="top"
-                        (click)="menu.toggle($event)"
+                        (click)="menu.toggle($event); $event.stopPropagation()"
                       />
                     </div>
                   </div>
@@ -644,7 +676,9 @@
                 #HomeleadsTable
                 [value]="loanLeads"
                 [sortOrder]="-1"
+                (onRowSelect)="viewLead($event)"
                 [lazy]="true"
+                selectionMode="single"
                 (onLazyLoad)="
                   activeEmploymentStatus.name == 'employed'
                     ? loadLeadsforHome($event)
@@ -675,7 +709,7 @@
               >
                 <ng-template pTemplate="caption">
                   <div class="row">
-                    <div class="col-md-4 mt-2 no-padding-small">
+                    <div class="col-md-3 mt-2 no-padding-small">
                       <div class="p-inputgroup">
                         <input
                           type="text"
@@ -689,17 +723,32 @@
                           (ngModelChange)="handleInputChange($event)"
                           (keyup.enter)="filterBasedOnEmploymentStatus()"
                         />
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           icon="pi pi-search"
                           class="p-button-primary"
                           [disabled]="!searchInputValue"
                           (click)="filterBasedOnEmploymentStatus()"
-                        ></button>
+                        ></button> -->
+                        <button
+                          type="button"
+                          pButton
+                          class="p-button-primary"
+                          [disabled]="!searchInputValue"
+                          (click)="filterBasedOnEmploymentStatus()"
+                        >
+                          <img
+                            src="assets/images/icons/search.svg"
+                            alt="Search"
+                            width="16"
+                            height="16"
+                            style="vertical-align: middle"
+                          />
+                        </button>
                       </div>
                     </div>
-                    <div class="col-md-4 mt-2 no-padding-small">
+                    <div class="col-md-3 mt-2 no-padding-small">
                       <div
                         class="p-inputgroup"
                         *ngIf="
@@ -729,7 +778,7 @@
                         </p-dropdown>
                       </div>
                     </div>
-                    <div class="col-md-4 mt-2 no-padding-small text-right">
+                    <div class="col-md-3 mt-2 no-padding-small text-right">
                       <div class="d-flex">
                         <div class="flex-grow-1 me-2">
                           <p-dropdown
@@ -840,7 +889,7 @@
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-lead>
-                  <tr>
+                  <tr [pSelectableRow]="lead">
                     <td>
                       <span class="table-column-data" *ngIf="lead.leadId">{{
                         lead.leadId
@@ -950,7 +999,7 @@
                             icon="fas fa-eye"
                             tooltipPosition="top"
                           ></button> -->
-                          <img
+                          <!-- <img
                             src="../../../assets/images/icons/eye.svg"
                             width="24px"
                             height="24px"
@@ -958,7 +1007,7 @@
                             tooltipPosition="top"
                             (click)="viewLead(lead)"
                             pTooltip="View Lead"
-                          />
+                          /> -->
                           <!-- <button
                             pButton
                             pRipple
@@ -1000,7 +1049,9 @@
                             height="24px"
                             pTooltip="Actions"
                             tooltipPosition="top"
-                            (click)="menuhome.toggle($event)"
+                            (click)="
+                              menuhome.toggle($event); $event.stopPropagation()
+                            "
                           />
                         </div>
                       </div>
@@ -1046,6 +1097,8 @@
                 [value]="loanLeads"
                 [sortOrder]="-1"
                 [lazy]="true"
+                selectionMode="single"
+                (onRowSelect)="viewLead($event)"
                 (onLazyLoad)="
                   activeEmploymentStatus.name == 'employed'
                     ? loadLeadsforlap($event)
@@ -1076,7 +1129,7 @@
               >
                 <ng-template pTemplate="caption">
                   <div class="row">
-                    <div class="col-md-4 mt-2 no-padding-small">
+                    <div class="col-md-3 mt-2 no-padding-small">
                       <div class="p-inputgroup">
                         <input
                           type="text"
@@ -1090,17 +1143,32 @@
                           (ngModelChange)="handleInputChange($event)"
                           (keyup.enter)="filterBasedOnEmploymentStatus()"
                         />
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           icon="pi pi-search"
                           class="p-button-primary"
                           [disabled]="!searchInputValue"
                           (click)="filterBasedOnEmploymentStatus()"
-                        ></button>
+                        ></button> -->
+                        <button
+                          type="button"
+                          pButton
+                          class="p-button-primary"
+                          [disabled]="!searchInputValue"
+                          (click)="filterBasedOnEmploymentStatus()"
+                        >
+                          <img
+                            src="assets/images/icons/search.svg"
+                            alt="Search"
+                            width="16"
+                            height="16"
+                            style="vertical-align: middle"
+                          />
+                        </button>
                       </div>
                     </div>
-                    <div class="col-md-4 mt-2 no-padding-small">
+                    <div class="col-md-3 mt-2 no-padding-small">
                       <div
                         class="p-inputgroup"
                         *ngIf="
@@ -1130,7 +1198,7 @@
                         </p-dropdown>
                       </div>
                     </div>
-                    <div class="col-md-4 mt-2 no-padding-small text-right">
+                    <div class="col-md-3 mt-2 no-padding-small text-right">
                       <div class="d-flex">
                         <div class="flex-grow-1 me-2">
                           <p-dropdown
@@ -1235,7 +1303,7 @@
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-lead>
-                  <tr>
+                  <tr [pSelectableRow]="lead">
                     <td>
                       <span class="table-column-data" *ngIf="lead.leadId">{{
                         lead.leadId
@@ -1331,7 +1399,7 @@
                     <td>
                       <div class="text-center">
                         <div class="d-flex">
-                          <img
+                          <!-- <img
                             src="../../../assets/images/icons/eye.svg"
                             width="24px"
                             height="24px"
@@ -1339,7 +1407,7 @@
                             (click)="viewLead(lead)"
                             pTooltip="View Lead"
                             tooltipPosition="top"
-                          />
+                          /> -->
                           <img
                             src="../../../assets/images/icons/edit.svg"
                             width="24px"
@@ -1359,7 +1427,9 @@
                             src="../../../assets/images/icons/menu.svg"
                             width="24px"
                             height="24px"
-                            (click)="menu.toggle($event)"
+                            (click)="
+                              menu.toggle($event); $event.stopPropagation()
+                            "
                             pTooltip="Actions"
                             tooltipPosition="top"
                           />

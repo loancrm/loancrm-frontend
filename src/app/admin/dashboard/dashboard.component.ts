@@ -1048,14 +1048,24 @@ export class DashboardComponent implements OnInit {
       //   '#581845',
 
       // ],
+      //  colors: [
+      //   '#EE7846',
+      //   '#33FF57',
+      //   '#FFC001',
+      //   '#BB5D5E',
+      //   '#3A5D82',
+      //   // '#703960',
+      //   '#DCA600',
+
+      // ],
       colors: [
         '#EE7846',
-        '#33FF57',
-        '#FFC001',
+        '#DCA600',
         '#BB5D5E',
+        '#FABE06',
         '#3A5D82',
         // '#703960',
-        '#DCA600',
+        '#4878AC',
 
       ],
 

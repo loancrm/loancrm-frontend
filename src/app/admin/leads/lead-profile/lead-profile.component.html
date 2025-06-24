@@ -3422,10 +3422,10 @@
           loanleads.employmentStatus === 'employed'))
     "
   >
-    <div class="container-fluid p-4" *ngIf="!loading">
-      <div class="row">
+    <div class="container-fluid" *ngIf="!loading">
+      <div class="row g-2">
         <div class="col-md-4">
-          <div class="card m-3 profile">
+          <div class="card profile">
             <div class="profile-container">
               <div class="colored-half">
                 <svg
@@ -3465,7 +3465,7 @@
           </div>
         </div>
         <div class="col-md-8">
-          <div class="card m-3 p-4 profileinfo">
+          <div class="card profileinfo">
             <div class="card-header">Personal Information</div>
             <div class="card-body" *ngIf="loanleads">
               <div class="row">
@@ -3480,7 +3480,7 @@
                   </div> -->
                   <div class="info-line" *ngIf="loanleads?.salary">
                     <div class="label d-flex justify-content-between">
-                      Salary <b>:&nbsp;</b>
+                      Salary (monthly) <b>:&nbsp;</b>
                     </div>
                     <div class="value">
                       {{ loanleads?.salary | capitalizeFirst }}
@@ -3496,7 +3496,7 @@
                   </div>
                   <div class="info-line" *ngIf="loanleads?.jobExperience">
                     <div class="label d-flex justify-content-between">
-                      Job Experience <b>:&nbsp;</b>
+                      Job Experience (years)<b>:&nbsp;</b>
                     </div>
                     <div class="value">
                       {{ loanleads?.jobExperience | capitalizeFirst }}
@@ -3667,10 +3667,10 @@
           loanleads.employmentStatus === 'self-employed'))
     "
   >
-    <div class="container-fluid p-4" *ngIf="!loading">
-      <div class="row">
+    <div class="container-fluid" *ngIf="!loading">
+      <div class="row g-2">
         <div class="col-md-4">
-          <div class="card m-3 profile">
+          <div class="card profile">
             <div class="profile-container">
               <div class="colored-half">
                 <svg
@@ -3710,7 +3710,7 @@
           </div>
         </div>
         <div class="col-md-8">
-          <div class="card m-3 p-4 profileinfo">
+          <div class="card profileinfo">
             <div class="card-header">Business Information</div>
             <div class="card-body" *ngIf="loanleads">
               <div class="row">

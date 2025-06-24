@@ -1,10 +1,10 @@
 .profile-details .card {
   border: none;
-  box-shadow: 0 2px 4px rgba(185, 185, 226, 0.91);
+  // box-shadow: 0 2px 4px rgba(185, 185, 226, 0.91);
 }
 .container-fluid .profileinfo {
   border: none;
-  box-shadow: 0 2px 4px rgba(185, 185, 226, 0.91);
+  // box-shadow: 0 2px 4px rgba(185, 185, 226, 0.91);
   position: relative;
   text-transform: capitalize;
   // background-image: url("../../../../assets/images/files/2.png");
@@ -19,13 +19,13 @@
 }
 .company-name {
   color: #230461;
-  font-weight: bold;
+  font-weight: 600;
   border-radius: 10px;
 }
 .company-type {
-  font-size: 20px;
+  font-size: 14px;
   color: #5e2ac6;
-  font-weight: bold;
+  font-weight: 600;
 }
 .card-header {
   background-color: #f1f1f1;

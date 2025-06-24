@@ -6,7 +6,7 @@
   color: #7a86b6 !important;
 }
 
-.custom-btn{
+.custom-btn {
   height: 30px;
 }
 // ::ng-deep .p-datatable-striped tbody tr:nth-child(even) {
@@ -23,4 +23,12 @@
 :host ::ng-deep .p-dropdown-filter {
   width: 100% !important;
   margin: auto;
+}
+.p-button-primary {
+  background-color: #fff !important;
+  border-color: lightgray !important;
+  border-bottom-right-radius: 8px !important;
+  border-top-right-radius: 8px !important;
+  border-bottom-left-radius: 0 !important;
+  border-top-left-radius: 0 !important;
 }
