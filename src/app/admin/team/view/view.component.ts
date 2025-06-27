@@ -1323,8 +1323,10 @@ export class ViewComponent {
       null
     );
   }
-  viewLead(leadId) {
-    this.routingService.handleRoute('leads/profile/' + leadId, null);
+  viewLead(event: any) {
+    console.log('Row clicked:', event.data);
+    const lead = event.data;
+    this.routingService.handleRoute('leads/profile/' + lead.id, null);
   }
   loadDisbursalLeads(event) {
     this.currentTableEvent = event;

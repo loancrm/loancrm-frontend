@@ -478,7 +478,9 @@
                 [value]="followupLeads"
                 [sortOrder]="-1"
                 [lazy]="true"
+                selectionMode="single"
                 (onLazyLoad)="loadFollowupLeads($event)"
+                (onRowSelect)="viewLead($event)"
                 dataKey="id"
                 [showCurrentPageReport]="true"
                 [rowsPerPageOptions]="[10, 25, 50]"
@@ -594,7 +596,7 @@
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-lead>
-                  <tr>
+                  <tr [pSelectableRow]="lead">
                     <td>
                       <span class="table-column-data" *ngIf="lead.leadId">{{
                         lead.id
@@ -710,7 +712,7 @@
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="emptymessage">
-                  <tr class="text-center">
+                  <tr class="text-center" >
                     <td colspan="10" class="text-center fw-bold">
                       <img
                         src="../../../assets/images/menu/no-data.gif"
@@ -732,7 +734,9 @@
                 #fipleadsTable
                 [value]="fipleads"
                 [lazy]="true"
+                selectionMode="single"
                 (onLazyLoad)="loadFIpLeads($event)"
+                (onRowSelect)="viewLead($event)"
                 dataKey="id"
                 [showCurrentPageReport]="true"
                 [rowsPerPageOptions]="[10, 25, 50]"
@@ -837,7 +841,7 @@
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-lead>
-                  <tr class="text-capitalize">
+                  <tr [pSelectableRow]="lead">
                     <td>
                       <span class="table-column-data" *ngIf="lead.leadId">{{
                         lead.id
@@ -923,7 +927,7 @@
                       <p>No Files In Process Found</p>
                     </td>
                   </tr>
-                </ng-template>
+    </ng-template>
               </p-table>
             </div>
           </div>
@@ -936,6 +940,10 @@
                 [value]="sanctionLeads"
                 [lazy]="true"
                 (onLazyLoad)="loadApprovalLeads($event)"
+            
+                 selectionMode="single"
+               
+                (onRowSelect)="viewLead($event)"
                 dataKey="id"
                 [showCurrentPageReport]="true"
                 [rowsPerPageOptions]="[10, 25, 50]"
@@ -1038,8 +1046,8 @@
                     <th>Actions</th>
                   </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-lead>
-                  <tr class="text-capitalize">
+                <ng-template pTemplate="body" let-lead>                  
+                  <tr  [pSelectableRow]="lead">
                     <td>
                       <span class="table-column-data" *ngIf="lead.leadId">{{
                         lead.id
@@ -1153,6 +1161,8 @@
                 [value]="disbursalleads"
                 [lazy]="true"
                 (onLazyLoad)="loadDisbursalLeads($event)"
+                (onRowSelect)="viewLead($event)"
+                selectionMode="single"
                 dataKey="id"
                 [showCurrentPageReport]="true"
                 [rowsPerPageOptions]="[10, 25, 50]"
@@ -1256,7 +1266,7 @@
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-lead>
-                  <tr class="text-capitalize">
+                  <tr [pSelectableRow]="lead">
                     <td>
                       <span class="table-column-data" *ngIf="lead.leadId">{{
                         lead.id
@@ -1344,6 +1354,8 @@
                 [value]="inHouseRejectedleads"
                 [lazy]="true"
                 (onLazyLoad)="loadInhouseRejectLeads($event)"
+                selectionMode="single"
+                (onRowSelect)="viewLead($event)"
                 dataKey="id"
                 [showCurrentPageReport]="true"
                 [rowsPerPageOptions]="[10, 25, 50]"
@@ -1449,7 +1461,7 @@
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-lead>
-                  <tr class="text-capitalize">
+                  <tr [pSelectableRow]="lead">
                     <td>
                       <span class="table-column-data" *ngIf="lead.leadId">{{
                         lead.id
@@ -1540,6 +1552,8 @@
                 [value]="bankRejectLeads"
                 [lazy]="true"
                 (onLazyLoad)="loadBankRejectedLeads($event)"
+                (onRowSelect)="viewLead($event)"
+                selectionMode="single"
                 dataKey="id"
                 [showCurrentPageReport]="true"
                 [rowsPerPageOptions]="[10, 25, 50]"
@@ -1645,7 +1659,7 @@
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-lead>
-                  <tr class="text-capitalize">
+                  <tr [pSelectableRow]="lead">
                     <td>
                       <span class="table-column-data" *ngIf="lead.leadId">{{
                         lead.id
@@ -1733,6 +1747,8 @@
                 [value]="CniLeads"
                 [lazy]="true"
                 (onLazyLoad)="loadCNIRejectedLeads($event)"
+                (onRowSelect)="viewLead($event)"
+                selectionMode="single"
                 dataKey="id"
                 [showCurrentPageReport]="true"
                 [rowsPerPageOptions]="[10, 25, 50]"
@@ -1840,7 +1856,7 @@
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-lead>
-                  <tr class="text-capitalize">
+                  <tr [pSelectableRow]="lead">
                     <td>
                       <span class="table-column-data" *ngIf="lead.leadId">{{
                         lead.id
