@@ -139,6 +139,7 @@ export class LoanleaduploadsComponent implements OnInit {
     this.updateItemsBasedOnCondition();
   }
   updateItemsBasedOnCondition() {
+    const currentActiveName = this.activeItem?.name;
     const { loanType, employmentStatus } = this.loanleads[0];
     this.items = [
       { label: 'KYCs', name: 'kycs' },
@@ -163,7 +164,11 @@ export class LoanleaduploadsComponent implements OnInit {
         { label: 'Sale Details', name: 'saledetails' }
       );
     }
-    this.activeItem = this.items[0];
+    // this.activeItem = this.items[0];
+
+    // Try to restore previously active tab if still exists
+    const matchedTab = this.items.find(item => item.name === currentActiveName);
+    this.activeItem = matchedTab || this.items[0];
   }
   onActiveItemChange(event) {
     console.log(event);

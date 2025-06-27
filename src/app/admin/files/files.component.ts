@@ -909,8 +909,9 @@ export class FilesComponent implements OnInit {
     this.routingService.handleRoute('leads/profile/' + lead.id, null);
   }
 
-  viewLoanLead(leadId) {
-    this.routingService.handleRoute('files/loanleadview/' + leadId, null);
+  viewLoanLead(event) {
+    const lead = event.data
+    this.routingService.handleRoute('files/loanleadview/' + lead.leadId, null);
   }
 
   uploadLeadFiles(leadId) {

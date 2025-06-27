@@ -337,3 +337,11 @@ small {
 .selected-row {
   background-color: #d1e7dd !important; /* Light green */
 }
+.single-line-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100px; /* adjust as needed */
+  display: inline-block;
+  vertical-align: middle;
+}

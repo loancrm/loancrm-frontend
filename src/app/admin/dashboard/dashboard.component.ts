@@ -20,6 +20,8 @@ export class DashboardComponent implements OnInit {
   AgentWiseBarChartOptions: any;
   pieChartOptions: any;
   pieChartOptionsforFilter: any;
+  barChartData: any;
+  barChartOptions: any;
   totalLeadsCount: any = 0;
   apiLoading: any;
   filesInProcessCount: any = 0;
@@ -935,6 +937,79 @@ export class DashboardComponent implements OnInit {
   }
 
   setBarChartOptionsForFilter() {
+    this.barChartData = {
+      labels: ['Leads', 'Follow Ups', 'Files', 'Files In Process', 'Sanctions', 'Disbursals'],
+      datasets: [
+        {
+          label: 'Counts',
+          data: [
+            this.leadsCountforFilter,
+            this.followupsCountforFilter,
+            this.filesCountforFilter,
+            this.fiProcessCountforFilter,
+            this.approvalCountforFilter,
+            this.disbursalCountforFilter
+          ],
+          backgroundColor: ['#EE7846', '#DCA600', '#BB5D5E', '#FABE06', '#3A5D82', '#4878AC'],
+          borderRadius: 4,
+          maxBarThickness: 45
+        }
+      ]
+    };
+
+    this.barChartOptions = {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: 'Agent-Based Metrics',
+          color: '#29415B',
+          align: 'start',
+          font: { size: 18 }
+        }
+      },
+      animation: {
+        onComplete: (animationCtx) => {
+          const chart = animationCtx.chart;
+          const ctx = chart.ctx;
+          ctx.save();
+          ctx.font = '12px ';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'bottom';
+
+          chart.data.datasets.forEach((dataset, datasetIndex) => {
+            const meta = chart.getDatasetMeta(datasetIndex);
+            meta.data.forEach((bar, index) => {
+              const value = dataset.data[index];
+              if (value != null) {
+                ctx.fillStyle = '#000'; // color of the label
+                ctx.fillText(value.toString(), bar.x, bar.y - 5);
+              }
+            });
+          });
+
+          ctx.restore();
+        }
+      },
+      scales: {
+        x: {
+          title: { display: true, text: 'Metrics' },
+          ticks: { color: '#000' },
+          grid: { display: false }
+        },
+        y: {
+          title: { display: true, text: 'Count' },
+          beginAtZero: true,
+          // ticks: { stepSize: 100 },
+          grid: { color: '#e5e5e5' }
+        }
+      }
+    };
+
+
+
+
     this.AgentWiseBarChartOptions = {
       series: [
         {
@@ -1149,6 +1224,41 @@ export class DashboardComponent implements OnInit {
 
     };
   }
+  onBarClick(event: any) {
+    const { chart, originalEvent } = event;
+
+    if (!chart || !originalEvent) return;
+
+    const elements = chart.getElementsAtEventForMode(
+      originalEvent,
+      'nearest',
+      { intersect: true },
+      true
+    );
+
+    if (elements.length && this.userDetails?.userType === '1') {
+      const index = elements[0].index;
+      const routes = [
+        'user/leads',
+        'user/followups',
+        'user/files',
+        'user/filesinprocess',
+        'user/approvals',
+        'user/disbursals'
+      ];
+
+      const targetRoute = routes[index];
+      if (targetRoute) {
+        this.router.navigate([targetRoute], {
+          queryParams: {
+            id: this.userId,
+            name: this.userName
+          }
+        });
+      }
+    }
+  }
+
 
   loadLeads(event) {
     this.currentTableEvent = event;
@@ -1286,78 +1396,68 @@ export class DashboardComponent implements OnInit {
     };
     // this.pieChartOptions = {
     //   series: [this.totalLeadsCount, this.callBacksCount],
-    //   labels: ['Leads', 'Callbacks'],
     //   chart: {
-    //     // height: 350,
-    //     height: 410,
-    //     type: 'pie',
-    //     toolbar: { show: true },
+    //     height: 345,
+    //     type: 'radialBar',
+    //     toolbar: { show: false },
     //   },
-    //   colors: ['#B39BC8', '#F172A1'],
-    //   title: {
-    //     text: 'Leads Callback Trends',
-    //     align: 'left',
-    //     style: { fontSize: '18px', color: '#33009C' },
-    //   },
-    //   legend: {
-    //     show: false,
-    //     position: 'top',
-    //     horizontalAlign: 'right',
-    //     floating: false,
-    //     offsetY: 15,
-    //     offsetX: -5,
-    //   },
-    //   dataLabels: {
-    //     enabled: true,
-    //     formatter: function (val, opts) {
-    //       var customLabels = ['Leads', 'Callbacks'];
-    //       var seriesValues = opts.w.config.series[opts.seriesIndex];
-    //       var customLabel = customLabels[opts.seriesIndex];
-    //       return customLabel + ': ' + seriesValues;
-    //     },
-    //   },
-    //   responsive: [
-    //     {
-    //       breakpoint: 480,
-    //       options: {
-    //         chart: {
-    //           width: 200,
+    //   labels: ['Leads', 'Callbacks'], // Custom labels for chart and legend
+    //   plotOptions: {
+    //     radialBar: {
+    //       dataLabels: {
+    //         name: {
+    //           show: true,
+    //           fontSize: '16px',
     //         },
-    //         legend: {
-    //           position: 'bottom',
+    //         value: {
+    //           show: true,
+    //           fontSize: '14px',
+    //         },
+    //         total: {
+    //           show: true,
+    //           label: 'Total',
+    //           formatter: () => {
+    //             return (this.totalLeadsCount + this.callBacksCount).toString();
+    //           },
     //         },
     //       },
     //     },
-    //   ],
+    //   },
+    //   colors: ['#FF7948', '#4878AC'],
+    //   title: {
+    //     text: 'Leads Callback Trends',
+    //     align: 'left',
+    //     style: { fontSize: '18px', color: '#29415B' },
+    //   },
+    //   legend: {
+    //     show: true,
+    //     position: 'bottom',
+    //     horizontalAlign: 'center',
+    //     formatter: (seriesName, opts) => {
+    //       // This uses the label provided in `labels`
+    //       const value = opts.w.globals.series[opts.seriesIndex];
+    //       return `${seriesName}: ${value}`;
+    //     },
+    //     markers: {
+    //       width: 12,
+    //       height: 12,
+    //       radius: 12,
+    //     },
+    //     itemMargin: {
+    //       horizontal: 10,
+    //       vertical: 5,
+    //     },
+    //   },
     // };
+
     this.pieChartOptions = {
       series: [this.totalLeadsCount, this.callBacksCount],
+      labels: ['Leads', 'Callbacks'],
       chart: {
-        height: 345,
-        type: 'radialBar',
+        // height: 350,
+        height: 310,
+        type: 'donut',
         toolbar: { show: false },
-      },
-      labels: ['Leads', 'Callbacks'], // Custom labels for chart and legend
-      plotOptions: {
-        radialBar: {
-          dataLabels: {
-            name: {
-              show: true,
-              fontSize: '16px',
-            },
-            value: {
-              show: true,
-              fontSize: '14px',
-            },
-            total: {
-              show: true,
-              label: 'Total',
-              formatter: () => {
-                return (this.totalLeadsCount + this.callBacksCount).toString();
-              },
-            },
-          },
-        },
       },
       colors: ['#FF7948', '#4878AC'],
       title: {
@@ -1366,26 +1466,35 @@ export class DashboardComponent implements OnInit {
         style: { fontSize: '18px', color: '#29415B' },
       },
       legend: {
-        show: true,
-        position: 'bottom',
-        horizontalAlign: 'center',
-        formatter: (seriesName, opts) => {
-          // This uses the label provided in `labels`
-          const value = opts.w.globals.series[opts.seriesIndex];
-          return `${seriesName}: ${value}`;
-        },
-        markers: {
-          width: 12,
-          height: 12,
-          radius: 12,
-        },
-        itemMargin: {
-          horizontal: 10,
-          vertical: 5,
+        show: false,
+        position: 'top',
+        horizontalAlign: 'right',
+        floating: false,
+        offsetY: 15,
+        offsetX: -5,
+      },
+      dataLabels: {
+        enabled: true,
+        formatter: function (val, opts) {
+          var customLabels = ['Leads', 'Callbacks'];
+          var seriesValues = opts.w.config.series[opts.seriesIndex];
+          var customLabel = customLabels[opts.seriesIndex];
+          return customLabel + ': ' + seriesValues;
         },
       },
-    };
+      responsive: [
+        {
 
+          options: {
+
+            legend: {
+
+              position: 'bottom',
+            },
+          },
+        },
+      ],
+    };
 
     this.setBarChartOptionsForFilter();
     this.ApprovedDisbursedAmountChartOptions = {

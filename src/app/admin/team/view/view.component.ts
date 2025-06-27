@@ -525,7 +525,7 @@ export class ViewComponent {
       },
       chart: {
         height: 345,
-        type: 'radialBar',
+        type: 'donut',
         toolbar: { show: true },
       },
       colors: ['#FF7948', '#4878AC', '#FE746E'],

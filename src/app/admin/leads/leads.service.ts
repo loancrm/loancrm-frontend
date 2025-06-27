@@ -175,7 +175,7 @@ export class LeadsService {
     const url = 'leads/' + leadId;
     return this.serviceMeta.httpPut(url, data);
   }
-    updateFipRemark(leadId, data) {
+  updateFipRemark(leadId, data) {
     const url = 'leads/' + leadId;
     return this.serviceMeta.httpPut(url, data);
   }
@@ -320,6 +320,15 @@ export class LeadsService {
   }
   createSubscription(data) {
     const url = 'subscriptions';
+    return this.serviceMeta.httpPost(url, data);
+  }
+  createRazorpayOrder(amount: number) {
+    const url = 'subscriptions/razorpay/order';
+    return this.serviceMeta.httpPost(url, { amount });
+  }
+
+  verifyAndStoreSubscription(data: any) {
+    const url = 'subscriptions/razorpay/verify';
     return this.serviceMeta.httpPost(url, data);
   }
   deleteUsers(userId, filter = {}) {

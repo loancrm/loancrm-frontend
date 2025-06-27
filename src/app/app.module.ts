@@ -22,6 +22,9 @@ import { HomeModule } from './home/home.module';
 import { ContactModule } from './home/contact/contact.module';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { SubscriptionModule } from './subscription/subscription.module';
+import { BusinessLoanCalculatorModule } from './calculators/business-loan-calculator/business-loan-calculator.module';
+import { PersonalLoanCalculatorModule } from './calculators/personal-loan-calculator/personal-loan-calculator.module';
+import { ChartModule } from 'primeng/chart';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -41,6 +44,9 @@ export function tokenGetter() {
     PreloaderModule,
     ConfirmDialogModule,
     SubscriptionModule,
+    BusinessLoanCalculatorModule,
+    PersonalLoanCalculatorModule,
+    ChartModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -64,4 +70,4 @@ export function tokenGetter() {
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

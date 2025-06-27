@@ -130,6 +130,12 @@
               </button>
             </div>
           </div>
+          <div
+            class="col-md-3 mt-2 no-padding-small"
+            *ngIf="
+              userDetails && userDetails.userType && userDetails.userType == '3'
+            "
+          ></div>
           <div class="col-md-3 mt-2 no-padding-small text-right">
             <div class="d-flex">
               <div class="flex-grow-1 me-2">

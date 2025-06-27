@@ -1,0 +1,111 @@
+<div class="container my-5">
+  <div class="text-center mb-4">
+    <h2 class="fw-bold">📊 Flat Rate Business Loan EMI Calculator</h2>
+    <p class="text-muted">Easily compute your monthly EMI and repayment schedule</p>
+  </div>
+
+  <div class="row">
+    <!-- Input Panel -->
+    <div class="col-md-6 bg-light p-4 rounded shadow-sm">
+      <div class="form-group mb-3">
+        <label class="form-label fw-semibold">Loan Amount (₹)</label>
+        <p-slider [(ngModel)]="loanAmount" [min]="50000" [max]="10000000" [step]="10000" [style]="{ width: '100%' }"></p-slider>
+        <input class="form-control mt-2" type="number" [(ngModel)]="loanAmount" />
+      </div>
+
+      <div class="form-group mb-3">
+        <label class="form-label fw-semibold">Interest Rate (%)</label>
+        <p-slider [(ngModel)]="interestRate" [min]="5" [max]="25" [step]="0.5" [style]="{ width: '100%' }"></p-slider>
+        <input class="form-control mt-2" type="number" [(ngModel)]="interestRate" />
+      </div>
+
+      <div class="form-group mb-4">
+        <label class="form-label fw-semibold">Tenure (Years)</label>
+        <p-slider [(ngModel)]="tenure" [min]="1" [max]="5" [step]="1" [style]="{ width: '100%' }"></p-slider>
+        <input class="form-control mt-2" type="number" [(ngModel)]="tenure" />
+      </div>
+
+      <button class="btn btn-primary w-100 fw-bold" (click)="calculateEMI()">
+        🔍 Calculate EMI
+      </button>
+    </div>
+
+    <!-- Chart Panel -->
+    <div class="col-md-6 mt-4 mt-md-0 d-flex align-items-center justify-content-center">
+      <div *ngIf="piechartOptions" style="width: 100%;">
+        <app-apex-charts [chartOptions]="piechartOptions"></app-apex-charts>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary Section -->
+  <div class="mt-5 text-center border-top pt-4">
+    <h5 class="text-success">📅 Monthly EMI: ₹{{ emi | number }}</h5>
+    <p>Total Payable: ₹{{ totalPayable | number }}</p>
+    <p>Principal: ₹{{ loanAmount | number }}</p>
+    <p>Interest: ₹{{ totalInterest | number }}</p>
+  </div>
+
+  <!-- Expandable Repayment Schedule -->
+  <div *ngIf="groupedYears?.length" class="m-5">
+    <h4 class="mb-3">📆 Repayment Schedule (Year-wise)</h4>
+    <p-table
+      [value]="groupedYears"
+      dataKey="year"
+      [expandedRowKeys]="expandedRows"
+      responsiveLayout="scroll"
+      class="p-datatable-sm shadow-sm"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Year</th>
+          <th>Total EMI</th>
+          <th>Interest</th>
+          <th>Principal</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-yearObj>
+        <tr>
+          <td>
+            <a (click)="toggleRow(yearObj.year)" class="text-decoration-none">
+              <i class="pi me-2"
+                 [ngClass]="{ 'pi-plus-circle': !expandedRows[yearObj.year], 'pi-minus-circle': expandedRows[yearObj.year] }"></i>
+              {{ yearObj.year }}
+            </a>
+          </td>
+          <td>₹{{ getYearlyTotal(yearObj.year, 'emi') | number }}</td>
+          <td>₹{{ getYearlyTotal(yearObj.year, 'interest') | number }}</td>
+          <td>₹{{ getYearlyTotal(yearObj.year, 'principal') | number }}</td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="rowexpansion" let-yearObj>
+        <tr>
+          <td colspan="4">
+            <p-table [value]="groupedSchedule[yearObj.year]" responsiveLayout="scroll" class="p-datatable-striped p-datatable-sm">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>Month</th>
+                  <th>EMI (₹)</th>
+                  <th>Principal (₹)</th>
+                  <th>Interest (₹)</th>
+                  <th>Balance (₹)</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-month>
+                <tr>
+                  <td>{{ month.month }}</td>
+                  <td>{{ month.emi | number }}</td>
+                  <td>{{ month.principal | number }}</td>
+                  <td>{{ month.interest | number }}</td>
+                  <td>{{ month.balance | number }}</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

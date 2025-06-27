@@ -117,6 +117,14 @@
                   </button>
                 </div>
               </div>
+              <div
+                class="col-md-3 mt-2 no-padding-small"
+                *ngIf="
+                  userDetails &&
+                  userDetails.userType &&
+                  userDetails.userType == '3'
+                "
+              ></div>
               <div class="col-md-3 mt-2 no-padding-small">
                 <div
                   class="p-inputgroup"
@@ -416,6 +424,14 @@
                   </button>
                 </div>
               </div>
+              <div
+                class="col-md-3 mt-2 no-padding-small"
+                *ngIf="
+                  userDetails &&
+                  userDetails.userType &&
+                  userDetails.userType == '3'
+                "
+              ></div>
               <div class="col-md-3 mt-2 no-padding-small">
                 <div
                   class="p-inputgroup"
@@ -611,10 +627,10 @@
                   />
                 </div>
                 <div
-                  class="text-center d-flex"
+                  class="text-center d-flex pointer-cursor"
                   *ngIf="callback.callbackInternalStatus == 3"
                 >
-                  <button
+                  <!-- <button
                     pButton
                     pRipple
                     type="button"
@@ -623,7 +639,16 @@
                     pTooltip="View Lead"
                     icon="fas fa-eye"
                     tooltipPosition="top"
-                  ></button>
+                  ></button> -->
+                  <img
+                    src="../../../assets/images/icons/eye.svg"
+                    width="24px"
+                    height="24px"
+                    class="me-2"
+                    (click)="viewLead(callback)"
+                    pTooltip="View Lead"
+                    tooltipPosition="top"
+                  />
                 </div>
               </td>
             </tr>
@@ -729,6 +754,14 @@
                         </button>
                       </div>
                     </div>
+                    <div
+                      class="col-md-3 mt-2 no-padding-small"
+                      *ngIf="
+                        userDetails &&
+                        userDetails.userType &&
+                        userDetails.userType == '3'
+                      "
+                    ></div>
                     <div class="col-md-3 mt-2 no-padding-small">
                       <div
                         class="p-inputgroup"
@@ -963,7 +996,7 @@
                         class="text-center d-flex"
                         *ngIf="callback.callbackInternalStatus == 3"
                       >
-                        <button
+                        <!-- <button
                           pButton
                           pRipple
                           type="button"
@@ -972,7 +1005,16 @@
                           pTooltip="View Lead"
                           icon="fas fa-eye"
                           tooltipPosition="top"
-                        ></button>
+                        ></button> -->
+                        <img
+                          src="../../../assets/images/icons/eye.svg"
+                          width="24px"
+                          height="24px"
+                          class="me-2"
+                          (click)="viewLead(callback)"
+                          pTooltip="View Lead"
+                          tooltipPosition="top"
+                        />
                       </div>
                     </td>
                   </tr>
@@ -1081,6 +1123,14 @@
                         </button>
                       </div>
                     </div>
+                    <div
+                      class="col-md-3 mt-2 no-padding-small"
+                      *ngIf="
+                        userDetails &&
+                        userDetails.userType &&
+                        userDetails.userType == '3'
+                      "
+                    ></div>
                     <div class="col-md-3 mt-2 no-padding-small">
                       <div
                         class="p-inputgroup"
@@ -1325,7 +1375,7 @@
                         class="text-center d-flex"
                         *ngIf="callback.callbackInternalStatus == 3"
                       >
-                        <button
+                        <!-- <button
                           pButton
                           pRipple
                           type="button"
@@ -1334,7 +1384,16 @@
                           pTooltip="View Lead"
                           icon="fas fa-eye"
                           tooltipPosition="top"
-                        ></button>
+                        ></button> -->
+                        <img
+                          src="../../../assets/images/icons/eye.svg"
+                          width="24px"
+                          height="24px"
+                          class="me-2"
+                          (click)="viewLead(callback)"
+                          pTooltip="View Lead"
+                          tooltipPosition="top"
+                        />
                       </div>
                     </td>
                   </tr>

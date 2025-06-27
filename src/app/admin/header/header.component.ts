@@ -9,6 +9,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { LeadSearchComponent } from '../leadSearch/leadSearch.component';
 import { RoutingService } from 'src/app/services/routing-service';
 import { ConfirmationService } from 'primeng/api';
+import { DateTimeProcessorService } from 'src/app/services/date-time-processor.service';
 
 @Component({
   selector: 'app-header',
@@ -25,9 +26,13 @@ export class HeaderComponent implements OnInit {
   businessNameToSearch: any;
   currentTableEvent: any;
   loading: any;
+  moment: any;
   notificationCount = 0; isMobile: boolean = false;
   notifications: { message: string, timestamp: Date }[] = [];
   showDropdown = false;
+  subscriptionPlanName: string = '';
+  subscriptionEndDate: string = '';
+  showUpgradeMessage: boolean = false;
   constructor(
     private confirmationService: ConfirmationService,
     private authService: AuthService,
@@ -39,7 +44,9 @@ export class HeaderComponent implements OnInit {
     private localStorageService: LocalStorageService,
     private subscriptionService: SubscriptionService,
     private routingService: RoutingService,
+    private dateTimeProcessor: DateTimeProcessorService,
   ) {
+    this.moment = this.dateTimeProcessor.getMoment();
     this.leadsService.sidebarVisible$.subscribe((collapsed) => {
       this.sidebarCollapsed = collapsed;
     });
@@ -51,10 +58,11 @@ export class HeaderComponent implements OnInit {
     window.addEventListener('resize', () => {
       this.isMobile = window.innerWidth < 768;
     });
-    this.userDetails =
+    const userDetails =
       this.localStorageService.getItemFromLocalStorage('userDetails');
-    if (this.userDetails && this.userDetails.user) {
-      this.userDetails = this.userDetails.user;
+    if (userDetails && userDetails.user) {
+      this.userDetails = userDetails.user;
+      this.fetchSubscription(this.userDetails.accountId);
       this.userDetails.userImage = JSON.parse(this.userDetails.userImage);
     }
     // this.leadsService.connect(this.userDetails.id, this.userDetails.userType);
@@ -88,6 +96,37 @@ export class HeaderComponent implements OnInit {
   //     }
   //   });
   // }
+
+  fetchSubscription(accountId: number) {
+    this.leadsService.getSubscriptionById(accountId).subscribe({
+      next: (sub: any) => {
+        if (sub && sub.status === 'Active') {
+          this.subscriptionPlanName = sub.plan_name;
+          this.subscriptionEndDate = sub.end_date;
+
+          const today = this.moment();
+          const end = this.moment(sub.end_date);
+          const diff = end.diff(today, 'days');
+
+          if (diff < 0) {
+            // Subscription expired
+            this.subscriptionPlanName += ' (Expired)';
+            this.showUpgradeMessage = true;
+          } else if (diff <= 7) {
+            // Subscription expiring within 7 days
+            this.showUpgradeMessage = true;
+          }
+        }
+      },
+      error: (err) => {
+        console.error('Failed to fetch subscription:', err);
+      }
+    });
+  }
+
+  upgradeSubscription() {
+    this.router.navigate(['/user/choose-subscription']);
+  }
   userLogout() {
     this.authService
       .doLogout()

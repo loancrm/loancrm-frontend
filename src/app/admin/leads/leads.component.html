@@ -127,6 +127,14 @@
                     </button>
                   </div>
                 </div>
+                <div
+                  class="col-md-3 mt-2 no-padding-small"
+                  *ngIf="
+                    userDetails &&
+                    userDetails.userType &&
+                    userDetails.userType == '3'
+                  "
+                ></div>
                 <div class="col-md-3 mt-2 no-padding-small">
                   <div
                     class="p-inputgroup"
@@ -427,6 +435,14 @@
                     </button>
                   </div>
                 </div>
+                 <div
+                  class="col-md-3 mt-2 no-padding-small"
+                  *ngIf="
+                    userDetails &&
+                    userDetails.userType &&
+                    userDetails.userType == '3'
+                  "
+                ></div>
                 <div class="col-md-3 mt-2 no-padding-small">
                   <div
                     class="p-inputgroup"
@@ -489,7 +505,7 @@
             <ng-template pTemplate="header" let-columns>
               <tr>
                 <th class="text-nowrap">Lead Id</th>
-                <th class="text-nowrap">Person Name</th>
+                <th class="text-nowrap">Applicant Name</th>
                 <th>Designation</th>
                 <th class="text-nowrap">Primary Phone</th>
                 <th>Salary</th>
@@ -748,6 +764,14 @@
                         </button>
                       </div>
                     </div>
+                     <div
+                  class="col-md-3 mt-2 no-padding-small"
+                  *ngIf="
+                    userDetails &&
+                    userDetails.userType &&
+                    userDetails.userType == '3'
+                  "
+                ></div>
                     <div class="col-md-3 mt-2 no-padding-small">
                       <div
                         class="p-inputgroup"
@@ -834,7 +858,7 @@
                       class="text-nowrap"
                       *ngIf="activeEmploymentStatus.name === 'employed'"
                     >
-                      Person Name
+                      Applicant Name
                     </th>
                     <th
                       class="text-nowrap"
@@ -1168,6 +1192,14 @@
                         </button>
                       </div>
                     </div>
+                     <div
+                  class="col-md-3 mt-2 no-padding-small"
+                  *ngIf="
+                    userDetails &&
+                    userDetails.userType &&
+                    userDetails.userType == '3'
+                  "
+                ></div>
                     <div class="col-md-3 mt-2 no-padding-small">
                       <div
                         class="p-inputgroup"
@@ -1254,7 +1286,7 @@
                       class="text-nowrap"
                       *ngIf="activeEmploymentStatus.name === 'employed'"
                     >
-                      Person Name
+                      Applicant Name
                     </th>
                     <th
                       class="text-nowrap"

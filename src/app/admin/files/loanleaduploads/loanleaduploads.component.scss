@@ -47,3 +47,14 @@ label {
 .leaddata {
   border: none;
 }
+.calendar-custom-img {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+  filter: grayscale(100%) brightness(50%);
+  z-index: 10;
+}

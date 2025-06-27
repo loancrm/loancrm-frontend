@@ -61,7 +61,7 @@ export class LoanLeadsComponent {
     private dateTimeProcessor: DateTimeProcessorService
   ) {
     this.steps = [
-      { label: 'Contact Details' },
+      { label: 'Applicant Details' },
       { label: 'Address Details' },
       { label: 'Employment Details' },
       { label: 'Loan Requirement' },
