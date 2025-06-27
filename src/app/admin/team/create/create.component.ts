@@ -101,7 +101,29 @@ export class CreateComponent {
     this.getUserRoles();
     this.capabilities = this.leadsService.getUserRbac();
     console.log(this.capabilities);
+    const phoneControl = this.teamForm.get('phone number');
+    phoneControl?.valueChanges.subscribe(value => {
+      //only trigger validation when exactly 10 digits are entered
+      if (value && value.length === 10) {
+        const isValid = /^[6-9]\d{9}$/.test(value);//start with 6-9 and 10 digits
+        if (!isValid) {
+          phoneControl.setErrors({ pattern: true });
+
+        } else {
+          phoneControl.setErrors(null);//valid number
+        }
+
+      } else {
+        //Clear pattern error for incomplete input
+        if (phoneControl?.hasError('pattern')) {
+          phoneControl.setErrors(null);
+        }
+      }
+    });
+
   }
+
+
 
   getUserRoles(filter = {}) {
     this.leadsService.getUserRoles(filter).subscribe(
@@ -149,7 +171,8 @@ export class CreateComponent {
     this.teamForm = this.formBuilder.group({
       userId: ['', Validators.compose([Validators.required])],
       name: ['', Validators.compose([Validators.required])],
-      phone: ['', Validators.compose([Validators.required])],
+      // phone: ['', Validators.compose([Validators.required,Validators.pattern(/^\d{10}$/)])],
+      phone: ['', Validators.compose([Validators.required, Validators.pattern(/^\d{10}$/)])],
       email: ['', Validators.compose([Validators.required])],
       userType: ['', Validators.compose([Validators.required])],
       joiningDate: ['', Validators.compose([Validators.required])],
