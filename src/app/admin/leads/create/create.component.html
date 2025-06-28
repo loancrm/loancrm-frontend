@@ -82,9 +82,9 @@
                           <!-- Error message for invalid BusinessName -->
                           <div
                             *ngIf="
-                              leadForm.get('businessName')?.invalid &&
+                              submitted && leadForm.get('businessName')?.invalid ||
                               (leadForm.get('businessName')?.touched ||
-                                leadForm.get('businessName')?.dirty)
+                              leadForm.get('businessName')?.dirty)
                             "
                           >
                             <small
@@ -119,9 +119,9 @@
                           <!-- Error message for invalid Business Entity -->
                           <div
                             *ngIf="
-                              leadForm.get('businessEntity')?.invalid &&
+                              submitted && leadForm.get('businessEntity')?.invalid ||
                               (leadForm.get('businessEntity')?.touched ||
-                                leadForm.get('businessEntity')?.dirty)
+                              leadForm.get('businessEntity')?.dirty)
                             "
                           >
                             <small
@@ -153,10 +153,9 @@
                           <!-- Error message for invalid Business Vintage -->
                           <div
                             *ngIf="
-                              leadForm.get('businessOperatingSince')?.invalid &&
-                              (leadForm.get('businessOperatingSince')
-                                ?.touched ||
-                                leadForm.get('businessOperatingSince')?.dirty)
+                              submitted && leadForm.get('businessOperatingSince')?.invalid ||
+                                  (leadForm.get('businessOperatingSince')?.touched ||
+                                  leadForm.get('businessOperatingSince')?.dirty)
                             "
                           >
                             <small
@@ -192,9 +191,9 @@
                           <!-- Error message for invalid Nature Of Business -->
                           <div
                             *ngIf="
-                              leadForm.get('natureOfBusiness')?.invalid &&
+                              submitted && leadForm.get('natureOfBusiness')?.invalid ||
                               (leadForm.get('natureOfBusiness')?.touched ||
-                                leadForm.get('natureOfBusiness')?.dirty)
+                              leadForm.get('natureOfBusiness')?.dirty)
                             "
                           >
                             <small
@@ -226,9 +225,9 @@
                           <!-- Error message for invalid Nature Of Business -->
                           <div
                             *ngIf="
-                              leadForm.get('product')?.invalid &&
+                              submitted && leadForm.get('product')?.invalid ||
                               (leadForm.get('product')?.touched ||
-                                leadForm.get('product')?.dirty)
+                              leadForm.get('product')?.dirty)
                             "
                           >
                             <small
@@ -264,9 +263,9 @@
                           <!-- Error message for invalid Business Turnover -->
                           <div
                             *ngIf="
-                              leadForm.get('businessTurnover')?.invalid &&
+                              submitted && leadForm.get('businessTurnover')?.invalid ||
                               (leadForm.get('businessTurnover')?.touched ||
-                                leadForm.get('businessTurnover')?.dirty)
+                              leadForm.get('businessTurnover')?.dirty)
                             "
                           >
                             <small
@@ -360,9 +359,9 @@
                           <!-- Error message for invalid City -->
                           <div
                             *ngIf="
-                              leadForm.get('city')?.invalid &&
-                              (leadForm.get('city')?.touched ||
-                                leadForm.get('city')?.dirty)
+                                  submitted && leadForm.get('city')?.invalid ||
+                                  (leadForm.get('city')?.touched ||
+                                  leadForm.get('city')?.dirty)
                             "
                           >
                             <small
@@ -450,9 +449,9 @@
                           <!-- Error message for invalid City -->
                           <div
                             *ngIf="
-                              leadForm.get('contactPerson')?.invalid &&
-                              (leadForm.get('contactPerson')?.touched ||
-                                leadForm.get('contactPerson')?.dirty)
+                                submitted && leadForm.get('contactPerson')?.invalid ||
+                                  (leadForm.get('contactPerson')?.touched ||
+                                  leadForm.get('contactPerson')?.dirty)
                             "
                           >
                             <small
@@ -484,11 +483,9 @@
                             minlength="10"
                           />
                           <div
-                            *ngIf="
-                              leadForm.get('primaryPhone')?.invalid &&
-                              (leadForm.get('primaryPhone')?.touched ||
-                                leadForm.get('primaryPhone')?.dirty)
-                            "
+                            *ngIf="submitted && leadForm.get('primaryPhone')?.invalid ||
+                                  (leadForm.get('primaryPhone')?.touched ||
+                                  leadForm.get('primaryPhone')?.dirty)"
                           >
                             <small
                               class="text-danger"
@@ -502,6 +499,12 @@
                             >
                               Invalid phone number.Please enter a valid mobile
                               number
+                            </small>
+                            <small
+                              class="text-danger"
+                              *ngIf="leadForm.get('primaryPhone')?.errors?.['minlength']"
+                            >
+                            Please Enter 10 digits mobile number
                             </small>
                           </div>
                         </div>
@@ -636,9 +639,9 @@
                           <!-- Error message for Had Own House -->
                           <div
                             *ngIf="
-                              leadForm.get('hadOwnHouse')?.invalid &&
+                              submitted && leadForm.get('hadOwnHouse')?.invalid ||
                               (leadForm.get('hadOwnHouse')?.touched ||
-                                leadForm.get('hadOwnHouse')?.dirty)
+                              leadForm.get('hadOwnHouse')?.dirty)
                             "
                           >
                             <small
@@ -670,9 +673,9 @@
                           <!-- Error message for Existing Loan Details -->
                           <div
                             *ngIf="
-                              leadForm.get('existingLoanDetails')?.invalid &&
+                              submitted && leadForm.get('existingLoanDetails')?.invalid ||
                               (leadForm.get('existingLoanDetails')?.touched ||
-                                leadForm.get('existingLoanDetails')?.dirty)
+                              leadForm.get('existingLoanDetails')?.dirty)
                             "
                           >
                             <small
@@ -786,9 +789,9 @@
                           <!-- Error message for Existing Sourced By -->
                           <div
                             *ngIf="
-                              leadForm.get('sourcedBy')?.invalid &&
+                              submitted && leadForm.get('sourcedBy')?.invalid ||
                               (leadForm.get('sourcedBy')?.touched ||
-                                leadForm.get('sourcedBy')?.dirty)
+                              leadForm.get('sourcedBy')?.dirty)
                             "
                           >
                             <small
@@ -864,9 +867,9 @@
                           <!-- Error message for Bank Name -->
                           <div
                             *ngIf="
-                              leadForm.get('calledFrom')?.invalid &&
+                              submitted && leadForm.get('calledFrom')?.invalid ||
                               (leadForm.get('calledFrom')?.touched ||
-                                leadForm.get('calledFrom')?.dirty)
+                              leadForm.get('calledFrom')?.dirty)
                             "
                           >
                             <small
@@ -898,9 +901,9 @@
                         <!-- Error message for Remarks -->
                         <div
                           *ngIf="
-                            leadForm.get('remarks')?.invalid &&
+                            submitted && leadForm.get('remarks')?.invalid ||
                             (leadForm.get('remarks')?.touched ||
-                              leadForm.get('remarks')?.dirty)
+                            leadForm.get('remarks')?.dirty)
                           "
                         >
                           <small
@@ -950,7 +953,7 @@
                 pButton
                 pRipple
                 type="submit"
-                [disabled]="!leadForm.valid"
+                [disabled]="loading"
                 class="p-button-primary"
               >
                 {{ actionType == "create" ? "Add" : "Update" }} Lead
