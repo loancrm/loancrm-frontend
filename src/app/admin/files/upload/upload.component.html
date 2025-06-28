@@ -1254,7 +1254,12 @@
           </div>
         </div>
       </div>
-      <div *ngIf="leadData[0]?.businessEntity == 'partnership'">
+      <div
+        *ngIf="
+          leadData[0]?.businessEntity === 'partnership' ||
+          leadData[0]?.businessEntity === 'llp'
+        "
+      >
         <div *ngIf="activeItem.name == 'cibil'">
           <div>
             <div class="my-1 text-end">
@@ -2011,7 +2016,10 @@
                   </span>
                 </div>
               </div>
-              <div class="col-md-4 mt-2">
+              <div
+                class="col-md-4 mt-2"
+                *ngIf="leadData[0]?.businessEntity === 'partnership'"
+              >
                 <div>
                   <div class="my-1">
                     <label class="">
@@ -2062,7 +2070,64 @@
                   </span>
                 </div>
               </div>
-              <div class="col-md-4 mt-2">
+              <div
+                class="col-md-4 mt-2"
+                *ngIf="leadData[0]?.businessEntity === 'llp'"
+              >
+                <div>
+                  <div class="my-1">
+                    <label class="">
+                      Certificate of Incorporation &nbsp;
+                    </label>
+                  </div>
+                  <button
+                    pButton
+                    pRipple
+                    type="button"
+                    class="p-button-info me-2"
+                    (click)="uploadFiles('llpCertificateofIncorporation', '*/*')"
+                  >
+                    <i class="pi pi-upload"></i>&nbsp;Upload Files
+                  </button>
+                </div>
+                <div
+                  *ngIf="
+                    leadDocuments &&
+                    leadDocuments.llpCertificateofIncorporation &&
+                    leadDocuments.llpCertificateofIncorporation.length > 0
+                  "
+                  class="mt-2"
+                >
+                  <span
+                    *ngFor="
+                      let file of leadDocuments.llpCertificateofIncorporation
+                    "
+                    class="file-wrapper"
+                  >
+                    <a [href]="'//' + file" target="_blank">
+                      <i
+                        [class]="getFileIcon(file.split('.').pop())"
+                        class="file-icon me-2"
+                      ></i>
+                    </a>
+                    <button
+                      pButton
+                      *ngIf="this.capabilities.delete"
+                      type="button"
+                      class="delete-btn p-button-danger p-button-sm"
+                      (click)="
+                        confirmDelete(file, 'llpCertificateofIncorporation')
+                      "
+                    >
+                      <i class="pi pi-times"></i>
+                    </button>
+                  </span>
+                </div>
+              </div>
+              <div
+                class="col-md-4 mt-2"
+                *ngIf="leadData[0]?.businessEntity === 'partnership'"
+              >
                 <div>
                   <div class="my-1">
                     <label class=""> Partnership Deed&nbsp; </label>
@@ -2101,6 +2166,54 @@
                       type="button"
                       class="delete-btn p-button-danger p-button-sm"
                       (click)="confirmDelete(file, 'partnershipDeed')"
+                    >
+                      <i class="pi pi-times"></i>
+                    </button>
+                  </span>
+                </div>
+              </div>
+               <div
+                class="col-md-4 mt-2"
+                *ngIf="leadData[0]?.businessEntity === 'llp'"
+              >
+                <div>
+                  <div class="my-1">
+                    <label class=""> LLP Deed&nbsp; </label>
+                  </div>
+                  <button
+                    pButton
+                    pRipple
+                    type="button"
+                    class="p-button-info me-2"
+                    (click)="uploadFiles('llpDeed', '*/*')"
+                  >
+                    <i class="pi pi-upload"></i>&nbsp;Upload Files
+                  </button>
+                </div>
+                <div
+                  *ngIf="
+                    leadDocuments &&
+                    leadDocuments.llpDeed &&
+                    leadDocuments.llpDeed.length > 0
+                  "
+                  class="mt-2"
+                >
+                  <span
+                    *ngFor="let file of leadDocuments.llpDeed"
+                    class="file-wrapper"
+                  >
+                    <a [href]="'//' + file" target="_blank">
+                      <i
+                        [class]="getFileIcon(file.split('.').pop())"
+                        class="file-icon me-2"
+                      ></i>
+                    </a>
+                    <button
+                      pButton
+                      *ngIf="this.capabilities.delete"
+                      type="button"
+                      class="delete-btn p-button-danger p-button-sm"
+                      (click)="confirmDelete(file, 'llpDeed')"
                     >
                       <i class="pi pi-times"></i>
                     </button>

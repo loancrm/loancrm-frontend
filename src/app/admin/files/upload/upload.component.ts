@@ -49,6 +49,8 @@ export class UploadComponent implements OnInit {
       links: [],
       uploadedFiles: [],
     },
+    llpCertificateofIncorporation: { filesData: [], links: [], uploadedFiles: [] },
+    llpDeed: { filesData: [], links: [], uploadedFiles: [] },
     partnershipDeed: { filesData: [], links: [], uploadedFiles: [] },
     firmGstCertificate: { filesData: [], links: [], uploadedFiles: [] },
     firmmsmeUdyamCertificate: { filesData: [], links: [], uploadedFiles: [] },
@@ -464,6 +466,14 @@ export class UploadComponent implements OnInit {
     if (this.leadDocuments.firmRegistrationCertificate) {
       this.selectedFiles['firmRegistrationCertificate']['uploadedFiles'] =
         this.leadDocuments.firmRegistrationCertificate;
+    }
+    if (this.leadDocuments.llpCertificateofIncorporation) {
+      this.selectedFiles['llpCertificateofIncorporation']['uploadedFiles'] =
+        this.leadDocuments.llpCertificateofIncorporation;
+    }
+    if (this.leadDocuments.llpDeed) {
+      this.selectedFiles['llpDeed']['uploadedFiles'] =
+        this.leadDocuments.llpDeed;
     }
     if (this.leadDocuments.partnershipDeed) {
       this.selectedFiles['partnershipDeed']['uploadedFiles'] =
@@ -1483,6 +1493,54 @@ export class UploadComponent implements OnInit {
       ) {
         formData['partnershipDeed'].push(
           this.selectedFiles['partnershipDeed']['uploadedFiles'][i]
+        );
+      }
+    }
+    formData['llpCertificateofIncorporation'] = [];
+    if (
+      this.selectedFiles['llpCertificateofIncorporation'] &&
+      this.selectedFiles['llpCertificateofIncorporation']['links']
+    ) {
+      for (
+        let i = 0;
+        i < this.selectedFiles['llpCertificateofIncorporation']['links'].length;
+        i++
+      ) {
+        formData['llpCertificateofIncorporation'].push(
+          this.selectedFiles['llpCertificateofIncorporation']['links'][i]
+        );
+      }
+      for (
+        let i = 0;
+        i < this.selectedFiles['llpCertificateofIncorporation']['uploadedFiles'].length;
+        i++
+      ) {
+        formData['llpCertificateofIncorporation'].push(
+          this.selectedFiles['llpCertificateofIncorporation']['uploadedFiles'][i]
+        );
+      }
+    }
+    formData['llpDeed'] = [];
+    if (
+      this.selectedFiles['llpDeed'] &&
+      this.selectedFiles['llpDeed']['links']
+    ) {
+      for (
+        let i = 0;
+        i < this.selectedFiles['llpDeed']['links'].length;
+        i++
+      ) {
+        formData['llpDeed'].push(
+          this.selectedFiles['llpDeed']['links'][i]
+        );
+      }
+      for (
+        let i = 0;
+        i < this.selectedFiles['llpDeed']['uploadedFiles'].length;
+        i++
+      ) {
+        formData['llpDeed'].push(
+          this.selectedFiles['llpDeed']['uploadedFiles'][i]
         );
       }
     }

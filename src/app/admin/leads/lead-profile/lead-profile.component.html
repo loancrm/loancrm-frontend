@@ -1606,7 +1606,9 @@
                         <!-- PARTNERS KYC SECTION -->
                         <ng-container
                           *ngIf="
-                            leadsData?.leadData?.businessEntity == 'partnership'
+                            leadsData?.leadData?.businessEntity ===
+                              'partnership' ||
+                            leadsData?.leadData?.businessEntity === 'llp'
                           "
                         >
                           <div
@@ -2493,7 +2495,10 @@
 
                 <div
                   class="row"
-                  *ngIf="leadsData?.leadData?.businessEntity == 'partnership'"
+                  *ngIf="
+                    leadsData?.leadData?.businessEntity === 'partnership' ||
+                    leadsData?.leadData?.businessEntity === 'llp'
+                  "
                 >
                   <div class="col-md-6 mb-4">
                     <div class="card shadow-sm files-card">
@@ -2549,7 +2554,12 @@
                     </div>
                   </div>
                   <!-- GST Certificate -->
-                  <div class="col-md-6 mb-4">
+                  <div
+                    class="col-md-6 mb-4"
+                    *ngIf="
+                      leadsData?.leadData?.businessEntity === 'partnership'
+                    "
+                  >
                     <div class="card shadow-sm files-card">
                       <div class="card-body">
                         <h6 class="mb-3">Firm Registration Certificate</h6>
@@ -2584,8 +2594,51 @@
                       </div>
                     </div>
                   </div>
+                  <div
+                    class="col-md-6 mb-4"
+                    *ngIf="leadsData?.leadData?.businessEntity === 'llp'"
+                  >
+                    <div class="card shadow-sm files-card">
+                      <div class="card-body">
+                        <h6 class="mb-3">Certificate of Registration</h6>
+                        <ng-container
+                          *ngIf="
+                            leadsData?.documents?.llpCertificateofIncorporation
+                              ?.length;
+                            else noGst
+                          "
+                        >
+                          <div class="d-flex flex-wrap gap-2">
+                            <a
+                              *ngFor="
+                                let file of leadsData?.documents
+                                  ?.llpCertificateofIncorporation
+                              "
+                              [href]="'//' + file"
+                              target="_blank"
+                            >
+                              <i
+                                [class]="getFileIcon(file.split('.').pop())"
+                                class="file-icon me-2"
+                              ></i>
+                            </a>
+                          </div>
+                        </ng-container>
+                        <ng-template #noGst>
+                          <div class="text-warning">
+                            No Certificate of Incorporation uploaded.
+                          </div>
+                        </ng-template>
+                      </div>
+                    </div>
+                  </div>
 
-                  <div class="col-md-6 mb-4">
+                  <div
+                    class="col-md-6 mb-4"
+                    *ngIf="
+                      leadsData?.leadData?.businessEntity === 'partnership'
+                    "
+                  >
                     <div class="card shadow-sm files-card">
                       <div class="card-body">
                         <h6 class="mb-3">Partnership Deed</h6>
@@ -2601,6 +2654,40 @@
                                 let file of leadsData?.documents
                                   ?.partnershipDeed
                               "
+                              [href]="'//' + file"
+                              target="_blank"
+                            >
+                              <i
+                                [class]="getFileIcon(file.split('.').pop())"
+                                class="file-icon me-2"
+                              ></i>
+                            </a>
+                          </div>
+                        </ng-container>
+                        <ng-template #noGst>
+                          <div class="text-warning">
+                            No Partnership Deed uploaded.
+                          </div>
+                        </ng-template>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="col-md-6 mb-4"
+                    *ngIf="leadsData?.leadData?.businessEntity === 'llp'"
+                  >
+                    <div class="card shadow-sm files-card">
+                      <div class="card-body">
+                        <h6 class="mb-3">LLP Deed</h6>
+                        <ng-container
+                          *ngIf="
+                            leadsData?.documents?.llpDeed?.length;
+                            else noGst
+                          "
+                        >
+                          <div class="d-flex flex-wrap gap-2">
+                            <a
+                              *ngFor="let file of leadsData?.documents?.llpDeed"
                               [href]="'//' + file"
                               target="_blank"
                             >
@@ -3235,8 +3322,8 @@
                         [class.selected-row]="isRowSelected(item)"
                       >
                         <td>{{ rowIndex + 1 }}</td>
-                        <td>{{ item.program || "-" }}</td>
-                        <td>{{ item.bankName || "-" }}</td>
+                        <td class="text-nowrap">{{ item.program || "-" }}</td>
+                        <td class="text-nowrap">{{ item.bankName || "-" }}</td>
                         <td>
                           {{
                             item.loginDate
@@ -3245,8 +3332,30 @@
                           }}
                         </td>
                         <td>{{ item.fipStatus || "-" }}</td>
-                        <td>{{ item.fipRemarks || "-" }}</td>
-
+                        <td class="text-nowrap">
+                          <div >
+                            <span
+                              [ngClass]="{
+                                'single-line-ellipsis': !expandedRows[rowIndex]
+                              }"
+                              >{{ (item.fipRemarks | capitalizeFirst) || '-' }}</span
+                            >
+                            <a
+                              *ngIf="
+                                item.fipRemarks && item.fipRemarks.length > 10
+                              "
+                              href="javascript:void(0)"
+                              class="ms-1"
+                              (click)="toggleRow(rowIndex)"
+                            >
+                              {{
+                                expandedRows[rowIndex]
+                                  ? "Show less"
+                                  : "Show more"
+                              }}
+                            </a>
+                          </div>
+                        </td>
                         <td>
                           {{
                             item.approvalDate
@@ -3262,8 +3371,32 @@
                           }}
                         </td>
                         <td>{{ item.approvedStatus || "-" }}</td>
-                        <td>{{ item.approvedRemarks || "-" }}</td>
-
+                        <td class="text-nowrap">
+                          <div >
+                            <span
+                              [ngClass]="{
+                                'single-line-ellipsis':
+                                  !expandedRows[rowIndex + '-a']
+                              }"
+                              >{{ (item.approvedRemarks | capitalizeFirst) || '-' }}</span
+                            >
+                            <a
+                              *ngIf="
+                                item.approvedRemarks &&
+                                item.approvedRemarks.length > 10
+                              "
+                              href="javascript:void(0)"
+                              class="ms-1"
+                              (click)="toggleRow(rowIndex + '-a')"
+                            >
+                              {{
+                                expandedRows[rowIndex + "-a"]
+                                  ? "Show less"
+                                  : "Show more"
+                              }}
+                            </a>
+                          </div>
+                        </td>
                         <td>{{ item.lan || "-" }}</td>
                         <td>{{ item.roi || "-" }}</td>
                         <td>{{ item.tenure || "-" }}</td>
@@ -3422,10 +3555,10 @@
           loanleads.employmentStatus === 'employed'))
     "
   >
-    <div class="container-fluid p-4" *ngIf="!loading">
-      <div class="row">
+    <div class="container-fluid" *ngIf="!loading">
+      <div class="row g-2">
         <div class="col-md-4">
-          <div class="card m-3 profile">
+          <div class="card profile">
             <div class="profile-container">
               <div class="colored-half">
                 <svg
@@ -3465,7 +3598,7 @@
           </div>
         </div>
         <div class="col-md-8">
-          <div class="card m-3 p-4 profileinfo">
+          <div class="card profileinfo">
             <div class="card-header">Personal Information</div>
             <div class="card-body" *ngIf="loanleads">
               <div class="row">
@@ -3480,7 +3613,7 @@
                   </div> -->
                   <div class="info-line" *ngIf="loanleads?.salary">
                     <div class="label d-flex justify-content-between">
-                      Salary <b>:&nbsp;</b>
+                      Salary (monthly) <b>:&nbsp;</b>
                     </div>
                     <div class="value">
                       {{ loanleads?.salary | capitalizeFirst }}
@@ -3496,7 +3629,7 @@
                   </div>
                   <div class="info-line" *ngIf="loanleads?.jobExperience">
                     <div class="label d-flex justify-content-between">
-                      Job Experience <b>:&nbsp;</b>
+                      Job Experience (years)<b>:&nbsp;</b>
                     </div>
                     <div class="value">
                       {{ loanleads?.jobExperience | capitalizeFirst }}
@@ -3667,10 +3800,10 @@
           loanleads.employmentStatus === 'self-employed'))
     "
   >
-    <div class="container-fluid p-4" *ngIf="!loading">
-      <div class="row">
+    <div class="container-fluid" *ngIf="!loading">
+      <div class="row g-2">
         <div class="col-md-4">
-          <div class="card m-3 profile">
+          <div class="card profile">
             <div class="profile-container">
               <div class="colored-half">
                 <svg
@@ -3710,7 +3843,7 @@
           </div>
         </div>
         <div class="col-md-8">
-          <div class="card m-3 p-4 profileinfo">
+          <div class="card profileinfo">
             <div class="card-header">Business Information</div>
             <div class="card-body" *ngIf="loanleads">
               <div class="row">

@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
   submitted = false;
-  isPasswordVisible = false;
+  showPassword: boolean = false;
   loading = false;
 
   constructor(
@@ -20,7 +20,7 @@ export class RegisterComponent implements OnInit {
     private toastService: ToastService,
     private leadsService: LeadsService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
@@ -82,12 +82,9 @@ export class RegisterComponent implements OnInit {
       error: (error) => {
         this.loading = false;
         const message = error?.error || 'Error creating account';
-        this.toastService.showError(message);
+        this.toastService.showError(error);
       }
     });
   }
 
-  togglePasswordVisibility() {
-    this.isPasswordVisible = !this.isPasswordVisible;
-  }
 }

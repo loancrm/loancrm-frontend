@@ -65,7 +65,7 @@
           >
             <ng-template pTemplate="caption">
               <div class="row">
-                <div class="col-md-4 mt-2 no-padding-small">
+                <div class="col-md-3 mt-2 no-padding-small">
                   <div class="p-inputgroup">
                     <input
                       type="text"
@@ -77,14 +77,29 @@
                       "
                       (keyup.enter)="filterWithBusinessName()"
                     />
-                    <button
+                    <!-- <button
                       type="button"
                       pButton
                       icon="pi pi-search"
                       class="p-button-primary"
                       [disabled]="!businessNameToSearch"
                       (click)="filterWithBusinessName()"
-                    ></button>
+                    ></button> -->
+                    <button
+                      type="button"
+                      pButton
+                      class="p-button-primary"
+                      [disabled]="!businessNameToSearch"
+                      (click)="filterWithBusinessName()"
+                    >
+                      <img
+                        src="assets/images/icons/search.svg"
+                        alt="Search"
+                        width="16"
+                        height="16"
+                        style="vertical-align: middle"
+                      />
+                    </button>
                   </div>
                 </div>
                 <!-- <div class="col-md-4 mt-2 no-padding-small">
@@ -109,7 +124,15 @@
                     ></button>
                   </div>
                 </div> -->
-                <div class="col-md-4 mt-2 no-padding-small text-right">
+                 <div
+                  class="col-md-3 mt-2 no-padding-small"
+                  *ngIf="
+                    userDetails &&
+                    userDetails.userType &&
+                    userDetails.userType == '3'
+                  "
+                ></div>
+                <div class="col-md-3 mt-2 no-padding-small text-right">
                   <div class="d-flex">
                     <div class="flex-grow-1 me-2">
                       <div
@@ -138,7 +161,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4 mt-2 no-padding-small text-right">
+                <div class="col-md-3 mt-2 no-padding-small text-right">
                   <div class="d-flex">
                     <div class="flex-grow-1 me-2">
                       <p-dropdown
@@ -412,7 +435,9 @@
             [value]="loanLeads"
             [sortOrder]="-1"
             [lazy]="true"
+            selectionMode="single"
             (onLazyLoad)="loadLeadsforPersonal($event)"
+            (onRowSelect)="viewLoanLead($event)"
             dataKey="id"
             [showCurrentPageReport]="true"
             [rowsPerPageOptions]="[10, 25, 50]"
@@ -434,7 +459,7 @@
           >
             <ng-template pTemplate="caption">
               <div class="row">
-                <div class="col-md-4 mt-2 no-padding-small">
+                <div class="col-md-3 mt-2 no-padding-small">
                   <div class="p-inputgroup">
                     <input
                       type="text"
@@ -449,18 +474,33 @@
                       "
                       (keyup.enter)="filterWithBusinessNameForPersonal()"
                     />
-                    <button
+                    <!-- <button
                       type="button"
                       pButton
                       icon="pi pi-search"
                       class="p-button-primary"
                       [disabled]="!businessNameToSearchForPersonal"
                       (click)="filterWithBusinessNameForPersonal()"
-                    ></button>
+                    ></button> -->
+                    <button
+                      type="button"
+                      pButton
+                      class="p-button-primary"
+                      [disabled]="!businessNameToSearchForPersonal"
+                      (click)="filterWithBusinessNameForPersonal()"
+                    >
+                      <img
+                        src="assets/images/icons/search.svg"
+                        alt="Search"
+                        width="16"
+                        height="16"
+                        style="vertical-align: middle"
+                      />
+                    </button>
                   </div>
                 </div>
-                <div class="col-md-4 mt-2 no-padding-small"></div>
-                <div class="col-md-4 mt-2 no-padding-small text-right">
+                <div class="col-md-6 mt-2 no-padding-small"></div>
+                <div class="col-md-3 mt-2 no-padding-small text-right">
                   <div class="d-flex">
                     <div class="flex-grow-1 me-2">
                       <div
@@ -527,7 +567,7 @@
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-lead>
-              <tr>
+              <tr [pSelectableRow]="lead">
                 <td>
                   <span class="table-column-data" *ngIf="lead.leadId">{{
                     lead.leadId
@@ -673,7 +713,7 @@
                         height="24px"
                         pTooltip="Actions"
                         tooltipPosition="top"
-                        (click)="menu.toggle($event)"
+                        (click)="menu.toggle($event); $event.stopPropagation()"
                       />
                     </div>
                   </div>
@@ -747,7 +787,7 @@
               >
                 <ng-template pTemplate="caption">
                   <div class="row">
-                    <div class="col-md-4 mt-2 no-padding-small">
+                    <div class="col-md-3 mt-2 no-padding-small">
                       <div class="p-inputgroup">
                         <input
                           type="text"
@@ -761,18 +801,33 @@
                           (ngModelChange)="handleInputChange($event)"
                           (keyup.enter)="filterBasedOnEmploymentStatus()"
                         />
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           icon="pi pi-search"
                           class="p-button-primary"
                           [disabled]="!searchInputValue"
                           (click)="filterBasedOnEmploymentStatus()"
-                        ></button>
+                        ></button> -->
+                        <button
+                          type="button"
+                          pButton
+                          class="p-button-primary"
+                          [disabled]="!searchInputValue"
+                          (click)="filterBasedOnEmploymentStatus()"
+                        >
+                          <img
+                            src="assets/images/icons/search.svg"
+                            alt="Search"
+                            width="16"
+                            height="16"
+                            style="vertical-align: middle"
+                          />
+                        </button>
                       </div>
                     </div>
-                    <div class="col-md-4 mt-2 no-padding-small"></div>
-                    <div class="col-md-4 mt-2 no-padding-small text-right">
+                    <div class="col-md-6 mt-2 no-padding-small"></div>
+                    <div class="col-md-3 mt-2 no-padding-small text-right">
                       <div class="d-flex">
                         <div class="flex-grow-1 me-2">
                           <div
@@ -1153,7 +1208,7 @@
               >
                 <ng-template pTemplate="caption">
                   <div class="row">
-                    <div class="col-md-4 mt-2 no-padding-small">
+                    <div class="col-md-3 mt-2 no-padding-small">
                       <div class="p-inputgroup">
                         <input
                           type="text"
@@ -1167,18 +1222,33 @@
                           (ngModelChange)="handleInputChange($event)"
                           (keyup.enter)="filterBasedOnEmploymentStatus()"
                         />
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           icon="pi pi-search"
                           class="p-button-primary"
                           [disabled]="!searchInputValue"
                           (click)="filterBasedOnEmploymentStatus()"
-                        ></button>
+                        ></button> -->
+                        <button
+                          type="button"
+                          pButton
+                          class="p-button-primary"
+                          [disabled]="!searchInputValue"
+                          (click)="filterBasedOnEmploymentStatus()"
+                        >
+                          <img
+                            src="assets/images/icons/search.svg"
+                            alt="Search"
+                            width="16"
+                            height="16"
+                            style="vertical-align: middle"
+                          />
+                        </button>
                       </div>
                     </div>
-                    <div class="col-md-4 mt-2 no-padding-small"></div>
-                    <div class="col-md-4 mt-2 no-padding-small text-right">
+                    <div class="col-md-6 mt-2 no-padding-small"></div>
+                    <div class="col-md-3 mt-2 no-padding-small text-right">
                       <div class="d-flex">
                         <div class="flex-grow-1 me-2">
                           <div

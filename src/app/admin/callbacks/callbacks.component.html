@@ -80,7 +80,7 @@
         >
           <ng-template pTemplate="caption">
             <div class="row">
-              <div class="col-md-4 mt-2 no-padding-small">
+              <div class="col-md-3 mt-2 no-padding-small">
                 <div class="p-inputgroup">
                   <input
                     type="text"
@@ -92,17 +92,40 @@
                     "
                     (keyup.enter)="filterWithBusinessName()"
                   />
-                  <button
+                  <!-- <button
                     type="button"
                     pButton
                     icon="pi pi-search"
                     class="p-button-primary"
                     [disabled]="!businessNameToSearch"
                     (click)="filterWithBusinessName()"
-                  ></button>
+                  ></button> -->
+                  <button
+                    type="button"
+                    pButton
+                    class="p-button-primary"
+                    [disabled]="!businessNameToSearch"
+                    (click)="filterWithBusinessName()"
+                  >
+                    <img
+                      src="assets/images/icons/search.svg"
+                      alt="Search"
+                      width="16"
+                      height="16"
+                      style="vertical-align: middle"
+                    />
+                  </button>
                 </div>
               </div>
-              <div class="col-md-4 mt-2 no-padding-small">
+              <div
+                class="col-md-3 mt-2 no-padding-small"
+                *ngIf="
+                  userDetails &&
+                  userDetails.userType &&
+                  userDetails.userType == '3'
+                "
+              ></div>
+              <div class="col-md-3 mt-2 no-padding-small">
                 <div
                   class="p-inputgroup"
                   *ngIf="
@@ -127,7 +150,7 @@
                   </p-dropdown>
                 </div>
               </div>
-              <div class="col-md-4 mt-2 no-padding-small text-right">
+              <div class="col-md-3 mt-2 no-padding-small text-right">
                 <div class="d-flex">
                   <div class="flex-grow-1 me-2">
                     <p-dropdown
@@ -361,7 +384,7 @@
         >
           <ng-template pTemplate="caption">
             <div class="row">
-              <div class="col-md-4 mt-2 no-padding-small">
+              <div class="col-md-3 mt-2 no-padding-small">
                 <div class="p-inputgroup">
                   <input
                     type="text"
@@ -376,17 +399,40 @@
                     "
                     (keyup.enter)="filterWithPersonName()"
                   />
-                  <button
+                  <!-- <button
                     type="button"
                     pButton
                     icon="pi pi-search"
                     class="p-button-primary"
                     [disabled]="!personNameToSearch"
                     (click)="filterWithPersonName()"
-                  ></button>
+                  ></button> -->
+                  <button
+                    type="button"
+                    pButton
+                    class="p-button-primary"
+                    [disabled]="!personNameToSearch"
+                    (click)="filterWithPersonName()"
+                  >
+                    <img
+                      src="assets/images/icons/search.svg"
+                      alt="Search"
+                      width="16"
+                      height="16"
+                      style="vertical-align: middle"
+                    />
+                  </button>
                 </div>
               </div>
-              <div class="col-md-4 mt-2 no-padding-small">
+              <div
+                class="col-md-3 mt-2 no-padding-small"
+                *ngIf="
+                  userDetails &&
+                  userDetails.userType &&
+                  userDetails.userType == '3'
+                "
+              ></div>
+              <div class="col-md-3 mt-2 no-padding-small">
                 <div
                   class="p-inputgroup"
                   *ngIf="
@@ -412,7 +458,7 @@
                   </p-dropdown>
                 </div>
               </div>
-              <div class="col-md-4 mt-2 no-padding-small text-right">
+              <div class="col-md-3 mt-2 no-padding-small text-right">
                 <div class="d-flex">
                   <div class="flex-grow-1 me-2">
                     <p-dropdown
@@ -532,7 +578,7 @@
               </td>
               <td>
                 <div
-                  class="text-center d-flex"
+                  class="text-center d-flex pointer-cursor"
                   *ngIf="callback.callbackInternalStatus !== 3"
                 >
                   <div class="d-flex">
@@ -581,10 +627,10 @@
                   />
                 </div>
                 <div
-                  class="text-center d-flex"
+                  class="text-center d-flex pointer-cursor"
                   *ngIf="callback.callbackInternalStatus == 3"
                 >
-                  <button
+                  <!-- <button
                     pButton
                     pRipple
                     type="button"
@@ -593,7 +639,16 @@
                     pTooltip="View Lead"
                     icon="fas fa-eye"
                     tooltipPosition="top"
-                  ></button>
+                  ></button> -->
+                  <img
+                    src="../../../assets/images/icons/eye.svg"
+                    width="24px"
+                    height="24px"
+                    class="me-2"
+                    (click)="viewLead(callback)"
+                    pTooltip="View Lead"
+                    tooltipPosition="top"
+                  />
                 </div>
               </td>
             </tr>
@@ -660,7 +715,7 @@
               >
                 <ng-template pTemplate="caption">
                   <div class="row">
-                    <div class="col-md-4 mt-2 no-padding-small">
+                    <div class="col-md-3 mt-2 no-padding-small">
                       <div class="p-inputgroup">
                         <input
                           type="text"
@@ -674,17 +729,40 @@
                           (ngModelChange)="handleInputChange($event)"
                           (keyup.enter)="filterBasedOnEmploymentStatus()"
                         />
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           icon="pi pi-search"
                           class="p-button-primary"
                           [disabled]="!searchInputValue"
                           (click)="filterBasedOnEmploymentStatus()"
-                        ></button>
+                        ></button> -->
+                        <button
+                          type="button"
+                          pButton
+                          class="p-button-primary"
+                          [disabled]="!searchInputValue"
+                          (click)="filterBasedOnEmploymentStatus()"
+                        >
+                          <img
+                            src="assets/images/icons/search.svg"
+                            alt="Search"
+                            width="16"
+                            height="16"
+                            style="vertical-align: middle"
+                          />
+                        </button>
                       </div>
                     </div>
-                    <div class="col-md-4 mt-2 no-padding-small">
+                    <div
+                      class="col-md-3 mt-2 no-padding-small"
+                      *ngIf="
+                        userDetails &&
+                        userDetails.userType &&
+                        userDetails.userType == '3'
+                      "
+                    ></div>
+                    <div class="col-md-3 mt-2 no-padding-small">
                       <div
                         class="p-inputgroup"
                         *ngIf="
@@ -714,7 +792,7 @@
                         </p-dropdown>
                       </div>
                     </div>
-                    <div class="col-md-4 mt-2 no-padding-small text-right">
+                    <div class="col-md-3 mt-2 no-padding-small text-right">
                       <div class="d-flex">
                         <div class="flex-grow-1 me-2">
                           <p-dropdown
@@ -866,7 +944,7 @@
                     </td>
                     <td>
                       <div
-                        class="text-center d-flex"
+                        class="text-center d-flex pointer-cursor"
                         *ngIf="callback.callbackInternalStatus !== 3"
                       >
                         <div class="d-flex">
@@ -918,7 +996,7 @@
                         class="text-center d-flex"
                         *ngIf="callback.callbackInternalStatus == 3"
                       >
-                        <button
+                        <!-- <button
                           pButton
                           pRipple
                           type="button"
@@ -927,7 +1005,16 @@
                           pTooltip="View Lead"
                           icon="fas fa-eye"
                           tooltipPosition="top"
-                        ></button>
+                        ></button> -->
+                        <img
+                          src="../../../assets/images/icons/eye.svg"
+                          width="24px"
+                          height="24px"
+                          class="me-2"
+                          (click)="viewLead(callback)"
+                          pTooltip="View Lead"
+                          tooltipPosition="top"
+                        />
                       </div>
                     </td>
                   </tr>
@@ -997,7 +1084,7 @@
               >
                 <ng-template pTemplate="caption">
                   <div class="row">
-                    <div class="col-md-4 mt-2 no-padding-small">
+                    <div class="col-md-3 mt-2 no-padding-small">
                       <div class="p-inputgroup">
                         <input
                           type="text"
@@ -1011,17 +1098,40 @@
                           (ngModelChange)="handleInputChange($event)"
                           (keyup.enter)="filterBasedOnEmploymentStatus()"
                         />
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           icon="pi pi-search"
                           class="p-button-primary"
                           [disabled]="!searchInputValue"
                           (click)="filterBasedOnEmploymentStatus()"
-                        ></button>
+                        ></button> -->
+                        <button
+                          type="button"
+                          pButton
+                          class="p-button-primary"
+                          [disabled]="!searchInputValue"
+                          (click)="filterBasedOnEmploymentStatus()"
+                        >
+                          <img
+                            src="assets/images/icons/search.svg"
+                            alt="Search"
+                            width="16"
+                            height="16"
+                            style="vertical-align: middle"
+                          />
+                        </button>
                       </div>
                     </div>
-                    <div class="col-md-4 mt-2 no-padding-small">
+                    <div
+                      class="col-md-3 mt-2 no-padding-small"
+                      *ngIf="
+                        userDetails &&
+                        userDetails.userType &&
+                        userDetails.userType == '3'
+                      "
+                    ></div>
+                    <div class="col-md-3 mt-2 no-padding-small">
                       <div
                         class="p-inputgroup"
                         *ngIf="
@@ -1051,7 +1161,7 @@
                         </p-dropdown>
                       </div>
                     </div>
-                    <div class="col-md-4 mt-2 no-padding-small text-right">
+                    <div class="col-md-3 mt-2 no-padding-small text-right">
                       <div class="d-flex">
                         <div class="flex-grow-1 me-2">
                           <p-dropdown
@@ -1213,7 +1323,7 @@
                     </td>
                     <td>
                       <div
-                        class="text-center d-flex"
+                        class="text-center d-flex pointer-cursor"
                         *ngIf="callback.callbackInternalStatus !== 3"
                       >
                         <div class="d-flex">
@@ -1265,7 +1375,7 @@
                         class="text-center d-flex"
                         *ngIf="callback.callbackInternalStatus == 3"
                       >
-                        <button
+                        <!-- <button
                           pButton
                           pRipple
                           type="button"
@@ -1274,7 +1384,16 @@
                           pTooltip="View Lead"
                           icon="fas fa-eye"
                           tooltipPosition="top"
-                        ></button>
+                        ></button> -->
+                        <img
+                          src="../../../assets/images/icons/eye.svg"
+                          width="24px"
+                          height="24px"
+                          class="me-2"
+                          (click)="viewLead(callback)"
+                          pTooltip="View Lead"
+                          tooltipPosition="top"
+                        />
                       </div>
                     </td>
                   </tr>

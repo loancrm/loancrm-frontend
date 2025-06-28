@@ -525,7 +525,7 @@ export class ViewComponent {
       },
       chart: {
         height: 345,
-        type: 'radialBar',
+        type: 'donut',
         toolbar: { show: true },
       },
       colors: ['#FF7948', '#4878AC', '#FE746E'],
@@ -1323,8 +1323,10 @@ export class ViewComponent {
       null
     );
   }
-  viewLead(leadId) {
-    this.routingService.handleRoute('leads/profile/' + leadId, null);
+  viewLead(event: any) {
+    console.log('Row clicked:', event.data);
+    const lead = event.data;
+    this.routingService.handleRoute('leads/profile/' + lead.id, null);
   }
   loadDisbursalLeads(event) {
     this.currentTableEvent = event;

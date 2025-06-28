@@ -50,17 +50,6 @@ export class AuthGuard implements CanActivate {
 //   ) {
 //     this.userType = this.localStorage.getItemFromLocalStorage('userType');
 //   }
-
-//   // canActivate(): boolean | UrlTree {
-//   //   console.log('this.authService.isLoggedIn()', this.authService.isLoggedIn());
-//   //   if (this.authService.isLoggedIn()) {
-//   //     this.router.createUrlTree(['/user/dashboard']);
-//   //     return true;
-//   //   } else {
-//   //     return this.router.createUrlTree(['/user/login']);
-//   //   }
-//   // }
-
 //   canActivate(): Observable<boolean | UrlTree> {
 //     if (!this.authService.isLoggedIn()) {
 //       return of(this.router.createUrlTree(['/user/login']));
@@ -75,9 +64,12 @@ export class AuthGuard implements CanActivate {
 
 //     return this.leadService.getSubscriptionById(accountId).pipe(
 //       map((sub: any) => {
+//         console.log("sub", sub)
+//         // ✅ Allow access if any plan is active (Free Trial, Basic, or Professional)
 //         if (sub?.status === 'Active') {
 //           return true;
 //         } else {
+//           // ❌ Redirect to subscription page if not active
 //           return this.router.createUrlTree(['/user/choose-subscription']);
 //         }
 //       }),
@@ -85,4 +77,3 @@ export class AuthGuard implements CanActivate {
 //     );
 //   }
 // }
-// //

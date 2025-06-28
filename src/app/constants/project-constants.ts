@@ -154,7 +154,7 @@ export const projectConstantsLocal = {
   BUSINESS_ENTITIES: [
     { displayName: 'Proprietorship', name: 'proprietorship' },
     { displayName: 'Partnership', name: 'partnership' },
-    // { displayName: "LLP", name: "llp" },
+    { displayName: "LLP", name: "llp" },
     { displayName: 'Private Limited', name: 'privateLimited' },
   ],
   STATE_ENTITIES: [
@@ -179,8 +179,9 @@ export const projectConstantsLocal = {
     { displayName: 'Trading - Retail', name: 'trading - retail' },
     { displayName: 'Service Provider', name: 'service provider' },
     { displayName: 'Constructions', name: 'constructions' },
-],
+  ],
   // BASE_URL: 'http://localhost:5002/',
   BASE_URL: 'https://rest.thefintalk.in:5002/',
   VERSION_DESKTOP: '0.0.0',
+  RAZORPAY_KEY_ID:"rzp_test_OryiPavGPST3CU"
 };

@@ -70,7 +70,23 @@
                 placeholder="Enter Employee Id"
                 autocomplete="off"
               />
+              <!---Error message for invalid Employee Id-->
+              <div
+              *ngIf="
+                teamForm.get('userId')?.invalid &&
+                (teamForm.get('userId')?.touched ||
+                  teamForm.get('userId')?.dirty)
+                  "
+              >
+              <small
+                class="text-danger"
+                *ngIf="teamForm.get('userId')?.errors?.['required']"
+                >
+                 Employee Id is required
+               </small>
             </div>
+            </div>
+
           </div>
           <div class="col-md-4 mt-2">
             <div>
@@ -87,6 +103,21 @@
                 placeholder="Enter your Name"
                 autocomplete="off"
               />
+
+              <div
+                *ngIf="
+                  teamForm.get('name')?.invalid &&
+                  (teamForm.get('name')?.touched ||
+                    teamForm.get('name')?.dirty)
+                    "
+                    >
+                  <small 
+                    class="text-danger"
+                    *ngIf="teamForm.get('name')?.errors?.['required']"
+                    >
+                       name is required.
+                  </small>
+              </div>
             </div>
           </div>
           <div class="col-md-4 mt-2">
@@ -97,6 +128,7 @@
                     ><sup class="text-danger">*</sup></span
                   ></label
                 >
+                
               </div>
               <input
                 pInputText
@@ -106,6 +138,21 @@
                 formControlName="phone"
                 autocomplete="off"
               />
+
+              <div
+               *ngIf="
+                  teamForm.get('phone')?.invalid &&
+                  (teamForm.get('phone')?.touched ||
+                  teamForm.get('phone')?.dirty)
+                  "
+                 >
+                   <small 
+                     class="text-danger"
+                     *ngIf="teamForm.get('phone')?.errors?.['required']"
+                     >
+                      Phone Number is required 
+                    </small>
+                  </div>
             </div>
           </div>
           <div class="col-md-4 mt-2">
@@ -125,6 +172,21 @@
                 formControlName="email"
                 autocomplete="off"
               />
+              <div 
+                *ngIf="
+                teamForm.get('email')?.invalid &&
+                (teamForm.get('email')?.touched ||
+                teamForm.get('email')?.dirty)
+                "
+                >
+                  <small
+                    class="text-danger"
+                    *ngIf="teamForm.get('email')?.errors?.['required']
+                    "
+                    >
+                      Email Id is required
+                    </small>
+                  </div>
             </div>
           </div>
           <div class="col-md-4 mt-2">
@@ -145,7 +207,22 @@
               appendTo="body"
               [dropdownIcon]="'fa fa-caret-down'"
             ></p-dropdown>
+            <div
+              *ngIf="
+                teamForm.get('userType')?.invalid &&
+                (teamForm.get('userType')?.touched ||
+                 teamForm.get('userType')?.dirty)
+                 "
+                 >
+                  <small
+                   class="text-danger"
+                   *ngIf="teamForm.get('userType')?.errors?.['required']"
+                   >
+                    Designation is required
+                  </small>
+                </div>
           </div>
+        
 
           <div class="col-md-4 mt-2">
             <div>
@@ -183,6 +260,18 @@
                   class="calendar-custom-img"
                   (click)="calendar.toggle()"
                 />
+                  <div
+                    *ngIf="
+                    teamForm.get('joiningDate')?.invalid &&
+                    (teamForm.get('joiningDate')?.touched ||
+                      teamForm.get('joiningDate')?.dirty)
+                      "
+                      >
+                        <small 
+                        class="text-danger"
+                        *ngIf="teamForm.get('joiningDate')?.errors?.['required']"
+                        >
+                          Joining date is required</small></div>
               </div>
             </div>
           </div>

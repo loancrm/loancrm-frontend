@@ -13,8 +13,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class ResetPasswordComponent {
   resetForm!: FormGroup;
   token: string = '';
-showPassword: boolean = false;
-showConfirmPassword: boolean = false;
+  showPassword: boolean = false;
+  showConfirmPassword: boolean = false;
 
   constructor(
     private fb: FormBuilder,

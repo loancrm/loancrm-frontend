@@ -60,3 +60,11 @@
 //   border-color: #4f94d4 !important;
 //   color: #0165ac !important;
 // }
+.p-button-primary {
+  background-color:#fff !important;
+  border-color: lightgray !important;
+  border-bottom-right-radius: 8px !important;
+  border-top-right-radius: 8px !important;
+  border-bottom-left-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+}

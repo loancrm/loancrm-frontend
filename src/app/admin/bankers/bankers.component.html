@@ -70,7 +70,7 @@
     >
       <ng-template pTemplate="caption">
         <div class="row">
-          <div class="col-md-4 no-padding-small">
+          <div class="col-md-3 no-padding-small">
             <div class="p-inputgroup">
               <input
                 type="text"
@@ -82,18 +82,33 @@
                 "
                 (keyup.enter)="filterWithBankersName()"
               />
-              <button
+              <!-- <button
                 type="button"
                 pButton
                 icon="pi pi-search"
                 class="p-button-primary"
                 [disabled]="!bankersNameToSearch"
                 (click)="filterWithBankersName()"
-              ></button>
+              ></button> -->
+              <button
+                type="button"
+                pButton
+                class="p-button-primary search-btn"
+                [disabled]="!bankersNameToSearch"
+                (click)="filterWithBankersName()"
+              >
+                <img
+                  src="assets/images/icons/search.svg"
+                  alt="Search"
+                  width="16"
+                  height="16"
+                  style="vertical-align: middle"
+                />
+              </button>
             </div>
           </div>
-          <div class="col-md-4 no-padding-small"></div>
-          <div class="col-md-4 no-padding-small text-right">
+          <div class="col-md-6 no-padding-small"></div>
+          <div class="col-md-3 no-padding-small text-right">
             <br class="d-lg-none d-md-none" />
             <p-dropdown
               styleClass="text-left"

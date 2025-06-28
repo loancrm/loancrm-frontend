@@ -24,7 +24,7 @@
 </div>
 <div class="m-2">
   <p-tabMenu
-    class="file-upload-steps "
+    class="file-upload-steps"
     [model]="items"
     class="tabdesign"
     [activeItem]="activeItem"
@@ -36,9 +36,7 @@
         <div>
           <div class="row">
             <div class="p-3">
-              <h3 style="font-weight: bold; color: #29415B">
-                KYC Details
-              </h3>
+              <h3 style="font-weight: bold; color: #29415b">KYC Details</h3>
             </div>
             <div class="col-md-4 mt-2">
               <div>
@@ -232,7 +230,7 @@
         <div>
           <div class="row">
             <div class="p-3">
-              <h3 style="font-weight: bold; color: #29415B">
+              <h3 style="font-weight: bold; color: #29415b">
                 Co Applicant KYC Details
               </h3>
             </div>
@@ -439,9 +437,7 @@
         <div>
           <div class="row">
             <div class="p-3">
-              <h3 style="font-weight: bold; color: #29415B">
-                Cibil Details
-              </h3>
+              <h3 style="font-weight: bold; color: #29415b">Cibil Details</h3>
             </div>
             <div class="col-md-4 mt-2">
               <div>
@@ -579,7 +575,7 @@
           <div>
             <div class="row">
               <div class="p-3">
-                <h3 style="font-weight: bold; color: #29415B">
+                <h3 style="font-weight: bold; color: #29415b">
                   Company Details
                 </h3>
               </div>
@@ -640,9 +636,7 @@
           </div>
           <div>
             <div class="">
-              <h3 style="font-weight: bold; color: #29415B">
-                Payslips
-              </h3>
+              <h3 style="font-weight: bold; color: #29415b">Payslips</h3>
             </div>
             <div class="my-1 text-end">
               <button
@@ -661,14 +655,33 @@
                   <div class="my-1">
                     <label>Date&nbsp; </label>
                   </div>
-                  <p-calendar
+                  <!-- <p-calendar
                     placeholder="Select Date"
                     appendTo="body"
                     [style]="{ width: '100%' }"
                     [showIcon]="true"
                     [(ngModel)]="statements['date']"
                     [showButtonBar]="true"
-                  ></p-calendar>
+                  ></p-calendar> -->
+                  <div class="custom-calendar-wrapper w-100 position-relative">
+                    <p-calendar
+                      #calendar
+                      [(ngModel)]="statements['date']"
+                      placeholder="Select  Date"
+                      [showIcon]="false"
+                      appendTo="body"
+                      [showButtonBar]="true"
+                      styleClass="w-100 custom-calendar-input"
+                    ></p-calendar>
+
+                    <!-- Custom Calendar Image Icon -->
+                    <img
+                      src="../../../../assets/images/icons/calendar.svg"
+                      alt="Calendar Icon"
+                      class="calendar-custom-img"
+                      (click)="calendar.toggle()"
+                    />
+                  </div>
                 </div>
               </div>
               <div class="col-md-4 mt-2">
@@ -972,13 +985,31 @@
                   <div class="my-1">
                     <label>Filing Period&nbsp; </label>
                   </div>
-                  <p-calendar
+                  <!-- <p-calendar
                     placeholder="Select Filing Period"
                     appendTo="body"
                     [showIcon]="true"
                     [(ngModel)]="gstData['filingPeriod']"
                     [showButtonBar]="true"
-                  ></p-calendar>
+                  ></p-calendar> -->
+                  <div class="custom-calendar-wrapper w-100 position-relative">
+                    <p-calendar
+                      #calendar
+                      [(ngModel)]="gstData['filingPeriod']"
+                      placeholder="Select Filing Period"
+                      [showIcon]="false"
+                      appendTo="body"
+                      [showButtonBar]="true"
+                      styleClass="w-100 custom-calendar-input"
+                    ></p-calendar>
+                    <!-- Custom Calendar Image Icon -->
+                    <img
+                      src="../../../../assets/images/icons/calendar.svg"
+                      alt="Calendar Icon"
+                      class="calendar-custom-img"
+                      (click)="calendar.toggle()"
+                    />
+                  </div>
                 </div>
               </div>
               <div class="col-md-3 mt-2">
@@ -1065,9 +1096,7 @@
       <div *ngIf="activeItem.name == 'bankStatements'">
         <div>
           <div class="">
-            <h3 style="font-weight: bold; color: #29415B">
-              Banking Details
-            </h3>
+            <h3 style="font-weight: bold; color: #29415b">Banking Details</h3>
           </div>
           <div class="my-1 text-end">
             <button
@@ -1121,14 +1150,32 @@
                 <div class="my-1">
                   <label>From&nbsp; </label>
                 </div>
-                <p-calendar
+                <!-- <p-calendar
                   placeholder="Select Date"
                   appendTo="body"
                   [style]="{ width: '100%' }"
                   [showIcon]="true"
                   [(ngModel)]="statements['from']"
                   [showButtonBar]="true"
-                ></p-calendar>
+                ></p-calendar> -->
+                <div class="custom-calendar-wrapper w-100 position-relative">
+                  <p-calendar
+                    #calendar
+                    [(ngModel)]="statements['from']"
+                    placeholder="Select From Date"
+                    [showIcon]="false"
+                    appendTo="body"
+                    [showButtonBar]="true"
+                    styleClass="w-100 custom-calendar-input"
+                  ></p-calendar>
+                  <!-- Custom Calendar Image Icon -->
+                  <img
+                    src="../../../../assets/images/icons/calendar.svg"
+                    alt="Calendar Icon"
+                    class="calendar-custom-img"
+                    (click)="calendar.toggle()"
+                  />
+                </div>
               </div>
             </div>
             <div class="col-md-3 mt-2">
@@ -1136,14 +1183,33 @@
                 <div class="my-1">
                   <label>To&nbsp; </label>
                 </div>
-                <p-calendar
+                <!-- <p-calendar
                   placeholder="Select Date"
                   appendTo="body"
                   [style]="{ width: '100%' }"
                   [showIcon]="true"
                   [(ngModel)]="statements['to']"
                   [showButtonBar]="true"
-                ></p-calendar>
+                ></p-calendar> -->
+                <div class="custom-calendar-wrapper w-100 position-relative">
+                  <p-calendar
+                    #calendar
+                    [(ngModel)]="statements['to']"
+                    placeholder="Select To Date"
+                    [showIcon]="false"
+                    appendTo="body"
+                    [showButtonBar]="true"
+                    styleClass="w-100 custom-calendar-input"
+                  ></p-calendar>
+
+                  <!-- Custom Calendar Image Icon -->
+                  <img
+                    src="../../../../assets/images/icons/calendar.svg"
+                    alt="Calendar Icon"
+                    class="calendar-custom-img"
+                    (click)="calendar.toggle()"
+                  />
+                </div>
               </div>
             </div>
             <div class="col-md-3 mt-2">
@@ -1280,13 +1346,32 @@
                   <label>EMI Closing Date&nbsp; </label>
                 </div>
                 <div class="d-flex">
-                  <p-calendar
+                  <!-- <p-calendar
                     placeholder="Select EMI Closing Date"
                     appendTo="body"
                     [showIcon]="true"
                     [showButtonBar]="true"
                     [(ngModel)]="loans['emiClosingDate']"
-                  ></p-calendar>
+                  ></p-calendar> -->
+                  <div class="custom-calendar-wrapper w-100 position-relative">
+                    <p-calendar
+                      #calendar
+                      [(ngModel)]="loans['emiClosingDate']"
+                      placeholder="Select EMI Closing Date"
+                      [showIcon]="false"
+                      appendTo="body"
+                      [showButtonBar]="true"
+                      styleClass="w-100 custom-calendar-input"
+                    ></p-calendar>
+
+                    <!-- Custom Calendar Image Icon -->
+                    <img
+                      src="../../../../assets/images/icons/calendar.svg"
+                      alt="Calendar Icon"
+                      class="calendar-custom-img"
+                      (click)="calendar.toggle()"
+                    />
+                  </div>
                   <button
                     pButton
                     pRipple
@@ -1360,9 +1445,7 @@
               <i class="pi pi-plus"></i>&nbsp;Add Additional Documents
             </button>
           </div>
-          <h3 style="font-weight: bold; color: #29415B">
-            Other Documents
-          </h3>
+          <h3 style="font-weight: bold; color: #29415b">Other Documents</h3>
           <div
             class="row"
             *ngFor="let attachments of otherDocuments; let i = index"

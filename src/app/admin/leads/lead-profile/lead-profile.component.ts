@@ -18,6 +18,7 @@ export class LeadProfileComponent implements OnInit {
   leadId: string | null = null;
   // leads: any = null;
   leadsData: any;
+  expandedRows: { [key: string]: boolean } = {};
   loanleads: any = null;
   leadUsers: any = [];
   leadSources: any = [];
@@ -97,6 +98,10 @@ export class LeadProfileComponent implements OnInit {
   }
   isRowSelected(item: any): boolean {
     return this.selectedRows?.some(selected => selected.id === item.id);
+  }
+
+  toggleRow(index: number | string): void {
+    this.expandedRows[index] = !this.expandedRows[index];
   }
   getAllLeadData(leadId: string) {
     this.loading = true;

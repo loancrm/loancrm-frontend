@@ -221,16 +221,27 @@
             (keypress)="onNumberInputChange($event)"
           />
           <span *ngIf="field && field.type == 'date'">
-            <p-calendar
-              [placeholder]="'Select ' + field.title"
-              appendTo="body"
-              [showIcon]="true"
-              [style]="{ width: field.fieldWidth ? field.fieldWidth : '100%' }"
-              [dateFormat]="field.dateFormat ? field.dateFormat : 'dd/mm/yy'"
-              [(ngModel)]="reportData[field.field + '-' + field.filterType]"
-              [readonlyInput]="true"
-              [showButtonBar]="true"
-            ></p-calendar>
+            <div class="custom-calendar-wrapper w-100 position-relative">
+              <p-calendar
+                #calendar
+                [placeholder]="'Select ' + field.title"
+                appendTo="body"
+                [showIcon]="false"
+                [style]="{
+                  width: field.fieldWidth ? field.fieldWidth : '100%'
+                }"
+                [dateFormat]="field.dateFormat ? field.dateFormat : 'dd/mm/yy'"
+                [(ngModel)]="reportData[field.field + '-' + field.filterType]"
+                [readonlyInput]="true"
+                [showButtonBar]="true"
+              ></p-calendar>
+              <img
+                src="../../../../assets/images/icons/calendar.svg"
+                alt="Calendar Icon"
+                class="calendar-custom-img"
+                (click)="calendar.toggle()"
+              />
+            </div>
           </span>
           <span *ngIf="field && field.type == 'dropdown'">
             <!-- <p-dropdown

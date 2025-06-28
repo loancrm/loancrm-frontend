@@ -8,6 +8,7 @@ import { CapitalizeFirstPipe } from 'src/app/pipes/capitalize.pipe';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
+import { ChartModule } from 'primeng/chart';
 
 const routes: Routes = [{ path: '', component: DashboardComponent }];
 
@@ -21,6 +22,7 @@ const routes: Routes = [{ path: '', component: DashboardComponent }];
     PreloaderModule,
     TableModule,
     FormsModule,
+    ChartModule,
     [RouterModule.forChild(routes)],
   ],
   exports: [DashboardComponent],

@@ -59,7 +59,7 @@
     >
       <ng-template pTemplate="caption">
         <div class="row">
-          <div class="col-md-4 mt-2 no-padding-small">
+          <div class="col-md-3 mt-2 no-padding-small">
             <div class="p-inputgroup">
               <input
                 type="text"
@@ -71,17 +71,32 @@
                 "
                 (keyup.enter)="filterWithBusinessName()"
               />
-              <button
+              <!-- <button
                 type="button"
                 pButton
                 icon="pi pi-search"
                 class="p-button-primary"
                 [disabled]="!businessNameToSearch"
                 (click)="filterWithBusinessName()"
-              ></button>
+              ></button> -->
+              <button
+                type="button"
+                pButton
+                class="p-button-primary"
+                [disabled]="!businessNameToSearch"
+                (click)="filterWithBusinessName()"
+              >
+                <img
+                  src="assets/images/icons/search.svg"
+                  alt="Search"
+                  width="16"
+                  height="16"
+                  style="vertical-align: middle"
+                />
+              </button>
             </div>
           </div>
-          <div class="col-md-4 mt-2 no-padding-small">
+          <div class="col-md-3 mt-2 no-padding-small">
             <div class="p-inputgroup">
               <input
                 type="text"
@@ -93,17 +108,32 @@
                 "
                 (keyup.enter)="filterWithMobileNumber()"
               />
-              <button
+              <!-- <button
                 type="button"
                 pButton
                 icon="pi pi-search"
                 class="p-button-primary"
                 [disabled]="!mobileNumberToSearch"
                 (click)="filterWithMobileNumber()"
-              ></button>
+              ></button> -->
+              <button
+                type="button"
+                pButton
+                class="p-button-primary"
+                [disabled]="!mobileNumberToSearch"
+                (click)="filterWithMobileNumber()"
+              >
+                <img
+                  src="assets/images/icons/search.svg"
+                  alt="Search"
+                  width="16"
+                  height="16"
+                  style="vertical-align: middle"
+                />
+              </button>
             </div>
           </div>
-          <div class="col-md-4 mt-2 no-padding-small text-right">
+          <div class="col-md-3 mt-2 no-padding-small text-right">
             <div class="d-flex">
               <div class="flex-grow-1 me-2">
                 <div

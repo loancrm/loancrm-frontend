@@ -111,6 +111,31 @@
         class="d-flex profile1 align-items-center justify-content-center"
         (click)="sidebarVisible = true"
       >
+        <!-- Show current plan and expiration warning -->
+        <!-- <div
+          class="d-flex flex-column align-items-start ps-2 text-nowrap"
+          *ngIf="userDetails.userType == 1"
+        >
+          <span
+            class="badge bg-info text-dark text-capitalize"
+            *ngIf="subscriptionPlanName"
+          >
+            {{ subscriptionPlanName }}
+          </span>
+
+          <small
+            class="text-danger mt-1 cursor-pointer"
+            *ngIf="showUpgradeMessage"
+            (click)="upgradeSubscription()"
+          >
+            {{
+              subscriptionPlanName.includes("(Expired)")
+                ? "Your plan has expired. Upgrade now."
+                : "Your plan will expire soon. Upgrade now."
+            }}
+          </small>
+        </div> -->
+
         <div class="text-start me-2">
           <p class="profile text-capitalize text-nowrap mb-0">
             {{ userDetails.name | capitalizeFirst }}

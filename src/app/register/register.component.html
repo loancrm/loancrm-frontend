@@ -81,8 +81,12 @@
                 />
                 <label class="form-label fw-medium">Email address</label>
                 <div *ngIf="submitted && email.errors" class="text-danger">
-                  <small *ngIf="email.errors['required']">Email is required.</small>
-                  <small *ngIf="email.errors['email']">Please enter a valid email address.</small>
+                  <small *ngIf="email.errors['required']"
+                    >Email is required.</small
+                  >
+                  <small *ngIf="email.errors['email']"
+                    >Please enter a valid email address.</small
+                  >
                 </div>
               </div>
 
@@ -100,8 +104,12 @@
                 />
                 <label class="form-label fw-medium">Phone Number</label>
                 <div *ngIf="submitted && mobile.errors" class="text-danger">
-                  <small *ngIf="mobile.errors['required']">Mobile number is required.</small>
-                  <small *ngIf="mobile.errors['pattern']">Enter a valid 10-digit mobile number.</small>
+                  <small *ngIf="mobile.errors['required']"
+                    >Mobile number is required.</small
+                  >
+                  <small *ngIf="mobile.errors['pattern']"
+                    >Enter a valid 10-digit mobile number.</small
+                  >
                 </div>
               </div>
 
@@ -116,29 +124,55 @@
                   class="rounded-lg w-100"
                 />
                 <label class="form-label fw-medium">Company Name</label>
-                <div *ngIf="submitted && businessName.invalid" class="text-danger">
+                <div
+                  *ngIf="submitted && businessName.invalid"
+                  class="text-danger"
+                >
                   Company name is required.
                 </div>
               </div>
 
               <!-- Password -->
               <div class="form-outline mb-4">
-                <input
-                  pInputText
-                  [type]="isPasswordVisible ? 'text' : 'password'"
-                  formControlName="password"
-                  placeholder="Password"
-                  autocomplete="off"
-                  class="rounded-lg w-100"
-                />
+                <div class="input-group">
+                  <input
+                    pInputText
+                    [type]="showPassword ? 'text' : 'password'"
+                    formControlName="password"
+                    placeholder="Password"
+                    autocomplete="off"
+                    class="rounded-lg form-control"
+                  />
+                  <span class="input-group-text bg-white border-start-0">
+                    <img
+                      src="{{
+                        showPassword
+                          ? 'assets/images/icons/eye-slash.svg'
+                          : 'assets/images/icons/eye.svg'
+                      }}"
+                      (click)="showPassword = !showPassword"
+                      width="20"
+                      height="20"
+                      style="cursor: pointer"
+                      alt="Toggle Password Visibility"
+                    />
+                  </span>
+                </div>
                 <label class="form-label fw-medium">Password</label>
-                <button type="button" (click)="togglePasswordVisibility()" class="btn btn-link p-0">
-                  {{ isPasswordVisible ? 'Hide' : 'Show' }}
-                </button>
+                <!-- <button
+                  type="button"
+                  (click)="togglePasswordVisibility()"
+                  class="btn btn-link p-0"
+                >
+                  {{ isPasswordVisible ? "Hide" : "Show" }}
+                </button> -->
                 <div *ngIf="submitted && password.errors" class="text-danger">
-                  <small *ngIf="password.errors['required']">Password is required.</small>
+                  <small *ngIf="password.errors['required']"
+                    >Password is required.</small
+                  >
                   <small *ngIf="password.errors['pattern']">
-                    Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.
+                    Password must contain at least 1 uppercase letter, 1
+                    lowercase letter, 1 number, and 1 special character.
                   </small>
                   <small *ngIf="password.errors['minlength']">
                     Password must be at least 6 characters.
