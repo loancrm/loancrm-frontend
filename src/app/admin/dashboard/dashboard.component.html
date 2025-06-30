@@ -152,7 +152,7 @@
       </div> -->
       <div class="col-md-6 col-12" *ngIf="AgentWiseBarChartOptions">
         <!-- <br class="d-lg-none d-md-none" /> -->
-        <div class="card chart-container">
+        <div class="card">
           <div class="dropdown-container">
             <p-dropdown
               styleClass="text-left"
@@ -171,16 +171,17 @@
             </p-dropdown>
           </div>
           <div>
-            <!-- <app-apex-charts
+            <app-apex-charts
               [chartOptions]="AgentWiseBarChartOptions"
-            ></app-apex-charts> -->
-            <p-chart
+            ></app-apex-charts>
+            <!-- <p-chart
               type="bar"
               [data]="barChartData"
               [options]="barChartOptions"
               (onChartClick)="onBarClick($event)"
+              class="fixed-bar-chart"
             >
-            </p-chart>
+            </p-chart> -->
             <span
               *ngIf="
                 leadsCountforFilter == 0 &&
@@ -204,7 +205,7 @@
 
         <div
           class="card rounded-3 p-3 mb-3 text-capitalize"
-          style="height: 370px"
+          style="height: 350px"
         >
           <p-table
             [value]="filesInProcessleads"
@@ -219,8 +220,8 @@
             [rowsPerPageOptions]="[10, 25, 50]"
             [paginator]="true"
             [rows]="10"
-            scrollHeight="260px"
-            [style]="{ cursor: 'pointer', 'min-height': '330px' }"
+            scrollHeight="240px"
+            [style]="{ cursor: 'pointer', 'min-height': '310px' }"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Files In Process"
           >
             <!-- Header -->

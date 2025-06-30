@@ -25,6 +25,7 @@ import { SubscriptionModule } from './subscription/subscription.module';
 import { BusinessLoanCalculatorModule } from './calculators/business-loan-calculator/business-loan-calculator.module';
 import { PersonalLoanCalculatorModule } from './calculators/personal-loan-calculator/personal-loan-calculator.module';
 import { ChartModule } from 'primeng/chart';
+import { HomeLoanCalculatorModule } from './calculators/home-loan-calculator/home-loan-calculator.module';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -46,6 +47,7 @@ export function tokenGetter() {
     SubscriptionModule,
     BusinessLoanCalculatorModule,
     PersonalLoanCalculatorModule,
+    HomeLoanCalculatorModule,
     ChartModule,
     JwtModule.forRoot({
       config: {

@@ -31,8 +31,13 @@ export class HeaderComponent implements OnInit {
   notifications: { message: string, timestamp: Date }[] = [];
   showDropdown = false;
   subscriptionPlanName: string = '';
+  subscriptionStatus: any;
+  upgradeMessage: any;
   subscriptionEndDate: string = '';
+  dropdownOpen = false;
+  displayPlanStatus: string = '';
   showUpgradeMessage: boolean = false;
+  showUpgradeButton: boolean = false;
   constructor(
     private confirmationService: ConfirmationService,
     private authService: AuthService,
@@ -96,25 +101,37 @@ export class HeaderComponent implements OnInit {
   //     }
   //   });
   // }
-
+  toggleDropdown(): void {
+    this.dropdownOpen = !this.dropdownOpen;
+  }
   fetchSubscription(accountId: number) {
     this.leadsService.getSubscriptionById(accountId).subscribe({
       next: (sub: any) => {
-        if (sub && sub.status === 'Active') {
+        if (sub) {
           this.subscriptionPlanName = sub.plan_name;
           this.subscriptionEndDate = sub.end_date;
+          this.subscriptionStatus = sub.status;
 
           const today = this.moment();
           const end = this.moment(sub.end_date);
           const diff = end.diff(today, 'days');
 
-          if (diff < 0) {
-            // Subscription expired
-            this.subscriptionPlanName += ' (Expired)';
-            this.showUpgradeMessage = true;
+          // Build the display string for the header badge
+          if (diff < 0 || sub.status === 'Expired') {
+            this.displayPlanStatus = `${sub.plan_name} - Expired`;
+            this.upgradeMessage = `Your ${sub.plan_name} plan has expired.`;
+            this.showUpgradeButton = true;
+          } else if (diff <= 1) {
+            this.displayPlanStatus = `${sub.plan_name} - Expires in 1 day`;
+            this.upgradeMessage = `Your ${sub.plan_name} plan will expire in 1 day.`;
+            this.showUpgradeButton = true;
           } else if (diff <= 7) {
-            // Subscription expiring within 7 days
-            this.showUpgradeMessage = true;
+            this.displayPlanStatus = `${sub.plan_name} - Expires in ${diff} days`;
+            this.upgradeMessage = `Your ${sub.plan_name} plan will expire in ${diff} days.`;
+            this.showUpgradeButton = true;
+          } else {
+            this.displayPlanStatus = `${sub.plan_name} - Active`;
+            this.upgradeMessage = ''; // no message if plan is fully valid
           }
         }
       },

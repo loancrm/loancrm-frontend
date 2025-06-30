@@ -159,3 +159,22 @@
 .card {
   border: 0;
 }
+.subscription-badge {
+  background-color: #f0f4f8; // Soft gray-blue background
+  color: #1f2d3d; // Dark gray text
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 5px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 1px solid #d0d7de;
+  transition: all 0.2s ease-in-out;
+  display: inline-block;
+  user-select: none;
+
+  &:hover {
+    background-color: #e5ecf3;
+    color: #1a2733;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.06);
+  }
+}

@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { projectConstantsLocal } from 'src/app/constants/project-constants';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { RoutingService } from 'src/app/services/routing-service';
 
 @Component({
   selector: 'app-lead-profile',
@@ -37,6 +38,7 @@ export class LeadProfileComponent implements OnInit {
     private location: Location,
     private router: Router,
     private toastService: ToastService,
+    private routingService: RoutingService,
     private localStorageService: LocalStorageService
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -309,6 +311,9 @@ export class LeadProfileComponent implements OnInit {
         this.toastService.showError(error);
       }
     );
+  }
+  updateLead(leadId) {
+    this.routingService.handleRoute('leads/update/' + leadId, null);
   }
   goBack() {
     this.location.back();

@@ -8,7 +8,7 @@ import { CapitalizeFirstPipe } from 'src/app/pipes/capitalize.pipe';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { LeadSearchModule } from '../leadSearch/leadSearch.module';
-
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 @NgModule({
   declarations: [HeaderComponent],
   imports: [
@@ -20,6 +20,7 @@ import { LeadSearchModule } from '../leadSearch/leadSearch.module';
     CapitalizeFirstPipe,
     InputTextModule,
     LeadSearchModule,
+    OverlayPanelModule
   ],
   exports: [HeaderComponent],
 })
