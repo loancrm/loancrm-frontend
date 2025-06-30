@@ -6,6 +6,7 @@ import axios from 'axios';
 import { io, Socket } from 'socket.io-client';
 import { projectConstantsLocal } from 'src/app/constants/project-constants';
 import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root',
 })
@@ -20,7 +21,8 @@ export class LeadsService {
   constructor(
     private dateTimeProcessor: DateTimeProcessorService,
     private serviceMeta: ServiceMeta,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private http: HttpClient
   ) {
     this.moment = this.dateTimeProcessor.getMoment();
   }
@@ -121,6 +123,9 @@ export class LeadsService {
       return phoneStr;
     }
     return phoneStr.replace(/^(\d{6})(\d{4})$/, '******$2');
+  }
+  checkPhoneNumberExists(phone: string) {
+  return this.http.get<{ exists: boolean }>(`/api/leads/check-phone?phone=${phone}`);
   }
   createLead(data) {
     const url = 'leads';
