@@ -261,6 +261,7 @@
             >
               <!-- Edit Icon in top-right corner -->
               <img
+                *ngIf="userDetails?.userType != 3"
                 src="assets/images/icons/edit.svg"
                 alt="Edit"
                 width="18"

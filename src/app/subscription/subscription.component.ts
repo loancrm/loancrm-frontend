@@ -132,7 +132,7 @@ export class SubscriptionComponent implements OnInit {
       plan_type: plan.plan_type,
       price: plan.price,
       durationDays: plan.durationDays,
-      auto_renew: false,
+      auto_renew: 1,
       razorpay_payment_id: paymentResponse.razorpay_payment_id,
       razorpay_order_id: paymentResponse.razorpay_order_id,
       razorpay_signature: paymentResponse.razorpay_signature
@@ -143,8 +143,8 @@ export class SubscriptionComponent implements OnInit {
         this.toastService.showSuccess(`${plan.plan_name} activated!`);
         this.router.navigate(['/user/dashboard']);
       },
-      error: () => {
-        this.toastService.showError('Payment verification failed.');
+      error: (err) => {
+        this.toastService.showError(err);
       }
     });
   }
@@ -157,7 +157,7 @@ export class SubscriptionComponent implements OnInit {
       plan_type: plan.plan_type,
       price: plan.price,
       durationDays: plan.durationDays,
-      auto_renew: false
+      auto_renew: 1
     };
 
     this.subscriptionService.createSubscription(subscriptionData).subscribe({
