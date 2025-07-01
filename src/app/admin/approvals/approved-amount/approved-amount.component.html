@@ -192,7 +192,7 @@
 
                 <div class="custom-calendar-wrapper w-100 position-relative">
                   <p-calendar
-                    #calendar
+                    #disbursalcalendar
                     [(ngModel)]="rowData.disbursalDate"
                     placeholder="Select Disbursed Date"
                     [showIcon]="false"
@@ -208,7 +208,7 @@
                     src="../../../../assets/images/icons/calendar.svg"
                     alt="Calendar Icon"
                     class="calendar-custom-img"
-                    (click)="calendar.toggle()"
+                    (click)="disbursalcalendar.toggle()"
                   />
                 </div>
               </td>

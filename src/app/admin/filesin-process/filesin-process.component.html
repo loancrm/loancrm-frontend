@@ -232,9 +232,9 @@
               lead.loginDate | date : "mediumDate"
             }}</span>
           </td>
-          <td>
+          <td (click)="$event.stopPropagation()">
             <div class="text-center">
-              <div class="d-flex pointer-cursor">
+              <div class="d-flex">
                 <!-- <button
                   pButton
                   pRipple
@@ -250,7 +250,7 @@
                   width="24px"
                   height="24px"
                   class="me-2"
-                  (click)="savedBanks(lead.id)"
+                  (click)="savedBanks(lead.id); $event.stopPropagation()"
                   pTooltip="Saved Banks"
                   tooltipPosition="top"
                 />
@@ -268,7 +268,7 @@
                   src="../../../assets/images/icons/lender1.svg"
                   width="24px"
                   height="24px"
-                  (click)="bankSelection(lead.id)"
+                  (click)="bankSelection(lead.id); $event.stopPropagation()"
                   pTooltip="Bank Selection"
                   tooltipPosition="top"
                 />

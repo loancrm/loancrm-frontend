@@ -225,12 +225,12 @@
           <td>
             <div class="text-center">
               <div class="d-flex">
-                <p-menu
+                <!-- <p-menu
                   appendTo="body"
                   #menu
                   [model]="actionItems(lead)"
                   [popup]="true"
-                ></p-menu>
+                ></p-menu> -->
                 <!-- <button
                   pButton
                   type="button"
@@ -240,13 +240,33 @@
                   pTooltip="Actions"
                   tooltipPosition="top"
                 ></button> -->
-                <img
+                <!-- <img
                   src="../../../assets/images/icons/menu.svg"
                   width="24px"
                   height="24px"
                   pTooltip="Actions"
                   tooltipPosition="top"
                   (click)="menu.toggle($event); $event.stopPropagation()"
+                /> -->
+
+                <img
+                  src="../../../assets/images/icons/disbursal.svg"
+                  width="24px"
+                  height="24px"
+                  class="me-2"
+                  (click)="disbursalDetails(lead.id); $event.stopPropagation()"
+                  pTooltip="Disbursal Details"
+                  tooltipPosition="top"
+                />
+                <img
+                  *ngIf="userDetails?.userType == 1"
+                  src="../../../assets/images/icons/revenue.svg"
+                  width="24px"
+                  height="24px"
+                  
+                  (click)="revenueDetails(lead.id); $event.stopPropagation()"
+                  pTooltip="Revenue"
+                  tooltipPosition="top"
                 />
               </div>
             </div>

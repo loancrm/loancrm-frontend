@@ -77,9 +77,6 @@
 .p-inputtext {
   padding: 5px !important;
 }
-.p-dropdown{
-  padding: 5px !important;
-}
 
 .btn-primary {
   background-color: #89ffc8 !important;
@@ -294,3 +291,7 @@ body {
 }
 // .back-btn-icon {
 // }
+.p-paginator .p-dropdown {
+  padding: 6px;
+  // border-radius: 4px;
+}
