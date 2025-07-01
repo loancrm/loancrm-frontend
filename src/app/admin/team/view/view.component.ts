@@ -1275,11 +1275,11 @@ export class ViewComponent {
       {
         label: 'Actions',
         items: [
-          {
-            label: 'View',
-            icon: 'pi pi-eye',
-            command: () => this.viewLead(lead.id),
-          },
+          // {
+          //   label: 'View',
+          //   icon: 'pi pi-eye',
+          //   command: () => this.viewLead(lead.id),
+          // },
           {
             label: 'Rejects Details',
             icon: 'pi pi-info-circle',
@@ -1295,11 +1295,11 @@ export class ViewComponent {
       {
         label: 'Actions',
         items: [
-          {
-            label: 'View',
-            icon: 'pi pi-eye',
-            command: () => this.viewLead(lead.id),
-          },
+          // {
+          //   label: 'View',
+          //   icon: 'pi pi-eye',
+          //   command: () => this.viewLead(lead.id),
+          // },
           {
             label: 'Rejects Details',
             icon: 'pi pi-info-circle',

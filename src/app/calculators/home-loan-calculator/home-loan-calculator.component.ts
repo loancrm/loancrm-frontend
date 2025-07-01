@@ -177,7 +177,7 @@ export class HomeLoanCalculatorComponent {
     const addWatermark = () => {
       const centerX = pageWidth / 2;
       const centerY = pageHeight / 2;
-      doc.setFont('Roboto', 'medium');
+      doc.setFont('helvetica', 'medium');
       doc.setTextColor(230, 230, 230); // light gray
       doc.setFontSize(60);
       doc.text('LoanCRM', centerX, centerY, {
@@ -188,7 +188,7 @@ export class HomeLoanCalculatorComponent {
     };
     // ✅ 2. Add header (business name)
     const addHeader = () => {
-      doc.setFont('Roboto', 'bold');
+      doc.setFont('helvetica', 'bold');
       doc.setFontSize(18);
       doc.setTextColor('#29415B');
       doc.text(businessName.toUpperCase(), pageWidth / 2, 15, { align: 'center' });
@@ -205,7 +205,7 @@ export class HomeLoanCalculatorComponent {
       ],
       styles: {
         fontSize: 10,
-        font: 'Roboto',
+        font: 'helvetica',
         cellPadding: 2,
       },
       columnStyles: {
@@ -217,7 +217,7 @@ export class HomeLoanCalculatorComponent {
       theme: 'grid',
     });
     doc.setFontSize(13);
-    doc.setFont('Roboto', 'bold');
+    doc.setFont('helvetica', 'bold');
     doc.setTextColor('#29415B');
     doc.text('Repayment Schedule', 14, 65);
     // ✅ 4. Repayment Table
@@ -237,7 +237,7 @@ export class HomeLoanCalculatorComponent {
       margin: { top: 25 }, // All other pages will respect this margin
       styles: {
         fontSize: 9,
-        font: 'Roboto',
+        font: 'helvetica',
       },
       headStyles: {
         fillColor: [41, 65, 91],

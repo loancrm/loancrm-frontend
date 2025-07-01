@@ -175,7 +175,7 @@ export class BusinessLoanCalculatorComponent implements OnInit {
     const addWatermark = () => {
       const centerX = pageWidth / 2;
       const centerY = pageHeight / 2;
-      doc.setFont('Roboto', 'medium');
+      doc.setFont('helvetica', 'medium');
       doc.setTextColor(230, 230, 230); // light gray
       doc.setFontSize(60);
       doc.text('LoanCRM', centerX, centerY, {
@@ -186,7 +186,7 @@ export class BusinessLoanCalculatorComponent implements OnInit {
     };
     // ✅ 2. Header
     const addHeader = () => {
-      doc.setFont('Roboto', 'bold');
+      doc.setFont('helvetica', 'bold');
       doc.setFontSize(18);
       doc.setTextColor('#29415B');
       doc.text(businessName?.toUpperCase() || 'LOAN REPORT', pageWidth / 2, 15, {
@@ -208,7 +208,7 @@ export class BusinessLoanCalculatorComponent implements OnInit {
       ],
       styles: {
         fontSize: 10,
-        font: 'Roboto',
+        font: 'helvetica',
         cellPadding: 2,
       },
       columnStyles: {
@@ -220,7 +220,7 @@ export class BusinessLoanCalculatorComponent implements OnInit {
       theme: 'grid',
     });
     doc.setFontSize(13);
-    doc.setFont('Roboto', 'bold');
+    doc.setFont('helvetica', 'bold');
     doc.setTextColor('#29415B');
     doc.text('Repayment Schedule', 14, 65);
     // ✅ 5. Repayment Table
@@ -240,7 +240,7 @@ export class BusinessLoanCalculatorComponent implements OnInit {
       margin: { top: 25 },
       styles: {
         fontSize: 9,
-        font: 'Roboto',
+        font: 'helvetica',
       },
       headStyles: {
         fillColor: [41, 65, 91],
