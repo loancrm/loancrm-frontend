@@ -32,6 +32,129 @@
   <div *ngIf="loading">
     <app-preloader></app-preloader>
   </div>
+  <p-dialog
+  [(visible)]="isDialogVisible"
+  [modal]="true"
+  [closable]="true"
+  [responsive]="true"
+  class="dialogbox"
+  header="User Details"
+  (onHide)="clearDialog()">
+  
+  <div *ngIf="selectLender" class="text-capitalize">
+    <div class="profilebg"></div>
+
+    <div class="profile-img-container raj" style="height: 600px; width: 850px;">
+      
+      <!-- Row 1: ID and Program -->
+      <div class="info-line">
+        <div class="label">ID:</div>
+        <div class="value">{{ selectLender.id ? selectLender.id : "-" }}</div>
+
+        <div class="label">Program:</div>
+        <div class="value">{{ selectLender.program ? (selectLender.program | capitalizeFirst) : "-" }}</div>
+      </div>
+
+      <!-- Row 2: Bank Name and Login Date -->
+      <div class="info-line">
+        <div class="label">Bank Name:</div>
+        <div class="value">{{ selectLender.bankName ? (selectLender.bankName | capitalizeFirst) : "-" }}</div>
+
+        <div class="label">Login Date:</div>
+        <div class="value">{{ selectLender.loginDate ? (selectLender.loginDate | date) : "-" }}</div>
+      </div>
+
+      <!-- Row 3: Login Status and Sanction Date -->
+      <div class="info-line">
+        <div class="label">Login Status:</div>
+        <div class="value">{{ selectLender.fipStatus ? (selectLender.fipStatus | capitalizeFirst) : "-" }}</div>
+
+        <div class="label">Sanction Date:</div>
+        <div class="value">{{ selectLender.sanctionDate ? (selectLender.sanctionDate | date) : "-" }}</div>
+      </div>
+
+      <!-- Row 4: Sanctioned Amount and Sanction Status -->
+      <div class="info-line">
+        <div class="label">Sanctioned Amount:</div>
+        <div class="value">{{ selectLender.sanctionedAmount ? "₹" + selectLender.sanctionedAmount : "-" }}</div>
+
+        <div class="label">Sanction Status:</div>
+        <div class="value">{{ selectLender.approvedStatus ? (selectLender.approvedStatus | capitalizeFirst) : "-" }}</div>
+      </div>
+
+      <!-- Row 5: LAN and ROI -->
+      <div class="info-line">
+        <div class="label">LAN:</div>
+        <div class="value">{{ selectLender.lan ? (selectLender.lan | capitalizeFirst) : "-" }}</div>
+
+        <div class="label">ROI:</div>
+        <div class="value">{{ selectLender.roi ? (selectLender.roi | capitalizeFirst) : "-" }}</div>
+      </div>
+
+      <!-- Row 6: Tenure and Process Code -->
+      <div class="info-line">
+        <div class="label">Tenure:</div>
+        <div class="value">{{ selectLender.tenure ? (selectLender.tenure | capitalizeFirst) : "-" }}</div>
+
+        <div class="label">Process Code:</div>
+        <div class="value">{{ selectLender.processCode ? (selectLender.processCode | capitalizeFirst) : "-" }}</div>
+      </div>
+
+      <!-- Row 7: Process Type and Disbursal Date -->
+      <div class="info-line">
+        <div class="label">Process Type:</div>
+        <div class="value">{{ selectLender.processType ? (selectLender.processType | capitalizeFirst) : "-" }}</div>
+
+        <div class="label">Disbursal Date:</div>
+        <div class="value">{{ selectLender.disbursalDate ? (selectLender.disbursalDate | date) : "-" }}</div>
+      </div>
+
+      <!-- Row 8: Disbursed Amount and Sanctioned Letter -->
+      <div class="info-line">
+        <div class="label">Disbursed Amount:</div>
+        <div class="value">{{ selectLender.disbursedAmount ? (selectLender.disbursedAmount | capitalizeFirst) : "-" }}</div>
+
+        <div class="label">Sanctioned Letter:</div>
+        <div class="value">
+          <ng-container *ngIf="selectLender.sanctionedLetter; else noData">
+            <a *ngFor="let file of selectLender.sanctionedLetter" [href]="'//' + file" target="_blank">
+              <i [class]="getFileIcon(file.split('.').pop())" class="file-icon me-2"></i>
+            </a>
+          </ng-container>
+          <ng-template #noData>-</ng-template>
+        </div>
+      </div>
+
+      <!-- Row 9: Repayment Schedule and Login Remarks -->
+      <div class="info-line">
+        <div class="label">Repayment Schedule:</div>
+        <div class="value">
+          <ng-container *ngIf="selectLender.repaymentSchedule; else noData">
+            <a *ngFor="let file of selectLender.repaymentSchedule" [href]="'//' + file" target="_blank">
+              <i [class]="getFileIcon(file.split('.').pop())" class="file-icon me-2"></i>
+            </a>
+          </ng-container>
+          <ng-template #noData>-</ng-template>
+        </div>
+        </div>
+        <div class="profile-img-container rajuu" style="height: 600px; width: 850px;">
+        <div class="info-line">
+        <div class="label">Login Remarks:</div>
+        <div class="value" style="width: 50px;">{{ selectLender.fipRemarks ? (selectLender.fipRemarks | capitalizeFirst) : "-" }}</div>
+      
+
+      <!-- Row 10: Sanction Remarks -->
+      <div>
+        <div class="label">Sanction Remarks:</div>
+        <div class="ra">{{ selectLender.approvedRemarks ? (selectLender.approvedRemarks | capitalizeFirst) : "-" }}</div>
+      </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</p-dialog>
+
+
   <div class="profile-details background-radial-gradient" *ngIf="leadsData">
     <div
       class="container-fluid pt-2 text-capitalize lead-card"
@@ -3284,6 +3407,7 @@
                     [(selection)]="selectedRows"
                     dataKey="id"
                     responsiveLayout="scroll"
+                    (onRowSelect)="showUserDetails($event)"
                     selectionMode="multiple"
                     class="custom-dark-table"
                   >

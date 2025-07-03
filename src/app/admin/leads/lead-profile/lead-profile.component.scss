@@ -1,4 +1,4 @@
-.profile-details .card {
+.profile .card {
   border: none;
   // box-shadow: 0 2px 4px rgba(185, 185, 226, 0.91);
 }
@@ -345,3 +345,182 @@ small {
   display: inline-block;
   vertical-align: middle;
 }
+
+// .info-line {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   padding: 2px 0;
+//   word-break: break-word;
+//   margin-right: 15px;
+// }
+
+// .label {
+//   font-weight: 500%;
+//   max-width: 50%;
+//   padding-right: 5px;
+// }
+
+// .value {
+//   max-width: 100%;
+//   max-height: 120px;
+//   text-align: left;
+//   word-wrap: break-word;
+//   overflow: hidden;
+//   white-space: normal;
+//   padding-left: 5px;
+   
+//   // position: fixed;
+// }
+// .container {
+//   display: flex;
+//   flex-direction: column;
+// }
+
+// .sanction-letter {
+//   margin: right;
+// }
+// p-dialog-content {
+//   padding-top: 10px;
+//   margin-top: 1;
+//   padding-left: 0;
+//   padding-right: 0;
+// }
+// .dialogbox .sanction-remarks {
+//   word-wrap: break-word; /* Break long words */
+//   word-break: break-word; /* Break unbreakable words */
+//   white-space: normal;    /* Prevent text from overflowing */
+//   overflow: hidden;       /* Avoid unwanted overflow */
+//   max-height: 150px;      /* Optional: limit max height if the remarks text is too long */
+//   padding: 10px;           /* Optional: ensure padding */
+//          /* Optional: space between fields */
+//   line-height: 1.5;       /* Ensure proper line spacing */
+//   display: block;         /* Ensure it behaves like a block-level element */
+// }
+// .sanction-remarks{
+//   margin-top: 80px;
+// }
+
+
+// @media (max-width: 768px) {
+//   .dialogbox .info-line {
+//     flex-direction: column;  /* Stack label and value vertically */
+//     align-items: flex-start;
+//   }
+
+//   .dialogbox .label {
+//     margin-bottom: 5px;  /* Space between label and value */
+//   }
+// .dialogbox .value {
+//     word-wrap: break-word;  /* Ensure long text breaks and wraps */
+//     max-width: 100%;
+//     padding-right: 10px;  /* Allow text to take up the entire available width */
+//   }
+// .dialogbox {
+//   padding: 15px;
+// }
+// }
+// @media (max-width: 480px) {
+//   .dialogbox {
+//     width: 100%;  /* Ensure the dialog takes up more of the screen */
+//     padding: 25px;
+//   }
+
+//   .profile-img-container img {
+//     width: 100px;  /* Adjust image size for smaller screens */
+//     height: 100px;
+//   }
+
+//   .info-line {
+//     margin-right: 0;  /* Remove right margin */
+//   }
+// }
+// /* Popup container */
+/* General styling for the dialog */
+// 
+/* Styling for the dialog box */
+// 
+/* Styling for the dialog box */
+.dialogbox {
+  padding: 15px;
+  max-width: 900px;
+  width: 100%;
+}
+.raj{
+  display: flex;
+  flex-direction: column;
+  // flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+.ra{
+  text-align: left;
+  line-break: calc(10);
+}
+// .rajuu{
+//   display: flex;
+//   flex-direction: column;
+// }
+
+/* Info line: This is the container for each row */
+.info-line {
+  display: flex;
+  justify-content: space-between; /* Space between label-value pairs */
+  margin-bottom: 15px; /* Space between rows */
+  align-items: center; /* Align the items vertically */
+  flex-wrap: wrap; /* Allow wrapping in case of overflow */
+  
+}
+
+/* Styling for the label */
+.label {
+  font-weight: bold;
+  flex: 0 0 150px; /* Fixed width for labels */
+  padding-right: 20px; /* Space between label and value */
+  text-align: left;
+}
+
+/* Styling for the value */
+.value {
+  flex: 1; /* The value takes the remaining space */
+  text-align: left;
+  word-wrap: break-word;
+  white-space: normal;
+  padding-right: 10px; /* Space on the right for value */
+}
+
+/* Add gap between the two labels */
+.label + .value {
+  margin-left: 30px;  /* This creates the gap between the label and the value */
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .info-line {
+    flex-direction: column; /* Stack label and value vertically */
+    align-items: flex-start; /* Align items to the start */
+  }
+
+  .label {
+    margin-bottom: 10px; /* Space between label and value when stacked */
+  }
+}
+
+@media (max-width: 480px) {
+  .dialogbox {
+    width: 100%;
+    padding: 25px;
+  }
+
+  .profile-img-container img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .info-line {
+    margin-right: 0; /* Remove right margin */
+  }
+}
+
+
+
+

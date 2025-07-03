@@ -564,13 +564,17 @@
                           <div class="my-1">
                             <label class="text-success">Loan Requirement</label>
                           </div>
-                          <input
+                         <input
                             pInputText
                             class="rounded-lg"
                             type="number"
                             placeholder="Enter Loan Requirement"
                             formControlName="loanRequirement"
                             autocomplete="off"
+                            inputmode="decimal"
+                            pattern="^\d*\.?\d*$"
+                            (keydown)="preventInvalidKeys($event)"
+                            (paste)="preventInvalidPaste($event)"
                           />
                         </div>
                       </div>
@@ -586,6 +590,10 @@
                             placeholder="Enter OD Requirement"
                             formControlName="odRequirement"
                             autocomplete="off"
+                            inputmode="decimal"
+                            pattern="^\d*\.?\d*$"
+                            (keydown)="preventInvalidKeys($event)"
+                            (paste)="preventInvalidPaste($event)"
                           />
                         </div>
                       </div>
