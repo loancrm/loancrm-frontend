@@ -87,8 +87,16 @@ export class DashboardComponent implements OnInit {
   monthLabels: any = []
   currentTableEvent: any;
   selectedDropdownOption: any = null;
+  dateOptions = [
+    { label: 'Total', value: 'total' },
+    { label: 'Today', value: 'today' },
+    { label: 'This Month', value: 'thisMonth' },
+    { label: 'Previous Month', value: 'previousMonth' },
+    { label: 'Last 7 Days', value: 'last7' },
+    { label: 'Custom Range', value: 'custom' },
+  ];
 
-
+  selectedDateOption: string = 'thisMonth';
   constructor(
     private routingService: RoutingService,
     private leadsService: LeadsService,

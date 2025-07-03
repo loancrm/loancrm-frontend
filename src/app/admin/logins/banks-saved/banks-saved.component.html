@@ -32,7 +32,8 @@
       >
         <ng-template pTemplate="header">
           <tr>
-            <th>Program</th>
+            <th>ID</th>
+            <th>Surrogate</th>
             <th>Lender</th>
             <th style="min-width: 200px">Login Date</th>
             <th>Status</th>
@@ -42,6 +43,7 @@
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
           <tr>
+            <td>{{ rowIndex + 1 }}</td>
             <td>{{ rowData.program }}</td>
             <td>{{ rowData.bankName }}</td>
             <td>

@@ -105,14 +105,29 @@
           (input)="filterBanks()"
           style="width: 100%"
         />
-        <button
+        <!-- <button
           type="button"
           pButton
           icon="pi pi-search"
           class="p-button-primary"
           [disabled]="!bankNameToSearch"
           (click)="filterWithBankName()"
-        ></button>
+        ></button> -->
+        <button
+          type="button"
+          pButton
+          class="p-button-primary search-btn"
+          [disabled]="!bankNameToSearch"
+          (click)="filterWithBankName()"
+        >
+          <img
+            src="assets/images/icons/search.svg"
+            alt="Search"
+            width="16"
+            height="16"
+            style="vertical-align: middle"
+          />
+        </button>
       </div>
 
       <!-- Bank Cards -->

@@ -127,7 +127,7 @@
       </ng-template>
       <ng-template pTemplate="header" let-columns>
         <tr>
-          <th class="text-nowrap">Lender Id</th>
+          <th class="text-nowrap">Id</th>
           <th>Image</th>
           <th>Name</th>
           <th class="text-nowrap">Created On</th>
@@ -135,16 +135,19 @@
           <th>Actions</th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-bankers>
+      <ng-template pTemplate="body" let-bankers let-rowIndex="rowIndex">
         <tr
           [pSelectableRow]="bankers"
           class="text-capitalize"
           [ngClass]="{ 'disabled-row': bankers.disabled }"
         >
           <td>
-            <span class="table-column-data" *ngIf="bankers.bankerId">{{
+            <!-- <span class="table-column-data" *ngIf="bankers.bankerId">{{
               bankers.bankerId
-            }}</span>
+            }}</span> -->
+            <span class="table-column-data" *ngIf="bankers.bankerId">
+              {{ rowIndex + 1 }}
+            </span>
           </td>
           <td>
             <span class="table-column-data" *ngIf="bankers.imageFiles">

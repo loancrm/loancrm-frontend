@@ -1,22 +1,29 @@
-<div class="welcome">
-  <div class="p-1 m-1 greeting-card">
-    <div class="d-flex align-items-center">
-      <img
-        src="../../../assets/images/menu/welcome.gif"
-        width="45"
-        height="45"
-        class="me-3"
-        alt="Image"
-      />
-      <div>
-        <h5 class="card-title mb-0 text-capitalize">
-          {{ greetingMessage }}, &nbsp;<span>{{
-            userDetails.name | capitalizeFirst
-          }}</span>
-        </h5>
-      </div>
+<div class="welcome d-flex justify-content-between align-items-center p-1 m-1 greeting-card">
+  <!-- Left: Greeting -->
+  <div class="d-flex align-items-center">
+    <img
+      src="../../../assets/images/menu/welcome.gif"
+      width="45"
+      height="45"
+      class="me-3"
+      alt="Image"
+    />
+    <div>
+      <h5 class="card-title mb-0 text-capitalize">
+        {{ greetingMessage }}, &nbsp;<span>{{ userDetails.name | capitalizeFirst }}</span>
+      </h5>
     </div>
   </div>
+
+  <!-- Right: Date Range Dropdown -->
+  <!-- <p-dropdown
+    [options]="dateOptions"
+    [(ngModel)]="selectedDateOption"
+    optionLabel="label"
+    placeholder="Select Range"
+    class="w-auto"
+    style="min-width: 160px"
+  ></p-dropdown> -->
 </div>
 
 <div *ngIf="loading">

@@ -203,7 +203,7 @@ export class BusinessLoanCalculatorComponent implements OnInit {
       margin: { left: 14, right: 14 },
       body: [
         ['Loan Amount:', `Rs. ${this.loanAmount}`, 'Monthly EMI:', `Rs. ${this.emi}`],
-        ['Interest Rate:', `${this.interestRate}%`, 'Interest:', `Rs. ${this.totalInterest}`],
+        ['Interest Rate (Flat):', `${this.interestRate}%`, 'Interest:', `Rs. ${this.totalInterest}`],
         ['Tenure:', `${this.tenure} years`, 'Total Payable:', `Rs. ${this.totalPayable}`],
       ],
       styles: {
