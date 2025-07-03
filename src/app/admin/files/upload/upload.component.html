@@ -3380,7 +3380,7 @@
                 ></p-calendar> -->
                 <div class="custom-calendar-wrapper w-100 position-relative">
                   <p-calendar
-                    #calendar
+                    #statementfromcalendar
                     [(ngModel)]="statements['from']"
                     placeholder="Select From Date"
                     [showIcon]="false"
@@ -3394,7 +3394,7 @@
                     src="../../../../assets/images/icons/calendar.svg"
                     alt="Calendar Icon"
                     class="calendar-custom-img"
-                    (click)="calendar.toggle()"
+                    (click)="statementfromcalendar.toggle()"
                   />
                 </div>
               </div>
@@ -3413,7 +3413,7 @@
                 ></p-calendar> -->
                 <div class="custom-calendar-wrapper w-100 position-relative">
                   <p-calendar
-                    #calendar
+                    #statementtocalendar
                     [(ngModel)]="statements['to']"
                     placeholder="Select To Date"
                     [showIcon]="false"
@@ -3427,7 +3427,7 @@
                     src="../../../../assets/images/icons/calendar.svg"
                     alt="Calendar Icon"
                     class="calendar-custom-img"
-                    (click)="calendar.toggle()"
+                    (click)="statementtocalendar.toggle()"
                   />
                 </div>
               </div>
@@ -3555,7 +3555,7 @@
                 ></p-calendar> -->
                 <div class="custom-calendar-wrapper w-100 position-relative">
                   <p-calendar
-                    #calendar
+                    #fromcalendar
                     [(ngModel)]="statements['from']"
                     placeholder="Select From Date"
                     [showIcon]="false"
@@ -3569,7 +3569,7 @@
                     src="../../../../assets/images/icons/calendar.svg"
                     alt="Calendar Icon"
                     class="calendar-custom-img"
-                    (click)="calendar.toggle()"
+                    (click)="fromcalendar.toggle()"
                   />
                 </div>
               </div>
@@ -3588,7 +3588,7 @@
                 ></p-calendar> -->
                 <div class="custom-calendar-wrapper w-100 position-relative">
                   <p-calendar
-                    #calendar
+                    #tocalendar
                     [(ngModel)]="statements['to']"
                     placeholder="Select To Date"
                     [showIcon]="false"
@@ -3602,7 +3602,7 @@
                     src="../../../../assets/images/icons/calendar.svg"
                     alt="Calendar Icon"
                     class="calendar-custom-img"
-                    (click)="calendar.toggle()"
+                    (click)="tocalendar.toggle()"
                   />
                 </div>
               </div>
@@ -3966,7 +3966,7 @@
                 ></p-calendar> -->
                 <div class="custom-calendar-wrapper w-100 position-relative">
                   <p-calendar
-                    #calendar
+                    #filingcalendar
                     [(ngModel)]="gstData['filingPeriod']"
                     placeholder="Select Filing Period"
                     [showIcon]="false"
@@ -3980,7 +3980,7 @@
                     src="../../../../assets/images/icons/calendar.svg"
                     alt="Calendar Icon"
                     class="calendar-custom-img"
-                    (click)="calendar.toggle()"
+                    (click)="filingcalendar.toggle()"
                   />
                 </div>
               </div>

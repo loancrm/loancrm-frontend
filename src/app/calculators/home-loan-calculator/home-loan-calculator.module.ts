@@ -7,9 +7,10 @@ import { SliderModule } from 'primeng/slider';
 import { TableModule } from 'primeng/table';
 import { ApexChartsModule } from 'src/app/admin/apex-charts/apex-charts.module';
 import { BusinessLoanCalculatorComponent } from '../business-loan-calculator/business-loan-calculator.component';
+import { ButtonModule } from 'primeng/button';
 
 
-const routes: Routes = [{ path: '', component: BusinessLoanCalculatorComponent }];
+const routes: Routes = [{ path: '', component: HomeLoanCalculatorComponent }];
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ const routes: Routes = [{ path: '', component: BusinessLoanCalculatorComponent }
     FormsModule, ApexChartsModule,
     RouterModule.forChild(routes),
     SliderModule,
+    ButtonModule,
     TableModule
   ],
   exports: [

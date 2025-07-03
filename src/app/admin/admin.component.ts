@@ -13,6 +13,7 @@ export class AdminComponent {
   subscription: Subscription;
   iswiz: any = false;
   smallMenuSection: any = false;
+  isSidebarVisible = true;
   bodyHeight: any;
   smallDeviceDisplay: any;
   constructor(
@@ -58,5 +59,8 @@ export class AdminComponent {
         this.bodyHeight = screenHeight - 67;
       }
     }
+  }
+  onSidebarToggle(state: boolean) {
+    this.isSidebarVisible = state;
   }
 }

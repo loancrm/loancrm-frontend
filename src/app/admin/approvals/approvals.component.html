@@ -222,15 +222,15 @@
               lead.approvalDate | date : "mediumDate"
             }}</span>
           </td>
-          <td>
+          <td (click)="$event.stopPropagation()">
             <div class="text-center">
               <div class="d-flex">
-                <p-menu
+                <!-- <p-menu
                   appendTo="body"
                   #menu
                   [model]="actionItems(lead)"
                   [popup]="true"
-                ></p-menu>
+                ></p-menu> -->
                 <!-- <button
                   pButton
                   type="button"
@@ -240,13 +240,22 @@
                   pTooltip="Actions"
                   tooltipPosition="top"
                 ></button> -->
-                <img
+                <!-- <img
                   src="../../../assets/images/icons/menu.svg"
                   width="24px"
                   height="24px"
                   pTooltip="Actions"
                   tooltipPosition="top"
                   (click)="menu.toggle($event); $event.stopPropagation()"
+                /> -->
+                <img
+                  src="../../../assets/images/icons/sanctions.svg"
+                  width="24px"
+                  height="24px"
+                  class="me-2"
+                  (click)="approvalDetails(lead.id); $event.stopPropagation()"
+                  pTooltip="Sanction Details"
+                  tooltipPosition="top"
                 />
               </div>
             </div>

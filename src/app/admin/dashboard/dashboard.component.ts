@@ -87,8 +87,16 @@ export class DashboardComponent implements OnInit {
   monthLabels: any = []
   currentTableEvent: any;
   selectedDropdownOption: any = null;
+  dateOptions = [
+    { label: 'Total', value: 'total' },
+    { label: 'Today', value: 'today' },
+    { label: 'This Month', value: 'thisMonth' },
+    { label: 'Previous Month', value: 'previousMonth' },
+    { label: 'Last 7 Days', value: 'last7' },
+    { label: 'Custom Range', value: 'custom' },
+  ];
 
-
+  selectedDateOption: string = 'thisMonth';
   constructor(
     private routingService: RoutingService,
     private leadsService: LeadsService,
@@ -937,106 +945,361 @@ export class DashboardComponent implements OnInit {
   }
 
   setBarChartOptionsForFilter() {
-    this.barChartData = {
-      labels: ['Leads', 'Follow Ups', 'Files', 'Files In Process', 'Sanctions', 'Disbursals'],
-      datasets: [
+    // this.barChartData = {
+    //   labels: ['Leads', 'Follow Ups', 'Files', 'Files In Process', 'Sanctions', 'Disbursals'],
+    //   datasets: [
+    //     {
+    //       label: 'Counts',
+    //       data: [
+    //         this.leadsCountforFilter,
+    //         this.followupsCountforFilter,
+    //         this.filesCountforFilter,
+    //         this.fiProcessCountforFilter,
+    //         this.approvalCountforFilter,
+    //         this.disbursalCountforFilter
+    //       ],
+    //       backgroundColor: ['#EE7846', '#DCA600', '#BB5D5E', '#FABE06', '#3A5D82', '#4878AC'],
+    //       borderRadius: 4,
+    //       maxBarThickness: 45
+    //     }
+    //   ]
+    // };
+    // this.barChartData = {
+    //   labels: ['Category '], // single label (dummy, since we’ll use one bar per dataset)
+    //   datasets: [
+    //     {
+    //       label: 'Leads',
+    //       data: [this.leadsCountforFilter],
+    //       backgroundColor: '#EE7846',
+    //       maxBarThickness: 50
+    //     },
+    //     {
+    //       label: 'Follow Ups',
+    //       data: [this.followupsCountforFilter],
+    //       backgroundColor: '#DCA600',
+    //       maxBarThickness: 50
+    //     },
+    //     {
+    //       label: 'Files',
+    //       data: [this.filesCountforFilter],
+    //       backgroundColor: '#BB5D5E',
+    //       maxBarThickness: 50
+    //     },
+    //     {
+    //       label: 'Files In Process',
+    //       data: [this.fiProcessCountforFilter],
+    //       backgroundColor: '#FABE06',
+    //       maxBarThickness: 50
+    //     },
+    //     {
+    //       label: 'Sanctions',
+    //       data: [this.approvalCountforFilter],
+    //       backgroundColor: '#3A5D82',
+    //       maxBarThickness: 50
+    //     },
+    //     {
+    //       label: 'Disbursals',
+    //       data: [this.disbursalCountforFilter],
+    //       backgroundColor: '#4878AC',
+    //       maxBarThickness: 50
+    //     }
+    //   ]
+    // };
+
+    // this.barChartOptions = {
+    //   responsive: true,
+    //   // maintainAspectRatio: false,
+    //   plugins: {
+    //     legend: {
+    //       display: true,
+    //       position: 'bottom', // ⬅️ move legend below chart
+    //       labels: {
+    //         usePointStyle: true, // ⬅️ use circle indicators
+    //         pointStyle: 'circle',
+    //         color: '#000',
+    //         font: {
+    //           size: 12
+    //         }
+    //       }
+    //     },
+
+    //     title: {
+    //       display: true,
+    //       text: 'Agent-Based Metrics',
+    //       color: '#29415B',
+    //       align: 'start',
+    //       font: { size: 18 }
+    //     }
+    //   },
+    //   animation: {
+    //     onComplete: (animationCtx) => {
+    //       const chart = animationCtx.chart;
+    //       const ctx = chart.ctx;
+    //       ctx.save();
+    //       ctx.font = '12px ';
+    //       ctx.textAlign = 'center';
+    //       ctx.textBaseline = 'bottom';
+
+    //       chart.data.datasets.forEach((dataset, datasetIndex) => {
+    //         const meta = chart.getDatasetMeta(datasetIndex);
+    //         meta.data.forEach((bar, index) => {
+    //           const value = dataset.data[index];
+    //           if (value != null) {
+    //             ctx.fillStyle = '#000'; // color of the label
+    //             ctx.fillText(value.toString(), bar.x, bar.y - 5);
+    //           }
+    //         });
+    //       });
+
+    //       ctx.restore();
+    //     }
+    //   },
+    //   scales: {
+    //     x: {
+    //       title: { display: false },
+    //       ticks: { color: '#000' },
+    //       grid: { display: false },
+    //       barPercentage: 0.6,        // Shrinks individual bars
+    //       categoryPercentage: 0.6    // Shrinks total width allotted for bars in one group
+    //     },
+    //     y: {
+    //       title: { display: true, text: 'Count' },
+    //       beginAtZero: true,
+    //       grid: { color: '#e5e5e5' }
+    //     }
+    //   }
+    // };
+
+
+
+
+    // this.AgentWiseBarChartOptions = {
+    //   series: [
+    //     {
+    //       name: 'Leads',
+    //       data: [this.leadsCountforFilter],
+    //     },
+    //     {
+    //       name: 'Follow Ups',
+    //       data: [this.followupsCountforFilter],
+    //     },
+    //     {
+    //       name: 'Files',
+    //       // data: [this.filesCountforFilter + this.partialsCountforFilter],
+    //       data: [this.filesCountforFilter],
+    //     },
+    //     {
+    //       name: 'Files In Process',
+    //       data: [this.fiProcessCountforFilter],
+    //     },
+    //     {
+    //       name: 'Sanctions',
+    //       data: [this.approvalCountforFilter],
+    //     },
+    //     {
+    //       name: 'Disbursals',
+    //       data: [this.disbursalCountforFilter],
+    //     },
+    //   ],
+    //   chart: {
+    //     height: 300,
+    //     type: 'bar',
+    //     toolbar: { show: false },
+    //     events: {
+    //       dataPointSelection: (event, chartContext, config) => {
+    //         if (
+    //           this.userDetails &&
+    //           this.userDetails.userType &&
+    //           this.userDetails.userType == '1'
+    //         ) {
+    //           const seriesIndex = config.seriesIndex;
+    //           const clickedCategory = config.dataPointIndex;
+    //           switch (seriesIndex) {
+    //             case 0:
+    //               this.router.navigate([`user/leads`], {
+    //                 queryParams: {
+    //                   id: this.userId,
+    //                   name: this.userName,
+    //                 },
+    //               });
+    //               break;
+    //             case 1:
+    //               this.router.navigate([`user/followups`], {
+    //                 queryParams: {
+    //                   id: this.userId,
+    //                   name: this.userName,
+    //                 },
+    //               });
+    //               break;
+    //             case 2:
+    //               this.router.navigate([`user/files`], {
+    //                 queryParams: {
+    //                   id: this.userId,
+    //                   name: this.userName,
+    //                 },
+    //               });
+    //               break;
+    //             case 3:
+    //               this.router.navigate([`user/filesinprocess`], {
+    //                 queryParams: {
+    //                   id: this.userId,
+    //                   name: this.userName,
+    //                 },
+    //               });
+    //               break;
+    //             case 4:
+    //               this.router.navigate([`user/approvals`], {
+    //                 queryParams: {
+    //                   id: this.userId,
+    //                   name: this.userName,
+    //                 },
+    //               });
+    //               break;
+    //             case 5:
+    //               this.router.navigate([`user/disbursals`], {
+    //                 queryParams: {
+    //                   id: this.userId,
+    //                   name: this.userName,
+    //                 },
+    //               });
+    //               break;
+    //             default:
+    //               console.log('No valid route for this selection');
+    //               break;
+    //           }
+    //         }
+    //       },
+    //     },
+    //   },
+    //   plotOptions: {
+    //     bar: {
+    //       distributed: false,
+    //     },
+    //   },
+    //   // colors: [
+    //   //   '#FF5733',
+    //   //   '#33FF57',
+    //   //   '#3357FF',
+    //   //   '#FFC300',
+    //   //   '#C70039',
+    //   //   // '#703960',
+    //   //   '#581845',
+
+    //   // ],
+    //   //  colors: [
+    //   //   '#EE7846',
+    //   //   '#33FF57',
+    //   //   '#FFC001',
+    //   //   '#BB5D5E',
+    //   //   '#3A5D82',
+    //   //   // '#703960',
+    //   //   '#DCA600',
+
+    //   // ],
+    //   colors: [
+    //     '#EE7846',
+    //     '#DCA600',
+    //     '#BB5D5E',
+    //     '#FABE06',
+    //     '#3A5D82',
+    //     // '#703960',
+    //     '#4878AC',
+
+    //   ],
+
+    //   dataLabels: {
+    //     enabled: true,
+    //   },
+    //   stroke: {
+    //     width: 1,
+    //     // colors: ['#fff'],
+    //   },
+    //   title: {
+    //     text: 'Agent-Based Metrics',
+    //     align: 'left',
+    //     style: { fontSize: '18px', color: '#29415B' },
+    //   },
+    //   grid: {
+    //     // borderColor: '#e7e7e7',
+    //     // row: { colors: ['#f3f3f3', 'transparent'], opacity: 0.5 },
+    //   },
+    //   markers: { size: 1 },
+    //   xaxis: {
+    //     categories: ['Total Count'],
+    //     title: {
+    //       text: 'Metrics',
+    //       // style: {
+    //       //   color: '#ffffff',
+
+    //       // },
+    //     },
+    //     labels: {
+    //       // style: {
+    //       //   colors: '#ffffff',
+    //       // },
+    //     },
+    //   },
+    //   yaxis: {
+    //     title: {
+    //       text: 'Count',
+    //       // style: {
+    //       //   color: '#ffffff',
+
+    //       // }
+    //     },
+    //     labels: {
+    //       // style: {
+    //       //   colors: '#ffffff',
+    //       // },
+    //     },
+    //   },
+    //   //     legend: {
+    //   //       position: 'top',
+    //   //       horizontalAlign: 'right',
+    //   //       floating: true,
+    //   //       markers: {
+    //   //   width: 12,
+    //   //   height: 12,
+    //   //   radius: 12 // This makes the legend color indicators rounded
+    //   // },
+    //   //       offsetY: -20,
+    //   //       offsetX: -5,
+    //   //       labels: {
+    //   //         // colors: '#ffffff',
+    //   //       },
+    //   //     },
+    //   legend: {
+    //     position: 'bottom',
+    //     horizontalAlign: 'center',
+    //     floating: false,
+    //     offsetY: 0,
+    //     offsetX: 0,
+    //     markers: {
+    //       width: 12,
+    //       height: 12,
+    //       radius: 12,
+    //     },
+    //     // itemMargin: {
+    //     //   horizontal: 10,
+    //     //   vertical: 5,
+    //     // },
+    //   }
+
+    // };
+
+    this.AgentWiseBarChartOptions = {
+      series: [
         {
-          label: 'Counts',
+          name: 'Count',
           data: [
             this.leadsCountforFilter,
             this.followupsCountforFilter,
             this.filesCountforFilter,
             this.fiProcessCountforFilter,
             this.approvalCountforFilter,
-            this.disbursalCountforFilter
-          ],
-          backgroundColor: ['#EE7846', '#DCA600', '#BB5D5E', '#FABE06', '#3A5D82', '#4878AC'],
-          borderRadius: 4,
-          maxBarThickness: 45
+            this.disbursalCountforFilter,
+          ]
         }
-      ]
-    };
-
-    this.barChartOptions = {
-      responsive: true,
-      plugins: {
-        legend: { display: false },
-        title: {
-          display: true,
-          text: 'Agent-Based Metrics',
-          color: '#29415B',
-          align: 'start',
-          font: { size: 18 }
-        }
-      },
-      animation: {
-        onComplete: (animationCtx) => {
-          const chart = animationCtx.chart;
-          const ctx = chart.ctx;
-          ctx.save();
-          ctx.font = '12px ';
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'bottom';
-
-          chart.data.datasets.forEach((dataset, datasetIndex) => {
-            const meta = chart.getDatasetMeta(datasetIndex);
-            meta.data.forEach((bar, index) => {
-              const value = dataset.data[index];
-              if (value != null) {
-                ctx.fillStyle = '#000'; // color of the label
-                ctx.fillText(value.toString(), bar.x, bar.y - 5);
-              }
-            });
-          });
-
-          ctx.restore();
-        }
-      },
-      scales: {
-        x: {
-          title: { display: true, text: 'Metrics' },
-          ticks: { color: '#000' },
-          grid: { display: false }
-        },
-        y: {
-          title: { display: true, text: 'Count' },
-          beginAtZero: true,
-          // ticks: { stepSize: 100 },
-          grid: { color: '#e5e5e5' }
-        }
-      }
-    };
-
-
-
-
-    this.AgentWiseBarChartOptions = {
-      series: [
-        {
-          name: 'Leads',
-          data: [this.leadsCountforFilter],
-        },
-        {
-          name: 'Follow Ups',
-          data: [this.followupsCountforFilter],
-        },
-        {
-          name: 'Files',
-          // data: [this.filesCountforFilter + this.partialsCountforFilter],
-          data: [this.filesCountforFilter],
-        },
-        {
-          name: 'Files In Process',
-          data: [this.fiProcessCountforFilter],
-        },
-        {
-          name: 'Sanctions',
-          data: [this.approvalCountforFilter],
-        },
-        {
-          name: 'Disbursals',
-          data: [this.disbursalCountforFilter],
-        },
       ],
       chart: {
         height: 300,
@@ -1044,167 +1307,63 @@ export class DashboardComponent implements OnInit {
         toolbar: { show: false },
         events: {
           dataPointSelection: (event, chartContext, config) => {
-            if (
-              this.userDetails &&
-              this.userDetails.userType &&
-              this.userDetails.userType == '1'
-            ) {
-              const seriesIndex = config.seriesIndex;
-              const clickedCategory = config.dataPointIndex;
-              switch (seriesIndex) {
-                case 0:
-                  this.router.navigate([`user/leads`], {
-                    queryParams: {
-                      id: this.userId,
-                      name: this.userName,
-                    },
-                  });
-                  break;
-                case 1:
-                  this.router.navigate([`user/followups`], {
-                    queryParams: {
-                      id: this.userId,
-                      name: this.userName,
-                    },
-                  });
-                  break;
-                case 2:
-                  this.router.navigate([`user/files`], {
-                    queryParams: {
-                      id: this.userId,
-                      name: this.userName,
-                    },
-                  });
-                  break;
-                case 3:
-                  this.router.navigate([`user/filesinprocess`], {
-                    queryParams: {
-                      id: this.userId,
-                      name: this.userName,
-                    },
-                  });
-                  break;
-                case 4:
-                  this.router.navigate([`user/approvals`], {
-                    queryParams: {
-                      id: this.userId,
-                      name: this.userName,
-                    },
-                  });
-                  break;
-                case 5:
-                  this.router.navigate([`user/disbursals`], {
-                    queryParams: {
-                      id: this.userId,
-                      name: this.userName,
-                    },
-                  });
-                  break;
-                default:
-                  console.log('No valid route for this selection');
-                  break;
-              }
+            const index = config.dataPointIndex;
+            switch (index) {
+              case 0:
+                this.router.navigate([`user/leads`], { queryParams: { id: this.userId, name: this.userName } });
+                break;
+              case 1:
+                this.router.navigate([`user/followups`], { queryParams: { id: this.userId, name: this.userName } });
+                break;
+              case 2:
+                this.router.navigate([`user/files`], { queryParams: { id: this.userId, name: this.userName } });
+                break;
+              case 3:
+                this.router.navigate([`user/filesinprocess`], { queryParams: { id: this.userId, name: this.userName } });
+                break;
+              case 4:
+                this.router.navigate([`user/approvals`], { queryParams: { id: this.userId, name: this.userName } });
+                break;
+              case 5:
+                this.router.navigate([`user/disbursals`], { queryParams: { id: this.userId, name: this.userName } });
+                break;
             }
-          },
-        },
-      },
-      plotOptions: {
-        bar: {
-          distributed: false,
-        },
-      },
-      // colors: [
-      //   '#FF5733',
-      //   '#33FF57',
-      //   '#3357FF',
-      //   '#FFC300',
-      //   '#C70039',
-      //   // '#703960',
-      //   '#581845',
-
-      // ],
-      //  colors: [
-      //   '#EE7846',
-      //   '#33FF57',
-      //   '#FFC001',
-      //   '#BB5D5E',
-      //   '#3A5D82',
-      //   // '#703960',
-      //   '#DCA600',
-
-      // ],
-      colors: [
-        '#EE7846',
-        '#DCA600',
-        '#BB5D5E',
-        '#FABE06',
-        '#3A5D82',
-        // '#703960',
-        '#4878AC',
-
-      ],
-
-      dataLabels: {
-        enabled: true,
-      },
-      stroke: {
-        width: 1,
-        // colors: ['#fff'],
+          }
+        }
       },
       title: {
         text: 'Agent-Based Metrics',
         align: 'left',
         style: { fontSize: '18px', color: '#29415B' },
       },
-      grid: {
-        // borderColor: '#e7e7e7',
-        // row: { colors: ['#f3f3f3', 'transparent'], opacity: 0.5 },
+      plotOptions: {
+        bar: {
+          distributed: true,
+          columnWidth: '50%',
+          borderRadius: 2
+        }
       },
-      markers: { size: 1 },
+      colors: ['#EE7846', '#DCA600', '#BB5D5E', '#FABE06', '#3A5D82', '#4878AC'],
+      dataLabels: {
+        enabled: true,
+      },
       xaxis: {
-        categories: ['Total Count'],
+        categories: ['Leads', 'Follow Ups', 'Files', 'Files In Process', 'Sanctions', 'Disbursals'],
         title: {
           text: 'Metrics',
-          // style: {
-          //   color: '#ffffff',
-
-          // },
         },
         labels: {
-          // style: {
-          //   colors: '#ffffff',
-          // },
-        },
+          style: {
+            fontSize: '10px',
+            fontWeight: 400
+          }
+        }
       },
       yaxis: {
         title: {
           text: 'Count',
-          // style: {
-          //   color: '#ffffff',
-
-          // }
-        },
-        labels: {
-          // style: {
-          //   colors: '#ffffff',
-          // },
         },
       },
-      //     legend: {
-      //       position: 'top',
-      //       horizontalAlign: 'right',
-      //       floating: true,
-      //       markers: {
-      //   width: 12,
-      //   height: 12,
-      //   radius: 12 // This makes the legend color indicators rounded
-      // },
-      //       offsetY: -20,
-      //       offsetX: -5,
-      //       labels: {
-      //         // colors: '#ffffff',
-      //       },
-      //     },
       legend: {
         position: 'bottom',
         horizontalAlign: 'center',
@@ -1216,12 +1375,7 @@ export class DashboardComponent implements OnInit {
           height: 12,
           radius: 12,
         },
-        // itemMargin: {
-        //   horizontal: 10,
-        //   vertical: 5,
-        // },
       }
-
     };
   }
   onBarClick(event: any) {

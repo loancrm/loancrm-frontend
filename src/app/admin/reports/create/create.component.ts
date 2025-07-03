@@ -47,7 +47,7 @@ export class CreateComponent {
   hadOwnHouse = projectConstantsLocal.YES_OR_NO;
   leadStatusList = projectConstantsLocal.LEAD_INTERNAL_STATUS_REPORTS;
   productTypeList = projectConstantsLocal.PRODUCT_TYPES;
-
+  processCodeList = projectConstantsLocal.PROCESS_CODES;
   callbacksStatusList = projectConstantsLocal.CALLBACK_STATUS_REPORTS;
   loginsStatus = projectConstantsLocal.BANKSSAVED_STATUS;
   approvalStatus = projectConstantsLocal.APPROVALS_STATUS;
@@ -780,7 +780,16 @@ export class CreateComponent {
             title: 'Disbursal To Date',
             type: 'date',
             filterType: 'lte',
-          }
+          },
+          {
+            field: 'processCode',
+            title: 'Process Code',
+            type: 'dropdown',
+            filterType: 'eq',
+            options: this.processCodeList,
+            value: 'name',
+            label: 'name',
+          },
         ],
       },
     ];

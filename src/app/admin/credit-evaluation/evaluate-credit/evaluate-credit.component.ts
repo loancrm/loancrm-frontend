@@ -24,6 +24,8 @@ export class EvaluateCreditComponent implements OnInit {
 
   profitaftertaxAy1: number;
   depreciationAy1: number;
+  interestonLoansAy2: number;
+  interestonLoansAy1: number;
   proposedEmi: number;
   odCcInterestAy1: number;
   monthsAy1: number;
@@ -68,6 +70,7 @@ export class EvaluateCreditComponent implements OnInit {
 
   isFirstYearSelected: boolean = true;
   isSecondYearSelected: boolean = false;
+  totalGst3BSale: number = 0;
 
   isFirstYearBalanceSheet: boolean = true;
   isSecondYearBalanceSheet: boolean = false;
@@ -107,6 +110,11 @@ export class EvaluateCreditComponent implements OnInit {
         this.getLeadDocumentsById(this.leadId).then((data) => {
           if (data) {
             console.log('Lead documents loaded');
+            if (this.leadDocuments?.gstDetails?.length > 0) {
+              this.totalGst3BSale = this.leadDocuments.gstDetails.reduce((sum, item) => {
+                return sum + (parseFloat(item.gst3BSale) || 0);
+              }, 0);
+            }
           }
         });
       }
@@ -185,6 +193,8 @@ export class EvaluateCreditComponent implements OnInit {
     this.purchasesAy1 = this.dscrValues.purchasesAy1 || '';
     this.profitaftertaxAy1 = this.dscrValues.profitaftertaxAy1 || '';
     this.depreciationAy1 = this.dscrValues.depreciationAy1 || '';
+    this.interestonLoansAy2 = this.dscrValues.interestonLoansAy2 || '';
+    this.interestonLoansAy1 = this.dscrValues.interestonLoansAy1 || '';
     this.monthsAy1 = this.dscrValues.monthsAy1 || '';
     this.turnoverAy2 = this.dscrValues.turnoverAy2 || '';
     this.purchasesAy2 = this.dscrValues.purchasesAy2 || '';
@@ -254,6 +264,8 @@ export class EvaluateCreditComponent implements OnInit {
       purchasesAy1: this.purchasesAy1,
       profitaftertaxAy1: this.profitaftertaxAy1,
       depreciationAy1: this.depreciationAy1,
+      interestonLoansAy2: this.interestonLoansAy2,
+      interestonLoansAy1: this.interestonLoansAy1,
       monthsAy1: this.monthsAy1,
       turnoverAy2: this.turnoverAy2,
       purchasesAy2: this.purchasesAy2,
@@ -398,6 +410,9 @@ export class EvaluateCreditComponent implements OnInit {
         }
       );
     });
+  }
+  isValidDate(date: any): boolean {
+    return date && !isNaN(new Date(date).getTime());
   }
 
   updateBreadcrumb(): void {

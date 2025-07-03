@@ -6,6 +6,7 @@ import { SliderModule } from 'primeng/slider';
 import { ApexChartsModule } from 'src/app/admin/apex-charts/apex-charts.module';
 import { RouterModule, Routes } from '@angular/router';
 import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
 
 
 const routes: Routes = [{ path: '', component: PersonalLoanCalculatorComponent }];
@@ -19,7 +20,8 @@ const routes: Routes = [{ path: '', component: PersonalLoanCalculatorComponent }
     FormsModule, ApexChartsModule,
     RouterModule.forChild(routes),
     SliderModule,
-    TableModule
+    TableModule,
+    ButtonModule
   ],
   exports:[
     PersonalLoanCalculatorComponent

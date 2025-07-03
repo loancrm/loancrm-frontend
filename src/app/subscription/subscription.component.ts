@@ -24,6 +24,8 @@ export class SubscriptionComponent implements OnInit {
       plan_type: 'Free',
       price: 0,
       durationDays: 30,
+      iconClass: 'fas fa-bolt',
+      colorClass: 'bg-success',
       features: [
         'Up to 100 Leads',
         'Basic Lead Management',
@@ -35,6 +37,8 @@ export class SubscriptionComponent implements OnInit {
       plan_type: 'Basic',
       price: 999,
       durationDays: 30,
+      iconClass: 'fas fa-layer-group',
+      colorClass: 'bg-primary',
       features: [
         'Up to 1000 Leads',
         'Customer KYC Upload',
@@ -47,7 +51,9 @@ export class SubscriptionComponent implements OnInit {
       plan_name: 'Professional',
       plan_type: 'Premium',
       price: 1999,
-      durationDays: 30,
+      durationDays: 365,
+      iconClass: 'fas fa-star',
+      colorClass: 'bg-warning text-dark',
       features: [
         'Up to 5000 Leads',
         'Multi-User Support (5 Users)',
@@ -80,7 +86,7 @@ export class SubscriptionComponent implements OnInit {
     }
   }
 
-  // 🟢 Entry point for any plan subscription
+  // Entry point for subscription
   subscribeToPlan(plan: any): void {
     if (plan.plan_type === 'Free') {
       this.createSubscription(plan);
@@ -92,7 +98,7 @@ export class SubscriptionComponent implements OnInit {
     }
   }
 
-  // 💳 Razorpay Integration
+  // Launch Razorpay payment
   launchRazorpay(order: any, plan: any) {
     const options = {
       key: projectConstantsLocal.RAZORPAY_KEY_ID,
@@ -118,19 +124,15 @@ export class SubscriptionComponent implements OnInit {
     }
   }
 
-  // ✅ Payment Verification + Store Subscription
+  // Verify Razorpay and store subscription
   verifyPayment(paymentResponse: any, plan: any) {
-    const today = this.moment().format('YYYY-MM-DD');
-    const endDate = this.moment().add(plan.durationDays, 'days').format('YYYY-MM-DD');
-
     const subscriptionData = {
       accountId: this.accountId,
       plan_name: plan.plan_name,
       plan_type: plan.plan_type,
       price: plan.price,
-      start_date: today,
-      end_date: endDate,
-      auto_renew: false,
+      durationDays: plan.durationDays,
+      auto_renew: 1,
       razorpay_payment_id: paymentResponse.razorpay_payment_id,
       razorpay_order_id: paymentResponse.razorpay_order_id,
       razorpay_signature: paymentResponse.razorpay_signature
@@ -141,25 +143,21 @@ export class SubscriptionComponent implements OnInit {
         this.toastService.showSuccess(`${plan.plan_name} activated!`);
         this.router.navigate(['/user/dashboard']);
       },
-      error: () => {
-        this.toastService.showError('Payment verification failed.');
+      error: (err) => {
+        this.toastService.showError(err);
       }
     });
   }
 
-  // 🆓 Free Trial Creation
+  // Handle free plan
   createSubscription(plan: any): void {
-    const today = this.moment().format('YYYY-MM-DD');
-    const endDate = this.moment().add(plan.durationDays, 'days').format('YYYY-MM-DD');
-
     const subscriptionData = {
       accountId: this.accountId,
       plan_name: plan.plan_name,
       plan_type: plan.plan_type,
       price: plan.price,
-      start_date: today,
-      end_date: endDate,
-      auto_renew: false
+      durationDays: plan.durationDays,
+      auto_renew: 1
     };
 
     this.subscriptionService.createSubscription(subscriptionData).subscribe({
@@ -169,7 +167,7 @@ export class SubscriptionComponent implements OnInit {
       },
       error: (err) => {
         this.toastService.showError(
-          err || 'Failed to activate Free Trial. You may already have one.'
+          err
         );
       }
     });

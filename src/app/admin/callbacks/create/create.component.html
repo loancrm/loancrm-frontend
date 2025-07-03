@@ -292,7 +292,7 @@
                 ></p-calendar> -->
                 <div class="custom-calendar-wrapper w-100 position-relative">
                   <p-calendar
-                    #calendar
+                    #callbackdatecalendar
                     formControlName="date"
                     placeholder="Select Callback Date"
                     [showIcon]="false"
@@ -308,7 +308,7 @@
                     src="../../../../assets/images/icons/calendar.svg"
                     alt="Calendar Icon"
                     class="calendar-custom-img"
-                    (click)="calendar.toggle()"
+                    (click)="callbackdatecalendar.toggle()"
                   />
                 </div>
               </div>

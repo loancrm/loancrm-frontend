@@ -46,6 +46,9 @@
   font-size: 40px !important;
 }
 
+.p-multiselect .p-multiselect-label {
+  padding: 0.3rem 0.73rem !important;
+}
 .p-button {
   padding: 0.3rem 0.7rem !important;
   border-radius: 3px !important;
@@ -291,3 +294,7 @@ body {
 }
 // .back-btn-icon {
 // }
+.p-paginator .p-dropdown {
+  padding: 6px;
+  // border-radius: 4px;
+}

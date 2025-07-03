@@ -483,12 +483,12 @@
                 <td>
                   <div class="text-center">
                     <div class="d-flex">
-                      <p-menu
+                      <!-- <p-menu
                         appendTo="body"
                         #bankmenu
                         [model]="actionItemsforBank(lead)"
                         [popup]="true"
-                      ></p-menu>
+                      ></p-menu> -->
                       <!-- <button
                         pButton
                         type="button"
@@ -499,7 +499,7 @@
                         tooltipPosition="top"
                       ></button> -->
 
-                      <img
+                      <!-- <img
                         src="../../../assets/images/icons/menu.svg"
                         width="24px"
                         height="24px"
@@ -508,6 +508,17 @@
                         (click)="
                           bankmenu.toggle($event); $event.stopPropagation()
                         "
+                      /> -->
+                      <img
+                        src="../../../assets/images/icons/rejects.svg"
+                        width="24px"
+                        height="24px"
+                        class="me-2"
+                        (click)="
+                          rejectsDetails(lead.id); $event.stopPropagation()
+                        "
+                        pTooltip="Rejects Details"
+                        tooltipPosition="top"
                       />
                     </div>
                   </div>
@@ -738,12 +749,12 @@
                 <td>
                   <div class="text-center">
                     <div class="d-flex">
-                      <p-menu
+                      <!-- <p-menu
                         appendTo="body"
                         #cnimenu
                         [model]="actionItemsforCni(lead)"
                         [popup]="true"
-                      ></p-menu>
+                      ></p-menu> -->
                       <!-- <button
                         pButton
                         type="button"
@@ -753,7 +764,7 @@
                         pTooltip="Actions"
                         tooltipPosition="top"
                       ></button> -->
-                      <img
+                      <!-- <img
                         src="../../../assets/images/icons/menu.svg"
                         width="24px"
                         height="24px"
@@ -762,6 +773,15 @@
                         (click)="
                           cnimenu.toggle($event); $event.stopPropagation()
                         "
+                      /> -->
+                      <img
+                        src="../../../assets/images/icons/cni-files.svg"
+                        width="24px"
+                        height="24px"
+                        class="me-2"
+                        (click)="cniDetails(lead.id); $event.stopPropagation()"
+                        pTooltip="CNI Details"
+                        tooltipPosition="top"
                       />
                     </div>
                   </div>

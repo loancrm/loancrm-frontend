@@ -259,52 +259,46 @@
     <div class="mt-2">
       <div *ngIf="activeItem && activeItem.name">
         <div *ngIf="activeItem.name == 'overview'">
-          <div class=" ">
-            <div class="container-fluid m-2">
-              <div class="row">
-                <div class="col-md-6 col-12" *ngIf="pieChartOptionsforFilter">
-                  <br class="d-lg-none d-md-none" />
-                  <div class="chart-container">
-                    <div class="chart-card p-2">
-                      <app-apex-charts
-                        [chartOptions]="pieChartOptionsforFilter"
-                      ></app-apex-charts>
-                      <span
-                        *ngIf="
-                          totalLeadsCount == 0 &&
-                          this.totalfilesCount +
-                            this.totalCreditsCount +
-                            this.totalLoginsCount +
-                            this.allProcessedFilesCount +
-                            this.inHouseRejectsCount ==
-                            0
-                        "
-                      >
-                        <img
-                          class="nodata"
-                          [src]="chartDisplayMessage1"
-                          alt="No Data Available"
-                        />
-                      </span>
-                    </div>
-                  </div>
+          <div class="row g-2">
+            <div class="col-md-6 col-12" *ngIf="pieChartOptionsforFilter">
+              <div class="chart-container">
+                <div class="chart-card p-2">
+                  <app-apex-charts
+                    [chartOptions]="pieChartOptionsforFilter"
+                  ></app-apex-charts>
+                  <span
+                    *ngIf="
+                      totalLeadsCount == 0 &&
+                      this.totalfilesCount +
+                        this.totalCreditsCount +
+                        this.totalLoginsCount +
+                        this.allProcessedFilesCount +
+                        this.inHouseRejectsCount ==
+                        0
+                    "
+                  >
+                    <img
+                      class="nodata"
+                      [src]="chartDisplayMessage1"
+                      alt="No Data Available"
+                    />
+                  </span>
                 </div>
-                <div class="col-md-6 col-12" *ngIf="amountBarChartOptions">
-                  <br class="d-lg-none d-md-none" />
-                  <div class="chart-container">
-                    <div class="chart-card p-2">
-                      <app-apex-charts
-                        [chartOptions]="amountBarChartOptions"
-                      ></app-apex-charts>
-                      <span *ngIf="areAllValuesZero()">
-                        <img
-                          class="nodata"
-                          [src]="chartDisplayMessage1"
-                          alt="No Data Available"
-                        />
-                      </span>
-                    </div>
-                  </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-12" *ngIf="amountBarChartOptions">
+              <div class="chart-container">
+                <div class="chart-card p-2">
+                  <app-apex-charts
+                    [chartOptions]="amountBarChartOptions"
+                  ></app-apex-charts>
+                  <span *ngIf="areAllValuesZero()">
+                    <img
+                      class="nodata"
+                      [src]="chartDisplayMessage1"
+                      alt="No Data Available"
+                    />
+                  </span>
                 </div>
               </div>
             </div>
@@ -502,12 +496,12 @@
               >
                 <ng-template pTemplate="caption">
                   <div class="row">
-                    <div class="col-md-4 mt-2 no-padding-small">
+                    <div class="col-md-3 mt-2 no-padding-small">
                       <div class="p-inputgroup">
                         <input
                           type="text"
                           pInputText
-                          placeholder="Search Lead with Business Name"
+                          placeholder="Enter Business Name"
                           [(ngModel)]="businessNameToSearchfollowups"
                           (ngModelChange)="
                             inputValueChangeEventfollow(
@@ -517,22 +511,37 @@
                           "
                           (keyup.enter)="filterWithBusinessNamefollow()"
                         />
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           icon="pi pi-search"
                           class="p-button-primary"
                           [disabled]="!businessNameToSearchfollowups"
                           (click)="filterWithBusinessNamefollow()"
-                        ></button>
+                        ></button> -->
+                        <button
+                          type="button"
+                          pButton
+                          class="p-button-primary"
+                          [disabled]="!businessNameToSearchfollowups"
+                          (click)="filterWithBusinessNamefollow()"
+                        >
+                          <img
+                            src="assets/images/icons/search.svg"
+                            alt="Search"
+                            width="16"
+                            height="16"
+                            style="vertical-align: middle"
+                          />
+                        </button>
                       </div>
                     </div>
-                    <div class="col-md-4 mt-2 no-padding-small">
+                    <div class="col-md-3 mt-2 no-padding-small">
                       <div class="p-inputgroup">
                         <input
                           type="text"
                           pInputText
-                          placeholder="Search File with Mobile Number"
+                          placeholder="Enter Mobile Number"
                           [(ngModel)]="mobileNumberToSearchfollow"
                           (ngModelChange)="
                             inputValueChangeEventfollow(
@@ -542,17 +551,33 @@
                           "
                           (keyup.enter)="filterWithMobileNumberFollow()"
                         />
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           icon="pi pi-search"
                           class="p-button-primary"
                           [disabled]="!mobileNumberToSearchfollow"
                           (click)="filterWithMobileNumberFollow()"
-                        ></button>
+                        ></button> -->
+                        <button
+                          type="button"
+                          pButton
+                          class="p-button-primary"
+                          [disabled]="!mobileNumberToSearchfollow"
+                          (click)="filterWithMobileNumberFollow()"
+                        >
+                          <img
+                            src="assets/images/icons/search.svg"
+                            alt="Search"
+                            width="16"
+                            height="16"
+                            style="vertical-align: middle"
+                          />
+                        </button>
                       </div>
                     </div>
-                    <div class="col-md-4 mt-2 no-padding-small text-right">
+                    <div class="col-md-3 mt-2 no-padding-small"></div>
+                    <div class="col-md-3 mt-2 no-padding-small text-right">
                       <div class="d-flex">
                         <div class="flex-grow-1 me-2">
                           <div
@@ -592,7 +617,7 @@
                     <th>Contact Number</th>
                     <th>City</th>
                     <th>Created Date</th>
-                    <th>Actions</th>
+                    <!-- <th>Actions</th> -->
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-lead>
@@ -644,10 +669,10 @@
                       }}</span>
                     </td>
 
-                    <td>
+                    <!-- <td>
                       <div class="text-center">
                         <div class="d-flex">
-                          <!-- <button
+                           <button
                             pButton
                             pRipple
                             type="button"
@@ -655,8 +680,8 @@
                             (click)="viewLead(lead.id)"
                           >
                             View
-                          </button> -->
-                          <!-- <button
+                          </button>
+                       <button
                             pButton
                             pRipple
                             type="button"
@@ -665,8 +690,8 @@
                             pTooltip="View Lead"
                             icon="fas fa-eye"
                             tooltipPosition="top"
-                          ></button> -->
-                          <img
+                          ></button>
+                        <img
                             src="../../../assets/images/icons/eye.svg"
                             width="24px"
                             height="24px"
@@ -674,20 +699,20 @@
                             tooltipPosition="top"
                             (click)="viewLead(lead.id)"
                           />
-                          <p-menu
+                         <p-menu
                             appendTo="body"
                             #menu
                             [model]="actionItems(lead)"
                             [popup]="true"
                           ></p-menu>
-                          <!-- <button
+                       <button
                             pButton
                             type="button"
                             class="custom-btn"
                             (click)="menu.toggle($event)"
                             icon="pi pi-bars"
-                          ></button> -->
-                          <img
+                          ></button>
+                        <img
                             src="../../../assets/images/icons/menu.svg"
                             width="24px"
                             height="24px"
@@ -697,7 +722,7 @@
                           />
                         </div>
                       </div>
-                    </td>
+                    </td>-->
                   </tr>
 
                   <tr>
@@ -712,7 +737,7 @@
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="emptymessage">
-                  <tr class="text-center" >
+                  <tr class="text-center">
                     <td colspan="10" class="text-center fw-bold">
                       <img
                         src="../../../assets/images/menu/no-data.gif"
@@ -758,12 +783,12 @@
               >
                 <ng-template pTemplate="caption">
                   <div class="row">
-                    <div class="col-md-4 mt-2 no-padding-small">
+                    <div class="col-md-3 mt-2 no-padding-small">
                       <div class="p-inputgroup">
                         <input
                           type="text"
                           pInputText
-                          placeholder="Search File with Business Name"
+                          placeholder="Search with Business Name"
                           [(ngModel)]="businessNameToSearchfip"
                           (ngModelChange)="
                             inputValueChangeEventfip(
@@ -773,22 +798,37 @@
                           "
                           (keyup.enter)="filterWithBusinessNamefip()"
                         />
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           icon="pi pi-search"
                           class="p-button-primary"
                           [disabled]="!businessNameToSearchfip"
                           (click)="filterWithBusinessNamefip()"
-                        ></button>
+                        ></button> -->
+                        <button
+                          type="button"
+                          pButton
+                          class="p-button-primary"
+                          [disabled]="!businessNameToSearchfip"
+                          (click)="filterWithBusinessNamefip()"
+                        >
+                          <img
+                            src="assets/images/icons/search.svg"
+                            alt="Search"
+                            width="16"
+                            height="16"
+                            style="vertical-align: middle"
+                          />
+                        </button>
                       </div>
                     </div>
-                    <div class="col-md-4 mt-2 no-padding-small">
+                    <div class="col-md-3 mt-2 no-padding-small">
                       <div class="p-inputgroup">
                         <input
                           type="text"
                           pInputText
-                          placeholder="Search File with Mobile Number"
+                          placeholder="Search with Mobile Number"
                           [(ngModel)]="mobileNumberToSearchfip"
                           (ngModelChange)="
                             inputValueChangeEventfip(
@@ -798,17 +838,33 @@
                           "
                           (keyup.enter)="filterWithMobileNumberfip()"
                         />
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           icon="pi pi-search"
                           class="p-button-primary"
                           [disabled]="!mobileNumberToSearchfip"
                           (click)="filterWithMobileNumberfip()"
-                        ></button>
+                        ></button> -->
+                        <button
+                          type="button"
+                          pButton
+                          class="p-button-primary"
+                          [disabled]="!mobileNumberToSearchfip"
+                          (click)="filterWithMobileNumberfip()"
+                        >
+                          <img
+                            src="assets/images/icons/search.svg"
+                            alt="Search"
+                            width="16"
+                            height="16"
+                            style="vertical-align: middle"
+                          />
+                        </button>
                       </div>
                     </div>
-                    <div class="col-md-4 mt-2 no-padding-small text-right">
+                    <div class="col-md-3 mt-2 no-padding-small"></div>
+                    <div class="col-md-3 mt-2 no-padding-small text-right">
                       <div class="d-flex">
                         <div class="flex-grow-1 me-2"></div>
                         <div class="d-flex align-items-center pointer-cursor">
@@ -837,7 +893,7 @@
                     <th>City</th>
                     <th>Created Date</th>
                     <th>Login Date</th>
-                    <th>Actions</th>
+                    <!-- <th>Actions</th> -->
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-lead>
@@ -887,7 +943,7 @@
                         lead.loginDate | date : "mediumDate"
                       }}</span>
                     </td>
-                    <td>
+                    <!--<td>
                       <div class="text-center">
                         <div class="d-flex">
                           <p-menu
@@ -896,13 +952,13 @@
                             [model]="actionItems(lead)"
                             [popup]="true"
                           ></p-menu>
-                          <!-- <button
+                           <button
                             pButton
                             type="button"
                             class="custom-btn"
                             (click)="menu.toggle($event)"
                             icon="pi pi-bars"
-                          ></button> -->
+                          ></button>
                           <img
                             src="../../../assets/images/icons/menu.svg"
                             width="24px"
@@ -913,7 +969,7 @@
                           />
                         </div>
                       </div>
-                    </td>
+                    </td>-->
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="emptymessage">
@@ -927,7 +983,7 @@
                       <p>No Files In Process Found</p>
                     </td>
                   </tr>
-    </ng-template>
+                </ng-template>
               </p-table>
             </div>
           </div>
@@ -940,9 +996,7 @@
                 [value]="sanctionLeads"
                 [lazy]="true"
                 (onLazyLoad)="loadApprovalLeads($event)"
-            
-                 selectionMode="single"
-               
+                selectionMode="single"
                 (onRowSelect)="viewLead($event)"
                 dataKey="id"
                 [showCurrentPageReport]="true"
@@ -965,12 +1019,12 @@
               >
                 <ng-template pTemplate="caption">
                   <div class="row">
-                    <div class="col-md-4 mt-2 no-padding-small">
+                    <div class="col-md-3 mt-2 no-padding-small">
                       <div class="p-inputgroup">
                         <input
                           type="text"
                           pInputText
-                          placeholder="Search File with Business Name"
+                          placeholder="Search with Business Name"
                           [(ngModel)]="businessNameToSearchSanctions"
                           (ngModelChange)="
                             inputValueChangeEventsanctions(
@@ -980,22 +1034,38 @@
                           "
                           (keyup.enter)="filterWithBusinessNameSanctions()"
                         />
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           icon="pi pi-search"
                           class="p-button-primary"
                           [disabled]="!businessNameToSearchSanctions"
                           (click)="filterWithBusinessNameSanctions()"
-                        ></button>
+                        ></button> -->
+
+                        <button
+                          type="button"
+                          pButton
+                          class="p-button-primary"
+                          [disabled]="!businessNameToSearchSanctions"
+                          (click)="filterWithBusinessNameSanctions()"
+                        >
+                          <img
+                            src="assets/images/icons/search.svg"
+                            alt="Search"
+                            width="16"
+                            height="16"
+                            style="vertical-align: middle"
+                          />
+                        </button>
                       </div>
                     </div>
-                    <div class="col-md-4 mt-2 no-padding-small">
+                    <div class="col-md-3 mt-2 no-padding-small">
                       <div class="p-inputgroup">
                         <input
                           type="text"
                           pInputText
-                          placeholder="Search File with Mobile Number"
+                          placeholder="Search with Mobile Number"
                           [(ngModel)]="mobileNumberToSearchSanctions"
                           (ngModelChange)="
                             inputValueChangeEventsanctions(
@@ -1005,17 +1075,33 @@
                           "
                           (keyup.enter)="filterWithMobileNumbersanctions()"
                         />
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           icon="pi pi-search"
                           class="p-button-primary"
                           [disabled]="!mobileNumberToSearchSanctions"
                           (click)="filterWithMobileNumbersanctions()"
-                        ></button>
+                        ></button> -->
+                        <button
+                          type="button"
+                          pButton
+                          class="p-button-primary"
+                          [disabled]="!mobileNumberToSearchSanctions"
+                          (click)="filterWithMobileNumbersanctions()"
+                        >
+                          <img
+                            src="assets/images/icons/search.svg"
+                            alt="Search"
+                            width="16"
+                            height="16"
+                            style="vertical-align: middle"
+                          />
+                        </button>
                       </div>
                     </div>
-                    <div class="col-md-4 mt-2 no-padding-small text-right">
+                    <div class="col-md-3 mt-2 no-padding-small"></div>
+                    <div class="col-md-3 mt-2 no-padding-small text-right">
                       <div class="d-flex">
                         <div class="flex-grow-1 me-2"></div>
                         <div class="d-flex align-items-center pointer-cursor">
@@ -1043,11 +1129,11 @@
                     <th>Created Date</th>
                     <th>Login Date</th>
                     <th>Sanction Date</th>
-                    <th>Actions</th>
+                    <!-- <th>Actions</th> -->
                   </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-lead>                  
-                  <tr  [pSelectableRow]="lead">
+                <ng-template pTemplate="body" let-lead>
+                  <tr [pSelectableRow]="lead">
                     <td>
                       <span class="table-column-data" *ngIf="lead.leadId">{{
                         lead.id
@@ -1082,7 +1168,7 @@
                         >{{ lead.approvalDate | date : "mediumDate" }}</span
                       >
                     </td>
-                    <td>
+                    <!-- <td>
                       <div class="text-center">
                         <div class="d-flex">
                           <p-menu
@@ -1091,13 +1177,13 @@
                             [model]="actionItems(lead)"
                             [popup]="true"
                           ></p-menu>
-                          <!-- <button
+                          <button
                             pButton
                             type="button"
                             class="custom-btn"
                             (click)="menu.toggle($event)"
                             icon="pi pi-bars"
-                          ></button> -->
+                          ></button>
                           <img
                             src="../../../assets/images/icons/menu.svg"
                             width="24px"
@@ -1108,7 +1194,7 @@
                           />
                         </div>
                       </div>
-                    </td>
+                    </td> -->
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="emptymessage">
@@ -1184,12 +1270,12 @@
               >
                 <ng-template pTemplate="caption">
                   <div class="row">
-                    <div class="col-md-4 mt-2 no-padding-small">
+                    <div class="col-md-3 mt-2 no-padding-small">
                       <div class="p-inputgroup">
                         <input
                           type="text"
                           pInputText
-                          placeholder="Search File with Business Name"
+                          placeholder="Search with Business Name"
                           [(ngModel)]="businessNameToSearch"
                           (ngModelChange)="
                             inputValueChangeEvent(
@@ -1199,22 +1285,37 @@
                           "
                           (keyup.enter)="filterWithBusinessName()"
                         />
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           icon="pi pi-search"
                           class="p-button-primary"
                           [disabled]="!businessNameToSearch"
                           (click)="filterWithBusinessName()"
-                        ></button>
+                        ></button> -->
+                        <button
+                          type="button"
+                          pButton
+                          class="p-button-primary"
+                          [disabled]="!businessNameToSearch"
+                          (click)="filterWithBusinessName()"
+                        >
+                          <img
+                            src="assets/images/icons/search.svg"
+                            alt="Search"
+                            width="16"
+                            height="16"
+                            style="vertical-align: middle"
+                          />
+                        </button>
                       </div>
                     </div>
-                    <div class="col-md-4 mt-2 no-padding-small">
+                    <div class="col-md-3 mt-2 no-padding-small">
                       <div class="p-inputgroup">
                         <input
                           type="text"
                           pInputText
-                          placeholder="Search File with Mobile Number"
+                          placeholder="Search with Mobile Number"
                           [(ngModel)]="mobileNumberToSearch"
                           (ngModelChange)="
                             inputValueChangeEvent(
@@ -1224,17 +1325,32 @@
                           "
                           (keyup.enter)="filterWithMobileNumber()"
                         />
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           icon="pi pi-search"
                           class="p-button-primary"
                           [disabled]="!mobileNumberToSearch"
                           (click)="filterWithMobileNumber()"
-                        ></button>
+                        ></button> --><button
+                          type="button"
+                          pButton
+                          class="p-button-primary"
+                          [disabled]="!mobileNumberToSearch"
+                          (click)="filterWithMobileNumber()"
+                        >
+                          <img
+                            src="assets/images/icons/search.svg"
+                            alt="Search"
+                            width="16"
+                            height="16"
+                            style="vertical-align: middle"
+                          />
+                        </button>
                       </div>
                     </div>
-                    <div class="col-md-4 mt-2 no-padding-small text-right">
+                    <div class="col-md-3 mt-2 no-padding-small"></div>
+                    <div class="col-md-3 mt-2 no-padding-small text-right">
                       <div class="d-flex">
                         <div class="flex-grow-1 me-2"></div>
                         <div class="d-flex align-items-center pointer-cursor">
@@ -1262,7 +1378,7 @@
                     <th>Disbursed Amount</th>
                     <th>Date</th>
                     <th>Disbursed Date</th>
-                    <th>Actions</th>
+                    <!-- <th>Actions</th> -->
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-lead>
@@ -1301,7 +1417,7 @@
                         >{{ lead.disbursalDate | date : "mediumDate" }}</span
                       >
                     </td>
-                    <td>
+                    <!-- <td>
                       <div class="text-center">
                         <div class="d-flex">
                           <p-menu
@@ -1310,13 +1426,13 @@
                             [model]="actionItems(lead)"
                             [popup]="true"
                           ></p-menu>
-                          <!-- <button
+                         <button
                             pButton
                             type="button"
                             class="custom-btn"
                             (click)="menu.toggle($event)"
                             icon="pi pi-bars"
-                          ></button> -->
+                          ></button>
                           <img
                             src="../../../assets/images/icons/menu.svg"
                             width="24px"
@@ -1327,7 +1443,7 @@
                           />
                         </div>
                       </div>
-                    </td>
+                    </td>-->
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="emptymessage">
@@ -1377,12 +1493,12 @@
               >
                 <ng-template pTemplate="caption">
                   <div class="row">
-                    <div class="col-md-4 mt-2 no-padding-small">
+                    <div class="col-md-3 mt-2 no-padding-small">
                       <div class="p-inputgroup">
                         <input
                           type="text"
                           pInputText
-                          placeholder="Search File with Business Name"
+                          placeholder="Search with Business Name"
                           [(ngModel)]="businessNameToSearchInHouseReject"
                           (ngModelChange)="
                             inputValueChangeEventInHouseReject(
@@ -1392,22 +1508,37 @@
                           "
                           (keyup.enter)="filterWithBusinessNameInHouseReject()"
                         />
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           icon="pi pi-search"
                           class="p-button-primary"
                           [disabled]="!businessNameToSearchInHouseReject"
                           (click)="filterWithBusinessNameInHouseReject()"
-                        ></button>
+                        ></button> -->
+                        <button
+                          type="button"
+                          pButton
+                          class="p-button-primary"
+                          [disabled]="!businessNameToSearchInHouseReject"
+                          (click)="filterWithBusinessNameInHouseReject()"
+                        >
+                          <img
+                            src="assets/images/icons/search.svg"
+                            alt="Search"
+                            width="16"
+                            height="16"
+                            style="vertical-align: middle"
+                          />
+                        </button>
                       </div>
                     </div>
-                    <div class="col-md-4 mt-2 no-padding-small">
+                    <div class="col-md-3 mt-2 no-padding-small">
                       <div class="p-inputgroup">
                         <input
                           type="text"
                           pInputText
-                          placeholder="Search File with Mobile Number"
+                          placeholder="Search with Mobile Number"
                           [(ngModel)]="mobileNumberToSearchInHouseRejects"
                           (ngModelChange)="
                             inputValueChangeEventInHouseReject(
@@ -1417,17 +1548,33 @@
                           "
                           (keyup.enter)="filterWithMobileNumberInHouseReject()"
                         />
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           icon="pi pi-search"
                           class="p-button-primary"
                           [disabled]="!mobileNumberToSearchInHouseRejects"
                           (click)="filterWithMobileNumberInHouseReject()"
-                        ></button>
+                        ></button> -->
+                        <button
+                          type="button"
+                          pButton
+                          class="p-button-primary"
+                          [disabled]="!mobileNumberToSearchInHouseRejects"
+                          (click)="filterWithMobileNumberInHouseReject()"
+                        >
+                          <img
+                            src="assets/images/icons/search.svg"
+                            alt="Search"
+                            width="16"
+                            height="16"
+                            style="vertical-align: middle"
+                          />
+                        </button>
                       </div>
                     </div>
-                    <div class="col-md-4 mt-2 no-padding-small text-right">
+                    <div class="col-md-3 mt-2 no-padding-small"></div>
+                    <div class="col-md-3 mt-2 no-padding-small text-right">
                       <div class="d-flex">
                         <div class="flex-grow-1 me-2"></div>
                         <div class="d-flex align-items-center pointer-cursor">
@@ -1457,7 +1604,7 @@
                     <th>City</th>
                     <th>Date</th>
                     <th>Remarks</th>
-                    <th>Status</th>
+                    <!-- <th>Status</th> -->
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-lead>
@@ -1499,7 +1646,7 @@
                         {{ lead.creditSummary | capitalizeFirst }}
                       </span>
                     </td>
-                    <td>
+                    <!-- <td>
                       <div class="text-center">
                         <div class="d-flex">
                           <p-menu
@@ -1508,13 +1655,13 @@
                             [model]="actionItems(lead)"
                             [popup]="true"
                           ></p-menu>
-                          <!-- <button
+                          <button
                             pButton
                             type="button"
                             class="custom-btn"
                             (click)="menu.toggle($event)"
                             icon="pi pi-bars"
-                          ></button> -->
+                          ></button>
                           <img
                             src="../../../assets/images/icons/menu.svg"
                             width="24px"
@@ -1525,7 +1672,7 @@
                           />
                         </div>
                       </div>
-                    </td>
+                    </td>-->
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="emptymessage">
@@ -1575,12 +1722,12 @@
               >
                 <ng-template pTemplate="caption">
                   <div class="row">
-                    <div class="col-md-4 mt-2 no-padding-small">
+                    <div class="col-md-3 mt-2 no-padding-small">
                       <div class="p-inputgroup">
                         <input
                           type="text"
                           pInputText
-                          placeholder="Search File with Business Name"
+                          placeholder="Search with Business Name"
                           [(ngModel)]="businessNameToSearchforbank"
                           (ngModelChange)="
                             inputValueChangeEventforbank(
@@ -1590,22 +1737,37 @@
                           "
                           (keyup.enter)="filterWithBusinessNameforBank()"
                         />
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           icon="pi pi-search"
                           class="p-button-primary"
                           [disabled]="!businessNameToSearchforbank"
                           (click)="filterWithBusinessNameforBank()"
-                        ></button>
+                        ></button> -->
+                        <button
+                          type="button"
+                          pButton
+                          class="p-button-primary"
+                          [disabled]="!businessNameToSearchforbank"
+                          (click)="filterWithBusinessNameforBank()"
+                        >
+                          <img
+                            src="assets/images/icons/search.svg"
+                            alt="Search"
+                            width="16"
+                            height="16"
+                            style="vertical-align: middle"
+                          />
+                        </button>
                       </div>
                     </div>
-                    <div class="col-md-4 mt-2 no-padding-small">
+                    <div class="col-md-3 mt-2 no-padding-small">
                       <div class="p-inputgroup">
                         <input
                           type="text"
                           pInputText
-                          placeholder="Search File with Mobile Number"
+                          placeholder="Search with Mobile Number"
                           [(ngModel)]="mobileNumberToSearchforbank"
                           (ngModelChange)="
                             inputValueChangeEventforbank(
@@ -1615,17 +1777,33 @@
                           "
                           (keyup.enter)="filterWithMobileNumberforbank()"
                         />
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           icon="pi pi-search"
                           class="p-button-primary"
                           [disabled]="!mobileNumberToSearchforbank"
                           (click)="filterWithMobileNumberforbank()"
-                        ></button>
+                        ></button> -->
+                        <button
+                          type="button"
+                          pButton
+                          class="p-button-primary"
+                          [disabled]="!mobileNumberToSearchforbank"
+                          (click)="filterWithMobileNumberforbank()"
+                        >
+                          <img
+                            src="assets/images/icons/search.svg"
+                            alt="Search"
+                            width="16"
+                            height="16"
+                            style="vertical-align: middle"
+                          />
+                        </button>
                       </div>
                     </div>
-                    <div class="col-md-4 mt-2 no-padding-small text-right">
+                    <div class="col-md-3 mt-2 no-padding-small"></div>
+                    <div class="col-md-3 mt-2 no-padding-small text-right">
                       <div class="d-flex">
                         <div class="flex-grow-1 me-2">
                           <div class="p-inputgroup"></div>
@@ -1716,7 +1894,9 @@
                             height="24px"
                             pTooltip="Actions"
                             tooltipPosition="top"
-                            (click)="bankmenu.toggle($event)"
+                            (click)="
+                              bankmenu.toggle($event); $event.stopPropagation()
+                            "
                           />
                         </div>
                       </div>
@@ -1771,12 +1951,12 @@
               >
                 <ng-template pTemplate="caption">
                   <div class="row">
-                    <div class="col-md-4 mt-2 no-padding-small">
+                    <div class="col-md-3 mt-2 no-padding-small">
                       <div class="p-inputgroup">
                         <input
                           type="text"
                           pInputText
-                          placeholder="Search File with Business Name"
+                          placeholder="Search with Business Name"
                           [(ngModel)]="businessNameToSearchcni"
                           (ngModelChange)="
                             inputValueChangeEventcni(
@@ -1786,22 +1966,37 @@
                           "
                           (keyup.enter)="filterWithBusinessNameforCNI()"
                         />
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           icon="pi pi-search"
                           class="p-button-primary"
                           [disabled]="!businessNameToSearchcni"
                           (click)="filterWithBusinessNameforCNI()"
-                        ></button>
+                        ></button> -->
+                        <button
+                          type="button"
+                          pButton
+                          class="p-button-primary"
+                          [disabled]="!businessNameToSearchcni"
+                          (click)="filterWithBusinessNameforCNI()"
+                        >
+                          <img
+                            src="assets/images/icons/search.svg"
+                            alt="Search"
+                            width="16"
+                            height="16"
+                            style="vertical-align: middle"
+                          />
+                        </button>
                       </div>
                     </div>
-                    <div class="col-md-4 mt-2 no-padding-small">
+                    <div class="col-md-3 mt-2 no-padding-small">
                       <div class="p-inputgroup">
                         <input
                           type="text"
                           pInputText
-                          placeholder="Search File with Mobile Number"
+                          placeholder="Search with Mobile Number"
                           [(ngModel)]="mobileNumberToSearchcni"
                           (ngModelChange)="
                             inputValueChangeEventcni(
@@ -1811,17 +2006,33 @@
                           "
                           (keyup.enter)="filterWithMobileNumbercni()"
                         />
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           icon="pi pi-search"
                           class="p-button-primary"
                           [disabled]="!mobileNumberToSearchcni"
                           (click)="filterWithMobileNumbercni()"
-                        ></button>
+                        ></button> -->
+                        <button
+                          type="button"
+                          pButton
+                          class="p-button-primary"
+                          [disabled]="!mobileNumberToSearchcni"
+                          (click)="filterWithMobileNumbercni()"
+                        >
+                          <img
+                            src="assets/images/icons/search.svg"
+                            alt="Search"
+                            width="16"
+                            height="16"
+                            style="vertical-align: middle"
+                          />
+                        </button>
                       </div>
                     </div>
-                    <div class="col-md-4 mt-2 no-padding-small text-right">
+                    <div class="col-md-3 mt-2 no-padding-small"></div>
+                    <div class="col-md-3 mt-2 no-padding-small text-right">
                       <div class="d-flex">
                         <div class="flex-grow-1 me-2">
                           <div class="p-inputgroup"></div>
@@ -1920,7 +2131,9 @@
                             height="24px"
                             pTooltip="Actions"
                             tooltipPosition="top"
-                            (click)="cnimenu.toggle($event)"
+                            (click)="
+                              cnimenu.toggle($event); $event.stopPropagation()
+                            "
                           />
                         </div>
                       </div>

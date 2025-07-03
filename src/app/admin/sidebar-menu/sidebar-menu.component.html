@@ -345,27 +345,19 @@
   </div>
 </div> -->
 
-<!-- 🔲 Dark Overlay -->
-<div
+<!-- <div
   class="sidebar-overlay"
   *ngIf="sidebarVisible"
   (click)="closeSidebar()"
 ></div>
 
-<!-- 🧭 Sidebar -->
 <div
   class="sidebar d-flex flex-column"
   [ngClass]="{ collapsed: !isSidebarVisible, 'mobile-visible': sidebarVisible }"
 >
-  <!-- Sidebar Header -->
   <div class="sidebar-header text-center py-2 position-relative">
     <img src="../../../assets/images/logo.svg" alt="LoanCRM" class="logo" />
 
-    <!-- ❌ Close button for mobile -->
-    <!-- <button
-      class="btn btn-sm btn-close position-absolute top-0 end-0 m-2 d-md-none"
-      (click)="closeSidebar()"
-    ></button> -->
     <button
       class="btn btn-sm position-absolute top-0 end-0 m-2 d-md-none"
       (click)="closeSidebar()"
@@ -403,7 +395,6 @@
       />
     </div>
   </div>
-  <!-- Sidebar Menu Items -->
   <div class="flex-grow-1 overflow-auto mt-2" *ngIf="menuItems">
     <ul class="nav flex-column sidebar-menu">
       <li class="nav-item" *ngFor="let item of menuItems">
@@ -430,7 +421,6 @@
     </ul>
   </div>
 
-  <!-- Footer -->
   <div class="sidebar-footer px-4 mb-3">
     <a class="nav-link d-flex align-items-center" href="#" (click)="confirmLogout($event)">
       <img
@@ -438,6 +428,128 @@
         class="me-3 sidebaricon"
       />
       <span class="sidebar-label" *ngIf="isSidebarVisible">Logout</span>
+    </a>
+  </div>
+</div> -->
+
+<div
+  class="sidebar-overlay"
+  *ngIf="sidebarVisible && isMobile"
+  (click)="closeSidebar()"
+></div>
+
+<!-- 🧭 Sidebar -->
+<div
+  class="sidebar d-flex flex-column"
+  [ngClass]="{
+    collapsed: !isSidebarVisible,
+    'mobile-visible': sidebarVisible && isMobile
+  }"
+>
+  <!-- Sidebar Header -->
+  <div class="sidebar-header text-center py-2 position-relative">
+    <!-- Logo (full or icon based on collapse) -->
+    <img
+      src="../../../assets/images/logo.svg"
+      alt="LoanCRM"
+      class="logo"
+      *ngIf="isSidebarVisible"
+    />
+    <img
+      src="../../../assets/fav_icon.svg"
+      alt="LoanCRM"
+      width="32"
+      *ngIf="!isSidebarVisible"
+    />
+
+    <!-- Sidebar Toggle Button -->
+    <button
+      class="btn btn-sm position-absolute top-0 end-0 m-2"
+      (click)="toggleSidebar()"
+    >
+      <!-- Show arrow (right) when sidebar is collapsed -->
+      <img
+        *ngIf="!isSidebarVisible"
+        src="../../../assets/images/icons/rightarrow.svg"
+        alt="Expand"
+        style="width: 18px; height: 18px"
+      />
+
+      <!-- Show cross when sidebar is visible -->
+      <img
+        *ngIf="isSidebarVisible"
+        src="../../../assets/images/icons/leftarrow.svg"
+        alt="Collapse"
+        style="width: 18px; height: 18px"
+      />
+    </button>
+  </div>
+
+  <!-- Search (only visible when expanded) -->
+  <div
+    class="searchbox d-flex align-items-center mx-3 mt-2"
+    *ngIf="isMobile && userDetails?.userType !== '3'"
+  >
+    <div class="input-group custom-search w-100">
+      <span
+        class="input-group-text searchbtn"
+        (click)="filterWithBusinessName()"
+      >
+        <img
+          src="../../../assets/images/icons/search.svg"
+          alt="Search"
+          width="14"
+          height="14"
+        />
+      </span>
+      <input
+        type="text"
+        class="form-control small-input searchField"
+        placeholder="Find Something"
+        [(ngModel)]="businessNameToSearch"
+        (keyup.enter)="filterWithBusinessName()"
+      />
+    </div>
+  </div>
+
+  <!-- Sidebar Menu -->
+  <div class="flex-grow-1 sidebardiv overflow-auto" *ngIf="menuItems">
+    <ul class="nav flex-column sidebar-menu">
+      <li class="nav-item" *ngFor="let item of menuItems">
+        <a
+          class="nav-link d-flex align-items-center"
+          [ngClass]="{
+            'mx-4': isSidebarVisible,
+            'justify-content-center mx-2': !isSidebarVisible
+          }"
+          [routerLink]="item.route"
+          routerLinkActive="active"
+          [queryParams]="{ v: version }"
+          [routerLinkActiveOptions]="{ exact: true }"
+          [title]="!isSidebarVisible ? item.label : null"
+          (click)="showMenuSection()"
+          *ngIf="item.condition"
+        >
+          <img [src]="item.icon" class="sidebaricon" width="24" height="24" />
+          <span class="sidebar-label ms-2" *ngIf="isSidebarVisible">
+            {{ item.label }}
+          </span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Footer -->
+  <div class="sidebar-footer px-4 mb-3 pointer-cursor" *ngIf="isSidebarVisible">
+    <a
+      class="nav-link d-flex align-items-center"
+      (click)="confirmLogout($event)"
+    >
+      <img
+        src="../../../assets/images/icons/logout.svg"
+        class="me-3 sidebaricon"
+      />
+      <span class="sidebar-label">Logout</span>
     </a>
   </div>
 </div>

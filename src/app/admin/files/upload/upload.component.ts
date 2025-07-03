@@ -179,9 +179,7 @@ export class UploadComponent implements OnInit {
       name: '',
       from: '',
       to: '',
-      odlimit: '',
-      odAccountStatements: [],
-      odSactionLetter: [],
+      currentAccountStatements: [],
     },
   ];
 
@@ -190,7 +188,9 @@ export class UploadComponent implements OnInit {
       name: '',
       from: '',
       to: '',
+      odlimit: '',
       odAccountStatements: [],
+      odSactionLetter: [],
     },
   ];
 

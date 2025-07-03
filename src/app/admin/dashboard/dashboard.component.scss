@@ -15,7 +15,7 @@
 }
 
 .dropdown {
-  padding: 8px 12px;
+  // padding: 8px 12px;
   font-size: 13px;
   border-radius: 5px;
   background-color: #fff;
@@ -89,8 +89,16 @@ span img {
   transform: scale(1.05);
 }
 
+// .chart-card {
+//   background-color: #eee8f6;
+// }
 .chart-card {
-  background-color: #eee8f6;
+  width: 100%;            /* responsive width */
+  height: 350px;          /* fixed height for the entire card */
+  box-sizing: border-box;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
 }
 .card {
   border: none;
@@ -151,4 +159,21 @@ span img {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+::ng-deep .p-chart {
+  height: 100% !important;
+  width: 100% !important;
+}
+
+::ng-deep .p-chart canvas {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  display: block;
+}
+.fixed-bar-chart {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  position: relative;
 }

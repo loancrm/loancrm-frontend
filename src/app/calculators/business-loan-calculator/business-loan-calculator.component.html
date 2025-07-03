@@ -1,11 +1,11 @@
-<div class="container my-5">
+<!-- <div class="container my-5">
   <div class="text-center mb-4">
     <h2 class="fw-bold">📊 Flat Rate Business Loan EMI Calculator</h2>
     <p class="text-muted">Easily compute your monthly EMI and repayment schedule</p>
   </div>
 
   <div class="row">
-    <!-- Input Panel -->
+
     <div class="col-md-6 bg-light p-4 rounded shadow-sm">
       <div class="form-group mb-3">
         <label class="form-label fw-semibold">Loan Amount (₹)</label>
@@ -30,7 +30,7 @@
       </button>
     </div>
 
-    <!-- Chart Panel -->
+
     <div class="col-md-6 mt-4 mt-md-0 d-flex align-items-center justify-content-center">
       <div *ngIf="piechartOptions" style="width: 100%;">
         <app-apex-charts [chartOptions]="piechartOptions"></app-apex-charts>
@@ -38,7 +38,7 @@
     </div>
   </div>
 
-  <!-- Summary Section -->
+
   <div class="mt-5 text-center border-top pt-4">
     <h5 class="text-success">📅 Monthly EMI: ₹{{ emi | number }}</h5>
     <p>Total Payable: ₹{{ totalPayable | number }}</p>
@@ -46,7 +46,7 @@
     <p>Interest: ₹{{ totalInterest | number }}</p>
   </div>
 
-  <!-- Expandable Repayment Schedule -->
+
   <div *ngIf="groupedYears?.length" class="m-5">
     <h4 class="mb-3">📆 Repayment Schedule (Year-wise)</h4>
     <p-table
@@ -104,6 +104,176 @@
               </ng-template>
             </p-table>
           </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div> -->
+
+<div class="container my-5">
+  <h2 class="text-center mb-4 fw-bold heading">
+    Buisness Loan - Flat Rate EMI Calculator
+  </h2>
+
+  <div class="row g-4 align-items-start">
+    <!-- Input Panel -->
+    <div class="col-md-4">
+      <div class="p-4 border-0">
+        <div class="form-group mb-3">
+          <label><strong>Business Name</strong></label>
+          <input
+            type="text"
+            pInputText
+            class="form-control"
+            placeholder="Enter your business name"
+            [(ngModel)]="businessName"
+          />
+        </div>
+        <div class="form-group mb-3">
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <label class="mb-0"><strong>Loan Amount (₹)</strong></label>
+            <!-- Loan Amount -->
+            <input
+              type="number"
+              [(ngModel)]="loanAmount"
+              class="form-control form-control-sm ms-2"
+              style="width: 200px"
+            />
+          </div>
+          <p-slider
+            [(ngModel)]="loanAmount"
+            [min]="50000"
+            [max]="10000000"
+            [step]="10000"
+            [style]="{ width: '100%' }"
+          ></p-slider>
+        </div>
+
+        <div class="form-group mb-3">
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <label class="mb-0"><strong>Interest Rate (%)</strong></label>
+            <input
+              type="number"
+              [(ngModel)]="interestRate"
+              class="form-control form-control-sm ms-2"
+              style="width: 200px"
+            />
+          </div>
+          <p-slider
+            [(ngModel)]="interestRate"
+            [min]="5"
+            [max]="15"
+            [step]="0.5"
+            [style]="{ width: '100%' }"
+          ></p-slider>
+        </div>
+
+        <div class="form-group mb-3">
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <label class="mb-0"><strong>Tenure (Years)</strong></label>
+            <input
+              type="number"
+              [(ngModel)]="tenure"
+              class="form-control form-control-sm ms-2"
+              style="width: 200px"
+            />
+          </div>
+          <p-slider
+            [(ngModel)]="tenure"
+            [min]="1"
+            [max]="4"
+            [step]="1"
+            [style]="{ width: '100%' }"
+          ></p-slider>
+        </div>
+
+        <button
+          pButton
+          label="Calculate EMI"
+          class="w-100 p-button-raised p-button-rounded"
+          style="background-color: #29415b; border: none"
+          (click)="calculateEMI()"
+        ></button>
+      </div>
+    </div>
+
+    <div class="col-md-4" *ngIf="emi">
+      <div class="p-4">
+        <div class="card-body text-center p-4">
+          <h4 class="mb-2 emi-heading fw-bold">Monthly EMI</h4>
+          <h2 class="emi-value mb-4 fw-bold">₹{{ emi }}</h2>
+
+          <div class="d-flex flex-column gap-2">
+            <div class="d-flex justify-content-between">
+              <span class="fw-semibold">Total Payable:</span>
+              <span>₹{{ totalPayable }}</span>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span class="fw-semibold">Principal:</span>
+              <span>₹{{ loanAmount }}</span>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span class="fw-semibold">Interest:</span>
+              <span>₹{{ totalInterest }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart -->
+    <div class="col-md-4" *ngIf="piechartOptions">
+      <div class="p-3">
+        <app-apex-charts [chartOptions]="piechartOptions"></app-apex-charts>
+      </div>
+    </div>
+  </div>
+
+  <!-- Repayment Schedule & PDF Download -->
+  <div class="mt-3" *ngIf="repaymentSchedule.length > 0">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h5 class="mb-0" style="color: #29415b">📆 Repayment Schedule</h5>
+      <button
+        pButton
+        icon="pi pi-download"
+        class="p-button-text p-button-sm p-button-secondary"
+        [disabled]="!businessName"
+        label="Download PDF"
+        (click)="generatePDF()"
+      ></button>
+    </div>
+
+    <p-table
+      [value]="repaymentSchedule"
+      [responsiveLayout]="'scroll'"
+      class="p-datatable-striped p-datatable-gridlines"
+      styleClass="p-shadow-2"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>S. No.</th>
+          <th>Month</th>
+          <th>EMI (₹)</th>
+          <th>Principal (₹)</th>
+          <th>Interest (₹)</th>
+          <th>Balance (₹)</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-row let-i="rowIndex">
+        <tr>
+          <td>{{ i + 1 }}</td>
+          <td>{{ row.month }}</td>
+          <td>{{ row.emi }}</td>
+          <td>{{ row.principal }}</td>
+          <td>{{ row.interest }}</td>
+          <td>{{ row.balance }}</td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="6" class="text-center">No repayment data available.</td>
         </tr>
       </ng-template>
     </p-table>

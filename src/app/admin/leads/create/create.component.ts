@@ -25,6 +25,7 @@ export class CreateComponent {
   breadCrumbItems: any = [];
   today: Date;
   leadForm: UntypedFormGroup;
+  submitted=false
   leadSources: any = [];
   leadUsers: any = [];
   files: File[];
@@ -158,7 +159,7 @@ preventInvalidPaste(event: ClipboardEvent) {
     const phoneControl = this.leadForm.get('primaryPhone');
     phoneControl?.valueChanges.subscribe(value => {
       // Only trigger validation when exactly 10 digits are entered
-      if (value && value.length === 10) {
+      if (value && value.length == 10) {
         const isValid = /^[6-9]\d{9}$/.test(value); // Starts with 6-9 and 10 digits
         if (!isValid) {
           phoneControl.setErrors({ pattern: true });
@@ -191,6 +192,7 @@ preventInvalidPaste(event: ClipboardEvent) {
         '',
         Validators.compose([
           Validators.required,
+          Validators.minLength(10)
           // Validators.pattern(/^[6789]\d{9}$/),
         ]),
       ],
@@ -253,6 +255,10 @@ preventInvalidPaste(event: ClipboardEvent) {
   }
 
   onSubmit(formValues) {
+    this.submitted=true;
+    if(this.leadForm.invalid){
+      return
+    }
     let formData: any = {
       businessName: formValues.businessName,
       businessEmail: formValues.businessEmail,

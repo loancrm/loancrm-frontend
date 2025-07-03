@@ -50,13 +50,14 @@ export class SidebarMenuComponent implements OnChanges {
   moreFeatureMenuItems: any = [];
   @Output() menuToggle: EventEmitter<boolean> = new EventEmitter();
   isMenuCollapsed = false;
-  isSidebarVisible = true;
   businessNameToSearch: any;
   searchFilter: any = {};
   currentTableEvent: any;
   loading: any;
   menuItems: any = [];
-
+  @Output() toggle = new EventEmitter<boolean>();
+  @Input() isSidebarVisible = true;
+  isMobile = false;
   constructor(
     private confirmationService: ConfirmationService,
     private subscriptionService: SubscriptionService,
@@ -71,6 +72,7 @@ export class SidebarMenuComponent implements OnChanges {
     private dialogService: DialogService,
     private localStorageService: LocalStorageService
   ) {
+    this.checkIfMobile();
     this.leadsService.sidebarVisible$.subscribe(
       (visible) => (this.isSidebarVisible = visible)
     );
@@ -87,11 +89,17 @@ export class SidebarMenuComponent implements OnChanges {
     this.getUserRoles();
   }
 
+  @HostListener('window:resize')
+  checkIfMobile() {
+    this.isMobile = window.innerWidth <= 991;
+  }
   toggleSidebar() {
-    this.leadsService.toggleSidebar();
+    this.isSidebarVisible = !this.isSidebarVisible;
+    this.toggle.emit(this.isSidebarVisible);
   }
   closeSidebar() {
-    this.sidebarVisible = false;
+    this.isSidebarVisible = false;
+    this.toggle.emit(this.isSidebarVisible);
   }
 
   filterWithBusinessName() {
@@ -436,26 +444,26 @@ export class SidebarMenuComponent implements OnChanges {
   // }
 
   confirmLogout(event: Event) {
-  event.preventDefault(); // prevent default <a> behavior
-  this.confirmationService.confirm({
-    message: 'Are you sure you want to logout?',
-    header: 'Confirm Logout',
-    icon: 'pi pi-sign-out',
-    accept: () => {
-      this.authService
-        .doLogout()
-        .then(() => {
-          this.toastService.showSuccess('Logout Successful');
-          this.localStorage.clearAllFromLocalStorage();
-          this.router.navigate(['user', 'login']);
-        })
-        .catch((error) => {
-          this.toastService.showError(error);
-        });
-    },
-    reject: () => {
-      this.toastService.showInfo('Logout cancelled');
-    }
-  });
-}
+    event.preventDefault(); // prevent default <a> behavior
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to logout?',
+      header: 'Confirm Logout',
+      icon: 'pi pi-sign-out',
+      accept: () => {
+        this.authService
+          .doLogout()
+          .then(() => {
+            this.toastService.showSuccess('Logout Successful');
+            this.localStorage.clearAllFromLocalStorage();
+            this.router.navigate(['user', 'login']);
+          })
+          .catch((error) => {
+            this.toastService.showError(error);
+          });
+      },
+      reject: () => {
+        this.toastService.showInfo('Logout cancelled');
+      }
+    });
+  }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 @Component({
   selector: 'app-business-loan-calculator',
   templateUrl: './business-loan-calculator.component.html',
@@ -19,13 +20,60 @@ export class BusinessLoanCalculatorComponent implements OnInit {
   groupedYears: { year: string }[] = [];
   expandedRows: { [key: string]: boolean } = {};
 
-  piechartOptions: any;
+  piechartOptions: any; businessName: string = '';
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
     this.calculateEMI();
   }
+
+  // calculateEMI(): void {
+  //   const totalInterest = (this.loanAmount * this.interestRate * this.tenure) / 100;
+  //   const totalPayable = this.loanAmount + totalInterest;
+  //   const months = this.tenure * 12;
+  //   const emi = Math.round(totalPayable / months);
+
+  //   this.emi = emi;
+  //   this.totalInterest = Math.round(totalInterest);
+  //   this.totalPayable = Math.round(totalPayable);
+
+  //   this.repaymentSchedule = [];
+  //   this.groupedSchedule = {};
+  //   this.groupedYears = [];
+
+  //   let balance = totalPayable;
+  //   const startDate = new Date();
+
+  //   for (let i = 0; i < months; i++) {
+  //     const monthDate = new Date(startDate);
+  //     monthDate.setMonth(startDate.getMonth() + i);
+
+  //     const monthName = monthDate.toLocaleString('default', { month: 'long' });
+  //     const year = monthDate.getFullYear().toString();
+
+  //     const principalPart = Math.round(this.loanAmount / months);
+  //     const interestPart = Math.round(totalInterest / months);
+  //     balance -= emi;
+
+  //     const row = {
+  //       month: `${monthName}-${year}`,
+  //       emi,
+  //       principal: principalPart,
+  //       interest: interestPart,
+  //       balance: balance > 0 ? Math.round(balance) : 0
+  //     };
+
+  //     if (!this.groupedSchedule[year]) {
+  //       this.groupedSchedule[year] = [];
+  //     }
+  //     this.groupedSchedule[year].push(row);
+  //   }
+
+  //   this.groupedYears = Object.keys(this.groupedSchedule).map(year => ({ year }));
+
+  //   this.updateChart();
+  // }
 
   calculateEMI(): void {
     const totalInterest = (this.loanAmount * this.interestRate * this.tenure) / 100;
@@ -38,38 +86,21 @@ export class BusinessLoanCalculatorComponent implements OnInit {
     this.totalPayable = Math.round(totalPayable);
 
     this.repaymentSchedule = [];
-    this.groupedSchedule = {};
-    this.groupedYears = [];
-
     let balance = totalPayable;
-    const startDate = new Date();
 
-    for (let i = 0; i < months; i++) {
-      const monthDate = new Date(startDate);
-      monthDate.setMonth(startDate.getMonth() + i);
-
-      const monthName = monthDate.toLocaleString('default', { month: 'long' });
-      const year = monthDate.getFullYear().toString();
-
+    for (let i = 1; i <= months; i++) {
       const principalPart = Math.round(this.loanAmount / months);
       const interestPart = Math.round(totalInterest / months);
       balance -= emi;
 
-      const row = {
-        month: `${monthName}-${year}`,
+      this.repaymentSchedule.push({
+        month: `Month ${i}`,
         emi,
         principal: principalPart,
         interest: interestPart,
         balance: balance > 0 ? Math.round(balance) : 0
-      };
-
-      if (!this.groupedSchedule[year]) {
-        this.groupedSchedule[year] = [];
-      }
-      this.groupedSchedule[year].push(row);
+      });
     }
-
-    this.groupedYears = Object.keys(this.groupedSchedule).map(year => ({ year }));
 
     this.updateChart();
   }
@@ -82,6 +113,19 @@ export class BusinessLoanCalculatorComponent implements OnInit {
     return this.groupedSchedule[year].reduce((sum, row) => sum + Number(row[field]), 0);
   }
 
+  enforceRange(event: Event, modelName: 'loanAmount' | 'interestRate' | 'tenure', min: number, max: number): void {
+    const input = event.target as HTMLInputElement;
+    let value = parseFloat(input.value);
+
+    if (isNaN(value)) return;
+
+    if (value > max) value = max;
+    if (value < min) value = min;
+
+    // Update the corresponding model
+    this[modelName] = value;
+  }
+
   updateChart(): void {
     this.piechartOptions = {
       series: [this.loanAmount, this.totalInterest],
@@ -90,19 +134,17 @@ export class BusinessLoanCalculatorComponent implements OnInit {
         height: 320,
         offsetY: -20
       },
-      labels: ['Principal Amount', 'Interest Amount'],
-      plotOptions: {
-        pie: {
-          startAngle: -90,
-          endAngle: 90,
-          donut: {
-            size: '75%'
-          }
-        }
-      },
-      fill: {
-        colors: ['#007bff', '#ffc107']
-      },
+      labels: ['Principal', 'Interest'],
+      // plotOptions: {
+      //   pie: {
+      //     startAngle: -90,
+      //     endAngle: 90,
+      //     donut: {
+      //       size: '75%'
+      //     }
+      //   }
+      // },
+      colors: ['#29415B', '#EE7846'],
       legend: {
         position: 'bottom'
       },
@@ -121,4 +163,99 @@ export class BusinessLoanCalculatorComponent implements OnInit {
       ]
     };
   }
+
+  generatePDF(): void {
+    const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+
+    const businessName = this.businessName;
+
+    // ✅ 1. Watermark
+    const addWatermark = () => {
+      const centerX = pageWidth / 2;
+      const centerY = pageHeight / 2;
+      doc.setFont('helvetica', 'medium');
+      doc.setTextColor(230, 230, 230); // light gray
+      doc.setFontSize(60);
+      doc.text('LoanCRM', centerX, centerY, {
+        angle: 45,
+        align: 'center',
+        baseline: 'middle'
+      });
+    };
+    // ✅ 2. Header
+    const addHeader = () => {
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(18);
+      doc.setTextColor('#29415B');
+      doc.text(businessName?.toUpperCase() || 'LOAN REPORT', pageWidth / 2, 15, {
+        align: 'center',
+      });
+    };
+
+    // ✅ 3. Draw header and summary table first
+    addHeader();
+
+    // ✅ 4. Summary Table (3 left + 3 right)
+    autoTable(doc, {
+      startY: 30,
+      margin: { left: 14, right: 14 },
+      body: [
+        ['Loan Amount:', `Rs. ${this.loanAmount}`, 'Monthly EMI:', `Rs. ${this.emi}`],
+        ['Interest Rate (Flat):', `${this.interestRate}%`, 'Interest:', `Rs. ${this.totalInterest}`],
+        ['Tenure:', `${this.tenure} years`, 'Total Payable:', `Rs. ${this.totalPayable}`],
+      ],
+      styles: {
+        fontSize: 10,
+        font: 'helvetica',
+        cellPadding: 2,
+      },
+      columnStyles: {
+        0: { fontStyle: 'bold', cellWidth: 40 },
+        1: { cellWidth: 50 },
+        2: { fontStyle: 'bold', cellWidth: 40 },
+        3: { cellWidth: 50 },
+      },
+      theme: 'grid',
+    });
+    doc.setFontSize(13);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor('#29415B');
+    doc.text('Repayment Schedule', 14, 65);
+    // ✅ 5. Repayment Table
+    autoTable(doc, {
+      head: [[
+        'S. No.', 'Month', 'EMI (Rs.)', 'Principal (Rs.)', 'Interest (Rs.)', 'Balance (Rs.)'
+      ]],
+      body: this.repaymentSchedule.map((row, index) => [
+        index + 1,
+        row.month,
+        `${row.emi}`,
+        `${row.principal}`,
+        `${row.interest}`,
+        `${row.balance}`,
+      ]),
+      startY: 70,
+      margin: { top: 25 },
+      styles: {
+        fontSize: 9,
+        font: 'helvetica',
+      },
+      headStyles: {
+        fillColor: [41, 65, 91],
+        textColor: 255,
+      },
+      didDrawPage: () => {
+        addWatermark();
+        addHeader();
+      },
+    });
+
+    // ✅ 6. Save the file
+    doc.save(`${this.businessName?.toUpperCase() || 'LOAN'}-EMI-REPORT.pdf`);
+  }
+
+
+
 }
