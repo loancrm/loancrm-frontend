@@ -22,6 +22,8 @@ export class LeadProfileComponent implements OnInit {
   expandedRows: { [key: string]: boolean } = {};
   loanleads: any = null;
   leadUsers: any = [];
+  isDialogVisible = false;
+  selectLender: any = null;
   leadSources: any = [];
   userDetails: any;
   selectedRows: any[] = [];
@@ -138,6 +140,15 @@ export class LeadProfileComponent implements OnInit {
         console.error(err);
       }
     });
+  }
+  showUserDetails(user: any): void {
+    console.log('User details:', user);
+    this.selectLender = user.data;
+    this.isDialogVisible = true;
+  }
+  clearDialog(): void {
+    this.selectLender = null;
+    this.isDialogVisible = false;
   }
 
   convertToLakhsOrCrores(amount: number): string {

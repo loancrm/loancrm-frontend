@@ -133,6 +133,19 @@ export class CreateComponent {
     this.getLeadSourcesValues();
     this.getLeadUsers();
   }
+  preventInvalidKeys(event: KeyboardEvent) {
+  const invalidKeys = ['e', 'E', '+', '-', ' '];
+  if (invalidKeys.includes(event.key)) {
+    event.preventDefault();
+  }
+}
+
+preventInvalidPaste(event: ClipboardEvent) {
+  const paste = event.clipboardData?.getData('text') || '';
+  if (/[^0-9.]/.test(paste)) {
+    event.preventDefault();
+  }
+}
 
   ngOnInit() {
     this.today = new Date();
