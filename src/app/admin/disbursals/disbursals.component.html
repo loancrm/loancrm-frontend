@@ -188,8 +188,8 @@
       <ng-template pTemplate="body" let-lead>
         <tr class="text-capitalize" [pSelectableRow]="lead">
           <td>
-            <span class="table-column-data" *ngIf="lead.leadId">{{
-              lead.id
+            <span class="table-column-data" *ngIf="lead.customId">{{
+              lead.customId
             }}</span>
           </td>
           <td>
@@ -263,7 +263,6 @@
                   src="../../../assets/images/icons/revenue.svg"
                   width="24px"
                   height="24px"
-                  
                   (click)="revenueDetails(lead.id); $event.stopPropagation()"
                   pTooltip="Revenue"
                   tooltipPosition="top"

@@ -220,8 +220,8 @@
             <ng-template pTemplate="body" let-lead>
               <tr [pSelectableRow]="lead">
                 <td>
-                  <span class="table-column-data" *ngIf="lead.leadId">{{
-                    lead.id
+                  <span class="table-column-data" *ngIf="lead.customId">{{
+                    lead.customId
                   }}</span>
                 </td>
                 <td>
@@ -435,7 +435,7 @@
                     </button>
                   </div>
                 </div>
-                 <div
+                <div
                   class="col-md-3 mt-2 no-padding-small"
                   *ngIf="
                     userDetails &&
@@ -528,8 +528,8 @@
             <ng-template pTemplate="body" let-lead>
               <tr [pSelectableRow]="lead">
                 <td>
-                  <span class="table-column-data" *ngIf="lead.leadId">{{
-                    lead.leadId
+                  <span class="table-column-data" *ngIf="lead.customId">{{
+                    lead.customId
                   }}</span>
                 </td>
                 <td>
@@ -764,14 +764,14 @@
                         </button>
                       </div>
                     </div>
-                     <div
-                  class="col-md-3 mt-2 no-padding-small"
-                  *ngIf="
-                    userDetails &&
-                    userDetails.userType &&
-                    userDetails.userType == '3'
-                  "
-                ></div>
+                    <div
+                      class="col-md-3 mt-2 no-padding-small"
+                      *ngIf="
+                        userDetails &&
+                        userDetails.userType &&
+                        userDetails.userType == '3'
+                      "
+                    ></div>
                     <div class="col-md-3 mt-2 no-padding-small">
                       <div
                         class="p-inputgroup"
@@ -915,8 +915,8 @@
                 <ng-template pTemplate="body" let-lead>
                   <tr [pSelectableRow]="lead">
                     <td>
-                      <span class="table-column-data" *ngIf="lead.leadId">{{
-                        lead.leadId
+                      <span class="table-column-data" *ngIf="lead.customId">{{
+                        lead.customId
                       }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'employed'">
@@ -1192,14 +1192,14 @@
                         </button>
                       </div>
                     </div>
-                     <div
-                  class="col-md-3 mt-2 no-padding-small"
-                  *ngIf="
-                    userDetails &&
-                    userDetails.userType &&
-                    userDetails.userType == '3'
-                  "
-                ></div>
+                    <div
+                      class="col-md-3 mt-2 no-padding-small"
+                      *ngIf="
+                        userDetails &&
+                        userDetails.userType &&
+                        userDetails.userType == '3'
+                      "
+                    ></div>
                     <div class="col-md-3 mt-2 no-padding-small">
                       <div
                         class="p-inputgroup"
@@ -1337,8 +1337,8 @@
                 <ng-template pTemplate="body" let-lead>
                   <tr [pSelectableRow]="lead">
                     <td>
-                      <span class="table-column-data" *ngIf="lead.leadId">{{
-                        lead.leadId
+                      <span class="table-column-data" *ngIf="lead.customId">{{
+                        lead.customId
                       }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'employed'">

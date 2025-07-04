@@ -2821,437 +2821,649 @@
               </div>
 
               <div class="tab-pane fade" id="creditDetails">
-                <div
-                  *ngIf="!leadsData?.credits || leadsData.credits.length === 0"
-                >
-                  <div class="text-center fw-bold">
-                    <img
-                      src="../../../../assets/images/menu/no-data.gif"
-                      width="200"
-                      height="200"
-                    />
-                    <p>Credit Evaluation not Done</p>
-                  </div>
-                </div>
-
-                <!-- Show details if credits exists and is not empty -->
-                <div *ngIf="leadsData?.credits">
-                  <div class="text-muted">
-                    Credit Summary
-                    <div class="fw-bold">
-                      {{
-                        (leadsData.credits.creditSummary | capitalizeFirst) ||
-                          "-"
-                      }}
-                    </div>
-                  </div>
-
-                  <div class="row mt-3">
-                    <div class="col-12 mt-2">
-                      <h6 class="fw-bold">DSCR Ratio</h6>
-                    </div>
-                    <div class="col-md-3 col-sm-4 col-6 mb-3">
-                      <div>
-                        <div class="text-muted">Total EMI</div>
-                        <div class="fw-bold">
-                          {{
-                            (leadsData.credits.totalEmi
-                              | currency : "INR" : "symbol" : "1.0-0") || "-"
-                          }}
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4 col-6 mb-3">
-                      <div>
-                        <div class="text-muted">Proposed EMI</div>
-                        <div class="fw-bold">
-                          {{
-                            (leadsData.credits.proposedEmi
-                              | currency : "INR" : "symbol" : "1.0-0") || "-"
-                          }}
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4 col-6 mb-3">
-                      <div>
-                        <div class="text-muted">OD/CC Interest</div>
-                        <div class="fw-bold">
-                          {{
-                            (leadsData.credits.odCcInterestAy1
-                              | currency : "INR" : "symbol" : "1.0-0") || "-"
-                          }}
-                        </div>
-                      </div>
-                    </div>
-                    <div>AY 2024 - 2025</div>
-                    <div class="col-md-3 col-sm-4 col-6 mb-3">
-                      <div>
-                        <div class="text-muted">Turnover / Sales</div>
-                        <div class="fw-bold">
-                          {{
-                            (leadsData.credits.turnoverAy1
-                              | currency : "INR" : "symbol" : "1.0-0") || "-"
-                          }}
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4 col-6 mb-3">
-                      <div>
-                        <div class="text-muted">Purchases</div>
-                        <div class="fw-bold">
-                          {{
-                            (leadsData.credits.purchasesAy1
-                              | currency : "INR" : "symbol" : "1.0-0") || "-"
-                          }}
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4 col-6 mb-3">
-                      <div>
-                        <div class="text-muted">Profit After Tax</div>
-                        <div class="fw-bold">
-                          {{
-                            (leadsData.credits.profitaftertaxAy1
-                              | currency : "INR" : "symbol" : "1.0-0") || "-"
-                          }}
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4 col-6 mb-3">
-                      <div>
-                        <div class="text-muted">Depreciation</div>
-                        <div class="fw-bold">
-                          {{
-                            (leadsData.credits.depreciationAy1
-                              | currency : "INR" : "symbol" : "1.0-0") || "-"
-                          }}
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4 col-6 mb-3">
-                      <div>
-                        <div class="text-muted">Months</div>
-                        <div class="fw-bold text-lowercase">
-                          {{ leadsData.credits.monthsAy1 || "0" }} months
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      class="col-md-3 col-sm-4 col-6 mb-3"
-                      *ngIf="leadsData.credits.partnerRemuAy1"
-                    >
-                      <div>
-                        <div class="text-muted">Partners Remuneration</div>
-                        <div class="fw-bold">
-                          {{
-                            (leadsData.credits.partnerRemuAy1
-                              | currency : "INR" : "symbol" : "1.0-0") || "-"
-                          }}
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      class="col-md-3 col-sm-4 col-6 mb-3"
-                      *ngIf="leadsData.credits.directorsRemuAy1"
-                    >
-                      <div>
-                        <div class="text-muted">Directors Remuneration</div>
-                        <div class="fw-bold">
-                          {{
-                            (leadsData.credits.directorsRemuAy1
-                              | currency : "INR" : "symbol" : "1.0-0") || "-"
-                          }}
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      class="col-md-3 col-sm-4 col-6 mb-3"
-                      *ngIf="leadsData.credits.partnerInterestAy1"
-                    >
-                      <div>
-                        <div class="text-muted">
-                          Interest On Partners Capital
-                        </div>
-                        <div class="fw-bold">
-                          {{
-                            (leadsData.credits.partnerInterestAy1
-                              | currency : "INR" : "symbol" : "1.0-0") || "-"
-                          }}
-                        </div>
-                      </div>
-                    </div>
-                    <div>AY 2023 - 2024</div>
-                    <div class="col-md-3 col-sm-4 col-6 mb-3">
-                      <div>
-                        <div class="text-muted">Turnover / Sales</div>
-                        <div class="fw-bold">
-                          {{
-                            (leadsData.credits.turnoverAy2
-                              | currency : "INR" : "symbol" : "1.0-0") || "-"
-                          }}
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4 col-6 mb-3">
-                      <div>
-                        <div class="text-muted">Purchases</div>
-                        <div class="fw-bold">
-                          {{
-                            (leadsData.credits.purchasesAy2
-                              | currency : "INR" : "symbol" : "1.0-0") || "-"
-                          }}
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4 col-6 mb-3">
-                      <div>
-                        <div class="text-muted">Profit After Tax</div>
-                        <div class="fw-bold">
-                          {{
-                            (leadsData.credits.profitaftertaxAy2
-                              | currency : "INR" : "symbol" : "1.0-0") || "-"
-                          }}
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4 col-6 mb-3">
-                      <div>
-                        <div class="text-muted">Depreciation</div>
-                        <div class="fw-bold">
-                          {{
-                            (leadsData.credits.depreciationAy2
-                              | currency : "INR" : "symbol" : "1.0-0") || "-"
-                          }}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div
-                      class="col-md-3 col-sm-4 col-6 mb-3"
-                      *ngIf="leadsData.credits.partnerRemuAy2"
-                    >
-                      <div>
-                        <div class="text-muted">Partners Remuneration</div>
-                        <div class="fw-bold">
-                          {{
-                            (leadsData.credits.partnerRemuAy2
-                              | currency : "INR" : "symbol" : "1.0-0") || "-"
-                          }}
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      class="col-md-3 col-sm-4 col-6 mb-3"
-                      *ngIf="leadsData.credits.directorsRemuAy2"
-                    >
-                      <div>
-                        <div class="text-muted">Directors Remuneration</div>
-                        <div class="fw-bold">
-                          {{
-                            (leadsData.credits.directorsRemuAy2
-                              | currency : "INR" : "symbol" : "1.0-0") || "-"
-                          }}
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      class="col-md-3 col-sm-4 col-6 mb-3"
-                      *ngIf="leadsData.credits.partnerInterestAy2"
-                    >
-                      <div>
-                        <div class="text-muted">
-                          Interest On Partners Capital
-                        </div>
-                        <div class="fw-bold">
-                          {{
-                            (leadsData.credits.partnerInterestAy2
-                              | currency : "INR" : "symbol" : "1.0-0") || "-"
-                          }}
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      class="col-md-3 col-sm-4 col-6 mb-3"
-                      *ngIf="leadsData.credits.resultFirstYear"
-                    >
-                      <div>
-                        <div class="text-muted">DSCR Ratio</div>
-                        <div class="fw-bold">
-                          {{ leadsData.credits.resultFirstYear || "-" }}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row mt-3">
-                    <p>Balance Sheet</p>
-
-                    <div>AY 2023 - 2024</div>
-                    <div class="col-md-3 col-sm-4 col-6 mb-3">
-                      <div>
-                        <div class="text-muted">Sundry Debtors</div>
-                        <div class="fw-bold">
-                          {{
-                            (leadsData.credits.sundryDebtorsAy1
-                              | currency : "INR" : "symbol" : "1.0-0") || "-"
-                          }}
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4 col-6 mb-3">
-                      <div>
-                        <div class="text-muted">Sundry Creditors</div>
-                        <div class="fw-bold">
-                          {{
-                            (leadsData.credits.sundryCreditorsAy1
-                              | currency : "INR" : "symbol" : "1.0-0") || "-"
-                          }}
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4 col-6 mb-3">
-                      <div>
-                        <div class="text-muted">Creditor Days</div>
-                        <div class="fw-bold">
-                          {{ leadsData.credits.creditor_daysFirstYear || "-" }}
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4 col-6 mb-3">
-                      <div>
-                        <div class="text-muted">Debtor Days</div>
-                        <div class="fw-bold">
-                          {{ leadsData.credits.debtor_daysFirstYear || "-" }}
-                        </div>
-                      </div>
-                    </div>
-                    <div>AY 2022 - 2023</div>
-                    <div class="col-md-3 col-sm-4 col-6 mb-3">
-                      <div>
-                        <div class="text-muted">Sundry Debtors</div>
-                        <div class="fw-bold">
-                          {{
-                            (leadsData.credits.sundryDebtorsAy2
-                              | currency : "INR" : "symbol" : "1.0-0") || "-"
-                          }}
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4 col-6 mb-3">
-                      <div>
-                        <div class="text-muted">Sundry Creditors</div>
-                        <div class="fw-bold">
-                          {{
-                            (leadsData.credits.sundryCreditorsAy2
-                              | currency : "INR" : "symbol" : "1.0-0") || "-"
-                          }}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row mt-3">
-                    <h6 class="fw-bold">GST Program</h6>
-                    <div class="col-md-3 col-sm-4 col-6 mb-3">
-                      <div>
-                        <div class="text-muted">GST Turnover</div>
-                        <div class="fw-bold">
-                          {{
-                            (leadsData.credits.gstTurnover
-                              | currency : "INR" : "symbol" : "1.0-0") || "-"
-                          }}
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4 col-6 mb-3">
-                      <div>
-                        <div class="text-muted">Margin</div>
-                        <div class="fw-bold">
-                          {{
-                            leadsData.credits.margin != null
-                              ? leadsData.credits.margin + "%"
-                              : "-"
-                          }}
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4 col-6 mb-3">
-                      <div>
-                        <div class="text-muted">Months</div>
-                        <div class="fw-bold text-lowercase">
-                          {{ leadsData.credits.months || "0" }} months
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4 col-6 mb-3">
-                      <div>
-                        <div class="text-muted">Eligible EMI</div>
-                        <div class="fw-bold">
-                          {{
-                            (leadsData.credits.gstValue
-                              | currency : "INR" : "symbol" : "1.0-0") || "-"
-                          }}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row mt-3">
-                    <p>BTO Program</p>
-
-                    <div class="col-md-3 col-sm-4 col-6 mb-3">
-                      <div>
-                        <div class="text-muted">Banking Turnover</div>
-                        <div class="fw-bold">
-                          {{
-                            (leadsData.credits.bankingTurnover
-                              | currency : "INR" : "symbol" : "1.0-0") || "-"
-                          }}
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4 col-6 mb-3">
-                      <div>
-                        <div class="text-muted">Margin</div>
-                        <div class="fw-bold">
-                          {{
-                            leadsData.credits.btoMargin != null
-                              ? leadsData.credits.btoMargin + "%"
-                              : "-"
-                          }}
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4 col-6 mb-3">
-                      <div>
-                        <div class="text-muted">Months</div>
-                        <div class="fw-bold text-lowercase">
-                          {{ leadsData.credits.btoMonths || "0" }} months
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4 col-6 mb-3">
-                      <div>
-                        <div class="text-muted">Eligible EMI</div>
-                        <div class="fw-bold">
-                          {{
-                            (leadsData.credits.btoValue
-                              | currency : "INR" : "symbol" : "1.0-0") || "-"
-                          }}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- <div
-                    class="col-12 mb-3"
-                    *ngIf="leadsData.credits.creditSummary"
+                <div class="accordion accordion-dark" id="creditAccordion">
+                  <div
+                    *ngIf="
+                      !leadsData?.credits || leadsData.credits.length === 0
+                    "
                   >
-                    <div>
-                      <div class="text-muted">Credit Summary</div>
+                    <div class="text-center fw-bold">
+                      <img
+                        src="../../../../assets/images/menu/no-data.gif"
+                        width="200"
+                        height="200"
+                      />
+                      <p>Credit Evaluation not Done</p>
+                    </div>
+                  </div>
+                  <div *ngIf="leadsData?.credits">
+                    <div class="text-muted">
+                      Credit Summary
                       <div class="fw-bold">
-                        {{ leadsData.credits.creditSummary || "-" }}
+                        {{
+                          (leadsData.credits.creditSummary | capitalizeFirst) ||
+                            "-"
+                        }}
                       </div>
                     </div>
-                  </div> -->
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="headingBank">
+                        <button
+                          class="accordion-button"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#collapseBank"
+                          aria-expanded="true"
+                          aria-controls="collapseBank"
+                        >
+                          DSCR Ratio :
+                          <span *ngIf="leadsData.credits.resultFirstYear">
+                            {{ leadsData.credits.resultFirstYear || "-" }}</span
+                          >
+                        </button>
+                      </h2>
+                      <div
+                        id="collapseBank"
+                        class="accordion-collapse collapse show"
+                        aria-labelledby="headingBank"
+                        data-bs-parent="#creditAccordion"
+                      >
+                        <div class="accordion-body">
+                          <div class="row mt-3">
+                            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                              <div>
+                                <div class="text-muted">Total EMI</div>
+                                <div class="fw-bold">
+                                  {{
+                                    (leadsData.credits.totalEmi
+                                      | currency
+                                        : "INR"
+                                        : "symbol"
+                                        : "1.0-0") || "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                              <div>
+                                <div class="text-muted">Proposed EMI</div>
+                                <div class="fw-bold">
+                                  {{
+                                    (leadsData.credits.proposedEmi
+                                      | currency
+                                        : "INR"
+                                        : "symbol"
+                                        : "1.0-0") || "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                              <div>
+                                <div class="text-muted">OD/CC Interest</div>
+                                <div class="fw-bold">
+                                  {{
+                                    (leadsData.credits.odCcInterestAy1
+                                      | currency
+                                        : "INR"
+                                        : "symbol"
+                                        : "1.0-0") || "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                              <div>
+                                <div class="text-muted">Months</div>
+                                <div class="fw-bold text-lowercase">
+                                  {{ leadsData.credits.monthsAy1 || "0" }}
+                                  months
+                                </div>
+                              </div>
+                            </div>
+                            <div>AY 2024 - 2025</div>
+                            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                              <div>
+                                <div class="text-muted">Turnover / Sales</div>
+                                <div class="fw-bold">
+                                  {{
+                                    (leadsData.credits.turnoverAy1
+                                      | currency
+                                        : "INR"
+                                        : "symbol"
+                                        : "1.0-0") || "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                              <div>
+                                <div class="text-muted">Purchases</div>
+                                <div class="fw-bold">
+                                  {{
+                                    (leadsData.credits.purchasesAy1
+                                      | currency
+                                        : "INR"
+                                        : "symbol"
+                                        : "1.0-0") || "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                              <div>
+                                <div class="text-muted">Profit After Tax</div>
+                                <div class="fw-bold">
+                                  {{
+                                    (leadsData.credits.profitaftertaxAy1
+                                      | currency
+                                        : "INR"
+                                        : "symbol"
+                                        : "1.0-0") || "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                              <div>
+                                <div class="text-muted">Depreciation</div>
+                                <div class="fw-bold">
+                                  {{
+                                    (leadsData.credits.depreciationAy1
+                                      | currency
+                                        : "INR"
+                                        : "symbol"
+                                        : "1.0-0") || "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                              <div>
+                                <div class="text-muted">Interest on Loans</div>
+                                <div class="fw-bold">
+                                  {{
+                                    (leadsData.credits.interestonLoansAy1
+                                      | currency
+                                        : "INR"
+                                        : "symbol"
+                                        : "1.0-0") || "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+
+                            <div
+                              class="col-md-3 col-sm-4 col-6 mb-3"
+                              *ngIf="leadsData.credits.partnerRemuAy1"
+                            >
+                              <div>
+                                <div class="text-muted">
+                                  Partners Remuneration
+                                </div>
+                                <div class="fw-bold">
+                                  {{
+                                    (leadsData.credits.partnerRemuAy1
+                                      | currency
+                                        : "INR"
+                                        : "symbol"
+                                        : "1.0-0") || "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="col-md-3 col-sm-4 col-6 mb-3"
+                              *ngIf="leadsData.credits.directorsRemuAy1"
+                            >
+                              <div>
+                                <div class="text-muted">
+                                  Directors Remuneration
+                                </div>
+                                <div class="fw-bold">
+                                  {{
+                                    (leadsData.credits.directorsRemuAy1
+                                      | currency
+                                        : "INR"
+                                        : "symbol"
+                                        : "1.0-0") || "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="col-md-3 col-sm-4 col-6 mb-3"
+                              *ngIf="leadsData.credits.partnerInterestAy1"
+                            >
+                              <div>
+                                <div class="text-muted">
+                                  Interest On Partners Capital
+                                </div>
+                                <div class="fw-bold">
+                                  {{
+                                    (leadsData.credits.partnerInterestAy1
+                                      | currency
+                                        : "INR"
+                                        : "symbol"
+                                        : "1.0-0") || "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                            <div>AY 2023 - 2024</div>
+                            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                              <div>
+                                <div class="text-muted">Turnover / Sales</div>
+                                <div class="fw-bold">
+                                  {{
+                                    (leadsData.credits.turnoverAy2
+                                      | currency
+                                        : "INR"
+                                        : "symbol"
+                                        : "1.0-0") || "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                              <div>
+                                <div class="text-muted">Purchases</div>
+                                <div class="fw-bold">
+                                  {{
+                                    (leadsData.credits.purchasesAy2
+                                      | currency
+                                        : "INR"
+                                        : "symbol"
+                                        : "1.0-0") || "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                              <div>
+                                <div class="text-muted">Profit After Tax</div>
+                                <div class="fw-bold">
+                                  {{
+                                    (leadsData.credits.profitaftertaxAy2
+                                      | currency
+                                        : "INR"
+                                        : "symbol"
+                                        : "1.0-0") || "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                              <div>
+                                <div class="text-muted">Depreciation</div>
+                                <div class="fw-bold">
+                                  {{
+                                    (leadsData.credits.depreciationAy2
+                                      | currency
+                                        : "INR"
+                                        : "symbol"
+                                        : "1.0-0") || "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                              <div>
+                                <div class="text-muted">Interest on Loans</div>
+                                <div class="fw-bold">
+                                  {{
+                                    (leadsData.credits.interestonLoansAy2
+                                      | currency
+                                        : "INR"
+                                        : "symbol"
+                                        : "1.0-0") || "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+
+                            <div
+                              class="col-md-3 col-sm-4 col-6 mb-3"
+                              *ngIf="leadsData.credits.partnerRemuAy2"
+                            >
+                              <div>
+                                <div class="text-muted">
+                                  Partners Remuneration
+                                </div>
+                                <div class="fw-bold">
+                                  {{
+                                    (leadsData.credits.partnerRemuAy2
+                                      | currency
+                                        : "INR"
+                                        : "symbol"
+                                        : "1.0-0") || "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="col-md-3 col-sm-4 col-6 mb-3"
+                              *ngIf="leadsData.credits.directorsRemuAy2"
+                            >
+                              <div>
+                                <div class="text-muted">
+                                  Directors Remuneration
+                                </div>
+                                <div class="fw-bold">
+                                  {{
+                                    (leadsData.credits.directorsRemuAy2
+                                      | currency
+                                        : "INR"
+                                        : "symbol"
+                                        : "1.0-0") || "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="col-md-3 col-sm-4 col-6 mb-3"
+                              *ngIf="leadsData.credits.partnerInterestAy2"
+                            >
+                              <div>
+                                <div class="text-muted">
+                                  Interest On Partners Capital
+                                </div>
+                                <div class="fw-bold">
+                                  {{
+                                    (leadsData.credits.partnerInterestAy2
+                                      | currency
+                                        : "INR"
+                                        : "symbol"
+                                        : "1.0-0") || "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                            <!-- <div
+                              class="col-md-3 col-sm-4 col-6 mb-3"
+                              *ngIf="leadsData.credits.resultFirstYear"
+                            >
+                              <div>
+                                <div class="text-muted">DSCR Ratio</div>
+                                <div class="fw-bold">
+                                  {{ leadsData.credits.resultFirstYear || "-" }}
+                                </div>
+                              </div>
+                            </div> -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Financials -->
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="headingFinancials">
+                        <button
+                          class="accordion-button collapsed"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#collapseFinancials"
+                          aria-expanded="false"
+                          aria-controls="collapseFinancials"
+                        >
+                          Balance Sheet
+                        </button>
+                      </h2>
+                      <div
+                        id="collapseFinancials"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="headingFinancials"
+                        data-bs-parent="#creditAccordion"
+                      >
+                        <div class="accordion-body">
+                          <div class="row mt-3">
+                            <div>AY 2023 - 2024</div>
+                            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                              <div>
+                                <div class="text-muted">Sundry Debtors</div>
+                                <div class="fw-bold">
+                                  {{
+                                    (leadsData.credits.sundryDebtorsAy1
+                                      | currency
+                                        : "INR"
+                                        : "symbol"
+                                        : "1.0-0") || "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                              <div>
+                                <div class="text-muted">Sundry Creditors</div>
+                                <div class="fw-bold">
+                                  {{
+                                    (leadsData.credits.sundryCreditorsAy1
+                                      | currency
+                                        : "INR"
+                                        : "symbol"
+                                        : "1.0-0") || "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                              <div>
+                                <div class="text-muted">Creditor Days</div>
+                                <div class="fw-bold">
+                                  {{
+                                    leadsData.credits.creditor_daysFirstYear ||
+                                      "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                              <div>
+                                <div class="text-muted">Debtor Days</div>
+                                <div class="fw-bold">
+                                  {{
+                                    leadsData.credits.debtor_daysFirstYear ||
+                                      "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                            <div>AY 2022 - 2023</div>
+                            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                              <div>
+                                <div class="text-muted">Sundry Debtors</div>
+                                <div class="fw-bold">
+                                  {{
+                                    (leadsData.credits.sundryDebtorsAy2
+                                      | currency
+                                        : "INR"
+                                        : "symbol"
+                                        : "1.0-0") || "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                              <div>
+                                <div class="text-muted">Sundry Creditors</div>
+                                <div class="fw-bold">
+                                  {{
+                                    (leadsData.credits.sundryCreditorsAy2
+                                      | currency
+                                        : "INR"
+                                        : "symbol"
+                                        : "1.0-0") || "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- GST Returns -->
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="headingGST">
+                        <button
+                          class="accordion-button collapsed"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#collapseGST"
+                          aria-expanded="false"
+                          aria-controls="collapseGST"
+                        >
+                          GST Program
+                        </button>
+                      </h2>
+                      <div
+                        id="collapseGST"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="headingGST"
+                        data-bs-parent="#creditAccordion"
+                      >
+                        <div class="accordion-body">
+                          <div class="row mt-3">
+                            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                              <div>
+                                <div class="text-muted">GST Turnover</div>
+                                <div class="fw-bold">
+                                  {{
+                                    (leadsData.credits.gstTurnover
+                                      | currency
+                                        : "INR"
+                                        : "symbol"
+                                        : "1.0-0") || "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                              <div>
+                                <div class="text-muted">Margin</div>
+                                <div class="fw-bold">
+                                  {{
+                                    leadsData.credits.margin != null
+                                      ? leadsData.credits.margin + "%"
+                                      : "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                              <div>
+                                <div class="text-muted">FOIR</div>
+                                <div class="fw-bold">
+                                  {{
+                                    leadsData.credits.months != null
+                                      ? leadsData.credits.months + "%"
+                                      : "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                              <div>
+                                <div class="text-muted">Eligible EMI</div>
+                                <div class="fw-bold">
+                                  {{
+                                    (leadsData.credits.gstValue
+                                      | currency
+                                        : "INR"
+                                        : "symbol"
+                                        : "1.0-0") || "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Existing Loans -->
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="headingLoans">
+                        <button
+                          class="accordion-button collapsed"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#collapseLoans"
+                          aria-expanded="false"
+                          aria-controls="collapseLoans"
+                        >
+                          Bto Program
+                        </button>
+                      </h2>
+                      <div
+                        id="collapseLoans"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="headingLoans"
+                        data-bs-parent="#creditAccordion"
+                      >
+                        <div class="accordion-body">
+                          <div class="row mt-3">
+                            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                              <div>
+                                <div class="text-muted">Banking Turnover</div>
+                                <div class="fw-bold">
+                                  {{
+                                    (leadsData.credits.bankingTurnover
+                                      | currency
+                                        : "INR"
+                                        : "symbol"
+                                        : "1.0-0") || "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                              <div>
+                                <div class="text-muted">Margin</div>
+                                <div class="fw-bold">
+                                  {{
+                                    leadsData.credits.btoMargin != null
+                                      ? leadsData.credits.btoMargin + "%"
+                                      : "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                              <div>
+                                <div class="text-muted">FOIR</div>
+                                <div class="fw-bold">
+                                  {{
+                                    leadsData.credits.btoMonths != null
+                                      ? leadsData.credits.btoMonths + "%"
+                                      : "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                              <div>
+                                <div class="text-muted">Eligible EMI</div>
+                                <div class="fw-bold">
+                                  {{
+                                    (leadsData.credits.btoValue
+                                      | currency
+                                        : "INR"
+                                        : "symbol"
+                                        : "1.0-0") || "-"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
+              <!-- Show details if credits exists and is not empty -->
+
               <!-- Lender Details Tab -->
               <div class="tab-pane fade" id="lenderDetails">
                 <!-- <button
