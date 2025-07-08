@@ -1,11 +1,11 @@
 <section
   class="d-flex align-items-center justify-content-center min-vh-100 background-radial-gradient overflow-hidden"
 >
-  <div class="container px-4 py-5 px-md-5 text-center text-lg-start">
+  <div class="container text-center text-lg-start">
     <div class="row gx-lg-5 align-items-center">
       <!-- Left Content -->
       <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
-        <h1
+        <!-- <h1
           class="my-5 display-5 fw-bold ls-tight"
           style="color: hsl(218, 81%, 95%)"
         >
@@ -13,27 +13,27 @@
           <div class="typing-text-container">
             <span style="color: hsl(218, 81%, 75%)">Loan CRM</span>
           </div>
-        </h1>
-        <p class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%)">
+        </h1> -->
+        <!-- <p class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%)">
           A simple and powerful CRM tool made for business loan DSAs, financial
           consultants, loan agents, and lenders to manage leads, track progress,
           and grow your loan business easily.
-        </p>
+        </p> -->
       </div>
 
       <!-- Login Card -->
       <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
-        <div
+        <!-- <div
           id="radius-shape-1"
           class="position-absolute rounded-circle shadow-5-strong"
         ></div>
         <div
           id="radius-shape-2"
           class="position-absolute shadow-5-strong"
-        ></div>
+        ></div> -->
 
         <div class="card">
-          <div class="card-body px-4 py-5 px-md-5">
+          <div class="card-body">
             <div class="card-logo d-flex mb-3">
               <img
                 src="../../assets/images/logo.svg"
@@ -60,6 +60,7 @@
                   formControlName="username"
                   placeholder="Enter your email or phone number"
                   autocomplete="off"
+                  style="height: 40px; background-color: #ffffff;border-color: #878787;"
                 />
                 <label class="form-label fw-medium" for="username"
                   >Email or Phone Number</label
@@ -69,12 +70,13 @@
                 <div class="p-inputgroup">
                   <input
                     pInputText
-                    class="rounded-lg w-100"
+                    class="rounded-lg w-100 text-bg-light"
                     id="password"
                     [type]="isPasswordVisible ? 'text' : 'password'"
                     placeholder="Enter your password"
                     formControlName="password"
                     autocomplete="off"
+                    style="height: 40px; background-color: #ffffff;border-color: #878787;"
                   />
                   <!-- <span
                     class="p-inputgroup-addon"
@@ -98,16 +100,14 @@
                           : 'assets/images/icons/eye.svg'
                       "
                       alt="Toggle Password Visibility"
-                      width="20"
-                      height="20"
+                      width="25"
+                      height="50"
                     />
                   </span>
                 </div>
                 <label class="form-label fw-medium" for="password"
-                  >Password</label
-                >
-              </div>
-              <div
+                  >Password</label>
+                <div
                 class="d-flex justify-content-between align-items-center mb-3"
               >
                 <div></div>
@@ -116,9 +116,11 @@
                   (click)="doForgotPassword()"
                   style="cursor: pointer"
                 >
-                  Forgot Password?
+                  <span style="color: #878787;">Forgot Password?</span>
                 </a>
               </div>
+              </div>
+              
 
               <button
                 type="submit"
@@ -131,31 +133,34 @@
                 Sign In
               </button>
               <div class="text-center">
-                <span class="text-muted">Don't have an account?</span>
+                <span class="text-muted">Don't Have An Account?</span>
                 <a
                   routerLink="/user/register"
                   class="fw-bold text-primary text-decoration-none"
                 >
-                  Register here
+                  <span style="color: orangered;"> Register here</span>
                 </a>
               </div>
             </form>
           </div>
         </div>
         <div class="mt-5">
-          <h5 class="text-center text-white mb-4 fw-bold">
-            Use Our Calculator
-          </h5>
-          <div class="row justify-content-center">
+          <div class="calculator-heading">
+            <div class="line"></div>
+            <h5>Use Our Calculator</h5>
+            <div class="line"></div>
+          </div>
+          <div class="row justify-content-center ca w-75">
             <!-- Business Loan -->
             <div class="col-md-4 mb-4">
               <div
-                class="card h-100 text-center border-0 shadow-sm pointer-cursor"
+                class="calucard h-100 text-center border-0 shadow-sm pointer-cursor"
                 routerLink="/calculator/business"
               >
-                <div class="card-body">
-                  <i class="fas fa-briefcase mb-3"></i>
-                  <h6 class="fw-bold mb-2">Business Loan Calculator</h6>
+                <div class="card-body p-2">
+                  <!-- <i class="fas fa-briefcase mb-3"></i> -->
+                   <img src="../../assets/images/icons/businessloan.svg" alt="business loan">
+                  <h6 class="fw-bold mb-2">Business Loan</h6>
                 </div>
               </div>
             </div>
@@ -163,12 +168,13 @@
             <!-- Personal Loan -->
             <div class="col-md-4 mb-4">
               <div
-                class="card h-100 text-center border-0 shadow-sm pointer-cursor"
+                class="calucard h-100 text-center border-0 shadow-sm pointer-cursor"
                 routerLink="/calculator/personal"
               >
-                <div class="card-body">
-                  <i class="fas fa-user mb-3"></i>
-                  <h6 class="fw-bold mb-2">Personal Loan Calculator</h6>
+                <div class="card-body p-2">
+                  <img src="../../assets/images/icons/team.svg" alt="personal loan">
+                  <!-- <i class="fas fa-user mb-3"></i> -->
+                  <h6 class="fw-bold mb-2">Personal Loan</h6>
                 </div>
               </div>
             </div>
@@ -176,12 +182,13 @@
             <!-- Home Loan -->
             <div class="col-md-4 mb-4">
               <div
-                class="card h-100 text-center border-0 shadow-sm pointer-cursor"
+                class="calucard h-100 text-center border-0 shadow-sm pointer-cursor"
                 routerLink="/calculator/home"
               >
-                <div class="card-body">
-                  <i class="fas fa-home mb-3"></i>
-                  <h6 class="fw-bold mb-2">Home Loan Calculator</h6>
+                <div class="card-body p-2">
+                  <img src="../../assets/images/icons/home.svg" alt="home lone">
+                  <!-- <i class="fas fa-home mb-3"></i> -->
+                  <h6 class="fw-bold mb-2">Home Loan</h6>
                 </div>
               </div>
             </div>
