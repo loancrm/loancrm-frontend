@@ -124,7 +124,7 @@
                     ></button>
                   </div>
                 </div> -->
-                 <div
+                <div
                   class="col-md-3 mt-2 no-padding-small"
                   *ngIf="
                     userDetails &&
@@ -214,15 +214,16 @@
                 </th>
                 <!-- <th class="text-nowrap">Created Date</th> -->
                 <th class="text-nowrap">Uploaded Date</th>
-                <th>Status</th>
+                <th>Remarks</th>
+                <!-- <th>Status</th> -->
                 <th>Actions</th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-lead>
               <tr class="text-capitalize" [pSelectableRow]="lead">
                 <td>
-                  <span class="table-column-data" *ngIf="lead.leadId">{{
-                    lead.id
+                  <span class="table-column-data" *ngIf="lead.customId">{{
+                    lead.customId
                   }}</span>
                 </td>
                 <td>
@@ -277,7 +278,33 @@
                     lead.uploadedDate | date : "mediumDate"
                   }}</span>
                 </td>
-                <td>
+                <td
+                  (click)="
+                    overlayPanel.toggle($event); $event.stopPropagation()
+                  "
+                >
+                  <span
+                    class="table-column-data text-nowrap"
+                    *ngIf="lead.remarks"
+                  >
+                    {{
+                      lead.remarks.length > 15
+                        ? (lead.remarks.slice(0, 15) + "..." | capitalizeFirst)
+                        : (lead.remarks | capitalizeFirst)
+                    }}
+                  </span>
+                  <p-overlayPanel
+                    #overlayPanel
+                    [dismissable]="true"
+                    [showCloseIcon]="true"
+                    styleClass="subscription-panel"
+                  >
+                    <div class="">
+                      {{ lead.remarks | capitalizeFirst }}
+                    </div>
+                  </p-overlayPanel>
+                </td>
+                <!-- <td>
                   <span
                     class="table-column-data fw-bold statusdata"
                     *ngIf="lead.leadInternalStatus"
@@ -289,7 +316,7 @@
                   >
                     {{ getStatusName(lead.leadInternalStatus) }}
                   </span>
-                </td>
+                </td> -->
                 <td>
                   <div class="text-center pointer-cursor">
                     <div
@@ -404,14 +431,14 @@
                   </div>
                 </td>
               </tr>
-              <tr>
+              <!-- <tr>
                 <td colspan="1" class="fw-semibold">Remarks</td>
                 <td colspan="10">
                   <span class="table-column-data col-12" *ngIf="lead.remarks">{{
                     lead.remarks | capitalizeFirst
                   }}</span>
                 </td>
-              </tr>
+              </tr> -->
             </ng-template>
             <ng-template pTemplate="emptymessage">
               <tr class="text-center">
@@ -569,8 +596,8 @@
             <ng-template pTemplate="body" let-lead>
               <tr [pSelectableRow]="lead">
                 <td>
-                  <span class="table-column-data" *ngIf="lead.leadId">{{
-                    lead.leadId
+                  <span class="table-column-data" *ngIf="lead.customId">{{
+                    lead.customId
                   }}</span>
                 </td>
                 <td>
@@ -949,8 +976,8 @@
                 <ng-template pTemplate="body" let-lead>
                   <tr>
                     <td>
-                      <span class="table-column-data" *ngIf="lead.leadId">{{
-                        lead.leadId
+                      <span class="table-column-data" *ngIf="lead.customId">{{
+                        lead.customId
                       }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'employed'">
@@ -1349,8 +1376,8 @@
                 <ng-template pTemplate="body" let-lead>
                   <tr>
                     <td>
-                      <span class="table-column-data" *ngIf="lead.leadId">{{
-                        lead.leadId
+                      <span class="table-column-data" *ngIf="lead.customId">{{
+                        lead.customId
                       }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'employed'">

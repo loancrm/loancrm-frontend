@@ -12,6 +12,7 @@ import { MenuModule } from 'primeng/menu';
 import { FilterModule } from 'src/app/filter/filter.module';
 import { CapitalizeFirstPipe } from 'src/app/pipes/capitalize.pipe';
 import { TabMenuModule } from 'primeng/tabmenu';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 const routes: Routes = [
   { path: '', component: FilesComponent },
   {
@@ -53,6 +54,7 @@ const routes: Routes = [
     ButtonModule,
     FilterModule,
     BreadcrumbModule,
+    OverlayPanelModule,
     MenuModule,
     [RouterModule.forChild(routes)],
   ],
