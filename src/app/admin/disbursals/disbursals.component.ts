@@ -23,7 +23,7 @@ export class DisbursalsComponent implements OnInit {
   apiLoading: any;
   SanctionedAmountSum: { [key: number]: number } = {};
   DisbursedAmountSum: { [key: number]: number } = {};
-
+  employmentStatus: any;
   loginStatus: any = projectConstantsLocal.LOGIN_STATUS;
   totalLeadsCount: any = 0;
   leadIdToSearch: any;
@@ -46,6 +46,37 @@ export class DisbursalsComponent implements OnInit {
   natureofBusinessDetails: any = projectConstantsLocal.NATURE_OF_BUSINESS;
   hadOwnHouse = projectConstantsLocal.YES_OR_NO;
   version = projectConstantsLocal.VERSION_DESKTOP;
+
+  items: any;
+  activeItem: any = null;
+  totalActiveLeadsCount: any;
+  activeEmploymentStatus: any;
+  totalLeadsCountArray: any;
+  loanleadsLoading: any;
+  businessNameToSearchForPersonal: any;
+  totalStatusLeadsCountArray: any;
+  SourcedByForLap: any;
+  loanLeads: any = [];
+  SourcedByForPersonal: any;
+  appliedFilterPersonal: {};
+  searchFilterForLapSelf: any = {};
+  personalfilterConfig: any[] = [];
+  appliedFilterLapself: {};
+  lapselfLeadsCount: any = 0;
+  personalloanLeadsCount: any = 0;
+  appliedFilterLap: {};
+  lapLeadsCount: any = 0;
+  SourcedByForHome: any;
+  appliedFilterHomeself: {};
+  homeloanselfLeadsCount: any = 0;
+  searchFilterForHomeSelf: any = {};
+  searchFilterForLap: any = {};
+  searchFilterForHome: any = {};
+  homeloanLeadsCount: any = 0;
+  appliedFilterHome: {};
+  searchFilterPersonal: any = {};
+  @ViewChild('personalleadsTable') personalleadsTable!: Table;
+
   constructor(
     private location: Location,
     private leadsService: LeadsService,
@@ -80,6 +111,12 @@ export class DisbursalsComponent implements OnInit {
       this.localStorageService.getItemFromLocalStorage('userDetails');
     this.userDetails = userDetails.user;
     this.setFilterConfig();
+    this.loadAllLeadData().then(() => {
+      this.items = this.getFilteredItems();
+      this.loadActiveItem();
+      this.employmentStatus = this.getStatusItems();
+      this.loadEmploymentActiveItem();
+    });
     this.route.queryParams.subscribe((params) => {
       const startDateParam = params['startDate'] || '';
       const endDateParam = params['endDate'] || '';
@@ -271,7 +308,194 @@ export class DisbursalsComponent implements OnInit {
       },
     ];
   }
+  getStatusItems(): { label: string; name: string }[] {
+    if (!this.totalStatusLeadsCountArray) {
+      return [];
+    }
+    console.log(this.activeItem)
+    // Check the active item and update the labels accordingly
+    if (this.activeItem.name === 'homeLoan') {
+      return [
+        {
+          label: `Employed (${this.totalStatusLeadsCountArray.homeLoancount || 0})`,
+          name: 'employed',
+        },
+        {
+          label: `Self Employed (${this.totalStatusLeadsCountArray.homeLoanSelfcount || 0})`,
+          name: 'self-employed',
+        },
+      ];
+    } else if (this.activeItem.name === 'lap') {
+      return [
+        {
+          label: `Employed (${this.totalStatusLeadsCountArray.LAPLoancount || 0})`,
+          name: 'employed',
+        },
+        {
+          label: `Self Employed (${this.totalStatusLeadsCountArray.LAPLoanSelfcount || 0})`,
+          name: 'self-employed',
+        },
+      ];
+    }
 
+    // Default case (if activeItem is neither homeLoan nor LAP)
+    return [];
+  }
+  onActiveItemChange(event) {
+    this.activeItem = event;
+    this.localStorageService.setItemOnLocalStorage(
+      'loginsActiveItem',
+      event.name
+    );
+  }
+
+  loadEmploymentActiveItem() {
+    const storedActiveItemName =
+      this.localStorageService.getItemFromLocalStorage(
+        'filesEmploymentStatusActiveItem'
+      );
+    if (storedActiveItemName) {
+      this.activeEmploymentStatus =
+        this.employmentStatus.find(
+          (item) => item.name == storedActiveItemName
+        ) || this.employmentStatus[0];
+    } else {
+      this.activeEmploymentStatus = this.employmentStatus[0];
+    }
+  }
+  loadActiveItem() {
+    const storedActiveItemName =
+      this.localStorageService.getItemFromLocalStorage('loginsActiveItem');
+    if (storedActiveItemName) {
+      this.activeItem =
+        this.items.find((item) => item.name == storedActiveItemName) ||
+        this.items[0];
+    } else {
+      this.activeItem = this.items[0];
+    }
+  }
+  getFilteredItems(): { label: string; name: string }[] {
+    return [
+      {
+        label: `Business Loan (${this.totalActiveLeadsCount || 0})`,
+        name: 'businessLoan',
+      },
+      {
+        // label: `Personal Loan (${this.totalLeadsCountArray?.personalcount || 0
+        //   })`,
+        label: `Personal Loan (${this.totalLeadsCountArray || 0
+          })`,
+        name: 'personalLoan',
+      },
+      {
+        label: `Home Loan (${this.totalLeadsCountArray?.homeLoancount || 0})`,
+        name: 'homeLoan',
+      },
+      {
+        label: `LAP (${this.totalLeadsCountArray?.LAPLoancount || 0})`,
+        name: 'lap',
+      },
+      {
+        label: `Professional Loans (0)`,
+        name: 'professionalLoans',
+      },
+      {
+        label: `Educational Loans (0)`,
+        name: 'educationlLoans',
+      },
+      {
+        label: `Car loans (0)`,
+        name: 'carLoan',
+      },
+      {
+        label: `Commercial Vehicle Loans (0)`,
+        name: 'commercialVehicleLoan',
+      },
+    ];
+  }
+  private async loadAllLeadData(): Promise<void> {
+    try {
+      await Promise.all([
+        // this.loadLeadsforPersonal(event),
+        // this.loadLeadsforHome(event),
+        // this.loadLeadsforHomeself(event),
+        // this.loadLeadsforlap(event),
+        // this.loadLeadsforlapself(event),
+        this.getTotalLeadsCountArray(event),
+        this.getbusinessloanleadsCount(event),
+        this.getStatusLeadsCountArray(event)
+      ]);
+    } catch (error) { }
+  }
+  getbusinessloanleadsCount(filter = {}) {
+    if (
+      this.userDetails &&
+      this.userDetails?.id &&
+      this.userDetails?.userType &&
+      this.userDetails?.userType == '3'
+    ) {
+      filter['sourcedBy-eq'] = this.userDetails.id;
+    }
+    // filter['leadInternalStatus-eq'] = 11;
+    this.leadsService.getDisbursalLeadCount(filter).subscribe(
+      (leadsCount) => {
+        this.totalActiveLeadsCount = leadsCount;
+        console.log(this.totalActiveLeadsCount);
+        this.items = this.getFilteredItems();
+        // this.activeItem = this.items[0];
+        this.loadActiveItem();
+      },
+      (error: any) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
+  getStatusLeadsCountArray(filter = {}) {
+    if (
+      this.userDetails &&
+      this.userDetails?.id &&
+      this.userDetails?.userType &&
+      this.userDetails?.userType == '3'
+    ) {
+      filter['sourcedBy-eq'] = this.userDetails.id;
+    }
+    filter['leadInternalStatus-eq'] = 11;
+    this.leadsService.getStatusLeadsCountArray(filter).subscribe(
+      (leadsCount) => {
+        this.totalStatusLeadsCountArray = leadsCount;
+        console.log(this.totalStatusLeadsCountArray);
+        this.employmentStatus = this.getStatusItems();
+        // this.activeItem = this.items[0];
+        this.loadEmploymentActiveItem();
+      },
+      (error: any) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
+  getTotalLeadsCountArray(filter = {}) {
+    if (
+      this.userDetails &&
+      this.userDetails?.id &&
+      this.userDetails?.userType &&
+      this.userDetails?.userType == '3'
+    ) {
+      filter['sourcedBy-eq'] = this.userDetails.id;
+    }
+    // filter['leadInternalStatus-eq'] = 11;
+    this.leadsService.getplDisbursalLeadCount(filter).subscribe(
+      (leadsCount) => {
+        this.totalLeadsCountArray = leadsCount;
+        console.log(this.totalLeadsCountArray);
+        this.items = this.getFilteredItems();
+        // this.activeItem = this.items[0];
+        this.loadActiveItem();
+      },
+      (error: any) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
   filterWithMobileNumber() {
     let searchFilter = { 'primaryPhone-like': this.mobileNumberToSearch };
     this.applyFilters(searchFilter);
@@ -290,9 +514,20 @@ export class DisbursalsComponent implements OnInit {
       this.leadsTable.reset();
     }
   }
-  viewLead(event) {
+  // viewLead(event) {
+  //   const lead = event.data
+  //   this.routingService.handleRoute('leads/profile/' + lead.id, null);
+  // }
+  viewLead(event: any) {
+    console.log('Row clicked:', event.data);
     const lead = event.data
-    this.routingService.handleRoute('leads/profile/' + lead.id, null);
+    const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+      this.routingService.handleRoute(`leads/profile/${loanType}/${lead.leadId}`, null);
+    } else {
+      // If no known loanType, omit status from the route
+      this.routingService.handleRoute(`leads/profile/${lead.id}`, null);
+    }
   }
   loadLeads(event) {
     this.currentTableEvent = event;
@@ -392,12 +627,12 @@ export class DisbursalsComponent implements OnInit {
           },
           ...(this.userDetails && this.userDetails.userType === '1'
             ? [
-                {
-                  label: 'Revenue',
-                  icon: 'pi pi-money-bill',
-                  command: () => this.revenueDetails(lead.id),
-                },
-              ]
+              {
+                label: 'Revenue',
+                icon: 'pi pi-money-bill',
+                command: () => this.revenueDetails(lead.id),
+              },
+            ]
             : []),
         ],
       },
@@ -423,29 +658,85 @@ export class DisbursalsComponent implements OnInit {
     );
   }
 
-  disbursalDetails(leadId) {
-    this.routingService.handleRoute(
-      'disbursals/disbursalDetails/' + leadId,
-      null
-    );
+  // disbursalDetails(leadId) {
+  //   this.routingService.handleRoute(
+  //     'disbursals/disbursalDetails/' + leadId,
+  //     null
+  //   );
+  // }
+  disbursalDetails(lead) {
+
+    const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+      this.routingService.handleRoute(`disbursals/disbursalDetails/${loanType}/${lead.leadId}`, null);
+    } else {
+      // If no known loanType, omit status from the route
+      this.routingService.handleRoute(`disbursals/disbursalDetails/${lead.id}`, null);
+    }
   }
 
-  revenueDetails(leadId) {
-    this.routingService.handleRoute('disbursals/revenue/' + leadId, null);
+  // revenueDetails(leadId) {
+  //   this.routingService.handleRoute('disbursals/revenue/' + leadId, null);
+  // }
+
+  revenueDetails(lead) {
+
+    const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+      this.routingService.handleRoute(`disbursals/revenue/${loanType}/${lead.leadId}`, null);
+    } else {
+      // If no known loanType, omit status from the route
+      this.routingService.handleRoute(`disbursals/revenue/${lead.id}`, null);
+    }
   }
-  applyConfigFilters(event) {
+  // applyConfigFilters(event) {
+  //   let api_filter = event;
+  //   if (api_filter['reset']) {
+  //     delete api_filter['reset'];
+  //     this.appliedFilter = {};
+  //   } else {
+  //     this.appliedFilter = api_filter;
+  //   }
+  //   this.localStorageService.setItemOnLocalStorage(
+  //     'disbursalAppliedFilter',
+  //     this.appliedFilter
+  //   );
+  //   this.loadLeads(this.currentTableEvent);
+  // }
+
+  applyConfigFilters(event, filterType: string) {
     let api_filter = event;
+    let localStorageKey = `disbursalAppliedFilter${filterType}`;
     if (api_filter['reset']) {
       delete api_filter['reset'];
-      this.appliedFilter = {};
+      this[`appliedFilter${filterType}`] = {};
     } else {
-      this.appliedFilter = api_filter;
+      this[`appliedFilter${filterType}`] = api_filter;
     }
     this.localStorageService.setItemOnLocalStorage(
-      'disbursalAppliedFilter',
-      this.appliedFilter
+      localStorageKey,
+      this[`appliedFilter${filterType}`]
     );
-    this.loadLeads(this.currentTableEvent);
+    switch (filterType) {
+      case 'Personal':
+        this.loadLoanLeads('personal');
+        break;
+      case 'Home':
+        this.loadLoanLeads('home');
+        break;
+      case 'Homeself':
+        this.loadLoanLeads('homeself');
+        break;
+      case 'Lap':
+        this.loadLoanLeads('lap');
+        break;
+      case 'Lapself':
+        this.loadLoanLeads('lapself');
+        break;
+      default:
+        this.loadLeads(null);
+        break;
+    }
   }
   statusChange(event) {
     this.localStorageService.setItemOnLocalStorage(
@@ -456,5 +747,269 @@ export class DisbursalsComponent implements OnInit {
   }
   goBack() {
     this.location.back();
+  }
+  loadLoanLeads(leadType: string) {
+    switch (leadType) {
+      case 'personal':
+        this.loadLeadsforPersonal(this.currentTableEvent);
+        break;
+      case 'home':
+        this.loadLeadsforHome(this.currentTableEvent);
+        break;
+      case 'homeself':
+        this.loadLeadsforHomeself(this.currentTableEvent);
+        break;
+      case 'lap':
+        this.loadLeadsforlap(this.currentTableEvent);
+        break;
+      case 'lapself':
+        this.loadLeadsforlapself(this.currentTableEvent);
+        break;
+      default:
+        console.error('Unknown lead type');
+    }
+  }
+  loadLeadsforlapself(event) {
+    this.currentTableEvent = event;
+    let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
+    api_filter['loanType-eq'] = 'lap';
+    api_filter['employmentStatus-eq'] = 'self-employed';
+    api_filter['leadInternalStatus-eq'] = '3';
+    if (this.SourcedByForLap && this.SourcedByForLap.name) {
+      if (this.SourcedByForLap.name == 'All') {
+        api_filter['leadInternalStatus-eq'] = '3';
+      } else {
+        api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
+      }
+    }
+    api_filter = Object.assign(
+      {},
+      api_filter,
+      this.searchFilterForLapSelf,
+      this.appliedFilterLapself
+    );
+    if (
+      this.userDetails &&
+      this.userDetails.id &&
+      this.userDetails.userType &&
+      this.userDetails.userType == '3'
+    ) {
+      api_filter['sourcedBy-eq'] = this.userDetails.id;
+    }
+    if (api_filter) {
+      this.getLapselfLeadsCount(api_filter);
+      this.getloanLeads(api_filter);
+    }
+  }
+  getLapselfLeadsCount(filter = {}) {
+    this.leadsService.getloanLeadsCount(filter).subscribe(
+      (response) => {
+        this.lapselfLeadsCount = response;
+      },
+      (error: any) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
+  getloanLeads(filter = {}) {
+    this.loanleadsLoading = true;
+    this.leadsService.getplDisbursalLeads(filter).subscribe(
+      (response) => {
+        this.loanLeads = response;
+        console.log(this.loanLeads)
+        this.loanleadsLoading = false;
+      },
+      (error: any) => {
+        this.loanleadsLoading = false;
+        this.toastService.showError(error);
+      }
+    );
+  }
+  loadLeadsforlap(event) {
+    this.currentTableEvent = event;
+    let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
+    api_filter['loanType-eq'] = 'lap';
+    api_filter['employmentStatus-eq'] = 'employed';
+    api_filter['leadInternalStatus-eq'] = '3';
+    if (this.SourcedByForLap && this.SourcedByForLap.name) {
+      if (this.SourcedByForLap.name == 'All') {
+        api_filter['leadInternalStatus-eq'] = '3';
+      } else {
+        api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
+      }
+    }
+    console.log(api_filter);
+    api_filter = Object.assign(
+      {},
+      api_filter,
+      this.searchFilterForLap,
+      this.appliedFilterLap
+    );
+    if (
+      this.userDetails &&
+      this.userDetails.id &&
+      this.userDetails.userType &&
+      this.userDetails.userType == '3'
+    ) {
+      api_filter['sourcedBy-eq'] = this.userDetails.id;
+    }
+    if (api_filter) {
+      this.getLapLeadsCount(api_filter);
+      this.getloanLeads(api_filter);
+    }
+  }
+  getLapLeadsCount(filter = {}) {
+    this.leadsService.getloanLeadsCount(filter).subscribe(
+      (response) => {
+        this.lapLeadsCount = response;
+      },
+      (error: any) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
+  loadLeadsforHomeself(event) {
+    this.currentTableEvent = event;
+    let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
+    api_filter['loanType-eq'] = 'homeLoan';
+    api_filter['employmentStatus-eq'] = 'self-employed';
+    api_filter['leadInternalStatus-eq'] = '3';
+    if (this.SourcedByForHome && this.SourcedByForHome.name) {
+      if (this.SourcedByForHome.name == 'All') {
+        api_filter['leadInternalStatus-eq'] = '3';
+      } else {
+        api_filter['sourcedBy-eq'] = this.SourcedByForHome.id;
+      }
+    }
+    api_filter = Object.assign(
+      {},
+      api_filter,
+      this.searchFilterForHomeSelf,
+      this.appliedFilterHomeself
+    );
+    if (
+      this.userDetails &&
+      this.userDetails.id &&
+      this.userDetails.userType &&
+      this.userDetails.userType == '3'
+    ) {
+      api_filter['sourcedBy-eq'] = this.userDetails.id;
+    }
+    if (api_filter) {
+      console.log(api_filter);
+      this.getHomeloanselfLeadsCount(api_filter);
+      this.getloanLeads(api_filter);
+    }
+  }
+  getHomeloanselfLeadsCount(filter = {}) {
+    this.leadsService.getloanLeadsCount(filter).subscribe(
+      (response) => {
+        this.homeloanselfLeadsCount = response;
+      },
+      (error: any) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
+  loadLeadsforHome(event) {
+    this.currentTableEvent = event;
+    let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
+    api_filter['loanType-eq'] = 'homeLoan';
+    api_filter['employmentStatus-eq'] = 'employed';
+    api_filter['leadInternalStatus-eq'] = '3';
+    if (this.SourcedByForHome && this.SourcedByForHome.name) {
+      if (this.SourcedByForHome.name == 'All') {
+        api_filter['leadInternalStatus-eq'] = '3';
+      } else {
+        api_filter['sourcedBy-eq'] = this.SourcedByForHome.id;
+      }
+    }
+    api_filter = Object.assign(
+      {},
+      api_filter,
+      this.searchFilterForHome,
+      this.appliedFilterHome
+    );
+    if (
+      this.userDetails &&
+      this.userDetails.id &&
+      this.userDetails.userType &&
+      this.userDetails.userType == '3'
+    ) {
+      api_filter['sourcedBy-eq'] = this.userDetails.id;
+    }
+    console.log(api_filter);
+    if (api_filter) {
+      this.getHomeloanLeadsCount(api_filter);
+      this.getloanLeads(api_filter);
+    }
+  }
+  getHomeloanLeadsCount(filter = {}) {
+    this.leadsService.getloanLeadsCount(filter).subscribe(
+      (response) => {
+        this.homeloanLeadsCount = response;
+      },
+      (error: any) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
+  loadLeadsforPersonal(event) {
+    this.currentTableEvent = event;
+    let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
+
+    if (this.SourcedByForPersonal && this.SourcedByForPersonal.name) {
+      if (this.SourcedByForPersonal.name == 'All') {
+        api_filter['leadInternalStatus-eq'] = '12';
+      } else {
+        api_filter['sourcedBy-eq'] = this.SourcedByForPersonal.id;
+      }
+    }
+    api_filter = Object.assign(
+      {},
+      api_filter,
+      this.searchFilterPersonal,
+      this.appliedFilterPersonal
+    );
+
+    console.log(api_filter);
+    if (api_filter) {
+      this.getpersonalloanLeadsCount(api_filter);
+      this.getloanLeads(api_filter);
+    }
+  }
+  viewLoanLead(event) {
+    const lead = event.data
+    this.routingService.handleRoute('files/loanleadview/' + lead.leadId, null);
+  }
+  inputValueChangeEventForPersonal(dataType, value) {
+    if (value == '') {
+      this.searchFilterPersonal = {};
+      this.personalleadsTable.reset();
+    }
+  }
+  filterWithBusinessNameForPersonal() {
+    let searchFilterPersonal = {
+      'contactPerson-like': this.businessNameToSearchForPersonal,
+    };
+    this.applyFiltersPersonal(searchFilterPersonal);
+  }
+  applyFiltersPersonal(searchFilterPersonal = {}) {
+    this.searchFilterPersonal = searchFilterPersonal;
+    this.loadLoanLeads('personal');
+  }
+  statusChangeForPersonal(event) {
+    this.loadLoanLeads('personal');
+  }
+  getpersonalloanLeadsCount(filter = {}) {
+    this.leadsService.getplDisbursalLeadCount(filter).subscribe(
+      (response) => {
+        this.personalloanLeadsCount = response;
+        console.log(this.personalloanLeadsCount);
+      },
+      (error: any) => {
+        this.toastService.showError(error);
+      }
+    );
   }
 }

@@ -134,8 +134,9 @@ export class LoanleaduploadsComponent implements OnInit {
     ];
   }
   ngOnInit() {
-    this.userDetails =
+    const userDetails =
       this.localStorageService.getItemFromLocalStorage('userDetails');
+    this.userDetails = userDetails.user;
     this.updateItemsBasedOnCondition();
   }
   updateItemsBasedOnCondition() {

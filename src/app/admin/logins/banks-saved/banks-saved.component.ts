@@ -19,6 +19,7 @@ export class BanksSavedComponent implements OnInit {
   version = projectConstantsLocal.VERSION_DESKTOP;
   loginInfoDetails: any[] = [];
   fipDetails: any[] = [];
+  displayedItems: any = [];
   breadCrumbItems: any[] = [
     {
       icon: 'pi pi-home',
@@ -49,14 +50,50 @@ export class BanksSavedComponent implements OnInit {
   }
   ngOnInit(): void {
     this.leadId = this.route.snapshot.paramMap.get('id');
+    // if (this.leadId) {
+    //   this.getLeadById(this.leadId);
+    //   this.getFIPDetailsById(this.leadId);
+    // }
+    const status = this.route.snapshot.paramMap.get('status');
     if (this.leadId) {
-      this.getLeadById(this.leadId);
+      if (!status) {
+        this.getLeadById(this.leadId);
+      } else {
+        const validStatuses = ['personalLoan', 'homeLoan', 'lap'];
+        if (validStatuses.includes(status)) {
+          this.getLoanLeadById(this.leadId);
+        } else {
+          console.warn('Unknown status:', status);
+          this.getLeadById(this.leadId);
+        }
+      }
       this.getFIPDetailsById(this.leadId);
     }
     this.capabilities = this.leadsService.getUserRbac();
     console.log(this.capabilities);
   }
 
+  getLoanLeadById(leadId: any): void {
+    this.leadsService.getLoanLeadById(leadId).subscribe(
+      (data: any) => {
+        this.leads = data;
+        this.updateDisplayedItems();
+      },
+      (error) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
+  updateDisplayedItems() {
+    const loanDisplayProperty =
+      this.leads && this.leads[0].employmentStatus === 'employed'
+        ? 'contactPerson'
+        : 'businessName';
+    this.displayedItems = [
+      // { data: this.leads[0], displayProperty: 'businessName' },
+      { data: this.leads[0], displayProperty: loanDisplayProperty },
+    ];
+  }
   getFIPDetailsById(id: string) {
     this.loading = true;
     this.leadsService.getFIPDetailsById(id).subscribe(
@@ -72,6 +109,15 @@ export class BanksSavedComponent implements OnInit {
     );
   }
 
+  shouldDisplayBlock(): boolean {
+    const lead = this.leads?.[0];
+    if (!lead) return false;
+    const isSelfEmployedHomeOrLap =
+      (lead.loanType === 'homeLoan' || lead.loanType === 'lap') &&
+      lead.employmentStatus === 'self-employed';
+    const loanTypeNotExists = !('loanType' in lead);
+    return isSelfEmployedHomeOrLap || loanTypeNotExists;
+  }
   confirmDelete(lead) {
     this.confirmationService.confirm({
       message: `Are you sure you want to delete this Login Data ? <br>
@@ -150,6 +196,33 @@ export class BanksSavedComponent implements OnInit {
     );
   }
 
+  saveplFormData(): void {
+    const formData = this.fipDetails.map((detail) => ({
+      id: detail.id,
+      fipStatus: detail.fipStatus,
+      loginDate: detail.loginDate
+        ? this.moment(detail.loginDate).format('YYYY-MM-DD')
+        : null,
+      fipRemarks: detail.fipRemarks,
+    }));
+    console.log(formData);
+    this.loading = true;
+    this.leadsService.updateplFIPDetails(this.leadId, formData).subscribe(
+      (response: any) => {
+        this.loading = false;
+        this.toastService.showSuccess(
+          'Files In Process info Saved Successfully'
+        );
+        const targetUrl = `user/filesinprocess`;
+        this.router.navigateByUrl(targetUrl);
+      },
+      (error) => {
+        this.loading = false;
+        this.toastService.showError(error);
+      }
+    );
+  }
+
   transformLoginInfoDetails(data: any[]): any[] {
     const transformedData: any[] = [];
     const flattenedData = data.flat();
@@ -169,6 +242,7 @@ export class BanksSavedComponent implements OnInit {
     this.leadsService.getLeadDetailsById(id).subscribe(
       (lead) => {
         this.leads = lead;
+        this.updateDisplayedItems();
       },
       (error: any) => {
         this.toastService.showError(error);

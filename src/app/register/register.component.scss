@@ -23,7 +23,6 @@
   background-position: center;
   background-attachment: fixed;
   max-height: 100vh;
-
 }
 
 /* Decorative shapes */
@@ -66,9 +65,9 @@
 }
 
 /* Input Fields */
-input[type='text'],
-input[type='email'],
-input[type='password'] {
+input[type="text"],
+input[type="email"],
+input[type="password"] {
   background-color: rgba(255, 255, 255, 0.9);
   border: 1px solid #878787;
   padding: 12px;
@@ -76,7 +75,7 @@ input[type='password'] {
   box-sizing: border-box;
 }
 
-.input-group{
+.input-group {
   position: relative;
 }
 .p-inputgroup-addon {
@@ -200,13 +199,10 @@ button.disabled {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    -ms-overflow-style: none; 
+    -ms-overflow-style: none;
   }
 
   .card::-webkit-scrollbar {
     display: none;
   }
 }
-
-
-

@@ -231,6 +231,10 @@ export class LeadsComponent {
         label: `Car loans (0)`,
         name: 'carLoan',
       },
+      {
+        label: `Commercial Vehicle Loans (0)`,
+        name: 'commercialVehicleLoan',
+      },
     ];
   }
 

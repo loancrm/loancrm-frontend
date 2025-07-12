@@ -22,24 +22,38 @@ export class RejectsComponent implements OnInit {
   businessNameToSearch: any;
   mobileNumberToSearchforbank: any;
   businessNameToSearchforbank: any;
+  businessNameToSearchforplbank: any;
   mobileNumberToSearchcni: any;
-  businessNameToSearchcni;
+  businessNameToSearchcni: any;
+  businessNameToSearchplcni: any;
   currentTableEvent: any;
   selectedSourcedByStatus: any;
+  selectedplSourcedByStatus: any;
   selectedSourcedByStatusforbank: any;
+  selectedplSourcedByStatusforbank: any;
   selectedSourcedByStatusforcni: any;
+  selectedSourcedByStatusforplcni: any;
   leadStatus: any = projectConstantsLocal.REJECTED_STATUS;
   appliedFilter: {};
+  plappliedFilter: {};
   appliedFilterforbank: {};
+  plappliedFilterforbank: {};
   appliedFilterforcni: {};
+  plappliedFilterforcni: {};
   filterConfig: any[] = [];
   searchFilter: any = {};
+  plsearchFilter: any = {};
   mobileNumberToSearch: any;
+  businessNameToSearchForPersonal: any;
   searchFilterbank: any = {};
+  plsearchFilterbank: any = {};
   searchFiltercni: any = {};
+  plsearchFiltercni: any = {};
   @ViewChild('leadsTable') leadsTable!: Table;
   @ViewChild('leadsTablebank') leadsTablebank!: Table;
+  @ViewChild('plleadsTablebank') plleadsTablebank!: Table;
   @ViewChild('leadsTablecni') leadsTablecni!: Table;
+  @ViewChild('plleadsTablecni') plleadsTablecni!: Table;
   leadSources: any = [];
   activeItem: any;
   items: any;
@@ -51,7 +65,12 @@ export class RejectsComponent implements OnInit {
   natureofBusinessDetails: any = projectConstantsLocal.NATURE_OF_BUSINESS;
   hadOwnHouse = projectConstantsLocal.YES_OR_NO;
   version = projectConstantsLocal.VERSION_DESKTOP;
-  businessEntities = projectConstantsLocal.BUSINESS_ENTITIES
+  businessEntities = projectConstantsLocal.BUSINESS_ENTITIES;
+  userDetails: any;
+  rejectStatus: any = projectConstantsLocal.REJECTED_STATUS;
+  selectedLoginStatus = this.rejectStatus[0];
+  selectedplLoginStatus = this.rejectStatus[0];
+  @ViewChild('personalleadsTable') personalleadsTable!: Table;
   constructor(
     private location: Location,
     private leadsService: LeadsService,
@@ -72,12 +91,21 @@ export class RejectsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.items = [
-      { label: 'In House Rejects', name: 'inHouseRejects' },
-      { label: 'Banker Rejects', name: 'bankerRejects' },
-      { label: 'CNI', name: 'cni' },
-    ];
+    // this.items = [
+    //   { label: 'In House Rejects', name: 'inHouseRejects' },
+    //   { label: 'Banker Rejects', name: 'bankerRejects' },
+    //   { label: 'CNI', name: 'cni' },
+    // ];
+    // this.loadActiveItem();
+    // this.loadAllLeadData().then(() => {
+    this.items = this.getFilteredItems();
     this.loadActiveItem();
+    // this.employmentStatus = this.getStatusItems();
+    // this.loadEmploymentActiveItem();
+    // });
+    let userDetails =
+      this.localStorageService.getItemFromLocalStorage('userDetails');
+    this.userDetails = userDetails.user;
     this.setFilterConfig();
     const storedAppliedFilter =
       this.localStorageService.getItemFromLocalStorage(
@@ -110,6 +138,47 @@ export class RejectsComponent implements OnInit {
       this.selectedSourcedByStatusforcni = storedStatus2;
     }
   }
+  getFilteredItems(): { label: string; name: string }[] {
+    return [
+      {
+        label: `Business Loan `,
+        name: 'businessLoan',
+      },
+      {
+        // label: `Personal Loan (${this.totalLeadsCountArray?.personalcount || 0
+        //   })`,
+        label: `Personal Loan
+        `,
+        name: 'personalLoan',
+      },
+      {
+        label: `Home Loan`,
+        name: 'homeLoan',
+      },
+      {
+        label: `LAP `,
+        name: 'lap',
+      },
+      {
+        label: `Professional Loans`,
+        name: 'professionalLoans',
+      },
+      {
+        label: `Educational Loans `,
+        name: 'educationlLoans',
+      },
+      {
+        label: `Car loans`,
+        name: 'carLoan',
+      },
+      {
+        label: `Commercial Vehicle Loans`,
+        name: 'commercialVehicleLoan',
+      },
+    ];
+  }
+
+
 
   loadActiveItem() {
     const storedActiveItemName =
@@ -317,6 +386,16 @@ export class RejectsComponent implements OnInit {
     );
     this.loadBankRejectedLeads(this.currentTableEvent);
   }
+  loginstatusChange(event: any) {
+    this.selectedLoginStatus = event.value; // store the whole object if needed
+    console.log(this.selectedLoginStatus)
+  }
+
+  loginplstatusChange(event: any) {
+    this.selectedplLoginStatus = event.value; // store the whole object if needed
+    console.log(this.selectedplLoginStatus)
+  }
+
   loadLeads(event) {
     this.currentTableEvent = event;
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
@@ -339,6 +418,53 @@ export class RejectsComponent implements OnInit {
     }
   }
 
+
+  loadplLeads(event) {
+    this.currentTableEvent = event;
+    let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
+    api_filter['leadInternalStatus-eq'] = '10';
+    if (this.selectedplSourcedByStatus && this.selectedplSourcedByStatus.name) {
+      if (this.selectedplSourcedByStatus.name != 'All') {
+        api_filter['sourcedBy-eq'] = this.selectedplSourcedByStatus.id;
+      }
+    }
+    console.log(api_filter);
+    api_filter = Object.assign(
+      {},
+      api_filter,
+      this.plsearchFilter,
+      this.plappliedFilter
+    );
+    if (api_filter) {
+      this.getplTotalLeadsCount(api_filter);
+      this.getplTotalLeads(api_filter);
+    }
+  }
+
+  getplTotalLeads(filter = {}) {
+    this.apiLoading = true;
+    this.leadsService.getloanLeads(filter).subscribe(
+      (response) => {
+        this.leads = response;
+        this.apiLoading = false;
+        console.log(this.leads)
+      },
+      (error: any) => {
+        this.apiLoading = false;
+        this.toastService.showError(error);
+      }
+    );
+  }
+  getplTotalLeadsCount(filter = {}) {
+    this.leadsService.getloanLeadsCount(filter).subscribe(
+      (leadsCount) => {
+        this.totalLeadsCount = leadsCount;
+      },
+      (error: any) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
   loadBankRejectedLeads(event) {
     this.currentTableEvent = event;
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
@@ -360,6 +486,53 @@ export class RejectsComponent implements OnInit {
       this.getBankRejectedLeadCount(api_filter);
       this.getBankRejectsLeads(api_filter);
     }
+  }
+
+  loadplBankRejectedLeads(event) {
+    this.currentTableEvent = event;
+    let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
+    if (
+      this.selectedplSourcedByStatusforbank &&
+      this.selectedplSourcedByStatusforbank.name
+    ) {
+      if (this.selectedplSourcedByStatusforbank.name != 'All') {
+        api_filter['sourcedBy-eq'] = this.selectedplSourcedByStatusforbank.id;
+      }
+    }
+    api_filter = Object.assign(
+      {},
+      api_filter,
+      this.plsearchFilterbank,
+      this.plappliedFilterforbank
+    );
+    if (api_filter) {
+      this.getplBankRejectedLeadCount(api_filter);
+      this.getplBankRejectsLeads(api_filter);
+    }
+  }
+  getplBankRejectsLeads(filter = {}) {
+    this.apiLoading = true;
+    this.leadsService.getplBankRejectsLeads(filter).subscribe(
+      (leads) => {
+        this.leads = leads;
+        this.apiLoading = false;
+      },
+      (error: any) => {
+        this.apiLoading = false;
+        this.toastService.showError(error);
+      }
+    );
+  }
+
+  getplBankRejectedLeadCount(filter = {}) {
+    this.leadsService.getplBankRejectedLeadCount(filter).subscribe(
+      (leadsCount) => {
+        this.totalLeadsCount = leadsCount;
+      },
+      (error: any) => {
+        this.toastService.showError(error);
+      }
+    );
   }
 
   loadCNIRejectedLeads(event) {
@@ -385,6 +558,51 @@ export class RejectsComponent implements OnInit {
     }
   }
 
+  loadplCNIRejectedLeads(event) {
+    this.currentTableEvent = event;
+    let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
+    if (
+      this.selectedSourcedByStatusforplcni &&
+      this.selectedSourcedByStatusforplcni.name
+    ) {
+      if (this.selectedSourcedByStatusforplcni.name != 'All') {
+        api_filter['sourcedBy-eq'] = this.selectedSourcedByStatusforplcni.id;
+      }
+    }
+    api_filter = Object.assign(
+      {},
+      api_filter,
+      this.plsearchFiltercni,
+      this.plappliedFilterforcni
+    );
+    if (api_filter) {
+      this.getplCNIRejectedLeadCount(api_filter);
+      this.getplCNIRejectsLeads(api_filter);
+    }
+  }
+  getplCNIRejectsLeads(filter = {}) {
+    this.apiLoading = true;
+    this.leadsService.getplCNIRejectsLeads(filter).subscribe(
+      (leads) => {
+        this.leads = leads;
+        this.apiLoading = false;
+      },
+      (error: any) => {
+        this.apiLoading = false;
+        this.toastService.showError(error);
+      }
+    );
+  }
+  getplCNIRejectedLeadCount(filter = {}) {
+    this.leadsService.getplCNIRejectedLeadCount(filter).subscribe(
+      (leadsCount) => {
+        this.totalLeadsCount = leadsCount;
+      },
+      (error: any) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
   statusChange(event) {
     this.localStorageService.setItemOnLocalStorage(
       'selectedInhouseRejects',
@@ -393,17 +611,54 @@ export class RejectsComponent implements OnInit {
     this.loadLeads(this.currentTableEvent);
   }
 
+
+  plstatusChange(event) {
+    // this.localStorageService.setItemOnLocalStorage(
+    //   'selectedInhouseRejects',
+    //   event.value
+    // );
+    this.loadplLeads(this.currentTableEvent);
+  }
+  filterWithBusinessNameForPersonal() {
+    let searchFilterPersonal = {
+      'contactPerson-like': this.businessNameToSearchForPersonal,
+    };
+    this.applyFiltersPersonal(searchFilterPersonal);
+  }
+
+  filterWithBusinessNameforplBank() {
+    let searchFilterPersonal = {
+      'contactPerson-like': this.businessNameToSearchforplbank,
+    };
+    this.applyFiltersplbank(searchFilterPersonal);
+  }
+  applyFiltersPersonal(searchFilterPersonal = {}) {
+    this.plsearchFilter = searchFilterPersonal;
+    this.loadplLeads(this.currentTableEvent);
+  }
   statusChangeforcni(event) {
     this.localStorageService.setItemOnLocalStorage('selectedCNI', event.value);
     this.loadCNIRejectedLeads(this.currentTableEvent);
   }
 
+  statusChangeforplcni(event) {
+    this.localStorageService.setItemOnLocalStorage('selectedCNI', event.value);
+    this.loadplCNIRejectedLeads(this.currentTableEvent);
+  }
   statusChangeforbank(event) {
     this.localStorageService.setItemOnLocalStorage(
       'selectedBankRejects',
       event.value
     );
     this.loadBankRejectedLeads(this.currentTableEvent);
+  }
+
+  plstatusChangeforbank(event) {
+    this.localStorageService.setItemOnLocalStorage(
+      'selectedBankRejects',
+      event.value
+    );
+    this.loadplBankRejectedLeads(this.currentTableEvent);
   }
   getTotalLeadsFilesCount(filter = {}) {
     this.leadsService.getLeadsCount(filter).subscribe(
@@ -508,6 +763,12 @@ export class RejectsComponent implements OnInit {
       this.leadsTablecni.reset();
     }
   }
+  inputValueChangeEventplcni(dataType, value) {
+    if (value == '') {
+      this.plsearchFiltercni = {};
+      this.plleadsTablecni.reset();
+    }
+  }
   inputValueChangeEventforbank(dataType, value) {
     if (value == '') {
       this.searchFilterbank = {};
@@ -515,6 +776,12 @@ export class RejectsComponent implements OnInit {
     }
   }
 
+  inputValueChangeEventforplbank(dataType, value) {
+    if (value == '') {
+      this.plsearchFilterbank = {};
+      this.plleadsTablebank.reset();
+    }
+  }
   filterWithBusinessName() {
     let searchFilter = { 'businessName-like': this.businessNameToSearch };
     this.applyFilters(searchFilter);
@@ -524,7 +791,17 @@ export class RejectsComponent implements OnInit {
     let searchFiltercni = { 'businessName-like': this.businessNameToSearchcni };
     this.applyFiltersforCni(searchFiltercni);
   }
+  filterWithBusinessNameforplCNI() {
+    let searchFilterPersonal = {
+      'contactPerson-like': this.businessNameToSearchplcni,
+    };
+    this.applyFiltersforplCni(searchFilterPersonal);
+  }
 
+  applyFiltersforplCni(searchFiltercni = {}) {
+    this.plsearchFiltercni = searchFiltercni;
+    this.loadplCNIRejectedLeads(this.currentTableEvent);
+  }
   filterWithBusinessNameforBank() {
     let searchFilterbank = {
       'businessName-like': this.businessNameToSearchforbank,
@@ -547,6 +824,10 @@ export class RejectsComponent implements OnInit {
     this.loadBankRejectedLeads(this.currentTableEvent);
   }
 
+  applyFiltersplbank(searchFilterbank = {}) {
+    this.plsearchFilterbank = searchFilterbank;
+    this.loadplBankRejectedLeads(this.currentTableEvent);
+  }
   getLeadUsers(filter = {}) {
     this.loading = true;
     this.leadsService.getUsers(filter).subscribe(
@@ -585,14 +866,38 @@ export class RejectsComponent implements OnInit {
     return '';
   }
 
-  viewLead(event) {
+  // viewLead(event) {
+  //   const lead = event.data
+  //   this.routingService.handleRoute('leads/profile/' + lead.id, null);
+  // }
+
+  viewLead(event: any) {
+    console.log('Row clicked:', event.data);
     const lead = event.data
-    this.routingService.handleRoute('leads/profile/' + lead.id, null);
+    const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+      this.routingService.handleRoute(`leads/profile/${loanType}/${lead.leadId}`, null);
+    } else {
+      // If no known loanType, omit status from the route
+      this.routingService.handleRoute(`leads/profile/${lead.id}`, null);
+    }
   }
 
   rejectsDetails(leadId) {
     this.routingService.handleRoute('rejects/rejectsDetails/' + leadId, null);
   }
+
+  plrejectsDetails(lead) {
+    const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+      this.routingService.handleRoute(`rejects/rejectsDetails/${loanType}/${lead.leadId}`, null);
+    } else {
+      // If no known loanType, omit status from the route
+      this.routingService.handleRoute(`rejects/rejectsDetails/${lead.id}`, null);
+    }
+  }
+
+
 
   inhouserejectsDetails(leadId) {
     this.routingService.handleRoute('rejects/inHouseRejects/' + leadId, null);
@@ -600,6 +905,14 @@ export class RejectsComponent implements OnInit {
 
   cniDetails(leadId) {
     this.routingService.handleRoute('rejects/cniDetails/' + leadId, null);
+  }
+  plcniDetails(lead) {
+    const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+      this.routingService.handleRoute(`rejects/cniDetails/${loanType}/${lead.leadId}`, null);
+    } else {
+      this.routingService.handleRoute(`rejects/cniDetails/${lead.id}`, null);
+    }
   }
 
   actionItems(lead: any): MenuItem[] {
@@ -626,6 +939,22 @@ export class RejectsComponent implements OnInit {
             label: 'Send to Credit Evaluation',
             icon: 'pi pi-sign-in',
             command: () => this.revertToCredit(lead),
+          },
+        ],
+      },
+    ];
+    return menuItems;
+  }
+
+  plactionItems(lead: any): MenuItem[] {
+    const menuItems: any = [
+      {
+        label: 'Actions',
+        items: [
+          {
+            label: 'Send to Credit Evaluation',
+            icon: 'pi pi-sign-in',
+            command: () => this.revertToplCredit(lead),
           },
         ],
       },
@@ -685,6 +1014,23 @@ export class RejectsComponent implements OnInit {
   revertToCredit(lead) {
     this.changeLeadStatus(lead.id, 5);
   }
+  revertToplCredit(lead: any) {
+    this.changeLoadLeadStatus(lead.leadId, 5);
+  }
+  changeLoadLeadStatus(leadId: number, statusId: number) {
+    this.loading = true;
+    this.leadsService.changeLoanLeadStatus(leadId, statusId).subscribe(
+      () => {
+        this.loading = false;
+        this.toastService.showSuccess('Lead Status Changed Successfully');
+        this.loadplLeads(this.currentTableEvent);
+      },
+      (error: any) => {
+        this.loading = false;
+        this.toastService.showError(error);
+      }
+    );
+  }
 
   changeLeadStatus(leadId, statusId) {
     this.loading = true;
@@ -719,4 +1065,10 @@ export class RejectsComponent implements OnInit {
     return '';
   }
 
+  inputValueChangeEventForPersonal(dataType, value) {
+    if (value == '') {
+      this.plsearchFilter = {};
+      this.personalleadsTable.reset();
+    }
+  }
 }

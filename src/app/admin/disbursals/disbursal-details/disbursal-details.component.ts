@@ -26,6 +26,7 @@ export class DisbursalDetailsComponent implements OnInit {
   userDetails: any;
   leadId: string | null = null;
   disbursalDetails: any[] = [];
+  displayedItems: any = [];
   selectedFiles: any = {
     sanctionedLetter: { filesData: [], links: [], uploadedFiles: [] },
     repaymentSchedule: { filesData: [], links: [], uploadedFiles: [] },
@@ -60,9 +61,25 @@ export class DisbursalDetailsComponent implements OnInit {
     const userDetails =
       this.localStorageService.getItemFromLocalStorage('userDetails');
     this.userDetails = userDetails.user;
+    // this.leadId = this.route.snapshot.paramMap.get('id');
+    // if (this.leadId) {
+    //   this.getLeadById(this.leadId);
+    //   this.getDisbursalsDetailsById(this.leadId);
+    // }
     this.leadId = this.route.snapshot.paramMap.get('id');
+    const status = this.route.snapshot.paramMap.get('status');
     if (this.leadId) {
-      this.getLeadById(this.leadId);
+      if (!status) {
+        this.getLeadById(this.leadId);
+      } else {
+        const validStatuses = ['personalLoan', 'homeLoan', 'lap'];
+        if (validStatuses.includes(status)) {
+          this.getLoanLeadById(this.leadId);
+        } else {
+          console.warn('Unknown status:', status);
+          this.getLeadById(this.leadId);
+        }
+      }
       this.getDisbursalsDetailsById(this.leadId);
     }
   }
@@ -128,6 +145,28 @@ export class DisbursalDetailsComponent implements OnInit {
     );
   }
 
+  getLoanLeadById(leadId: any): void {
+    this.leadsService.getLoanLeadById(leadId).subscribe(
+      (data: any) => {
+        this.leads = data;
+        this.updateDisplayedItems();
+      },
+      (error) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
+
+  updateDisplayedItems() {
+    const loanDisplayProperty =
+      this.leads && this.leads[0].employmentStatus === 'employed'
+        ? 'contactPerson'
+        : 'businessName';
+    this.displayedItems = [
+      // { data: this.leads[0], displayProperty: 'businessName' },
+      { data: this.leads[0], displayProperty: loanDisplayProperty },
+    ];
+  }
   getDisbursalsDetailsById(leadId) {
     this.loading = true;
     this.leadsService.getDisbursalsDetailsById(leadId).subscribe(
@@ -265,11 +304,21 @@ export class DisbursalDetailsComponent implements OnInit {
   getFileIcon(fileType) {
     return this.leadsService.getFileIcon(fileType);
   }
+  shouldDisplayBlock(): boolean {
+    const lead = this.leads?.[0];
+    if (!lead) return false;
+    const isSelfEmployedHomeOrLap =
+      (lead.loanType === 'homeLoan' || lead.loanType === 'lap') &&
+      lead.employmentStatus === 'self-employed';
+    const loanTypeNotExists = !('loanType' in lead);
+    return isSelfEmployedHomeOrLap || loanTypeNotExists;
+  }
 
   getLeadById(id: string) {
     this.leadsService.getLeadDetailsById(id).subscribe(
       (lead) => {
         this.leads = lead;
+        this.updateDisplayedItems();
       },
       (error: any) => {
         this.toastService.showError(error);

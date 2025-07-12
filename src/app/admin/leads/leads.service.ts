@@ -125,7 +125,7 @@ export class LeadsService {
     return phoneStr.replace(/^(\d{6})(\d{4})$/, '******$2');
   }
   checkPhoneNumberExists(phone: string) {
-  return this.http.get<{ exists: boolean }>(`/api/leads/check-phone?phone=${phone}`);
+    return this.http.get<{ exists: boolean }>(`/api/leads/check-phone?phone=${phone}`);
   }
   createLead(data) {
     const url = 'leads';
@@ -193,12 +193,20 @@ export class LeadsService {
     const url = 'logins/fipDetails/' + leadId;
     return this.serviceMeta.httpPut(url, data);
   }
+  updateplFIPDetails(leadId, data) {
+    const url = 'logins/plfipDetails/' + leadId;
+    return this.serviceMeta.httpPut(url, data);
+  }
   updateRevenueDetails(leadId, data) {
     const url = 'logins/revenueDetails/' + leadId;
     return this.serviceMeta.httpPut(url, data);
   }
   updateApprovalsDetails(leadId, data) {
     const url = 'logins/approved/' + leadId;
+    return this.serviceMeta.httpPut(url, data);
+  }
+  updateplApprovalsDetails(leadId, data) {
+    const url = 'logins/plapproved/' + leadId;
     return this.serviceMeta.httpPut(url, data);
   }
   updateDisbursalDetails(leadId, data) {
@@ -249,16 +257,32 @@ export class LeadsService {
     const url = 'logins/approvals';
     return this.serviceMeta.httpGet(url, null, filter);
   }
+  getplApprovalsLeads(filter = {}) {
+    const url = 'logins/plapprovals';
+    return this.serviceMeta.httpGet(url, null, filter);
+  }
   getDisbursalLeads(filter = {}) {
     const url = 'logins/disbursals';
+    return this.serviceMeta.httpGet(url, null, filter);
+  }
+  getplDisbursalLeads(filter = {}) {
+    const url = 'logins/pldisbursals';
     return this.serviceMeta.httpGet(url, null, filter);
   }
   getBankRejectsLeads(filter = {}) {
     const url = 'logins/bankRejects';
     return this.serviceMeta.httpGet(url, null, filter);
   }
+  getplBankRejectsLeads(filter = {}) {
+    const url = 'logins/plbankRejects';
+    return this.serviceMeta.httpGet(url, null, filter);
+  }
   getCNIRejectsLeads(filter = {}) {
     const url = 'logins/cniRejects';
+    return this.serviceMeta.httpGet(url, null, filter);
+  }
+  getplCNIRejectsLeads(filter = {}) {
+    const url = 'logins/plcniRejects';
     return this.serviceMeta.httpGet(url, null, filter);
   }
   getDistinctLeads(filter = {}) {
@@ -267,6 +291,10 @@ export class LeadsService {
   }
   getFIPProcessDistinctLeads(filter = {}) {
     const url = 'logins/fipDistinctLeads';
+    return this.serviceMeta.httpGet(url, null, filter);
+  }
+  getplFIPDistinctLeads(filter = {}) {
+    const url = 'logins/plfipDistinctLeads';
     return this.serviceMeta.httpGet(url, null, filter);
   }
   getExportedLeads(filter = {}) {
@@ -498,6 +526,10 @@ export class LeadsService {
     const url = 'leads/calulategstprogram/' + leadId;
     return this.serviceMeta.httpPut(url, data);
   }
+  calculateEligibleEmi(leadId, data) {
+    const url = 'loanleads/eligibleemi/' + leadId;
+    return this.serviceMeta.httpPut(url, data);
+  }
   calculateBTOProgram(leadId, data) {
     const url = 'leads/btoprogram/' + leadId;
     return this.serviceMeta.httpPut(url, data);
@@ -556,20 +588,44 @@ export class LeadsService {
     const url = 'logins/fipcount';
     return this.serviceMeta.httpGet(url, null, filter);
   }
+
+  getplFIPDistinctLeadsCount(filter = {}) {
+    const url = 'logins/plfipcount';
+    return this.serviceMeta.httpGet(url, null, filter);
+  }
   getApprovedLeadCount(filter = {}) {
     const url = 'logins/approvalCount';
+    return this.serviceMeta.httpGet(url, null, filter);
+  }
+
+  getplApprovedLeadCount(filter = {}) {
+    const url = 'logins/plapprovalCount';
     return this.serviceMeta.httpGet(url, null, filter);
   }
   getBankRejectedLeadCount(filter = {}) {
     const url = 'logins/rejectedCount';
     return this.serviceMeta.httpGet(url, null, filter);
   }
+
+  getplBankRejectedLeadCount(filter = {}) {
+    const url = 'logins/plrejectedCount';
+    return this.serviceMeta.httpGet(url, null, filter);
+  }
   getCNIRejectedLeadCount(filter = {}) {
     const url = 'logins/cniCount';
     return this.serviceMeta.httpGet(url, null, filter);
   }
+  getplCNIRejectedLeadCount(filter = {}) {
+    const url = 'logins/plcniCount';
+    return this.serviceMeta.httpGet(url, null, filter);
+  }
   getDisbursalLeadCount(filter = {}) {
     const url = 'logins/disbursalCount';
+    return this.serviceMeta.httpGet(url, null, filter);
+  }
+
+  getplDisbursalLeadCount(filter = {}) {
+    const url = 'logins/pldisbursalCount';
     return this.serviceMeta.httpGet(url, null, filter);
   }
   getLeadCountStatus(filter = {}) {

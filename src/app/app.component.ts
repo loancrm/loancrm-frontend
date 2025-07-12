@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { LeadsService } from './admin/leads/leads.service';
+import { VersionCheckService } from './services/version-check.service';
 
 @Component({
   selector: 'app-root',
@@ -10,8 +11,7 @@ import { LeadsService } from './admin/leads/leads.service';
 export class AppComponent implements OnInit {
   title = 'eloanspro';
   loading: boolean = false;
-
-  constructor(private router: Router, private leadsService: LeadsService) {
+  constructor(private router: Router, private leadsService: LeadsService, private versionCheckService: VersionCheckService) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
         this.loading = true;
@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
     });
   }
   ngOnInit(): void {
+    // this.versionCheckService.start();
     this.leadsService.startIpUpdateInterval();
   }
 
@@ -34,4 +35,7 @@ export class AppComponent implements OnInit {
   scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+  // ngOnDestroy(): void {
+  //   this.versionCheckService.stop();
+  // }
 }

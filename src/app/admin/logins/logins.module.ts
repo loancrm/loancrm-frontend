@@ -22,7 +22,21 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'bankSelection/:status/:id',
+    loadChildren: () =>
+      import('./bank-selection/bank-selection.module').then(
+        (m) => m.BankSelectionModule
+      ),
+  },
+  {
     path: 'banksSaved/:id',
+    loadChildren: () =>
+      import('./banks-saved/banks-saved.module').then(
+        (m) => m.BanksSavedModule
+      ),
+  },
+  {
+    path: 'banksSaved/:status/:id',
     loadChildren: () =>
       import('./banks-saved/banks-saved.module').then(
         (m) => m.BanksSavedModule
@@ -47,4 +61,4 @@ const routes: Routes = [
     [RouterModule.forChild(routes)],
   ],
 })
-export class LoginsModule {}
+export class LoginsModule { }

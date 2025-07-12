@@ -11,6 +11,7 @@ import { MenuModule } from 'primeng/menu';
 import { TableModule } from 'primeng/table';
 import { FilterModule } from 'src/app/filter/filter.module';
 import { CapitalizeFirstPipe } from 'src/app/pipes/capitalize.pipe';
+import { TabMenuModule } from 'primeng/tabmenu';
 
 const routes: Routes = [
   { path: '', component: DisbursalsComponent },
@@ -23,6 +24,18 @@ const routes: Routes = [
   },
   {
     path: 'revenue/:id',
+    loadChildren: () =>
+      import('./revenue/revenue.module').then((m) => m.RevenueModule),
+  },
+  {
+    path: 'disbursalDetails/:status/:id',
+    loadChildren: () =>
+      import('./disbursal-details/disbursal-details.module').then(
+        (m) => m.DisbursalDetailsModule
+      ),
+  },
+  {
+    path: 'revenue/:status/:id',
     loadChildren: () =>
       import('./revenue/revenue.module').then((m) => m.RevenueModule),
   },
@@ -41,7 +54,8 @@ const routes: Routes = [
     InputTextModule,
     CapitalizeFirstPipe,
     FilterModule,
+    TabMenuModule,
     [RouterModule.forChild(routes)],
   ],
 })
-export class DisbursalsModule {}
+export class DisbursalsModule { }

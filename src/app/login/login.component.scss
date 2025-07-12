@@ -116,7 +116,7 @@
   justify-content: center;
   margin-bottom: 30px;
 }
-.card{
+.card {
   background-color: #ffffff;
   width: 450px;
   height: 480px;
@@ -126,18 +126,18 @@
   margin-top: 20px;
   margin-left: 120px;
 }
-.ca{
+.ca {
   margin-left: 120px;
   padding: 0;
 }
-.calucard{
+.calucard {
   background-color: #ffffff;
   border-radius: 3px;
   border-color: #878787;
   margin: 0 auto;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.calucard:hover{
+.calucard:hover {
   transform: translateY(-8px) scale(1.02);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   border-color: #ff7a3d;
@@ -200,7 +200,13 @@
 .calculator-heading .line {
   flex: 1;
   height: 3px;
-  background: linear-gradient(to right, transparent, orangered, orangered, transparent);
+  background: linear-gradient(
+    to right,
+    transparent,
+    orangered,
+    orangered,
+    transparent
+  );
   max-width: 150px;
   border-radius: 2px;
   opacity: 0.8;
@@ -214,14 +220,24 @@
 }
 @keyframes line-grow {
   from {
-    background: linear-gradient(to right, transparent, transparent, transparent, transparent);
+    background: linear-gradient(
+      to right,
+      transparent,
+      transparent,
+      transparent,
+      transparent
+    );
   }
   to {
-    background: linear-gradient(to right, transparent, orangered, orangered, transparent);
+    background: linear-gradient(
+      to right,
+      transparent,
+      orangered,
+      orangered,
+      transparent
+    );
   }
 }
-
-
 
 // @keyframes typing-animation {
 //   from {
@@ -240,7 +256,6 @@
   justify-content: center;
 }
 
-
 @media (max-width: 991px) {
   .card {
     width: 90%;
@@ -256,7 +271,7 @@
   .calucard {
     width: 100%;
     max-width: 100%;
-    min-height:40px;
+    min-height: 40px;
     margin: 0;
     margin-bottom: 20px;
     align-content: center;
@@ -366,5 +381,3 @@
     max-width: 100%;
   }
 }
-
-

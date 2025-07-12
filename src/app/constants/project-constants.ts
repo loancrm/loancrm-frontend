@@ -15,7 +15,7 @@ export const projectConstantsLocal = {
     { id: 12, name: 'filesInProcess', displayName: 'Files in Process' },
   ],
   REJECTED_STATUS: [
-    { id: 0, name: 'all', displayName: 'All Rejects' },
+    // { id: 0, name: 'all', displayName: 'All Rejects' },
     { id: 10, name: 'inHouseRejects', displayName: 'In House Rejects' },
     { id: 14, name: 'bankersRejects', displayName: 'Bankers Rejects' },
     { id: 15, name: 'cnis', displayName: 'CNIs' },

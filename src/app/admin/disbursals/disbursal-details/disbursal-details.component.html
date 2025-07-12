@@ -2,7 +2,7 @@
   <div class="bread-crumb m-2">
     <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
   </div>
-  <div class="p-1 m-2" *ngIf="leads">
+  <!-- <div class="p-1 m-2" *ngIf="leads">
     <div class="d-flex justify-content-between">
       <div
         class="d-flex align-items-center justify-content-center pointer-cursor"
@@ -11,20 +11,33 @@
         <span class="me-2 d-flex align-items-center">
           <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
         </span>
-        <!-- <span class="me-1">
-          <img
-            src="../../../../assets/images/menu/disbursed-details.png"
-            alt="Default Image"
-            class=""
-            style="height: 35px; width: 40px"
-          />
-        </span> -->
         <span class="back-btn-text text-capitalize">{{
           leads[0]?.businessName | capitalizeFirst
         }}</span>
       </div>
     </div>
-  </div>
+  </div> -->
+
+  <ng-container *ngFor="let item of displayedItems">
+    <div class="m-2 p-1" *ngIf="item.data">
+      <div class="d-flex justify-content-between">
+        <div
+          class="d-flex align-items-center justify-content-center pointer-cursor"
+          (click)="goBack()"
+        >
+          <span class="me-2 d-flex align-items-center">
+            <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
+          </span>
+
+          <b>
+            <span class="back-btn-text text-capitalize">
+              {{ item.data[item.displayProperty] || "N/A" | capitalizeFirst }}
+            </span>
+          </b>
+        </div>
+      </div>
+    </div>
+  </ng-container>
   <div *ngIf="loading">
     <app-preloader></app-preloader>
   </div>
@@ -41,7 +54,7 @@
               <th>Sanction Date</th>
               <th>Disbursed Date</th>
               <th>LAN</th>
-              <th>Program</th>
+              <th *ngIf="shouldDisplayBlock()">Program</th>
               <th>Lender</th>
               <th>Process Code</th>
               <th>Product Type</th>
@@ -58,7 +71,7 @@
               <td>{{ rowData.approvalDate | date }}</td>
               <td>{{ rowData.disbursalDate | date }}</td>
               <td>{{ rowData.lan }}</td>
-              <td>{{ rowData.program }}</td>
+              <td *ngIf="shouldDisplayBlock()">{{ rowData.program }}</td>
               <td>{{ rowData.bankName }}</td>
               <td>{{ rowData.processCode }}</td>
               <td>{{ rowData.productTypeName }}</td>

@@ -10,7 +10,7 @@ export class RoutingService {
   featureRoute = '';
   version = projectConstantsLocal.VERSION_DESKTOP;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   handleRoute(activeRoute: any, params, options?) {
     let relativeRoute = this.projectRoute;

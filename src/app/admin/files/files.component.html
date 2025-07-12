@@ -464,7 +464,7 @@
             [lazy]="true"
             selectionMode="single"
             (onLazyLoad)="loadLeadsforPersonal($event)"
-            (onRowSelect)="viewLoanLead($event)"
+            (onRowSelect)="viewLeadProfile($event)"
             dataKey="id"
             [showCurrentPageReport]="true"
             [rowsPerPageOptions]="[10, 25, 50]"
@@ -491,7 +491,7 @@
                     <input
                       type="text"
                       pInputText
-                      placeholder="Search File with Person Name"
+                      placeholder="Search File with Applicant Name"
                       [(ngModel)]="businessNameToSearchForPersonal"
                       (ngModelChange)="
                         inputValueChangeEventForPersonal(
@@ -694,19 +694,6 @@
                         pTooltip="View Files"
                         tooltipPosition="top"
                       />
-                      <!-- <button
-                        *ngIf="
-                          userDetails?.userType && userDetails.userType !== '5'
-                        "
-                        pButton
-                        pRipple
-                        type="button"
-                        class="p-button-info me-2 custom-btn"
-                        (click)="uploadLoanLeadFiles(lead.leadId)"
-                        pTooltip="Upload Files"
-                        icon="fas fa-upload"
-                        tooltipPosition="top"
-                      ></button> -->
                       <img
                         *ngIf="
                           userDetails?.userType && userDetails.userType !== '5'
@@ -725,15 +712,6 @@
                         [model]="actionItemsForLead(lead, 'personal')"
                         [popup]="true"
                       ></p-menu>
-                      <!-- <button
-                        pButton
-                        type="button"
-                        class="custom-btn"
-                        (click)="menu.toggle($event)"
-                        icon="fas fa-bars"
-                        pTooltip="Actions"
-                        tooltipPosition="top"
-                      ></button> -->
                       <img
                         src="../../../assets/images/icons/menu.svg"
                         width="24px"
@@ -821,7 +799,7 @@
                           pInputText
                           [placeholder]="
                             activeEmploymentStatus.name === 'employed'
-                              ? 'Search File with Person Name'
+                              ? 'Search File with Applicant Name'
                               : 'Search File with Business Name'
                           "
                           [(ngModel)]="searchInputValue"
@@ -921,7 +899,7 @@
                       class="text-nowrap"
                       *ngIf="activeEmploymentStatus.name === 'employed'"
                     >
-                      Person Name
+                      Applicant Name
                     </th>
                     <th
                       class="text-nowrap"
@@ -1242,7 +1220,7 @@
                           pInputText
                           [placeholder]="
                             activeEmploymentStatus.name === 'employed'
-                              ? 'Search File with Person Name'
+                              ? 'Search File with Applicant Name'
                               : 'Search File with Business Name'
                           "
                           [(ngModel)]="searchInputValue"
@@ -1340,7 +1318,7 @@
                   <tr>
                     <th>Lead Id</th>
                     <th *ngIf="activeEmploymentStatus.name === 'employed'">
-                      Person Name
+                      Applicant Name
                     </th>
                     <th *ngIf="activeEmploymentStatus.name === 'self-employed'">
                       Business Name
@@ -1581,6 +1559,9 @@
         <p>Comming soon ....</p>
       </div>
       <div *ngIf="activeItem.name == 'carLoan'">
+        <p>Comming soon ....</p>
+      </div>
+      <div *ngIf="activeItem.name == 'commercialVehicleLoan'">
         <p>Comming soon ....</p>
       </div>
     </div>

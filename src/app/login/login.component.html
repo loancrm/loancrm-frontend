@@ -60,7 +60,11 @@
                   formControlName="username"
                   placeholder="Enter your email or phone number"
                   autocomplete="off"
-                  style="height: 40px; background-color: #ffffff;border-color: #878787;"
+                  style="
+                    height: 40px;
+                    background-color: #ffffff;
+                    border-color: #878787;
+                  "
                 />
                 <label class="form-label fw-medium" for="username"
                   >Email or Phone Number</label
@@ -76,7 +80,11 @@
                     placeholder="Enter your password"
                     formControlName="password"
                     autocomplete="off"
-                    style="height: 40px; background-color: #ffffff;border-color: #878787;"
+                    style="
+                      height: 40px;
+                      background-color: #ffffff;
+                      border-color: #878787;
+                    "
                   />
                   <!-- <span
                     class="p-inputgroup-addon"
@@ -100,27 +108,27 @@
                           : 'assets/images/icons/eye.svg'
                       "
                       alt="Toggle Password Visibility"
-                      width="25"
-                      height="50"
+                      width="20"
+                      height="20"
                     />
                   </span>
                 </div>
                 <label class="form-label fw-medium" for="password"
-                  >Password</label>
-                <div
-                class="d-flex justify-content-between align-items-center mb-3"
-              >
-                <div></div>
-                <a
-                  class="text-decoration-none fw-medium text-primary"
-                  (click)="doForgotPassword()"
-                  style="cursor: pointer"
+                  >Password</label
                 >
-                  <span style="color: #878787;">Forgot Password?</span>
-                </a>
+                <div
+                  class="d-flex justify-content-between align-items-center mb-3"
+                >
+                  <div></div>
+                  <a
+                    class="text-decoration-none fw-medium text-primary"
+                    (click)="doForgotPassword()"
+                    style="cursor: pointer"
+                  >
+                    <span style="color: #878787">Forgot Password?</span>
+                  </a>
+                </div>
               </div>
-              </div>
-              
 
               <button
                 type="submit"
@@ -138,7 +146,7 @@
                   routerLink="/user/register"
                   class="fw-bold text-primary text-decoration-none"
                 >
-                  <span style="color: orangered;"> Register here</span>
+                  <span style="color: orangered"> Register here</span>
                 </a>
               </div>
             </form>
@@ -159,7 +167,10 @@
               >
                 <div class="card-body p-2">
                   <!-- <i class="fas fa-briefcase mb-3"></i> -->
-                   <img src="../../assets/images/icons/businessloan.svg" alt="business loan">
+                  <img
+                    src="../../assets/images/icons/businessloan.svg"
+                    alt="business loan"
+                  />
                   <h6 class="fw-bold mb-2">Business Loan</h6>
                 </div>
               </div>
@@ -172,7 +183,10 @@
                 routerLink="/calculator/personal"
               >
                 <div class="card-body p-2">
-                  <img src="../../assets/images/icons/team.svg" alt="personal loan">
+                  <img
+                    src="../../assets/images/icons/team.svg"
+                    alt="personal loan"
+                  />
                   <!-- <i class="fas fa-user mb-3"></i> -->
                   <h6 class="fw-bold mb-2">Personal Loan</h6>
                 </div>
@@ -186,7 +200,10 @@
                 routerLink="/calculator/home"
               >
                 <div class="card-body p-2">
-                  <img src="../../assets/images/icons/home.svg" alt="home lone">
+                  <img
+                    src="../../assets/images/icons/home.svg"
+                    alt="home lone"
+                  />
                   <!-- <i class="fas fa-home mb-3"></i> -->
                   <h6 class="fw-bold mb-2">Home Loan</h6>
                 </div>

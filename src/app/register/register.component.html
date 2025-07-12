@@ -35,8 +35,8 @@
               (ngSubmit)="onSubmit()"
               novalidate
             > -->
-              <!-- Full Name -->
-              <!-- <div class="form-outline mb-4">
+        <!-- Full Name -->
+        <!-- <div class="form-outline mb-4">
                 <input
                   pInputText
                   type="text"
@@ -53,8 +53,8 @@
                 </div>
               </div> -->
 
-              <!-- Email -->
-              <!-- <div class="form-outline mb-4">
+        <!-- Email -->
+        <!-- <div class="form-outline mb-4">
                 <input
                   pInputText
                   type="email"
@@ -73,8 +73,8 @@
                 </div>
               </div> -->
 
-              <!-- Phone Number -->
-              <!-- <div class="form-outline mb-4">
+        <!-- Phone Number -->
+        <!-- <div class="form-outline mb-4">
                 <input
                   pInputText
                   type="tel"
@@ -94,8 +94,8 @@
                 </div>
               </div> -->
 
-              <!-- Company Name -->
-              <!-- <div class="form-outline mb-4">
+        <!-- Company Name -->
+        <!-- <div class="form-outline mb-4">
                 <input
                   pInputText
                   type="text"
@@ -112,8 +112,8 @@
                 </div>
               </div> -->
 
-              <!-- Password -->
-              <!-- <div class="form-outline mb-4">
+        <!-- Password -->
+        <!-- <div class="form-outline mb-4">
                 <div class="input-group">
                   <input
                     pInputText
@@ -139,15 +139,15 @@
                     />
                   </span>
                 </div> -->
-                <!-- <label class="form-label fw-medium">Password</label> -->
-                <!-- <button
+        <!-- <label class="form-label fw-medium">Password</label> -->
+        <!-- <button
                   type="button"
                   (click)="togglePasswordVisibility()"
                   class="btn btn-link p-0"
                 >
                   {{ isPasswordVisible ? "Hide" : "Show" }}
                 </button> -->
-                <!-- <div class="error-placeholder">
+        <!-- <div class="error-placeholder">
                   <div *ngIf="submitted && password.errors" class="text-danger">
                     <small *ngIf="password.errors['required']">Password is required.</small>
                     <small *ngIf="password.errors['pattern']">
@@ -160,8 +160,8 @@
                 </div>
               </div> -->
 
-              <!-- Submit -->
-              <!-- <button
+        <!-- Submit -->
+        <!-- <button
                 type="submit"
                 pButton
                 pRipple
@@ -171,8 +171,8 @@
                 Register
               </button> -->
 
-              <!-- Link to login -->
-              <!-- <div class="text-center">
+        <!-- Link to login -->
+        <!-- <div class="text-center">
                 <span class="text-muted" style="color:#878787;">Already have an account?</span>
                 <a
                   routerLink="/user/login"
@@ -263,8 +263,12 @@
                 <!-- <label class="form-label fw-medium">Email address</label> -->
                 <div class="error-placeholder">
                   <div *ngIf="submitted && email.errors" class="text-danger">
-                    <small *ngIf="email.errors['required']">Email is required.</small>
-                    <small *ngIf="email.errors['email']">Please enter a valid email address.</small>
+                    <small *ngIf="email.errors['required']"
+                      >Email is required.</small
+                    >
+                    <small *ngIf="email.errors['email']"
+                      >Please enter a valid email address.</small
+                    >
                   </div>
                 </div>
               </div>
@@ -284,8 +288,12 @@
                 <!-- <label class="form-label fw-medium">Phone Number</label> -->
                 <div class="error-placeholder">
                   <div *ngIf="submitted && mobile.errors" class="text-danger">
-                    <small *ngIf="mobile.errors['required']">Mobile number is required.</small>
-                    <small *ngIf="mobile.errors['pattern']">Enter a valid 10-digit mobile number.</small>
+                    <small *ngIf="mobile.errors['required']"
+                      >Mobile number is required.</small
+                    >
+                    <small *ngIf="mobile.errors['pattern']"
+                      >Enter a valid 10-digit mobile number.</small
+                    >
                   </div>
                 </div>
               </div>
@@ -302,7 +310,10 @@
                 />
                 <!-- <label class="form-label fw-medium">Company Name</label> -->
                 <div class="error-placeholder">
-                  <div *ngIf="submitted && businessName.invalid" class="text-danger">
+                  <div
+                    *ngIf="submitted && businessName.invalid"
+                    class="text-danger"
+                  >
                     <small>Company name is required.</small>
                   </div>
                 </div>
@@ -318,9 +329,11 @@
                     placeholder="Password"
                     autocomplete="off"
                     class="rounded-lg form-control"
-                    style="border-radius: 5px;"
+                    style="border-radius: 5px"
                   />
-                  <span class="p-inputgroup-addon input-group-text  border-start-0">
+                  <span
+                    class="p-inputgroup-addon input-group-text border-start-0"
+                  >
                     <img
                       src="{{
                         showPassword
@@ -345,8 +358,13 @@
                 </button> -->
                 <div class="error-placeholder">
                   <div *ngIf="submitted && password.errors" class="text-danger">
-                    <small *ngIf="password.errors['required']">Password is required.</small>
-                    <small *ngIf="password.errors['pattern']">Your password should contain uppercase and lowercase letters, numbers, and special characters.</small>
+                    <small *ngIf="password.errors['required']"
+                      >Password is required.</small
+                    >
+                    <small *ngIf="password.errors['pattern']"
+                      >Your password should contain uppercase and lowercase
+                      letters, numbers, and special characters.</small
+                    >
                     <small *ngIf="password.errors['minlength']">
                       Password must be at least 6 characters.
                     </small>
@@ -367,12 +385,14 @@
 
               <!-- Link to login -->
               <div class="text-center">
-                <span class="text-muted" style="color:#878787;">Already have an account?</span>
+                <span class="text-muted" style="color: #878787"
+                  >Already have an account?</span
+                >
                 <a
                   routerLink="/user/login"
                   class="fw-bold text-primary text-decoration-none"
                 >
-                  <span style="color: orangered;"> Sign in here</span>
+                  <span style="color: orangered"> Sign in here</span>
                 </a>
               </div>
             </form>

@@ -2,7 +2,7 @@
   <div class="bread-crumb m-2">
     <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
   </div>
-  <div class="p-1 m-2" *ngIf="leads">
+  <!-- <div class="p-1 m-2" *ngIf="leads">
     <div class="d-flex justify-content-between">
       <div
         class="d-flex align-items-center justify-content-center pointer-cursor"
@@ -19,7 +19,27 @@
         </b>
       </div>
     </div>
-  </div>
+  </div> -->
+  <ng-container *ngFor="let item of displayedItems">
+    <div class="m-2 p-1" *ngIf="item.data">
+      <div class="d-flex justify-content-between">
+        <div
+          class="d-flex align-items-center justify-content-center pointer-cursor"
+          (click)="goBack()"
+        >
+          <span class="me-2 d-flex align-items-center">
+            <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
+          </span>
+
+          <b>
+            <span class="back-btn-text text-capitalize">
+              {{ item.data[item.displayProperty] || "N/A" | capitalizeFirst }}
+            </span>
+          </b>
+        </div>
+      </div>
+    </div>
+  </ng-container>
   <div *ngIf="loading">
     <app-preloader></app-preloader>
   </div>
@@ -35,7 +55,9 @@
           <ng-template pTemplate="header">
             <tr>
               <th style="min-width: 150px">LAN</th>
-              <th style="min-width: 100px">Program</th>
+              <th style="min-width: 100px" *ngIf="shouldDisplayBlock()">
+                Program
+              </th>
               <th style="min-width: 200px">Lender</th>
               <th style="min-width: 200px">Sanctioned Amount</th>
               <th style="min-width: 200px">Disbursed Amount</th>
@@ -43,7 +65,7 @@
               <th style="min-width: 100px">Tenure</th>
               <th style="min-width: 200px">Process Code</th>
               <th style="min-width: 200px">Product type</th>
-              <th style="min-width: 250px">Approval Date</th>
+              <th style="min-width: 250px">Sanction Date</th>
               <th style="min-width: 250px">Status</th>
               <th style="min-width: 250px">Disbursed Date</th>
               <th style="min-width: 250px">Remarks</th>
@@ -62,7 +84,7 @@
                   [(ngModel)]="rowData.lan"
                 />
               </td>
-              <td>{{ rowData.program }}</td>
+              <td *ngIf="shouldDisplayBlock()">{{ rowData.program }}</td>
               <td>{{ rowData.bankName }}</td>
               <td>
                 <input
@@ -138,7 +160,7 @@
                   [showIcon]="true"
                   dateFormat="yy-mm-dd"
                   appendTo="body"
-                  placeholder="Select Approval Date"
+                  placeholder="Select Sanction Date"
                   autocomplete="off"
                   [showButtonBar]="true"
                 ></p-calendar> -->
@@ -146,7 +168,7 @@
                   <p-calendar
                     #calendar
                     [(ngModel)]="rowData.approvalDate"
-                    placeholder="Select Approval Date"
+                    placeholder="Select Sanction Date"
                     [showIcon]="false"
                     appendTo="body"
                     dateFormat="yy-mm-dd"
@@ -239,6 +261,7 @@
         </p-table>
         <div class="col text-center mb-4">
           <button
+            *ngIf="shouldDisplayBlock()"
             pButton
             pRipple
             type="button"
@@ -246,6 +269,24 @@
             (click)="saveFormData()"
           >
             Save Sanctions Info
+          </button>
+          <button
+            *ngIf="
+              leads &&
+              ((leads[0].loanType === 'personalLoan' &&
+                leads[0].employmentStatus === 'employed') ||
+                (leads[0].loanType === 'homeLoan' &&
+                  leads[0].employmentStatus === 'employed') ||
+                (leads[0].loanType === 'lap' &&
+                  leads[0].employmentStatus === 'employed'))
+            "
+            pButton
+            pRipple
+            type="button"
+            class="p-button-primary me-2"
+            (click)="saveplFormData()"
+          >
+            Save Sanction Info
           </button>
         </div>
       </div>

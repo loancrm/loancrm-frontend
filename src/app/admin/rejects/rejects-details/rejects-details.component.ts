@@ -19,6 +19,7 @@ export class RejectsDetailsComponent implements OnInit {
   rejectedFilesInProcess: any[] = [];
   bankRejectesData: any[] = [];
   filesInProcessDetails: any[] = [];
+  displayedItems: any = [];
   constructor(
     private location: Location,
 
@@ -43,9 +44,26 @@ export class RejectsDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // this.leadId = this.route.snapshot.paramMap.get('id');
+    // if (this.leadId) {
+    //   this.getLeadById(this.leadId);
+    //   this.getBankRejectsDetailsById(this.leadId);
+    // }
+
     this.leadId = this.route.snapshot.paramMap.get('id');
+    const status = this.route.snapshot.paramMap.get('status');
     if (this.leadId) {
-      this.getLeadById(this.leadId);
+      if (!status) {
+        this.getLeadById(this.leadId);
+      } else {
+        const validStatuses = ['personalLoan', 'homeLoan', 'lap'];
+        if (validStatuses.includes(status)) {
+          this.getLoanLeadById(this.leadId);
+        } else {
+          console.warn('Unknown status:', status);
+          this.getLeadById(this.leadId);
+        }
+      }
       this.getBankRejectsDetailsById(this.leadId);
     }
   }
@@ -65,11 +83,42 @@ export class RejectsDetailsComponent implements OnInit {
     this.leadsService.getLeadDetailsById(id).subscribe(
       (lead) => {
         this.leads = lead;
+        this.updateDisplayedItems();
       },
       (error: any) => {
         this.toastService.showError(error);
       }
     );
+  }
+  getLoanLeadById(leadId: any): void {
+    this.leadsService.getLoanLeadById(leadId).subscribe(
+      (data: any) => {
+        this.leads = data;
+        this.updateDisplayedItems();
+      },
+      (error) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
+  updateDisplayedItems() {
+    const loanDisplayProperty =
+      this.leads && this.leads[0].employmentStatus === 'employed'
+        ? 'contactPerson'
+        : 'businessName';
+    this.displayedItems = [
+      // { data: this.leads[0], displayProperty: 'businessName' },
+      { data: this.leads[0], displayProperty: loanDisplayProperty },
+    ];
+  }
+  shouldDisplayBlock(): boolean {
+    const lead = this.leads?.[0];
+    if (!lead) return false;
+    const isSelfEmployedHomeOrLap =
+      (lead.loanType === 'homeLoan' || lead.loanType === 'lap') &&
+      lead.employmentStatus === 'self-employed';
+    const loanTypeNotExists = !('loanType' in lead);
+    return isSelfEmployedHomeOrLap || loanTypeNotExists;
   }
   goBack() {
     this.location.back();
