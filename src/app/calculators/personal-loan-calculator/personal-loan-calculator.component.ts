@@ -21,6 +21,20 @@ export class PersonalLoanCalculatorComponent implements OnInit {
   expandedRows: { [year: string]: boolean } = {};
 
   piechartOptions: any;
+  applicantName: string = '';
+  preventInvalidKeys(event: KeyboardEvent) {
+    const invalidKeys = ['e', 'E', '+', '-', ' '];
+    if (invalidKeys.includes(event.key)) {
+      event.preventDefault();
+    }
+  }
+
+  preventInvalidPaste(event: ClipboardEvent) {
+    const paste = event.clipboardData?.getData('text') || '';
+    if (/[^0-9.]/.test(paste)) {
+      event.preventDefault();
+    }
+  }
 
   constructor() { }
 

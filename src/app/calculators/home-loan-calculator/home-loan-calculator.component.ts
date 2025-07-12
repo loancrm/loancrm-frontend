@@ -21,7 +21,8 @@ export class HomeLoanCalculatorComponent {
   expandedRows: { [year: string]: boolean } = {};
 
   piechartOptions: any;
-  businessName: string = '';
+  applicantName: string = '';
+
   constructor() { }
 
   ngOnInit(): void {
@@ -154,12 +155,26 @@ export class HomeLoanCalculatorComponent {
       ]
     };
   }
+  preventInvalidKeys(event: KeyboardEvent) {
+    const invalidKeys = ['e', 'E', '+', '-', ' '];
+    if (invalidKeys.includes(event.key)) {
+      event.preventDefault();
+    }
+  }
+
+  preventInvalidPaste(event: ClipboardEvent) {
+    const paste = event.clipboardData?.getData('text') || '';
+    if (/[^0-9.]/.test(paste)) {
+      event.preventDefault();
+    }
+  }
+
   generatePDF(): void {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
 
-    const businessName = this.businessName;
+    const applicantName = this.applicantName;
 
     // const leftDetails = [
     //   `Loan Amount: Rs. ${this.loanAmount}`,
@@ -191,7 +206,7 @@ export class HomeLoanCalculatorComponent {
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(18);
       doc.setTextColor('#29415B');
-      doc.text(businessName.toUpperCase(), pageWidth / 2, 15, { align: 'center' });
+      doc.text(applicantName.toUpperCase(), pageWidth / 2, 15, { align: 'center' });
     };
     addHeader();
 
@@ -249,6 +264,6 @@ export class HomeLoanCalculatorComponent {
         addHeader();    // 👈 Redraw header
       },
     });
-    doc.save(`${this.businessName.toUpperCase()}-EMI-REPORT.pdf`);
+    doc.save(`${this.applicantName.toUpperCase()}-EMI-REPORT.pdf`);
   }
 }

@@ -20,8 +20,21 @@ export class BusinessLoanCalculatorComponent implements OnInit {
   groupedYears: { year: string }[] = [];
   expandedRows: { [key: string]: boolean } = {};
 
-  piechartOptions: any; businessName: string = '';
+  piechartOptions: any;
+  businessName: string = '';
+  preventInvalidKeys(event: KeyboardEvent) {
+    const invalidKeys = ['e', 'E', '+', '-', ' '];
+    if (invalidKeys.includes(event.key)) {
+      event.preventDefault();
+    }
+  }
 
+  preventInvalidPaste(event: ClipboardEvent) {
+    const paste = event.clipboardData?.getData('text') || '';
+    if (/[^0-9.]/.test(paste)) {
+      event.preventDefault();
+    }
+  }
   constructor() { }
 
   ngOnInit(): void {

@@ -138,6 +138,8 @@
               [(ngModel)]="loanAmount"
               class="form-control form-control-sm ms-2"
               style="width: 200px"
+              (keydown)="preventInvalidKeys($event)"
+              (paste)="preventInvalidPaste($event)"
             />
           </div>
           <p-slider
@@ -157,6 +159,8 @@
               [(ngModel)]="interestRate"
               class="form-control form-control-sm ms-2"
               style="width: 200px"
+              (keydown)="preventInvalidKeys($event)"
+              (paste)="preventInvalidPaste($event)"
             />
           </div>
           <p-slider
@@ -176,6 +180,8 @@
               [(ngModel)]="tenure"
               class="form-control form-control-sm ms-2"
               style="width: 200px"
+              (keydown)="preventInvalidKeys($event)"
+              (paste)="preventInvalidPaste($event)"
             />
           </div>
           <p-slider
