@@ -11,6 +11,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { FilterModule } from 'src/app/filter/filter.module';
 import { CapitalizeFirstPipe } from 'src/app/pipes/capitalize.pipe';
+import { TabMenuModule } from 'primeng/tabmenu';
 
 const routes: Routes = [
   { path: '', component: CreditEvaluationComponent },
@@ -21,6 +22,13 @@ const routes: Routes = [
         (m) => m.EvaluateCreditModule
       ),
   },
+  {
+    path: 'loan-evaluate/:id',
+    loadChildren: () =>
+      import('./loanleadsevaluatecredit/loanleadsevaluatecredit.module').then(
+        (m) => m.LoanleadsevaluatecreditModule
+      ),
+  }
 ];
 
 @NgModule({
@@ -35,8 +43,9 @@ const routes: Routes = [
     FilterModule,
     FormsModule,
     MenuModule,
+    TabMenuModule,
     InputTextModule,
     [RouterModule.forChild(routes)],
   ],
 })
-export class CreditEvaluationModule {}
+export class CreditEvaluationModule { }

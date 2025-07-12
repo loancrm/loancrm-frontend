@@ -1151,7 +1151,7 @@ export class ViewComponent {
 
     const specificFiltersSanctions = [
       {
-        header: 'Approval Date Range',
+        header: 'Sanction Date Range',
         data: [
           {
             field: 'approvalDate',

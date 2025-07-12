@@ -1,21 +1,10 @@
 <div>
-  <div class="p-1 m-2 fixed-card" *ngIf="leads">
+  <!-- <div class="p-1 m-2 fixed-card" *ngIf="leads">
     <div class="d-flex justify-content-between">
       <div
         class="d-flex align-items-center justify-content-center pointer-cursor"
         (click)="goBack()"
       >
-        <!-- <span class="back-btn-icon me-2"
-          ><i class="pi pi-arrow-left fw-bold"></i
-        ></span> -->
-        <!-- <span class="me-1">
-          <img
-            src="../../../../assets/images/menu/revenue.png"
-            alt="Default Image"
-            class=""
-            style="height: 35px; width: 40px"
-          />
-        </span> -->
         <span class="me-2 d-flex align-items-center">
           <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
         </span>
@@ -24,7 +13,27 @@
         }}</span>
       </div>
     </div>
-  </div>
+  </div> -->
+  <ng-container *ngFor="let item of displayedItems">
+    <div class="m-2 p-1" *ngIf="item.data">
+      <div class="d-flex justify-content-between">
+        <div
+          class="d-flex align-items-center justify-content-center pointer-cursor"
+          (click)="goBack()"
+        >
+          <span class="me-2 d-flex align-items-center">
+            <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
+          </span>
+
+          <b>
+            <span class="back-btn-text text-capitalize">
+              {{ item.data[item.displayProperty] || "N/A" | capitalizeFirst }}
+            </span>
+          </b>
+        </div>
+      </div>
+    </div>
+  </ng-container>
 
   <div class="bread-crumb m-2">
     <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
@@ -38,8 +47,8 @@
         >
           <ng-template pTemplate="header">
             <tr>
-              <th>Business Name</th>
-              <th>Program</th>
+              <th *ngIf="shouldDisplayBlock()">Business Name</th>
+              <th *ngIf="shouldDisplayBlock()">Program</th>
               <th>Lender</th>
               <th>Process Code</th>
               <th>Product Type</th>
@@ -50,8 +59,10 @@
           </ng-template>
           <ng-template pTemplate="body" let-rowData>
             <tr>
-              <td class="text-capitalize">{{ rowData.businessName }}</td>
-              <td>{{ rowData.program }}</td>
+              <td *ngIf="shouldDisplayBlock()" class="text-capitalize">
+                {{ rowData.businessName }}
+              </td>
+              <td *ngIf="shouldDisplayBlock()">{{ rowData.program }}</td>
               <td>{{ rowData.bankName }}</td>
               <td>{{ rowData.processCode }}</td>
               <td>{{ rowData.productTypeName }}</td>

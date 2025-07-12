@@ -284,6 +284,10 @@ export class CallbacksComponent implements OnInit {
         label: `Car loans (0)`,
         name: 'carLoan',
       },
+      {
+        label: `Commercial Vehicle Loans (0)`,
+        name: 'commercialVehicleLoan',
+      },
     ];
   }
     getTotalCallbacksCountArray(filter = {}) {
@@ -1593,7 +1597,7 @@ this.HomeSelffilterConfig=this.filterConfig
     const trimmedInput = this.personNameToSearch?.trim() || '';
     if(this.isPhoneNumber(trimmedInput)){
       console.log('Detected phone number:', trimmedInput);
-      searchFilter = {'phone-like':trimmedInput}      
+      searchFilter = {'phone-like':trimmedInput}
     } else {
       console.log("Detected Person Name:",trimmedInput);
       searchFilter ={'businessName-like':trimmedInput}

@@ -2085,7 +2085,9 @@
                     pRipple
                     type="button"
                     class="p-button-info me-2"
-                    (click)="uploadFiles('llpCertificateofIncorporation', '*/*')"
+                    (click)="
+                      uploadFiles('llpCertificateofIncorporation', '*/*')
+                    "
                   >
                     <i class="pi pi-upload"></i>&nbsp;Upload Files
                   </button>
@@ -2172,7 +2174,7 @@
                   </span>
                 </div>
               </div>
-               <div
+              <div
                 class="col-md-4 mt-2"
                 *ngIf="leadData[0]?.businessEntity === 'llp'"
               >

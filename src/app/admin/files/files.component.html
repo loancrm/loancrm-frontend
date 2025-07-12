@@ -124,7 +124,7 @@
                     ></button>
                   </div>
                 </div> -->
-                 <div
+                <div
                   class="col-md-3 mt-2 no-padding-small"
                   *ngIf="
                     userDetails &&
@@ -214,15 +214,16 @@
                 </th>
                 <!-- <th class="text-nowrap">Created Date</th> -->
                 <th class="text-nowrap">Uploaded Date</th>
-                <th>Status</th>
+                <th>Remarks</th>
+                <!-- <th>Status</th> -->
                 <th>Actions</th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-lead>
               <tr class="text-capitalize" [pSelectableRow]="lead">
                 <td>
-                  <span class="table-column-data" *ngIf="lead.leadId">{{
-                    lead.id
+                  <span class="table-column-data" *ngIf="lead.customId">{{
+                    lead.customId
                   }}</span>
                 </td>
                 <td>
@@ -277,7 +278,33 @@
                     lead.uploadedDate | date : "mediumDate"
                   }}</span>
                 </td>
-                <td>
+                <td
+                  (click)="
+                    overlayPanel.toggle($event); $event.stopPropagation()
+                  "
+                >
+                  <span
+                    class="table-column-data text-nowrap"
+                    *ngIf="lead.remarks"
+                  >
+                    {{
+                      lead.remarks.length > 15
+                        ? (lead.remarks.slice(0, 15) + "..." | capitalizeFirst)
+                        : (lead.remarks | capitalizeFirst)
+                    }}
+                  </span>
+                  <p-overlayPanel
+                    #overlayPanel
+                    [dismissable]="true"
+                    [showCloseIcon]="true"
+                    styleClass="subscription-panel"
+                  >
+                    <div class="">
+                      {{ lead.remarks | capitalizeFirst }}
+                    </div>
+                  </p-overlayPanel>
+                </td>
+                <!-- <td>
                   <span
                     class="table-column-data fw-bold statusdata"
                     *ngIf="lead.leadInternalStatus"
@@ -289,7 +316,7 @@
                   >
                     {{ getStatusName(lead.leadInternalStatus) }}
                   </span>
-                </td>
+                </td> -->
                 <td>
                   <div class="text-center pointer-cursor">
                     <div
@@ -404,14 +431,14 @@
                   </div>
                 </td>
               </tr>
-              <tr>
+              <!-- <tr>
                 <td colspan="1" class="fw-semibold">Remarks</td>
                 <td colspan="10">
                   <span class="table-column-data col-12" *ngIf="lead.remarks">{{
                     lead.remarks | capitalizeFirst
                   }}</span>
                 </td>
-              </tr>
+              </tr> -->
             </ng-template>
             <ng-template pTemplate="emptymessage">
               <tr class="text-center">
@@ -437,7 +464,7 @@
             [lazy]="true"
             selectionMode="single"
             (onLazyLoad)="loadLeadsforPersonal($event)"
-            (onRowSelect)="viewLoanLead($event)"
+            (onRowSelect)="viewLeadProfile($event)"
             dataKey="id"
             [showCurrentPageReport]="true"
             [rowsPerPageOptions]="[10, 25, 50]"
@@ -464,7 +491,7 @@
                     <input
                       type="text"
                       pInputText
-                      placeholder="Search File with Person Name"
+                      placeholder="Search File with Applicant Name"
                       [(ngModel)]="businessNameToSearchForPersonal"
                       (ngModelChange)="
                         inputValueChangeEventForPersonal(
@@ -569,8 +596,8 @@
             <ng-template pTemplate="body" let-lead>
               <tr [pSelectableRow]="lead">
                 <td>
-                  <span class="table-column-data" *ngIf="lead.leadId">{{
-                    lead.leadId
+                  <span class="table-column-data" *ngIf="lead.customId">{{
+                    lead.customId
                   }}</span>
                 </td>
                 <td>
@@ -667,19 +694,6 @@
                         pTooltip="View Files"
                         tooltipPosition="top"
                       />
-                      <!-- <button
-                        *ngIf="
-                          userDetails?.userType && userDetails.userType !== '5'
-                        "
-                        pButton
-                        pRipple
-                        type="button"
-                        class="p-button-info me-2 custom-btn"
-                        (click)="uploadLoanLeadFiles(lead.leadId)"
-                        pTooltip="Upload Files"
-                        icon="fas fa-upload"
-                        tooltipPosition="top"
-                      ></button> -->
                       <img
                         *ngIf="
                           userDetails?.userType && userDetails.userType !== '5'
@@ -698,15 +712,6 @@
                         [model]="actionItemsForLead(lead, 'personal')"
                         [popup]="true"
                       ></p-menu>
-                      <!-- <button
-                        pButton
-                        type="button"
-                        class="custom-btn"
-                        (click)="menu.toggle($event)"
-                        icon="fas fa-bars"
-                        pTooltip="Actions"
-                        tooltipPosition="top"
-                      ></button> -->
                       <img
                         src="../../../assets/images/icons/menu.svg"
                         width="24px"
@@ -794,7 +799,7 @@
                           pInputText
                           [placeholder]="
                             activeEmploymentStatus.name === 'employed'
-                              ? 'Search File with Person Name'
+                              ? 'Search File with Applicant Name'
                               : 'Search File with Business Name'
                           "
                           [(ngModel)]="searchInputValue"
@@ -894,7 +899,7 @@
                       class="text-nowrap"
                       *ngIf="activeEmploymentStatus.name === 'employed'"
                     >
-                      Person Name
+                      Applicant Name
                     </th>
                     <th
                       class="text-nowrap"
@@ -949,8 +954,8 @@
                 <ng-template pTemplate="body" let-lead>
                   <tr>
                     <td>
-                      <span class="table-column-data" *ngIf="lead.leadId">{{
-                        lead.leadId
+                      <span class="table-column-data" *ngIf="lead.customId">{{
+                        lead.customId
                       }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'employed'">
@@ -1215,7 +1220,7 @@
                           pInputText
                           [placeholder]="
                             activeEmploymentStatus.name === 'employed'
-                              ? 'Search File with Person Name'
+                              ? 'Search File with Applicant Name'
                               : 'Search File with Business Name'
                           "
                           [(ngModel)]="searchInputValue"
@@ -1313,7 +1318,7 @@
                   <tr>
                     <th>Lead Id</th>
                     <th *ngIf="activeEmploymentStatus.name === 'employed'">
-                      Person Name
+                      Applicant Name
                     </th>
                     <th *ngIf="activeEmploymentStatus.name === 'self-employed'">
                       Business Name
@@ -1349,8 +1354,8 @@
                 <ng-template pTemplate="body" let-lead>
                   <tr>
                     <td>
-                      <span class="table-column-data" *ngIf="lead.leadId">{{
-                        lead.leadId
+                      <span class="table-column-data" *ngIf="lead.customId">{{
+                        lead.customId
                       }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'employed'">
@@ -1554,6 +1559,9 @@
         <p>Comming soon ....</p>
       </div>
       <div *ngIf="activeItem.name == 'carLoan'">
+        <p>Comming soon ....</p>
+      </div>
+      <div *ngIf="activeItem.name == 'commercialVehicleLoan'">
         <p>Comming soon ....</p>
       </div>
     </div>

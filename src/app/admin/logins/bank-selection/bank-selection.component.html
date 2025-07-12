@@ -2,38 +2,31 @@
   <div class="bread-crumb m-2">
     <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
   </div>
-  <div class="p-1 m-2">
-    <div class="d-flex justify-content-between" *ngIf="leadData">
-      <div
-        class="d-flex align-items-center justify-content-center pointer-cursor"
-        (click)="goBack()"
-      >
-        <span class="me-2 d-flex align-items-center">
-          <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
-        </span>
-        <!-- <span class="me-1">
-          <img
-            src="../../../../assets/images/menu/bank-selection.png"
-            alt="Default Image"
-            class=""
-            style="height: 35px; width: 40px"
-          />
-        </span> -->
-
-        <b>
-          <span class="back-btn-text text-capitalize">{{
-            leadData[0].businessName | capitalizeFirst
-          }}</span></b
+  <ng-container *ngFor="let item of displayedItems">
+    <div class="m-2 p-1" *ngIf="item.data">
+      <div class="d-flex justify-content-between">
+        <div
+          class="d-flex align-items-center justify-content-center pointer-cursor"
+          (click)="goBack()"
         >
+          <span class="me-2 d-flex align-items-center">
+            <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
+          </span>
+          <b>
+            <span class="back-btn-text text-capitalize">
+              {{ item.data[item.displayProperty] || "N/A" | capitalizeFirst }}
+            </span>
+          </b>
+        </div>
       </div>
     </div>
-  </div>
+  </ng-container>
 
   <div *ngIf="loading">
     <app-preloader></app-preloader>
   </div>
   <div class="m-2" *ngIf="!loading">
-    <div class="">
+    <div class="" *ngIf="shouldDisplayBlock()">
       <div class="fw-medium" style="color: #29415b; font-size: 18px">
         <p>Select Program:</p>
       </div>
@@ -199,12 +192,31 @@
     <div class="row my-4">
       <div class="col text-center">
         <button
+          *ngIf="shouldDisplayBlock()"
           pButton
           pRipple
           type="button"
           [disabled]="!selectedProgram"
           class="p-button-primary me-2"
           (click)="saveLoginInfo()"
+        >
+          Save Login Info
+        </button>
+        <button
+          *ngIf="
+            leadData &&
+            ((leadData[0].loanType === 'personalLoan' &&
+              leadData[0].employmentStatus === 'employed') ||
+              (leadData[0].loanType === 'homeLoan' &&
+                leadData[0].employmentStatus === 'employed') ||
+              (leadData[0].loanType === 'lap' &&
+                leadData[0].employmentStatus === 'employed'))
+          "
+          pButton
+          pRipple
+          type="button"
+          class="p-button-primary me-2"
+          (click)="saveLoanLoginInfo()"
         >
           Save Login Info
         </button>

@@ -458,13 +458,13 @@
     <img
       src="../../../assets/fav_icon.svg"
       alt="LoanCRM"
-      width="32"
+      width="50"
       *ngIf="!isSidebarVisible"
     />
 
     <!-- Sidebar Toggle Button -->
-    <button
-      class="btn btn-sm position-absolute top-0 end-0 m-2"
+    <div
+      class="position-absolute top-0 end-0 pointer-cursor"
       (click)="toggleSidebar()"
     >
       <!-- Show arrow (right) when sidebar is collapsed -->
@@ -472,7 +472,7 @@
         *ngIf="!isSidebarVisible"
         src="../../../assets/images/icons/rightarrow.svg"
         alt="Expand"
-        style="width: 18px; height: 18px"
+        style="width: 20px; height: 20px"
       />
 
       <!-- Show cross when sidebar is visible -->
@@ -480,9 +480,9 @@
         *ngIf="isSidebarVisible"
         src="../../../assets/images/icons/leftarrow.svg"
         alt="Collapse"
-        style="width: 18px; height: 18px"
+        style="width: 20px; height: 20px"
       />
-    </button>
+    </div>
   </div>
 
   <!-- Search (only visible when expanded) -->
@@ -526,7 +526,8 @@
           routerLinkActive="active"
           [queryParams]="{ v: version }"
           [routerLinkActiveOptions]="{ exact: true }"
-          [title]="!isSidebarVisible ? item.label : null"
+          [pTooltip]="!isSidebarVisible ? item.label : null"
+          tooltipPosition="right"
           (click)="showMenuSection()"
           *ngIf="item.condition"
         >

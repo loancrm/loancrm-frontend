@@ -23,7 +23,21 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'rejectsDetails/:status/:id',
+    loadChildren: () =>
+      import('./rejects-details/rejects-details.module').then(
+        (m) => m.RejectsDetailsModule
+      ),
+  },
+  {
     path: 'cniDetails/:id',
+    loadChildren: () =>
+      import('./cnis-details/cnis-details.module').then(
+        (m) => m.CnisDetailsModule
+      ),
+  },
+  {
+    path: 'cniDetails/:status/:id',
     loadChildren: () =>
       import('./cnis-details/cnis-details.module').then(
         (m) => m.CnisDetailsModule
@@ -54,4 +68,4 @@ const routes: Routes = [
     [RouterModule.forChild(routes)],
   ],
 })
-export class RejectsModule {}
+export class RejectsModule { }

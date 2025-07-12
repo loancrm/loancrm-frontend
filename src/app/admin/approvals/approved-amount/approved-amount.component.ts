@@ -15,6 +15,7 @@ export class ApprovedAmountComponent implements OnInit {
   leadId: string | null = null;
   moment: any;
   loading: any;
+  displayedItems: any = [];
   version = projectConstantsLocal.VERSION_DESKTOP;
   statusOptions: any[] = projectConstantsLocal.APPROVALS_STATUS;
   processcodes: any[] = projectConstantsLocal.PROCESS_CODES;
@@ -46,9 +47,25 @@ export class ApprovedAmountComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // this.leadId = this.route.snapshot.paramMap.get('id');
+    // if (this.leadId) {
+    //   this.getLeadById(this.leadId);
+    //   this.getApprovalsDetailsById(this.leadId);
+    // }
     this.leadId = this.route.snapshot.paramMap.get('id');
+    const status = this.route.snapshot.paramMap.get('status');
     if (this.leadId) {
-      this.getLeadById(this.leadId);
+      if (!status) {
+        this.getLeadById(this.leadId);
+      } else {
+        const validStatuses = ['personalLoan', 'homeLoan', 'lap'];
+        if (validStatuses.includes(status)) {
+          this.getLoanLeadById(this.leadId);
+        } else {
+          console.warn('Unknown status:', status);
+          this.getLeadById(this.leadId);
+        }
+      }
       this.getApprovalsDetailsById(this.leadId);
     }
   }
@@ -67,6 +84,39 @@ export class ApprovedAmountComponent implements OnInit {
     );
   }
 
+  shouldDisplayBlock(): boolean {
+    const lead = this.leads?.[0];
+    if (!lead) return false;
+
+    const isSelfEmployedHomeOrLap =
+      (lead.loanType === 'homeLoan' || lead.loanType === 'lap') &&
+      lead.employmentStatus === 'self-employed';
+
+    const loanTypeNotExists = !('loanType' in lead);
+
+    return isSelfEmployedHomeOrLap || loanTypeNotExists;
+  }
+  getLoanLeadById(leadId: any): void {
+    this.leadsService.getLoanLeadById(leadId).subscribe(
+      (data: any) => {
+        this.leads = data;
+        this.updateDisplayedItems();
+      },
+      (error) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
+  updateDisplayedItems() {
+    const loanDisplayProperty =
+      this.leads && this.leads[0].employmentStatus === 'employed'
+        ? 'contactPerson'
+        : 'businessName';
+    this.displayedItems = [
+      // { data: this.leads[0], displayProperty: 'businessName' },
+      { data: this.leads[0], displayProperty: loanDisplayProperty },
+    ];
+  }
   saveFormData(): void {
     const formData = this.approvalDetails.map((detail) => ({
       id: detail.id,
@@ -97,6 +147,42 @@ export class ApprovedAmountComponent implements OnInit {
     }));
     this.loading = true;
     this.leadsService.updateApprovalsDetails(this.leadId, formData).subscribe(
+      (response: any) => {
+        this.loading = false;
+        this.toastService.showSuccess('Sanctions Info Saved Successfully');
+        const targetUrl = `user/approvals`;
+        this.router.navigateByUrl(targetUrl);
+      },
+      (error) => {
+        this.loading = false;
+        this.toastService.showError(error);
+      }
+    );
+  }
+
+  saveplFormData(): void {
+    const formData = this.approvalDetails.map((detail) => ({
+      id: detail.id,
+      bankName: detail.bankName,
+      lan: detail.lan,
+      sanctionedAmount: detail.sanctionedAmount,
+      disbursedAmount: detail.disbursedAmount,
+      roi: detail.roi,
+      tenure: detail.tenure,
+      processCode: detail.processCode,
+      productType: detail.productType,
+      productTypeName: this.getProductTypeName(detail.productType),
+      approvalDate: detail.approvalDate
+        ? this.moment(detail.approvalDate).format('YYYY-MM-DD')
+        : null,
+      disbursalDate: detail.disbursalDate
+        ? this.moment(detail.disbursalDate).format('YYYY-MM-DD')
+        : null,
+      approvedStatus: detail.approvedStatus,
+      approvedRemarks: detail.approvedRemarks,
+    }));
+    this.loading = true;
+    this.leadsService.updateplApprovalsDetails(this.leadId, formData).subscribe(
       (response: any) => {
         this.loading = false;
         this.toastService.showSuccess('Sanctions Info Saved Successfully');
@@ -156,6 +242,7 @@ export class ApprovedAmountComponent implements OnInit {
     this.leadsService.getLeadDetailsById(id).subscribe(
       (lead) => {
         this.leads = lead;
+        this.updateDisplayedItems();
       },
       (error: any) => {
         this.toastService.showError(error);

@@ -29,6 +29,7 @@ export class BankSelectionComponent implements OnInit {
   loading: any;
   loginInfoDetails: any = {};
   breadCrumbItems: any = [];
+  displayedItems: any = [];
   leads: any = [];
   selectedBanks: { id: number; name: string }[] = [];
   currentTableEvent: any;
@@ -58,13 +59,29 @@ export class BankSelectionComponent implements OnInit {
     private router: Router
   ) { }
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe((params) => {
-      if (params && params['id']) {
-        this.leadId = params['id'];
+    // this.activatedRoute.params.subscribe((params) => {
+    //   if (params && params['id']) {
+    //     this.leadId = params['id'];
+    //     this.getLeadById(this.leadId);
+    //   }
+    //   this.getBanks();
+    // });
+    this.leadId = this.activatedRoute.snapshot.paramMap.get('id');
+    const status = this.activatedRoute.snapshot.paramMap.get('status');
+    if (this.leadId) {
+      if (!status) {
         this.getLeadById(this.leadId);
+      } else {
+        const validStatuses = ['personalLoan', 'homeLoan', 'lap'];
+        if (validStatuses.includes(status)) {
+          this.getLoanLeadById(this.leadId);
+        } else {
+          console.warn('Unknown status:', status);
+          this.getLeadById(this.leadId);
+        }
       }
       this.getBanks();
-    });
+    }
     this.breadCrumbItems = [
       {
         icon: 'pi pi-home',
@@ -159,9 +176,52 @@ export class BankSelectionComponent implements OnInit {
       }
     );
   }
+
+  saveLoanLoginInfo(): void {
+    const bankIds = this.selectedBanks.map((bank) => bank.id);
+    const bankNames = this.selectedBanks.map((bank) => bank.name);
+    const formData = {
+      bankId: bankIds,
+      leadId: this.leadId,
+      loanType: this.leadData[0].loanType,
+      employmentStatus: this.leadData[0].employmentStatus,
+      Banks: bankNames,
+    };
+    console.log('formData', formData);
+    this.loading = true;
+    this.leadsService.createLogin(formData).subscribe(
+      (data: any) => {
+        this.loading = false;
+        this.toastService.showSuccess('Login Info Saved Successfully');
+        this.changeLoanLeadStatus(this.leadData[0].leadId, 12);
+        const targetUrl = `user/filesinprocess`;
+        this.router.navigateByUrl(targetUrl);
+      },
+      (error) => {
+        this.loading = false;
+        this.toastService.showError(error);
+        const targetUrl = `user/filesinprocess`;
+        this.router.navigateByUrl(targetUrl);
+      }
+    );
+  }
   changeLeadStatus(leadId, statusId) {
     this.loading = true;
     this.leadsService.changeLeadStatus(leadId, statusId).subscribe(
+      (leads) => {
+        this.toastService.showSuccess('Lead Status Changed Successfully');
+        this.loading = false;
+        this.loadLeads(this.currentTableEvent);
+      },
+      (error: any) => {
+        this.loading = false;
+        this.toastService.showError(error);
+      }
+    );
+  }
+  changeLoanLeadStatus(leadId, statusId) {
+    this.loading = true;
+    this.leadsService.changeLoanLeadStatus(leadId, statusId).subscribe(
       (leads) => {
         this.toastService.showSuccess('Lead Status Changed Successfully');
         this.loading = false;
@@ -196,10 +256,46 @@ export class BankSelectionComponent implements OnInit {
       }
     );
   }
+  getLoanLeadById(leadId: any): void {
+    this.leadsService.getLoanLeadById(leadId).subscribe(
+      (leadData: any) => {
+        this.leadData = leadData;
+        this.updateDisplayedItems();
+        console.log('loanleadData', leadData);
+      },
+      (error) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
+  updateDisplayedItems() {
+    const loanDisplayProperty =
+      this.leadData && this.leadData[0]?.employmentStatus === 'employed'
+        ? 'contactPerson'
+        : 'businessName';
+    this.displayedItems = [
+      // { data: this.leadData[0], displayProperty: 'businessName' },
+      { data: this.leadData[0], displayProperty: loanDisplayProperty },
+    ];
+  }
+  shouldDisplayBlock(): boolean {
+    const lead = this.leadData?.[0];
+    if (!lead) return false;
+
+    const isSelfEmployedHomeOrLap =
+      (lead.loanType === 'homeLoan' || lead.loanType === 'lap') &&
+      lead.employmentStatus === 'self-employed';
+
+    const loanTypeNotExists = !('loanType' in lead);
+
+    return isSelfEmployedHomeOrLap || loanTypeNotExists;
+  }
+
   getLeadById(leadId: any): void {
     this.leadsService.getLeadDetailsById(leadId).subscribe(
       (leadData: any) => {
         this.leadData = leadData;
+        this.updateDisplayedItems();
         console.log('leadData', leadData);
       },
       (error) => {

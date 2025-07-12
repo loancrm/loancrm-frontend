@@ -9,6 +9,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CapitalizeFirstPipe } from 'src/app/pipes/capitalize.pipe';
+import { AccordionModule } from 'primeng/accordion';
 
 const routes: Routes = [{ path: '', component: EvaluateCreditComponent }];
 
@@ -24,7 +25,8 @@ const routes: Routes = [{ path: '', component: EvaluateCreditComponent }];
     InputTextareaModule,
     ReactiveFormsModule,
     CapitalizeFirstPipe,
+    AccordionModule,
     [RouterModule.forChild(routes)],
   ],
 })
-export class EvaluateCreditModule {}
+export class EvaluateCreditModule { }

@@ -363,6 +363,10 @@ export class FilesComponent implements OnInit {
         label: `Car loans (0)`,
         name: 'carLoan',
       },
+      {
+        label: `Commercial Vehicle Loans (0)`,
+        name: 'commercialVehicleLoan',
+      },
     ];
   }
   getStatusItems(): { label: string; name: string }[] {
@@ -493,6 +497,15 @@ export class FilesComponent implements OnInit {
             icon: 'pi pi-sign-in',
             command: () => this.revertLoanLeadToNew(lead, leadType),
           },
+          ...(leadType === 'personal'
+            ? [
+              {
+                label: 'Send to Credit Evaluation',
+                icon: 'pi pi-sign-in',
+                command: () => this.sendplFileToCreditEvaluation(lead, leadType),
+              },
+            ]
+            : []),
         ],
       },
     ];
@@ -733,7 +746,12 @@ export class FilesComponent implements OnInit {
 
   sendFileToCreditEvaluation(lead) {
     this.changeLeadStatus(lead.id, 5);
-    this.createDscrTable(lead);
+    this.createDscrTable(lead.id);
+  }
+
+  sendplFileToCreditEvaluation(lead: any, leadType: string) {
+    this.changeLoadLeadStatus(lead.leadId, 5, leadType);
+    this.createDscrTable(lead.leadId);
   }
 
   sendFileToCNI(lead) {
@@ -741,7 +759,7 @@ export class FilesComponent implements OnInit {
   }
   createDscrTable(lead) {
     this.loading = true;
-    this.leadsService.createDscrTable(lead).subscribe(
+    this.leadsService.createDscrTable({ id: lead }).subscribe(
       (leads) => {
         //this.toastService.showSuccess("Id Inserted  into the Dscr Table Changed Successfully")
         this.loading = false;
@@ -901,17 +919,28 @@ export class FilesComponent implements OnInit {
     this.routingService.handleRoute('leads/create', null);
   }
 
-  viewLead(leadId) {
-    this.routingService.handleRoute('files/view/' + leadId, null);
-  }
-  viewLeadProfile(event) {
-    const lead = event.data
-    this.routingService.handleRoute('leads/profile/' + lead.id, null);
-  }
+  // viewLead(leadId) {
+  //   this.routingService.handleRoute('files/view/' + leadId, null);
+  // }
+  // viewLeadProfile(event) {
+  //   const lead = event.data
+  //   this.routingService.handleRoute('leads/profile/' + lead.id, null);
+  // }
 
-  viewLoanLead(event) {
+
+  viewLeadProfile(event: any) {
+    console.log('Row clicked:', event.data);
     const lead = event.data
-    this.routingService.handleRoute('files/loanleadview/' + lead.leadId, null);
+    const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+      this.routingService.handleRoute(`leads/profile/${loanType}/${lead.leadId}`, null);
+    } else {
+      // If no known loanType, omit status from the route
+      this.routingService.handleRoute(`leads/profile/${lead.id}`, null);
+    }
+  }
+  viewLoanLead(leadId) {
+    this.routingService.handleRoute('files/loanleadview/' + leadId, null);
   }
 
   uploadLeadFiles(leadId) {
