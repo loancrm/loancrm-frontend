@@ -20,10 +20,7 @@
   <ng-container *ngFor="let item of displayedItems">
     <div class="m-2 p-1" *ngIf="item.data">
       <div class="d-flex justify-content-between">
-        <div
-          class="d-flex align-items-center justify-content-center pointer-cursor"
-          (click)="goBack()"
-        >
+        <div class="d-flex align-items-center justify-content-center pointer-cursor" (click)="goBack()">
           <span class="me-2 d-flex align-items-center">
             <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
           </span>
@@ -37,11 +34,7 @@
     </div>
   </ng-container>
   <div class="m-2">
-    <p-table
-      [value]="bankRejectesData"
-      class="p-datatable-striped"
-      styleClass="p-datatable-customers"
-    >
+    <p-table [value]="bankRejectesData" class="p-datatable-striped" styleClass="p-datatable-customers">
       <ng-template pTemplate="header">
         <tr>
           <th *ngIf="shouldDisplayBlock()">Program</th>
@@ -57,27 +50,25 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
-        <tr>
-          <td *ngIf="shouldDisplayBlock()">{{ rowData.program }}</td>
-          <td>{{ rowData.bankName }}</td>
-          <td>{{ rowData.loginDate | date }}</td>
-          <td>{{ rowData.fipStatus | capitalizeFirst }}</td>
-          <td>{{ rowData.fipRemarks | capitalizeFirst }}</td>
-          <td>{{ rowData.approvalDate | date }}</td>
-          <td>{{ rowData.lan }}</td>
-          <td>{{ rowData.sanctionedAmount }}</td>
-          <td>{{ rowData.approvedStatus | capitalizeFirst }}</td>
-          <td>{{ rowData.approvedRemarks | capitalizeFirst }}</td>
+
+
+        <tr *ngIf="shouldDisplayBlock()">
+          <td>{{ rowData.program ? (rowData.program) : '-'}}</td>
+          <td>{{ rowData.bankName ? (rowData.bankName) : '-'}}</td>
+          <td>{{ rowData.loginDate ? (rowData.loginDate | date) : '-' }}</td>
+          <td>{{ rowData.fipStatus ? (rowData.fipStatus | capitalizeFirst) : '-'}}</td>
+          <td>{{ rowData.fipRemarks ? (rowData.fipRemarks | capitalizeFirst) : '-' }}</td>
+          <td>{{ rowData.approvalDate ? (rowData.approvalDate | date) : '-' }}</td>
+          <td>{{ rowData.lan ? (rowData.lan) : '-' }}</td>
+          <td>{{ rowData.sanctionedAmount ? (rowData.sanctionedAmount) : '-' }}</td>
+          <td>{{ rowData.approvedStatus ? (rowData.approvedStatus | capitalizeFirst) : '-'}}</td>
+          <td>{{ rowData.approvedRemarks ? (rowData.approvedRemarks | capitalizeFirst) : '-' }}</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr class="text-center">
           <td colspan="10" class="text-center fw-bold">
-            <img
-              src="../../../assets/images/menu/no-data.gif"
-              width="200"
-              height="200"
-            />
+            <img src="../../../assets/images/menu/no-data.gif" width="200" height="200" />
             <p>No CNI Details</p>
           </td>
         </tr>

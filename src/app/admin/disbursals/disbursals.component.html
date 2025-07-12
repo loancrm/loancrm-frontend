@@ -1,10 +1,7 @@
 <div>
   <div class="m-2 p-1 fixed-card">
     <div class="d-flex justify-content-between">
-      <div
-        class="d-flex align-items-center justify-content-center pointer-cursor"
-        (click)="goBack()"
-      >
+      <div class="d-flex align-items-center justify-content-center pointer-cursor" (click)="goBack()">
         <span class="me-2 d-flex align-items-center">
           <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
         </span>
@@ -27,54 +24,29 @@
     <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
   </div> -->
   <div class="text-capitalize m-2">
-    <p-tabMenu
-      [model]="items"
-      class="tabdesign"
-      [activeItem]="activeItem"
-      (activeItemChange)="onActiveItemChange($event)"
-    ></p-tabMenu>
+    <p-tabMenu [model]="items" class="tabdesign" [activeItem]="activeItem"
+      (activeItemChange)="onActiveItemChange($event)"></p-tabMenu>
     <div *ngIf="activeItem && activeItem.name">
       <div *ngIf="activeItem.name == 'businessLoan'">
-        <p-table
-          #leadsTable
-          [value]="leads"
-          [lazy]="true"
-          (onLazyLoad)="loadLeads($event)"
-          (onRowSelect)="viewLead($event)"
-          selectionMode="single"
-          dataKey="id"
-          [showCurrentPageReport]="true"
-          [rowsPerPageOptions]="[10, 25, 50]"
-          [paginator]="true"
-          [rows]="10"
-          [totalRecords]="totalLeadsCount"
-          [loading]="apiLoading"
-          responsiveLayout="scroll"
-          scrollHeight="flex"
-          class="p-datatable-striped"
+        <p-table #leadsTable [value]="leads" [lazy]="true" (onLazyLoad)="loadLeads($event)"
+          (onRowSelect)="viewLead($event)" selectionMode="single" dataKey="id" [showCurrentPageReport]="true"
+          [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true" [rows]="10" [totalRecords]="totalLeadsCount"
+          [loading]="apiLoading" responsiveLayout="scroll" scrollHeight="flex" class="p-datatable-striped"
           [globalFilterFields]="[
             'referenceNo',
             'customer.firstName',
             'partner.partnerName',
             'status'
-          ]"
-          styleClass="p-datatable-customers "
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords}  Disbursals"
-        >
+          ]" styleClass="p-datatable-customers "
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords}  Disbursals">
           <ng-template pTemplate="caption">
             <div class="row">
               <div class="col-md-3 mt-2 no-padding-small">
                 <div class="p-inputgroup">
-                  <input
-                    type="text"
-                    pInputText
-                    placeholder="Search File with Business Name"
-                    [(ngModel)]="businessNameToSearch"
-                    (ngModelChange)="
+                  <input type="text" pInputText placeholder="Search File with Business Name"
+                    [(ngModel)]="businessNameToSearch" (ngModelChange)="
                       inputValueChangeEvent('loanId', businessNameToSearch)
-                    "
-                    (keyup.enter)="filterWithBusinessName()"
-                  />
+                    " (keyup.enter)="filterWithBusinessName()" />
                   <!-- <button
                 type="button"
                 pButton
@@ -83,35 +55,19 @@
                 [disabled]="!businessNameToSearch"
                 (click)="filterWithBusinessName()"
               ></button> -->
-                  <button
-                    type="button"
-                    pButton
-                    class="p-button-primary"
-                    [disabled]="!businessNameToSearch"
-                    (click)="filterWithBusinessName()"
-                  >
-                    <img
-                      src="assets/images/icons/search.svg"
-                      alt="Search"
-                      width="16"
-                      height="16"
-                      style="vertical-align: middle"
-                    />
+                  <button type="button" pButton class="p-button-primary" [disabled]="!businessNameToSearch"
+                    (click)="filterWithBusinessName()">
+                    <img src="assets/images/icons/search.svg" alt="Search" width="16" height="16"
+                      style="vertical-align: middle" />
                   </button>
                 </div>
               </div>
               <div class="col-md-3 mt-2 no-padding-small">
                 <div class="p-inputgroup">
-                  <input
-                    type="text"
-                    pInputText
-                    placeholder="Search File with Mobile Number"
-                    [(ngModel)]="mobileNumberToSearch"
-                    (ngModelChange)="
+                  <input type="text" pInputText placeholder="Search File with Mobile Number"
+                    [(ngModel)]="mobileNumberToSearch" (ngModelChange)="
                       inputValueChangeEvent('loanId', mobileNumberToSearch)
-                    "
-                    (keyup.enter)="filterWithMobileNumber()"
-                  />
+                    " (keyup.enter)="filterWithMobileNumber()" />
                   <!-- <button
                 type="button"
                 pButton
@@ -120,61 +76,32 @@
                 [disabled]="!mobileNumberToSearch"
                 (click)="filterWithMobileNumber()"
               ></button> -->
-                  <button
-                    type="button"
-                    pButton
-                    class="p-button-primary"
-                    [disabled]="!mobileNumberToSearch"
-                    (click)="filterWithMobileNumber()"
-                  >
-                    <img
-                      src="assets/images/icons/search.svg"
-                      alt="Search"
-                      width="16"
-                      height="16"
-                      style="vertical-align: middle"
-                    />
+                  <button type="button" pButton class="p-button-primary" [disabled]="!mobileNumberToSearch"
+                    (click)="filterWithMobileNumber()">
+                    <img src="assets/images/icons/search.svg" alt="Search" width="16" height="16"
+                      style="vertical-align: middle" />
                   </button>
                 </div>
               </div>
               <div class="col-md-3 mt-2 no-padding-small text-right">
                 <div class="d-flex">
                   <div class="flex-grow-1 me-2">
-                    <div
-                      class="p-inputgroup"
-                      *ngIf="
+                    <div class="p-inputgroup" *ngIf="
                         userDetails &&
                         userDetails.userType &&
                         userDetails.userType != '3'
-                      "
-                    >
-                      <p-dropdown
-                        styleClass="text-left"
-                        [style]="{ width: '100%' }"
-                        [options]="leadUsers"
-                        (onChange)="statusChange($event)"
-                        [dropdownIcon]="'fa fa-caret-down'"
-                        [(ngModel)]="selectedSourcedByStatus"
-                        optionLabel="name"
-                        dataKey="name"
-                        appendTo="body"
-                        [filter]="true"
-                        filterPlaceholder="Search..."
-                      >
+                      ">
+                      <p-dropdown styleClass="text-left" [style]="{ width: '100%' }" [options]="leadUsers"
+                        (onChange)="statusChange($event)" [dropdownIcon]="'fa fa-caret-down'"
+                        [(ngModel)]="selectedSourcedByStatus" optionLabel="name" dataKey="name" appendTo="body"
+                        [filter]="true" filterPlaceholder="Search...">
                       </p-dropdown>
                     </div>
                   </div>
                   <div class="d-flex align-items-center pointer-cursor">
-                    <app-filter
-                      [position]="'right'"
-                      [iconColor]="'#33009C'"
-                      [iconSize]="'28px!important'"
-                      (filterEvent)="applyConfigFilters($event, '')"
-                      [filterConfig]="filterConfig"
-                      [showFilterIndication]="appliedFilter"
-                      pTooltip="Filter"
-                      tooltipPosition="top"
-                    >
+                    <app-filter [position]="'right'" [iconColor]="'#33009C'" [iconSize]="'28px!important'"
+                      (filterEvent)="applyConfigFilters($event, '')" [filterConfig]="filterConfig"
+                      [showFilterIndication]="appliedFilter" pTooltip="Filter" tooltipPosition="top">
                     </app-filter>
                   </div>
                 </div>
@@ -196,29 +123,29 @@
           <ng-template pTemplate="body" let-lead>
             <tr class="text-capitalize" [pSelectableRow]="lead">
               <td>
-                <span class="table-column-data" *ngIf="lead.customId">{{
-                  lead.customId
-                }}</span>
+                <span class="table-column-data">{{
+                  lead.customId || '-'
+                  }}</span>
               </td>
               <td>
                 <span class="table-column-data" *ngIf="lead.businessName">{{
-                  lead.businessName | capitalizeFirst
-                }}</span>
+                  lead.businessName ? (lead.businessName | capitalizeFirst) : '-'
+                  }}</span>
               </td>
               <td>
                 <span class="table-column-data" *ngIf="lead.id">
-                  {{ lead.sanctionedAmount }}
+                  {{ lead.sanctionedAmount ? (lead.sanctionedAmount | capitalizeFirst) : '-' }}
                 </span>
               </td>
               <td>
                 <span class="table-column-data" *ngIf="lead.id">
-                  {{ lead.disbursedAmount }}
+                  {{ lead.disbursedAmount ? (lead.disbursedAmount | capitalizeFirst) : '-'}}
                 </span>
               </td>
               <td>
                 <span class="table-column-data" *ngIf="lead.sourcedBy">{{
-                  getSourceName(lead.sourcedBy) | capitalizeFirst
-                }}</span>
+                  lead.sourcedBy ? (getSourceName(lead.sourcedBy) | capitalizeFirst) : '-'
+                  }}</span>
               </td>
               <!-- <td>
             <span class="table-column-data" *ngIf="lead.createdOn">{{
@@ -226,31 +153,19 @@
             }}</span>
           </td> -->
               <td>
-                <span class="table-column-data" *ngIf="lead.disbursalDate">{{
-                  lead.disbursalDate | date : "mediumDate"
-                }}</span>
+                <span class="table-column-data">{{
+                  lead.disbursalDate ? (lead.disbursalDate | date : "mediumDate") : '-'
+                  }}</span>
               </td>
               <td>
                 <div class="text-center">
                   <div class="d-flex">
-                    <img
-                      src="../../../assets/images/icons/disbursal.svg"
-                      width="24px"
-                      height="24px"
-                      class="me-2"
-                      (click)="disbursalDetails(lead); $event.stopPropagation()"
-                      pTooltip="Disbursal Details"
-                      tooltipPosition="top"
-                    />
-                    <img
-                      *ngIf="userDetails?.userType == 1"
-                      src="../../../assets/images/icons/revenue.svg"
-                      width="24px"
-                      height="24px"
-                      (click)="revenueDetails(lead); $event.stopPropagation()"
-                      pTooltip="Revenue"
-                      tooltipPosition="top"
-                    />
+                    <img src="../../../assets/images/icons/disbursal.svg" width="24px" height="24px" class="me-2"
+                      (click)="disbursalDetails(lead); $event.stopPropagation()" pTooltip="Disbursal Details"
+                      tooltipPosition="top" />
+                    <img *ngIf="userDetails?.userType == 1" src="../../../assets/images/icons/revenue.svg" width="24px"
+                      height="24px" (click)="revenueDetails(lead); $event.stopPropagation()" pTooltip="Revenue"
+                      tooltipPosition="top" />
                   </div>
                 </div>
               </td>
@@ -259,11 +174,7 @@
           <ng-template pTemplate="emptymessage">
             <tr class="text-center">
               <td colspan="10" class="text-center fw-bold">
-                <img
-                  src="../../../assets/images/menu/no-data.gif"
-                  width="200"
-                  height="200"
-                />
+                <img src="../../../assets/images/menu/no-data.gif" width="200" height="200" />
                 <p>No Disbursals Found</p>
               </td>
             </tr>
@@ -273,65 +184,33 @@
 
       <div *ngIf="activeItem.name == 'personalLoan'">
         <div class="text-capitalize">
-          <p-table
-            #personalleadsTable
-            [value]="loanLeads"
-            [sortOrder]="-1"
-            [lazy]="true"
-            selectionMode="single"
-            (onLazyLoad)="loadLeadsforPersonal($event)"
-            (onRowSelect)="viewLead($event)"
-            dataKey="id"
-            [showCurrentPageReport]="true"
-            [rowsPerPageOptions]="[10, 25, 50]"
-            [paginator]="true"
-            [rows]="10"
-            class="p-datatable-striped"
-            [totalRecords]="personalloanLeadsCount"
-            [loading]="loanleadsLoading"
-            responsiveLayout="scroll"
-            scrollHeight="flex"
-            [globalFilterFields]="[
+          <p-table #personalleadsTable [value]="loanLeads" [sortOrder]="-1" [lazy]="true" selectionMode="single"
+            (onLazyLoad)="loadLeadsforPersonal($event)" (onRowSelect)="viewLead($event)" dataKey="id"
+            [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true" [rows]="10"
+            class="p-datatable-striped" [totalRecords]="personalloanLeadsCount" [loading]="loanleadsLoading"
+            responsiveLayout="scroll" scrollHeight="flex" [globalFilterFields]="[
               'referenceNo',
               'customer.firstName',
               'partner.partnerName',
               'status'
-            ]"
-            styleClass="p-datatable-customers "
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Files"
-          >
+            ]" styleClass="p-datatable-customers "
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Files">
             <ng-template pTemplate="caption">
               <div class="row">
                 <div class="col-md-3 mt-2 no-padding-small">
                   <div class="p-inputgroup">
-                    <input
-                      type="text"
-                      pInputText
-                      placeholder="Search File with Applicant Name"
-                      [(ngModel)]="businessNameToSearchForPersonal"
-                      (ngModelChange)="
+                    <input type="text" pInputText placeholder="Search File with Applicant Name"
+                      [(ngModel)]="businessNameToSearchForPersonal" (ngModelChange)="
                         inputValueChangeEventForPersonal(
                           'loanId',
                           businessNameToSearchForPersonal
                         )
-                      "
-                      (keyup.enter)="filterWithBusinessNameForPersonal()"
-                    />
+                      " (keyup.enter)="filterWithBusinessNameForPersonal()" />
 
-                    <button
-                      type="button"
-                      pButton
-                      class="p-button-primary"
-                      [disabled]="!businessNameToSearchForPersonal"
-                      (click)="filterWithBusinessNameForPersonal()"
-                    >
-                      <img
-                        src="assets/images/icons/search.svg"
-                        alt="Search"
-                        width="16"
-                        height="16"
-                        style="vertical-align: middle"
-                      />
+                    <button type="button" pButton class="p-button-primary" [disabled]="!businessNameToSearchForPersonal"
+                      (click)="filterWithBusinessNameForPersonal()">
+                      <img src="assets/images/icons/search.svg" alt="Search" width="16" height="16"
+                        style="vertical-align: middle" />
                     </button>
                   </div>
                 </div>
@@ -339,42 +218,23 @@
                 <div class="col-md-3 mt-2 no-padding-small text-right">
                   <div class="d-flex">
                     <div class="flex-grow-1 me-2">
-                      <div
-                        class="p-inputgroup"
-                        *ngIf="
+                      <div class="p-inputgroup" *ngIf="
                           userDetails &&
                           userDetails.userType &&
                           userDetails.userType != '3'
-                        "
-                      >
+                        ">
                         <br class="d-lg-none d-md-none" />
-                        <p-dropdown
-                          styleClass="text-left"
-                          [style]="{ width: '100%' }"
-                          [options]="leadUsers"
-                          (onChange)="statusChangeForPersonal($event)"
-                          [dropdownIcon]="'fa fa-caret-down'"
-                          [(ngModel)]="SourcedByForPersonal"
-                          optionLabel="name"
-                          dataKey="name"
-                          appendTo="body"
-                          [filter]="true"
-                          filterPlaceholder="Search..."
-                        >
+                        <p-dropdown styleClass="text-left" [style]="{ width: '100%' }" [options]="leadUsers"
+                          (onChange)="statusChangeForPersonal($event)" [dropdownIcon]="'fa fa-caret-down'"
+                          [(ngModel)]="SourcedByForPersonal" optionLabel="name" dataKey="name" appendTo="body"
+                          [filter]="true" filterPlaceholder="Search...">
                         </p-dropdown>
                       </div>
                     </div>
                     <div class="d-flex align-items-center pointer-cursor">
-                      <app-filter
-                        [position]="'right'"
-                        [iconColor]="'#33009C'"
-                        [iconSize]="'28px!important'"
-                        (filterEvent)="applyConfigFilters($event, 'Personal')"
-                        [filterConfig]="personalfilterConfig"
-                        [showFilterIndication]="appliedFilterPersonal"
-                        pTooltip="Filter"
-                        tooltipPosition="top"
-                      >
+                      <app-filter [position]="'right'" [iconColor]="'#33009C'" [iconSize]="'28px!important'"
+                        (filterEvent)="applyConfigFilters($event, 'Personal')" [filterConfig]="personalfilterConfig"
+                        [showFilterIndication]="appliedFilterPersonal" pTooltip="Filter" tooltipPosition="top">
                       </app-filter>
                     </div>
                   </div>
@@ -390,14 +250,11 @@
                 <th class="text-nowrap">Sanctioned Amount</th>
                 <th class="text-nowrap">Disbursed Amount</th>
 
-                <th
-                  class="text-nowrap"
-                  *ngIf="
+                <th class="text-nowrap" *ngIf="
                     userDetails &&
                     userDetails.userType &&
                     userDetails.userType != '3'
-                  "
-                >
+                  ">
                   Sourced By
                 </th>
                 <th class="text-nowrap">Disbursal Date</th>
@@ -409,12 +266,12 @@
                 <td>
                   <span class="table-column-data" *ngIf="lead.customId">{{
                     lead.customId
-                  }}</span>
+                    }}</span>
                 </td>
                 <td>
                   <span class="table-column-data" *ngIf="lead.contactPerson">{{
                     lead.contactPerson | capitalizeFirst
-                  }}</span>
+                    }}</span>
                 </td>
                 <!-- <td>
                   <span class="table-column-data" *ngIf="lead.designation">{{
@@ -428,58 +285,37 @@
                   }}</span>
                 </td> -->
                 <td>
-                  <span
-                    class="table-column-data"
-                    *ngIf="lead.sanctionedAmount"
-                    >{{ lead.sanctionedAmount | capitalizeFirst }}</span
-                  >
+                  <span class="table-column-data" *ngIf="lead.sanctionedAmount">{{ lead.sanctionedAmount |
+                    capitalizeFirst }}</span>
                 </td>
                 <td>
-                  <span
-                    class="table-column-data"
-                    *ngIf="lead.disbursedAmount"
-                    >{{ lead.disbursedAmount | capitalizeFirst }}</span
-                  >
+                  <span class="table-column-data" *ngIf="lead.disbursedAmount">{{ lead.disbursedAmount | capitalizeFirst
+                    }}</span>
                 </td>
-                <td
-                  *ngIf="
+                <td *ngIf="
                     userDetails &&
                     userDetails.userType &&
                     userDetails.userType != '3'
-                  "
-                >
+                  ">
                   <span class="table-column-data" *ngIf="lead.sourcedByName">{{
                     lead.sourcedByName | capitalizeFirst
-                  }}</span>
+                    }}</span>
                 </td>
                 <td>
                   <span class="table-column-data" *ngIf="lead.disbursalDate">{{
                     lead.disbursalDate | date : "mediumDate"
-                  }}</span>
+                    }}</span>
                 </td>
                 <td>
                   <div class="text-center">
                     <div class="d-flex">
-                      <img
-                        src="../../../assets/images/icons/disbursal.svg"
-                        width="24px"
-                        height="24px"
-                        class="me-2"
+                      <img src="../../../assets/images/icons/disbursal.svg" width="24px" height="24px" class="me-2"
                         (click)="
                           disbursalDetails(lead); $event.stopPropagation()
-                        "
-                        pTooltip="Disbursal Details"
-                        tooltipPosition="top"
-                      />
-                      <img
-                        *ngIf="userDetails?.userType == 1"
-                        src="../../../assets/images/icons/revenue.svg"
-                        width="24px"
-                        height="24px"
-                        (click)="revenueDetails(lead); $event.stopPropagation()"
-                        pTooltip="Revenue"
-                        tooltipPosition="top"
-                      />
+                        " pTooltip="Disbursal Details" tooltipPosition="top" />
+                      <img *ngIf="userDetails?.userType == 1" src="../../../assets/images/icons/revenue.svg"
+                        width="24px" height="24px" (click)="revenueDetails(lead); $event.stopPropagation()"
+                        pTooltip="Revenue" tooltipPosition="top" />
                     </div>
                   </div>
                 </td>
@@ -488,11 +324,7 @@
             <ng-template pTemplate="emptymessage">
               <tr class="text-center">
                 <td colspan="10" class="text-center fw-bold">
-                  <img
-                    src="../../../assets/images/menu/no-data.gif"
-                    width="200"
-                    height="200"
-                  />
+                  <img src="../../../assets/images/menu/no-data.gif" width="200" height="200" />
                   <p>No Files Found</p>
                 </td>
               </tr>

@@ -207,52 +207,46 @@
               </ng-template>
               <ng-template pTemplate="body" let-lead>
                 <tr class="text-capitalize" [pSelectableRow]="lead">
-                  <td>
-                    <span class="table-column-data" *ngIf="lead.customId">{{
-                      lead.customId
-                    }}</span>
-                  </td>
-                  <td>
-                    <span class="table-column-data" *ngIf="lead.businessName">{{
-                      lead.businessName | capitalizeFirst
-                    }}</span>
-                  </td>
-                  <td>
-                    <span
-                      class="table-column-data"
-                      *ngIf="lead.businessEntity"
-                      >{{ getEntityName(lead.businessEntity) }}</span
-                    >
-                  </td>
-                  <td>
-                    <span
-                      class="table-column-data"
-                      *ngIf="lead.contactPerson"
-                      >{{ lead.contactPerson | capitalizeFirst }}</span
-                    >
-                  </td>
-                  <td>
-                    <span class="table-column-data" *ngIf="lead.city">{{
-                      lead.city | capitalizeFirst
-                    }}</span>
-                  </td>
-                  <td>
-                    <span class="table-column-data" *ngIf="lead.sourcedBy">{{
-                      getSourceName(lead.sourcedBy) | capitalizeFirst
-                    }}</span>
-                  </td>
-                  <td>
-                    <span class="table-column-data" *ngIf="lead.createdOn">{{
-                      lead.createdOn | date : "mediumDate"
-                    }}</span>
-                  </td>
-                  <td>
-                    <span
-                      class="table-column-data"
-                      *ngIf="lead.creditSummary"
-                      >{{ lead.creditSummary | capitalizeFirst }}</span
-                    >
-                  </td>
+                   <td>
+                  <span class="table-column-data">{{
+                    lead.customId ? (lead.customId) : '-'
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data">{{
+                    lead.businessName ? (lead.businessName | capitalizeFirst) : '-'
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data">{{
+                    lead.businessEntity ? (getEntityName(lead.businessEntity)) : '-'
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data">{{
+                   lead.contactPerson ? (lead.contactPerson | capitalizeFirst) : '-'
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data">{{
+                    lead.city ? (lead.city | capitalizeFirst) : '-'
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data">{{
+                    lead.sourcedBy ? (getSourceName(lead.sourcedBy) | capitalizeFirst) : '-'
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data">{{
+                    lead.createdOn ? (lead.createdOn | date : "mediumDate") : '-'
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data">{{
+                    lead.creditSummary ? (lead.creditSummary | capitalizeFirst) : '-'
+                  }}</span>
+                </td>
                   <td>
                     <div class="text-center">
                       <div class="d-flex">
@@ -462,49 +456,45 @@
               <ng-template pTemplate="body" let-lead>
                 <tr class="text-capitalize" [pSelectableRow]="lead">
                   <td>
-                    <span class="table-column-data" *ngIf="lead.customId">{{
-                      lead.customId
-                    }}</span>
-                  </td>
-                  <td>
-                    <span class="table-column-data" *ngIf="lead.businessName">{{
-                      lead.businessName | capitalizeFirst
-                    }}</span>
-                  </td>
-                  <td>
-                    <span
-                      class="table-column-data"
-                      *ngIf="lead.businessEntity"
-                      >{{ getEntityName(lead.businessEntity) }}</span
-                    >
-                  </td>
-                  <td>
-                    <span
-                      class="table-column-data"
-                      *ngIf="lead.contactPerson"
-                      >{{ lead.contactPerson | capitalizeFirst }}</span
-                    >
-                  </td>
-                  <td>
-                    <span class="table-column-data" *ngIf="lead.city">{{
-                      lead.city | capitalizeFirst
-                    }}</span>
-                  </td>
-                  <td>
-                    <span class="table-column-data" *ngIf="lead.sourcedBy">{{
-                      getSourceName(lead.sourcedBy) | capitalizeFirst
-                    }}</span>
-                  </td>
-                  <td>
-                    <span class="table-column-data" *ngIf="lead.createdOn">{{
-                      lead.createdOn | date : "mediumDate"
-                    }}</span>
-                  </td>
-                  <td>
-                    <span class="table-column-data" *ngIf="lead.loginDate">{{
-                      lead.loginDate | date : "mediumDate"
-                    }}</span>
-                  </td>
+                  <span class="table-column-data">{{
+                    lead.customId ? (lead.customId) : '-'
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data">{{
+                   lead.businessName ? (lead.businessName | capitalizeFirst) : '-'
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data">{{
+                    lead.businessEntity ? (getEntityName(lead.businessEntity)) : '-'
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data">{{
+                    lead.contactPerson ? (lead.contactPerson | capitalizeFirst) : '-'
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data">{{
+                    lead.city ? (lead.city | capitalizeFirst) : '-'
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data">{{
+                    lead.sourcedBy ? (getSourceName(lead.sourcedBy) | capitalizeFirst) : '-'
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data">{{
+                    lead.createdOn ? (lead.createdOn | date : "mediumDate") : '-'
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data">{{
+                    lead.loginDate ? (lead.loginDate | date : "mediumDate") : '-'
+                  }}</span>
+                </td>
                   <td>
                     <div class="text-center">
                       <div class="d-flex">
@@ -726,54 +716,50 @@
               <ng-template pTemplate="body" let-lead>
                 <tr class="text-capitalize" [pSelectableRow]="lead">
                   <td>
-                    <span class="table-column-data" *ngIf="lead.customId">{{
-                      lead.customId
-                    }}</span>
-                  </td>
-                  <td>
-                    <span class="table-column-data" *ngIf="lead.businessName">{{
-                      lead.businessName | capitalizeFirst
-                    }}</span>
-                  </td>
-                  <td>
-                    <span
-                      class="table-column-data"
-                      *ngIf="lead.businessEntity"
-                      >{{ getEntityName(lead.businessEntity) }}</span
-                    >
-                  </td>
-                  <td>
-                    <span
-                      class="table-column-data"
-                      *ngIf="lead.contactPerson"
-                      >{{ lead.contactPerson | capitalizeFirst }}</span
-                    >
-                  </td>
-                  <td>
-                    <span class="table-column-data" *ngIf="lead.city">{{
-                      lead.city | capitalizeFirst
-                    }}</span>
-                  </td>
-                  <td>
-                    <span class="table-column-data" *ngIf="lead.sourcedBy">{{
-                      getSourceName(lead.sourcedBy) | capitalizeFirst
-                    }}</span>
-                  </td>
-                  <td>
-                    <span class="table-column-data" *ngIf="lead.createdOn">{{
-                      lead.createdOn | date : "mediumDate"
-                    }}</span>
-                  </td>
-                  <td>
-                    <span class="table-column-data" *ngIf="lead.loginDate">{{
-                      lead.loginDate | date : "mediumDate"
-                    }}</span>
-                  </td>
-                  <td>
-                    <span class="table-column-data" *ngIf="lead.approvalDate">{{
-                      lead.approvalDate | date : "mediumDate"
-                    }}</span>
-                  </td>
+                  <span class="table-column-data">{{
+                    lead.customId ? (lead.customId) : '-'
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data">{{
+                    lead.businessName ? (lead.businessName | capitalizeFirst) : '-'
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data">{{
+                    getEntityName(lead.businessEntity)
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data">{{
+                    lead.contactPerson ? (lead.contactPerson | capitalizeFirst) : '-'
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data">{{
+                    lead.city ? (lead.city | capitalizeFirst) : '-'
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data">{{
+                    lead.sourcedBy ? (getSourceName(lead.sourcedBy) | capitalizeFirst) : '-'
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data">{{
+                    lead.createdOn ? (lead.createdOn | date : "mediumDate") : '-'
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data">{{
+                    lead.loginDate ? (lead.loginDate | date : "mediumDate") : '-'
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data">{{
+                    lead.approvalDate ? (lead.approvalDate | date : "mediumDate") : '-'
+                  }}</span>
+                </td>
                   <td>
                     <div class="text-center">
                       <div class="d-flex">
