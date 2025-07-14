@@ -180,40 +180,48 @@
           <ng-template pTemplate="body" let-lead>
             <tr class="text-capitalize" [pSelectableRow]="lead">
               <td>
-            <span class="table-column-data">{{
-              lead.customId || '-'
-            }}</span>
-          </td>
-          <td>
-            <span class="table-column-data">{{
-              lead.businessName ? (lead.businessName | capitalizeFirst) : '-'
-            }}</span>
-          </td>
-          <td>
-            <span class="table-column-data">{{
-              lead.city ? (lead.city | capitalizeFirst) : '-'
-            }}</span>
-          </td>
-          <td>
-            <span class="table-column-data">{{
-              lead.sanctionedAmount ? (lead.sanctionedAmount | capitalizeFirst) : '-'
-            }}</span>
-          </td>
-          <td>
-            <span class="table-column-data">{{
-              lead.souceedBy ? ((getSourceName(lead.sourcedBy) | capitalizeFirst)) : '-'
-            }}</span>
-          </td>
-          <!-- <td>
+                <span class="table-column-data">{{
+                  lead.customId || "-"
+                }}</span>
+              </td>
+              <td>
+                <span class="table-column-data">{{
+                  lead.businessName
+                    ? (lead.businessName | capitalizeFirst)
+                    : "-"
+                }}</span>
+              </td>
+              <td>
+                <span class="table-column-data">{{
+                  lead.city ? (lead.city | capitalizeFirst) : "-"
+                }}</span>
+              </td>
+              <td>
+                <span class="table-column-data">{{
+                  lead.sanctionedAmount
+                    ? (lead.sanctionedAmount | capitalizeFirst)
+                    : "-"
+                }}</span>
+              </td>
+              <td>
+                <span class="table-column-data">{{
+                  lead.souceedBy
+                    ? (getSourceName(lead.sourcedBy) | capitalizeFirst)
+                    : "-"
+                }}</span>
+              </td>
+              <!-- <td>
             <span class="table-column-data" *ngIf="lead.createdOn">{{
               lead.createdOn | date : "mediumDate"
             }}</span>
           </td> -->
-          <td>
-            <span class="table-column-data">{{
-              lead.approvalDate ? (lead.approvalDate | date : "mediumDate") : '-'
-            }}</span>
-          </td>
+              <td>
+                <span class="table-column-data">{{
+                  lead.approvalDate
+                    ? (lead.approvalDate | date : "mediumDate")
+                    : "-"
+                }}</span>
+              </td>
               <td (click)="$event.stopPropagation()">
                 <div class="text-center">
                   <div class="d-flex">
@@ -222,6 +230,7 @@
                       width="24px"
                       height="24px"
                       class="me-2"
+                      alt="Sanction Details"
                       (click)="approvalDetails(lead); $event.stopPropagation()"
                       pTooltip="Sanction Details"
                       tooltipPosition="top"
@@ -235,6 +244,7 @@
             <tr class="text-center">
               <td colspan="10" class="text-center fw-bold">
                 <img
+                  alt="No Data"
                   src="../../../assets/images/menu/no-data.gif"
                   width="200"
                   height="200"
@@ -429,6 +439,7 @@
                         src="../../../assets/images/icons/sanctions.svg"
                         width="24px"
                         height="24px"
+                        alt="Sanction Details"
                         class="me-2"
                         (click)="
                           approvalDetails(lead); $event.stopPropagation()
@@ -445,6 +456,7 @@
               <tr class="text-center">
                 <td colspan="10" class="text-center fw-bold">
                   <img
+                    alt="No Data"
                     src="../../../assets/images/menu/no-data.gif"
                     width="200"
                     height="200"

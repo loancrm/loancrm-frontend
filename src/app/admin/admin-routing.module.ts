@@ -87,6 +87,13 @@ const routes: Routes = [
             (m) => m.IpAddressModule
           ),
       },
+      {
+        path: 'integrations',
+        loadChildren: () =>
+          import('./integrations/integrations.module').then(
+            (m) => m.IntegrationsModule
+          ),
+      },
 
       {
         path: 'bankers',
@@ -136,4 +143,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AdminRoutingModule {}
+export class AdminRoutingModule { }

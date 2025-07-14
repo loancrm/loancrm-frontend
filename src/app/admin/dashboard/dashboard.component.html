@@ -1,4 +1,6 @@
-<div class="welcome d-flex justify-content-between align-items-center p-1 m-1 greeting-card">
+<div
+  class="welcome d-flex justify-content-between align-items-center p-1 m-1 greeting-card"
+>
   <!-- Left: Greeting -->
   <div class="d-flex align-items-center">
     <img
@@ -10,7 +12,9 @@
     />
     <div>
       <h5 class="card-title mb-0 text-capitalize">
-        {{ greetingMessage }}, &nbsp;<span>{{ userDetails.name | capitalizeFirst }}</span>
+        {{ greetingMessage }}, &nbsp;<span>{{
+          userDetails.name | capitalizeFirst
+        }}</span>
       </h5>
     </div>
   </div>
@@ -234,6 +238,7 @@
             <!-- Header -->
             <ng-template pTemplate="header">
               <tr>
+                <th>ID</th>
                 <th>Business Name</th>
                 <th>Sourced By</th>
               </tr>
@@ -242,6 +247,7 @@
             <!-- Body -->
             <ng-template pTemplate="body" let-rowData>
               <tr [pSelectableRow]="rowData">
+                <td>{{ rowData.customId }}</td>
                 <td>{{ rowData.businessName | capitalizeFirst }}</td>
                 <td>
                   {{ getSourceName(rowData.sourcedBy) | capitalizeFirst }}
@@ -254,6 +260,7 @@
               <tr class="text-center">
                 <td colspan="10" class="text-center fw-bold">
                   <img
+                    alt="No Data"
                     src="../../../assets/images/menu/no-data.gif"
                     width="200"
                     height="200"
@@ -333,10 +340,10 @@
     </div>
     <footer class="footer-card text-center text-lg-start mx-2 my-4">
       <div class="text-center">
-        © 2024 <span style="color: #ee7846">Loan <span style="color :#152238;">CRM</span></span>&nbsp;<b
-          style="color: #51c297"
-        ></b
-        >. | All Rights Reserved
+        © 2024
+        <span style="color: #ee7846"
+          >Loan <span style="color: #152238">CRM</span></span
+        >&nbsp;<b style="color: #51c297"></b>. | All Rights Reserved
       </div>
     </footer>
   </div>

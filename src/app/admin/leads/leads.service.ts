@@ -131,6 +131,15 @@ export class LeadsService {
     const url = 'leads';
     return this.serviceMeta.httpPost(url, data);
   }
+  sendOtp(data: { mobile: string }) {
+    const url = '/otp/send-otp';
+    return this.serviceMeta.httpPost(url, data);
+  }
+
+  verifyOtp(data: { mobile: string; otp: string }) {
+    const url = '/otp/verify-otp';
+    return this.serviceMeta.httpPost(url, data);
+  }
 
   createAccount(data) {
     console.log(data)
@@ -413,6 +422,7 @@ export class LeadsService {
       bankers: rbac.includes('bankers'),
       reports: rbac.includes('reports'),
       ipAddress: rbac.includes('ipAddress'),
+      integrations: rbac.includes('integrations'),
       followups: rbac.includes('followups'),
       delete: rbac.includes('delete'),
     };

@@ -370,6 +370,7 @@ export class SidebarMenuComponent implements OnChanges {
       { label: 'Lenders', icon: '../../../assets/images/icons/lender1.svg', route: 'bankers', condition: this.capabilities.bankers, },
       { label: 'Reports', icon: '../../../assets/images/icons/reports.svg', route: 'reports', condition: this.capabilities.reports, },
       { label: 'Ip Address', icon: '../../../assets/images/icons/ipaddress.svg', route: 'ipAddress', condition: this.capabilities.ipAddress, },
+      { label: 'Integrations', icon: '../../../assets/images/icons/Integ.svg', route: 'integrations', condition: this.capabilities.integrations, },
       { label: 'Settings', icon: '../../../assets/images/icons/Settings.svg', route: 'settings' },
     ];
   }

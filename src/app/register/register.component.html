@@ -201,15 +201,6 @@
 
       <!-- Register Card -->
       <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
-        <!-- <div
-          id="radius-shape-1"
-          class="position-absolute rounded-circle shadow-5-strong"
-        ></div>
-        <div
-          id="radius-shape-2"
-          class="position-absolute shadow-5-strong"
-        ></div> -->
-
         <div class="card px-4">
           <div class="card-body">
             <div class="card-logo d-flex mb-3">
@@ -231,7 +222,7 @@
               (ngSubmit)="onSubmit()"
               novalidate
             >
-              <!-- Full Name -->
+             
               <div class="form-outline mb-4">
                 <input
                   pInputText
@@ -241,7 +232,7 @@
                   autocomplete="off"
                   class="rounded-lg w-100"
                 />
-                <!-- <label class="form-label fw-medium">Full Name</label> -->
+               
                 <div class="error-placeholder">
                   <div *ngIf="submitted && name.invalid" class="text-danger">
                     Full name is required.
@@ -249,7 +240,7 @@
                 </div>
               </div>
 
-              <!-- Email -->
+         
               <div class="form-outline mb-4">
                 <input
                   pInputText
@@ -260,7 +251,7 @@
                   class="rounded-lg w-100"
                   [class.ng-invalid]="submitted && email.invalid"
                 />
-                <!-- <label class="form-label fw-medium">Email address</label> -->
+ 
                 <div class="error-placeholder">
                   <div *ngIf="submitted && email.errors" class="text-danger">
                     <small *ngIf="email.errors['required']"
@@ -273,7 +264,6 @@
                 </div>
               </div>
 
-              <!-- Phone Number -->
               <div class="form-outline mb-4">
                 <input
                   pInputText
@@ -285,7 +275,7 @@
                   maxlength="10"
                   [class.ng-invalid]="submitted && mobile.invalid"
                 />
-                <!-- <label class="form-label fw-medium">Phone Number</label> -->
+
                 <div class="error-placeholder">
                   <div *ngIf="submitted && mobile.errors" class="text-danger">
                     <small *ngIf="mobile.errors['required']"
@@ -298,7 +288,7 @@
                 </div>
               </div>
 
-              <!-- Company Name -->
+      
               <div class="form-outline mb-4">
                 <input
                   pInputText
@@ -308,7 +298,7 @@
                   autocomplete="off"
                   class="rounded-lg w-100"
                 />
-                <!-- <label class="form-label fw-medium">Company Name</label> -->
+
                 <div class="error-placeholder">
                   <div
                     *ngIf="submitted && businessName.invalid"
@@ -319,7 +309,6 @@
                 </div>
               </div>
 
-              <!-- Password -->
               <div class="form-outline mb-4">
                 <div class="input-group">
                   <input
@@ -348,14 +337,7 @@
                     />
                   </span>
                 </div>
-                <!-- <label class="form-label fw-medium">Password</label> -->
-                <!-- <button
-                  type="button"
-                  (click)="togglePasswordVisibility()"
-                  class="btn btn-link p-0"
-                >
-                  {{ isPasswordVisible ? "Hide" : "Show" }}
-                </button> -->
+              
                 <div class="error-placeholder">
                   <div *ngIf="submitted && password.errors" class="text-danger">
                     <small *ngIf="password.errors['required']"
@@ -372,7 +354,7 @@
                 </div>
               </div>
 
-              <!-- Submit -->
+           
               <button
                 type="submit"
                 pButton
@@ -383,7 +365,6 @@
                 Register
               </button>
 
-              <!-- Link to login -->
               <div class="text-center">
                 <span class="text-muted" style="color: #878787"
                   >Already have an account?</span
@@ -396,6 +377,164 @@
                 </a>
               </div>
             </form>
+
+            <!-- <form
+              class="register-form"
+              [formGroup]="registerForm"
+              (ngSubmit)="onSubmit()"
+              novalidate
+            >
+              <div class="form-outline mb-3">
+                <input
+                  pInputText
+                  type="text"
+                  formControlName="name"
+                  placeholder="Full Name"
+                  autocomplete="off"
+                  class="rounded-lg w-100"
+                />
+                <div *ngIf="submitted && name.invalid" class="text-danger">
+                  Full name is required.
+                </div>
+              </div>
+
+              <div class="form-outline mb-3">
+                <input
+                  pInputText
+                  type="email"
+                  formControlName="emailId"
+                  placeholder="Email Address"
+                  autocomplete="off"
+                  class="rounded-lg w-100"
+                />
+                <div *ngIf="submitted && email.errors" class="text-danger">
+                  <small *ngIf="email.errors['required']"
+                    >Email is required.</small
+                  >
+                  <small *ngIf="email.errors['email']"
+                    >Enter a valid email.</small
+                  >
+                </div>
+              </div>
+
+              <div class="form-outline mb-3">
+                <input
+                  pInputText
+                  type="tel"
+                  formControlName="mobile"
+                  placeholder="Mobile Number"
+                  autocomplete="off"
+                  class="rounded-lg w-100"
+                  maxlength="10"
+                />
+                <div *ngIf="submitted && mobile.errors" class="text-danger">
+                  <small *ngIf="mobile.errors['required']"
+                    >Mobile is required.</small
+                  >
+                  <small *ngIf="mobile.errors['pattern']"
+                    >Enter a valid 10-digit mobile.</small
+                  >
+                </div>
+              </div>
+
+              <div class="form-outline mb-3 d-flex gap-2">
+                <input
+                  pInputText
+                  formControlName="otp"
+                  placeholder="Enter OTP"
+                  class="form-control rounded-lg"
+                  style="flex: 1"
+                />
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-primary"
+                  (click)="sendOTP()"
+                  [disabled]="otpSent"
+                >
+                  {{ otpSent ? "OTP Sent" : "Send OTP" }}
+                </button>
+              </div>
+
+              <div class="form-outline mb-3" *ngIf="otpSent && !otpVerified">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-success"
+                  (click)="verifyOTP()"
+                >
+                  Verify OTP
+                </button>
+                <div *ngIf="otpError" class="text-danger mt-1">
+                  {{ otpError }}
+                </div>
+              </div>
+
+              <div class="form-outline mb-3">
+                <input
+                  pInputText
+                  type="text"
+                  formControlName="businessName"
+                  placeholder="Company Name"
+                  autocomplete="off"
+                  class="rounded-lg w-100"
+                />
+                <div
+                  *ngIf="submitted && businessName.invalid"
+                  class="text-danger"
+                >
+                  Company name is required.
+                </div>
+              </div>
+
+              <div class="form-outline mb-4">
+                <div class="input-group">
+                  <input
+                    pInputText
+                    [type]="showPassword ? 'text' : 'password'"
+                    formControlName="password"
+                    placeholder="Password"
+                    autocomplete="off"
+                    class="rounded-lg form-control"
+                  />
+                  <span
+                    class="p-inputgroup-addon input-group-text border-start-0"
+                  >
+                    <img
+                      src="{{
+                        showPassword
+                          ? 'assets/images/icons/eye-slash.svg'
+                          : 'assets/images/icons/eye.svg'
+                      }}"
+                      (click)="showPassword = !showPassword"
+                      width="25"
+                      height="50"
+                      style="cursor: pointer"
+                      alt="Toggle Password Visibility"
+                    />
+                  </span>
+                </div>
+                <div *ngIf="submitted && password.errors" class="text-danger">
+                  <small *ngIf="password.errors['required']"
+                    >Password is required.</small
+                  >
+                  <small *ngIf="password.errors['pattern']"
+                    >Use uppercase, lowercase, number, symbol.</small
+                  >
+                  <small *ngIf="password.errors['minlength']"
+                    >Min 6 characters required.</small
+                  >
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                pButton
+                pRipple
+                [disabled]="loading || !otpVerified"
+                class="p-button-primary mb-4 w-100 custom-button"
+              >
+                Register
+              </button>
+            </form> -->
           </div>
         </div>
       </div>

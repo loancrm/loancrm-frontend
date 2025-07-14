@@ -14,7 +14,9 @@ export class RegisterComponent implements OnInit {
   submitted = false;
   showPassword: boolean = false;
   loading = false;
-
+  otpSent = false;
+  otpVerified = false;
+  otpError = '';
   constructor(
     private fb: FormBuilder,
     private toastService: ToastService,
@@ -56,10 +58,52 @@ export class RegisterComponent implements OnInit {
     return this.registerForm.get('password')!;
   }
 
+
+  sendOTP() {
+    const mobile = this.mobile.value;
+    if (!mobile || this.mobile.invalid) {
+      this.toastService.showWarn('Enter a valid mobile number before requesting OTP');
+      return;
+    }
+
+    this.leadsService.sendOtp({ mobile }).subscribe({
+      next: () => {
+        this.toastService.showSuccess('OTP sent successfully');
+        this.otpSent = true;
+      },
+      error: () => {
+        this.toastService.showError('Failed to send OTP');
+      }
+    });
+  }
+  verifyOTP() {
+    const mobile = this.mobile.value;
+    const otp = this.registerForm.get('otp')?.value;
+
+    if (!otp) {
+      this.otpError = 'OTP is required';
+      return;
+    }
+
+    this.leadsService.verifyOtp({ mobile, otp }).subscribe({
+      next: () => {
+        this.toastService.showSuccess('OTP verified');
+        this.otpVerified = true;
+        this.otpError = '';
+      },
+      error: () => {
+        this.otpError = 'Invalid OTP';
+      }
+    });
+  }
   onSubmit(): void {
     this.submitted = true;
 
     if (this.registerForm.invalid) {
+      return;
+    }
+    if (this.registerForm.invalid || !this.otpVerified) {
+      if (!this.otpVerified) this.otpError = 'Please verify OTP before registering.';
       return;
     }
 
