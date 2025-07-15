@@ -57,7 +57,7 @@ export class CreateComponent {
         this.heading = 'Update Employee';
         this.getTeamDetailsById().then((data) => {
           if (data) {
-            console.log('teamData', this.teamData);
+            // console.log('teamData', this.teamData);
             this.teamForm.patchValue({
               userId: this.teamData.userId,
               name: this.teamData.name,
@@ -100,7 +100,7 @@ export class CreateComponent {
     this.getLeadSources();
     this.getUserRoles();
     this.capabilities = this.leadsService.getUserRbac();
-    console.log(this.capabilities);
+    // console.log(this.capabilities);
     const phoneControl = this.teamForm.get('phone number');
     phoneControl?.valueChanges.subscribe(value => {
       //only trigger validation when exactly 10 digits are entered
@@ -129,7 +129,7 @@ export class CreateComponent {
     this.leadsService.getUserRoles(filter).subscribe(
       (roles) => {
         this.userRoles = roles;
-        console.log(this.userRoles);
+        // console.log(this.userRoles);
       },
       (error: any) => {
         this.toastService.showError(error);
@@ -152,8 +152,8 @@ export class CreateComponent {
       this.loading = true;
       this.leadsService.getUsersDetailsById(this.teamId, filter).subscribe(
         (teamData) => {
-          console.log(this.teamId);
-          console.log(teamData);
+          // console.log(this.teamId);
+          // console.log(teamData);
           this.teamData = teamData;
           this.loading = false;
           resolve(true);
@@ -272,7 +272,7 @@ export class CreateComponent {
           formData.append('files', file);
         }
       }
-      console.log(this.userDetails)
+      // console.log(this.userDetails)
       const accountId = this.userDetails?.accountId || 'default'; // make sure accountId is available
       this.leadsService.uploadFiles(formData, 'Users', fileType, accountId).subscribe(
         (response: any) => {
@@ -284,11 +284,11 @@ export class CreateComponent {
               files[i]['fileuploaded'] = true;
               this.selectedFiles[fileType]['filesData'].push(files[i]);
             }
-            console.log(
-              'this.selectedFiles',
-              this.selectedFiles[fileType],
-              files
-            );
+            // console.log(
+            //   'this.selectedFiles',
+            //   this.selectedFiles[fileType],
+            //   files
+            // );
             this.toastService.showSuccess('Files Uploaded Successfully');
           } else {
             this.toastService.showError({ error: 'Something went wrong' });
@@ -303,7 +303,7 @@ export class CreateComponent {
     }
   }
   confirmDelete(file, controlName, docIndex?, fileIndex?) {
-    console.log('Before Deletion:', this.selectedFiles);
+    // console.log('Before Deletion:', this.selectedFiles);
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete this File?',
       header: 'Confirm Deletion',
@@ -323,23 +323,23 @@ export class CreateComponent {
     this.leadsService.deleteFile(relativePath).subscribe(
       (response: any) => {
         if (response.message === 'File deleted successfully.') {
-          console.log('File deleted successfully.');
+          // console.log('File deleted successfully.');
           if (this.selectedFiles[fileType]?.uploadedFiles) {
             this.selectedFiles[fileType].uploadedFiles = this.selectedFiles[
               fileType
             ].uploadedFiles.filter((f: string) => f !== fileUrl);
-            console.log('After Deletion:', this.selectedFiles);
+            // console.log('After Deletion:', this.selectedFiles);
           } else if (Array.isArray(this.selectedFiles[fileType])) {
             if (docIndex !== undefined && fileIndex !== undefined) {
               const document = this.selectedFiles[fileType][docIndex];
               if (Array.isArray(document?.uploadedFiles)) {
                 document.uploadedFiles.splice(fileIndex, 1);
-                console.log(
-                  `After Deletion from ${fileType}[${docIndex}]:`,
-                  document.uploadedFiles
-                );
+                // console.log(
+                //   `After Deletion from ${fileType}[${docIndex}]:`,
+                //   document.uploadedFiles
+                // );
               }
-              console.log('After Deletion:', this.selectedFiles);
+              // console.log('After Deletion:', this.selectedFiles);
             } else {
               console.error('docIndex or fileIndex is missing.');
             }

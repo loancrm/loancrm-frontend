@@ -337,7 +337,7 @@ export class RejectsComponent implements OnInit {
     ];
   }
   onActiveItemChange(event) {
-    console.log(event);
+    // console.log(event);
     this.activeItem = event;
     this.localStorageService.setItemOnLocalStorage(
       'rejectsActiveItem',
@@ -388,12 +388,12 @@ export class RejectsComponent implements OnInit {
   }
   loginstatusChange(event: any) {
     this.selectedLoginStatus = event.value; // store the whole object if needed
-    console.log(this.selectedLoginStatus)
+    // console.log(this.selectedLoginStatus)
   }
 
   loginplstatusChange(event: any) {
     this.selectedplLoginStatus = event.value; // store the whole object if needed
-    console.log(this.selectedplLoginStatus)
+    // console.log(this.selectedplLoginStatus)
   }
 
   loadLeads(event) {
@@ -405,7 +405,7 @@ export class RejectsComponent implements OnInit {
         api_filter['sourcedBy-eq'] = this.selectedSourcedByStatus.id;
       }
     }
-    console.log(api_filter);
+    // console.log(api_filter);
     api_filter = Object.assign(
       {},
       api_filter,
@@ -428,7 +428,7 @@ export class RejectsComponent implements OnInit {
         api_filter['sourcedBy-eq'] = this.selectedplSourcedByStatus.id;
       }
     }
-    console.log(api_filter);
+    // console.log(api_filter);
     api_filter = Object.assign(
       {},
       api_filter,
@@ -447,7 +447,7 @@ export class RejectsComponent implements OnInit {
       (response) => {
         this.leads = response;
         this.apiLoading = false;
-        console.log(this.leads)
+        // console.log(this.leads)
       },
       (error: any) => {
         this.apiLoading = false;
@@ -698,7 +698,7 @@ export class RejectsComponent implements OnInit {
       (response) => {
         this.leads = response;
         this.apiLoading = false;
-        console.log(this.leads)
+        // console.log(this.leads)
       },
       (error: any) => {
         this.apiLoading = false;
@@ -872,7 +872,7 @@ export class RejectsComponent implements OnInit {
   // }
 
   viewLead(event: any) {
-    console.log('Row clicked:', event.data);
+    // console.log('Row clicked:', event.data);
     const lead = event.data
     const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
     if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {

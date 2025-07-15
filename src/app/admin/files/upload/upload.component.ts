@@ -311,7 +311,7 @@ export class UploadComponent implements OnInit {
     this.activeItem = this.items[0];
     this.today = new Date();
     this.capabilities = this.leadsService.getUserRbac();
-    console.log(this.capabilities);
+    // console.log(this.capabilities);
   }
 
   calculateTotalEMIAmount(): void {
@@ -336,7 +336,7 @@ export class UploadComponent implements OnInit {
     this.leadsService?.getLeadDetailsById(leadId)?.subscribe(
       (leadData: any) => {
         this.leadData = leadData;
-        console.log('leadData', leadData);
+        // console.log('leadData', leadData);
       },
       (error) => {
         this.toastService.showError(error);
@@ -2652,7 +2652,7 @@ export class UploadComponent implements OnInit {
       this.leadsService.getLeadDocumentsById(leadId).subscribe(
         (leadDocuments: any) => {
           this.leadDocuments = leadDocuments;
-          console.log(leadDocuments);
+          // console.log(leadDocuments);
           resolve(true);
         },
         (error) => {
@@ -2663,7 +2663,7 @@ export class UploadComponent implements OnInit {
     });
   }
   onActiveItemChange(event) {
-    console.log(event);
+    // console.log(event);
     this.activeItem = event;
   }
   goToCibilScoreCheck() {
@@ -2725,11 +2725,11 @@ export class UploadComponent implements OnInit {
                 )
                 : this.selectedFiles[fileType]['filesData'].push(files[i]);
             }
-            console.log(
-              'this.selectedFiles',
-              this.selectedFiles[fileType],
-              files
-            );
+            // console.log(
+            //   'this.selectedFiles',
+            //   this.selectedFiles[fileType],
+            //   files
+            // );
             this.toastService.showSuccess('Files Uploaded Successfully');
           } else {
             this.toastService.showError({ error: 'Something went wrong' });
@@ -2744,7 +2744,7 @@ export class UploadComponent implements OnInit {
     }
   }
   confirmDelete(file, controlName, docIndex?, fileIndex?) {
-    console.log('Before Deletion:', this.selectedFiles);
+    // console.log('Before Deletion:', this.selectedFiles);
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete this File?',
       header: 'Confirm Deletion',
@@ -2764,23 +2764,23 @@ export class UploadComponent implements OnInit {
     this.leadsService.deleteFile(relativePath).subscribe(
       (response: any) => {
         if (response.message === 'File deleted successfully.') {
-          console.log('File deleted successfully.');
+          // console.log('File deleted successfully.');
           if (this.selectedFiles[fileType]?.uploadedFiles) {
             this.selectedFiles[fileType].uploadedFiles = this.selectedFiles[
               fileType
             ].uploadedFiles.filter((f: string) => f !== fileUrl);
-            console.log('After Deletion:', this.selectedFiles);
+            // console.log('After Deletion:', this.selectedFiles);
           } else if (Array.isArray(this.selectedFiles[fileType])) {
             if (docIndex !== undefined && fileIndex !== undefined) {
               const document = this.selectedFiles[fileType][docIndex];
               if (Array.isArray(document?.uploadedFiles)) {
                 document.uploadedFiles.splice(fileIndex, 1);
-                console.log(
-                  `After Deletion from ${fileType}[${docIndex}]:`,
-                  document.uploadedFiles
-                );
+                // console.log(
+                //   `After Deletion from ${fileType}[${docIndex}]:`,
+                //   document.uploadedFiles
+                // );
               }
-              console.log('After Deletion:', this.selectedFiles);
+              // console.log('After Deletion:', this.selectedFiles);
             } else {
               console.error('docIndex or fileIndex is missing.');
             }

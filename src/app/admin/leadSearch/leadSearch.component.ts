@@ -31,7 +31,7 @@ export class LeadSearchComponent {
   ngOnInit() {
     if (this.dialogConfig && this.dialogConfig.data) {
       this.dialogData = this.dialogConfig.data.leadDetails;
-      console.log(this.dialogData);
+      // console.log(this.dialogData);
     }
   }
 

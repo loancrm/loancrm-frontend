@@ -52,7 +52,7 @@ export class LoanleadsevaluatecreditComponent {
     this.leadsService.getLoanLeadById(leadId).subscribe(
       (leadData: any) => {
         this.leadData = leadData;
-        console.log('leadData', leadData);
+        // console.log('leadData', leadData);
         this.updateBreadcrumb();
         this.loading = false;
       },
@@ -90,7 +90,7 @@ export class LoanleadsevaluatecreditComponent {
       this.leadsService.getDscrValuesById(leadId).subscribe(
         (data: any) => {
           this.fiorValues = data;
-          console.log('dscrValues,', this.fiorValues);
+          // console.log('dscrValues,', this.fiorValues);
           resolve(true);
         },
         (error) => {
@@ -127,7 +127,7 @@ export class LoanleadsevaluatecreditComponent {
       plFoir: this.plFoir,
       plEligibleEmi: this.plEligibleEmi,
     };
-    console.log('Form Data:', formData);
+    // console.log('Form Data:', formData);
     this.loading = true;
     this.leadsService.calculateEligibleEmi(this.leadId, formData).subscribe(
       (data: any) => {
@@ -152,7 +152,7 @@ export class LoanleadsevaluatecreditComponent {
   sendLeadToReadyToLogin(lead) {
     this.changeLoanLeadStatus(lead[0].leadId, 11);
     const loanType = lead[0].loanType; // e.g., 'personalloan', 'home loan', etc.
-    console.log(loanType)
+    // console.log(loanType)
     if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
       this.routingService.handleRoute(`logins/bankSelection/${loanType}/${lead[0].leadId}`, null);
     }

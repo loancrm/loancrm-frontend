@@ -125,7 +125,7 @@ export class LeadsComponent {
     // this.loadEmploymentActiveItem();
     this.setFilterConfig();
     this.capabilities = this.leadsService.getUserRbac();
-    console.log(this.capabilities);
+    // console.log(this.capabilities);
     const loanTypes = ['', 'Personal', 'Home', 'Homeself', 'Lap', 'Lapself'];
     loanTypes.forEach((type) => {
       const localStorageKey = `leadsAppliedFilter${type}`;
@@ -242,7 +242,7 @@ export class LeadsComponent {
     if (!this.totalStatusLeadsCountArray) {
       return [];
     }
-    console.log(this.activeItem)
+    // console.log(this.activeItem)
     // Check the active item and update the labels accordingly
     if (this.activeItem.name === 'homeLoan') {
       return [
@@ -273,7 +273,7 @@ export class LeadsComponent {
   }
 
   onActiveItemChange(event) {
-    console.log(event);
+    // console.log(event);
     this.activeItem = event;
     this.localStorageService.setItemOnLocalStorage(
       'leadsActiveItem',
@@ -286,8 +286,8 @@ export class LeadsComponent {
     this.activeEmploymentStatus = event;
     const { name } = this.activeEmploymentStatus;
     const { name: itemName } = this.activeItem;
-    console.log(name);
-    console.log(itemName);
+    // console.log(name);
+    // console.log(itemName);
     const loadLeadsFn =
       name === 'employed'
         ? itemName === 'homeLoan'
@@ -308,7 +308,7 @@ export class LeadsComponent {
   }
 
   onLoanTypeSelect(event: any): void {
-    console.log('Selected Loan Type:', event.value);
+    // console.log('Selected Loan Type:', event.value);
     this.selectedLoanType = event.value;
     if (this.selectedLoanType == 'businessLoan') {
       this.createLead();
@@ -385,7 +385,7 @@ export class LeadsComponent {
     this.loading = true;
     this.leadsService.deleteLoanLead(leadId).subscribe(
       (response: any) => {
-        console.log(response);
+        // console.log(response);
         this.toastService.showSuccess(response?.message);
         this.loading = false;
         this.loadLeads(this.currentTableEvent);
@@ -413,7 +413,7 @@ export class LeadsComponent {
     this.loading = true;
     this.leadsService.deleteLead(leadId).subscribe(
       (response: any) => {
-        console.log(response);
+        // console.log(response);
         this.toastService.showSuccess(response?.message);
         this.loading = false;
         this.loadLeads(this.currentTableEvent);
@@ -949,7 +949,7 @@ export class LeadsComponent {
     this.leadsService.getLeadsCount(filter).subscribe(
       (leadsCount) => {
         this.totalLeadsCount = leadsCount;
-        console.log(this.totalLeadsCount);
+        // console.log(this.totalLeadsCount);
         // this.items = this.getFilteredItems();
         // // this.activeItem = this.items[0];
         // this.loadActiveItem();
@@ -973,7 +973,7 @@ export class LeadsComponent {
     this.leadsService.getTotalLeadsCountArray(filter).subscribe(
       (leadsCount) => {
         this.totalLeadsCountArray = leadsCount;
-        console.log(this.totalLeadsCountArray);
+        // console.log(this.totalLeadsCountArray);
         this.items = this.getFilteredItems();
         // this.activeItem = this.items[0];
         this.loadActiveItem();
@@ -997,7 +997,7 @@ export class LeadsComponent {
     this.leadsService.getStatusLeadsCountArray(filter).subscribe(
       (leadsCount) => {
         this.totalStatusLeadsCountArray = leadsCount;
-        console.log(this.totalStatusLeadsCountArray);
+        // console.log(this.totalStatusLeadsCountArray);
         this.employmentStatus = this.getStatusItems();
         // this.activeItem = this.items[0];
         this.loadEmploymentActiveItem();
@@ -1021,7 +1021,7 @@ export class LeadsComponent {
     this.leadsService.getLeadsCount(filter).subscribe(
       (leadsCount) => {
         this.totalActiveLeadsCount = leadsCount;
-        console.log(this.totalActiveLeadsCount);
+        // console.log(this.totalActiveLeadsCount);
         this.items = this.getFilteredItems();
         // this.activeItem = this.items[0];
         this.loadActiveItem();
@@ -1038,7 +1038,7 @@ export class LeadsComponent {
       (leads) => {
         this.leads = leads;
         this.apiLoading = false;
-        console.log(this.leads);
+        // console.log(this.leads);
       },
       (error: any) => {
         this.apiLoading = false;
@@ -1172,14 +1172,14 @@ export class LeadsComponent {
     const trimmedInput = this.businessNameToSearch?.trim() || '';
 
     if (this.isPhoneNumber(trimmedInput)) {
-      console.log("Detected phone number:", trimmedInput);
+      // console.log("Detected phone number:", trimmedInput);
       searchFilter = { 'primaryPhone-like': trimmedInput };
     } else {
-      console.log("Detected business name:", trimmedInput);
+      // console.log("Detected business name:", trimmedInput);
       searchFilter = { 'businessName-like': trimmedInput };
     }
 
-    console.log("Search Filter Object:", searchFilter);
+    // console.log("Search Filter Object:", searchFilter);
     this.applyFilters(searchFilter);
   }
 
@@ -1204,7 +1204,7 @@ export class LeadsComponent {
     let searchFilterForLap = {
       'contactPerson-like': this.personNameToSearchForHome,
     };
-    console.log(searchFilterForLap);
+    // console.log(searchFilterForLap);
     this.applyFiltersLap(searchFilterForLap);
   }
 
@@ -1278,7 +1278,7 @@ export class LeadsComponent {
   //   this.routingService.handleRoute('leads/profile/' + leadId, null);
   // }
   viewLead(event: any) {
-    console.log('Row clicked:', event.data);
+    // console.log('Row clicked:', event.data);
     const lead = event.data
     const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
     if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
@@ -1349,7 +1349,7 @@ export class LeadsComponent {
       this.searchFilterPersonal,
       this.appliedFilterPersonal
     );
-    console.log(api_filter);
+    // console.log(api_filter);
     if (api_filter) {
       this.getpersonalloanLeadsCount(api_filter);
       this.getloanLeads(api_filter);
@@ -1389,7 +1389,7 @@ export class LeadsComponent {
       this.searchFilterForHome,
       this.appliedFilterHome
     );
-    console.log(api_filter);
+    // console.log(api_filter);
     if (api_filter) {
       this.getHomeloanLeadsCount(api_filter);
       this.getloanLeads(api_filter);
@@ -1433,7 +1433,7 @@ export class LeadsComponent {
       this.appliedFilterHomeself
     );
     if (api_filter) {
-      console.log(api_filter);
+      // console.log(api_filter);
       this.getHomeloanselfLeadsCount(api_filter);
       this.getloanLeads(api_filter);
     }
@@ -1523,7 +1523,7 @@ export class LeadsComponent {
     this.leadsService.getloanLeadsCount(filter).subscribe(
       (response) => {
         this.personalloanLeadsCount = response;
-        console.log(this.personalloanLeadsCount);
+        // console.log(this.personalloanLeadsCount);
       },
       (error: any) => {
         this.toastService.showError(error);

@@ -48,7 +48,7 @@ export class CreateComponent {
     this.moment = this.dateTimeProcessor.getMoment();
     this.activatedRoute.queryParams.subscribe((params) => {
       this.loanType = params['loanType'];
-      console.log('Selected Loan Type:', this.loanType);
+      // console.log('Selected Loan Type:', this.loanType);
     });
     this.activatedRoute.params.subscribe((params) => {
       if (params && params['id']) {
@@ -59,7 +59,7 @@ export class CreateComponent {
           if (data) {
             (this.employmentStatus = this.callBackData?.employmentStatus),
               (this.loanType = this.callBackData.loanType),
-              console.log('callBackData', this.callBackData);
+              // console.log('callBackData', this.callBackData);
             this.callBackForm.patchValue({
               businessName: this.callBackData.businessName,
               personName: this.callBackData.businessName,
@@ -114,7 +114,7 @@ export class CreateComponent {
     let userDetails =
       this.localStorageService.getItemFromLocalStorage('userDetails');
     this.userDetails = userDetails.user;
-    console.log(this.userDetails);
+    // console.log(this.userDetails);
     this.createForm();
     if (this.loanType == 'personalLoan') {
       this.employmentStatus = 'employed';
@@ -260,8 +260,8 @@ export class CreateComponent {
         const currentCreatedOn = this.moment(
           this.callBackData?.createdOn
         ).format('YYYY-MM-DD');
-        console.log(newCreatedOn);
-        console.log(currentCreatedOn);
+        // console.log(newCreatedOn);
+        // console.log(currentCreatedOn);
         if (newCreatedOn !== currentCreatedOn) {
           formData.createdOn = moment(formValues.createdOn)
             .tz('Asia/Kolkata')
@@ -295,7 +295,7 @@ export class CreateComponent {
     this.leadsService.getUsers(filter).subscribe(
       (users) => {
         this.leadUsers = users;
-        console.log('Lead Users:', this.leadUsers);
+        // console.log('Lead Users:', this.leadUsers);
       },
       (error: any) => {
         this.toastService.showError(error);

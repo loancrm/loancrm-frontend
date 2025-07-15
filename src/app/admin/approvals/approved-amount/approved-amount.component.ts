@@ -226,7 +226,7 @@ export class ApprovedAmountComponent implements OnInit {
     this.leadsService.getApprovalsDetailsById(leadId).subscribe(
       (lead: any) => {
         this.approvalDetails = lead;
-        console.log('FIPDETAILS:', this.approvalDetails);
+        // console.log('FIPDETAILS:', this.approvalDetails);
         this.loading = false;
         this.approvalDetails.forEach((detail, index) => {
           this.onApprovalDateChange(index);

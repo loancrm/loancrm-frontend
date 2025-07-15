@@ -32,7 +32,7 @@ export class ViewComponent implements OnInit {
         this.getLeadById(this.leadId);
         this.getLeadDocumentsById(this.leadId).then((data) => {
           if (data) {
-            console.log('Lead documents loaded');
+            // console.log('Lead documents loaded');
           }
         });
       }
@@ -58,7 +58,7 @@ export class ViewComponent implements OnInit {
     this.leadsService.getLeadDetailsById(leadId).subscribe(
       (leadData: any) => {
         this.leadData = leadData;
-        console.log('leadData', leadData);
+        // console.log('leadData', leadData);
         this.updateBreadcrumb();
         this.loading = false;
       },
@@ -74,7 +74,7 @@ export class ViewComponent implements OnInit {
       this.leadsService.getLeadDocumentsById(leadId).subscribe(
         (leadDocuments: any) => {
           this.leadDocuments = leadDocuments;
-          console.log('lead documents:', leadDocuments);
+          // console.log('lead documents:', leadDocuments);
           resolve(true);
         },
         (error) => {

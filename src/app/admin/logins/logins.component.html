@@ -218,44 +218,50 @@
           </ng-template>
           <ng-template pTemplate="body" let-lead>
             <tr class="text-capitalize" [pSelectableRow]="lead">
-               <td>
+              <td>
                 <span class="table-column-data">{{
-                  lead.customId ? (lead.customId) : '-'
+                  lead.customId ? lead.customId : "-"
                 }}</span>
               </td>
               <td>
                 <span class="table-column-data">{{
-                  lead.businessName ? (lead.businessName | capitalizeFirst) : '-'
+                  lead.businessName
+                    ? (lead.businessName | capitalizeFirst)
+                    : "-"
                 }}</span>
               </td>
               <td>
                 <span class="table-column-data">{{
-                  lead.businessEntity ? (getEntityName(lead.businessEntity)) : '-'
+                  lead.businessEntity ? getEntityName(lead.businessEntity) : "-"
                 }}</span>
               </td>
               <td>
                 <span class="table-column-data">{{
-                  lead.contactPerson ? (lead.contactPerson | capitalizeFirst) : '-'
+                  lead.contactPerson
+                    ? (lead.contactPerson | capitalizeFirst)
+                    : "-"
                 }}</span>
               </td>
               <td>
                 <span class="table-column-data">{{
-                  lead.primaryPhone ? (lead.primaryPhone) : '-'
+                  lead.primaryPhone ? lead.primaryPhone : "-"
                 }}</span>
               </td>
               <td>
                 <span class="table-column-data">{{
-                  lead.city ? (lead.city | capitalizeFirst) : '-'
+                  lead.city ? (lead.city | capitalizeFirst) : "-"
                 }}</span>
               </td>
               <td>
                 <span class="table-column-data">{{
-                  lead.sourcedBy ? (getSourceName(lead.sourcedBy) | capitalizeFirst) : '-'
+                  lead.sourcedBy
+                    ? (getSourceName(lead.sourcedBy) | capitalizeFirst)
+                    : "-"
                 }}</span>
               </td>
               <td>
                 <span class="table-column-data">{{
-                 lead.createdOn ? (lead.createdOn | date : "mediumDate") : '-'
+                  lead.createdOn ? (lead.createdOn | date : "mediumDate") : "-"
                 }}</span>
               </td>
               <td>
@@ -273,6 +279,7 @@
                     ></button> -->
 
                     <img
+                      alt="Bank Selection"
                       src="../../../assets/images/icons/lender1.svg"
                       width="24px"
                       height="24px"
@@ -297,6 +304,7 @@
                       tooltipPosition="top"
                     ></button> -->
                     <img
+                      alt="Actions"
                       src="../../../assets/images/icons/menu.svg"
                       width="24px"
                       height="24px"
@@ -313,6 +321,7 @@
             <tr class="text-center">
               <td colspan="10" class="text-center fw-bold">
                 <img
+                  alt="No Data"
                   src="../../../assets/images/menu/no-data.gif"
                   width="200"
                   height="200"
@@ -523,6 +532,7 @@
                   <div class="text-center">
                     <div class="d-flex">
                       <img
+                        alt="View Lead"
                         src="../../../assets/images/icons/lender1.svg"
                         width="24px"
                         height="24px"
@@ -539,6 +549,7 @@
                       ></p-menu>
 
                       <img
+                        alt="Actions"
                         src="../../../assets/images/icons/menu.svg"
                         width="24px"
                         height="24px"
@@ -555,6 +566,7 @@
               <tr class="text-center">
                 <td colspan="10" class="text-center fw-bold">
                   <img
+                    alt="No Data"
                     src="../../../assets/images/menu/no-data.gif"
                     width="200"
                     height="200"

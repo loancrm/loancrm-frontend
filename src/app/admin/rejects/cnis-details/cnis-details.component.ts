@@ -68,7 +68,7 @@ export class CnisDetailsComponent implements OnInit {
   getCNIRejectsDetailsById(leadId: string): void {
     this.leadsService.getCNIRejectsDetailsById(leadId).subscribe(
       (response: any) => {
-        console.log('Response data:', response);
+        // console.log('Response data:', response);
         this.bankRejectesData = response;
       },
       (error) => {

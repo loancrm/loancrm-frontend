@@ -34,7 +34,8 @@ export class RegisterComponent implements OnInit {
         Validators.required,
         Validators.minLength(6),
         Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/)
-      ]]
+      ]],
+      // otp: [''] // ✅ ADD THIS LINE
     });
   }
 
@@ -60,8 +61,11 @@ export class RegisterComponent implements OnInit {
 
 
   sendOTP() {
+    // console.log('Mobile value from form:', this.mobile.value);
+    // console.log('Form object:', this.registerForm.value);
     const mobile = this.mobile.value;
     if (!mobile || this.mobile.invalid) {
+      // console.log(mobile)
       this.toastService.showWarn('Enter a valid mobile number before requesting OTP');
       return;
     }

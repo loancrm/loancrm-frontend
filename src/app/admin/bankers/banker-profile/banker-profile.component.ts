@@ -51,7 +51,7 @@ export class BankerProfileComponent implements OnInit {
     this.leadsService.getBankersDetailsById(id).subscribe(
       (response) => {
         this.bankers = response;
-        console.log('bankers', this.bankers);
+        // console.log('bankers', this.bankers);
         this.loading = false;
       },
       (error: any) => {

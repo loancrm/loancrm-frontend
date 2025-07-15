@@ -231,7 +231,7 @@ export class FilesComponent implements OnInit {
     this.leadsService.getTotalLeadsCountArray(filter).subscribe(
       (leadsCount) => {
         this.totalLeadsCountArray = leadsCount;
-        console.log(this.totalLeadsCountArray);
+        // console.log(this.totalLeadsCountArray);
         this.items = this.getFilteredItems();
         // this.activeItem = this.items[0];
         this.loadActiveItem();
@@ -254,7 +254,7 @@ export class FilesComponent implements OnInit {
     this.leadsService.getStatusLeadsCountArray(filter).subscribe(
       (leadsCount) => {
         this.totalStatusLeadsCountArray = leadsCount;
-        console.log(this.totalStatusLeadsCountArray);
+        // console.log(this.totalStatusLeadsCountArray);
         this.employmentStatus = this.getStatusItems();
         // this.activeItem = this.items[0];
         this.loadEmploymentActiveItem();
@@ -277,7 +277,7 @@ export class FilesComponent implements OnInit {
     this.leadsService.getLeadsCount(filter).subscribe(
       (leadsCount) => {
         this.totalActiveLeadsCount = leadsCount;
-        console.log(this.totalActiveLeadsCount);
+        // console.log(this.totalActiveLeadsCount);
         this.items = this.getFilteredItems();
         // this.activeItem = this.items[0];
         this.loadActiveItem();
@@ -292,7 +292,7 @@ export class FilesComponent implements OnInit {
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     // api_filter['leadInternalStatus-eq'] = 3;
     if (this.selectedFileStatus) {
-      console.log(this.selectedFileStatus)
+      // console.log(this.selectedFileStatus)
       if (this.selectedFileStatus && this.selectedFileStatus.name) {
         if (this.selectedFileStatus.name != 'all') {
           api_filter['leadInternalStatus-eq'] = this.selectedFileStatus.id;
@@ -373,7 +373,7 @@ export class FilesComponent implements OnInit {
     if (!this.totalStatusLeadsCountArray) {
       return [];
     }
-    console.log(this.activeItem)
+    // console.log(this.activeItem)
     // Check the active item and update the labels accordingly
     if (this.activeItem.name === 'homeLoan') {
       return [
@@ -404,7 +404,7 @@ export class FilesComponent implements OnInit {
   }
 
   onActiveItemChange(event) {
-    console.log(event);
+    // console.log(event);
     this.activeItem = event;
     this.localStorageService.setItemOnLocalStorage(
       'filesActiveItem',
@@ -822,7 +822,7 @@ export class FilesComponent implements OnInit {
     this.leadsService.getFilesCount(filter).subscribe(
       (leadsCount) => {
         this.totalLeadsCount = leadsCount;
-        console.log(this.totalLeadsCount);
+        // console.log(this.totalLeadsCount);
         this.items = this.getFilteredItems();
         this.activeItem = this.items[0];
       },
@@ -837,7 +837,7 @@ export class FilesComponent implements OnInit {
     this.leadsService.getFiles(filter).subscribe(
       (response) => {
         this.leads = response;
-        console.log("this.leads", this.leads)
+        // console.log("this.leads", this.leads)
         this.apiLoading = false;
       },
       (error: any) => {
@@ -929,7 +929,7 @@ export class FilesComponent implements OnInit {
 
 
   viewLeadProfile(event: any) {
-    console.log('Row clicked:', event.data);
+    // console.log('Row clicked:', event.data);
     const lead = event.data
     const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
     if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
@@ -990,7 +990,7 @@ export class FilesComponent implements OnInit {
     ) {
       api_filter['sourcedBy-eq'] = this.userDetails.id;
     }
-    console.log(api_filter);
+    // console.log(api_filter);
     if (api_filter) {
       this.getpersonalloanLeadsCount(api_filter);
       this.getloanLeads(api_filter);
@@ -1014,7 +1014,7 @@ export class FilesComponent implements OnInit {
     this.leadsService.getloanLeadsCount(filter).subscribe(
       (response) => {
         this.personalloanLeadsCount = response;
-        console.log(this.personalloanLeadsCount);
+        // console.log(this.personalloanLeadsCount);
       },
       (error: any) => {
         this.toastService.showError(error);
@@ -1100,8 +1100,8 @@ export class FilesComponent implements OnInit {
     this.activeEmploymentStatus = event;
     const { name } = this.activeEmploymentStatus;
     const { name: itemName } = this.activeItem;
-    console.log(name);
-    console.log(itemName);
+    // console.log(name);
+    // console.log(itemName);
     const loadLeadsFn =
       name === 'employed'
         ? itemName === 'homeLoan'
@@ -1110,7 +1110,7 @@ export class FilesComponent implements OnInit {
         : itemName === 'homeLoan'
           ? this.loadLeadsforHomeself
           : this.loadLeadsforlapself;
-    console.log('loadLeadsFn', loadLeadsFn);
+    // console.log('loadLeadsFn', loadLeadsFn);
     loadLeadsFn.call(this, event);
     this.localStorageService.setItemOnLocalStorage(
       'filesEmploymentStatusActiveItem',
@@ -1163,7 +1163,7 @@ export class FilesComponent implements OnInit {
     ) {
       api_filter['sourcedBy-eq'] = this.userDetails.id;
     }
-    console.log(api_filter);
+    // console.log(api_filter);
     if (api_filter) {
       this.getHomeloanLeadsCount(api_filter);
       this.getloanLeads(api_filter);
@@ -1208,7 +1208,7 @@ export class FilesComponent implements OnInit {
       api_filter['sourcedBy-eq'] = this.userDetails.id;
     }
     if (api_filter) {
-      console.log(api_filter);
+      // console.log(api_filter);
       this.getHomeloanselfLeadsCount(api_filter);
       this.getloanLeads(api_filter);
     }
@@ -1227,8 +1227,8 @@ export class FilesComponent implements OnInit {
     this.searchInputValue = value;
     if (this.activeEmploymentStatus.name === 'employed') {
       this.personNameToSearchForHome = value;
-      console.log(this.activeItem);
-      console.log(this.activeEmploymentStatus);
+      // console.log(this.activeItem);
+      // console.log(this.activeEmploymentStatus);
       if (this.activeItem.name === 'homeLoan') {
         this.inputValueChangeEventForHome(
           'loanId',
@@ -1289,7 +1289,7 @@ export class FilesComponent implements OnInit {
         api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
       }
     }
-    console.log(api_filter);
+    // console.log(api_filter);
     api_filter = Object.assign(
       {},
       api_filter,
@@ -1423,7 +1423,7 @@ export class FilesComponent implements OnInit {
     let searchFilterForLap = {
       'contactPerson-like': this.personNameToSearchForHome,
     };
-    console.log(searchFilterForLap);
+    // console.log(searchFilterForLap);
     this.applyFiltersLap(searchFilterForLap);
   }
   filterWithBusinessNameForHome() {

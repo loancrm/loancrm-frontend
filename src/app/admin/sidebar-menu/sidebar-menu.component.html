@@ -531,7 +531,13 @@
           (click)="showMenuSection()"
           *ngIf="item.condition"
         >
-          <img [src]="item.icon" class="sidebaricon" width="24" height="24" />
+          <img
+            [src]="item.icon"
+            class="sidebaricon"
+            width="24"
+            height="24"
+            alt="icon"
+          />
           <span class="sidebar-label ms-2" *ngIf="isSidebarVisible">
             {{ item.label }}
           </span>
@@ -547,6 +553,7 @@
       (click)="confirmLogout($event)"
     >
       <img
+        alt="Logout"
         src="../../../assets/images/icons/logout.svg"
         class="me-3 sidebaricon"
       />

@@ -92,7 +92,7 @@ export class LoginsDoneComponent implements OnInit {
     this.leadsService.getBankersDetailsById(id).subscribe(
       (response) => {
         this.bankers = response;
-        console.log('bankers', this.bankers);
+        // console.log('bankers', this.bankers);
         this.loading = false;
       },
       (error: any) => {
@@ -106,7 +106,7 @@ export class LoginsDoneComponent implements OnInit {
     this.leadsService.getLoginsDoneById(filter).subscribe(
       (response) => {
         this.loginsDone = response;
-        console.log('Logins Done ', this.loginsDone);
+        // console.log('Logins Done ', this.loginsDone);
         this.loading = false;
       },
       (error: any) => {
@@ -116,7 +116,7 @@ export class LoginsDoneComponent implements OnInit {
     );
   }
   viewLead(event: any) {
-    console.log('Row clicked:', event.data);
+    // console.log('Row clicked:', event.data);
     const lead = event.data;
     this.routingService.handleRoute('leads/profile/' + lead.leadId, null);
   }

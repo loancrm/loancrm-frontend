@@ -172,7 +172,7 @@ export class LoanleaduploadsComponent implements OnInit {
     this.activeItem = matchedTab || this.items[0];
   }
   onActiveItemChange(event) {
-    console.log(event);
+    // console.log(event);
     this.activeItem = event;
   }
   updateDisplayedItems() {
@@ -189,7 +189,7 @@ export class LoanleaduploadsComponent implements OnInit {
       this.leadsService.getLoanLeadById(leadId).subscribe(
         (response: any) => {
           this.loanleads = response;
-          console.log(this.loanleads);
+          // console.log(this.loanleads);
           this.updateItemsBasedOnCondition();
           this.updateDisplayedItems();
           resolve(true);
@@ -627,12 +627,12 @@ export class LoanleaduploadsComponent implements OnInit {
         );
       }
     }
-    console.log(formData);
-    console.log(this.leadId);
+    // console.log(formData);
+    // console.log(this.leadId);
     this.loading = true;
     this.leadsService.addLoanLeadsDocumentData(this.leadId, formData).subscribe(
       (data: any) => {
-        console.log(data);
+        // console.log(data);
         this.loading = false;
         this.toastService.showSuccess("Kyc's Saved Successfully");
         this.getLoanLeadById(this.leadId);
@@ -674,12 +674,12 @@ export class LoanleaduploadsComponent implements OnInit {
         );
       }
     }
-    console.log(formData);
-    console.log(this.leadId);
+    // console.log(formData);
+    // console.log(this.leadId);
     this.loading = true;
     this.leadsService.addLoanLeadsDocumentData(this.leadId, formData).subscribe(
       (data: any) => {
-        console.log(data);
+        // console.log(data);
         this.loading = false;
         this.toastService.showSuccess('Cibil Data Saved Successfully');
         this.getLoanLeadById(this.leadId);
@@ -746,12 +746,12 @@ export class LoanleaduploadsComponent implements OnInit {
         );
       }
     }
-    console.log(formData);
-    console.log(this.leadId);
+    // console.log(formData);
+    // console.log(this.leadId);
     this.loading = true;
     this.leadsService.addLoanLeadsDocumentData(this.leadId, formData).subscribe(
       (data: any) => {
-        console.log(data);
+        // console.log(data);
         this.loading = false;
         this.toastService.showSuccess('company Details Saved Successfully');
         this.getLoanLeadById(this.leadId);
@@ -799,12 +799,12 @@ export class LoanleaduploadsComponent implements OnInit {
     let formData = {
       bankStatements: this.bankStatements,
     };
-    console.log(formData);
-    console.log(this.leadId);
+    // console.log(formData);
+    // console.log(this.leadId);
     this.loading = true;
     this.leadsService.addLoanLeadsDocumentData(this.leadId, formData).subscribe(
       (data: any) => {
-        console.log(data);
+        // console.log(data);
         this.loading = false;
         this.toastService.showSuccess('Bank Statements Saved Successfully');
         this.getLoanLeadById(this.leadId);
@@ -1161,11 +1161,11 @@ export class LoanleaduploadsComponent implements OnInit {
                 )
                 : this.selectedFiles[fileType]['filesData'].push(files[i]);
             }
-            console.log(
-              'this.selectedFiles',
-              this.selectedFiles[fileType],
-              files
-            );
+            // console.log(
+            //   'this.selectedFiles',
+            //   this.selectedFiles[fileType],
+            //   files
+            // );
             this.toastService.showSuccess('Files Uploaded Successfully');
           } else {
             this.toastService.showError({ error: 'Something went wrong' });

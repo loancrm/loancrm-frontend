@@ -77,7 +77,7 @@ export class CreateComponent {
         this.heading = 'Update Lead';
         this.getLeadDetailsById().then((data) => {
           if (data) {
-            console.log('leadData', this.leadData);
+            // console.log('leadData', this.leadData);
             this.leadForm.patchValue({
               businessName: this.leadData[0]?.businessName,
               businessEmail: this.leadData[0]?.businessEmail,
@@ -152,9 +152,9 @@ preventInvalidPaste(event: ClipboardEvent) {
     let userDetails =
       this.localStorageService.getItemFromLocalStorage('userDetails');
     this.userDetails = userDetails.user;
-    console.log(this.userDetails);
+    // console.log(this.userDetails);
     this.capabilities = this.leadsService.getUserRbac();
-    console.log(this.capabilities);
+    // console.log(this.capabilities);
     this.createForm();
     const phoneControl = this.leadForm.get('primaryPhone');
     phoneControl?.valueChanges.subscribe(value => {
@@ -230,7 +230,7 @@ preventInvalidPaste(event: ClipboardEvent) {
     this.leadsService.getLeadSources(filter).subscribe(
       (sources) => {
         this.leadSources = sources;
-        console.log('Lead sources :', this.leadSources);
+        // console.log('Lead sources :', this.leadSources);
       },
       (error: any) => {
         this.toastService.showError(error);
@@ -242,7 +242,7 @@ preventInvalidPaste(event: ClipboardEvent) {
     this.leadsService.getUsers(filter).subscribe(
       (users) => {
         this.leadUsers = users;
-        console.log('Lead Users:', this.leadUsers);
+        // console.log('Lead Users:', this.leadUsers);
       },
       (error: any) => {
         this.toastService.showError(error);
@@ -317,8 +317,8 @@ preventInvalidPaste(event: ClipboardEvent) {
         );
       }
     }
-    console.log('formvalues', formValues);
-    console.log('formData', formData);
+    // console.log('formvalues', formValues);
+    // console.log('formData', formData);
     if (this.actionType == 'create') {
       if (formValues.createdOn) {
         formData.createdOn = moment(formValues.createdOn)
@@ -333,7 +333,7 @@ preventInvalidPaste(event: ClipboardEvent) {
           .format('YYYY-MM-DD HH:mm:ss'); // Format as UTC time
       }
       this.loading = true;
-      console.log(formData);
+      // console.log(formData);
       this.leadsService.createLead(formData).subscribe(
         (data) => {
           if (data) {
@@ -344,7 +344,7 @@ preventInvalidPaste(event: ClipboardEvent) {
         },
         (error: any) => {
           this.loading = false;
-          console.log(error);
+          // console.log(error);
           this.toastService.showError(error);
         }
       );
@@ -362,8 +362,8 @@ preventInvalidPaste(event: ClipboardEvent) {
         const currentCreatedOn = this.moment(this.leadData[0].createdOn).format(
           'YYYY-MM-DD'
         );
-        console.log(newCreatedOn);
-        console.log(currentCreatedOn);
+        // console.log(newCreatedOn);
+        // console.log(currentCreatedOn);
         if (newCreatedOn !== currentCreatedOn) {
           formData.createdOn = moment(formValues.createdOn)
             .tz('Asia/Kolkata') // Convert to IST
@@ -378,7 +378,7 @@ preventInvalidPaste(event: ClipboardEvent) {
         }
       }
       this.loading = true;
-      console.log(formData);
+      // console.log(formData);
       this.leadsService.updateLead(this.leadId, formData).subscribe(
         (data) => {
           if (data) {
@@ -447,7 +447,7 @@ preventInvalidPaste(event: ClipboardEvent) {
     });
   }
   confirmDelete(file) {
-    console.log('Before Deletion:', this.selectedFiles);
+    // console.log('Before Deletion:', this.selectedFiles);
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete this Audio File?',
       header: 'Confirm Deletion',
@@ -491,14 +491,14 @@ preventInvalidPaste(event: ClipboardEvent) {
     this.leadsService.deleteFile(relativePath).subscribe({
       next: (response: any) => {
         if (response?.message === 'File deleted successfully.') {
-          console.log('File deleted successfully:', fileUrl);
+          // console.log('File deleted successfully:', fileUrl);
           if (this.selectedFiles?.audioFiles?.uploadedFiles) {
             this.selectedFiles.audioFiles.uploadedFiles =
               this.selectedFiles.audioFiles.uploadedFiles.filter(
                 (file: string) => file !== fileUrl
               );
           }
-          console.log('Updated selected files:', this.selectedFiles);
+          // console.log('Updated selected files:', this.selectedFiles);
           this.toastService.showSuccess('File Deleted Successfully');
         } else {
           const errorMsg = response?.error || 'Unexpected error occurred.';
@@ -543,11 +543,11 @@ preventInvalidPaste(event: ClipboardEvent) {
                 )
                 : this.selectedFiles[fileType]['filesData'].push(files[i]);
             }
-            console.log(
-              'this.selectedFiles',
-              this.selectedFiles[fileType],
-              files
-            );
+            // console.log(
+            //   'this.selectedFiles',
+            //   this.selectedFiles[fileType],
+            //   files
+            // );
             this.toastService.showSuccess('Files Uploaded Successfully');
           } else {
             this.toastService.showError({ error: 'Something went wrong' });

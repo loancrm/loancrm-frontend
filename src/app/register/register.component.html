@@ -222,7 +222,7 @@
               (ngSubmit)="onSubmit()"
               novalidate
             >
-             
+
               <div class="form-outline mb-4">
                 <input
                   pInputText
@@ -232,7 +232,7 @@
                   autocomplete="off"
                   class="rounded-lg w-100"
                 />
-               
+
                 <div class="error-placeholder">
                   <div *ngIf="submitted && name.invalid" class="text-danger">
                     Full name is required.
@@ -240,7 +240,7 @@
                 </div>
               </div>
 
-         
+
               <div class="form-outline mb-4">
                 <input
                   pInputText
@@ -251,7 +251,7 @@
                   class="rounded-lg w-100"
                   [class.ng-invalid]="submitted && email.invalid"
                 />
- 
+
                 <div class="error-placeholder">
                   <div *ngIf="submitted && email.errors" class="text-danger">
                     <small *ngIf="email.errors['required']"
@@ -288,7 +288,7 @@
                 </div>
               </div>
 
-      
+
               <div class="form-outline mb-4">
                 <input
                   pInputText
@@ -337,7 +337,7 @@
                     />
                   </span>
                 </div>
-              
+
                 <div class="error-placeholder">
                   <div *ngIf="submitted && password.errors" class="text-danger">
                     <small *ngIf="password.errors['required']"
@@ -354,7 +354,7 @@
                 </div>
               </div>
 
-           
+
               <button
                 type="submit"
                 pButton

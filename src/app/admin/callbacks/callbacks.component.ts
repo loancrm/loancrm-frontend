@@ -42,8 +42,8 @@ export class CallbacksComponent implements OnInit {
   // appliedFilterConverted: {};
   @ViewChild('callBacksTable') callBacksTable!: Table;
   @ViewChild('personalcallBacksTable') personalcallBacksTable!: Table;
-    @ViewChild('HomecallBacksTable') HomecallBacksTable!: Table;
-    @ViewChild('LapcallBacksTable') LapcallBacksTable!: Table;
+  @ViewChild('HomecallBacksTable') HomecallBacksTable!: Table;
+  @ViewChild('LapcallBacksTable') LapcallBacksTable!: Table;
   // @ViewChild('convertedcallBacksTable') convertedcallBacksTable!: Table;
   version = projectConstantsLocal.VERSION_DESKTOP;
 
@@ -53,7 +53,7 @@ export class CallbacksComponent implements OnInit {
   employmentStatus: any;
   activeEmploymentStatus: any;
   totalCallbacksCountArray: any;
-  totalStatusCallbacksCountArray:any;
+  totalStatusCallbacksCountArray: any;
   searchInputValue: string = '';
   personNameToSearchForHome: any;
   personNameToSearch: any;
@@ -125,7 +125,7 @@ export class CallbacksComponent implements OnInit {
     });
     // this.activeItem = this.items[0];
     this.capabilities = this.leadsService.getUserRbac();
-    console.log(this.capabilities);
+    // console.log(this.capabilities);
     this.setFilterConfig();
     // const storedAppliedFilter =
     //   this.localStorageService.getItemFromLocalStorage(
@@ -191,7 +191,7 @@ export class CallbacksComponent implements OnInit {
     if (storedStatus8) {
       this.selectedLapCallbackStatus = storedStatus8;
     }
-    console.log(this.selectedSoucedByStatus)
+    // console.log(this.selectedSoucedByStatus)
     const loanTypes = ['', 'Personal', 'Home', 'Homeself', 'Lap', 'Lapself'];
     loanTypes.forEach((type) => {
       const localStorageKey = `callbacksAppliedFilter${type}`;
@@ -223,7 +223,7 @@ export class CallbacksComponent implements OnInit {
         this.getTotalCallbacksCountArray(event),
         this.getStatusCallbacksCountArray(event)
       ]);
-    } catch (error) {}
+    } catch (error) { }
   }
 
   loadActiveItem() {
@@ -259,9 +259,8 @@ export class CallbacksComponent implements OnInit {
         name: 'businessLoan',
       },
       {
-        label: `Personal Loan (${
-          this.totalCallbacksCountArray?.personalcount || 0
-        })`,
+        label: `Personal Loan (${this.totalCallbacksCountArray?.personalcount || 0
+          })`,
         name: 'personalLoan',
       },
       {
@@ -272,7 +271,7 @@ export class CallbacksComponent implements OnInit {
         label: `LAP (${this.totalCallbacksCountArray?.LAPLoancount || 0})`,
         name: 'lap',
       },
-       {
+      {
         label: `Professional Loans (0)`,
         name: 'professionalLoans',
       },
@@ -290,7 +289,7 @@ export class CallbacksComponent implements OnInit {
       },
     ];
   }
-    getTotalCallbacksCountArray(filter = {}) {
+  getTotalCallbacksCountArray(filter = {}) {
     if (
       this.userDetails &&
       this.userDetails?.id &&
@@ -303,7 +302,7 @@ export class CallbacksComponent implements OnInit {
     this.leadsService.getTotalCallbacksCountArray(filter).subscribe(
       (callbacksCount) => {
         this.totalCallbacksCountArray = callbacksCount;
-        console.log(this.totalCallbacksCountArray);
+        // console.log(this.totalCallbacksCountArray);
         this.items = this.getFilteredItems();
         // this.activeItem = this.items[0];
         this.loadActiveItem();
@@ -327,7 +326,7 @@ export class CallbacksComponent implements OnInit {
     this.leadsService.getStatusCallbacksCountArray(filter).subscribe(
       (callbacksCount) => {
         this.totalStatusCallbacksCountArray = callbacksCount;
-        console.log(this.totalStatusCallbacksCountArray);
+        // console.log(this.totalStatusCallbacksCountArray);
         this.employmentStatus = this.getStatusItems();
         // this.activeItem = this.items[0];
         this.loadEmploymentActiveItem();
@@ -343,7 +342,7 @@ export class CallbacksComponent implements OnInit {
     if (!this.totalStatusCallbacksCountArray) {
       return [];
     }
-console.log(this.activeItem)
+    // console.log(this.activeItem)
     // Check the active item and update the labels accordingly
     if (this.activeItem.name === 'homeLoan') {
       return [
@@ -373,24 +372,24 @@ console.log(this.activeItem)
     return [];
   }
 
-  actionItems(callback: any,callbackType: string): MenuItem[] {
+  actionItems(callback: any, callbackType: string): MenuItem[] {
     const menuItems: any = [{ label: 'Actions', items: [] }];
     if (callback.callbackInternalStatus === 1) {
       menuItems[0].items.push({
         label: 'Archive',
         icon: 'pi pi-sign-in',
-        command: () => this.sendCallbackToArchive(callback,callbackType),
+        command: () => this.sendCallbackToArchive(callback, callbackType),
       });
       menuItems[0].items.push({
         label: 'Send to Lead',
         icon: 'pi pi-sign-in',
-        command: () => this.confirmConversion(callback,callbackType),
+        command: () => this.confirmConversion(callback, callbackType),
       });
     } else if (callback.callbackInternalStatus === 2) {
       menuItems[0].items.push({
         label: 'Send to New callback',
         icon: 'pi pi-sign-in',
-        command: () => this.revertCallbackToNew(callback,callbackType),
+        command: () => this.revertCallbackToNew(callback, callbackType),
       });
     }
     if (this.capabilities?.delete) {
@@ -421,7 +420,7 @@ console.log(this.activeItem)
     this.loading = true;
     this.leadsService.deleteCallBack(callBackId).subscribe(
       (response: any) => {
-        console.log(response);
+        // console.log(response);
         this.toastService.showSuccess(response?.message);
         this.loading = false;
         this.loadCallBacks(this.currentTableEvent);
@@ -433,13 +432,13 @@ console.log(this.activeItem)
     );
   }
   onActiveItemChange(event) {
-    console.log(event);
+    // console.log(event);
     this.activeItem = event;
     this.localStorageService.setItemOnLocalStorage(
       'callbacksActiveItem',
       event.name
     );
-    this.employmentStatus =this.getStatusItems();
+    this.employmentStatus = this.getStatusItems();
     this.loadEmploymentActiveItem();
   }
 
@@ -447,16 +446,16 @@ console.log(this.activeItem)
     this.activeEmploymentStatus = event;
     const { name } = this.activeEmploymentStatus;
     const { name: itemName } = this.activeItem;
-    console.log(name);
-    console.log(itemName);
+    // console.log(name);
+    // console.log(itemName);
     const loadCallbacksFn =
       name === 'employed'
         ? itemName === 'homeLoan'
           ? this.loadHomeLoanCallBacks
           : this.loadLAPCallBacks
         : itemName === 'homeLoan'
-        ? this.loadHomeLoanSelfCallBacks
-        : this.loadLAPSelfCallBacks;
+          ? this.loadHomeLoanSelfCallBacks
+          : this.loadLAPSelfCallBacks;
 
     loadCallbacksFn.call(this, event);
     this.localStorageService.setItemOnLocalStorage(
@@ -465,7 +464,7 @@ console.log(this.activeItem)
     );
   }
   setFilterConfig() {
-    console.log("filter config")
+    // console.log("filter config")
     this.filterConfig = [
       {
         header: 'Callback Id',
@@ -570,7 +569,7 @@ console.log(this.activeItem)
         ],
       },
     ];
-this.HomeSelffilterConfig=this.filterConfig
+    this.HomeSelffilterConfig = this.filterConfig
     this.personalfilterConfig = [
       {
         header: 'Callback Id',
@@ -652,13 +651,13 @@ this.HomeSelffilterConfig=this.filterConfig
         ],
       },
     ];
-    this.HomefilterConfig=this.filterConfig
+    this.HomefilterConfig = this.filterConfig
   }
-  sendCallbackToArchive(callback,callbackType) {
-    this.changeCallBackStatus(callback.id, 2,callbackType);
+  sendCallbackToArchive(callback, callbackType) {
+    this.changeCallBackStatus(callback.id, 2, callbackType);
   }
 
-  confirmConversion(callback,callbackType) {
+  confirmConversion(callback, callbackType) {
     this.confirmationService.confirm({
       message: `Are you sure you want to convert this callback to lead?<br>
       ${callback.employmentStatus === 'employed' ? `Person Name: ${callback.businessName}` : `Business Name: ${callback.businessName}`}<br>
@@ -668,7 +667,7 @@ this.HomeSelffilterConfig=this.filterConfig
       acceptLabel: 'Yes',
       rejectLabel: 'No',
       accept: () => {
-        this.sendCallbackToLead(callback,callbackType);
+        this.sendCallbackToLead(callback, callbackType);
       },
     });
   }
@@ -747,97 +746,97 @@ this.HomeSelffilterConfig=this.filterConfig
 
       ...(this.userDetails?.userType === '3' && this.userDetails?.id
         ? {
-            sourcedBy: this.userDetails.id,
-            leadSource: 1,
-          }
+          sourcedBy: this.userDetails.id,
+          leadSource: 1,
+        }
         : {}),
     };
 
     const formData = !isBusinessLoan
       ? {
-          ...baseFormData,
-          loanType: callback.loanType,
-          employmentStatus: callback.employmentStatus,
-        }
+        ...baseFormData,
+        loanType: callback.loanType,
+        employmentStatus: callback.employmentStatus,
+      }
       : baseFormData;
 
-    console.log('Form Data:', formData);
+    // console.log('Form Data:', formData);
 
 
 
-      if (isBusinessLoan) {
-        this.leadsService.createLeadFromCallback(formData).subscribe(
-          (leadData: any) => {
-            if (leadData?.id) {
-              console.log('Created Lead ID:', leadData.id);
-              this.toastService.showSuccess('Lead Created Successfully');
-              this.routingService.handleRoute(`leads/update/${leadData.id}`, null);
+    if (isBusinessLoan) {
+      this.leadsService.createLeadFromCallback(formData).subscribe(
+        (leadData: any) => {
+          if (leadData?.id) {
+            // console.log('Created Lead ID:', leadData.id);
+            this.toastService.showSuccess('Lead Created Successfully');
+            this.routingService.handleRoute(`leads/update/${leadData.id}`, null);
 
-              const callbackFormData = {
-                businessName: callback.businessName,
-                referenceNo: leadData.id,
-              };
+            const callbackFormData = {
+              businessName: callback.businessName,
+              referenceNo: leadData.id,
+            };
 
-              console.log('callbackFormData', callbackFormData);
+            // console.log('callbackFormData', callbackFormData);
 
-              this.leadsService.updateCallBack(callback.id, callbackFormData).subscribe(
-                (updateResponse: any) => {
-                  this.loading = false;
-                  if (updateResponse) {
-                    this.changeCallBackStatus(callback.id, 3, callbackType);
-                  }
-                },
-                (error: any) => {
-                  this.loading = false;
-                  console.error('Callback Update Error:', error);
-                  this.toastService.showError(error);
+            this.leadsService.updateCallBack(callback.id, callbackFormData).subscribe(
+              (updateResponse: any) => {
+                this.loading = false;
+                if (updateResponse) {
+                  this.changeCallBackStatus(callback.id, 3, callbackType);
                 }
-              );
-            }
-          },
-          (error: any) => {
-            this.loading = false;
-            console.error('Lead Creation Error:', error);
-            this.toastService.showError(error);
+              },
+              (error: any) => {
+                this.loading = false;
+                console.error('Callback Update Error:', error);
+                this.toastService.showError(error);
+              }
+            );
           }
-        );
-      }else{
-        this.leadsService.createLoanLeadFromCallback(formData).subscribe(
-          (leadData: any) => {
-            if (leadData?.leadId) {
-              console.log('Created Lead ID:', leadData.leadId);
-              this.toastService.showSuccess('Lead Created Successfully');
-              this.routingService.handleRoute(`leads/updateLoanLead/${leadData.leadId}`, null);
+        },
+        (error: any) => {
+          this.loading = false;
+          console.error('Lead Creation Error:', error);
+          this.toastService.showError(error);
+        }
+      );
+    } else {
+      this.leadsService.createLoanLeadFromCallback(formData).subscribe(
+        (leadData: any) => {
+          if (leadData?.leadId) {
+            // console.log('Created Lead ID:', leadData.leadId);
+            this.toastService.showSuccess('Lead Created Successfully');
+            this.routingService.handleRoute(`leads/updateLoanLead/${leadData.leadId}`, null);
 
-              const callbackFormData = {
-                businessName: callback.businessName,
-                referenceNo: leadData.leadId,
-              };
+            const callbackFormData = {
+              businessName: callback.businessName,
+              referenceNo: leadData.leadId,
+            };
 
-              console.log('callbackFormData', callbackFormData);
+            // console.log('callbackFormData', callbackFormData);
 
-              this.leadsService.updateCallBack(callback.id, callbackFormData).subscribe(
-                (updateResponse: any) => {
-                  this.loading = false;
-                  if (updateResponse) {
-                    this.changeCallBackStatus(callback.id, 3, callbackType);
-                  }
-                },
-                (error: any) => {
-                  this.loading = false;
-                  console.error('Callback Update Error:', error);
-                  this.toastService.showError(error);
+            this.leadsService.updateCallBack(callback.id, callbackFormData).subscribe(
+              (updateResponse: any) => {
+                this.loading = false;
+                if (updateResponse) {
+                  this.changeCallBackStatus(callback.id, 3, callbackType);
                 }
-              );
-            }
-          },
-          (error: any) => {
-            this.loading = false;
-            console.error('Lead Creation Error:', error);
-            this.toastService.showError(error);
+              },
+              (error: any) => {
+                this.loading = false;
+                console.error('Callback Update Error:', error);
+                this.toastService.showError(error);
+              }
+            );
           }
-        );
-      }
+        },
+        (error: any) => {
+          this.loading = false;
+          console.error('Lead Creation Error:', error);
+          this.toastService.showError(error);
+        }
+      );
+    }
 
   }
 
@@ -891,11 +890,11 @@ this.HomeSelffilterConfig=this.filterConfig
         break;
     }
   }
-  revertCallbackToNew(callback,callbackType) {
+  revertCallbackToNew(callback, callbackType) {
     this.changeCallBackStatus(callback.id, 1, callbackType);
   }
 
-  changeCallBackStatus(callbackId, statusId,callbackType) {
+  changeCallBackStatus(callbackId, statusId, callbackType) {
     this.loading = true;
     this.leadsService.changeCallBackStatus(callbackId, statusId).subscribe(
       () => {
@@ -946,7 +945,7 @@ this.HomeSelffilterConfig=this.filterConfig
       (leadUsers: any) => {
         this.leadUsers = [{ name: 'All' }, ...leadUsers];
         this.loading = false;
-        console.log(leadUsers)
+        // console.log(leadUsers)
       },
       (error: any) => {
         this.loading = false;
@@ -993,7 +992,7 @@ this.HomeSelffilterConfig=this.filterConfig
 
 
   loadCallbackTypes(callbackType: string) {
-    console.log(callbackType)
+    // console.log(callbackType)
     if (!callbackType) {
       this.loadCallBacks(this.currentTableEvent);
       return;
@@ -1021,7 +1020,7 @@ this.HomeSelffilterConfig=this.filterConfig
   }
 
   loadCallBacks(event) {
-    console.log(event);
+    // console.log(event);
     this.currentTableEvent = event;
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     if (this.selectedCallbackStatus) {
@@ -1036,7 +1035,7 @@ this.HomeSelffilterConfig=this.filterConfig
     } else {
       api_filter['callbackInternalStatus-or'] = '1,2,3';
     }
-    console.log(this.selectedSoucedByStatus)
+    // console.log(this.selectedSoucedByStatus)
     if (this.selectedSoucedByStatus && this.selectedSoucedByStatus.name) {
       if (this.selectedSoucedByStatus.name == 'All') {
         api_filter['callbackInternalStatus-or'] = '1,2,3';
@@ -1060,14 +1059,14 @@ this.HomeSelffilterConfig=this.filterConfig
       api_filter['sourcedBy-eq'] = this.userDetails.id;
     }
     if (api_filter) {
-      console.log(api_filter);
+      // console.log(api_filter);
       this.getCallBacksCount(api_filter);
       this.getCallBacks(api_filter);
     }
   }
 
   loadPersonalLoanCallBacks(event) {
-    console.log(event);
+    // console.log(event);
     this.currentTableEvent = event;
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     api_filter['loanType-eq'] = 'personalLoan';
@@ -1101,7 +1100,7 @@ this.HomeSelffilterConfig=this.filterConfig
       api_filter['sourcedBy-eq'] = this.userDetails.id;
     }
     if (api_filter) {
-      console.log(api_filter);
+      // console.log(api_filter);
       this.getCallBacksCount(api_filter);
       this.getCallBacks(api_filter);
     }
@@ -1109,7 +1108,7 @@ this.HomeSelffilterConfig=this.filterConfig
 
 
   loadHomeLoanCallBacks(event) {
-    console.log(event);
+    // console.log(event);
     this.currentTableEvent = event;
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     api_filter['loanType-eq'] = 'homeLoan';
@@ -1144,14 +1143,14 @@ this.HomeSelffilterConfig=this.filterConfig
       api_filter['sourcedBy-eq'] = this.userDetails.id;
     }
     if (api_filter) {
-      console.log(api_filter);
+      // console.log(api_filter);
       this.getCallBacksCount(api_filter);
       this.getCallBacks(api_filter);
     }
   }
 
   loadHomeLoanSelfCallBacks(event) {
-    console.log(event);
+    // console.log(event);
     this.currentTableEvent = event;
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     api_filter['loanType-eq'] = 'homeLoan';
@@ -1185,14 +1184,14 @@ this.HomeSelffilterConfig=this.filterConfig
       api_filter['sourcedBy-eq'] = this.userDetails.id;
     }
     if (api_filter) {
-      console.log(api_filter);
+      // console.log(api_filter);
       this.getCallBacksCount(api_filter);
       this.getCallBacks(api_filter);
     }
   }
 
   loadLAPCallBacks(event) {
-    console.log(event);
+    // console.log(event);
     this.currentTableEvent = event;
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     api_filter['loanType-eq'] = 'lap';
@@ -1226,14 +1225,14 @@ this.HomeSelffilterConfig=this.filterConfig
       api_filter['sourcedBy-eq'] = this.userDetails.id;
     }
     if (api_filter) {
-      console.log(api_filter);
+      // console.log(api_filter);
       this.getCallBacksCount(api_filter);
       this.getCallBacks(api_filter);
     }
   }
 
   loadLAPSelfCallBacks(event) {
-    console.log(event);
+    // console.log(event);
     this.currentTableEvent = event;
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     api_filter['loanType-eq'] = 'lap';
@@ -1267,7 +1266,7 @@ this.HomeSelffilterConfig=this.filterConfig
       api_filter['sourcedBy-eq'] = this.userDetails.id;
     }
     if (api_filter) {
-      console.log(api_filter);
+      // console.log(api_filter);
       this.getCallBacksCount(api_filter);
       this.getCallBacks(api_filter);
     }
@@ -1305,7 +1304,7 @@ this.HomeSelffilterConfig=this.filterConfig
   }
 
   filterWithPersonNameForHome() {
-    let searchFilterForHome = {'businessName-like': this.personNameToSearchForHome,};
+    let searchFilterForHome = { 'businessName-like': this.personNameToSearchForHome, };
 
     // const trimmedInput = this.personNameToSearchForHome?.trim() || '';
     // if (this.isPhoneNumber(trimmedInput)){
@@ -1323,7 +1322,7 @@ this.HomeSelffilterConfig=this.filterConfig
     let searchFilterForLap = {
       'businessName-like': this.personNameToSearchForHome,
     };
-    console.log(searchFilterForLap);
+    // console.log(searchFilterForLap);
     this.applyFiltersLap(searchFilterForLap);
   }
   inputValueChangeEventForHome(dataType, value) {
@@ -1576,33 +1575,33 @@ this.HomeSelffilterConfig=this.filterConfig
     let searchFilter = {};
     const trimmedInput = this.businessNameToSearch?.trim() || '';
 
-    if(this.isPhoneNumber(trimmedInput)){
-      console.log('Dectected Phone number:',trimmedInput);
-      searchFilter={'phone-like':trimmedInput}
-    } else{
-      console.log("Detected business name:", trimmedInput);
-      searchFilter ={'businessName-like': this.businessNameToSearch }
+    if (this.isPhoneNumber(trimmedInput)) {
+      // console.log('Dectected Phone number:', trimmedInput);
+      searchFilter = { 'phone-like': trimmedInput }
+    } else {
+      // console.log("Detected business name:", trimmedInput);
+      searchFilter = { 'businessName-like': this.businessNameToSearch }
     }
-      console.log("Search Filter Object:", searchFilter);
+    // console.log("Search Filter Object:", searchFilter);
     this.applyFilters(searchFilter);
   }
 
-  isPhoneNumber(value:string):boolean{
-    const phoneNumberPattern=/^[6-9]\d{9}$/;
+  isPhoneNumber(value: string): boolean {
+    const phoneNumberPattern = /^[6-9]\d{9}$/;
     return phoneNumberPattern.test(value.trim())
   }
 
   filterWithPersonName() {
     let searchFilter = {};
     const trimmedInput = this.personNameToSearch?.trim() || '';
-    if(this.isPhoneNumber(trimmedInput)){
-      console.log('Detected phone number:', trimmedInput);
-      searchFilter = {'phone-like':trimmedInput}
+    if (this.isPhoneNumber(trimmedInput)) {
+      // console.log('Detected phone number:', trimmedInput);
+      searchFilter = { 'phone-like': trimmedInput }
     } else {
-      console.log("Detected Person Name:",trimmedInput);
-      searchFilter ={'businessName-like':trimmedInput}
+      // console.log("Detected Person Name:", trimmedInput);
+      searchFilter = { 'businessName-like': trimmedInput }
     }
-    console.log("search Filter Object:", searchFilter);
+    // console.log("search Filter Object:", searchFilter);
     this.applyFiltersForPersonal(searchFilter);
   }
 
@@ -1643,12 +1642,12 @@ this.HomeSelffilterConfig=this.filterConfig
 
 
   onLoanTypeSelect(event: any): void {
-    console.log('Selected Loan Type:', event.value);
+    // console.log('Selected Loan Type:', event.value);
     this.selectedLoanType = event.value;
     // if (this.selectedLoanType == 'businessLoan') {
     //   this.createCallBack();
     // } else {
-      this.createSecuredCallBack();
+    this.createSecuredCallBack();
     // }
   }
 

@@ -54,7 +54,7 @@ export class BankersComponent implements OnInit {
       this.selectedBankersStatus = storedStatus;
     }
     this.capabilities = this.leadsService.getUserRbac();
-    console.log(this.capabilities);
+    // console.log(this.capabilities);
   }
   actionItems(bankers: any): MenuItem[] {
     const menuItems: any = [{ label: 'Actions', items: [] }];
@@ -107,7 +107,7 @@ export class BankersComponent implements OnInit {
     this.loading = true;
     this.leadsService.deleteBanker(bankerId).subscribe(
       (response: any) => {
-        console.log(response);
+        // console.log(response);
         this.toastService.showSuccess(response?.message);
         this.loading = false;
         this.loadBankers(this.currentTableEvent);
@@ -238,7 +238,7 @@ export class BankersComponent implements OnInit {
       (bankers) => {
         this.bankers = bankers;
         this.apiLoading = false;
-        console.log(bankers);
+        // console.log(bankers);
       },
       (error: any) => {
         this.apiLoading = false;

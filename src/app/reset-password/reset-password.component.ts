@@ -64,7 +64,7 @@ export class ResetPasswordComponent {
         },
 
         error: (error) => {
-          console.log('Reset password error:', error);
+          // console.log('Reset password error:', error);
           this.toastService.showError(error);
         }
       });

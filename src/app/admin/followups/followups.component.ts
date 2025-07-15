@@ -244,7 +244,7 @@ export class FollowupsComponent implements OnInit {
   }
 
   viewLead(event: any) {
-    console.log('Row clicked:', event.data);
+    // console.log('Row clicked:', event.data);
     const lead = event.data;
     this.routingService.handleRoute('leads/profile/' + lead.id, null);
   }

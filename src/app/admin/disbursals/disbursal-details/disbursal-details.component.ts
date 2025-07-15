@@ -129,7 +129,7 @@ export class DisbursalDetailsComponent implements OnInit {
         ];
       }
     });
-    console.log(formData);
+    // console.log(formData);
     this.loading = true;
     this.leadsService.updateDisbursalDetails(this.leadId, formData).subscribe(
       (response: any) => {
@@ -173,7 +173,7 @@ export class DisbursalDetailsComponent implements OnInit {
       (lead: any) => {
         this.disbursalDetails = lead;
         this.initializeSelectedFiles();
-        console.log('disbursal details :', this.disbursalDetails);
+        // console.log('disbursal details :', this.disbursalDetails);
         this.loading = false;
       },
       (error: any) => {

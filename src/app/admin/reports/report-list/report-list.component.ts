@@ -38,12 +38,12 @@ export class ReportListComponent {
     ];
   }
   loadReports(event) {
-    console.log(event);
+    // console.log(event);
     this.currentTableEvent = event;
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     api_filter = Object.assign({}, api_filter);
     if (api_filter) {
-      console.log(api_filter);
+      // console.log(api_filter);
       this.getReportsCount(api_filter);
       this.getReports(api_filter);
     }
@@ -52,7 +52,7 @@ export class ReportListComponent {
     this.leadsService.getReportsCount(filter).subscribe(
       (response) => {
         this.reportsCount = response;
-        console.log(this.reportsCount);
+        // console.log(this.reportsCount);
       },
       (error: any) => {
         this.toastService.showError('error occurs');
@@ -64,7 +64,7 @@ export class ReportListComponent {
     this.leadsService.getReports(filter).subscribe(
       (response) => {
         this.reportsData = response;
-        console.log(this.reportsData);
+        // console.log(this.reportsData);
         this.loading = false;
       },
       (error: any) => {

@@ -215,3 +215,167 @@
     </div>
   </div>
 </section>
+
+<!-- <section
+  class="d-flex align-items-center justify-content-center min-vh-100 background-radial-gradient overflow-hidden"
+>
+  <div class="container">
+    <div class="row align-items-center justify-content-between">
+      <div class="col-lg-6 d-none d-lg-block">
+      </div>
+
+      <div class="col-lg-6 col-md-10 col-sm-12 ms-auto">
+        <div class="card shadow-sm">
+          <div class="card-body p-4">
+            <div class="d-flex justify-content-center mb-4">
+              <img
+                src="../../assets/images/logo.svg"
+                alt="Business Logo"
+                width="150"
+                height="35"
+              />
+            </div>
+
+            <div class="text-center fw-semibold mb-4 fs-5">
+              Hi, Welcome Back 👋
+            </div>
+
+            <form
+              [formGroup]="loginForm"
+              (ngSubmit)="onSubmit(loginForm.value)"
+              class="login-form"
+              novalidate
+            >
+              <div class="mb-3">
+                <input
+                  pInputText
+                  type="text"
+                  id="username"
+                  formControlName="username"
+                  placeholder="Enter your email or phone number"
+                  autocomplete="off"
+                  class="form-control"
+                />
+                <label class="form-label fw-medium mt-1" for="username"
+                  >Email or Phone Number</label
+                >
+              </div>
+
+              <div class="mb-3">
+                <div class="p-inputgroup">
+                  <input
+                    pInputText
+                    id="password"
+                    [type]="isPasswordVisible ? 'text' : 'password'"
+                    formControlName="password"
+                    placeholder="Enter your password"
+                    autocomplete="off"
+                    class="form-control"
+                  />
+                  <span
+                    class="p-inputgroup-addon"
+                    (click)="togglePasswordVisibility()"
+                    style="cursor: pointer"
+                  >
+                    <img
+                      [src]="
+                        isPasswordVisible
+                          ? 'assets/images/icons/eye-slash.svg'
+                          : 'assets/images/icons/eye.svg'
+                      "
+                      alt="Toggle Password Visibility"
+                      width="20"
+                      height="20"
+                    />
+                  </span>
+                </div>
+                <label class="form-label fw-medium mt-1" for="password"
+                  >Password</label
+                >
+
+                <div class="d-flex justify-content-end mt-2">
+                  <a
+                    class="text-decoration-none text-secondary fw-medium"
+                    (click)="doForgotPassword()"
+                    style="cursor: pointer"
+                  >
+                    Forgot Password?
+                  </a>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                pButton
+                pRipple
+                class="w-100 p-button-primary mb-3"
+                [disabled]="!loginForm.valid || api_loading"
+              >
+                Sign In
+              </button>
+
+              <div class="text-center">
+                <span class="text-muted">Don't have an account?</span>
+                <a
+                  routerLink="/user/register"
+                  class="fw-bold text-decoration-none"
+                  style="color: orangered"
+                >
+                  Register here
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="mt-5">
+          <div class="text-center mb-3">
+            <div class="d-flex justify-content-center align-items-center">
+              <div class="flex-grow-1 border-top me-2"></div>
+              <h5 class="mb-0">Use Our Calculator</h5>
+              <div class="flex-grow-1 border-top ms-2"></div>
+            </div>
+          </div>
+
+          <div class="row g-3 justify-content-center">
+            <div class="col-6 col-md-4">
+              <div
+                class="calucard text-center pointer-cursor shadow-sm p-3"
+                routerLink="/calculator/business"
+              >
+                <img
+                  src="../../assets/images/icons/businessloan.svg"
+                  alt="Business Loan"
+                />
+                <h6 class="fw-bold mt-2">Business Loan</h6>
+              </div>
+            </div>
+
+            <div class="col-6 col-md-4">
+              <div
+                class="calucard text-center pointer-cursor shadow-sm p-3"
+                routerLink="/calculator/personal"
+              >
+                <img
+                  src="../../assets/images/icons/team.svg"
+                  alt="Personal Loan"
+                />
+                <h6 class="fw-bold mt-2">Personal Loan</h6>
+              </div>
+            </div>
+
+            <div class="col-6 col-md-4">
+              <div
+                class="calucard text-center pointer-cursor shadow-sm p-3"
+                routerLink="/calculator/home"
+              >
+                <img src="../../assets/images/icons/home.svg" alt="Home Loan" />
+                <h6 class="fw-bold mt-2">Home Loan</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->

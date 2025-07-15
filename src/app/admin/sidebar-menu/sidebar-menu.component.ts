@@ -130,7 +130,7 @@ export class SidebarMenuComponent implements OnChanges {
     this.loading = true;
     this.leadsService.searchLeads(filter).subscribe(
       (response: any) => {
-        console.log(response);
+        // console.log(response);
         if (response) {
           this.dialogService.open(LeadSearchComponent, {
             data: response,
@@ -157,7 +157,7 @@ export class SidebarMenuComponent implements OnChanges {
     this.leadsService.getUserRoles(filter).subscribe(
       (roles) => {
         this.userRoles = roles;
-        console.log(this.userRoles);
+        // console.log(this.userRoles);
       },
       (error: any) => {
         this.toastService.showError(error);
@@ -170,7 +170,7 @@ export class SidebarMenuComponent implements OnChanges {
       let leadUserName = this.userRoles.filter(
         (leadUser) => leadUser.id == userId
       );
-      console.log(leadUserName);
+      // console.log(leadUserName);
       return (leadUserName && leadUserName[0] && leadUserName[0].name) || '';
     }
     return '';
@@ -199,9 +199,9 @@ export class SidebarMenuComponent implements OnChanges {
       this.userDetails = this.userDetails.user;
       this.userDetails.userImage = JSON.parse(this.userDetails.userImage);
     }
-    console.log(this.userDetails);
+    // console.log(this.userDetails);
     this.capabilities = this.leadsService.getUserRbac();
-    console.log(this.capabilities);
+    // console.log(this.capabilities);
   }
 
   setMenuItems() {
@@ -390,7 +390,7 @@ export class SidebarMenuComponent implements OnChanges {
 
   minimizeSideBar() {
     this.minimizeMenu = !this.minimizeMenu;
-    console.log(this.minimizeMenu);
+    // console.log(this.minimizeMenu);
     this.subscriptionService.sendMessage({
       ttype: 'smallMenu',
       value: this.minimizeMenu,

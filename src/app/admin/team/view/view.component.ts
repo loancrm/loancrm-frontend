@@ -129,7 +129,7 @@ export class ViewComponent {
     this.moment = this.dateTimeProcessor.getMoment();
     const userDetails = this.localStorageService.getItemFromLocalStorage('userDetails');
     this.user = userDetails.user;
-    console.log('UserType:', this.user?.userType); // DEBUG LOG
+    // console.log('UserType:', this.user?.userType); // DEBUG LOG
     this.breadCrumbItems = [
       {
         icon: 'pi pi-home',
@@ -146,7 +146,7 @@ export class ViewComponent {
       });
     }
     this.breadCrumbItems.push({ label: 'User Profile' });
-    console.log(this.breadCrumbItems);
+    // console.log(this.breadCrumbItems);
     this.getLeadUsers();
   }
   ngOnInit(): void {
@@ -176,11 +176,11 @@ export class ViewComponent {
     } else {
       this.items = allItems;
     }
-    console.log(this.items)
+    // console.log(this.items)
     this.loadActiveItem();
     this.userId = this.route.snapshot.paramMap.get('id');
     if (this.userId) {
-      console.log(this.userId);
+      // console.log(this.userId);
       this.getUsersDetailsById(this.userId);
       this.getDisbursalLeadsforcount();
     }
@@ -224,7 +224,7 @@ export class ViewComponent {
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     api_filter['sourcedBy-eq'] = this.userId;
     api_filter = Object.assign({}, api_filter);
-    console.log(api_filter);
+    // console.log(api_filter);
     if (api_filter) {
       this.getAllProcessedFilesCount(api_filter);
     }
@@ -272,7 +272,7 @@ export class ViewComponent {
     this.leadsService.getDistinctLeadCount(filter).subscribe(
       (response) => {
         this.allProcessedFilesCount = response;
-        console.log(this.allProcessedFilesCount);
+        // console.log(this.allProcessedFilesCount);
         this.setBarChartOptionsForFilter();
       },
       (error: any) => {
@@ -372,8 +372,8 @@ export class ViewComponent {
             responses[1], // Last Month Disbursed
             responses[3], // Current Month Disbursed
           ];
-          console.log('Sanctioned Amounts:', this.sanctionedAmounts);
-          console.log('Disbursed Amounts:', this.disbursedAmounts);
+          // console.log('Sanctioned Amounts:', this.sanctionedAmounts);
+          // console.log('Disbursed Amounts:', this.disbursedAmounts);
           this.setBarChartOptionsForFilter();
         },
         (error) => {
@@ -755,14 +755,14 @@ export class ViewComponent {
     );
   }
   loadCallBacks(event) {
-    console.log(event);
+    // console.log(event);
     this.currentTableEvent = event;
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     api_filter['callbackInternalStatus-or'] = '1';
     api_filter['sourcedBy-eq'] = this.userId;
     api_filter = Object.assign({}, api_filter);
     if (api_filter) {
-      console.log(api_filter);
+      // console.log(api_filter);
       this.getCallBacksCount(api_filter);
       this.getLastMonthCallbacksCount(api_filter);
       this.getThisMonthCallBacksCount(api_filter);
@@ -785,7 +785,7 @@ export class ViewComponent {
     this.leadsService.getLastMonthCallBacksCountStatus(filter).subscribe(
       (leadsCount) => {
         this.lastMonthCallbackCount = leadsCount;
-        console.log(this.lastMonthCallbackCount);
+        // console.log(this.lastMonthCallbackCount);
         this.updateCallbackEvents();
       },
       (error: any) => {
@@ -797,7 +797,7 @@ export class ViewComponent {
     this.leadsService.getThisMonthCallBacksCount(filter).subscribe(
       (leadsCount) => {
         this.thisMonthCallbackCount = leadsCount;
-        console.log(this.thisMonthCallbackCount);
+        // console.log(this.thisMonthCallbackCount);
         this.updateCallbackEvents();
       },
       (error: any) => {
@@ -810,7 +810,7 @@ export class ViewComponent {
     this.leadsService.getTwoMonthsAgoCallBacksCount(filter).subscribe(
       (leadsCount) => {
         this.lastBeforeMonthCallbackCount = leadsCount;
-        console.log(this.lastBeforeMonthCallbackCount);
+        // console.log(this.lastBeforeMonthCallbackCount);
         this.updateCallbackEvents();
       },
       (error: any) => {
@@ -823,7 +823,7 @@ export class ViewComponent {
     this.leadsService.getLastMonthLeadCountStatus(filter).subscribe(
       (leadsCount) => {
         this.lastMonthLeadCount = leadsCount;
-        console.log(this.lastMonthLeadCount);
+        // console.log(this.lastMonthLeadCount);
         this.updateEvents();
       },
       (error: any) => {
@@ -836,7 +836,7 @@ export class ViewComponent {
     this.leadsService.getThisMonthLeadCountStatus(filter).subscribe(
       (leadsCount) => {
         this.thisMonthLeadCount = leadsCount;
-        console.log(this.thisMonthLeadCount);
+        // console.log(this.thisMonthLeadCount);
         this.updateEvents();
       },
       (error: any) => {
@@ -849,7 +849,7 @@ export class ViewComponent {
     this.leadsService.getLastBeforeMonthLeadCountStatus(filter).subscribe(
       (leadsCount) => {
         this.lastBeforeMonthLeadCount = leadsCount;
-        console.log(this.lastBeforeMonthLeadCount);
+        // console.log(this.lastBeforeMonthLeadCount);
         this.updateEvents();
       },
       (error: any) => {
@@ -944,7 +944,7 @@ export class ViewComponent {
       (leadsCount) => {
         this.totalFipLeadsCount = leadsCount;
         this.setBarChartOptionsForFilter();
-        console.log('Total leads count ', this.totalFipLeadsCount);
+        // console.log('Total leads count ', this.totalFipLeadsCount);
       },
       (error: any) => {
         this.toastService.showError(error);
@@ -957,7 +957,7 @@ export class ViewComponent {
     this.leadsService.getFIPProcessDistinctLeads(filter).subscribe(
       (response) => {
         this.fipleads = response;
-        console.log('fip distinct leads', this.fipleads);
+        // console.log('fip distinct leads', this.fipleads);
         this.loading = false;
       },
       (error: any) => {
@@ -1003,7 +1003,7 @@ export class ViewComponent {
     ];
   }
   onActiveItemChange(event) {
-    console.log(event);
+    // console.log(event);
     this.activeItem = event;
     this.localStorageService.setItemOnLocalStorage(
       'teamActiveItem',
@@ -1204,7 +1204,7 @@ export class ViewComponent {
     this.leadsService.getUsersDetailsById(id).subscribe(
       (response) => {
         this.userDetails = response;
-        console.log('userDetails', this.userDetails);
+        // console.log('userDetails', this.userDetails);
         this.loading = false;
       },
       (error: any) => {
@@ -1247,7 +1247,7 @@ export class ViewComponent {
     this.leadsService.getUserRoles(filter).subscribe(
       (roles) => {
         this.userRoles = roles;
-        console.log(this.userRoles);
+        // console.log(this.userRoles);
       },
       (error: any) => {
         this.toastService.showError(error);
@@ -1324,7 +1324,7 @@ export class ViewComponent {
     );
   }
   viewLead(event: any) {
-    console.log('Row clicked:', event.data);
+    // console.log('Row clicked:', event.data);
     const lead = event.data;
     this.routingService.handleRoute('leads/profile/' + lead.id, null);
   }
@@ -1634,7 +1634,7 @@ export class ViewComponent {
     this.leadsService.getDisbursalLeads(filter).subscribe(
       (response) => {
         this.disbursalleads = response;
-        console.log(this.disbursalleads);
+        // console.log(this.disbursalleads);
         this.totalSanctionedAmount = this.disbursalleads.reduce((sum, lead) => {
           return sum + (lead.sanctionedAmount || 0);
         }, 0);
@@ -1647,8 +1647,8 @@ export class ViewComponent {
         this.totalDisbursedAmountInLakhsOrCrores = this.convertToLakhsOrCrores(
           this.totalDisbursedAmount
         );
-        console.log('Total Sanctioned Amount:', this.totalSanctionedAmount);
-        console.log('Total Disbursed Amount:', this.totalDisbursedAmount);
+        // console.log('Total Sanctioned Amount:', this.totalSanctionedAmount);
+        // console.log('Total Disbursed Amount:', this.totalDisbursedAmount);
         this.loading = false;
       },
       (error: any) => {

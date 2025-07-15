@@ -67,7 +67,7 @@ export class LoginComponent {
     this.api_loading = true;
     this.authService.userLogin(payload).subscribe(
       (data: any) => {
-        console.log(data);
+        // console.log(data);
         this.api_loading = false;
         if (data && data['accessToken']) {
           this.localStorageService.setItemOnLocalStorage(

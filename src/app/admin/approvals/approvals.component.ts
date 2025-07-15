@@ -361,7 +361,7 @@ export class ApprovalsComponent implements OnInit {
     if (!this.totalStatusLeadsCountArray) {
       return [];
     }
-    console.log(this.activeItem)
+    // console.log(this.activeItem)
     // Check the active item and update the labels accordingly
     if (this.activeItem.name === 'homeLoan') {
       return [
@@ -442,7 +442,7 @@ export class ApprovalsComponent implements OnInit {
     this.leadsService.getStatusLeadsCountArray(filter).subscribe(
       (leadsCount) => {
         this.totalStatusLeadsCountArray = leadsCount;
-        console.log(this.totalStatusLeadsCountArray);
+        // console.log(this.totalStatusLeadsCountArray);
         this.employmentStatus = this.getStatusItems();
         // this.activeItem = this.items[0];
         this.loadEmploymentActiveItem();
@@ -465,7 +465,7 @@ export class ApprovalsComponent implements OnInit {
     this.leadsService.getApprovedLeadCount(filter).subscribe(
       (leadsCount) => {
         this.totalActiveLeadsCount = leadsCount;
-        console.log(this.totalActiveLeadsCount);
+        // console.log(this.totalActiveLeadsCount);
         this.items = this.getFilteredItems();
         // this.activeItem = this.items[0];
         this.loadActiveItem();
@@ -488,7 +488,7 @@ export class ApprovalsComponent implements OnInit {
     this.leadsService.getplApprovedLeadCount(filter).subscribe(
       (leadsCount) => {
         this.totalLeadsCountArray = leadsCount;
-        console.log(this.totalLeadsCountArray);
+        // console.log(this.totalLeadsCountArray);
         this.items = this.getFilteredItems();
         // this.activeItem = this.items[0];
         this.loadActiveItem();
@@ -736,7 +736,7 @@ export class ApprovalsComponent implements OnInit {
       this.appliedFilterPersonal
     );
 
-    console.log(api_filter);
+    // console.log(api_filter);
     if (api_filter) {
       this.getpersonalloanLeadsCount(api_filter);
       this.getloanLeads(api_filter);
@@ -747,7 +747,7 @@ export class ApprovalsComponent implements OnInit {
     this.leadsService.getplApprovalsLeads(filter).subscribe(
       (response) => {
         this.loanLeads = response;
-        console.log(this.loanLeads)
+        // console.log(this.loanLeads)
         this.loanleadsLoading = false;
       },
       (error: any) => {
@@ -760,7 +760,7 @@ export class ApprovalsComponent implements OnInit {
     this.leadsService.getplApprovedLeadCount(filter).subscribe(
       (response) => {
         this.personalloanLeadsCount = response;
-        console.log(this.personalloanLeadsCount);
+        // console.log(this.personalloanLeadsCount);
       },
       (error: any) => {
         this.toastService.showError(error);
@@ -772,7 +772,7 @@ export class ApprovalsComponent implements OnInit {
   //   this.routingService.handleRoute('files/loanleadview/' + lead.leadId, null);
   // }
   viewLead(event: any) {
-    console.log('Row clicked:', event.data);
+    // console.log('Row clicked:', event.data);
     const lead = event.data
     const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
     if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
@@ -846,7 +846,7 @@ export class ApprovalsComponent implements OnInit {
     ) {
       api_filter['sourcedBy-eq'] = this.userDetails.id;
     }
-    console.log(api_filter);
+    // console.log(api_filter);
     if (api_filter) {
       this.getHomeloanLeadsCount(api_filter);
       this.getloanLeads(api_filter);
@@ -890,7 +890,7 @@ export class ApprovalsComponent implements OnInit {
       api_filter['sourcedBy-eq'] = this.userDetails.id;
     }
     if (api_filter) {
-      console.log(api_filter);
+      // console.log(api_filter);
       this.getHomeloanselfLeadsCount(api_filter);
       this.getloanLeads(api_filter);
     }
@@ -918,7 +918,7 @@ export class ApprovalsComponent implements OnInit {
         api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
       }
     }
-    console.log(api_filter);
+    // console.log(api_filter);
     api_filter = Object.assign(
       {},
       api_filter,

@@ -14,12 +14,12 @@ export class RoutingService {
 
   handleRoute(activeRoute: any, params, options?) {
     let relativeRoute = this.projectRoute;
-    console.log('Relative Route:', relativeRoute);
+    // console.log('Relative Route:', relativeRoute);
     if (this.featureRoute) {
       relativeRoute = relativeRoute + '/' + this.featureRoute;
     }
-    console.log('Relative Route:', relativeRoute);
-    console.log('Active Route:', activeRoute);
+    // console.log('Relative Route:', relativeRoute);
+    // console.log('Active Route:', activeRoute);
     if (options) {
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
       this.router.onSameUrlNavigation = 'reload';
@@ -28,7 +28,7 @@ export class RoutingService {
       params['queryParams']['v'] = this.getVersion();
       this.router.navigate([relativeRoute + '/' + activeRoute], params);
     } else {
-      console.log('else');
+      // console.log('else');
       this.router.navigate([relativeRoute + '/' + activeRoute], {
         queryParams: { v: this.getVersion() },
       });
@@ -36,11 +36,11 @@ export class RoutingService {
   }
   setParentRoute(route) {
     this.projectRoute = route;
-    console.log('Project route:', this.projectRoute);
+    // console.log('Project route:', this.projectRoute);
   }
   setFeatureRoute(route) {
     this.featureRoute = route;
-    console.log('Feature route:', this.featureRoute);
+    // console.log('Feature route:', this.featureRoute);
   }
   setVersion(version) {
     this.version = version;

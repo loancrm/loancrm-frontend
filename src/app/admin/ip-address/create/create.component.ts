@@ -46,7 +46,7 @@ export class CreateComponent {
         this.heading = 'Update Ip Address';
         this.getIpAddressById().then((data) => {
           if (data) {
-            console.log('ip address data', this.ipAddressData);
+            // console.log('ip address data', this.ipAddressData);
             this.ipAddressForm.patchValue({
               ipAddress: this.ipAddressData.ipAddress,
             });
@@ -69,7 +69,7 @@ export class CreateComponent {
     ];
     this.getIpAddressById().then((data) => {
       if (data) {
-        console.log(this.ipAddressData);
+        // console.log(this.ipAddressData);
         this.ipAddressForm.patchValue({
           ipAddress: this.ipAddressData?.ipAddress,
           ipAddressName: this.ipAddressData?.ipAddressName,
@@ -151,7 +151,7 @@ export class CreateComponent {
       ipAddressName: formValues.ipAddressName,
       ipAddress: formValues.ipAddress,
     };
-    console.log('formData', formData);
+    // console.log('formData', formData);
     if (this.actionType == 'create') {
       this.loading = true;
       this.leadsService.createIpAddress(formData).subscribe(
@@ -164,13 +164,13 @@ export class CreateComponent {
         },
         (error: any) => {
           this.loading = false;
-          console.log(error);
+          // console.log(error);
           this.toastService.showError(error);
         }
       );
     } else if (this.actionType == 'update') {
       this.loading = true;
-      console.log(formData);
+      // console.log(formData);
       this.leadsService.updateIpAddress(this.ipAddressId, formData).subscribe(
         (data) => {
           if (data) {
@@ -192,7 +192,7 @@ export class CreateComponent {
       this.leadsService.getIpAddressById(this.ipAddressId, filter).subscribe(
         (response) => {
           this.ipAddressData = response;
-          console.log(this.ipAddressData);
+          // console.log(this.ipAddressData);
           this.loading = false;
           resolve(true);
         },

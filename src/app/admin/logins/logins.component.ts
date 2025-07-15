@@ -254,7 +254,7 @@ export class LoginsComponent {
     if (!this.totalStatusLeadsCountArray) {
       return [];
     }
-    console.log(this.activeItem)
+    // console.log(this.activeItem)
     // Check the active item and update the labels accordingly
     if (this.activeItem.name === 'homeLoan') {
       return [
@@ -296,7 +296,7 @@ export class LoginsComponent {
     this.leadsService.getLeadsCount(filter).subscribe(
       (leadsCount) => {
         this.totalActiveLeadsCount = leadsCount;
-        console.log(this.totalActiveLeadsCount);
+        // console.log(this.totalActiveLeadsCount);
         this.items = this.getFilteredItems();
         // this.activeItem = this.items[0];
         this.loadActiveItem();
@@ -319,7 +319,7 @@ export class LoginsComponent {
     this.leadsService.getStatusLeadsCountArray(filter).subscribe(
       (leadsCount) => {
         this.totalStatusLeadsCountArray = leadsCount;
-        console.log(this.totalStatusLeadsCountArray);
+        // console.log(this.totalStatusLeadsCountArray);
         this.employmentStatus = this.getStatusItems();
         // this.activeItem = this.items[0];
         this.loadEmploymentActiveItem();
@@ -342,7 +342,7 @@ export class LoginsComponent {
     this.leadsService.getTotalLeadsCountArray(filter).subscribe(
       (leadsCount) => {
         this.totalLeadsCountArray = leadsCount;
-        console.log(this.totalLeadsCountArray);
+        // console.log(this.totalLeadsCountArray);
         this.items = this.getFilteredItems();
         // this.activeItem = this.items[0];
         this.loadActiveItem();
@@ -572,7 +572,7 @@ export class LoginsComponent {
     this.currentTableEvent = event;
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     if (this.selectedLoginStatus) {
-      console.log(this.selectedLoginStatus)
+      // console.log(this.selectedLoginStatus)
       if (this.selectedLoginStatus && this.selectedLoginStatus.name) {
         if (this.selectedLoginStatus.name != 'all') {
           api_filter['leadInternalStatus-eq'] = this.selectedLoginStatus.id;
@@ -590,7 +590,7 @@ export class LoginsComponent {
     //   }
     // }
     if (this.selectedSourcedByStatus && this.selectedSourcedByStatus.name) {
-      console.log(this.selectedSourcedByStatus)
+      // console.log(this.selectedSourcedByStatus)
       if (this.selectedSourcedByStatus.name != 'All') {
         api_filter['sourcedBy-eq'] = this.selectedSourcedByStatus.id;
       }
@@ -704,7 +704,7 @@ export class LoginsComponent {
     this.leadsService.getLeadsCount(filter).subscribe(
       (leadsCount) => {
         this.totalLeadsCount = leadsCount;
-        console.log(this.totalLeadsCount);
+        // console.log(this.totalLeadsCount);
       },
       (error: any) => {
         this.toastService.showError(error);
@@ -716,7 +716,7 @@ export class LoginsComponent {
     this.leadsService.getDistinctLeadCount(filter).subscribe(
       (leadsCount) => {
         this.totalLeadsCountfip = leadsCount;
-        console.log(this.totalLeadsCountfip);
+        // console.log(this.totalLeadsCountfip);
       },
       (error: any) => {
         this.toastService.showError(error);
@@ -726,11 +726,11 @@ export class LoginsComponent {
 
   getTotalLeads(filter = {}) {
     this.apiLoading = true;
-    console.log(filter)
+    // console.log(filter)
     this.leadsService.getLeads(filter).subscribe(
       (leads) => {
         this.leads = leads;
-        console.log("leads", this.leads)
+        // console.log("leads", this.leads)
         this.apiLoading = false;
       },
       (error: any) => {
@@ -1007,7 +1007,7 @@ export class LoginsComponent {
         api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
       }
     }
-    console.log(api_filter);
+    // console.log(api_filter);
     api_filter = Object.assign(
       {},
       api_filter,
@@ -1097,7 +1097,7 @@ export class LoginsComponent {
       api_filter['sourcedBy-eq'] = this.userDetails.id;
     }
     if (api_filter) {
-      console.log(api_filter);
+      // console.log(api_filter);
       this.getHomeloanselfLeadsCount(api_filter);
       this.getloanLeads(api_filter);
     }
@@ -1149,7 +1149,7 @@ export class LoginsComponent {
     ) {
       api_filter['sourcedBy-eq'] = this.userDetails.id;
     }
-    console.log(api_filter);
+    // console.log(api_filter);
     if (api_filter) {
       this.getHomeloanLeadsCount(api_filter);
       this.getloanLeads(api_filter);
@@ -1167,7 +1167,7 @@ export class LoginsComponent {
     //   }
     // }
     if (this.selectedplLoginStatus) {
-      console.log(this.selectedplLoginStatus)
+      // console.log(this.selectedplLoginStatus)
       if (this.selectedplLoginStatus && this.selectedplLoginStatus.name) {
         if (this.selectedplLoginStatus.name != 'all') {
           api_filter['leadInternalStatus-eq'] = this.selectedplLoginStatus.id;
@@ -1177,7 +1177,7 @@ export class LoginsComponent {
       }
     }
     if (this.SourcedByForPersonal && this.SourcedByForPersonal.name) {
-      console.log(this.SourcedByForPersonal)
+      // console.log(this.SourcedByForPersonal)
       if (this.SourcedByForPersonal.name != 'All') {
         api_filter['sourcedBy-eq'] = this.SourcedByForPersonal.id;
       }
@@ -1197,7 +1197,7 @@ export class LoginsComponent {
     //   api_filter['sourcedBy-eq'] = this.userDetails.id;
     // }
 
-    console.log(api_filter);
+    // console.log(api_filter);
     if (api_filter) {
       this.getpersonalloanLeadsCount(api_filter);
       this.getloanLeads(api_filter);
@@ -1217,7 +1217,7 @@ export class LoginsComponent {
     this.leadsService.getloanLeadsCount(filter).subscribe(
       (response) => {
         this.personalloanLeadsCount = response;
-        console.log(this.personalloanLeadsCount);
+        // console.log(this.personalloanLeadsCount);
       },
       (error: any) => {
         this.toastService.showError(error);

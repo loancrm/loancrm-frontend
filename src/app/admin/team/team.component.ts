@@ -55,7 +55,7 @@ export class TeamComponent implements OnInit {
   ngOnInit(): void {
     this.setFilterConfig();
     this.capabilities = this.leadsService.getUserRbac();
-    console.log(this.capabilities);
+    // console.log(this.capabilities);
     const userDetails =
       this.localStorageService.getItemFromLocalStorage('userDetails');
     this.userDetails = userDetails.user;
@@ -172,7 +172,7 @@ export class TeamComponent implements OnInit {
     this.leadsService.getUserRoles(filter).subscribe(
       (roles) => {
         this.userRoles = roles;
-        console.log(this.userRoles);
+        // console.log(this.userRoles);
       },
       (error: any) => {
         this.toastService.showError(error);
@@ -219,7 +219,7 @@ export class TeamComponent implements OnInit {
     this.loading = true;
     this.leadsService.deleteUsers(userId).subscribe(
       (response: any) => {
-        console.log(response);
+        // console.log(response);
         this.toastService.showSuccess(response?.message);
         this.loading = false;
         this.loadTeam(this.currentTableEvent);
@@ -302,7 +302,7 @@ export class TeamComponent implements OnInit {
   }
 
   loadTeam(event) {
-    console.log(event);
+    // console.log(event);
     this.currentTableEvent = event;
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     if (this.selectedTeamStatus) {
@@ -336,7 +336,7 @@ export class TeamComponent implements OnInit {
       }
     }
     if (api_filter) {
-      console.log(api_filter);
+      // console.log(api_filter);
       this.getTeamCount(api_filter);
       this.getTeam(api_filter);
     }
@@ -353,7 +353,7 @@ export class TeamComponent implements OnInit {
     this.leadsService.getUsersCount(filter).subscribe(
       (teamsCount) => {
         this.usersCount = teamsCount;
-        console.log(this.usersCount);
+        // console.log(this.usersCount);
       },
       (error: any) => {
         this.toastService.showError(error);

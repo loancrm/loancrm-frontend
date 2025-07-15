@@ -58,7 +58,7 @@ export class LoanleadsviewComponent {
       this.leadsService.getLoanLeadById(leadId).subscribe(
         (response: any) => {
           this.loanleads = response;
-          console.log(this.loanleads);
+          // console.log(this.loanleads);
           this.updateDisplayedItems();
           resolve(true);
         },

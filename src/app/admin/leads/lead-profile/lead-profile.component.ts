@@ -112,7 +112,7 @@ export class LeadProfileComponent implements OnInit {
     this.leadsService.getAllLeadData(leadId).subscribe(
       (response) => {
         this.leadsData = response;
-        console.log('leads full data:', this.leadsData);
+        // console.log('leads full data:', this.leadsData);
         this.updateDisplayedItems();
         this.setTimelineDates();
         this.loading = false; // Ensure loading is set to false after data is processed
@@ -142,7 +142,7 @@ export class LeadProfileComponent implements OnInit {
     });
   }
   showUserDetails(user: any): void {
-    console.log('User details:', user);
+    // console.log('User details:', user);
     this.selectLender = user.data;
     this.isDialogVisible = true;
   }
@@ -228,7 +228,7 @@ export class LeadProfileComponent implements OnInit {
     this.leadsService.getLoanLeadById(id).subscribe(
       (response) => {
         this.loanleads = response[0];
-        console.log('loanleads', this.loanleads);
+        // console.log('loanleads', this.loanleads);
         this.updateDisplayedItems();
         this.loading = false;
       },

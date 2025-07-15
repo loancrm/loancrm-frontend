@@ -77,7 +77,7 @@ export class LoanLeadsComponent {
     this.moment = this.dateTimeProcessor.getMoment();
     this.activatedRoute.queryParams.subscribe((params) => {
       this.loanType = params['loanType'];
-      console.log('Selected Loan Type:', this.loanType);
+      // console.log('Selected Loan Type:', this.loanType);
     });
     this.activatedRoute.params.subscribe((params) => {
       if (params && params['id']) {
@@ -88,7 +88,7 @@ export class LoanLeadsComponent {
           if (data) {
             (this.employmentStatus = this.leadData[0]?.employmentStatus),
               (this.loanType = this.leadData[0].loanType),
-              console.log('leadData', this.leadData);
+              // console.log('leadData', this.leadData);
             this.leadForm.patchValue({
               contactPerson: this.leadData[0]?.contactPerson,
               primaryPhone: this.leadData[0]?.primaryPhone,
@@ -176,7 +176,7 @@ export class LoanLeadsComponent {
     let userDetails =
       this.localStorageService.getItemFromLocalStorage('userDetails');
     this.userDetails = userDetails.user;
-    console.log(this.userDetails);
+    // console.log(this.userDetails);
     this.createForm();
     if (this.loanType == 'personalLoan') {
       this.employmentStatus = 'employed';
@@ -275,7 +275,7 @@ export class LoanLeadsComponent {
     this.leadsService.getLeadSources(filter).subscribe(
       (sources) => {
         this.leadSources = sources;
-        console.log('Lead sources :', this.leadSources);
+        // console.log('Lead sources :', this.leadSources);
       },
       (error: any) => {
         this.toastService.showError(error);
@@ -286,7 +286,7 @@ export class LoanLeadsComponent {
     this.leadsService.getUsers(filter).subscribe(
       (users) => {
         this.leadUsers = users;
-        console.log('Lead Users:', this.leadUsers);
+        // console.log('Lead Users:', this.leadUsers);
       },
       (error: any) => {
         this.toastService.showError(error);
@@ -336,7 +336,7 @@ export class LoanLeadsComponent {
         this.userDetails.user &&
         this.userDetails.user.username,
     };
-    console.log('formData', formData);
+    // console.log('formData', formData);
     if (this.actionType == 'create') {
       // if (formValues.createdOn) {
       //   formData.createdOn = this.moment(formValues.createdOn).format(
@@ -363,7 +363,7 @@ export class LoanLeadsComponent {
       this.leadsService.createLoanLead(formData).subscribe(
         (data) => {
           if (data) {
-            console.log(data);
+            // console.log(data);
             this.loading = false;
             this.toastService.showSuccess('Lead Created Successfully');
             this.routingService.handleRoute('leads', null);
@@ -371,7 +371,7 @@ export class LoanLeadsComponent {
         },
         (error: any) => {
           this.loading = false;
-          console.log(error);
+          // console.log(error);
           this.toastService.showError(error);
         }
       );
@@ -384,8 +384,8 @@ export class LoanLeadsComponent {
               const currentCreatedOn = this.moment(this.leadData[0].createdOn).format(
                 'YYYY-MM-DD'
               );
-              console.log(newCreatedOn);
-              console.log(currentCreatedOn);
+              // console.log(newCreatedOn);
+              // console.log(currentCreatedOn);
               if (newCreatedOn !== currentCreatedOn) {
                 formData.createdOn = moment(formValues.createdOn)
                   .tz('Asia/Kolkata') // Convert to IST

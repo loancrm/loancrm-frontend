@@ -23,7 +23,7 @@ export class VersionCheckService {
     if (this.intervalId) {
       clearInterval(this.intervalId);
       this.intervalId = null;
-      console.log('🛑 Version polling stopped.');
+      // console.log('🛑 Version polling stopped.');
     }
   }
 
@@ -55,9 +55,9 @@ export class VersionCheckService {
           window.location.href = `${baseUrl}?v=${serverVersion}`; // harsh reload with version
         } else if (!isMismatch && !isUrlOutdated) {
           localStorage.removeItem('versionReloaded');
-          console.log('✅ Version is up-to-date:', serverVersion);
+          // console.log('✅ Version is up-to-date:', serverVersion);
         } else {
-          console.log('🔁 Already reloaded once. Skipping reload.');
+          // console.log('🔁 Already reloaded once. Skipping reload.');
         }
       },
       error: (error) => {

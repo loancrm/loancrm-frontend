@@ -254,7 +254,7 @@
                     userDetails.userType != '3'
                   "
                 >
-                  <span class="table-column-data">{{ lead.sourcedBy ? (lead.sourcedBy | capitalizeFirst) : '-' }}</span>
+                  <span class="table-column-data">{{ lead.sourcedBy ? (getSourceName(lead.sourcedBy) | capitalizeFirst) : '-' }}</span>
                 </td>
                 <td>
                   <span class="table-column-data">{{
@@ -298,6 +298,7 @@
                         (click)="viewLead(lead);$event.stopPropagation()"
                       /> -->
                       <img
+                      alt="View Lead"
                         src="../../../assets/images/icons/edit.svg"
                         width="24px"
                         height="24px"
@@ -313,6 +314,7 @@
                         [popup]="true"
                       ></p-menu>
                       <img
+                      alt="Actions"
                         src="../../../assets/images/icons/menu.svg"
                         width="24px"
                         height="24px"
@@ -349,6 +351,7 @@
               <tr class="text-center">
                 <td colspan="10" class="text-center fw-bold">
                   <img
+                  alt="No Data"
                     src="../../../assets/images/menu/no-data.gif"
                     width="200"
                     height="200"
@@ -616,6 +619,7 @@
                         tooltipPosition="top"
                       ></button> -->
                       <img
+                      alt="Update Lead"
                         src="../../../assets/images/icons/edit.svg"
                         width="24px"
                         height="24px"
@@ -640,6 +644,7 @@
                         tooltipPosition="top"
                       ></button> -->
                       <img
+                      alt="Actions"
                         src="../../../assets/images/icons/menu.svg"
                         width="24px"
                         height="24px"
@@ -656,6 +661,7 @@
               <tr class="text-center">
                 <td colspan="10" class="text-center fw-bold">
                   <img
+                  alt="No Data"
                     src="../../../assets/images/menu/no-data.gif"
                     width="200"
                     height="200"
@@ -925,21 +931,21 @@
                     <td *ngIf="activeEmploymentStatus.name === 'self-employed'">
                       <span
                         class="table-column-data"
-                        
+
                         >{{ lead.businessName ? (lead.businessName | capitalizeFirst) : '-' }}</span
                       >
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'employed'">
                       <span
                         class="table-column-data"
-                        
+
                         >{{ lead.designation ? (lead.designation | capitalizeFirst) :'-' }}</span
                       >
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'self-employed'">
                       <span
                         class="table-column-data"
-                        
+
                         >{{ lead.businessEntity ? (getEntityName(lead.businessEntity)) : '-' }}</span
                       >
                     </td>
@@ -951,28 +957,28 @@
                     <td *ngIf="activeEmploymentStatus.name === 'self-employed'">
                       <span
                         class="table-column-data"
-                        
+
                         >{{ lead.contactPerson ? (lead.contactPerson | capitalizeFirst) : '-' }}</span
                       >
                     </td>
                     <td>
                       <span
                         class="table-column-data"
-                        
+
                         >{{ lead.primaryPhone }}</span
                       >
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'employed'">
                       <span
                         class="table-column-data"
-                        
+
                         >{{ lead.jobExperience ? (lead.jobExperience | capitalizeFirst) : '-' }}</span
                       >
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'self-employed'">
                       <span
                         class="table-column-data"
-                        
+
                         >{{ lead.businessTurnover ? (lead.businessTurnover | capitalizeFirst) : '-' }}</span
                       >
                     </td>
@@ -995,7 +1001,7 @@
                     <td>
                       <span
                         class="table-column-data fw-bold statusdata"
-                        
+
                         [ngStyle]="{
                           color: getStatusColor(
                             getStatusName(lead.leadInternalStatus)
@@ -1039,6 +1045,7 @@
                             tooltipPosition="top"
                           ></button> -->
                           <img
+                          alt="Update Lead"
                             src="../../../assets/images/icons/edit.svg"
                             width="24px"
                             height="24px"
@@ -1064,6 +1071,7 @@
                             tooltipPosition="top"
                           ></button> -->
                           <img
+                          alt="Actions"
                             src="../../../assets/images/icons/menu.svg"
                             width="24px"
                             height="24px"
@@ -1082,6 +1090,7 @@
                   <tr class="text-center">
                     <td colspan="10" class="text-center fw-bold">
                       <img
+                      alt="No Data"
                         src="../../../assets/images/menu/no-data.gif"
                         width="200"
                         height="200"
@@ -1437,6 +1446,7 @@
                             tooltipPosition="top"
                           /> -->
                           <img
+                          alt="View Lead"
                             src="../../../assets/images/icons/edit.svg"
                             width="24px"
                             height="24px"
@@ -1452,6 +1462,7 @@
                             [popup]="true"
                           ></p-menu>
                           <img
+                          alt="Actions"
                             src="../../../assets/images/icons/menu.svg"
                             width="24px"
                             height="24px"
@@ -1470,6 +1481,7 @@
                   <tr class="text-center">
                     <td colspan="10" class="text-center fw-bold">
                       <img
+                      alt="No Data"
                         src="../../../assets/images/menu/no-data.gif"
                         width="200"
                         height="200"

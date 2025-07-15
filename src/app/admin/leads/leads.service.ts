@@ -50,7 +50,7 @@ export class LeadsService {
     return this.sidebarVisible.getValue();
   }
   async getClientIp(): Promise<string> {
-    console.log('Fetching client IP...');
+    // console.log('Fetching client IP...');
     try {
       const response = await axios.get('https://api.ipify.org?format=json');
       return response.data.ip;
@@ -81,7 +81,7 @@ export class LeadsService {
             'clientIpTime',
             currentTime.toString()
           );
-          console.log('Client IP updated:', newIp);
+          // console.log('Client IP updated:', newIp);
         }
       }
     }
@@ -132,17 +132,17 @@ export class LeadsService {
     return this.serviceMeta.httpPost(url, data);
   }
   sendOtp(data: { mobile: string }) {
-    const url = '/otp/send-otp';
+    const url = 'otp/send-otp';
     return this.serviceMeta.httpPost(url, data);
   }
 
   verifyOtp(data: { mobile: string; otp: string }) {
-    const url = '/otp/verify-otp';
+    const url = 'otp/verify-otp';
     return this.serviceMeta.httpPost(url, data);
   }
 
   createAccount(data) {
-    console.log(data)
+    // console.log(data)
     const url = 'accounts';
     return this.serviceMeta.httpPost(url, data);
   }
@@ -405,7 +405,7 @@ export class LeadsService {
     let userDetails =
       this.localStorageService.getItemFromLocalStorage('userDetails');
     let user = userDetails?.user || {};
-    console.log(user);
+    // console.log(user);
     let rbac = user.rbac.split(',');
     let capabilities = {
       leads: rbac.includes('leads'),
@@ -865,22 +865,22 @@ export class LeadsService {
   //   return this.serviceMeta.httpPost(url, data);
   // }
   uploadFiles(data: FormData, leadId, type = 'default', accountId: string,) {
-    console.log(FormData);
-    console.log(data);
+    // console.log(FormData);
+    // console.log(data);
     // const url = `http://localhost/files?type=${type}&leadId=${leadId}&accountId=${accountId}`
     const url = `https://files.loancrm.org/files?type=${type}&leadId=${leadId}&accountId=${accountId}`;
     return this.serviceMeta.httpPost(url, data);
   }
 
   deleteFile(filePath: string) {
-    console.log(filePath);
+    // console.log(filePath);
     // const url = `https://files.thefintalk.in/files?file_path=${encodeURIComponent(
     //   filePath
     // )}`;
     const url = `https://files.loancrm.org/files?file_path=${encodeURIComponent(
       filePath
     )}`;
-    console.log(url);
+    // console.log(url);
     return this.serviceMeta.httpDelete(url);
   }
 

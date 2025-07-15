@@ -41,7 +41,7 @@ export class IpAddressComponent implements OnInit {
   ngOnInit(): void {
     this.setFilterConfig();
     this.capabilities = this.leadsService.getUserRbac();
-    console.log(this.capabilities);
+    // console.log(this.capabilities);
   }
 
   // setFilterConfig() {
@@ -146,7 +146,7 @@ export class IpAddressComponent implements OnInit {
     ];
   }
   loadIpAddress(event) {
-    console.log(event);
+    // console.log(event);
     this.currentTableEvent = event;
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     api_filter = Object.assign(
@@ -156,7 +156,7 @@ export class IpAddressComponent implements OnInit {
       this.appliedFilter
     );
     if (api_filter) {
-      console.log(api_filter);
+      // console.log(api_filter);
       this.getIpAddressCount(api_filter);
       this.getIpAddress(api_filter);
     }
@@ -166,7 +166,7 @@ export class IpAddressComponent implements OnInit {
     this.leadsService.getIpAddressCount(filter).subscribe(
       (response) => {
         this.ipAddressCount = response;
-        console.log(this.ipAddressCount);
+        // console.log(this.ipAddressCount);
       },
       (error: any) => {
         this.toastService.showError('error occurs');
@@ -179,7 +179,7 @@ export class IpAddressComponent implements OnInit {
     this.leadsService.getIpAddress(filter).subscribe(
       (response) => {
         this.ipAddress = response;
-        console.log(this.ipAddress);
+        // console.log(this.ipAddress);
         this.loading = false;
       },
       (error: any) => {
@@ -207,7 +207,7 @@ export class IpAddressComponent implements OnInit {
     this.loading = true;
     this.leadsService.deleteIpAddress(ipAddressId).subscribe(
       (response: any) => {
-        console.log(response);
+        // console.log(response);
         this.toastService.showSuccess(response?.message);
         this.loading = false;
         this.loadIpAddress(this.currentTableEvent);

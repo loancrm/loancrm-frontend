@@ -99,8 +99,8 @@ export class RevenueComponent implements OnInit {
       (lead: any) => {
         this.disbursalDetails = lead;
         this.totalRevenueValue = this.sumRevenueValues(this.disbursalDetails);
-        console.log('Disbursal details:', this.disbursalDetails);
-        console.log('Total Revenue Value:', this.totalRevenueValue);
+        // console.log('Disbursal details:', this.disbursalDetails);
+        // console.log('Total Revenue Value:', this.totalRevenueValue);
         this.loading = false;
       },
       (error: any) => {
@@ -144,7 +144,7 @@ export class RevenueComponent implements OnInit {
       payoutValue: detail.payoutValue,
       revenueValue: detail.revenueValue,
     }));
-    console.log(formData);
+    // console.log(formData);
     this.loading = true;
     this.leadsService.updateRevenueDetails(this.leadId, formData).subscribe(
       (response: any) => {

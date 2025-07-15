@@ -70,7 +70,7 @@ export class RejectsDetailsComponent implements OnInit {
   getBankRejectsDetailsById(leadId: string): void {
     this.leadsService.getBankRejectsDetailsById(leadId).subscribe(
       (response: any) => {
-        console.log('Response data:', response);
+        // console.log('Response data:', response);
         this.bankRejectesData = response;
       },
       (error) => {

@@ -59,7 +59,7 @@ export class CreateComponent implements OnInit {
         this.heading = 'Update Lender';
         this.getBankersDetailsById().then((data) => {
           if (data) {
-            console.log('bankersData', this.bankersData);
+            // console.log('bankersData', this.bankersData);
             this.BankerForm.patchValue({
               name: this.bankersData.name,
             });
@@ -96,7 +96,7 @@ export class CreateComponent implements OnInit {
     this.userDetails = userDetails.user;
     this.createForm();
     this.capabilities = this.leadsService.getUserRbac();
-    console.log(this.capabilities);
+    // console.log(this.capabilities);
   }
 
   createForm() {
@@ -277,11 +277,11 @@ export class CreateComponent implements OnInit {
               files[i]['fileuploaded'] = true;
               this.selectedFiles[fileType]['filesData'].push(files[i]);
             }
-            console.log(
-              'this.selectedFiles',
-              this.selectedFiles[fileType],
-              files
-            );
+            // console.log(
+            //   'this.selectedFiles',
+            //   this.selectedFiles[fileType],
+            //   files
+            // );
             this.toastService.showSuccess('Files Uploaded Successfully');
           } else {
             this.toastService.showError({ error: 'Something went wrong' });
@@ -297,7 +297,7 @@ export class CreateComponent implements OnInit {
   }
 
   confirmDelete(file, controlName, docIndex?, fileIndex?) {
-    console.log('Before Deletion:', this.selectedFiles);
+    // console.log('Before Deletion:', this.selectedFiles);
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete this File?',
       header: 'Confirm Deletion',
@@ -317,23 +317,23 @@ export class CreateComponent implements OnInit {
     this.leadsService.deleteFile(relativePath).subscribe(
       (response: any) => {
         if (response.message === 'File deleted successfully.') {
-          console.log('File deleted successfully.');
+          // console.log('File deleted successfully.');
           if (this.selectedFiles[fileType]?.uploadedFiles) {
             this.selectedFiles[fileType].uploadedFiles = this.selectedFiles[
               fileType
             ].uploadedFiles.filter((f: string) => f !== fileUrl);
-            console.log('After Deletion:', this.selectedFiles);
+            // console.log('After Deletion:', this.selectedFiles);
           } else if (Array.isArray(this.selectedFiles[fileType])) {
             if (docIndex !== undefined && fileIndex !== undefined) {
               const document = this.selectedFiles[fileType][docIndex];
               if (Array.isArray(document?.uploadedFiles)) {
                 document.uploadedFiles.splice(fileIndex, 1);
-                console.log(
-                  `After Deletion from ${fileType}[${docIndex}]:`,
-                  document.uploadedFiles
-                );
+                // console.log(
+                //   `After Deletion from ${fileType}[${docIndex}]:`,
+                //   document.uploadedFiles
+                // );
               }
-              console.log('After Deletion:', this.selectedFiles);
+              // console.log('After Deletion:', this.selectedFiles);
             } else {
               console.error('docIndex or fileIndex is missing.');
             }

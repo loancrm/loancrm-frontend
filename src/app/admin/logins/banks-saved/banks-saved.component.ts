@@ -70,7 +70,7 @@ export class BanksSavedComponent implements OnInit {
       this.getFIPDetailsById(this.leadId);
     }
     this.capabilities = this.leadsService.getUserRbac();
-    console.log(this.capabilities);
+    // console.log(this.capabilities);
   }
 
   getLoanLeadById(leadId: any): void {
@@ -99,7 +99,7 @@ export class BanksSavedComponent implements OnInit {
     this.leadsService.getFIPDetailsById(id).subscribe(
       (lead: any) => {
         this.fipDetails = lead;
-        console.log('FIPDETAILS:', this.fipDetails);
+        // console.log('FIPDETAILS:', this.fipDetails);
         this.loading = false;
       },
       (error: any) => {
@@ -136,7 +136,7 @@ export class BanksSavedComponent implements OnInit {
     this.loading = true;
     this.leadsService.deleteLogin(loginLeadId).subscribe(
       (response: any) => {
-        console.log(response);
+        // console.log(response);
         this.toastService.showSuccess(response?.message);
         this.loading = false;
         if (this.leadId) {
@@ -178,7 +178,7 @@ export class BanksSavedComponent implements OnInit {
         : null,
       fipRemarks: detail.fipRemarks,
     }));
-    console.log(formData);
+    // console.log(formData);
     this.loading = true;
     this.leadsService.updateFIPDetails(this.leadId, formData).subscribe(
       (response: any) => {
@@ -205,7 +205,7 @@ export class BanksSavedComponent implements OnInit {
         : null,
       fipRemarks: detail.fipRemarks,
     }));
-    console.log(formData);
+    // console.log(formData);
     this.loading = true;
     this.leadsService.updateplFIPDetails(this.leadId, formData).subscribe(
       (response: any) => {

@@ -99,7 +99,7 @@ export class BankSelectionComponent implements OnInit {
   }
 
   sendLeadToFilesInProcess(lead) {
-    console.log(lead);
+    // console.log(lead);
   }
 
   isImageFile(file: string): boolean {
@@ -112,8 +112,8 @@ export class BankSelectionComponent implements OnInit {
       (response: any) => {
         this.banks = response;
         this.filteredBanks = this.banks;
-        console.log('banks,', this.banks);
-        console.log(this.banks[0].imageUrl);
+        // console.log('banks,', this.banks);
+        // console.log(this.banks[0].imageUrl);
       },
       (error) => {
         this.toastService.showError(error);
@@ -127,7 +127,7 @@ export class BankSelectionComponent implements OnInit {
     } else {
       this.selectedBanks = this.selectedBanks.filter((b) => b.id !== bank.id);
     }
-    console.log('Selected Banks:', this.selectedBanks);
+    // console.log('Selected Banks:', this.selectedBanks);
   }
   filterBanks(): void {
     this.filteredBanks = this.banks.filter((bank) =>
@@ -139,13 +139,13 @@ export class BankSelectionComponent implements OnInit {
       this.filteredBanks = this.banks.filter((bank) =>
         bank.name.toLowerCase().includes(this.bankNameToSearch.toLowerCase())
       );
-      console.log('Filtered Banks:', this.filteredBanks);
+      // console.log('Filtered Banks:', this.filteredBanks);
       if (this.filteredBanks.length === 0) {
         this.toastService.showInfo('No banks found with the provided name.');
       }
     } else {
       this.filteredBanks = this.banks;
-      console.log('Reset Filter: Showing all banks');
+      // console.log('Reset Filter: Showing all banks');
     }
   }
   saveLoginInfo(): void {
@@ -158,7 +158,7 @@ export class BankSelectionComponent implements OnInit {
       Program: this.selectedProgram,
       Banks: bankNames,
     };
-    console.log('formData', formData);
+    // console.log('formData', formData);
     this.loading = true;
     this.leadsService.createLogin(formData).subscribe(
       (data: any) => {
@@ -187,7 +187,7 @@ export class BankSelectionComponent implements OnInit {
       employmentStatus: this.leadData[0].employmentStatus,
       Banks: bankNames,
     };
-    console.log('formData', formData);
+    // console.log('formData', formData);
     this.loading = true;
     this.leadsService.createLogin(formData).subscribe(
       (data: any) => {
@@ -247,7 +247,7 @@ export class BankSelectionComponent implements OnInit {
     this.leadsService.getLeads(filter).subscribe(
       (leads) => {
         this.leads = leads;
-        console.log(leads);
+        // console.log(leads);
         this.loading = false;
       },
       (error: any) => {
@@ -261,7 +261,7 @@ export class BankSelectionComponent implements OnInit {
       (leadData: any) => {
         this.leadData = leadData;
         this.updateDisplayedItems();
-        console.log('loanleadData', leadData);
+        // console.log('loanleadData', leadData);
       },
       (error) => {
         this.toastService.showError(error);
@@ -296,7 +296,7 @@ export class BankSelectionComponent implements OnInit {
       (leadData: any) => {
         this.leadData = leadData;
         this.updateDisplayedItems();
-        console.log('leadData', leadData);
+        // console.log('leadData', leadData);
       },
       (error) => {
         this.toastService.showError(error);

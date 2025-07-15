@@ -61,7 +61,7 @@ export class InHouseDetailsComponent {
     this.leadsService.getCreditSummary(id).subscribe(
       (lead) => {
         this.creditSummary = lead;
-        console.log(this.creditSummary);
+        // console.log(this.creditSummary);
       },
       (error: any) => {
         this.toastService.showError(error);

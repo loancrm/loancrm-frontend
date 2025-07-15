@@ -209,7 +209,7 @@ export class HeaderComponent implements OnInit {
     this.loading = true;
     this.leadsService.searchLeads(filter).subscribe(
       (response: any) => {
-        console.log(response);
+        // console.log(response);
         if (response) {
           this.dialogService.open(LeadSearchComponent, {
             data: response,

@@ -908,8 +908,8 @@ export class CreateComponent {
         delete selectedReportData[key];
       }
     }
-    console.log(reportType);
-    console.log(selectedReportData);
+    // console.log(reportType);
+    // console.log(selectedReportData);
     const reportServiceMap = {
       LEADS: () => this.leadsService.getExportedLeads(selectedReportData),
       CALLBACKS: () =>
@@ -989,7 +989,7 @@ export class CreateComponent {
         (leadUsers: any) => {
           // this.leadUsers = [{ name: 'All' }, ...leadUsers];
           this.leadUsers = [...leadUsers];
-          console.log(leadUsers);
+          // console.log(leadUsers);
           this.loading = false;
           resolve(true);
         },
@@ -1009,7 +1009,7 @@ export class CreateComponent {
         (response: any) => {
           // this.banks = [{ name: 'All' }, ...response];
           this.banks = [...response];
-          console.log(this.banks);
+          // console.log(this.banks);
           this.loading = false;
           resolve(true);
         },
@@ -1054,7 +1054,7 @@ export class CreateComponent {
               label: `${formattedBusinessName} (${file.id})`,
             };
           });
-          console.log(this.files);
+          // console.log(this.files);
           this.loading = false;
           resolve(true);
         },

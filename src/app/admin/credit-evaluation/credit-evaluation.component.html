@@ -201,45 +201,55 @@
             <ng-template pTemplate="body" let-lead>
               <tr class="text-capitalize" [pSelectableRow]="lead">
                 <td>
-            <span class="table-column-data">{{
-              lead.customId ? (lead.customId) : '-'
-            }}</span>
-          </td>
-          <td>
-            <span class="table-column-data">{{
-              lead.businessName ? (lead.businessName | capitalizeFirst) : '-'
-            }}</span>
-          </td>
-          <td>
-            <span class="table-column-data">{{
-              lead.businessEntity ? (getEntityName(lead.businessEntity)) : '-'
-            }}</span>
-          </td>
-          <td>
-            <span class="table-column-data">{{
-              lead.contactPerson ? (lead.contactPerson | capitalizeFirst) : '-'
-            }}</span>
-          </td>
-          <td>
-            <span class="table-column-data">{{
-              lead.primePhone ?(lead.primaryPhone) : '-'
-            }}</span>
-          </td>
-          <td>
-            <span class="table-column-data">{{
-              lead.city ? (lead.city | capitalizeFirst) : '-'
-            }}</span>
-          </td>
-          <td>
-            <span class="table-column-data">{{
-              lead.sourcedBy ? (getSourceName(lead.sourcedBy) | capitalizeFirst) : '-'
-            }}</span>
-          </td>
-          <td>
-            <span class="table-column-data">{{
-              lead.createdOn ? (lead.createdOn | date : "mediumDate") : '-'
-            }}</span>
-          </td>
+                  <span class="table-column-data">{{
+                    lead.customId ? lead.customId : "-"
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data">{{
+                    lead.businessName
+                      ? (lead.businessName | capitalizeFirst)
+                      : "-"
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data">{{
+                    lead.businessEntity
+                      ? getEntityName(lead.businessEntity)
+                      : "-"
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data">{{
+                    lead.contactPerson
+                      ? (lead.contactPerson | capitalizeFirst)
+                      : "-"
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data">{{
+                    lead.primaryPhone ? lead.primaryPhone : "-"
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data">{{
+                    lead.city ? (lead.city | capitalizeFirst) : "-"
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data">{{
+                    lead.sourcedBy
+                      ? (getSourceName(lead.sourcedBy) | capitalizeFirst)
+                      : "-"
+                  }}</span>
+                </td>
+                <td>
+                  <span class="table-column-data">{{
+                    lead.createdOn
+                      ? (lead.createdOn | date : "mediumDate")
+                      : "-"
+                  }}</span>
+                </td>
                 <td>
                   <div class="text-center">
                     <div class="d-flex">
@@ -254,7 +264,7 @@
                   tooltipPosition="left"
                 ></button> -->
                       <img
-                      alt="Evaluate Credit"
+                        alt="Evaluate Credit"
                         src="../../../assets/images/icons/credit.svg"
                         width="24px"
                         height="24px"
@@ -279,7 +289,7 @@
                   tooltipPosition="top"
                 ></button> -->
                       <img
-                      alt="Actions"
+                        alt="Actions"
                         src="../../../assets/images/icons/menu.svg"
                         width="24px"
                         height="24px"
@@ -296,7 +306,7 @@
               <tr class="text-center">
                 <td colspan="10" class="text-center fw-bold">
                   <img
-                  alt="No Data"
+                    alt="No Data"
                     src="../../../assets/images/menu/no-data.gif"
                     width="200"
                     height="200"
@@ -370,7 +380,7 @@
                       (click)="filterWithBusinessNameForPersonal()"
                     >
                       <img
-                      alt="Search"
+                        alt="Search"
                         src="assets/images/icons/search.svg"
                         alt="Search"
                         width="16"
@@ -562,7 +572,7 @@
                         tooltipPosition="top"
                       ></button> -->
                       <img
-                      alt="View Lead"
+                        alt="View Lead"
                         src="../../../assets/images/icons/credit.svg"
                         width="24px"
                         height="24px"
@@ -587,7 +597,7 @@
                         tooltipPosition="top"
                       ></button> -->
                       <img
-                      alt="Actions"
+                        alt="Actions"
                         src="../../../assets/images/icons/menu.svg"
                         width="24px"
                         height="24px"
@@ -604,7 +614,7 @@
               <tr class="text-center">
                 <td colspan="10" class="text-center fw-bold">
                   <img
-                  alt="No Data"
+                    alt="No Data"
                     src="../../../assets/images/menu/no-data.gif"
                     width="200"
                     height="200"

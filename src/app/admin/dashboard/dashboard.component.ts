@@ -142,13 +142,13 @@ export class DashboardComponent implements OnInit {
     return this.moment().subtract(offset, 'months').format('MMMYYYY');
   }
   onRowSelect(event: any) {
-    console.log('Row clicked:', event.data);
+    // console.log('Row clicked:', event.data);
     this.routingService.handleRoute('leads/profile/' + event.data.id, null);
     // You can also open a dialog or navigate based on `event.data`
   }
   loadData() {
     this.loading = true;
-    console.log(this.loading);
+    // console.log(this.loading);
     this.getCounts();
     this.getFollowUpsCount();
     this.getDisbursalLeadCountforFilter();
@@ -164,7 +164,7 @@ export class DashboardComponent implements OnInit {
     this.getTotalAmountSums();
     // this.getMonthWiseLeadCountStatus();
     // this.getMonthWiseCallBacksCount();
-    console.log(this.loading);
+    // console.log(this.loading);
   }
 
   getAmountsForMonth(offset: number) {
@@ -344,7 +344,7 @@ export class DashboardComponent implements OnInit {
         filter['sourcedBy-eq'] = this.selectedSoucedByStatus.id;
       }
     }
-    console.log(filter);
+    // console.log(filter);
     this.leadsService.getLeadCountStatus(filter).subscribe(
       (response) => {
         this.leadsCountforFilter = response;
@@ -439,7 +439,7 @@ export class DashboardComponent implements OnInit {
         this.fiProcessCountforFilter = response;
         this.setBarChartOptionsForFilter();
         this.loading = false;
-        console.log(this.loading);
+        // console.log(this.loading);
       },
       (error: any) => {
         this.toastService.showError(error);
@@ -510,9 +510,9 @@ export class DashboardComponent implements OnInit {
         // this.totalbankrejectLeadsCount = bankrejectLeadsCount?.count ?? 0;
         this.totalbankrejectLeadsCount = bankrejectLeadsCount || 0;
         this.teamCount = teamCount;
-        console.log(this.totalRejectsCount)
-        console.log(this.totalcniLeadsCount)
-        console.log(this.totalbankrejectLeadsCount)
+        // console.log(this.totalRejectsCount)
+        // console.log(this.totalcniLeadsCount)
+        // console.log(this.totalbankrejectLeadsCount)
         this.updateCountsAnalytics();
         this.setChartOptions();
       },
@@ -1433,7 +1433,7 @@ export class DashboardComponent implements OnInit {
     this.leadsService.getFIPProcessDistinctLeadsCount(filter).subscribe(
       (leadsCount) => {
         this.filesInProcessCount = leadsCount;
-        console.log('Total leads count ', this.totalLeadsCount);
+        // console.log('Total leads count ', this.totalLeadsCount);
       },
       (error: any) => {
         this.toastService.showError(error);
@@ -1445,7 +1445,7 @@ export class DashboardComponent implements OnInit {
     this.leadsService.getFIPProcessDistinctLeads(filter).subscribe(
       (response) => {
         this.filesInProcessleads = response;
-        console.log('fip distinct leads', this.filesInProcessleads);
+        // console.log('fip distinct leads', this.filesInProcessleads);
         this.apiLoading = false;
       },
       (error: any) => {

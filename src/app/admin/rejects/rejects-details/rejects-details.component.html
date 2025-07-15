@@ -22,7 +22,10 @@
   <ng-container *ngFor="let item of displayedItems">
     <div class="m-2 p-1" *ngIf="item.data">
       <div class="d-flex justify-content-between">
-        <div class="d-flex align-items-center justify-content-center pointer-cursor" (click)="goBack()">
+        <div
+          class="d-flex align-items-center justify-content-center pointer-cursor"
+          (click)="goBack()"
+        >
           <span class="me-2 d-flex align-items-center">
             <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
           </span>
@@ -42,21 +45,30 @@
         <div class="card m-2 profile">
           <div class="profile-container">
             <div class="colored-half">
-              <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
-                preserveAspectRatio="none" class="svg" style="
+              <svg
+                data-name="Layer 1"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 1200 120"
+                preserveAspectRatio="none"
+                class="svg"
+                style="
                   height: 69px;
                   width: 100%;
                   fill: rgb(20, 77, 133);
                   opacity: 0.8;
                   transform: rotateY(0deg);
-                ">
+                "
+              >
                 <path
-                  d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z">
-                </path>
+                  d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+                ></path>
               </svg>
             </div>
             <div class="image-container">
-              <img src="../../../../assets/images/profile/business-profile.png" alt="Profile Picture" />
+              <img
+                src="../../../../assets/images/profile/business-profile.png"
+                alt="Profile Picture"
+              />
             </div>
           </div>
           <div *ngIf="leads" class="text-center mt-4 p-4 text-capitalize">
@@ -70,7 +82,11 @@
         </div>
       </div>
       <div class="col-md-9 mt-3 mb-4">
-        <p-table [value]="bankRejectesData" class="p-datatable-striped" styleClass="p-datatable-customers">
+        <p-table
+          [value]="bankRejectesData"
+          class="p-datatable-striped"
+          styleClass="p-datatable-customers"
+        >
           <ng-template pTemplate="header">
             <tr>
               <th *ngIf="shouldDisplayBlock()">Program</th>
@@ -81,19 +97,39 @@
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
-
             <tr>
-              <td *ngIf="shouldDisplayBlock()">{{ rowData.program ? (rowData.program) : '-'}}</td>
-              <td>{{ rowData.bankName ?(rowData.bankName) : '-'}}</td>
-              <td>{{ rowData.loginDate ? (rowData.loginDate | date) : '-'}}</td>
-              <td>{{ rowData.fipStatus ?(rowData.fipStatus | capitalizeFirst) : '-'}}</td>
-              <td>{{ rowData.fipRemarks ?(rowData.fipRemarks | capitalizeFirst) : '-' }}</td>
+              <td *ngIf="shouldDisplayBlock()">
+                {{ rowData.program ? rowData.program : "-" }}
+              </td>
+              <td>{{ rowData.bankName ? rowData.bankName : "-" }}</td>
+              <td>
+                {{ rowData.loginDate ? (rowData.loginDate | date) : "-" }}
+              </td>
+              <td>
+                {{
+                  rowData.fipStatus
+                    ? (rowData.fipStatus | capitalizeFirst)
+                    : "-"
+                }}
+              </td>
+              <td>
+                {{
+                  rowData.fipRemarks
+                    ? (rowData.fipRemarks | capitalizeFirst)
+                    : "-"
+                }}
+              </td>
             </tr>
           </ng-template>
           <ng-template pTemplate="emptymessage">
             <tr class="text-center">
               <td colspan="4" class="text-center fw-bold">
-                <img src="../../../assets/images/menu/no-data.gif" width="200" height="200" />
+                <img
+                  alt="No Data"
+                  src="../../../assets/images/menu/no-data.gif"
+                  width="200"
+                  height="200"
+                />
                 <p>No Banks Saved</p>
               </td>
             </tr>
