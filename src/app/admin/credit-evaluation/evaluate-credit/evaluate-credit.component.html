@@ -40,7 +40,7 @@
         <div class="detail-card">
           <p-accordion>
             <p-accordionTab header="Business Information">
-              <div class="business-details">
+              <!-- <div class="business-details">
                 <div class="info-line" *ngIf="leadData[0]?.natureOfBusiness">
                   <div class="label d-flex justify-content-between">
                     Nature of Business <b>:&nbsp;</b>
@@ -94,6 +94,30 @@
                   </div>
                   <div class="value">{{ leadData[0]?.createdOn | date }}</div>
                 </div>
+              </div> -->
+
+              <div class="business-details">
+                <div class="info-line" *ngFor="let field of businessFields">
+                  <div class="label d-flex justify-content-between">
+                    {{ field.label }} <b>:&nbsp;</b>
+                  </div>
+                  <div class="value">
+                    <ng-container
+                      *ngIf="leadData[0]?.[field.key]; else noValue"
+                    >
+                      <span *ngIf="field.pipe === 'capitalize'">
+                        {{ leadData[0][field.key] | capitalizeFirst }}
+                      </span>
+                      <span *ngIf="field.pipe === 'date'">
+                        {{ leadData[0][field.key] | date }}
+                      </span>
+                      <span *ngIf="!field.pipe">
+                        {{ leadData[0][field.key] }}
+                      </span>
+                    </ng-container>
+                    <ng-template #noValue>-</ng-template>
+                  </div>
+                </div>
               </div>
             </p-accordionTab>
           </p-accordion>
@@ -104,7 +128,7 @@
           <p-accordion>
             <p-accordionTab header="Business Documents">
               <div *ngIf="leadDocuments" class="detail-card">
-                <div class="business-details">
+                <!-- <div class="business-details">
                   <div class="info-line">
                     <div class="label d-flex justify-content-between">
                       GST Certificate<b>:&nbsp;</b>
@@ -193,6 +217,27 @@
                       </div>
                     </div>
                   </div>
+                </div> -->
+
+                <div class="business-details">
+                  <div class="info-line" *ngFor="let doc of documentTypes">
+                    <div class="label d-flex justify-content-between">
+                      {{ doc.label }}<b>:&nbsp;</b>
+                    </div>
+                    <div class="value">
+                      <ng-container
+                        *ngIf="leadDocuments?.[doc.key]?.length > 0; else noData"
+                      >
+                        <span
+                          *ngFor="let file of leadDocuments[doc.key]"
+                          class="me-2"
+                        >
+                          <a [href]="'//' + file" target="_blank">View</a>
+                        </span>
+                      </ng-container>
+                      <ng-template #noData>-</ng-template>
+                    </div>
+                  </div>
                 </div>
               </div>
             </p-accordionTab>
@@ -203,7 +248,7 @@
           <div *ngIf="leadDocuments" class="detail-card">
             <p-accordion>
               <p-accordionTab header="Firm Documents">
-                <div class="business-details">
+                <!-- <div class="business-details">
                   <div class="info-line" *ngIf="leadDocuments?.firmPanCard">
                     <div class="label d-flex justify-content-between">
                       Firm PAN <b>:&nbsp;</b>
@@ -325,17 +370,145 @@
                       </div>
                     </div>
                   </div>
+                </div> -->
+
+                <div class="business-details">
+                  <!-- 1. Firm PAN (text) -->
+                  <div class="info-line">
+                    <div class="label d-flex justify-content-between">
+                      Firm PAN <b>:&nbsp;</b>
+                    </div>
+                    <div class="value">
+                      <ng-container
+                        *ngIf="leadDocuments?.firmPanCard?.[0]?.firmPan; else noValue"
+                      >
+                        {{ leadDocuments.firmPanCard[0].firmPan }}
+                      </ng-container>
+                    </div>
+                  </div>
+
+                  <!-- 2. PAN Card (files) -->
+                  <div class="info-line">
+                    <div class="label d-flex justify-content-between">
+                      PAN Card <b>:&nbsp;</b>
+                    </div>
+                    <div class="value">
+                      <ng-container
+                        *ngIf="leadDocuments?.firmPanCard?.[0]?.firmPanCard?.length > 0; else noValue"
+                      >
+                        <span
+                          *ngFor="
+                            let file of leadDocuments.firmPanCard[0].firmPanCard
+                          "
+                          class="me-2"
+                        >
+                          <a [href]="'//' + file" target="_blank">View</a>
+                        </span>
+                      </ng-container>
+                    </div>
+                  </div>
+
+                  <!-- 3. Remaining fields as loop -->
+                  <div
+                    class="info-line"
+                    *ngFor="let doc of remainingFirmDocuments"
+                  >
+                    <div class="label d-flex justify-content-between">
+                      {{ doc.label }} <b>:&nbsp;</b>
+                    </div>
+                    <div class="value">
+                      <ng-container
+                        *ngIf="leadDocuments?.[doc.key]?.length > 0; else noValue"
+                      >
+                        <span
+                          *ngFor="let file of leadDocuments[doc.key]"
+                          class="me-2"
+                        >
+                          <a [href]="'//' + file" target="_blank">View</a>
+                        </span>
+                      </ng-container>
+                    </div>
+                  </div>
+
+                  <!-- Fallback Template -->
+                  <ng-template #noValue>-</ng-template>
                 </div>
               </p-accordionTab>
             </p-accordion>
           </div>
         </div>
 
+        <div *ngIf="leadData[0]?.businessEntity == 'llp'">
+          <div *ngIf="leadDocuments" class="detail-card">
+            <p-accordion>
+              <p-accordionTab header="Firm Documents">
+                <div class="business-details">
+                  <!-- 1. Firm PAN (text) -->
+                  <div class="info-line">
+                    <div class="label d-flex justify-content-between">
+                      Firm PAN Number <b>:&nbsp;</b>
+                    </div>
+                    <div class="value">
+                      <ng-container
+                        *ngIf="leadDocuments?.firmPanCard?.[0]?.firmPan; else noValue"
+                      >
+                        {{ leadDocuments.firmPanCard[0].firmPan }}
+                      </ng-container>
+                    </div>
+                  </div>
+
+                  <!-- 2. PAN Card (files) -->
+                  <div class="info-line">
+                    <div class="label d-flex justify-content-between">
+                      Firm PAN Card <b>:&nbsp;</b>
+                    </div>
+                    <div class="value">
+                      <ng-container
+                        *ngIf="leadDocuments?.firmPanCard?.[0]?.firmPanCard?.length > 0; else noValue"
+                      >
+                        <span
+                          *ngFor="
+                            let file of leadDocuments.firmPanCard[0].firmPanCard
+                          "
+                          class="me-2"
+                        >
+                          <a [href]="'//' + file" target="_blank">View</a>
+                        </span>
+                      </ng-container>
+                    </div>
+                  </div>
+
+                  <!-- 3. Remaining fields as loop -->
+                  <div class="info-line" *ngFor="let doc of llpFirmDocuments">
+                    <div class="label d-flex justify-content-between">
+                      {{ doc.label }} <b>:&nbsp;</b>
+                    </div>
+                    <div class="value">
+                      <ng-container
+                        *ngIf="leadDocuments?.[doc.key]?.length > 0; else noValue"
+                      >
+                        <span
+                          *ngFor="let file of leadDocuments[doc.key]"
+                          class="me-2"
+                        >
+                          <a [href]="'//' + file" target="_blank">View</a>
+                        </span>
+                      </ng-container>
+                    </div>
+                  </div>
+
+                  <!-- Fallback Template -->
+                  <ng-template #noValue>-</ng-template>
+                </div>
+              </p-accordionTab>
+            </p-accordion>
+          </div>
+        </div>
         <div *ngIf="leadData[0]?.businessEntity == 'privateLimited'">
           <div *ngIf="leadDocuments" class="detail-card">
             <p-accordion>
               <p-accordionTab header="Company Documents">
-                <div class="business-details">
+                <!-- <div class="business-details">
                   <div class="info-line" *ngIf="leadDocuments?.companyPan">
                     <div class="label d-flex justify-content-between">
                       Company PAN Number<b>:&nbsp;</b>
@@ -481,6 +654,65 @@
                       </div>
                     </div>
                   </div>
+                </div> -->
+
+                <div class="business-details">
+                  <!-- 1. Company PAN Number (Text) -->
+                  <div class="info-line">
+                    <div class="label d-flex justify-content-between">
+                      Company PAN Number <b>:&nbsp;</b>
+                    </div>
+                    <div class="value">
+                      <ng-container
+                        *ngIf="leadDocuments?.companyPan?.[0]?.panNumber; else noValue"
+                      >
+                        {{ leadDocuments.companyPan[0].panNumber }}
+                      </ng-container>
+                    </div>
+                  </div>
+
+                  <!-- 2. Company PAN Card (Files) -->
+                  <div class="info-line">
+                    <div class="label d-flex justify-content-between">
+                      Company PAN Card <b>:&nbsp;</b>
+                    </div>
+                    <div class="value">
+                      <ng-container
+                        *ngIf="leadDocuments?.companyPan?.[0]?.companyPan?.length > 0; else noValue"
+                      >
+                        <span
+                          *ngFor="
+                            let file of leadDocuments.companyPan[0].companyPan
+                          "
+                          class="me-2"
+                        >
+                          <a [href]="'//' + file" target="_blank">View</a>
+                        </span>
+                      </ng-container>
+                    </div>
+                  </div>
+
+                  <!-- 3. Remaining Documents (Loop) -->
+                  <div class="info-line" *ngFor="let doc of companyDocuments">
+                    <div class="label d-flex justify-content-between">
+                      {{ doc.label }} <b>:&nbsp;</b>
+                    </div>
+                    <div class="value">
+                      <ng-container
+                        *ngIf="leadDocuments?.[doc.key]?.length > 0; else noValue"
+                      >
+                        <span
+                          *ngFor="let file of leadDocuments[doc.key]"
+                          class="me-2"
+                        >
+                          <a [href]="'//' + file" target="_blank">View</a>
+                        </span>
+                      </ng-container>
+                    </div>
+                  </div>
+
+                  <!-- Fallback Dash -->
+                  <ng-template #noValue>-</ng-template>
                 </div>
               </p-accordionTab>
             </p-accordion>
@@ -500,7 +732,7 @@
                 </div>
               </div>
 
-              <div *ngIf="leadDocuments?.gstDetails?.length > 0">
+              <!-- <div *ngIf="leadDocuments?.gstDetails?.length > 0">
                 <div
                   *ngFor="
                     let account of leadDocuments?.gstDetails;
@@ -559,13 +791,69 @@
                     </div>
                   </div>
                 </div>
+              </div> -->
+              <div *ngIf="leadDocuments?.gstDetails?.length > 0">
+                <div
+                  *ngFor="
+                    let account of leadDocuments.gstDetails;
+                    let i = index
+                  "
+                  class="business-details mt-3"
+                >
+                  <div class="label" style="text-decoration: underline">
+                    Operating State - {{ i + 1 }}
+                  </div>
+
+                  <div class="info-line" *ngFor="let field of gstAccountFields">
+                    <div class="label d-flex justify-content-between">
+                      {{ field.label }} <b>:&nbsp;</b>
+                    </div>
+                    <div class="value">
+                      <!-- For date type -->
+                      <ng-container *ngIf="field.key === 'filingPeriod'">
+                        <ng-container
+                          *ngIf="isValidDate(account[field.key]); else noValue"
+                        >
+                          {{ account[field.key] | date }}
+                        </ng-container>
+                      </ng-container>
+
+                      <!-- For file list -->
+                      <ng-container *ngIf="field.key === 'gstDetails'">
+                        <ng-container
+                          *ngIf="account?.gstDetails?.length > 0; else noValue"
+                        >
+                          <span
+                            *ngFor="let file of account.gstDetails"
+                            class="me-2"
+                          >
+                            <a [href]="'//' + file" target="_blank">View</a>
+                          </span>
+                        </ng-container>
+                      </ng-container>
+
+                      <!-- For normal text -->
+                      <ng-container
+                        *ngIf="
+                          field.key !== 'filingPeriod' &&
+                          field.key !== 'gstDetails'
+                        "
+                      >
+                        {{ account[field.key] || "-" }}
+                      </ng-container>
+                    </div>
+                  </div>
+
+                  <!-- Fallback dash -->
+                  <ng-template #noValue>-</ng-template>
+                </div>
               </div>
 
               <div *ngIf="leadDocuments?.gstDetails == null">
                 <div class="text-center">
                   <div colspan="10" class="text-center fw-bold">
                     <img
-                    alt="No Data"
+                      alt="No Data"
                       src="../../../../assets/images/menu/no-data.gif"
                       width="200"
                       height="200"
@@ -582,7 +870,7 @@
         <p-accordion>
           <p-accordionTab header="Existing Loan Details">
             <div class="detail-card">
-              <div *ngIf="leadDocuments?.existingLoans?.length > 0">
+              <!-- <div *ngIf="leadDocuments?.existingLoans?.length > 0">
                 <div
                   *ngFor="
                     let loan of leadDocuments?.existingLoans;
@@ -647,7 +935,79 @@
                 >
                   <div>Total Monthly EMI Payment: {{ totalEmi }}</div>
                 </div>
+              </div> -->
+
+              <div *ngIf="leadDocuments?.existingLoans?.length > 0">
+                <div
+                  *ngFor="
+                    let loan of leadDocuments.existingLoans;
+                    let i = index
+                  "
+                  class="business-details mt-3"
+                >
+                  <div class="label" style="text-decoration: underline">
+                    <input
+                      type="checkbox"
+                      [value]="loan.emiAmount"
+                      (change)="calculateTotalEmi()"
+                    />
+                    Existing Loan - {{ i + 1 }}
+                  </div>
+
+                  <!-- Dynamic fields -->
+                  <div
+                    class="info-line"
+                    *ngFor="let field of existingLoanFields"
+                  >
+                    <div class="label d-flex justify-content-between">
+                      {{ field.label }} <b>:&nbsp;</b>
+                    </div>
+                    <div class="value">
+                      <!-- Capitalize pipe -->
+                      <ng-container *ngIf="field.pipe === 'capitalize'">
+                        {{
+                          loan[field.key]
+                            ? (loan[field.key] | capitalizeFirst)
+                            : "-"
+                        }}
+                      </ng-container>
+
+                      <!-- Date pipe with validity check -->
+                      <ng-container *ngIf="field.pipe === 'date'">
+                        <ng-container
+                          *ngIf="isValidDate(loan[field.key]); else noValue"
+                        >
+                          {{ loan[field.key] | date }}
+                        </ng-container>
+                      </ng-container>
+
+                      <!-- Regular field with fallback -->
+                      <ng-container *ngIf="!field.pipe">
+                        {{ loan[field.key] || "-" }}
+                      </ng-container>
+
+
+                      <ng-template #noValue>-</ng-template>
+                    </div>
+                  </div>
+
+                  <!-- Fallback dash -->
+                  <ng-template #noValue>-</ng-template>
+                </div>
+
+                <!-- Total EMI Display -->
+                <div
+                  class="p-3 mt-3 fw-bold"
+                  style="
+                    background-color: #620897;
+                    color: white;
+                    border-radius: 3px;
+                  "
+                >
+                  <div>Total Monthly EMI Payment: {{ totalEmi }}</div>
+                </div>
               </div>
+
               <div *ngIf="leadDocuments?.existingLoans == null">
                 <div class="text-center">
                   <div colspan="10" class="text-center fw-bold">
@@ -670,7 +1030,7 @@
         <p-accordion>
           <p-accordionTab header="Current Account Details">
             <div class="detail-card">
-              <div *ngIf="leadDocuments?.currentAccountStatements?.length > 0">
+              <!-- <div *ngIf="leadDocuments?.currentAccountStatements?.length > 0">
                 <div
                   *ngFor="
                     let account of leadDocuments?.currentAccountStatements;
@@ -729,6 +1089,80 @@
                     </div>
                   </div>
                 </div>
+              </div> -->
+              <div *ngIf="leadDocuments?.currentAccountStatements?.length > 0">
+                <div
+                  *ngFor="
+                    let account of leadDocuments.currentAccountStatements;
+                    let i = index
+                  "
+                  class="business-details mt-3"
+                >
+                  <div class="label" style="text-decoration: underline">
+                    Current Account - {{ i + 1 }}
+                  </div>
+
+                  <div
+                    class="info-line"
+                    *ngFor="let field of currentAccountFields"
+                  >
+                    <div class="label d-flex justify-content-between">
+                      {{ field.label }} <b>:&nbsp;</b>
+                    </div>
+                    <div class="value">
+                      <ng-container *ngIf="field.isDate">
+                        <ng-container
+                          *ngIf="isValidDate(account[field.key]); else noValue"
+                        >
+                          {{ account[field.key] | date }}
+                        </ng-container>
+                      </ng-container>
+
+
+                      <ng-container *ngIf="field.pipe === 'capitalize'">
+                        {{
+                          account[field.key]
+                            ? (account[field.key] | capitalizeFirst)
+                            : "-"
+                        }}
+                      </ng-container>
+
+
+                      <ng-container
+                        *ngIf="
+                          !field.isDate &&
+                          !field.pipe &&
+                          field.key !== 'currentAccountStatements'
+                        "
+                      >
+                        {{ account[field.key] || "-" }}
+                      </ng-container>
+
+
+                      <ng-container
+                        *ngIf="field.key === 'currentAccountStatements'"
+                      >
+                        <ng-container
+                          *ngIf="
+                            account?.currentAccountStatements?.length > 0;
+                            else noValue
+                          "
+                        >
+                          <span
+                            *ngFor="
+                              let file of account.currentAccountStatements
+                            "
+                            class="me-2"
+                          >
+                            <a [href]="'//' + file" target="_blank">View</a>
+                          </span>
+                        </ng-container>
+                      </ng-container>
+                    </div>
+                  </div>
+
+                  <ng-template #noValue>-</ng-template>
+                </div>
               </div>
 
               <div *ngIf="leadDocuments?.currentAccountStatements == null">
@@ -753,7 +1187,7 @@
         <p-accordion>
           <p-accordionTab header="OD Account Details">
             <div class="detail-card">
-              <div *ngIf="leadDocuments?.odAccountStatements?.length > 0">
+              <!-- <div *ngIf="leadDocuments?.odAccountStatements?.length > 0">
                 <div
                   *ngFor="
                     let account of leadDocuments?.odAccountStatements;
@@ -839,6 +1273,68 @@
                       </div>
                     </div>
                   </div>
+                </div>
+              </div> -->
+              <div *ngIf="leadDocuments?.odAccountStatements?.length > 0">
+                <div
+                  *ngFor="
+                    let account of leadDocuments.odAccountStatements;
+                    let i = index
+                  "
+                  class="business-details mt-3"
+                >
+                  <div class="label" style="text-decoration: underline">
+                    OD Account - {{ i + 1 }}
+                  </div>
+
+                  <div class="info-line" *ngFor="let field of odAccountFields">
+                    <div class="label d-flex justify-content-between">
+                      {{ field.label }} <b>:&nbsp;</b>
+                    </div>
+                    <div class="value">
+                      <!-- Date fields -->
+                      <ng-container *ngIf="field.isDate">
+                        <ng-container
+                          *ngIf="isValidDate(account[field.key]); else noValue"
+                        >
+                          {{ account[field.key] | date }}
+                        </ng-container>
+                      </ng-container>
+
+
+                      <ng-container *ngIf="field.isFile">
+                        <ng-container
+                          *ngIf="account[field.key]?.length > 0; else noValue"
+                        >
+                          <span
+                            *ngFor="let file of account[field.key]"
+                            class="me-2"
+                          >
+                            <a [href]="'//' + file" target="_blank">View</a>
+                          </span>
+                        </ng-container>
+                      </ng-container>
+
+
+                      <ng-container *ngIf="field.pipe === 'capitalize'">
+                        {{
+                          account[field.key]
+                            ? (account[field.key] | capitalizeFirst)
+                            : "-"
+                        }}
+                      </ng-container>
+
+
+                      <ng-container
+                        *ngIf="!field.isDate && !field.isFile && !field.pipe"
+                      >
+                        {{ account[field.key] || "-" }}
+                      </ng-container>
+                    </div>
+                  </div>
+
+
+                  <ng-template #noValue>-</ng-template>
                 </div>
               </div>
 
@@ -1679,7 +2175,7 @@
               <div class="text-center">
                 <div colspan="10" class="text-center fw-bold">
                   <img
-                  alt="No Data"
+                    alt="No Data"
                     src="../../../../assets/images/menu/no-data.gif"
                     width="200"
                     height="200"

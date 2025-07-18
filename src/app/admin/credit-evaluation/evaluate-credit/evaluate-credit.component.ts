@@ -79,6 +79,68 @@ export class EvaluateCreditComponent implements OnInit {
   searchFilter: any = {};
   moment: any;
   version = projectConstantsLocal.VERSION_DESKTOP;
+  documentTypes = [
+    { key: 'gstCertificate', label: 'GST Certificate' },
+    { key: 'labourTradeLicense', label: 'Labour / Trade License' },
+    { key: 'vatTinTot', label: 'VAT / Tin / TOT' },
+    { key: 'msmeUdyamCertificate', label: 'MSME / UDYAM Certificate' }
+  ];
+  businessFields = [
+    { key: 'natureOfBusiness', label: 'Nature of Business' },
+    { key: 'product', label: 'Product', pipe: 'capitalize' },
+    { key: 'businessOperatingSince', label: 'Business Vintage' },
+    { key: 'businessEntity', label: 'Business Entity' },
+    { key: 'businessTurnover', label: 'Business TurnOver', pipe: 'capitalize' },
+    { key: 'city', label: 'City', pipe: 'capitalize' },
+    { key: 'createdOn', label: 'Created On', pipe: 'date' }
+  ];
+  remainingFirmDocuments = [
+    { label: 'Firm Registration Certificate', key: 'firmRegistrationCertificate' },
+    { label: 'Partnership Deed', key: 'partnershipDeed' },
+    { label: 'GST Certificate', key: 'firmGstCertificate' },
+    { label: 'MSME / UDYAM Certificate', key: 'firmmsmeUdyamCertificate' }
+  ];
+  llpFirmDocuments = [
+    { label: 'Certificate of Incorporation ', key: 'llpCertificateofIncorporation' },
+    { label: 'LLP Deed', key: 'llpDeed' },
+    { label: 'GST Certificate', key: 'firmGstCertificate' },
+    { label: 'MSME / UDYAM Certificate', key: 'firmmsmeUdyamCertificate' }
+  ];
+  companyDocuments = [
+    { label: 'Incorporation Certificate', key: 'incorporationCertificate' },
+    { label: 'MOA and AOA', key: 'moaandaoa' },
+    { label: 'GST Certificate', key: 'companyGst' },
+    { label: 'MSME / UDYAM Certificate', key: 'companyMSMEUdyamCertificate' },
+    { label: 'Share Holding Pattern', key: 'shareHoldingPattern' }
+  ];
+  gstAccountFields = [
+    { key: 'operatingState', label: 'State' },
+    { key: 'filingPeriod', label: 'Filing Period' },
+    { key: 'gst3BSale', label: 'GSTR-3B Sale' },
+    { key: 'gstDetails', label: 'GSTR-3B Attachment' }
+  ];
+  existingLoanFields = [
+    { key: 'bankName', label: 'Bank Name', pipe: 'capitalize' },
+    { key: 'loanType', label: 'Loan Type', pipe: 'capitalize' },
+    { key: 'emiAmount', label: 'Loan EMI' },
+    { key: 'emiClosingDate', label: 'EMI Closing Date', pipe: 'date' }
+  ];
+  currentAccountFields = [
+    { key: 'name', label: 'Bank Name', pipe: 'capitalize' },
+    { key: 'from', label: 'Statement From', isDate: true },
+    { key: 'to', label: 'Statement To', isDate: true },
+    { key: 'currentAccountStatements', label: 'Statement Attachment' }
+  ];
+
+  odAccountFields = [
+    { key: 'name', label: 'Bank Name', pipe: 'capitalize' }, // Optional: capitalize
+    { key: 'from', label: 'Statement From', isDate: true },
+    { key: 'to', label: 'Statement To', isDate: true },
+    { key: 'odAccountStatements', label: 'Statement Attachment', isFile: true },
+    { key: 'odlimit', label: 'OD Limit' },
+    { key: 'odSactionLetter', label: 'OD Sanction Letter', isFile: true }
+  ];
+
   constructor(
     private location: Location,
     private toastService: ToastService,
@@ -122,8 +184,8 @@ export class EvaluateCreditComponent implements OnInit {
 
     this.breadCrumbItems = [
       {
-        icon: 'pi pi-home',
-        label: ' Dashboard',
+
+        label: ' Home',
         routerLink: '/user/dashboard',
         queryParams: { v: this.version },
       },
@@ -401,7 +463,7 @@ export class EvaluateCreditComponent implements OnInit {
       this.leadsService.getLeadDocumentsById(leadId).subscribe(
         (leadDocuments: any) => {
           this.leadDocuments = leadDocuments;
-          // console.log('lead documents:', leadDocuments);
+          console.log('lead documents:', leadDocuments);
           resolve(true);
         },
         (error) => {
@@ -418,8 +480,8 @@ export class EvaluateCreditComponent implements OnInit {
   updateBreadcrumb(): void {
     this.breadCrumbItems = [
       {
-        icon: 'pi pi-home',
-        label: ' Dashboard',
+
+        label: ' Home',
         routerLink: '/user/dashboard',
         queryParams: { v: this.version },
       },
