@@ -1,40 +1,17 @@
-<section
+<!-- <section
   class="d-flex align-items-center justify-content-center min-vh-100 background-radial-gradient overflow-hidden"
 >
   <div class="container text-center text-lg-start">
     <div class="row gx-lg-5 align-items-center">
-      <!-- Left Content -->
       <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
-        <!-- <h1
-          class="my-5 display-5 fw-bold ls-tight"
-          style="color: hsl(218, 81%, 95%)"
-        >
-          Welcome to our <br />
-          <div class="typing-text-container">
-            <span style="color: hsl(218, 81%, 75%)">Loan CRM</span>
-          </div>
-        </h1> -->
-        <!-- <p class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%)">
-          A simple and powerful CRM tool made for business loan DSAs, financial
-          consultants, loan agents, and lenders to manage leads, track progress,
-          and grow your loan business easily.
-        </p> -->
       </div>
 
-      <!-- Login Card -->
       <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
-        <!-- <div
-          id="radius-shape-1"
-          class="position-absolute rounded-circle shadow-5-strong"
-        ></div>
-        <div
-          id="radius-shape-2"
-          class="position-absolute shadow-5-strong"
-        ></div> -->
+
 
         <div class="card">
           <div class="card-body">
-            <div class="card-logo d-flex mb-3">
+            <div class="card-logo d-flex mb-2">
               <img
                 src="../../assets/images/logo.svg"
                 alt="Business Logo"
@@ -42,7 +19,7 @@
                 height="35"
               />
             </div>
-            <div class="text-large text-left fw-medium mb-3">
+            <div class="text-large text-left fw-medium mb-2">
               <span class="text-capitalize">Hi, Welcome Back 👋</span>
             </div>
             <form
@@ -86,15 +63,7 @@
                       border-color: #878787;
                     "
                   />
-                  <!-- <span
-                    class="p-inputgroup-addon"
-                    (click)="togglePasswordVisibility()"
-                  >
-                    <i
-                      class="pi custom-icon"
-                      [ngClass]="isPasswordVisible ? 'pi-eye-slash' : 'pi-eye'"
-                    ></i>
-                  </span> -->
+
 
                   <span
                     class="p-inputgroup-addon"
@@ -117,7 +86,7 @@
                   >Password</label
                 >
                 <div
-                  class="d-flex justify-content-between align-items-center mb-3"
+                  class="d-flex justify-content-between align-items-center mb-2"
                 >
                   <div></div>
                   <a
@@ -159,14 +128,12 @@
             <div class="line"></div>
           </div>
           <div class="row justify-content-center ca w-75">
-            <!-- Business Loan -->
             <div class="col-md-4 mb-4">
               <div
                 class="calucard h-100 text-center border-0 shadow-sm pointer-cursor"
                 routerLink="/calculator/business"
               >
                 <div class="card-body p-2">
-                  <!-- <i class="fas fa-briefcase mb-3"></i> -->
                   <img
                     src="../../assets/images/icons/businessloan.svg"
                     alt="business loan"
@@ -176,7 +143,6 @@
               </div>
             </div>
 
-            <!-- Personal Loan -->
             <div class="col-md-4 mb-4">
               <div
                 class="calucard h-100 text-center border-0 shadow-sm pointer-cursor"
@@ -187,13 +153,11 @@
                     src="../../assets/images/icons/team.svg"
                     alt="personal loan"
                   />
-                  <!-- <i class="fas fa-user mb-3"></i> -->
                   <h6 class="fw-bold mb-2">Personal Loan</h6>
                 </div>
               </div>
             </div>
 
-            <!-- Home Loan -->
             <div class="col-md-4 mb-4">
               <div
                 class="calucard h-100 text-center border-0 shadow-sm pointer-cursor"
@@ -204,7 +168,6 @@
                     src="../../assets/images/icons/home.svg"
                     alt="home lone"
                   />
-                  <!-- <i class="fas fa-home mb-3"></i> -->
                   <h6 class="fw-bold mb-2">Home Loan</h6>
                 </div>
               </div>
@@ -214,39 +177,39 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->
 
-<!-- <section
-  class="d-flex align-items-center justify-content-center min-vh-100 background-radial-gradient overflow-hidden"
+<section
+  class="d-flex align-items-center justify-content-center min-vh-100 background-radial-gradient"
 >
   <div class="container">
-    <div class="row align-items-center justify-content-between">
-      <div class="col-lg-6 d-none d-lg-block">
-      </div>
-
-      <div class="col-lg-6 col-md-10 col-sm-12 ms-auto">
-        <div class="card shadow-sm">
+    <div class="row justify-content-end">
+      <div class="col-lg-6 col-md-10 col-sm-12 m-2">
+        <div class="card shadow-sm mx-auto">
           <div class="card-body p-4">
-            <div class="d-flex justify-content-center mb-4">
+            <div class="d-flex justify-content-center mb-2">
               <img
                 src="../../assets/images/logo.svg"
                 alt="Business Logo"
                 width="150"
-                height="35"
+                height="40"
+                loading="lazy"
               />
             </div>
 
-            <div class="text-center fw-semibold mb-4 fs-5">
+            <div class="text-center card-greeting fw-semibold mb-4 fs-6">
               Hi, Welcome Back 👋
             </div>
 
             <form
               [formGroup]="loginForm"
               (ngSubmit)="onSubmit(loginForm.value)"
-              class="login-form"
               novalidate
             >
-              <div class="mb-3">
+              <div class="mb-2">
+                <label class="form-label fw-medium mt-1" for="username"
+                  >Email or Phone Number</label
+                >
                 <input
                   pInputText
                   type="text"
@@ -256,12 +219,12 @@
                   autocomplete="off"
                   class="form-control"
                 />
-                <label class="form-label fw-medium mt-1" for="username"
-                  >Email or Phone Number</label
-                >
               </div>
 
-              <div class="mb-3">
+              <div class="mb-2 position-relative">
+                <label class="form-label fw-medium" for="password"
+                  >Password</label
+                >
                 <div class="p-inputgroup">
                   <input
                     pInputText
@@ -273,7 +236,7 @@
                     class="form-control"
                   />
                   <span
-                    class="p-inputgroup-addon"
+                    class="p-inputgroup-addon bg-white border-start-0"
                     (click)="togglePasswordVisibility()"
                     style="cursor: pointer"
                   >
@@ -289,13 +252,10 @@
                     />
                   </span>
                 </div>
-                <label class="form-label fw-medium mt-1" for="password"
-                  >Password</label
-                >
 
-                <div class="d-flex justify-content-end mt-2">
+                <div class="text-end m-2">
                   <a
-                    class="text-decoration-none text-secondary fw-medium"
+                    class="text-decoration-none forgot-text"
                     (click)="doForgotPassword()"
                     style="cursor: pointer"
                   >
@@ -308,69 +268,66 @@
                 type="submit"
                 pButton
                 pRipple
-                class="w-100 p-button-primary mb-3"
+                class="w-100 p-button-primary d-flex align-items-center justify-content-center"
                 [disabled]="!loginForm.valid || api_loading"
               >
                 Sign In
               </button>
 
-              <div class="text-center">
-                <span class="text-muted">Don't have an account?</span>
+              <div class="text-center mt-3">
+                <span class="text-muted">Don't have an account? </span>
                 <a
                   routerLink="/user/register"
-                  class="fw-bold text-decoration-none"
-                  style="color: orangered"
+                  class="text-decoration-none"
+                  style="color: #ee7846"
+                  >Register here</a
                 >
-                  Register here
-                </a>
               </div>
             </form>
           </div>
         </div>
 
-        <div class="mt-5">
-          <div class="text-center mb-3">
-            <div class="d-flex justify-content-center align-items-center">
-              <div class="flex-grow-1 border-top me-2"></div>
-              <h5 class="mb-0">Use Our Calculator</h5>
-              <div class="flex-grow-1 border-top ms-2"></div>
-            </div>
+        <div class="">
+          <div class="calculator-heading my-3">
+            <div class="line"></div>
+            <h6>Use Our Calculator</h6>
+            <div class="line"></div>
           </div>
 
-          <div class="row g-3 justify-content-center">
-            <div class="col-6 col-md-4">
+          <div class="row ca justify-content-center">
+            <div class="col-6 col-md-4 mb-2">
               <div
-                class="calucard text-center pointer-cursor shadow-sm p-3"
+                class="calucard text-center shadow-sm py-2"
                 routerLink="/calculator/business"
               >
                 <img
                   src="../../assets/images/icons/businessloan.svg"
                   alt="Business Loan"
                 />
-                <h6 class="fw-bold mt-2">Business Loan</h6>
+                <h6 class="fw-bold mt-2 calci-heading">Business Loan</h6>
               </div>
             </div>
 
-            <div class="col-6 col-md-4">
+            <div class="col-6 col-md-4 mb-2">
               <div
-                class="calucard text-center pointer-cursor shadow-sm p-3"
+                class="calucard text-center shadow-sm py-2"
                 routerLink="/calculator/personal"
               >
                 <img
                   src="../../assets/images/icons/team.svg"
                   alt="Personal Loan"
                 />
-                <h6 class="fw-bold mt-2">Personal Loan</h6>
+                <h6 class="fw-bold mt-2 calci-heading">Personal Loan</h6>
               </div>
             </div>
 
-            <div class="col-6 col-md-4">
+            <div class="col-6 col-md-4 mb-2">
               <div
-                class="calucard text-center pointer-cursor shadow-sm p-3"
+                class="calucard text-center shadow-sm py-2"
                 routerLink="/calculator/home"
               >
                 <img src="../../assets/images/icons/home.svg" alt="Home Loan" />
-                <h6 class="fw-bold mt-2">Home Loan</h6>
+                <h6 class="fw-bold mt-2 calci-heading">Home Loan</h6>
               </div>
             </div>
           </div>
@@ -378,4 +335,4 @@
       </div>
     </div>
   </div>
-</section> -->
+</section>

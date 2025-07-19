@@ -51,19 +51,19 @@
         >
           <ng-template pTemplate="header">
             <tr>
-              <th>Sanction Date</th>
-              <th>Disbursed Date</th>
+              <th class="text-nowrap">Sanction Date</th>
+              <th class="text-nowrap">Disbursed Date</th>
               <th>LAN</th>
-              <th *ngIf="shouldDisplayBlock()">Program</th>
+              <th *ngIf="shouldDisplayBlock()">Surrogate</th>
               <th>Lender</th>
-              <th>Process Code</th>
-              <th>Product Type</th>
+              <th class="text-nowrap">Process Code</th>
+              <th class="text-nowrap">Product Type</th>
               <th>ROI</th>
               <th>Tenure</th>
-              <th>Sanctioned Amount</th>
-              <th>Disbursed Amount</th>
-              <th>Sanctioned Letter</th>
-              <th>Repayment Schedule</th>
+              <th class="text-nowrap">Sanctioned Amount</th>
+              <th class="text-nowrap">Disbursed Amount</th>
+              <th class="text-nowrap">Sanctioned Letter</th>
+              <th class="text-nowrap">Repayment Schedule</th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
@@ -80,7 +80,8 @@
               <td *ngIf="shouldDisplayBlock()">
                 {{ rowData.program ? rowData.program : "-" }}
               </td>
-              <td>{{ rowData.bankName ? rowData.bankName : "-" }}</td>
+              <!-- <td>{{ rowData.bankName ? rowData.bankName : "-" }}</td> -->
+              <td>{{ getLenderName(rowData.bankId) }}</td>
               <td>{{ rowData.processCode ? rowData.processCode : "-" }}</td>
               <td>
                 {{ rowData.productTypeName ? rowData.productTypeName : "-" }}

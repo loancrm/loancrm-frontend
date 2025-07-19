@@ -74,8 +74,7 @@ export class CreateComponent {
   ) {
     this.breadCrumbItems = [
       {
-        icon: 'pi pi-home',
-        label: ' Dashboard',
+        label: ' Home',
         routerLink: '/user/dashboard',
         queryParams: { v: this.version },
       },
@@ -108,8 +107,7 @@ export class CreateComponent {
   updateBreadcrumb(): void {
     this.breadCrumbItems = [
       {
-        icon: 'pi pi-home',
-        label: ' Dashboard',
+        label: ' Home',
         routerLink: '/user/dashboard',
         queryParams: { v: this.version },
       },
@@ -943,8 +941,8 @@ export class CreateComponent {
       (response: any) => {
         this.loading = false;
         if (response.success && response.fileUrl) {
-          window.open('//' + response.fileUrl, '_blank');
-          this.toastService.showSuccess('Report Downloaded Successfully');
+          // window.open('//' + response.fileUrl, '_blank');
+          this.toastService.showSuccess('Report Generated Successfully and sent via email.');
         } else {
           this.toastService.showError('Failed to download the report.');
         }

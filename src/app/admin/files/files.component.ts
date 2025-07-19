@@ -89,8 +89,7 @@ export class FilesComponent implements OnInit {
   ) {
     this.breadCrumbItems = [
       {
-        icon: 'pi pi-home',
-        label: ' Dashboard',
+        label: ' Home',
         routerLink: '/user/dashboard',
         queryParams: { v: this.version },
       },
@@ -180,11 +179,6 @@ export class FilesComponent implements OnInit {
   private async loadAllLeadData(): Promise<void> {
     try {
       await Promise.all([
-        // this.loadLeadsforPersonal(event),
-        // this.loadLeadsforHome(event),
-        // this.loadLeadsforHomeself(event),
-        // this.loadLeadsforlap(event),
-        // this.loadLeadsforlapself(event),
         this.getTotalLeadsCountArray(event),
         this.getbusinessloanleadsCount(event),
         this.getStatusLeadsCountArray(event)

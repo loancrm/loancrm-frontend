@@ -84,8 +84,7 @@ export class ApprovalsComponent implements OnInit {
     this.moment = this.dateTimeProcessor.getMoment();
     this.breadCrumbItems = [
       {
-        icon: 'pi pi-home',
-        label: ' Dashboard',
+        label: ' Home',
         routerLink: '/user/dashboard',
         queryParams: { v: this.version },
       },
@@ -110,23 +109,6 @@ export class ApprovalsComponent implements OnInit {
       this.employmentStatus = this.getStatusItems();
       this.loadEmploymentActiveItem();
     });
-    // this.route.queryParams.subscribe((params) => {
-    //   const startDateParam = params['startDate'] || '';
-    //   const endDateParam = params['endDate'] || '';
-    //   this.startDate = startDateParam
-    //     ? this.moment(startDateParam).format('YYYY-MM-DD')
-    //     : '';
-    //   this.endDate = endDateParam
-    //     ? this.moment(endDateParam).format('YYYY-MM-DD')
-    //     : '';
-    //   if (this.startDate && this.endDate) {
-    //     this.searchFilter['approvalDate-gte'] = this.startDate;
-    //     this.searchFilter['approvalDate-lte'] = this.endDate;
-    //
-    //   }
-    //this.loadLeads(this.currentTableEvent);
-    // });
-
     this.route.queryParams.subscribe((params) => {
       const startDateParam = params['startDate'];
       const endDateParam = params['endDate'];
@@ -418,11 +400,6 @@ export class ApprovalsComponent implements OnInit {
   private async loadAllLeadData(): Promise<void> {
     try {
       await Promise.all([
-        // this.loadLeadsforPersonal(event),
-        // this.loadLeadsforHome(event),
-        // this.loadLeadsforHomeself(event),
-        // this.loadLeadsforlap(event),
-        // this.loadLeadsforlapself(event),
         this.getTotalLeadsCountArray(event),
         this.getbusinessloanleadsCount(event),
         this.getStatusLeadsCountArray(event)

@@ -21,7 +21,6 @@ export class LoginsComponent {
   activeItem: any = null;
   loading: any;
   items: any;
-  // loginStatus: any = projectConstantsLocal.LOGIN_STATUS;
   totalLeadsCount: any = 0;
   totalLeadsCountfip: any = 0;
   leadIdToSearch: any;
@@ -92,8 +91,7 @@ export class LoginsComponent {
   ) {
     this.breadCrumbItems = [
       {
-        icon: 'pi pi-home',
-        label: ' Dashboard',
+        label: ' Home',
         routerLink: '/user/dashboard',
         queryParams: { v: this.version },
       },
@@ -188,11 +186,6 @@ export class LoginsComponent {
   private async loadAllLeadData(): Promise<void> {
     try {
       await Promise.all([
-        // this.loadLeadsforPersonal(event),
-        // this.loadLeadsforHome(event),
-        // this.loadLeadsforHomeself(event),
-        // this.loadLeadsforlap(event),
-        // this.loadLeadsforlapself(event),
         this.getTotalLeadsCountArray(event),
         this.getbusinessloanleadsCount(event),
         this.getStatusLeadsCountArray(event)

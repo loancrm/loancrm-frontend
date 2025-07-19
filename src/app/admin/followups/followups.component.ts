@@ -47,7 +47,6 @@ export class FollowupsComponent implements OnInit {
   ) {
     this.breadCrumbItems = [
       {
-        icon: 'pi pi-home',
         label: '  Dashboard',
         routerLink: '/user/dashboard',
         queryParams: { v: this.version },

@@ -838,6 +838,10 @@ export class LeadsService {
     const url = 'bankers';
     return this.serviceMeta.httpGet(url, null, filter);
   }
+  getSubscriptionPlans(filter = {}) {
+    const url = 'subscriptionPlans';
+    return this.serviceMeta.httpGet(url, null, filter);
+  }
   getBanks(filter = {}) {
     const url = 'bankers/banks';
     return this.serviceMeta.httpGet(url, null, filter);

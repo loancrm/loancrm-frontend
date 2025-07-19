@@ -27,6 +27,8 @@ export class DisbursalDetailsComponent implements OnInit {
   leadId: string | null = null;
   disbursalDetails: any[] = [];
   displayedItems: any = [];
+  bankMap = new Map<number, string>();
+  banks: any = [];
   selectedFiles: any = {
     sanctionedLetter: { filesData: [], links: [], uploadedFiles: [] },
     repaymentSchedule: { filesData: [], links: [], uploadedFiles: [] },
@@ -34,8 +36,8 @@ export class DisbursalDetailsComponent implements OnInit {
   version = projectConstantsLocal.VERSION_DESKTOP;
   breadCrumbItems: any[] = [
     {
-      icon: 'pi pi-home',
-      label: ' Dashboard',
+
+      label: ' Home',
       routerLink: '/user/dashboard',
       queryParams: { v: this.version },
     },
@@ -55,7 +57,9 @@ export class DisbursalDetailsComponent implements OnInit {
     private toastService: ToastService,
     private router: Router,
     private localStorageService: LocalStorageService,
-  ) { }
+  ) {
+    this.getBankers();
+  }
 
   ngOnInit(): void {
     const userDetails =
@@ -326,6 +330,30 @@ export class DisbursalDetailsComponent implements OnInit {
     );
   }
 
+  getBankers(filter = {}) {
+    this.loading = true;
+    this.leadsService.getBankers(filter).subscribe(
+      (response: any) => {
+        this.banks = [{ name: 'All' }, ...response];
+
+        // Create a Map for quick lookup
+        this.bankMap.clear();
+        for (const bank of response) {
+          if (bank.id && bank.name) {
+            this.bankMap.set(bank.id, bank.name);
+          }
+        }
+        this.loading = false;
+      },
+      (error: any) => {
+        this.loading = false;
+        this.toastService.showError(error);
+      }
+    );
+  }
+  getLenderName(bankId: number): string {
+    return this.bankMap.get(bankId) || '';
+  }
   goBack(): void {
     this.location.back();
   }

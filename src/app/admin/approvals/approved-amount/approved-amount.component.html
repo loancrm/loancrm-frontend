@@ -2,24 +2,6 @@
   <div class="bread-crumb m-2">
     <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
   </div>
-  <!-- <div class="p-1 m-2" *ngIf="leads">
-    <div class="d-flex justify-content-between">
-      <div
-        class="d-flex align-items-center justify-content-center pointer-cursor"
-        (click)="goBack()"
-      >
-        <span class="me-2 d-flex align-items-center">
-          <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
-        </span>
-
-        <b>
-          <span class="back-btn-text text-capitalize">{{
-            leads[0]?.businessName | capitalizeFirst
-          }}</span>
-        </b>
-      </div>
-    </div>
-  </div> -->
   <ng-container *ngFor="let item of displayedItems">
     <div class="m-2 p-1" *ngIf="item.data">
       <div class="d-flex justify-content-between">
@@ -56,7 +38,7 @@
             <tr>
               <th style="min-width: 150px">LAN</th>
               <th style="min-width: 100px" *ngIf="shouldDisplayBlock()">
-                Program
+                Surrogate
               </th>
               <th style="min-width: 200px">Lender</th>
               <th style="min-width: 200px">Sanctioned Amount</th>
@@ -85,7 +67,7 @@
                 />
               </td>
               <td *ngIf="shouldDisplayBlock()">{{ rowData.program }}</td>
-              <td>{{ rowData.bankName }}</td>
+              <td>{{ getLenderName(rowData.bankId) }}</td>
               <td>
                 <input
                   pInputText
@@ -153,17 +135,6 @@
                 ></p-dropdown>
               </td>
               <td>
-                <!-- <p-calendar
-                  [(ngModel)]="rowData.approvalDate"
-                  [style]="{ width: '100%' }"
-                  class="rounded-lg"
-                  [showIcon]="true"
-                  dateFormat="yy-mm-dd"
-                  appendTo="body"
-                  placeholder="Select Sanction Date"
-                  autocomplete="off"
-                  [showButtonBar]="true"
-                ></p-calendar> -->
                 <div class="custom-calendar-wrapper w-100 position-relative">
                   <p-calendar
                     #calendar
@@ -176,7 +147,6 @@
                     [style]="{ width: '100%' }"
                   ></p-calendar>
 
-                  <!-- Custom Calendar Image Icon -->
                   <img
                     src="../../../../assets/images/icons/calendar.svg"
                     alt="Calendar Icon"
@@ -199,19 +169,6 @@
                 ></p-dropdown>
               </td>
               <td>
-                <!-- <p-calendar
-                  [(ngModel)]="rowData.disbursalDate"
-                  [style]="{ width: '100%' }"
-                  class="rounded-lg"
-                  [showIcon]="true"
-                  dateFormat="yy-mm-dd"
-                  appendTo="body"
-                  placeholder="Select Disbursed Date"
-                  autocomplete="off"
-                  [minDate]="rowData.minDisbursalDate"
-                  [showButtonBar]="true"
-                ></p-calendar> -->
-
                 <div class="custom-calendar-wrapper w-100 position-relative">
                   <p-calendar
                     #disbursalcalendar
@@ -225,7 +182,6 @@
                     [style]="{ width: '100%' }"
                   ></p-calendar>
 
-                  <!-- Custom Calendar Image Icon -->
                   <img
                     src="../../../../assets/images/icons/calendar.svg"
                     alt="Calendar Icon"
@@ -250,7 +206,7 @@
             <tr class="text-center">
               <td colspan="10" class="text-center fw-bold">
                 <img
-                alt="No Data"
+                  alt="No Data"
                   src="../../../assets/images/menu/no-data.gif"
                   width="200"
                   height="200"

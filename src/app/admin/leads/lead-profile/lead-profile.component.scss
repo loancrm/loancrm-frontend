@@ -110,9 +110,6 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
-::ng-deep .bread-crumb .pi-home {
-  color: #7a86b6 !important;
-}
 // .card {
 //   // box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 // }
@@ -341,7 +338,7 @@ small {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100px; /* adjust as needed */
+  max-width: 100px;
   display: inline-block;
   vertical-align: middle;
 }

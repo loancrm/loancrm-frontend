@@ -27,10 +27,10 @@
   </div>
   <div class="m-2" *ngIf="!loading">
     <div class="" *ngIf="shouldDisplayBlock()">
-      <div class="fw-medium" style="color: #29415b; font-size: 18px">
-        <p>Select Program:</p>
+      <div class="fw-medium" style="color: #29415b; font-size: 16px">
+        <p>Select Surrogate:</p>
       </div>
-      <div class="d-flex flex-wrap justify-content-center">
+      <!-- <div class="d-flex flex-wrap justify-content-center">
         <div
           *ngFor="let program of programs"
           class="col-md-3 d-flex justify-content-center"
@@ -48,6 +48,32 @@
                 {{ program.heading }}
               </span>
             </label>
+          </div>
+        </div>
+      </div> -->
+      <div class="container">
+        <div class="row justify-content-center">
+          <div
+            *ngFor="let program of programs"
+            class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-content-center mb-3"
+          >
+            <div class="card program w-100 d-flex align-items-center">
+              <label
+                class="d-flex align-items-center w-100 px-3"
+                style="margin-bottom: 0"
+              >
+                <p-radioButton
+                  type="radio"
+                  name="program"
+                  class="me-2"
+                  [(ngModel)]="selectedProgram"
+                  [value]="program.name"
+                ></p-radioButton>
+                <span class="fw-medium" style="font-size: 16px">
+                  {{ program.heading }}
+                </span>
+              </label>
+            </div>
           </div>
         </div>
       </div>
@@ -83,7 +109,7 @@
       </div> -->
 
     <div class="d-flex align-items-center justify-content-between p-2">
-      <div class="fw-medium" style="color: #29415b; font-size: 18px">
+      <div class="fw-medium" style="color: #29415b; font-size: 16px">
         <p class="m-0">Select Banks</p>
       </div>
     </div>
@@ -140,24 +166,6 @@
                   [(ngModel)]="bank.selected"
                   (change)="toggleSelected(bank)"
                 />
-                <!-- <a>
-                  <img
-                    *ngIf="
-                      bank && bank.imageUrl && bank.imageUrl.length > 0;
-                      else noImage
-                    "
-                    [src]="'//' + bank.imageUrl[0]"
-                    alt="Bank Logo"
-                    style="height: 60px; width: 116px"
-                  />
-                  <ng-template #noImage>
-                    <img
-                      src="../../../../assets/images/menu/noImage.png"
-                      alt="No Image"
-                      style="height: 30px; width: 80px"
-                    />
-                  </ng-template>
-                </a> -->
 
                 <ng-container
                   *ngIf="
@@ -184,6 +192,58 @@
               </div>
               <span class="text-capitalize text-center">{{ bank.name }}</span>
             </label>
+          </div>
+        </div>
+      </div>
+      <div
+        style="max-height: 500px; overflow-y: auto"
+        class="w-100 px-2 bankscard"
+      >
+        <div class="row w-100">
+          <div
+            *ngFor="let bank of filteredBanks"
+            class="col-12 col-sm-6 col-md-3 my-4 d-flex justify-content-center"
+          >
+            <div class="card bank w-100" style="max-width: 220px">
+              <label class="d-flex flex-column align-items-center">
+                <div
+                  class="d-flex justify-content-center align-items-center mb-2"
+                >
+                  <input
+                    type="checkbox"
+                    class="styled-checkbox me-2"
+                    [(ngModel)]="bank.selected"
+                    (change)="toggleSelected(bank)"
+                  />
+
+                  <ng-container
+                    *ngIf="
+                      bank && bank.imageUrl && bank.imageUrl.length > 0;
+                      else defaultImage
+                    "
+                  >
+                    <a>
+                      <img
+                        [src]="'//' + bank.imageUrl[0]"
+                        alt="Bank Logo"
+                        style="height: 60px; width: 116px"
+                      />
+                    </a>
+                  </ng-container>
+
+                  <ng-template #defaultImage>
+                    <img
+                      src="../../../../assets/images/menu/noImage.png"
+                      alt="No Image"
+                      style="height: 60px; width: 116px"
+                    />
+                  </ng-template>
+                </div>
+                <span class="text-center text-capitalize">{{
+                  bank.name | capitalizeFirst
+                }}</span>
+              </label>
+            </div>
           </div>
         </div>
       </div>

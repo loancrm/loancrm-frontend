@@ -48,9 +48,6 @@
 //   background: #13003a !important;
 //   color: #fff !important;
 // }
-::ng-deep .bread-crumb .pi-home {
-  color: #7a86b6 !important;
-}
 .delete-btn {
   height: 30px;
   width: 35px;
@@ -62,7 +59,7 @@
 
 .calendar-custom-img {
   position: absolute;
-  right: 10px; /* Adjust as needed */
+  right: 10px;
   top: 50%;
   transform: translateY(-50%);
   height: 20px;

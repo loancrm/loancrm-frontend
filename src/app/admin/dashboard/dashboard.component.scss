@@ -88,13 +88,27 @@ span img {
 .cards:hover {
   transform: scale(1.05);
 }
+.countcard {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 0.5rem;
+}
+
+.countcard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.countcard:hover .dashboardicon {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
 
 // .chart-card {
 //   background-color: #eee8f6;
 // }
 .chart-card {
-  width: 100%;            /* responsive width */
-  height: 350px;          /* fixed height for the entire card */
+  width: 100%; /* responsive width */
+  height: 350px; /* fixed height for the entire card */
   box-sizing: border-box;
   padding: 1rem;
   display: flex;

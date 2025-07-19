@@ -40,8 +40,8 @@ export class ViewComponent implements OnInit {
 
     this.breadCrumbItems = [
       {
-        icon: 'pi pi-home',
-        label: ' Dashboard',
+
+        label: ' Home',
         routerLink: '/user/dashboard',
         queryParams: { v: this.version },
       },
@@ -88,8 +88,8 @@ export class ViewComponent implements OnInit {
   updateBreadcrumb(): void {
     this.breadCrumbItems = [
       {
-        icon: 'pi pi-home',
-        label: ' Dashboard',
+
+        label: ' Home',
         routerLink: '/user/dashboard',
         queryParams: { v: this.version },
       },

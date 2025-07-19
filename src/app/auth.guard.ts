@@ -64,7 +64,7 @@ export class AuthGuard implements CanActivate {
 
     return this.leadService.getSubscriptionById(accountId).pipe(
       map((sub: any) => {
-        console.log("sub", sub)
+        // console.log("sub", sub)
         // ✅ Allow access if any plan is active (Free Trial, Basic, or Professional)
         if (sub?.status === 'Active' || sub?.status === 'Expired') {
           return true;

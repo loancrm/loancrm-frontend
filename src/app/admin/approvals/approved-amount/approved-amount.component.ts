@@ -15,6 +15,8 @@ export class ApprovedAmountComponent implements OnInit {
   leadId: string | null = null;
   moment: any;
   loading: any;
+  banks: any = [];
+  bankMap = new Map<number, string>();
   displayedItems: any = [];
   version = projectConstantsLocal.VERSION_DESKTOP;
   statusOptions: any[] = projectConstantsLocal.APPROVALS_STATUS;
@@ -23,8 +25,7 @@ export class ApprovedAmountComponent implements OnInit {
   approvalDetails: any[] = [];
   breadCrumbItems: any[] = [
     {
-      icon: 'pi pi-home',
-      label: ' Dashboard',
+      label: ' Home',
       routerLink: '/user/dashboard',
       queryParams: { v: this.version },
     },
@@ -44,6 +45,7 @@ export class ApprovedAmountComponent implements OnInit {
     private router: Router
   ) {
     this.moment = this.dateTimeProcessor.getMoment();
+    this.getBankers();
   }
 
   ngOnInit(): void {
@@ -238,6 +240,33 @@ export class ApprovedAmountComponent implements OnInit {
       }
     );
   }
+
+
+  getBankers(filter = {}) {
+    this.loading = true;
+    this.leadsService.getBankers(filter).subscribe(
+      (response: any) => {
+        this.banks = [{ name: 'All' }, ...response];
+
+        // Create a Map for quick lookup
+        this.bankMap.clear();
+        for (const bank of response) {
+          if (bank.id && bank.name) {
+            this.bankMap.set(bank.id, bank.name);
+          }
+        }
+        this.loading = false;
+      },
+      (error: any) => {
+        this.loading = false;
+        this.toastService.showError(error);
+      }
+    );
+  }
+  getLenderName(bankId: number): string {
+    return this.bankMap.get(bankId) || '';
+  }
+
   getLeadById(id: string) {
     this.leadsService.getLeadDetailsById(id).subscribe(
       (lead) => {

@@ -132,8 +132,7 @@ export class ViewComponent {
     // console.log('UserType:', this.user?.userType); // DEBUG LOG
     this.breadCrumbItems = [
       {
-        icon: 'pi pi-home',
-        label: 'Dashboard',
+        label: 'Home',
         routerLink: '/user/dashboard',
         queryParams: { v: this.version },
       }

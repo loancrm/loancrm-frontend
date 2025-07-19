@@ -12,7 +12,7 @@ export const projectConstantsLocal = {
   LOGIN_STATUS: [
     { id: 0, name: 'all', displayName: 'All Logins' },
     { id: 11, name: 'readyToLogin', displayName: 'Ready To Login' },
-    { id: 12, name: 'filesInProcess', displayName: 'Files in Process' },
+    { id: 12, name: 'filesInProcess', displayName: 'All Processed Files' },
   ],
   REJECTED_STATUS: [
     // { id: 0, name: 'all', displayName: 'All Rejects' },

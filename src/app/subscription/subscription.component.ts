@@ -14,56 +14,14 @@ declare var Razorpay: any;
   styleUrls: ['./subscription.component.scss']
 })
 export class SubscriptionComponent implements OnInit {
-  accountId: number = 0;
-  moment: any;
+  accountId = 0;
   user: any;
-
-  plans = [
-    {
-      plan_name: 'Free Trial',
-      plan_type: 'Free',
-      price: 0,
-      durationDays: 30,
-      iconClass: 'fas fa-bolt',
-      colorClass: 'bg-success',
-      features: [
-        'Up to 100 Leads',
-        'Basic Lead Management',
-        'Single User Access'
-      ]
-    },
-    {
-      plan_name: 'Basic',
-      plan_type: 'Basic',
-      price: 999,
-      durationDays: 30,
-      iconClass: 'fas fa-layer-group',
-      colorClass: 'bg-primary',
-      features: [
-        'Up to 1000 Leads',
-        'Customer KYC Upload',
-        'Single User Access',
-        'Basic Reporting',
-        'Email Notifications'
-      ]
-    },
-    {
-      plan_name: 'Professional',
-      plan_type: 'Premium',
-      price: 1999,
-      durationDays: 365,
-      iconClass: 'fas fa-star',
-      colorClass: 'bg-warning text-dark',
-      features: [
-        'Up to 5000 Leads',
-        'Multi-User Support (5 Users)',
-        'Workflow Automation',
-        'Document Collection & Tracking',
-        'Loan Application Tracking',
-        'Integration with Email & SMS'
-      ]
-    }
-  ];
+  plans: any[] = [];
+  displayPlans: any[] = [];
+  selectedPlan: any = null;
+  isYearly = false;
+  displayDialog = false;
+  moment: any;
 
   constructor(
     private router: Router,
@@ -76,30 +34,84 @@ export class SubscriptionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadPlans();
     const userDetails = this.localStorageService.getItemFromLocalStorage('userDetails');
     if (userDetails?.user?.accountId) {
       this.accountId = userDetails.user.accountId;
       this.user = userDetails.user;
     } else {
       this.toastService.showError('User not found. Please login again.');
-      this.router.navigate(['/auth/login']);
+      this.router.navigate(['/user/login']);
     }
   }
 
-  // Entry point for subscription
+  loadPlans(): void {
+    this.subscriptionService.getSubscriptionPlans().subscribe({
+      next: (data: any) => {
+        console.log(data)
+        this.plans = data.map(plan => ({
+          ...plan,
+          features: typeof plan.features === 'string' ? plan.features.split(',') : plan.features,
+          iconClass: this.getIcon(plan.plan_name)
+        }));
+        this.updateDisplayPlans();
+      },
+      error: () => this.toastService.showError('Failed to load subscription plans.')
+    });
+  }
+
+  updateDisplayPlans(): void {
+    const cycle = this.isYearly ? 'Yearly' : 'Monthly';
+    this.displayPlans = this.plans.filter(p => p.billing_cycle === cycle);
+  }
+
+  togglePricing(yearly: boolean): void {
+    this.isYearly = yearly;
+    this.updateDisplayPlans();
+  }
+
+  getIcon(planName: string): string {
+    if (planName.includes('Professional')) return 'fas fa-star';
+    if (planName.includes('Basic')) return 'fas fa-layer-group';
+    return 'fas fa-bolt';
+  }
+
+  showPlanSummary(plan: any): void {
+    const gstRate = plan.gst_applicable ? (plan.gst_percentage || 0) : 0;
+    const basePrice = plan.price || 0;
+    const gstAmount = +(basePrice * gstRate / 100).toFixed(2);
+    const totalAmount = +(basePrice + gstAmount).toFixed(2);
+    this.selectedPlan = {
+      ...plan,
+      gst_percentage: gstRate,
+      basePrice,
+      gstAmount,
+      totalAmount
+    };
+    this.displayDialog = true;
+  }
+
   subscribeToPlan(plan: any): void {
     if (plan.plan_type === 'Free') {
       this.createSubscription(plan);
-    } else {
-      this.subscriptionService.createRazorpayOrder(plan.price).subscribe({
-        next: (order: any) => this.launchRazorpay(order, plan),
-        error: () => this.toastService.showError('Failed to initiate payment.')
-      });
+      return;
     }
+
+    const gstRate = plan.gst_applicable ? (plan.gst_percentage || 0) : 0;
+    const baseAmount = plan.price || 0;
+    const gstAmount = +(baseAmount * gstRate / 100).toFixed(2);
+    const totalAmount = +(baseAmount + gstAmount).toFixed(2);
+
+    plan.totalPayable = totalAmount;
+    plan.gstAmount = gstAmount;
+    plan.gst_percentage = gstRate;
+    this.subscriptionService.createRazorpayOrder(totalAmount).subscribe({
+      next: (order: any) => this.launchRazorpay(order, plan),
+      error: () => this.toastService.showError('Failed to initiate payment.')
+    });
   }
 
-  // Launch Razorpay payment
-  launchRazorpay(order: any, plan: any) {
+  launchRazorpay(order: any, plan: any): void {
     const options = {
       key: projectConstantsLocal.RAZORPAY_KEY_ID,
       amount: order.amount,
@@ -124,14 +136,16 @@ export class SubscriptionComponent implements OnInit {
     }
   }
 
-  // Verify Razorpay and store subscription
-  verifyPayment(paymentResponse: any, plan: any) {
+  verifyPayment(paymentResponse: any, plan: any): void {
     const subscriptionData = {
       accountId: this.accountId,
       plan_name: plan.plan_name,
       plan_type: plan.plan_type,
       price: plan.price,
-      durationDays: plan.durationDays,
+      gst_percentage: plan.gst_percentage || 0,
+      gst_amount: plan.gstAmount || 0,
+      total_amount: plan.totalPayable || plan.price,
+      durationDays: plan.duration_days,
       auto_renew: 1,
       razorpay_payment_id: paymentResponse.razorpay_payment_id,
       razorpay_order_id: paymentResponse.razorpay_order_id,
@@ -143,33 +157,27 @@ export class SubscriptionComponent implements OnInit {
         this.toastService.showSuccess(`${plan.plan_name} activated!`);
         this.router.navigate(['/user/dashboard']);
       },
-      error: (err) => {
-        this.toastService.showError(err);
-      }
+      error: (err) => this.toastService.showError(err)
     });
   }
 
-  // Handle free plan
   createSubscription(plan: any): void {
     const subscriptionData = {
       accountId: this.accountId,
       plan_name: plan.plan_name,
       plan_type: plan.plan_type,
       price: plan.price,
-      durationDays: plan.durationDays,
+      durationDays: plan.duration_days,
       auto_renew: 1
     };
 
     this.subscriptionService.createSubscription(subscriptionData).subscribe({
-      next: () => {
+      next: (response) => {
+        // console.log('Subscription response:', response);
         this.toastService.showSuccess('Free Trial Activated!');
         this.router.navigate(['/user/dashboard']);
       },
-      error: (err) => {
-        this.toastService.showError(
-          err
-        );
-      }
+      error: (err) => this.toastService.showError(err)
     });
   }
 }

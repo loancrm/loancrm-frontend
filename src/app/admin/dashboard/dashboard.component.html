@@ -2,14 +2,14 @@
   class="welcome d-flex justify-content-between align-items-center p-1 m-1 greeting-card"
 >
   <!-- Left: Greeting -->
-  <div class="d-flex align-items-center">
-    <img
+  <div class="d-flex align-items-center m-2">
+    <!-- <img
       src="../../../assets/images/menu/welcome.gif"
       width="45"
       height="45"
       class="me-3"
       alt="Image"
-    />
+    /> -->
     <div>
       <h5 class="card-title mb-0 text-capitalize">
         {{ greetingMessage }}, &nbsp;<span>{{
@@ -81,7 +81,7 @@
             class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"
           >
             <div
-              class="card shadow-sm d-flex flex-row align-items-center justify-content-between px-3 py-2 pointer-cursor h-100"
+              class="card countcard shadow-sm d-flex flex-row align-items-center justify-content-between px-3 py-2 pointer-cursor h-100"
               (click)="goToRoute(card.routerLink)"
             >
               <div>
@@ -238,7 +238,7 @@
             <!-- Header -->
             <ng-template pTemplate="header">
               <tr>
-                <th>ID</th>
+                <th>Lead Id</th>
                 <th>Business Name</th>
                 <th>Sourced By</th>
               </tr>

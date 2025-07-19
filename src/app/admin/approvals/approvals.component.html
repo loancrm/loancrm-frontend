@@ -8,24 +8,12 @@
         <span class="me-2 d-flex align-items-center">
           <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
         </span>
-        <!-- <span class="me-1">
-          <img
-            src="../../../assets/images/menu/approvals.png"
-            alt="Default Image"
-            class=""
-            style="height: 35px; width: 40px"
-          />
-        </span> -->
         <b>
           <span class="back-btn-text">Sanctions</span>
         </b>
-        <!-- <span class="back-btn-text text-capitalize">Sanctions</span> -->
       </div>
     </div>
   </div>
-  <!-- <div class="bread-crumb">
-    <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
-  </div> -->
   <div class="text-capitalize m-2">
     <p-tabMenu
       [model]="items"
@@ -172,7 +160,6 @@
               <th>City</th>
               <th class="text-nowrap">Sanction Amount</th>
               <th class="text-nowrap">Sourced By</th>
-              <!-- <th class="text-nowrap">Created Date</th> -->
               <th class="text-nowrap">Sanction Date</th>
               <th>Actions</th>
             </tr>
@@ -210,11 +197,6 @@
                     : "-"
                 }}</span>
               </td>
-              <!-- <td>
-            <span class="table-column-data" *ngIf="lead.createdOn">{{
-              lead.createdOn | date : "mediumDate"
-            }}</span>
-          </td> -->
               <td>
                 <span class="table-column-data">{{
                   lead.approvalDate

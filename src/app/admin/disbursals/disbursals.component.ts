@@ -24,7 +24,6 @@ export class DisbursalsComponent implements OnInit {
   SanctionedAmountSum: { [key: number]: number } = {};
   DisbursedAmountSum: { [key: number]: number } = {};
   employmentStatus: any;
-  loginStatus: any = projectConstantsLocal.LOGIN_STATUS;
   totalLeadsCount: any = 0;
   leadIdToSearch: any;
   businessNameToSearch: any;
@@ -90,8 +89,8 @@ export class DisbursalsComponent implements OnInit {
 
     this.breadCrumbItems = [
       {
-        icon: 'pi pi-home',
-        label: ' Dashboard',
+
+        label: ' Home',
         routerLink: '/user/dashboard',
         queryParams: { v: this.version },
       },
@@ -416,11 +415,6 @@ export class DisbursalsComponent implements OnInit {
   private async loadAllLeadData(): Promise<void> {
     try {
       await Promise.all([
-        // this.loadLeadsforPersonal(event),
-        // this.loadLeadsforHome(event),
-        // this.loadLeadsforHomeself(event),
-        // this.loadLeadsforlap(event),
-        // this.loadLeadsforlapself(event),
         this.getTotalLeadsCountArray(event),
         this.getbusinessloanleadsCount(event),
         this.getStatusLeadsCountArray(event)
