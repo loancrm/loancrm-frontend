@@ -253,16 +253,6 @@
                 <td>
                   <div class="text-center">
                     <div class="d-flex">
-                      <!-- <button
-                  pButton
-                  pRipple
-                  type="button"
-                  class="p-button-primary me-2 custom-btn"
-                  (click)="evaluateCredit(lead.id)"
-                  pTooltip="Evaluate Credit"
-                  icon="fas fa-clipboard-check"
-                  tooltipPosition="left"
-                ></button> -->
                       <img
                         alt="Evaluate Credit"
                         src="../../../assets/images/icons/credit.svg"
@@ -270,7 +260,7 @@
                         height="24px"
                         class="me-2"
                         tooltipPosition="top"
-                        (click)="evaluateCredit(lead.id)"
+                        (click)="evaluateCredit(lead)"
                         pTooltip="Evaluate Credit"
                       />
                       <p-menu
@@ -627,8 +617,8 @@
         </div>
       </div>
       <div *ngIf="activeItem?.name == 'homeLoan'">
-        <p>Comming soon ....</p>
-        <!-- <p-tabMenu
+        <!-- <p>Comming soon ....</p> -->
+        <p-tabMenu
           [model]="employmentStatus"
           class="tabdesign"
           [activeItem]="activeEmploymentStatus"
@@ -913,61 +903,33 @@
 
                     <td>
                       <div class="text-center">
-                        <div
+                        <!-- Employed -->
+                        <img
+                          *ngIf="activeEmploymentStatus.name === 'employed'"
+                          alt="View Lead"
+                          src="../../../assets/images/icons/credit.svg"
+                          width="24px"
+                          height="24px"
+                          class="me-2"
+                          tooltipPosition="top"
+                          (click)="evaluateLoanCredit(lead.leadId)"
+                          pTooltip="Evaluate Credit"
+                        />
+
+                        <!-- Self-Employed -->
+                        <img
                           *ngIf="
-                            userDetails &&
-                            userDetails.userType &&
-                            userDetails.userType == '3'
+                            activeEmploymentStatus.name === 'self-employed'
                           "
-                        >
-
-                          <img
-                            src="../../../assets/images/icons/eye.svg"
-                            width="24px"
-                            height="24px"
-                            class="me-2"
-                            (click)="viewLoanLead(lead.leadId)"
-                            pTooltip="View"
-                            tooltipPosition="top"
-                          />
-                        </div>
-                        <div
-                          class="d-flex"
-                          *ngIf="
-                            userDetails &&
-                            userDetails.userType &&
-                            userDetails.userType != '3'
-                          "
-                        >
-
-
-                          <img
-                            src="../../../assets/images/icons/eye.svg"
-                            width="24px"
-                            height="24px"
-                            class="me-2"
-                            (click)="viewLoanLead(lead.leadId)"
-                            pTooltip="View Files"
-                            tooltipPosition="top"
-                          />
-
-
-                          <p-menu
-                            appendTo="body"
-                            #menuhome
-                            [model]="getHomeActionItems(lead)"
-                            [popup]="true"
-                          ></p-menu>
-
-                          <img
-                            src="../../../assets/images/icons/menu.svg"
-                            width="24px"
-                            height="24px"
-                            pTooltip="Actions"
-                            tooltipPosition="top"
-                            (click)="menuhome.toggle($event)"
-                          />
-                        </div>
+                          alt="Evaluate Credit"
+                          src="../../../assets/images/icons/credit.svg"
+                          width="24px"
+                          height="24px"
+                          class="me-2"
+                          tooltipPosition="top"
+                          (click)="evaluateCredit(lead)"
+                          pTooltip="Evaluate Credit"
+                        />
                       </div>
                     </td>
                   </tr>
@@ -987,10 +949,10 @@
               </p-table>
             </div>
           </ng-container>
-        </ng-container> -->
+        </ng-container>
       </div>
       <div *ngIf="activeItem.name == 'lap'">
-        <!-- <p-tabMenu
+        <p-tabMenu
           [model]="employmentStatus"
           class="tabdesign"
           [activeItem]="activeEmploymentStatus"
@@ -1254,13 +1216,12 @@
                             userDetails.userType == '3'
                           "
                         >
-
                           <img
                             src="../../../assets/images/icons/eye.svg"
                             width="24px"
                             height="24px"
                             class="me-2"
-                            (click)="viewLoanLead(lead.leadId)"
+                            (click)="viewLead(lead.leadId)"
                             pTooltip="View"
                             tooltipPosition="top"
                           />
@@ -1273,17 +1234,15 @@
                             userDetails.userType != '3'
                           "
                         >
-
                           <img
                             src="../../../assets/images/icons/eye.svg"
                             width="24px"
                             height="24px"
                             class="me-2"
-                            (click)="viewLoanLead(lead.leadId)"
+                            (click)="viewLead(lead.leadId)"
                             pTooltip="View Files"
                             tooltipPosition="top"
                           />
-
 
                           <p-menu
                             appendTo="body"
@@ -1320,8 +1279,8 @@
               </p-table>
             </div>
           </ng-container>
-        </ng-container> -->
-        <p>Comming soon ....</p>
+        </ng-container>
+        <!-- <p>Comming soon ....</p> -->
       </div>
       <div *ngIf="activeItem.name == 'professionalLoans'">
         <p>Comming soon ....</p>

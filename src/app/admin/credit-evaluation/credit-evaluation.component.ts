@@ -666,8 +666,18 @@ export class CreditEvaluationComponent implements OnInit {
     return menuItems;
   }
 
-  evaluateCredit(leadId) {
-    this.routingService.handleRoute('credit/evaluate/' + leadId, null);
+  // evaluateCredit(leadId) {
+  //   this.routingService.handleRoute('credit/evaluate/' + leadId, null);
+  // }
+  evaluateCredit(lead) {
+
+    const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+      this.routingService.handleRoute(`credit/evaluate/${loanType}/${lead.leadId}`, null);
+    } else {
+      // If no known loanType, omit status from the route
+      this.routingService.handleRoute(`credit/evaluate/${lead.id}`, null);
+    }
   }
   evaluateLoanCredit(leadId) {
     this.routingService.handleRoute('credit/loan-evaluate/' + leadId, null);

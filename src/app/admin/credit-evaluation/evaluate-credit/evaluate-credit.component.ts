@@ -78,6 +78,7 @@ export class EvaluateCreditComponent implements OnInit {
   leads: any = [];
   searchFilter: any = {};
   moment: any;
+  displayedItems: any = [];
   version = projectConstantsLocal.VERSION_DESKTOP;
   documentTypes = [
     { key: 'gstCertificate', label: 'GST Certificate' },
@@ -151,36 +152,66 @@ export class EvaluateCreditComponent implements OnInit {
     private dateTimeProcessor: DateTimeProcessorService
   ) {
     this.moment = this.dateTimeProcessor.getMoment();
-    this.activatedRoute.params.subscribe((params) => {
-      if (params && params['id']) {
-        this.leadId = params['id'];
+    // this.activatedRoute.params.subscribe((params) => {
+    //   if (params && params['id']) {
+    //     this.leadId = params['id'];
+    //     this.getLeadById(this.leadId);
+    //     this.getDscrValuesById(this.leadId).then((data) => {
+    //       if (data) {
+    //         this.setDscrValuesData();
+    //       }
+    //     });
+    //   }
+    // });
+    this.leadId = this.activatedRoute.snapshot.paramMap.get('id');
+    const status = this.activatedRoute.snapshot.paramMap.get('status');
+    if (this.leadId) {
+      if (!status) {
         this.getLeadById(this.leadId);
-        this.getDscrValuesById(this.leadId).then((data) => {
-          if (data) {
-            this.setDscrValuesData();
-          }
-        });
+      } else {
+        const validStatuses = ['personalLoan', 'homeLoan', 'lap'];
+        if (validStatuses.includes(status)) {
+          this.getLoanLeadById(this.leadId);
+        } else {
+          console.warn('Unknown status:', status);
+          this.getLeadById(this.leadId);
+        }
       }
-    });
+      this.getLeadDocumentsById(this.leadId).then((data) => {
+        if (data) {
+          // console.log('Lead documents loaded');
+          if (this.leadDocuments?.gstDetails?.length > 0) {
+            this.totalGst3BSale = this.leadDocuments.gstDetails.reduce((sum, item) => {
+              return sum + (parseFloat(item.gst3BSale) || 0);
+            }, 0);
+          }
+        }
+      });
+      this.getDscrValuesById(this.leadId).then((data) => {
+        if (data) {
+          this.setDscrValuesData();
+        }
+      });
+    }
   }
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe((params) => {
-      if (params && params['id']) {
-        this.leadId = params['id'];
-        this.getLeadById(this.leadId);
-        this.getLeadDocumentsById(this.leadId).then((data) => {
-          if (data) {
-            // console.log('Lead documents loaded');
-            if (this.leadDocuments?.gstDetails?.length > 0) {
-              this.totalGst3BSale = this.leadDocuments.gstDetails.reduce((sum, item) => {
-                return sum + (parseFloat(item.gst3BSale) || 0);
-              }, 0);
-            }
-          }
-        });
-      }
-    });
+    // this.activatedRoute.params.subscribe((params) => {
+    //   if (params && params['id']) {
+    //     this.leadId = params['id'];
+    //     this.getLeadById(this.leadId);
+    //     this.getLeadDocumentsById(this.leadId).then((data) => {
+    //       if (data) {
+    //         // console.log('Lead documents loaded');
+    //         if (this.leadDocuments?.gstDetails?.length > 0) {
+    //           this.totalGst3BSale = this.leadDocuments.gstDetails.reduce((sum, item) => {
+    //             return sum + (parseFloat(item.gst3BSale) || 0);
+    //           }, 0);
+    //         }
+    //       }
+    //     });
+    //   }
+    // });
 
     this.breadCrumbItems = [
       {
@@ -198,6 +229,27 @@ export class EvaluateCreditComponent implements OnInit {
     ];
   }
 
+  getLoanLeadById(leadId: any): void {
+    this.leadsService.getLoanLeadById(leadId).subscribe(
+      (data: any) => {
+        this.leadData = data;
+        this.updateDisplayedItems();
+      },
+      (error) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
+  updateDisplayedItems() {
+    const loanDisplayProperty =
+      this.leads && this.leads[0].employmentStatus === 'employed'
+        ? 'contactPerson'
+        : 'businessName';
+    this.displayedItems = [
+      // { data: this.leads[0], displayProperty: 'businessName' },
+      { data: this.leads[0], displayProperty: loanDisplayProperty },
+    ];
+  }
   changeLeadStatus(leadId, statusId) {
     this.loading = true;
     this.leadsService.changeLeadStatus(leadId, statusId).subscribe(
@@ -447,7 +499,8 @@ export class EvaluateCreditComponent implements OnInit {
     this.leadsService.getLeadDetailsById(leadId).subscribe(
       (leadData: any) => {
         this.leadData = leadData;
-        // console.log('leadData', leadData);
+        console.log('leadData', leadData);
+        this.updateDisplayedItems();
         this.updateBreadcrumb();
         this.loading = false;
       },
