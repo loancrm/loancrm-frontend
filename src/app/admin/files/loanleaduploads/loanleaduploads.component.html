@@ -38,7 +38,7 @@
             <div class="p-3">
               <h3 style="font-weight: bold; color: #29415b">KYC Details</h3>
             </div>
-            <div class="col-md-4 mt-2">
+            <!-- <div class="col-md-4 mt-2">
               <div>
                 <div class="my-1">
                   <label>Person Name&nbsp; </label>
@@ -92,8 +92,44 @@
                   maxlength="12"
                 />
               </div>
-            </div>
-            <div class="col-md-3 mt-2">
+            </div> -->
+            <ng-container *ngFor="let field of [
+                  { label: 'Person Name', placeholder: 'Enter Person Name', model: contactPerson, hasPattern: false, pattern: '', maxLength: null },
+                  { label: 'PAN Number', placeholder: 'Enter PAN Number', model: panNumber, hasPattern: true, pattern: '[A-Z]{5}[0-9]{4}[A-Z]{1}', maxLength: 10 },
+                  { label: 'Aadhaar Number', placeholder: 'Enter Aadhaar Number', model: aadharNumber, hasPattern: true, pattern: '[0-9]{12}', maxLength: 12 }
+                ]">
+                  <div class="col-md-4 mt-2">
+                    <div class="my-1">
+                      <label>{{ field.label }}&nbsp;</label>
+                    </div>
+                    <input
+                      pInputText
+                      class="rounded-lg"
+                      [style.width.%]="100"
+                      type="text"
+                      [placeholder]="field.placeholder"
+                      [(ngModel)]="field.model"
+                      autocomplete="off"
+                      required
+                      *ngIf="!field.hasPattern"
+                    />
+                    <input
+                      *ngIf="field.hasPattern"
+                      pInputText
+                      class="rounded-lg"
+                      [style.width.%]="100"
+                      type="text"
+                      [placeholder]="field.placeholder"
+                      [(ngModel)]="field.model"
+                      autocomplete="off"
+                      required
+                      [pattern]="field.pattern"
+                      [attr.maxlength]="field.maxLength"
+                    />
+                  </div>
+                </ng-container>
+
+            <!-- <div class="col-md-3 mt-2">
               <div>
                 <div class="my-1">
                   <label class="text-success">Pan Card&nbsp; </label>
@@ -224,11 +260,48 @@
                   </a>
                 </span>
               </div>
-            </div>
-          </div>
+            </div> -->
+           <ng-container *ngFor="let doc of [
+                { label: 'Pan Card', key: 'panCard' },
+                { label: 'Aadhar Card', key: 'aadharCard' },
+                { label: 'Person Photo', key: 'photo' },
+                { label: 'Voter Id', key: 'voterId' }
+              ]">
+                <div class="col-md-3 mt-2">
+                  <div>
+                    <div class="my-1">
+                      <label class="text-success">{{ doc.label }}&nbsp;</label>
+                    </div>
+                    <button
+                      pButton
+                      pRipple
+                      type="button"
+                      class="p-button-info me-2"
+                      (click)="uploadFiles(doc.key, '*/*')"
+                    >
+                      <i class="pi pi-upload"></i>&nbsp;Upload Files
+                    </button>
+                  </div>
+
+                  <div
+                    *ngIf="loanleads && loanleads[0][doc.key] && loanleads[0][doc.key].length > 0"
+                    class="mt-2"
+                  >
+                    <span *ngFor="let file of loanleads[0][doc.key]" class="me-2">
+                      <a [href]="'//' + file" target="_blank">
+                        <i
+                          [class]="getFileIcon(file.split('.').pop())"
+                          class="file-icon"
+                        ></i>
+                      </a>
+                    </span>
+                  </div>
+                </div>
+              </ng-container>
+           </div>
         </div>
         <div>
-          <div class="row">
+          <!-- <div class="row">
             <div class="p-3">
               <h3 style="font-weight: bold; color: #29415b">
                 Co Applicant KYC Details
@@ -419,8 +492,90 @@
                 </span>
               </div>
             </div>
+          </div> -->
+          <div class="row">
+              <div class="p-3">
+                <h3 style="font-weight: bold; color: #29415b">
+                  Co Applicant KYC Details
+                </h3>
+              </div>
+
+              <!-- Co-Applicant Name -->
+              <div class="col-md-4 mt-2">
+                <div class="my-1">
+                  <label>Co-Applicant Name&nbsp;</label>
+                </div>
+                <input
+                  pInputText
+                  class="rounded-lg"
+                  [style.width.%]="100"
+                  type="text"
+                  placeholder="Enter Co-Applicant Name"
+                  [(ngModel)]="coApplicantName"
+                  autocomplete="off"
+                  required
+                />
+              </div>
+
+              <!-- Co-Applicant Relation -->
+              <div class="col-md-4 mt-2">
+                <div class="my-1">
+                  <label>Co-Applicant Relation&nbsp;</label>
+                </div>
+                <input
+                  pInputText
+                  class="rounded-lg"
+                  [style.width.%]="100"
+                  type="text"
+                  placeholder="Enter Co-Applicant Relation"
+                  [(ngModel)]="coApplicantRelation"
+                  autocomplete="off"
+                  required
+                />
+              </div>
+
+              <div class="col-md-4 mt-2"></div>
+
+              <!-- Upload Blocks -->
+              <ng-container *ngFor="let doc of [
+                { label: 'Co-Applicant Pan Card', key: 'coApplicantPancard' },
+                { label: 'Co-Applicant Aadhar Card', key: 'coApplicantAadharcard' },
+                { label: 'Co-Applicant Photo', key: 'coApplicantPhoto' },
+                { label: 'Co-Applicant Voter Id', key: 'coApplicantVoterId' }
+              ]">
+                <div class="col-md-3 mt-2">
+                  <div>
+                    <div class="my-1">
+                      <label class="text-success">{{ doc.label }}&nbsp;</label>
+                    </div>
+                    <button
+                      pButton
+                      pRipple
+                      type="button"
+                      class="p-button-info me-2"
+                      (click)="uploadFiles(doc.key, '*/*')"
+                    >
+                      <i class="pi pi-upload"></i>&nbsp;Upload Files
+                    </button>
+                  </div>
+
+                  <div
+                    *ngIf="loanleads && loanleads[0][doc.key]?.length > 0"
+                    class="mt-2"
+                  >
+                    <span *ngFor="let file of loanleads[0][doc.key]" class="me-2">
+                      <a [href]="'//' + file" target="_blank">
+                        <i
+                          [class]="getFileIcon(file.split('.').pop())"
+                          class="file-icon"
+                        ></i>
+                      </a>
+                    </span>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
           </div>
-        </div>
         <div class="my-3 text-center">
           <button
             pButton
@@ -433,7 +588,7 @@
           </button>
         </div>
       </div>
-      <div *ngIf="activeItem.name == 'cibil'">
+      <!-- <div *ngIf="activeItem.name == 'cibil'">
         <div>
           <div class="row">
             <div class="p-3">
@@ -559,7 +714,89 @@
             <i class="pi pi-save"></i>&nbsp;Save
           </button>
         </div>
+      </div> -->
+      <div *ngIf="activeItem.name == 'cibil'">
+  <div>
+    <div class="row">
+      <div class="p-3">
+        <h3 style="font-weight: bold; color: #29415b">Cibil Details</h3>
       </div>
+
+      <ng-container *ngFor="let field of [
+        { label: 'Person Name', placeholder: 'Enter Person Name ', model: 'contactPerson', required: true },
+        { label: 'PAN Number', placeholder: 'Enter PAN Number', model: 'panNumber', required: true, pattern: '[A-Z]{5}[0-9]{4}[A-Z]{1}', maxlength: 10 },
+        { label: 'Aadhaar Number', placeholder: 'Enter Aadhaar Number', model: 'aadharNumber', required: true, pattern: '[0-9]{12}', maxlength: 12 },
+        { label: 'Cibil Score', placeholder: 'Enter Cibil Score', model: 'cibilScore', required: false }
+      ]">
+        <div class="col-md-4 mt-2">
+          <div>
+            <div class="my-1">
+              <label>{{ field.label }}&nbsp;</label>
+            </div>
+            <input
+              pInputText
+              class="rounded-lg"
+              [style.width.%]="100"
+              type="text"
+              [placeholder]="field.placeholder"
+              [(ngModel)]="this[field.model]"
+              autocomplete="off"
+              [required]="field.required"
+              [pattern]="field.pattern || ''"
+              [attr.maxlength]="field.maxlength || null"
+            />
+          </div>
+        </div>
+      </ng-container>
+
+      <div class="col-md-3 mt-2">
+        <div>
+          <div class="my-1">
+            <label class="text-success">Cibil Report&nbsp;</label>
+          </div>
+          <button
+            pButton
+            pRipple
+            type="button"
+            class="p-button-info me-2"
+            (click)="uploadFiles('cibilReport', '*/*')"
+          >
+            <i class="pi pi-upload"></i>&nbsp;Upload Files
+          </button>
+        </div>
+        <div
+          *ngIf="
+            loanleads &&
+            loanleads[0].cibilReport &&
+            loanleads[0].cibilReport.length > 0
+          "
+          class="mt-2"
+        >
+          <span *ngFor="let file of loanleads[0].cibilReport" class="me-2">
+            <a [href]="'//' + file" target="_blank">
+              <i
+                [class]="getFileIcon(file.split('.').pop())"
+                class="file-icon"
+              ></i>
+            </a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="my-3 text-center">
+    <button
+      pButton
+      pRipple
+      type="button"
+      class="p-button-primary me-2"
+      (click)="saveCibilSection()"
+    >
+      <i class="pi pi-save"></i>&nbsp;Save
+    </button>
+  </div>
+</div>
+
       <ng-container
         *ngIf="
           loanleads?.length &&
@@ -571,7 +808,7 @@
               loanleads[0].employmentStatus === 'employed'))
         "
       >
-        <div *ngIf="activeItem.name == 'companydetails'">
+        <!-- <div *ngIf="activeItem.name == 'companydetails'">
           <div>
             <div class="row">
               <div class="p-3">
@@ -655,14 +892,7 @@
                   <div class="my-1">
                     <label>Date&nbsp; </label>
                   </div>
-                  <!-- <p-calendar
-                    placeholder="Select Date"
-                    appendTo="body"
-                    [style]="{ width: '100%' }"
-                    [showIcon]="true"
-                    [(ngModel)]="statements['date']"
-                    [showButtonBar]="true"
-                  ></p-calendar> -->
+                  
                   <div class="custom-calendar-wrapper w-100 position-relative">
                     <p-calendar
                       #statementcalendar
@@ -674,7 +904,7 @@
                       styleClass="w-100 custom-calendar-input"
                     ></p-calendar>
 
-                    <!-- Custom Calendar Image Icon -->
+                    
                     <img
                       src="../../../../assets/images/icons/calendar.svg"
                       alt="Calendar Icon"
@@ -763,8 +993,155 @@
               <i class="pi pi-save"></i>&nbsp;Save
             </button>
           </div>
-        </div>
-      </ng-container>
+        </div> -->
+                  <div *ngIf="activeItem.name === 'companydetails'">
+            <div class="row">
+              <div class="p-3">
+                <h3 class="fw-bold" style="color: #29415b">Company Details</h3>
+              </div>
+
+              <!-- Company Name -->
+              <div class="col-md-4 mt-2">
+                <label class="my-1">Company Name&nbsp;</label>
+                <input
+                  pInputText
+                  class="rounded-lg w-100"
+                  type="text"
+                  placeholder="Enter Person Name"
+                  [(ngModel)]="companyName"
+                  autocomplete="off"
+                  required
+                />
+              </div>
+
+              <!-- Company ID Upload -->
+              <div class="col-md-3 mt-2">
+                <label class="text-success my-1">Company Id&nbsp;</label>
+                <button
+                  pButton
+                  pRipple
+                  type="button"
+                  class="p-button-info me-2"
+                  (click)="uploadFiles('companyId', '*/*')"
+                >
+                  <i class="pi pi-upload"></i>&nbsp;Upload Files
+                </button>
+
+                <div *ngIf="loanleads?.[0]?.companyId?.length" class="mt-2">
+                  <ng-container *ngFor="let file of loanleads[0].companyId">
+                    <a [href]="'//' + file" target="_blank" class="me-2">
+                      <i [class]="getFileIcon(file.split('.').pop())" class="file-icon"></i>
+                    </a>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+
+            <!-- Payslips Section -->
+            <div>
+              <h3 class="fw-bold mt-4" style="color: #29415b">Payslips</h3>
+
+              <div class="my-1 text-end">
+                <button
+                  pButton
+                  pRipple
+                  type="button"
+                  class="p-button-primary me-2"
+                  (click)="addPayslipsRow()"
+                >
+                  <i class="pi pi-plus"></i>&nbsp;Add Additional Payslip
+                </button>
+              </div>
+
+              <div class="row" *ngFor="let slip of paySlips; let i = index">
+                <!-- Date -->
+                <div class="col-md-4 mt-2">
+                  <label class="my-1">Date&nbsp;</label>
+                  <div class="custom-calendar-wrapper w-100 position-relative">
+                    <p-calendar
+                      #calendar
+                      [(ngModel)]="slip.date"
+                      placeholder="Select Date"
+                      [showIcon]="false"
+                      [showButtonBar]="true"
+                      appendTo="body"
+                      styleClass="w-100 custom-calendar-input"
+                    ></p-calendar>
+                    <img
+                      src="../../../../assets/images/icons/calendar.svg"
+                      alt="Calendar Icon"
+                      class="calendar-custom-img"
+                      (click)="calendar.toggle()"
+                    />
+                  </div>
+                </div>
+
+                <!-- Salary -->
+                <div class="col-md-4 mt-2">
+                  <label class="my-1">Salary&nbsp;</label>
+                  <input
+                    pInputText
+                    class="rounded-lg w-100"
+                    type="text"
+                    placeholder="Enter Salary"
+                    [(ngModel)]="slip.salary"
+                    autocomplete="off"
+                  />
+                </div>
+
+                <!-- Payslip Upload -->
+                <div class="col-md-3 mt-2">
+                  <label class="text-success my-1">Payslip</label>
+                  <div class="d-flex">
+                    <button
+                      pButton
+                      pRipple
+                      type="button"
+                      class="p-button-info"
+                      (click)="uploadFiles('paySlips', '*/*', i)"
+                    >
+                      <i class="pi pi-upload"></i>&nbsp;Upload Files
+                    </button>
+                    <button
+                      *ngIf="i > 0"
+                      pButton
+                      pRipple
+                      type="button"
+                      class="p-button-danger ml-1"
+                      (click)="deletePayslipsRow(i)"
+                    >
+                      <i class="pi pi-times"></i>
+                    </button>
+                  </div>
+
+                  <div
+                    *ngIf="loanleads?.[0]?.paySlips?.[i]?.paySlips?.length"
+                    class="mt-2"
+                  >
+                    <ng-container *ngFor="let file of loanleads[0].paySlips[i].paySlips">
+                      <a [href]="'//' + file" target="_blank" class="me-2">
+                        <i [class]="getFileIcon(file.split('.').pop())" class="file-icon"></i>
+                      </a>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Save Button -->
+            <div class="my-3 text-center">
+              <button
+                pButton
+                pRipple
+                type="button"
+                class="p-button-primary me-2"
+                (click)="saveCompanyDetailsSection()"
+              >
+                <i class="pi pi-save"></i>&nbsp;Save
+              </button>
+            </div>
+          </div>
+        </ng-container>
       <ng-container
         *ngIf="
           loanleads?.length &&

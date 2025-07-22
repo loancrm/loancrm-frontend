@@ -184,3 +184,6 @@ export class LoanleadsevaluatecreditComponent {
     this.location.back();
   }
 }
+
+
+

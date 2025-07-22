@@ -722,7 +722,9 @@
       <div class="col-md-6">
         <p-accordion>
           <p-accordionTab header="GST Details">
+            <div class="scrollable-content">
             <div class="detail-card">
+              </div>
               <div class="info-line mt-2">
                 <div class="label d-flex justify-content-between">
                   Total GSTR-3B Sale<b>:&nbsp;</b>
@@ -848,7 +850,7 @@
                   <ng-template #noValue>-</ng-template>
                 </div>
               </div>
-
+               </div>
               <div *ngIf="leadDocuments?.gstDetails == null">
                 <div class="text-center">
                   <div colspan="10" class="text-center fw-bold">
@@ -862,14 +864,16 @@
                   </div>
                 </div>
               </div>
-            </div>
+           
           </p-accordionTab>
         </p-accordion>
       </div>
       <div class="col-md-6">
         <p-accordion>
           <p-accordionTab header="Existing Loan Details">
+            <div class="scrollable-content">
             <div class="detail-card">
+              </div>
               <!-- <div *ngIf="leadDocuments?.existingLoans?.length > 0">
                 <div
                   *ngFor="
@@ -1007,7 +1011,7 @@
                   <div>Total Monthly EMI Payment: {{ totalEmi }}</div>
                 </div>
               </div>
-
+              </div>
               <div *ngIf="leadDocuments?.existingLoans == null">
                 <div class="text-center">
                   <div colspan="10" class="text-center fw-bold">
@@ -1021,7 +1025,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            
           </p-accordionTab>
         </p-accordion>
       </div>
@@ -1029,7 +1033,9 @@
       <div class="col-md-6">
         <p-accordion>
           <p-accordionTab header="Current Account Details">
+            <div class="scrollable-content">
             <div class="detail-card">
+              </div>
               <!-- <div *ngIf="leadDocuments?.currentAccountStatements?.length > 0">
                 <div
                   *ngFor="
@@ -1090,6 +1096,8 @@
                   </div>
                 </div>
               </div> -->
+
+              <div class="scrollable-content">
               <div *ngIf="leadDocuments?.currentAccountStatements?.length > 0">
                 <div
                   *ngFor="
@@ -1164,7 +1172,8 @@
                   <ng-template #noValue>-</ng-template>
                 </div>
               </div>
-
+              </div>
+              </div>
               <div *ngIf="leadDocuments?.currentAccountStatements == null">
                 <div class="text-center">
                   <div colspan="10" class="text-center fw-bold">
@@ -1178,7 +1187,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            
           </p-accordionTab>
         </p-accordion>
       </div>
@@ -1186,7 +1195,10 @@
       <div class="col-md-6">
         <p-accordion>
           <p-accordionTab header="OD Account Details">
+            <div class="scrollable-content">
             <div class="detail-card">
+              </div>
+
               <!-- <div *ngIf="leadDocuments?.odAccountStatements?.length > 0">
                 <div
                   *ngFor="
@@ -1337,7 +1349,7 @@
                   <ng-template #noValue>-</ng-template>
                 </div>
               </div>
-
+              </div>
               <div *ngIf="leadDocuments?.odAccountStatements == null">
                 <div class="text-center">
                   <div colspan="10" class="text-center fw-bold">
@@ -1350,8 +1362,7 @@
                     <p>No OD Account Data Found</p>
                   </div>
                 </div>
-              </div>
-            </div>
+              </div>   
           </p-accordionTab>
         </p-accordion>
       </div>
