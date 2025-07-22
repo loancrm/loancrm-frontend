@@ -469,14 +469,14 @@
               <div class="col-md-3 mt-2">
                 <div>
                   <div class="my-1">
-                    <label class="">Aadhar Card&nbsp; </label>
+                    <label class="">Aadhaar Card&nbsp; </label>
                   </div>
                   <button
                     pButton
                     pRipple
                     type="button"
                     class="p-button-info me-2"
-                    (click)="uploadFiles('aadharCard', '*/*')"
+                    (click)="uploadFiles('aadhaarCard', '*/*')"
                   >
                     <i class="pi pi-upload"></i>&nbsp;Upload Files
                   </button>
@@ -484,13 +484,13 @@
                 <div
                   *ngIf="
                     leadDocuments &&
-                    leadDocuments.aadharCard &&
-                    leadDocuments.aadharCard.length > 0
+                    leadDocuments.aadhaarCard &&
+                    leadDocuments.aadhaarCard.length > 0
                   "
                   class="mt-2"
                 >
                   <span
-                    *ngFor="let file of leadDocuments.aadharCard"
+                    *ngFor="let file of leadDocuments.aadhaarCard"
                     class="file-wrapper"
                   >
                     <a [href]="'//' + file" target="_blank">
@@ -504,7 +504,7 @@
                       *ngIf="this.capabilities.delete"
                       type="button"
                       class="p-button-danger delete-btn p-button-sm"
-                      (click)="confirmDelete(file, 'aadharCard')"
+                      (click)="confirmDelete(file, 'aadhaarCard')"
                     >
                       <i class="pi pi-times"></i>
                     </button>

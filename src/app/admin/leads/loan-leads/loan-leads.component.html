@@ -502,6 +502,7 @@
                               placeholder="Enter Salary"
                               formControlName="salary"
                               autocomplete="off"
+                              (keydown)="preventNonNumeric($event)"
                             />
                             <!-- Error message for invalid Salary -->
                             <div
@@ -536,6 +537,7 @@
                               placeholder="Enter Job Experience"
                               formControlName="jobExperience"
                               autocomplete="off"
+                              (keydown)="preventNonNumeric($event)"
                             />
                             <!-- Error message for invalid Job Experience -->
                             <div
@@ -624,6 +626,7 @@
                               placeholder="Enter Loan Requirement"
                               formControlName="loanRequirement"
                               autocomplete="off"
+                              (keydown)="preventNonNumeric($event)"
                             />
                           </div>
                         </div>
@@ -1606,6 +1609,7 @@
                               placeholder="Enter Loan Requirement"
                               formControlName="loanRequirement"
                               autocomplete="off"
+                              (keydown)="preventNonNumeric($event)"
                             />
                           </div>
                         </div>

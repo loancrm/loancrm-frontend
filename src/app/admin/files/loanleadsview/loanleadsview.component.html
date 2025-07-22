@@ -32,7 +32,7 @@
             "
           >
             <div class="detail-card">
-              <div class="card p-4">
+              <!-- <div class="card p-4">
                 <div class="business-info card-header text-center mb-3">
                   <h4>Personal Information</h4>
                 </div>
@@ -103,10 +103,46 @@
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
+              </div> -->
+            <div class="card p-4" *ngIf="loanleads[0] as lead">
+                  <div class="business-info card-header text-center mb-3">
+                    <h4>Personal Information</h4>
+                  </div>
 
+                  <div class="business-details">
+                    <ng-container *ngFor="let item of [
+                      { key: 'contactPerson', label: 'Contact Person', pipe: 'capitalizeFirst' },
+                      { key: 'salary', label: 'Salary', pipe: 'capitalizeFirst' },
+                      { key: 'companyName', label: 'Company Name', pipe: 'capitalizeFirst' },
+                      { key: 'jobExperience', label: 'Job Experience', pipe: 'capitalizeFirst' },
+                      { key: 'designation', label: 'Designation', pipe: 'capitalizeFirst' },
+                      { key: 'primaryPhone', label: 'Primary Phone' },
+                      { key: 'city', label: 'City', pipe: 'capitalizeFirst' },
+                      { key: 'createdOn', label: 'Created On', pipe: 'date' }
+                    ]">
+                      <div class="info-line" *ngIf="lead[item.key]">
+                        <div class="label d-flex justify-content-between">
+                          {{ item.label }} <b>:&nbsp;</b>
+                        </div>
+                        <div class="value">
+                          <ng-container [ngSwitch]="item.pipe">
+                            <span *ngSwitchCase="'capitalizeFirst'">
+                              {{ lead[item.key] | capitalizeFirst }}
+                            </span>
+                            <span *ngSwitchCase="'date'">
+                              {{ lead[item.key] | date }}
+                            </span>
+                            <span *ngSwitchDefault>
+                              {{ lead[item.key] }}
+                            </span>
+                          </ng-container>
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+          </div>
           <div
             *ngIf="
               (loanleads[0]?.loanType == 'homeLoan' &&
@@ -116,7 +152,7 @@
             "
           >
             <div class="detail-card">
-              <div class="card p-4">
+              <!-- <div class="card p-4">
                 <div class="business-info card-header text-center mb-3">
                   <h4>Business Information</h4>
                 </div>
@@ -192,8 +228,46 @@
                     </div>
                   </div>
                 </div>
+              </div> -->
+              <div class="card p-4" *ngIf="loanleads[0] as lead">
+                  <div class="business-info card-header text-center mb-3">
+                    <h4>Business Information</h4>
+                  </div>
+
+                  <div class="business-details">
+                    <ng-container *ngFor="let item of [
+                      { key: 'natureofBusiness', label: 'Nature of Business', pipe: 'capitalizeFirst' },
+                      { key: 'product', label: 'Product', pipe: 'capitalizeFirst' },
+                      { key: 'businessVintage', label: 'Business Vintage', pipe: 'capitalizeFirst' },
+                      { key: 'businessEntity', label: 'Business Entity' },
+                      { key: 'businessTurnover', label: 'Business TurnOver' },
+                      { key: 'contactPerson', label: 'Contact Person', pipe: 'capitalizeFirst' },
+                      { key: 'primaryPhone', label: 'Primary Phone' },
+                      { key: 'city', label: 'City', pipe: 'capitalizeFirst' },
+                      { key: 'createdOn', label: 'Created On', pipe: 'date' }
+                    ]">
+                      <div class="info-line" *ngIf="lead[item.key]">
+                        <div class="label d-flex justify-content-between">
+                          {{ item.label }} <b>:&nbsp;</b>
+                        </div>
+                        <div class="value">
+                          <ng-container [ngSwitch]="item.pipe">
+                            <span *ngSwitchCase="'capitalizeFirst'">
+                              {{ lead[item.key] | capitalizeFirst }}
+                            </span>
+                            <span *ngSwitchCase="'date'">
+                              {{ lead[item.key] | date }}
+                            </span>
+                            <span *ngSwitchDefault>
+                              {{ lead[item.key] }}
+                            </span>
+                          </ng-container>
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
               </div>
-            </div>
           </div>
         </div>
         <div class="col-md-6">
@@ -206,7 +280,7 @@
                 loanleads[0]?.employmentStatus == 'employed')
             "
           >
-            <div *ngIf="loanleads" class="detail-card">
+            <!-- <div *ngIf="loanleads" class="detail-card">
               <div class="card p-4">
                 <div class="business-info card-header text-center mb-3">
                   <h4>Company Details</h4>
@@ -284,14 +358,81 @@
                   </div>
                 </div>
               </div>
+            </div> -->
+            <div *ngIf="loanleads[0] as lead" class="detail-card">
+                <div class="card p-4">
+                  <div class="business-info card-header text-center mb-3">
+                    <h4>Company Details</h4>
+                  </div>
+
+                  <div class="business-details">
+                    <div class="info-line" *ngIf="lead.companyName">
+                      <div class="label d-flex justify-content-between">
+                        Company Name <b>:&nbsp;</b>
+                      </div>
+                      <div class="value">
+                        {{ lead.companyName | capitalizeFirst }}
+                      </div>
+                    </div>
+
+                    <div class="info-line">
+                      <div class="label d-flex justify-content-between">
+                        Company Id <b>:&nbsp;</b>
+                      </div>
+                      <div class="value">
+                        <div *ngIf="lead.companyId?.length">
+                          <span *ngFor="let file of lead.companyId" class="me-2">
+                            <a [href]="'//' + file" target="_blank"> View </a>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div *ngIf="lead.paySlips">
+                      <div *ngFor="let kyc of lead.paySlips" class="business-details mt-3">
+                        <div class="label" style="text-decoration: underline">PaySlips</div>
+
+                        <div class="info-line">
+                          <div class="label d-flex justify-content-between">
+                            Date <b>:&nbsp;</b>
+                          </div>
+                          <div class="value">{{ kyc.date | date }}</div>
+                        </div>
+
+                        <div class="info-line">
+                          <div class="label d-flex justify-content-between">
+                            Salary <b>:&nbsp;</b>
+                          </div>
+                          <div class="value">
+                            {{ kyc.salary | capitalizeFirst }}
+                          </div>
+                        </div>
+
+                        <div class="info-line">
+                          <div class="label d-flex justify-content-between">
+                            Payslip <b>:&nbsp;</b>
+                          </div>
+                          <div class="value">
+                            <div *ngIf="kyc.paySlips?.length">
+                              <span *ngFor="let file of kyc.paySlips" class="me-2">
+                                <a [href]="'//' + file" target="_blank"> View </a>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
         </div>
       </div>
       <div class="row mt-5">
         <div class="col-md-6">
           <div *ngIf="loanleads" class="detail-card">
-            <div class="card p-4">
+            <!-- <div class="card p-4">
               <div class="business-info card-header text-center mb-3">
                 <h4>KYC'S</h4>
               </div>
@@ -514,8 +655,100 @@
                   </div>
                 </div>
               </div>
+            </div> -->
+            <div *ngIf="loanleads[0] as lead" class="card p-4">
+                  <div class="business-info card-header text-center mb-3">
+                    <h4>KYC'S</h4>
+                  </div>
+
+                  <div class="business-details">
+                    <div class="label" style="text-decoration: underline">
+                      Applicant Details
+                    </div>
+
+                    <div class="info-line">
+                      <div class="label d-flex justify-content-between">
+                        Applicant Name <b>:&nbsp;</b>
+                      </div>
+                      <div class="value">{{ lead.contactPerson | capitalizeFirst }}</div>
+                    </div>
+
+                    <div class="info-line">
+                      <div class="label d-flex justify-content-between">
+                        PAN Number <b>:&nbsp;</b>
+                      </div>
+                      <div class="value">{{ lead.panNumber }}</div>
+                    </div>
+
+                    <div class="info-line">
+                      <div class="label d-flex justify-content-between">
+                        Aadhar Number <b>:&nbsp;</b>
+                      </div>
+                      <div class="value">{{ lead.aadharNumber }}</div>
+                    </div>
+
+                    <ng-container *ngFor="let doc of [
+                      { label: 'PAN CARD', files: lead.panCard },
+                      { label: 'Aadhar Card', files: lead.aadharCard },
+                      { label: 'Applicant Photo', files: lead.photo },
+                      { label: 'Voter Id', files: lead.voterId }
+                    ]">
+                      <div class="info-line" *ngIf="doc.files?.length">
+                        <div class="label d-flex justify-content-between">
+                          {{ doc.label }}<b>:&nbsp;</b>
+                        </div>
+                        <div class="value">
+                          <span *ngFor="let file of doc.files" class="me-2">
+                            <a [href]="'//' + file" target="_blank"> View </a>
+                          </span>
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+
+                  <div class="business-info card-header text-center mb-3">
+                    <h4>CO-Applicant KYC'S</h4>
+                  </div>
+
+                  <div class="business-details">
+                    <div class="label" style="text-decoration: underline">
+                      Co-Applicant Details
+                    </div>
+
+                    <div class="info-line">
+                      <div class="label d-flex justify-content-between">
+                        Applicant Name <b>:&nbsp;</b>
+                      </div>
+                      <div class="value">{{ lead.coApplicantName | capitalizeFirst }}</div>
+                    </div>
+
+                    <div class="info-line">
+                      <div class="label d-flex justify-content-between">
+                        Applicant Relation <b>:&nbsp;</b>
+                      </div>
+                      <div class="value">{{ lead.coApplicantRelation | capitalizeFirst }}</div>
+                    </div>
+
+                    <ng-container *ngFor="let doc of [
+                      { label: 'PAN CARD', files: lead.coApplicantPancard },
+                      { label: 'Aadhar Card', files: lead.coApplicantAadharcard },
+                      { label: 'Applicant Photo', files: lead.coApplicantPhoto },
+                      { label: 'Voter Id', files: lead.coApplicantVoterId }
+                    ]">
+                      <div class="info-line" *ngIf="doc.files?.length">
+                        <div class="label d-flex justify-content-between">
+                          {{ doc.label }}<b>:&nbsp;</b>
+                        </div>
+                        <div class="value">
+                          <span *ngFor="let file of doc.files" class="me-2">
+                            <a [href]="'//' + file" target="_blank"> View </a>
+                          </span>
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
             </div>
-          </div>
         </div>
         <div class="col-md-6">
           <div *ngIf="loanleads" class="detail-card">
@@ -586,7 +819,7 @@
                   <div class="label" style="text-decoration: underline">
                     Co Applicant Details
                   </div>
-                  <div class="info-line">
+                  <!-- <div class="info-line">
                     <div class="label d-flex justify-content-between">
                       Name <b>:&nbsp;</b>
                     </div>
@@ -621,7 +854,29 @@
                   <div class="info-line">
                     <div class="label d-flex justify-content-between">
                       Cibil Report <b>:&nbsp;</b>
-                    </div>
+                    </div> -->
+                    <ng-container *ngFor="let field of [
+                          { label: 'Name', value: cibil.name, pipe: 'capitalizeFirst' },
+                          { label: 'PAN Number', value: cibil.panNumber },
+                          { label: 'Aadhar Number', value: cibil.aadharNumber },
+                          { label: 'Mobile Number', value: cibil.mobileNumber },
+                          { label: 'Cibil Score', value: cibil.cibilScore }
+                        ]">
+                          <div class="info-line">
+                            <div class="label d-flex justify-content-between">
+                              {{ field.label }} <b>:&nbsp;</b>
+                            </div>
+                            <div class="value">
+                              <ng-container *ngIf="field.pipe === 'capitalizeFirst'; else plain">
+                                {{ field.value | capitalizeFirst }}
+                              </ng-container>
+                              <ng-template #plain>
+                                {{ field.value }}
+                              </ng-template>
+                            </div>
+                          </div>
+                        </ng-container>
+
                     <div class="value">
                       <div
                         *ngIf="
@@ -640,10 +895,9 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> 
           </div>
         </div>
-      </div>
       <div
         class="row mt-5"
         *ngIf="
@@ -655,7 +909,7 @@
       >
         <div class="col-md-6">
           <div class="detail-card">
-            <div class="card p-4">
+            <!-- <div class="card p-4">
               <div class="business-info card-header text-center mb-3">
                 <h4>ITR Documents</h4>
               </div>
@@ -755,12 +1009,79 @@
                   </div>
                 </div>
               </div>
+            </div> -->
+            <div class="card p-4">
+                <div class="business-info card-header text-center mb-3">
+                  <h4>ITR Documents</h4>
+                </div>
+
+                <ng-container *ngIf="loanleads && loanleads[0]?.financialReturns?.length > 0">
+                  <ng-container *ngFor="let yearType of ['past', 'present']">
+                    <div class="business-details mt-4">
+                      <div class="label" style="text-decoration: underline">
+                        Annual Year
+                      </div>
+
+                      <div class="info-line">
+                        <div class="label d-flex justify-content-between">
+                          Annual Year Of ITR <b>:&nbsp;</b>
+                        </div>
+                        <div class="value">
+                          {{
+                            yearType === 'past'
+                              ? loanleads[0]?.financialReturns[0]?.pastIncomeTax
+                              : loanleads[0]?.financialReturns[0]?.presentIncomeTax
+                          }}
+                        </div>
+                      </div>
+
+                      <div class="info-line">
+                        <div class="label d-flex justify-content-between">
+                          Attachment <b>:&nbsp;</b>
+                        </div>
+                        <div class="value">
+                          <ng-container
+                            *ngIf="
+                              (yearType === 'past'
+                                ? loanleads[0]?.financialReturns[0]?.pastIncomeReturns
+                                : loanleads[0]?.financialReturns[0]?.presentIncomeReturns
+                              )?.length > 0
+                            "
+                          >
+                            <span
+                              *ngFor="
+                                let file of yearType === 'past'
+                                  ? loanleads[0]?.financialReturns[0]?.pastIncomeReturns
+                                  : loanleads[0]?.financialReturns[0]?.presentIncomeReturns
+                              "
+                              class="me-2"
+                            >
+                              <a [href]="'//' + file" target="_blank"> View </a>
+                            </span>
+                          </ng-container>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                </ng-container>
+
+                <div *ngIf="!loanleads[0]?.financialReturns">
+                  <div class="text-center fw-bold">
+                    <img
+                      src="../../../../assets/images/menu/no-data.gif"
+                      width="200"
+                      height="200"
+                      alt="No Data"
+                    />
+                    <p>No ITR Documents Found</p>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
         </div>
         <div class="col-md-6">
           <div class="detail-card">
-            <div class="card p-4">
+            <!-- <div class="card p-4">
               <div class="business-info card-header text-center mb-3">
                 <h4>GST Details</h4>
               </div>
@@ -855,14 +1176,79 @@
                   </div>
                 </div>
               </div>
+            </div> -->
+          <div class="card p-4">
+                <div class="business-info card-header text-center mb-3">
+                  <h4>GST Details</h4>
+                </div>
+
+                <div *ngIf="loanleads && loanleads[0]?.gstCertificate?.length > 0">
+                  <div class="info-line">
+                    <div class="label d-flex justify-content-between fw-bold" style="font-size: 17px">
+                      Business Proof<b>:&nbsp;</b>
+                    </div>
+                    <div class="value" style="font-size: 17px; font-weight: bold">
+                      <span *ngFor="let file of loanleads[0]?.gstCertificate" class="me-2">
+                        <a [href]="'//' + file" target="_blank" rel="noopener noreferrer"> View </a>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div *ngIf="loanleads[0]?.gstDetails?.length > 0">
+                  <div *ngFor="let account of loanleads[0]?.gstDetails; let i = index" class="business-details mt-3">
+                    <div class="label" style="text-decoration: underline">
+                      Operating State - {{ i + 1 }}
+                    </div>
+
+                    <div class="info-line">
+                      <div class="label d-flex justify-content-between">State<b>:&nbsp;</b></div>
+                      <div class="value">{{ account.operatingState | capitalizeFirst }}</div>
+                    </div>
+
+                    <div class="info-line">
+                      <div class="label d-flex justify-content-between">Filing Period<b>:&nbsp;</b></div>
+                      <div class="value">{{ account.filingPeriod | date }}</div>
+                    </div>
+
+                    <div class="info-line">
+                      <div class="label d-flex justify-content-between">GSTR-3B Sale<b>:&nbsp;</b></div>
+                      <div class="value">{{ account.gst3BSale }}</div>
+                    </div>
+
+                    <div class="info-line">
+                      <div class="label d-flex justify-content-between">GSTR-3B Attachment<b>:&nbsp;</b></div>
+                      <div class="value">
+                        <span *ngIf="account?.gstDetails?.length > 0">
+                          <span *ngFor="let file of account.gstDetails" class="me-2">
+                            <a [href]="'//' + file" target="_blank" rel="noopener noreferrer"> View </a>
+                          </span>
+                        </span>
+                        <span *ngIf="!account?.gstDetails?.length">No Attachments</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div *ngIf="!loanleads[0]?.gstDetails || loanleads[0]?.gstDetails.length === 0">
+                  <div class="text-center fw-bold">
+                    <img
+                      alt="No GST Details"
+                      src="../../../../assets/images/menu/no-data.gif"
+                      width="200"
+                      height="200"
+                    />
+                    <p>No GST Details Found</p>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
         </div>
       </div>
       <div class="row mt-5">
         <div class="col-md-6">
           <div class="detail-card">
-            <div class="card p-4">
+            <!-- <div class="card p-4">
               <div class="business-info card-header text-center mb-3">
                 <h4>Bank Statement Details</h4>
               </div>
@@ -940,12 +1326,73 @@
                   </div>
                 </div>
               </div>
+            </div> -->
+            <div class="card p-4">
+                <div class="business-info card-header text-center mb-3">
+                  <h4>Bank Statement Details</h4>
+                </div>
+
+                <div *ngIf="loanleads[0]?.bankStatements?.length > 0; else noBankStatements">
+                  <div
+                    *ngFor="let account of loanleads[0]?.bankStatements; let i = index"
+                    class="business-details mt-3"
+                  >
+                    <div class="label" style="text-decoration: underline">
+                      Current Account-{{ i + 1 }}
+                    </div>
+
+                    <div class="info-line">
+                      <div class="label d-flex justify-content-between">Bank Name<b>:&nbsp;</b></div>
+                      <div class="value">{{ account.name | capitalizeFirst }}</div>
+                    </div>
+
+                    <div class="info-line">
+                      <div class="label d-flex justify-content-between">Account Type<b>:&nbsp;</b></div>
+                      <div class="value">{{ account.accountType | capitalizeFirst }}</div>
+                    </div>
+
+                    <div class="info-line">
+                      <div class="label d-flex justify-content-between">Statement From<b>:&nbsp;</b></div>
+                      <div class="value">{{ account.from | date }}</div>
+                    </div>
+
+                    <div class="info-line">
+                      <div class="label d-flex justify-content-between">Statement To<b>:&nbsp;</b></div>
+                      <div class="value">{{ account.to | date }}</div>
+                    </div>
+
+                    <div class="info-line">
+                      <div class="label d-flex justify-content-between">Statement Attachment<b>:&nbsp;</b></div>
+                      <div class="value">
+                        <div *ngIf="account?.bankStatements?.length > 0">
+                          <span *ngFor="let file of account.bankStatements" class="me-2">
+                            <a [href]="'//' + file" target="_blank"> View </a>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <ng-template #noBankStatements>
+                  <div class="text-center">
+                    <div colspan="10" class="text-center fw-bold">
+                      <img
+                        alt="No Data"
+                        src="../../../../assets/images/menu/no-data.gif"
+                        width="200"
+                        height="200"
+                      />
+                      <p>No Bank Statement Details Found</p>
+                    </div>
+                  </div>
+                </ng-template>
+              </div>
             </div>
-          </div>
         </div>
         <div class="col-md-6">
           <div class="detail-card">
-            <div class="card p-4">
+            <!-- <div class="card p-4">
               <div class="business-info card-header text-center mb-3">
                 <h4>Existing Loan Details</h4>
               </div>
@@ -1004,13 +1451,63 @@
                 </div>
               </div>
             </div>
+          </div> -->
+        <div class="card p-4">
+              <div class="business-info card-header text-center mb-3">
+                <h4>Existing Loan Details</h4>
+              </div>
+
+              <div *ngIf="loanleads[0]?.existingLoans?.length > 0; else noExistingLoans">
+                <div
+                  *ngFor="let loan of loanleads[0]?.existingLoans; let i = index"
+                  class="business-details mt-3"
+                >
+                  <div class="label" style="text-decoration: underline">
+                    Existing Loan-{{ i + 1 }}
+                  </div>
+
+                  <div class="info-line">
+                    <div class="label d-flex justify-content-between">Bank Name<b>:&nbsp;</b></div>
+                    <div class="value">{{ loan.bankName | capitalizeFirst }}</div>
+                  </div>
+
+                  <div class="info-line">
+                    <div class="label d-flex justify-content-between">Loan Type<b>:&nbsp;</b></div>
+                    <div class="value">{{ loan.loanType | capitalizeFirst }}</div>
+                  </div>
+
+                  <div class="info-line">
+                    <div class="label d-flex justify-content-between">Loan EMI<b>:&nbsp;</b></div>
+                    <div class="value">{{ loan.emiAmount }}</div>
+                  </div>
+
+                  <div class="info-line">
+                    <div class="label d-flex justify-content-between">EMI Closing Date<b>:&nbsp;</b></div>
+                    <div class="value">{{ loan.emiClosingDate | date }}</div>
+                  </div>
+                </div>
+              </div>
+
+              <ng-template #noExistingLoans>
+                <div class="text-center">
+                  <div colspan="10" class="text-center fw-bold">
+                    <img
+                      alt="No Data"
+                      src="../../../../assets/images/menu/no-data.gif"
+                      width="200"
+                      height="200"
+                    />
+                    <p>No Existing Loans Found</p>
+                  </div>
+                </div>
+              </ng-template>
+            </div>
           </div>
-        </div>
       </div>
       <div class="row mt-5">
         <div class="col-md-6">
           <div class="detail-card">
-            <div class="card p-4">
+            <!-- <div class="card p-4">
               <div class="business-info card-header text-center mb-3">
                 <h4>Other Details</h4>
               </div>
@@ -1094,8 +1591,69 @@
                   </div>
                 </div>
               </div>
+            </div> -->
+            <div class="card p-4">
+                <div class="business-info card-header text-center mb-3">
+                  <h4>Other Details</h4>
+                </div>
+
+                <div *ngIf="loanleads && loanleads[0]?.residenceProof?.length > 0">
+                  <div class="info-line">
+                    <div
+                      class="label d-flex justify-content-between fw-bold"
+                      style="font-size: 17px"
+                    >
+                      Residence Proof<b>:&nbsp;</b>
+                    </div>
+                    <div class="value" style="font-size: 17px; font-weight: bold">
+                      <span *ngFor="let file of loanleads[0]?.residenceProof" class="me-2">
+                        <a [href]="'//' + file" target="_blank"> View </a>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div *ngIf="loanleads[0]?.otherDocuments?.length > 0; else noOtherDocuments">
+                  <div
+                    *ngFor="let account of loanleads[0]?.otherDocuments; let i = index"
+                    class="business-details mt-3"
+                  >
+                    <div class="label" style="text-decoration: underline">
+                      Document-{{ i + 1 }} Details
+                    </div>
+                    <div class="info-line">
+                      <div class="label d-flex justify-content-between">Name<b>:&nbsp;</b></div>
+                      <div class="value">{{ account.name | capitalizeFirst }}</div>
+                    </div>
+                    <div class="info-line">
+                      <div class="label d-flex justify-content-between">Attachment<b>:&nbsp;</b></div>
+                      <div class="value">
+                        <span
+                          *ngFor="let file of account.otherDocuments"
+                          class="me-2"
+                        >
+                          <a [href]="'//' + file" target="_blank"> View </a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <ng-template #noOtherDocuments>
+                  <div class="text-center">
+                    <div colspan="10" class="text-center fw-bold">
+                      <img
+                        alt="No Data"
+                        src="../../../../assets/images/menu/no-data.gif"
+                        width="200"
+                        height="200"
+                      />
+                      <p>No Other Documents Found</p>
+                    </div>
+                  </div>
+                </ng-template>
+              </div>
             </div>
-          </div>
         </div>
         <div
           class="col-md-6"
@@ -1105,7 +1663,7 @@
           "
         >
           <div class="detail-card">
-            <div class="card p-4">
+            <!-- <div class="card p-4">
               <div class="business-info card-header text-center mb-3">
                 <h4>Sale Details</h4>
               </div>
@@ -1179,8 +1737,59 @@
                   </div>
                 </div>
               </div>
+            </div> -->
+          <div class="card p-4">
+                  <div class="business-info card-header text-center mb-3">
+                    <h4>Sale Details</h4>
+                  </div>
+
+                  <div *ngIf="loanleads && loanleads[0]?.saleDeed?.length > 0">
+                    <div class="info-line">
+                      <div
+                        class="label d-flex justify-content-between fw-bold"
+                        style="font-size: 17px"
+                      >
+                        Sale Deed<b>:&nbsp;</b>
+                      </div>
+                      <div class="value" style="font-size: 17px; font-weight: bold">
+                        <span *ngFor="let file of loanleads[0]?.saleDeed" class="me-2">
+                          <a [href]="'//' + file" target="_blank"> View </a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div *ngIf="loanleads && loanleads[0]?.saleAgreement?.length > 0">
+                    <div class="info-line">
+                      <div
+                        class="label d-flex justify-content-between fw-bold"
+                        style="font-size: 17px"
+                      >
+                        Sale Agreement<b>:&nbsp;</b>
+                      </div>
+                      <div class="value" style="font-size: 17px; font-weight: bold">
+                        <span *ngFor="let file of loanleads[0]?.saleAgreement" class="me-2">
+                          <a [href]="'//' + file" target="_blank"> View </a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div *ngIf="!(loanleads[0]?.saleDeed?.length > 0) && !(loanleads[0]?.saleAgreement?.length > 0)">
+                    <div class="text-center">
+                      <div colspan="10" class="text-center fw-bold">
+                        <img
+                          alt="No Data"
+                          src="../../../../assets/images/menu/no-data.gif"
+                          width="200"
+                          height="200"
+                        />
+                        <p>No Sale Documents Found</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
             </div>
-          </div>
         </div>
       </div>
     </div>
