@@ -194,33 +194,33 @@
           <ng-template pTemplate="body" let-lead>
             <tr class="text-capitalize" [pSelectableRow]="lead">
               <td>
-                <span class="table-column-data" *ngIf="lead.customId">{{
-                  lead.customId
+                <span class="table-column-data">{{
+                  lead.customId || '-'
                 }}</span>
               </td>
               <td>
-                <span class="table-column-data" *ngIf="lead.businessName">{{
-                  lead.businessName | capitalizeFirst
+                <span class="table-column-data">{{
+                  lead.businessName ? (lead.businessName | capitalizeFirst) : '-'
                 }}</span>
               </td>
               <td>
-                <span class="table-column-data" *ngIf="lead.businessEntity">{{
-                  getEntityName(lead.businessEntity)
+                <span class="table-column-data">{{
+                  lead.businessEntity ? (getEntityName(lead.businessEntity)) : '-'
                 }}</span>
               </td>
               <td>
-                <span class="table-column-data" *ngIf="lead.contactPerson">{{
-                  lead.contactPerson | capitalizeFirst
+                <span class="table-column-data">{{
+                  lead.contactPerson ? (lead.contactPerson | capitalizeFirst) : '-'
                 }}</span>
               </td>
               <td>
-                <span class="table-column-data" *ngIf="lead.id">
-                  {{ lead.city | capitalizeFirst }}
+                <span class="table-column-data">
+                  {{ lead.city ? (lead.city | capitalizeFirst) : '-' }}
                 </span>
               </td>
               <td>
-                <span class="table-column-data" *ngIf="lead.sourcedBy">{{
-                  getSourceName(lead.sourcedBy) | capitalizeFirst
+                <span class="table-column-data">{{
+                  lead.sourcedBy ? (getSourceName(lead.sourcedBy) | capitalizeFirst) : '-'
                 }}</span>
               </td>
               <!-- <td>
@@ -229,8 +229,8 @@
             }}</span>
           </td> -->
               <td>
-                <span class="table-column-data" *ngIf="lead.loginDate">{{
-                  lead.loginDate | date : "mediumDate"
+                <span class="table-column-data">{{
+                  lead.loginDate  ? (lead.loginDate | date : "mediumDate") :'-'
                 }}</span>
               </td>
               <td (click)="$event.stopPropagation()">

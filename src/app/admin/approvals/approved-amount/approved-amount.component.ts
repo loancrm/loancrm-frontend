@@ -16,6 +16,8 @@ export class ApprovedAmountComponent implements OnInit {
   moment: any;
   loading: any;
   banks: any = [];
+  rowData: any = {};       // Your rowData object, modify based on your requirements
+  minDisbursalDate: Date | null = null;  // Holds the min date for the disbursal date
   bankMap = new Map<number, string>();
   displayedItems: any = [];
   version = projectConstantsLocal.VERSION_DESKTOP;
@@ -69,6 +71,13 @@ export class ApprovedAmountComponent implements OnInit {
         }
       }
       this.getApprovalsDetailsById(this.leadId);
+    }
+  }
+ onSanctionDateChange() {
+    if (this.rowData.approvalDate) {
+      this.minDisbursalDate = new Date(this.rowData.approvalDate);
+    } else {
+      this.minDisbursalDate = null;
     }
   }
 

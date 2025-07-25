@@ -14,7 +14,7 @@ export class HomeLoanCalculatorComponent {
   emi: number = 0;
   totalInterest: number = 0;
   totalPayable: number = 0;
-
+  // homeLoanAmount: number = 50000;
   repaymentSchedule: any[] = [];
   groupedSchedule: { [year: string]: any[] } = {};
   groupedYears: { year: string }[] = [];
@@ -156,7 +156,7 @@ export class HomeLoanCalculatorComponent {
     };
   }
   preventInvalidKeys(event: KeyboardEvent) {
-    const invalidKeys = ['e', 'E', '+', '-', ' '];
+    const invalidKeys = ['e', 'E', '+', '-', '.', ' '];
     if (invalidKeys.includes(event.key)) {
       event.preventDefault();
     }
@@ -165,6 +165,39 @@ export class HomeLoanCalculatorComponent {
   preventInvalidPaste(event: ClipboardEvent) {
     const paste = event.clipboardData?.getData('text') || '';
     if (/[^0-9.]/.test(paste)) {
+      event.preventDefault();
+    }
+  }
+
+
+  // ✅ Trim excess digits after typing
+  limitInputLength(event: Event, field: 'home'): void {
+    const input = event.target as HTMLInputElement;
+    const value = input.value.slice(0, 8);
+    input.value = value;
+
+    if (field === 'home') {
+      this.loanAmount = Number(value);
+    }
+  }
+  // Restrict the manual input to only numbers <= 4
+  onTenureInput() {
+    if (this.tenure > 4) {
+      this.tenure = 4; // Automatically set to 4 if user enters a value greater than 4
+    }
+  }
+
+  // Restrict keys (only allow digits 0-9)
+  restrictTenureKeys(event: KeyboardEvent) {
+    const value = (event.target as HTMLInputElement).value;
+
+    // Allow only numbers and the necessary keys (backspace, delete, etc.)
+    if (!/[0-9]/.test(event.key) && event.key !== 'Backspace' && event.key !== 'Delete' && event.key !== 'Tab') {
+      event.preventDefault();
+    }
+
+    // If the value is greater than 4, prevent entering more digits
+    if (parseInt(value + event.key) > 4) {
       event.preventDefault();
     }
   }

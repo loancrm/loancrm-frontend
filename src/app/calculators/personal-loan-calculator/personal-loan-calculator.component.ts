@@ -19,11 +19,11 @@ export class PersonalLoanCalculatorComponent implements OnInit {
   groupedSchedule: { [year: string]: any[] } = {};
   groupedYears: { year: string }[] = [];
   expandedRows: { [year: string]: boolean } = {};
-
+  // personalLoanAmount: number = 50000;
   piechartOptions: any;
   applicantName: string = '';
   preventInvalidKeys(event: KeyboardEvent) {
-    const invalidKeys = ['e', 'E', '+', '-', ' '];
+    const invalidKeys = ['e', 'E', '+', '-', ' ', '.', ' '];
     if (invalidKeys.includes(event.key)) {
       event.preventDefault();
     }
@@ -32,6 +32,38 @@ export class PersonalLoanCalculatorComponent implements OnInit {
   preventInvalidPaste(event: ClipboardEvent) {
     const paste = event.clipboardData?.getData('text') || '';
     if (/[^0-9.]/.test(paste)) {
+      event.preventDefault();
+    }
+  }
+  limitInputLength(event: Event, field: 'personal' | 'business'): void {
+    const input = event.target as HTMLInputElement;
+    const value = input.value.slice(0, 8);
+    input.value = value;
+
+    if (field === 'personal') {
+      this.loanAmount = Number(value);
+    } else if (field === 'business') {
+      this.loanAmount = Number(value); // if you're also handling business loan
+    }
+  }
+  // Restrict the manual input to only numbers <= 4
+  onTenureInput() {
+    if (this.tenure > 4) {
+      this.tenure = 4; // Automatically set to 4 if user enters a value greater than 4
+    }
+  }
+
+  // Restrict keys (only allow digits 0-9)
+  restrictTenureKeys(event: KeyboardEvent) {
+    const value = (event.target as HTMLInputElement).value;
+
+    // Allow only numbers and the necessary keys (backspace, delete, etc.)
+    if (!/[0-9]/.test(event.key) && event.key !== 'Backspace' && event.key !== 'Delete' && event.key !== 'Tab') {
+      event.preventDefault();
+    }
+
+    // If the value is greater than 4, prevent entering more digits
+    if (parseInt(value + event.key) > 8) {
       event.preventDefault();
     }
   }

@@ -23,7 +23,7 @@ export class BusinessLoanCalculatorComponent implements OnInit {
   piechartOptions: any;
   businessName: string = '';
   preventInvalidKeys(event: KeyboardEvent) {
-    const invalidKeys = ['e', 'E', '+', '-', ' '];
+    const invalidKeys = ['e', 'E', '+', '-', '.', ' '];
     if (invalidKeys.includes(event.key)) {
       event.preventDefault();
     }
@@ -35,6 +35,67 @@ export class BusinessLoanCalculatorComponent implements OnInit {
       event.preventDefault();
     }
   }
+  
+  limitInputLength(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const value = input.value.slice(0, 8);
+    input.value = value;
+    this.loanAmount = Number(value);
+  }
+  // Restrict the manual input to only numbers <= 4
+  onTenureInput() {
+    if (this.tenure > 4) {
+      this.tenure = 4; // Automatically set to 4 if user enters a value greater than 4
+    }
+  }
+
+  // Restrict keys (only allow digits 0-9)
+  restrictTenureKeys(event: KeyboardEvent) {
+    const value = (event.target as HTMLInputElement).value;
+
+    // Allow only numbers and the necessary keys (backspace, delete, etc.)
+    if (!/[0-9]/.test(event.key) && event.key !== 'Backspace' && event.key !== 'Delete' && event.key !== 'Tab') {
+      event.preventDefault();
+    }
+
+    // If the value is greater than 4, prevent entering more digits
+    if (parseInt(value + event.key) > 4) {
+      event.preventDefault();
+    }
+  }
+
+  //  limitInterestRate(event: Event): void {
+  //   const input = event.target as HTMLInputElement;
+  //   let value = parseFloat(input.value);
+
+  //   // Restrict to max 15.99 and min 1
+  //   if (value > 15.99) {
+  //     value = 15.99;
+  //   }
+
+  //   if (value < 1) {
+  //     value = 1;
+  //   }
+  // }
+  limitInterestRate(event: Event): void {
+  const input = event.target as HTMLInputElement;
+  let value = parseFloat(input.value);
+
+  // Restrict to max 15.99 and min 1
+  if (value > 15.99) {
+    value = 15.99;
+  }
+
+  if (value < 1) {
+    value = 1;
+  }
+
+  // Update the input's value immediately, so the user sees the restriction
+  input.value = value.toFixed(2);
+
+  // Update the model in Angular as well
+  this.interestRate = value;
+}
   constructor() { }
 
   ngOnInit(): void {
