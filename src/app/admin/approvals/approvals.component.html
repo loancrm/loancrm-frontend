@@ -185,9 +185,7 @@
               </td>
               <td>
                 <span class="table-column-data">{{
-                  lead.sanctionedAmount
-                    ? (lead.sanctionedAmount | capitalizeFirst)
-                    : "-"
+                  lead.sanctionedAmount ? lead.sanctionedAmount : "-"
                 }}</span>
               </td>
               <td>
@@ -371,32 +369,34 @@
             <ng-template pTemplate="body" let-lead>
               <tr [pSelectableRow]="lead">
                 <td>
-                  <span class="table-column-data" *ngIf="lead.customId">{{
-                    lead.customId
+                  <span class="table-column-data">{{
+                    lead.customId || "-"
                   }}</span>
                 </td>
                 <td>
-                  <span class="table-column-data" *ngIf="lead.contactPerson">{{
-                    lead.contactPerson | capitalizeFirst
+                  <span class="table-column-data">{{
+                    lead.contactPerson
+                      ? (lead.contactPerson | capitalizeFirst)
+                      : "-"
                   }}</span>
                 </td>
                 <td>
-                  <span class="table-column-data" *ngIf="lead.designation">{{
-                    lead.designation | capitalizeFirst
+                  <span class="table-column-data">{{
+                    lead.designation
+                      ? (lead.designation | capitalizeFirst)
+                      : "-"
                   }}</span>
                 </td>
 
                 <td>
-                  <span class="table-column-data" *ngIf="lead.salary">{{
-                    lead.salary | capitalizeFirst
+                  <span class="table-column-data">{{
+                    lead.salary ? lead.salary : "-"
                   }}</span>
                 </td>
                 <td>
-                  <span
-                    class="table-column-data"
-                    *ngIf="lead.sanctionedAmount"
-                    >{{ lead.sanctionedAmount | capitalizeFirst }}</span
-                  >
+                  <span class="table-column-data">{{
+                    lead.sanctionedAmount ? lead.sanctionedAmount : "-"
+                  }}</span>
                 </td>
                 <td
                   *ngIf="
@@ -405,13 +405,17 @@
                     userDetails.userType != '3'
                   "
                 >
-                  <span class="table-column-data" *ngIf="lead.sourcedByName">{{
-                    lead.sourcedByName | capitalizeFirst
+                  <span class="table-column-data">{{
+                    lead.sourcedByName
+                      ? (lead.sourcedByName | capitalizeFirst)
+                      : "-"
                   }}</span>
                 </td>
                 <td>
-                  <span class="table-column-data" *ngIf="lead.approvalDate">{{
-                    lead.approvalDate | date : "mediumDate"
+                  <span class="table-column-data">{{
+                    lead.approvalDate
+                      ? (lead.approvalDate | date : "mediumDate")
+                      : "-"
                   }}</span>
                 </td>
                 <td>

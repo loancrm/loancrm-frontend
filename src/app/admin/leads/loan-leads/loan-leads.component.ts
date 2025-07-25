@@ -50,6 +50,17 @@ export class LoanLeadsComponent {
   moment: any;
   loanType: string;
   version = projectConstantsLocal.VERSION_DESKTOP;
+  preventNonNumeric(event: KeyboardEvent): void {
+  const allowedKeys = ['Backspace', 'Tab', 'ArrowLeft', 'ArrowRight', 'Delete'];
+  const key = event.key;
+
+  const isDigit = key >= '0' && key <= '9';
+
+  if (!isDigit && !allowedKeys.includes(key)) {
+    event.preventDefault();
+  }
+}
+
   constructor(
     private location: Location,
     private formBuilder: UntypedFormBuilder,
@@ -441,3 +452,4 @@ export class LoanLeadsComponent {
     });
   }
 }
+

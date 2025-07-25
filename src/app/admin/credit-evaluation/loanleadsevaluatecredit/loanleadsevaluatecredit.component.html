@@ -94,6 +94,7 @@
         <p-accordionTab header="Company Details">
           <div *ngIf="leadData" >
             <div class="business-details">
+              <div class="scrollbar-content">
               <div class="info-line" *ngIf="leadData[0]?.companyName">
                 <div class="label d-flex justify-content-between">
                   Company Name <b>:&nbsp;</b>
@@ -166,12 +167,15 @@
                 </div>
               </div>
             </div>
+            </div>
+            
           </div>
         </p-accordionTab>
       </p-accordion>
 
         <p-accordion>
           <p-accordionTab header="Bank Statements">
+            <div class="scrollbar-content">
             <div *ngIf="leadData[0]?.bankStatements?.length > 0">
               <div
                 *ngFor="
@@ -242,6 +246,7 @@
                       </span>
                     </div>
                   </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -257,13 +262,14 @@
                   <p>No Bank Statement Details Found</p>
                 </div>
               </div>
-            </div>
+            </div>  
           </p-accordionTab>
         </p-accordion>
 
        <p-accordion>
         <p-accordionTab header="Existing Loans">
           <div *ngIf="leadData">
+            <div class="scrollbar-content">
             <div *ngIf="leadData[0]?.existingLoans?.length > 0">
               <div
                 *ngFor="let loan of leadData[0]?.existingLoans; let i = index"
@@ -305,6 +311,7 @@
                         : "-"
                     }}
                   </div>
+                </div>
                 </div>
               </div>
             </div>

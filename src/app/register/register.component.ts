@@ -106,10 +106,10 @@ export class RegisterComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
-    if (this.registerForm.invalid || !this.otpVerified) {
-      if (!this.otpVerified) this.otpError = 'Please verify OTP before registering.';
-      return;
-    }
+    // if (this.registerForm.invalid || !this.otpVerified) {
+    //   if (!this.otpVerified) this.otpError = 'Please verify OTP before registering.';
+    //   return;
+    // }
 
     this.loading = true;
 

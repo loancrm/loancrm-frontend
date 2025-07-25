@@ -23,6 +23,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'evaluate/:status/:id',
+    loadChildren: () =>
+      import('./evaluate-credit/evaluate-credit.module').then(
+        (m) => m.EvaluateCreditModule
+      ),
+  },
+  {
     path: 'loan-evaluate/:id',
     loadChildren: () =>
       import('./loanleadsevaluatecredit/loanleadsevaluatecredit.module').then(

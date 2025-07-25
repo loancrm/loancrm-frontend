@@ -491,15 +491,20 @@ export class FilesComponent implements OnInit {
             icon: 'pi pi-sign-in',
             command: () => this.revertLoanLeadToNew(lead, leadType),
           },
-          ...(leadType === 'personal'
-            ? [
-              {
+           {
                 label: 'Send to Credit Evaluation',
                 icon: 'pi pi-sign-in',
                 command: () => this.sendplFileToCreditEvaluation(lead, leadType),
               },
-            ]
-            : []),
+          // ...(leadType === 'personal'
+          //   ? [
+          //     {
+          //       label: 'Send to Credit Evaluation',
+          //       icon: 'pi pi-sign-in',
+          //       command: () => this.sendplFileToCreditEvaluation(lead, leadType),
+          //     },
+          //   ]
+          //   : []),
         ],
       },
     ];

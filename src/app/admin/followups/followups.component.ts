@@ -101,7 +101,17 @@ export class FollowupsComponent implements OnInit {
       menuItems[0].items.push({
         label: 'Send to Files',
         icon: 'pi pi-sign-in',
-        command: () => this.sendLeadToFiles(lead),
+      command: () => {
+            // Check if businessEntity is filled before sending to files
+            if (!lead.businessEntity || lead.businessEntity.trim() === '') {
+              // Show error message if businessEntity is empty
+              this.toastService.showToast('error', 'Business Entity Required', 'Please fill in the Business Entity field.');
+              return;  // Exit the function to prevent sending the lead to files
+            }
+            
+            // Proceed to send to files if businessEntity is filled
+            this.sendLeadToFiles(lead);
+          },  
       });
       // menuItems[0].items.push({
       //   label: 'Send to Partial',
@@ -243,7 +253,7 @@ export class FollowupsComponent implements OnInit {
   }
 
   viewLead(event: any) {
-    // console.log('Row clicked:', event.data);
+    console.log('Row clicked:', event.data);
     const lead = event.data;
     this.routingService.handleRoute('leads/profile/' + lead.id, null);
   }
