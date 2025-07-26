@@ -186,7 +186,9 @@ export const projectConstantsLocal = {
     { id: 3, status: 'roi_and_tenure_concern', displayName: 'ROI Concern & Tenure Concern' },
     { id: 4, status: 'client_not_responding', displayName: 'Client Not Responding to Calls' },
     { id: 5, status: 'client_out_of_station', displayName: 'Client Out of Station' },
-    { id: 6, status: 'not_interested_presently', displayName: 'Present Not Interested' }
+    { id: 6, status: 'not_interested_presently', displayName: 'Present Not Interested' },
+    { id: 7, status: 'low_vintage', displayName: 'Low Vintage' },
+    { id: 8, status: 'multiple_banks_not_interested', displayName: 'Multiple Banks Not Interested' }
   ],
 
   // RAZORPAY_KEY_ID: "rzp_test_OryiPavGPST3CU",
