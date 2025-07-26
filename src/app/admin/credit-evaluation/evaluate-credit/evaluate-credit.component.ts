@@ -242,12 +242,12 @@ export class EvaluateCreditComponent implements OnInit {
   }
   updateDisplayedItems() {
     const loanDisplayProperty =
-      this.leads && this.leads[0].employmentStatus === 'employed'
+      this.leadData && this.leadData[0].employmentStatus === 'employed'
         ? 'contactPerson'
         : 'businessName';
     this.displayedItems = [
-      // { data: this.leads[0], displayProperty: 'businessName' },
-      { data: this.leads[0], displayProperty: loanDisplayProperty },
+      // { data: this.leadData[0], displayProperty: 'businessName' },
+      { data: this.leadData[0], displayProperty: loanDisplayProperty },
     ];
   }
   changeLeadStatus(leadId, statusId) {
@@ -288,20 +288,60 @@ export class EvaluateCreditComponent implements OnInit {
       }
     );
   }
+  // sendLeadToReject(lead) {
+  //   this.changeLeadStatus(lead[0].id, 10);
+  //   const targetUrl = `user/rejects`;
+  //   this.router.navigateByUrl(targetUrl);
+  // }
+
   sendLeadToReject(lead) {
-    this.changeLeadStatus(lead[0].id, 10);
-    const targetUrl = `user/rejects`;
-    this.router.navigateByUrl(targetUrl);
+    console.log('Row clicked:', lead);
+    const loanType = lead[0].loanType; // e.g., 'personalloan', 'home loan', etc.
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+      this.changeLoanLeadStatus(lead[0].leadId, 10);
+      this.routingService.handleRoute(`rejects`, null);
+    } else {
+      // If no known loanType, omit status from the route
+      this.changeLeadStatus(lead[0].id, 10);
+      this.routingService.handleRoute(`rejects`, null);
+    }
   }
 
+  // sendLeadToReadyToLogin(lead) {
+  //   this.changeLeadStatus(lead[0].id, 11);
+
+  //   const id = lead[0].id;
+  //   const targetUrl = `user/logins/bankSelection/${id}`;
+  //   this.router.navigateByUrl(targetUrl);
+  // }
   sendLeadToReadyToLogin(lead) {
-    this.changeLeadStatus(lead[0].id, 11);
 
-    const id = lead[0].id;
-    const targetUrl = `user/logins/bankSelection/${id}`;
-    this.router.navigateByUrl(targetUrl);
+    console.log('Row clicked:', lead);
+    const loanType = lead[0].loanType; // e.g., 'personalloan', 'home loan', etc.
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+      this.changeLoanLeadStatus(lead[0].leadId, 11);
+      this.routingService.handleRoute(`logins/bankSelection/${loanType}/${lead[0].leadId}`, null);
+    } else {
+      // If no known loanType, omit status from the route
+      this.changeLeadStatus(lead[0].id, 11);
+      this.routingService.handleRoute(`logins/bankSelection/${lead[0].id}`, null);
+    }
   }
 
+  changeLoanLeadStatus(leadId, statusId) {
+    this.loading = true;
+    this.leadsService.changeLoanLeadStatus(leadId, statusId).subscribe(
+      (leads) => {
+        this.toastService.showSuccess('Lead Status Changed Successfully');
+        this.loading = false;
+        // this.loadLeads(this.currentTableEvent);
+      },
+      (error: any) => {
+        this.loading = false;
+        this.toastService.showError(error);
+      }
+    );
+  }
   setDscrValuesData() {
     this.turnoverAy1 = this.dscrValues.turnoverAy1 || '';
     this.purchasesAy1 = this.dscrValues.purchasesAy1 || '';

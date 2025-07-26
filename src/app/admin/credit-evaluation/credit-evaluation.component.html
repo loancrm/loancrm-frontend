@@ -451,28 +451,32 @@
               <tr [pSelectableRow]="lead">
                 <td>
                   <span class="table-column-data">{{
-                    lead.customId || '-'
+                    lead.customId || "-"
                   }}</span>
                 </td>
                 <td>
                   <span class="table-column-data">{{
-                  lead.contactPerson ? (lead.contactPerson | capitalizeFirst) : '-'
+                    lead.contactPerson
+                      ? (lead.contactPerson | capitalizeFirst)
+                      : "-"
                   }}</span>
                 </td>
                 <td>
                   <span class="table-column-data">{{
-                    lead.designation ? (lead.designation | capitalizeFirst) : '-'
+                    lead.designation
+                      ? (lead.designation | capitalizeFirst)
+                      : "-"
                   }}</span>
                 </td>
 
                 <td>
                   <span class="table-column-data">{{
-                    lead.salary ? (lead.salary | capitalizeFirst) : '-'
+                    lead.salary ? lead.salary : "-"
                   }}</span>
                 </td>
                 <td>
                   <span class="table-column-data">{{
-                    lead.jobExperience ? (lead.jobExperience | capitalizeFirst) : '-'
+                    lead.jobExperience ? lead.jobExperience : "-"
                   }}</span>
                 </td>
                 <td
@@ -483,12 +487,16 @@
                   "
                 >
                   <span class="table-column-data">{{
-                    lead.sourcedByName ? (lead.sourcedByName | capitalizeFirst) : '-'
+                    lead.sourcedByName
+                      ? (lead.sourcedByName | capitalizeFirst)
+                      : "-"
                   }}</span>
                 </td>
                 <td>
                   <span class="table-column-data">{{
-                    lead.createdOn ? (lead.createdOn | date : "mediumDate") : '-'
+                    lead.createdOn
+                      ? (lead.createdOn | date : "mediumDate")
+                      : "-"
                   }}</span>
                 </td>
                 <td>
@@ -903,7 +911,6 @@
 
                     <td>
                       <div class="text-center">
-                        <!-- Employed -->
                         <img
                           *ngIf="activeEmploymentStatus.name === 'employed'"
                           alt="View Lead"
@@ -916,7 +923,6 @@
                           pTooltip="Evaluate Credit"
                         />
 
-                        <!-- Self-Employed -->
                         <img
                           *ngIf="
                             activeEmploymentStatus.name === 'self-employed'
@@ -1209,57 +1215,31 @@
 
                     <td>
                       <div class="text-center">
-                        <div
-                          *ngIf="
-                            userDetails &&
-                            userDetails.userType &&
-                            userDetails.userType == '3'
-                          "
-                        >
-                          <img
-                            src="../../../assets/images/icons/eye.svg"
-                            width="24px"
-                            height="24px"
-                            class="me-2"
-                            (click)="viewLead(lead.leadId)"
-                            pTooltip="View"
-                            tooltipPosition="top"
-                          />
-                        </div>
-                        <div
-                          class="d-flex"
-                          *ngIf="
-                            userDetails &&
-                            userDetails.userType &&
-                            userDetails.userType != '3'
-                          "
-                        >
-                          <img
-                            src="../../../assets/images/icons/eye.svg"
-                            width="24px"
-                            height="24px"
-                            class="me-2"
-                            (click)="viewLead(lead.leadId)"
-                            pTooltip="View Files"
-                            tooltipPosition="top"
-                          />
+                        <img
+                          *ngIf="activeEmploymentStatus.name === 'employed'"
+                          alt="View Lead"
+                          src="../../../assets/images/icons/credit.svg"
+                          width="24px"
+                          height="24px"
+                          class="me-2"
+                          tooltipPosition="top"
+                          (click)="evaluateLoanCredit(lead.leadId)"
+                          pTooltip="Evaluate Credit"
+                        />
 
-                          <p-menu
-                            appendTo="body"
-                            #menu
-                            [model]="getLapActionItems(lead)"
-                            [popup]="true"
-                          ></p-menu>
-
-                          <img
-                            src="../../../assets/images/icons/menu.svg"
-                            width="24px"
-                            height="24px"
-                            pTooltip="Actions"
-                            tooltipPosition="top"
-                            (click)="menu.toggle($event)"
-                          />
-                        </div>
+                        <img
+                          *ngIf="
+                            activeEmploymentStatus.name === 'self-employed'
+                          "
+                          alt="Evaluate Credit"
+                          src="../../../assets/images/icons/credit.svg"
+                          width="24px"
+                          height="24px"
+                          class="me-2"
+                          tooltipPosition="top"
+                          (click)="evaluateCredit(lead)"
+                          pTooltip="Evaluate Credit"
+                        />
                       </div>
                     </td>
                   </tr>

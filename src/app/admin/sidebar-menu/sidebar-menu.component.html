@@ -525,7 +525,7 @@
           [routerLink]="item.route"
           routerLinkActive="active"
           [queryParams]="{ v: version }"
-          [routerLinkActiveOptions]="{ exact: true }"
+          [routerLinkActiveOptions]="{ exact: false }"
           [pTooltip]="!isSidebarVisible ? item.label : null"
           tooltipPosition="right"
           (click)="showMenuSection()"

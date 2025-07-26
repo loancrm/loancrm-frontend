@@ -189,6 +189,10 @@ export class LeadsService {
     const url = 'leads/' + leadId;
     return this.serviceMeta.httpPut(url, data);
   }
+  updateLeadFileRemarks(leadId, data) {
+    const url = 'leads/file-remarks/' + leadId;
+    return this.serviceMeta.httpPut(url, data);
+  }
   updateFipRemark(leadId, data) {
     const url = 'leads/' + leadId;
     return this.serviceMeta.httpPut(url, data);

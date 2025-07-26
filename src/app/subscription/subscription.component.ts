@@ -5,6 +5,7 @@ import { LocalStorageService } from '../services/local-storage.service';
 import { ToastService } from '../services/toast.service';
 import { DateTimeProcessorService } from '../services/date-time-processor.service';
 import { projectConstantsLocal } from '../constants/project-constants';
+import { RoutingService } from 'src/app/services/routing-service';
 
 declare var Razorpay: any;
 
@@ -22,12 +23,13 @@ export class SubscriptionComponent implements OnInit {
   isYearly = false;
   displayDialog = false;
   moment: any;
-
+  loading: boolean = false;
   constructor(
     private router: Router,
     private subscriptionService: LeadsService,
     private localStorageService: LocalStorageService,
     private toastService: ToastService,
+    private routingService: RoutingService,
     private dateTimeProcessor: DateTimeProcessorService
   ) {
     this.moment = this.dateTimeProcessor.getMoment();
@@ -137,6 +139,7 @@ export class SubscriptionComponent implements OnInit {
   }
 
   verifyPayment(paymentResponse: any, plan: any): void {
+    this.loading = true;
     const subscriptionData = {
       accountId: this.accountId,
       plan_name: plan.plan_name,
@@ -154,10 +157,14 @@ export class SubscriptionComponent implements OnInit {
 
     this.subscriptionService.verifyAndStoreSubscription(subscriptionData).subscribe({
       next: () => {
+        this.loading = false;
         this.toastService.showSuccess(`${plan.plan_name} activated!`);
         this.router.navigate(['/user/dashboard']);
       },
-      error: (err) => this.toastService.showError(err)
+      error: (err) => {
+        this.loading = false;
+        this.toastService.showError(err)
+      }
     });
   }
 
@@ -175,7 +182,8 @@ export class SubscriptionComponent implements OnInit {
       next: (response) => {
         // console.log('Subscription response:', response);
         this.toastService.showSuccess('Free Trial Activated!');
-        this.router.navigate(['/user/dashboard']);
+        // this.router.navigate(['/user/dashboard']);
+        this.routingService.handleRoute('user/dashboard', null);
       },
       error: (err) => this.toastService.showError(err)
     });

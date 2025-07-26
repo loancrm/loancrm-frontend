@@ -136,7 +136,7 @@ export class CreditEvaluationComponent implements OnInit {
   }
   loadActiveItem() {
     const storedActiveItemName =
-      this.localStorageService.getItemFromLocalStorage('filesActiveItem');
+      this.localStorageService.getItemFromLocalStorage('creditActiveItem');
     if (storedActiveItemName) {
       this.activeItem =
         this.items.find((item) => item.name === storedActiveItemName) ||
@@ -149,7 +149,7 @@ export class CreditEvaluationComponent implements OnInit {
     // console.log(event);
     this.activeItem = event;
     this.localStorageService.setItemOnLocalStorage(
-      'filesActiveItem',
+      'creditActiveItem',
       event.name
     );
     this.employmentStatus = this.getStatusItems();
@@ -158,7 +158,7 @@ export class CreditEvaluationComponent implements OnInit {
   loadEmploymentActiveItem() {
     const storedActiveItemName =
       this.localStorageService.getItemFromLocalStorage(
-        'filesEmploymentStatusActiveItem'
+        'creditEmploymentStatusActiveItem'
       );
     if (storedActiveItemName) {
       this.activeEmploymentStatus =
@@ -1158,7 +1158,7 @@ export class CreditEvaluationComponent implements OnInit {
     // console.log('loadLeadsFn', loadLeadsFn);
     loadLeadsFn.call(this, event);
     this.localStorageService.setItemOnLocalStorage(
-      'filesEmploymentStatusActiveItem',
+      'creditEmploymentStatusActiveItem',
       event.name
     );
   }

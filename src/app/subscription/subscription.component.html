@@ -53,8 +53,10 @@
     </div>
   </div>
 </div> -->
-
-<div class="container my-5">
+<div *ngIf="loading">
+  <app-preloader></app-preloader>
+</div>
+<div class="container my-5" *ngIf="!loading">
   <h2 class="text-center mb-4 fw-bold">Choose Your Subscription Plan</h2>
   <p class="text-center text-muted">
     Select a plan that fits your needs and start exploring our features today.
