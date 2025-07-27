@@ -100,7 +100,7 @@ export class LeadsComponent implements OnInit {
     private routingService: RoutingService,
     private confirmationService: ConfirmationService,
     private localStorageService: LocalStorageService
-    ) {
+  ) {
     this.breadCrumbItems = [
       {
         label: '  Dashboard',
@@ -163,7 +163,6 @@ export class LeadsComponent implements OnInit {
     // ];
     // this.activeEmploymentStatus = this.employmentStatus[0];
   }
-  
   loadActiveItem() {
     const storedActiveItemName =
       this.localStorageService.getItemFromLocalStorage('leadsActiveItem');
@@ -355,7 +354,7 @@ export class LeadsComponent implements OnInit {
         label: 'Send to Follow Ups',
         icon: 'pi pi-sign-in',
         command: () => this.sendLeadToFollowUps(lead),
-        
+
       });
       if (userTypeIsNot3) {
         menuItems[0].items.push({
@@ -368,18 +367,18 @@ export class LeadsComponent implements OnInit {
               this.toastService.showToast('error', 'Business Entity Required', 'Please fill in the Business Entity field.');
               return;  // Exit the function to prevent sending the lead to files
             }
-            
+
             // Proceed to send to files if businessEntity is filled
             this.sendLeadToFiles(lead);
           },
         });
-        }
-  // You can also uncomment and implement the "Send to Partial" functionality
-  // menuItems[0].items.push({
-  //   label: 'Send to Partial',
-  //   icon: 'pi pi-sign-in',
-  //   command: () => this.sendLeadToPartialFiles(lead),
-  // });
+      }
+      // You can also uncomment and implement the "Send to Partial" functionality
+      // menuItems[0].items.push({
+      //   label: 'Send to Partial',
+      //   icon: 'pi pi-sign-in',
+      //   command: () => this.sendLeadToPartialFiles(lead),
+      // });
 
 
       // if (userTypeIsNot3) {
@@ -389,12 +388,12 @@ export class LeadsComponent implements OnInit {
       //     command: () => this.sendLeadToFiles(lead),
       //   });
       //    }
-        // menuItems[0].items.push({
-        //   label: 'Send to Partial',
-        //   icon: 'pi pi-sign-in',
-        //   command: () => this.sendLeadToPartialFiles(lead),
-        // });
-     
+      // menuItems[0].items.push({
+      //   label: 'Send to Partial',
+      //   icon: 'pi pi-sign-in',
+      //   command: () => this.sendLeadToPartialFiles(lead),
+      // });
+
     } else if (lead.leadInternalStatus === 2) {
       menuItems[0].items.push({
         label: 'Send to New Leads',

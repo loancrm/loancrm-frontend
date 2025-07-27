@@ -150,20 +150,31 @@ export class BankSelectionComponent implements OnInit {
   saveLoginInfo(): void {
     const bankIds = this.selectedBanks.map((bank) => bank.id);
     const bankNames = this.selectedBanks.map((bank) => bank.name);
-    const formData = {
+    const formData: any = {
       bankId: bankIds,
       leadId: this.leadId,
       businessName: this.leadData[0].businessName,
       Program: this.selectedProgram,
       Banks: bankNames,
     };
+    const loanType = this.leadData[0].loanType;
+    console.log(this.leadData[0])
+    if (loanType == 'homeLoan' || loanType == 'lap') {
+      formData.loanType = this.leadData[0].loanType;
+      formData.employmentStatus = this.leadData[0].employmentStatus;
+    }
     // console.log('formData', formData);
     this.loading = true;
     this.leadsService.createLogin(formData).subscribe(
       (data: any) => {
         this.loading = false;
         this.toastService.showSuccess('Login Info Saved Successfully');
-        this.changeLeadStatus(this.leadData[0].id, 12);
+        // this.changeLeadStatus(this.leadData[0].id, 12);
+        if (loanType === 'homeLoan' || loanType === 'lap') {
+          this.changeLoanLeadStatus(this.leadData[0].leadId, 12);
+        } else {
+          this.changeLeadStatus(this.leadData[0].id, 12);
+        }
         const targetUrl = `user/filesinprocess`;
         this.router.navigateByUrl(targetUrl);
       },

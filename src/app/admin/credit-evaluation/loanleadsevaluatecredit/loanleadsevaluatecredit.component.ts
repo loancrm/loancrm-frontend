@@ -41,6 +41,7 @@ export class LoanleadsevaluatecreditComponent {
         this.getDscrValuesById(this.leadId).then((data) => {
           if (data) {
             this.setDscrValuesData();
+            this.setAverageSalary();
           }
         });
       }
@@ -61,6 +62,20 @@ export class LoanleadsevaluatecreditComponent {
         this.loading = false;
       }
     );
+  }
+  setAverageSalary(): void {
+    const paySlips = this.leadData[0]?.paySlips;
+    if (!paySlips || paySlips.length === 0) {
+      this.netSalary = 0;
+      return;
+    }
+
+    const total = paySlips.reduce((sum, slip) => {
+      const salary = parseFloat(slip.salary);
+      return sum + (isNaN(salary) ? 0 : salary);
+    }, 0);
+
+    this.netSalary = Math.round(total / paySlips.length);
   }
   setDscrValuesData() {
     this.netSalary = this.fiorValues.netSalary || 0;

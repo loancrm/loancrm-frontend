@@ -53,8 +53,10 @@ export class FilesComponent implements OnInit {
   leadInternalStatusList: any = projectConstantsLocal.LEAD_INTERNAL_STATUS;
   turnoverDetails: any = projectConstantsLocal.BUSINESS_TURNOVER;
   entityDetails: any = projectConstantsLocal.BUSINESS_ENTITIES;
+  fileRemarksDetails: any = projectConstantsLocal.FILE_REMARKS;
   natureofBusinessDetails: any = projectConstantsLocal.NATURE_OF_BUSINESS;
   hadOwnHouse = projectConstantsLocal.YES_OR_NO;
+  fileRemarks = projectConstantsLocal.FILE_REMARKS;
   searchFilter: any = {};
   @ViewChild('leadsTable') leadsTable!: Table;
   @ViewChild('personalleadsTable') personalleadsTable!: Table;
@@ -75,6 +77,7 @@ export class FilesComponent implements OnInit {
   totalLeadsCountArray: any;
   totalActiveLeadsCount: any;
   totalStatusLeadsCountArray: any;
+  selectedMonth: Date;
   version = projectConstantsLocal.VERSION_DESKTOP;
   businessEntities = projectConstantsLocal.BUSINESS_ENTITIES;
   fileStatus: any = projectConstantsLocal.FILE_STATUS;
@@ -105,6 +108,7 @@ export class FilesComponent implements OnInit {
         name: params['name'],
       };
     });
+    this.selectedMonth = new Date();
     this.initializeUserDetails();
     this.loadAllLeadData().then(() => {
       this.items = this.getFilteredItems();
@@ -284,6 +288,13 @@ export class FilesComponent implements OnInit {
   loadLeads(event) {
     this.currentTableEvent = event;
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
+    if (this.selectedMonth) {
+      const startOfMonth = new Date(this.selectedMonth.getFullYear(), this.selectedMonth.getMonth(), 1);
+      const endOfMonth = new Date(this.selectedMonth.getFullYear(), this.selectedMonth.getMonth() + 1, 0);
+
+      api_filter['docs.createdOn-gte'] = startOfMonth.toISOString().split('T')[0]; // e.g. '2024-07-01'
+      api_filter['docs.createdOn-lte'] = endOfMonth.toISOString().split('T')[0];   // e.g. '2024-07-31'
+    }
     // api_filter['leadInternalStatus-eq'] = 3;
     if (this.selectedFileStatus) {
       // console.log(this.selectedFileStatus)
@@ -491,11 +502,11 @@ export class FilesComponent implements OnInit {
             icon: 'pi pi-sign-in',
             command: () => this.revertLoanLeadToNew(lead, leadType),
           },
-           {
-                label: 'Send to Credit Evaluation',
-                icon: 'pi pi-sign-in',
-                command: () => this.sendplFileToCreditEvaluation(lead, leadType),
-              },
+          {
+            label: 'Send to Credit Evaluation',
+            icon: 'pi pi-sign-in',
+            command: () => this.sendplFileToCreditEvaluation(lead, leadType),
+          },
           // ...(leadType === 'personal'
           //   ? [
           //     {
@@ -555,6 +566,21 @@ export class FilesComponent implements OnInit {
         value: option.name,
       })),
     });
+
+    const createDropdownFilterforId = (
+      field: string,
+      title: string,
+      options: any[]
+    ) => ({
+      field,
+      title,
+      type: 'dropdown',
+      filterType: 'eq', // for exact ID match
+      options: options.map((option) => ({
+        label: option.displayName, // what the user sees
+        value: option.id           // the actual ID value used in filtering
+      })),
+    });
     const createDocDateRangeFilter = () => [
       { field: 'docs.createdOn', title: 'Uploaded From', type: 'date', filterType: 'gte' },
       { field: 'docs.createdOn', title: 'Uploaded To', type: 'date', filterType: 'lte' },
@@ -567,6 +593,7 @@ export class FilesComponent implements OnInit {
       isCommonFilter ? 'id' : 'leadId';
     const hadOwnHouseOptions = this.hadOwnHouse;
     const entityOptions = this.entityDetails;
+    const fileRemarksOptions = this.fileRemarksDetails;
     const turnoverOptions = this.turnoverDetails;
     const natureOfBusinessOptions = this.natureofBusinessDetails;
     const commonFilters = [
@@ -596,11 +623,21 @@ export class FilesComponent implements OnInit {
         header: 'Business Name',
         data: [createTextFilter('businessName', 'Business Name')],
       },
-      { header: 'Date Range', data: createDateRangeFilter() },
       {
         header: 'Uploaded Date Range',
         data: createDocDateRangeFilter()
       },
+      {
+        header: 'File Remarks',
+        data: [
+          createDropdownFilterforId(
+            'fileRemarks',
+            'File Remarks',
+            fileRemarksOptions
+          ),
+        ],
+      },
+      { header: 'Date Range', data: createDateRangeFilter() },
       {
         header: 'Business Entity',
         data: [
@@ -822,7 +859,8 @@ export class FilesComponent implements OnInit {
       (leadsCount) => {
         this.totalLeadsCount = leadsCount;
         // console.log(this.totalLeadsCount);
-        this.items = this.getFilteredItems();
+        this.items =
+          this.getFilteredItems();
         this.activeItem = this.items[0];
       },
       (error: any) => {
@@ -1436,5 +1474,29 @@ export class FilesComponent implements OnInit {
       'businessName-like': this.businessNameToSearchForHome,
     };
     this.applyFiltersLapSelf(searchFilterForLapSelf);
+  }
+  stopDropdownClick(event: Event): void {
+    event.stopPropagation();
+  }
+  updateLeadFileRemark(lead: any) {
+    const payload = {
+
+      fileRemarks: lead.fileRemarks
+    };
+    this.loading = true;
+    this.leadsService.updateLeadFileRemarks(lead.id, payload).subscribe(
+
+      (data) => {
+        if (data) {
+          this.loading = false;
+          this.toastService.showSuccess('Remarks Updated Successfully');
+          // this.routingService.handleRoute('leads', null);
+        }
+      },
+      (error: any) => {
+        this.loading = false;
+        this.toastService.showError(error);
+      }
+    );
   }
 }

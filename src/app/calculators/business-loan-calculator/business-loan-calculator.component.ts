@@ -35,7 +35,6 @@ export class BusinessLoanCalculatorComponent implements OnInit {
       event.preventDefault();
     }
   }
-  
   limitInputLength(event: Event): void {
     const input = event.target as HTMLInputElement;
     const value = input.value.slice(0, 8);
@@ -78,24 +77,24 @@ export class BusinessLoanCalculatorComponent implements OnInit {
   //   }
   // }
   limitInterestRate(event: Event): void {
-  const input = event.target as HTMLInputElement;
-  let value = parseFloat(input.value);
+    const input = event.target as HTMLInputElement;
+    let value = parseFloat(input.value);
 
-  // Restrict to max 15.99 and min 1
-  if (value > 15.99) {
-    value = 15.99;
+    // Restrict to max 15.99 and min 1
+    if (value > 15.99) {
+      value = 15.99;
+    }
+
+    if (value < 1) {
+      value = 1;
+    }
+
+    // Update the input's value immediately, so the user sees the restriction
+    input.value = value.toFixed(2);
+
+    // Update the model in Angular as well
+    this.interestRate = value;
   }
-
-  if (value < 1) {
-    value = 1;
-  }
-
-  // Update the input's value immediately, so the user sees the restriction
-  input.value = value.toFixed(2);
-
-  // Update the model in Angular as well
-  this.interestRate = value;
-}
   constructor() { }
 
   ngOnInit(): void {

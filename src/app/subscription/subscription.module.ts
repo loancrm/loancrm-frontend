@@ -4,6 +4,7 @@ import { SubscriptionComponent } from './subscription.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
+import { PreloaderModule } from "src/app/preloader/preloader.module";
 
 
 
@@ -15,10 +16,11 @@ import { DialogModule } from 'primeng/dialog';
     CommonModule,
     FormsModule,
     ButtonModule,
+    PreloaderModule,
     ReactiveFormsModule,
     DialogModule
   ],
-    exports: [
+  exports: [
     SubscriptionComponent
   ]
 })

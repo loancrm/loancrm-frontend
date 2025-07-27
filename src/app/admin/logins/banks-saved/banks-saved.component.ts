@@ -222,6 +222,37 @@ export class BanksSavedComponent implements OnInit {
     );
   }
 
+  //   saveFIPFormData(): void {
+  //   const loanType = this.leads[0]?.loanType; // ✅ safely extract loanType
+  //   const formData = this.fipDetails.map((detail) => ({
+  //     id: detail.id,
+  //     program: detail.program,
+  //     bankName: detail.bankName,
+  //     fipStatus: detail.fipStatus,
+  //     loginDate: detail.loginDate
+  //       ? this.moment(detail.loginDate).format('YYYY-MM-DD')
+  //       : null,
+  //     fipRemarks: detail.fipRemarks,
+  //   }));
+
+  //   this.loading = true;
+
+  //   this.leadsService
+  //     .updateFIPDetails(this.leadId, loanType, formData)
+  //     .subscribe(
+  //       (response: any) => {
+  //         this.loading = false;
+  //         this.toastService.showSuccess('Files In Process info Saved Successfully');
+  //         this.router.navigateByUrl(`user/filesinprocess`);
+  //       },
+  //       (error) => {
+  //         this.loading = false;
+  //         this.toastService.showError(error?.error || 'Error saving data');
+  //       }
+  //     );
+  // }
+
+
   transformLoginInfoDetails(data: any[]): any[] {
     const transformedData: any[] = [];
     const flattenedData = data.flat();

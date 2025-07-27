@@ -124,14 +124,6 @@
                     ></button>
                   </div>
                 </div> -->
-                <div
-                  class="col-md-3 mt-2 no-padding-small"
-                  *ngIf="
-                    userDetails &&
-                    userDetails.userType &&
-                    userDetails.userType == '3'
-                  "
-                ></div>
                 <div class="col-md-3 mt-2 no-padding-small text-right">
                   <div class="d-flex">
                     <div class="flex-grow-1 me-2">
@@ -162,20 +154,49 @@
                   </div>
                 </div>
                 <div class="col-md-3 mt-2 no-padding-small text-right">
+                  <p-dropdown
+                    styleClass="text-left"
+                    [style]="{ width: '100%' }"
+                    [options]="fileStatus"
+                    (onChange)="statusChange($event)"
+                    [dropdownIcon]="'fa fa-caret-down'"
+                    [(ngModel)]="selectedFileStatus"
+                    optionLabel="displayName"
+                    dataKey="name"
+                    appendTo="body"
+                  >
+                  </p-dropdown>
+                </div>
+                <div class="col-md-3 mt-2 no-padding-small text-right">
                   <div class="d-flex">
                     <div class="flex-grow-1 me-2">
-                      <p-dropdown
-                        styleClass="text-left"
-                        [style]="{ width: '100%' }"
-                        [options]="fileStatus"
-                        (onChange)="statusChange($event)"
-                        [dropdownIcon]="'fa fa-caret-down'"
-                        [(ngModel)]="selectedFileStatus"
-                        optionLabel="displayName"
-                        dataKey="name"
-                        appendTo="body"
+                      <div
+                        class="custom-calendar-wrapper w-100 position-relative"
                       >
-                      </p-dropdown>
+                        <p-calendar
+                          #calendar
+                          (onSelect)="loadLeads($event)"
+                          [(ngModel)]="selectedMonth"
+                          view="month"
+                          dateFormat="MM yy"
+                          placeholder="Select Month"
+                          [showIcon]="false"
+                          [monthNavigator]="true"
+                          [yearNavigator]="true"
+                          [yearRange]="'-10:+10'"
+                          appendTo="body"
+                          styleClass=" w-100"
+                          [readonlyInput]="true"
+                        ></p-calendar>
+
+                        <!-- Custom Calendar Image Icon -->
+                        <img
+                          src="../../../../assets/images/icons/calendar.svg"
+                          alt="Calendar Icon"
+                          class="calendar-custom-img"
+                          (click)="calendar.toggle()"
+                        />
+                      </div>
                     </div>
                     <div class="d-flex align-items-center pointer-cursor">
                       <app-filter
@@ -290,7 +311,7 @@
                       : "-"
                   }}</span>
                 </td>
-                <td
+                <!-- <td
                   (click)="
                     overlayPanel.toggle($event); $event.stopPropagation()
                   "
@@ -315,6 +336,20 @@
                       {{ lead.remarks | capitalizeFirst }}
                     </div>
                   </p-overlayPanel>
+                </td> -->
+                <td>
+                  <p-dropdown
+                    [options]="fileRemarks"
+                    [(ngModel)]="lead.fileRemarks"
+                    optionLabel="displayName"
+                    optionValue="id"
+                    placeholder="Select Remark"
+                    (onChange)="updateLeadFileRemark(lead)"
+                    (onClick)="stopDropdownClick($event)"
+                    styleClass="p-dropdown-sm w-100"
+                    appendTo="body"
+                    [disabled]="userDetails?.userType == 3"
+                  ></p-dropdown>
                 </td>
                 <!-- <td>
                   <span

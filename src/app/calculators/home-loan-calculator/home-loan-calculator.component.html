@@ -7,41 +7,86 @@
       <div class="p-4 border-0">
         <div class="form-group mb-3">
           <label><strong>Applicant Name</strong></label>
-          <input type="text" pInputText class="form-control" placeholder="Enter applicant name"
-            [(ngModel)]="applicantName" />
+          <input
+            type="text"
+            pInputText
+            class="form-control"
+            placeholder="Enter applicant name"
+            [(ngModel)]="applicantName"
+          />
         </div>
         <div class="form-group mb-3">
           <div class="d-flex justify-content-between align-items-center mb-1">
             <label class="mb-0"><strong>Loan Amount (₹)</strong></label>
-            <input type="number" [(ngModel)]="loanAmount" class="form-control form-control-sm ms-2" style="width: 200px"
-              (keydown)="preventInvalidKeys($event)" (paste)="preventInvalidPaste($event)" (input)="limitInputLength($event, 'home')" />
+            <input
+              type="number"
+              [(ngModel)]="loanAmount"
+              class="form-control form-control-sm ms-2"
+              style="width: 200px"
+              (keydown)="preventInvalidKeys($event)"
+              (paste)="preventInvalidPaste($event)"
+              (input)="limitInputLength($event, 'home')"
+            />
           </div>
-          <p-slider [(ngModel)]="loanAmount" [min]="50000" [max]="100000000" [step]="10000"
-            [style]="{ width: '100%' }"></p-slider>
+          <p-slider
+            [(ngModel)]="loanAmount"
+            [min]="50000"
+            [max]="100000000"
+            [step]="10000"
+            [style]="{ width: '100%' }"
+          ></p-slider>
         </div>
 
         <div class="form-group mb-3">
           <div class="d-flex justify-content-between align-items-center mb-1">
             <label class="mb-0"><strong>Interest Rate (%)</strong></label>
-            <input type="tel" [(ngModel)]="interestRate" class="form-control form-control-sm ms-2"
-              style="width: 200px" maxlength="5"/>
+            <input
+              type="tel"
+              [(ngModel)]="interestRate"
+              class="form-control form-control-sm ms-2"
+              style="width: 200px"
+              maxlength="5"
+            />
           </div>
-          <p-slider [(ngModel)]="interestRate" [min]="1" [max]="12" [step]="0.25"
-            [style]="{ width: '100%' }"></p-slider>
+          <p-slider
+            [(ngModel)]="interestRate"
+            [min]="1"
+            [max]="12"
+            [step]="0.25"
+            [style]="{ width: '100%' }"
+          ></p-slider>
         </div>
 
         <div class="form-group mb-3">
           <div class="d-flex justify-content-between align-items-center mb-1">
             <label class="mb-0"><strong>Tenure (Years)</strong></label>
-            <input type="number" [(ngModel)]="tenure" class="form-control form-control-sm ms-2" style="width: 200px"
-              (keydown)="restrictTenureKeys($event)" (paste)="preventInvalidPaste($event)" (input)="tenure = tenure > 4 ? 4 : tenure"
-              maxlength="2"/>
+            <input
+              type="number"
+              [(ngModel)]="tenure"
+              class="form-control form-control-sm ms-2"
+              style="width: 200px"
+              (keydown)="restrictTenureKeys($event)"
+              (paste)="preventInvalidPaste($event)"
+              (input)="tenure = tenure > 4 ? 4 : tenure"
+              maxlength="2"
+            />
           </div>
-          <p-slider [(ngModel)]="tenure" [min]="1" [max]="30" [step]="1" [style]="{ width: '100%' }"></p-slider>
+          <p-slider
+            [(ngModel)]="tenure"
+            [min]="1"
+            [max]="30"
+            [step]="1"
+            [style]="{ width: '100%' }"
+          ></p-slider>
         </div>
 
-        <button pButton label="Calculate EMI" class="w-100 p-button-raised p-button-rounded"
-          style="background-color: #29415b; border: none" (click)="calculateEMI()"></button>
+        <button
+          pButton
+          label="Calculate EMI"
+          class="w-100 p-button-raised p-button-rounded"
+          style="background-color: #29415b; border: none"
+          (click)="calculateEMI()"
+        ></button>
       </div>
     </div>
 
@@ -78,12 +123,22 @@
   <div class="mt-3" *ngIf="repaymentSchedule.length > 0">
     <div class="d-flex justify-content-between align-items-center mb-2">
       <h5 class="mb-0" style="color: #29415b">📆 Repayment Schedule</h5>
-      <button pButton icon="pi pi-download" class="p-button-text p-button-sm p-button-secondary"
-        [disabled]="!applicantName" label="Download PDF" (click)="generatePDF()"></button>
+      <button
+        pButton
+        icon="pi pi-download"
+        class="p-button-text p-button-sm p-button-secondary"
+        [disabled]="!applicantName"
+        label="Download PDF"
+        (click)="generatePDF()"
+      ></button>
     </div>
 
-    <p-table [value]="repaymentSchedule" [responsiveLayout]="'scroll'" class="p-datatable-striped p-datatable-gridlines"
-      styleClass="p-shadow-2">
+    <p-table
+      [value]="repaymentSchedule"
+      [responsiveLayout]="'scroll'"
+      class="p-datatable-striped p-datatable-gridlines"
+      styleClass="p-shadow-2"
+    >
       <ng-template pTemplate="header">
         <tr>
           <th>S. No.</th>

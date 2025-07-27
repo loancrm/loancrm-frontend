@@ -180,9 +180,20 @@ export const projectConstantsLocal = {
     { displayName: 'Service Provider', name: 'service provider' },
     { displayName: 'Constructions', name: 'constructions' },
   ],
-  RAZORPAY_KEY_ID:"rzp_test_OryiPavGPST3CU",
-  BASE_URL: 'http://localhost:5002/',
-  // BASE_URL: 'https://rest.thefintalk.in:5002/',
-  // RAZORPAY_KEY_ID: "rzp_live_ZC5B0vsPZ7UxUs",
+  FILE_REMARKS: [
+    { id: 1, status: 'will_share_documents', displayName: 'Will Share Documents' },
+    { id: 2, status: 'received_partials', displayName: 'Received Partials' },
+    { id: 3, status: 'roi_and_tenure_concern', displayName: 'ROI Concern & Tenure Concern' },
+    { id: 4, status: 'client_not_responding', displayName: 'Client Not Responding to Calls' },
+    { id: 5, status: 'client_out_of_station', displayName: 'Client Out of Station' },
+    { id: 6, status: 'not_interested_presently', displayName: 'Present Not Interested' },
+    { id: 7, status: 'low_vintage', displayName: 'Low Vintage' },
+    { id: 8, status: 'multiple_banks_not_interested', displayName: 'Multiple Banks Not Interested' }
+  ],
+
+  // RAZORPAY_KEY_ID: "rzp_test_OryiPavGPST3CU",
+  // BASE_URL: 'http://localhost:5002/',
+  BASE_URL: 'https://rest.thefintalk.in:5002/',
+  RAZORPAY_KEY_ID: "rzp_live_ZC5B0vsPZ7UxUs",
   VERSION_DESKTOP: '0.0.0',
 };
