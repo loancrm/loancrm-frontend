@@ -201,12 +201,12 @@
             <ng-template pTemplate="body" let-lead>
               <tr class="text-capitalize" [pSelectableRow]="lead">
                 <td>
-                  <span class="table-column-data singleline">{{
+                  <span class="table-column-data">{{
                     lead.customId ? lead.customId : "-"
                   }}</span>
                 </td>
                 <td>
-                  <span class="table-column-data singleline">{{
+                  <span class="table-column-data">{{
                     lead.businessName
                       ? (lead.businessName | capitalizeFirst)
                       : "-"
@@ -220,7 +220,7 @@
                   }}</span>
                 </td>
                 <td>
-                  <span class="table-column-data singleline">{{
+                  <span class="table-column-data">{{
                     lead.contactPerson
                       ? (lead.contactPerson | capitalizeFirst)
                       : "-"
@@ -232,12 +232,12 @@
                   }}</span>
                 </td>
                 <td>
-                  <span class="table-column-data singleline">{{
+                  <span class="table-column-data">{{
                     lead.city ? (lead.city | capitalizeFirst) : "-"
                   }}</span>
                 </td>
                 <td>
-                  <span class="table-column-data singleline">{{
+                  <span class="table-column-data">{{
                     lead.sourcedBy
                       ? (getSourceName(lead.sourcedBy) | capitalizeFirst)
                       : "-"
@@ -451,17 +451,21 @@
               <tr [pSelectableRow]="lead">
                 <td>
                   <span class="table-column-data">{{
-                    lead.customId || '-'
+                    lead.customId || "-"
                   }}</span>
                 </td>
                 <td>
                   <span class="table-column-data">{{
-                  lead.contactPerson ? (lead.contactPerson | capitalizeFirst) : '-'
+                    lead.contactPerson
+                      ? (lead.contactPerson | capitalizeFirst)
+                      : "-"
                   }}</span>
                 </td>
                 <td>
                   <span class="table-column-data">{{
-                    lead.designation ? (lead.designation | capitalizeFirst) : '-'
+                    lead.designation
+                      ? (lead.designation | capitalizeFirst)
+                      : "-"
                   }}</span>
                 </td>
 
@@ -483,7 +487,9 @@
                   "
                 >
                   <span class="table-column-data">{{
-                    lead.sourcedByName ? (lead.sourcedByName | capitalizeFirst) : '-'
+                    lead.sourcedByName
+                      ? (lead.sourcedByName | capitalizeFirst)
+                      : "-"
                   }}</span>
                 </td>
                 <td>
@@ -826,27 +832,27 @@
                 <ng-template pTemplate="body" let-lead>
                   <tr>
                     <td>
-                      <span class="table-column-data singleline" *ngIf="lead.customId">{{
+                      <span class="table-column-data" *ngIf="lead.customId">{{
                         lead.customId
                       }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'employed'">
                       <span
-                        class="table-column-data singleline"
+                        class="table-column-data"
                         *ngIf="lead.contactPerson"
                         >{{ lead.contactPerson | capitalizeFirst }}</span
                       >
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'self-employed'">
                       <span
-                        class="table-column-data singleline"
+                        class="table-column-data"
                         *ngIf="lead.businessName"
                         >{{ lead.businessName | capitalizeFirst }}</span
                       >
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'employed'">
                       <span
-                        class="table-column-data singleline"
+                        class="table-column-data"
                         *ngIf="lead.designation"
                         >{{ lead.designation | capitalizeFirst }}</span
                       >
@@ -865,7 +871,7 @@
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'self-employed'">
                       <span
-                        class="table-column-data-inline"
+                        class="table-column-data"
                         *ngIf="lead.contactPerson"
                         >{{ lead.contactPerson | capitalizeFirst }}</span
                       >
@@ -892,7 +898,7 @@
                       "
                     >
                       <span
-                        class="table-column-data singleline"
+                        class="table-column-data"
                         *ngIf="lead.sourcedByName"
                         >{{ lead.sourcedByName | capitalizeFirst }}</span
                       >
@@ -1137,27 +1143,27 @@
                 <ng-template pTemplate="body" let-lead>
                   <tr>
                     <td>
-                      <span class="table-column-data singleline" *ngIf="lead.customId">{{
+                      <span class="table-column-data" *ngIf="lead.customId">{{
                         lead.customId
                       }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'employed'">
                       <span
-                        class="table-column-data singleline"
+                        class="table-column-data"
                         *ngIf="lead.contactPerson"
                         >{{ lead.contactPerson | capitalizeFirst }}</span
                       >
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'self-employed'">
                       <span
-                        class="table-column-data singleline"
+                        class="table-column-data"
                         *ngIf="lead.businessName"
                         >{{ lead.businessName | capitalizeFirst }}</span
                       >
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'employed'">
                       <span
-                        class="table-column-data singleline"
+                        class="table-column-data"
                         *ngIf="lead.designation"
                         >{{ lead.designation | capitalizeFirst }}</span
                       >
@@ -1171,7 +1177,7 @@
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'self-employed'">
                       <span
-                        class="table-column-data singleline"
+                        class="table-column-data"
                         *ngIf="lead.contactPerson"
                         >{{ lead.contactPerson | capitalizeFirst }}</span
                       >
@@ -1196,7 +1202,7 @@
                       "
                     >
                       <span
-                        class="table-column-data singleline"
+                        class="table-column-data"
                         *ngIf="lead.sourcedByName"
                         >{{ lead.sourcedByName | capitalizeFirst }}</span
                       >

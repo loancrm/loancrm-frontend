@@ -195,12 +195,14 @@
             <tr class="text-capitalize" [pSelectableRow]="lead">
               <td>
                 <span class="table-column-data">{{
-                  lead.customId || '-'
+                  lead.customId || "-"
                 }}</span>
               </td>
               <td>
                 <span class="table-column-data">{{
-                  lead.businessName ? (lead.businessName | capitalizeFirst) : '-'
+                  lead.businessName
+                    ? (lead.businessName | capitalizeFirst)
+                    : "-"
                 }}</span>
               </td>
               <td>
@@ -210,17 +212,21 @@
               </td>
               <td>
                 <span class="table-column-data">{{
-                  lead.contactPerson ? (lead.contactPerson | capitalizeFirst) : '-'
+                  lead.contactPerson
+                    ? (lead.contactPerson | capitalizeFirst)
+                    : "-"
                 }}</span>
               </td>
               <td>
                 <span class="table-column-data">
-                  {{ lead.city ? (lead.city | capitalizeFirst) : '-' }}
+                  {{ lead.city ? (lead.city | capitalizeFirst) : "-" }}
                 </span>
               </td>
               <td>
                 <span class="table-column-data">{{
-                  lead.sourcedBy ? (getSourceName(lead.sourcedBy) | capitalizeFirst) : '-'
+                  lead.sourcedBy
+                    ? (getSourceName(lead.sourcedBy) | capitalizeFirst)
+                    : "-"
                 }}</span>
               </td>
               <!-- <td>
@@ -410,17 +416,21 @@
               <tr [pSelectableRow]="lead">
                 <td>
                   <span class="table-column-data">{{
-                    lead.customId || '-'
+                    lead.customId || "-"
                   }}</span>
                 </td>
                 <td>
                   <span class="table-column-data">{{
-                    lead.contactPerson ? (lead.contactPerson | capitalizeFirst) : '-'
+                    lead.contactPerson
+                      ? (lead.contactPerson | capitalizeFirst)
+                      : "-"
                   }}</span>
                 </td>
                 <td>
                   <span class="table-column-data">{{
-                    lead.designation ? (lead.designation | capitalizeFirst) : '-'
+                    lead.designation
+                      ? (lead.designation | capitalizeFirst)
+                      : "-"
                   }}</span>
                 </td>
 
@@ -444,7 +454,9 @@
                   "
                 >
                   <span class="table-column-data">{{
-                    lead.sourcedByName ? (lead.sourcedByName | capitalizeFirst) : '-'
+                    lead.sourcedByName
+                      ? (lead.sourcedByName | capitalizeFirst)
+                      : "-"
                   }}</span>
                 </td>
                 <td>

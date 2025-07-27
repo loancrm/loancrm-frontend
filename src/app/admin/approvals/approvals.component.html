@@ -167,19 +167,19 @@
           <ng-template pTemplate="body" let-lead>
             <tr class="text-capitalize" [pSelectableRow]="lead">
               <td>
-                <span class="table-column-data singleline">{{
+                <span class="table-column-data">{{
                   lead.customId || "-"
                 }}</span>
               </td>
               <td>
-                <span class="table-column-data singleline">{{
+                <span class="table-column-data">{{
                   lead.businessName
                     ? (lead.businessName | capitalizeFirst)
                     : "-"
                 }}</span>
               </td>
               <td>
-                <span class="table-column-data singleline">{{
+                <span class="table-column-data">{{
                   lead.city ? (lead.city | capitalizeFirst) : "-"
                 }}</span>
               </td>
@@ -189,7 +189,7 @@
                 }}</span>
               </td>
               <td>
-                <span class="table-column-data singleline">{{
+                <span class="table-column-data">{{
                   lead.sourcedBy
                     ? (getSourceName(lead.sourcedBy) | capitalizeFirst)
                     : "-"
@@ -369,19 +369,19 @@
             <ng-template pTemplate="body" let-lead>
               <tr [pSelectableRow]="lead">
                 <td>
-                  <span class="table-column-data singleline">{{
-                    lead.customId
+                  <span class="table-column-data">{{
+                    lead.customId || "-"
                   }}</span>
                 </td>
                 <td>
-                  <span class="table-column-data singleline">{{
+                  <span class="table-column-data">{{
                     lead.contactPerson
                       ? (lead.contactPerson | capitalizeFirst)
                       : "-"
                   }}</span>
                 </td>
                 <td>
-                  <span class="table-column-data singleline">{{
+                  <span class="table-column-data">{{
                     lead.designation
                       ? (lead.designation | capitalizeFirst)
                       : "-"
@@ -405,7 +405,7 @@
                     userDetails.userType != '3'
                   "
                 >
-                  <span class="table-column-data singleline">{{
+                  <span class="table-column-data">{{
                     lead.sourcedByName
                       ? (lead.sourcedByName | capitalizeFirst)
                       : "-"

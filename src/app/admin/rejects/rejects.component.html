@@ -195,12 +195,12 @@
               <ng-template pTemplate="body" let-lead>
                 <tr class="text-capitalize" [pSelectableRow]="lead">
                   <td>
-                    <span class="table-column-data singleline">{{
-                      lead.customId
+                    <span class="table-column-data">{{
+                      lead.customId ? lead.customId : "-"
                     }}</span>
                   </td>
                   <td>
-                    <span class="table-column-data singleline">{{
+                    <span class="table-column-data">{{
                       lead.businessName
                         ? (lead.businessName | capitalizeFirst)
                         : "-"
@@ -214,19 +214,19 @@
                     }}</span>
                   </td>
                   <td>
-                    <span class="table-column-data singleline">{{
+                    <span class="table-column-data">{{
                       lead.contactPerson
                         ? (lead.contactPerson | capitalizeFirst)
                         : "-"
                     }}</span>
                   </td>
                   <td>
-                    <span class="table-column-data singleline">{{
+                    <span class="table-column-data">{{
                       lead.city ? (lead.city | capitalizeFirst) : "-"
                     }}</span>
                   </td>
                   <td>
-                    <span class="table-column-data singleline">{{
+                    <span class="table-column-data">{{
                       lead.sourcedBy
                         ? (getSourceName(lead.sourcedBy) | capitalizeFirst)
                         : "-"
@@ -240,7 +240,7 @@
                     }}</span>
                   </td>
                   <td>
-                    <span class="table-column-data singleline">{{
+                    <span class="table-column-data">{{
                       lead.creditSummary
                         ? (lead.creditSummary | capitalizeFirst)
                         : "-"
@@ -989,19 +989,19 @@
               <ng-template pTemplate="body" let-lead>
                 <tr class="text-capitalize" [pSelectableRow]="lead">
                   <td>
-                    <span class="table-column-data singleline" *ngIf="lead.customId">{{
+                    <span class="table-column-data" *ngIf="lead.customId">{{
                       lead.customId
                     }}</span>
                   </td>
                   <td>
                     <span
-                      class="table-column-data singleline"
+                      class="table-column-data"
                       *ngIf="lead.contactPerson"
                       >{{ lead.contactPerson | capitalizeFirst }}</span
                     >
                   </td>
                   <td>
-                    <span class="table-column-data singleline" *ngIf="lead.designation">{{
+                    <span class="table-column-data" *ngIf="lead.designation">{{
                       lead.designation | capitalizeFirst
                     }}</span>
                   </td>
@@ -1019,7 +1019,7 @@
                     >
                   </td>
                   <td>
-                    <span class="table-column-data singleline" *ngIf="lead.sourcedBy">{{
+                    <span class="table-column-data" *ngIf="lead.sourcedBy">{{
                       getSourceName(lead.sourcedBy) | capitalizeFirst
                     }}</span>
                   </td>
@@ -1029,7 +1029,7 @@
                     }}</span>
                   </td>
                   <td>
-                    <span class="table-column-data singleline" *ngIf="lead.remarks">{{
+                    <span class="table-column-data" *ngIf="lead.remarks">{{
                       lead.remarks | capitalizeFirst
                     }}</span>
                   </td>
