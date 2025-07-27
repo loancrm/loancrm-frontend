@@ -299,3 +299,10 @@ body {
   padding: 6px;
   // border-radius: 4px;
 }
+.singleline{
+  display: inline-block;
+  max-width: 140px; /* Set to whatever width you need */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
