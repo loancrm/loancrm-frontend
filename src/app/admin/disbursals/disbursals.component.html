@@ -1040,7 +1040,7 @@
                   <tr>
                     <td>
                       <span class="table-column-data singleline" >{{
-                        lead.customId | '-'
+                        lead.customId || '-'
                       }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'employed'">
