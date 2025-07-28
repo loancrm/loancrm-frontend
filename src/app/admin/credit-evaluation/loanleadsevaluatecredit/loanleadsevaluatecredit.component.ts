@@ -173,8 +173,9 @@ export class LoanleadsevaluatecreditComponent {
   }
   sendLeadToReject(lead) {
     this.changeLoanLeadStatus(lead[0].leadId, 10);
-    const targetUrl = `user/rejects`;
-    this.router.navigateByUrl(targetUrl);
+    // const targetUrl = `user/rejects`;
+    // this.router.navigateByUrl(targetUrl);
+    this.routingService.handleRoute('rejects', null);
   }
   changeLoanLeadStatus(leadId, statusId) {
     this.loading = true;

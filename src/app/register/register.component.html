@@ -481,30 +481,31 @@
                 </div>
               </div>
 
-              <div class="form-outline mb-4">
-                <div class="input-group">
+              <div class="form-outline mb-4 position-relative">
+                <div class="p-inputgroup">
                   <input
                     pInputText
-                    [type]="showPassword ? 'text' : 'password'"
+                    id="password"
+                    [type]="isPasswordVisible ? 'text' : 'password'"
                     formControlName="password"
-                    placeholder="Password"
+                    placeholder="Enter your password"
                     autocomplete="off"
-                    class="rounded-lg form-control"
+                    class="form-control"
                   />
                   <span
-                    class="p-inputgroup-addon input-group-text border-start-0"
+                    class="p-inputgroup-addon bg-white border-start-0"
+                    (click)="togglePasswordVisibility()"
+                    style="cursor: pointer"
                   >
                     <img
-                      src="{{
-                        showPassword
+                      [src]="
+                        isPasswordVisible
                           ? 'assets/images/icons/eye-slash.svg'
                           : 'assets/images/icons/eye.svg'
-                      }}"
-                      (click)="showPassword = !showPassword"
-                      width="25"
-                      height="50"
-                      style="cursor: pointer"
+                      "
                       alt="Toggle Password Visibility"
+                      width="20"
+                      height="20"
                     />
                   </span>
                 </div>
@@ -530,6 +531,17 @@
               >
                 Register
               </button>
+              <div class="text-center">
+                <span class="text-muted" style="color: #878787"
+                  >Already have an account?</span
+                >
+                <a
+                  routerLink="/user/login"
+                  class="fw-bold text-primary text-decoration-none"
+                >
+                  <span style="color: orangered"> Sign in here</span>
+                </a>
+              </div>
             </form> -->
           </div>
         </div>

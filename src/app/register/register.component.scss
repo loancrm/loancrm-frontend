@@ -1,22 +1,5 @@
 /* Full screen background with radial gradient */
 .background-radial-gradient {
-  // background-color: hsl(218, 41%, 15%);
-  // background-image: radial-gradient(
-  //     650px circle at 0% 0%,
-  //     hsl(218, 41%, 35%) 15%,
-  //     hsl(218, 41%, 30%) 35%,
-  //     hsl(218, 41%, 20%) 75%,
-  //     hsl(218, 41%, 19%) 80%,
-  //     transparent 100%
-  //   ),
-  //   radial-gradient(
-  //     1250px circle at 100% 100%,
-  //     hsl(218, 41%, 45%) 15%,
-  //     hsl(218, 41%, 30%) 35%,
-  //     hsl(218, 41%, 20%) 75%,
-  //     hsl(218, 41%, 19%) 80%,
-  //     transparent 100%
-  //   );
   background-image: url("../../assets/images/loginpage.jpg");
   background-size: cover;
   background-repeat: no-repeat;
@@ -65,22 +48,22 @@
 }
 
 /* Input Fields */
-input[type="text"],
-input[type="email"],
-input[type="password"] {
-  background-color: rgba(255, 255, 255, 0.9);
-  border: 1px solid #878787;
-  padding: 12px;
-  border-radius: 8px;
-  box-sizing: border-box;
-}
+// input[type="text"],
+// input[type="email"],
+// input[type="password"] {
+//   background-color: rgba(255, 255, 255, 0.9);
+//   border: 1px solid #878787;
+//   padding: 12px;
+//   border-radius: 8px;
+//   box-sizing: border-box;
+// }
 
-.input-group {
-  position: relative;
-}
+// .input-group {
+//   position: relative;
+// }
 .p-inputgroup-addon {
   position: absolute;
-  right: 10px;
+  right: 1px;
   top: 50%;
   transform: translateY(-50%);
   background: transparent;
@@ -90,7 +73,7 @@ input[type="password"] {
   z-index: 2;
 }
 .p-inputgroup input {
-  padding-right: 40px !important;
+  // padding-right: 40px !important;
   border-radius: 5px;
 }
 

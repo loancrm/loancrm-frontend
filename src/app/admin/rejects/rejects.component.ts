@@ -99,6 +99,7 @@ export class RejectsComponent implements OnInit {
   rejectStatus: any = projectConstantsLocal.REJECTED_STATUS;
   selectedLoginStatus = this.rejectStatus[0];
   selectedhlLoginStatus = this.rejectStatus[0];
+  selectedlapLoginStatus = this.rejectStatus[0];
   selectedplLoginStatus = this.rejectStatus[0];
   @ViewChild('personalleadsTable') personalleadsTable!: Table;
   constructor(
@@ -579,16 +580,15 @@ export class RejectsComponent implements OnInit {
   }
   loginstatusChange(event: any) {
     this.selectedLoginStatus = event.value; // store the whole object if needed
-    // console.log(this.selectedLoginStatus)
   }
   loginhlstatusChange(event: any) {
     this.selectedhlLoginStatus = event.value; // store the whole object if needed
-    // console.log(this.selectedhlLoginStatus)
   }
-
+  loginlapstatusChange(event: any) {
+    this.selectedlapLoginStatus = event.value; // store the whole object if needed
+  }
   loginplstatusChange(event: any) {
     this.selectedplLoginStatus = event.value; // store the whole object if needed
-    // console.log(this.selectedplLoginStatus)
   }
 
   loadLeads(event) {
@@ -711,11 +711,53 @@ export class RejectsComponent implements OnInit {
     }
   }
 
+  loadlapBankRejectedLeads(event) {
+    this.currentTableEvent = event;
+    let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
+    api_filter['loanType-eq'] = 'lap';
+    api_filter['employmentStatus-eq'] = 'employed';
+    // if (
+    //   this.selectedSourcedByStatusforbank &&
+    //   this.selectedSourcedByStatusforbank.name
+    // ) {
+    //   if (this.selectedSourcedByStatusforbank.name != 'All') {
+    //     api_filter['sourcedBy-eq'] = this.selectedSourcedByStatusforbank.id;
+    //   }
+    // }
+    api_filter = Object.assign(
+      {},
+      api_filter,
+      this.searchFilterbank,
+      this.appliedFilterforbank
+    );
+    if (api_filter) {
+      this.getplBankRejectedLeadCount(api_filter);
+      this.getplBankRejectsLeads(api_filter);
+    }
+  }
+
 
   loadhlCNIRejectedLeads(event) {
     this.currentTableEvent = event;
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     api_filter['loanType-eq'] = 'homeLoan';
+    api_filter['employmentStatus-eq'] = 'employed';
+    api_filter = Object.assign(
+      {},
+      api_filter,
+      this.searchFiltercni,
+      this.appliedFilterforcni
+    );
+    if (api_filter) {
+      this.getplCNIRejectedLeadCount(api_filter);
+      this.getplCNIRejectsLeads(api_filter);
+    }
+  }
+
+  loadlapCNIRejectedLeads(event) {
+    this.currentTableEvent = event;
+    let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
+    api_filter['loanType-eq'] = 'lap';
     api_filter['employmentStatus-eq'] = 'employed';
     api_filter = Object.assign(
       {},
@@ -744,10 +786,52 @@ export class RejectsComponent implements OnInit {
       this.getplCNIRejectsLeads(api_filter);
     }
   }
+
+  loadlapselfCNIRejectedLeads(event) {
+    this.currentTableEvent = event;
+    let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
+    api_filter['loanType-eq'] = 'lap';
+    api_filter['employmentStatus-eq'] = 'self-employed';
+    api_filter = Object.assign(
+      {},
+      api_filter,
+      this.searchFiltercni,
+      this.appliedFilterforcni
+    );
+    if (api_filter) {
+      this.getplCNIRejectedLeadCount(api_filter);
+      this.getplCNIRejectsLeads(api_filter);
+    }
+  }
   loadhlselfBankRejectedLeads(event) {
     this.currentTableEvent = event;
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     api_filter['loanType-eq'] = 'homeLoan';
+    api_filter['employmentStatus-eq'] = 'self-employed';
+    // if (
+    //   this.selectedSourcedByStatusforbank &&
+    //   this.selectedSourcedByStatusforbank.name
+    // ) {
+    //   if (this.selectedSourcedByStatusforbank.name != 'All') {
+    //     api_filter['sourcedBy-eq'] = this.selectedSourcedByStatusforbank.id;
+    //   }
+    // }
+    api_filter = Object.assign(
+      {},
+      api_filter,
+      this.searchFilterbank,
+      this.appliedFilterforbank
+    );
+    if (api_filter) {
+      this.getplBankRejectedLeadCount(api_filter);
+      this.getplBankRejectsLeads(api_filter);
+    }
+  }
+
+  loadlapselfBankRejectedLeads(event) {
+    this.currentTableEvent = event;
+    let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
+    api_filter['loanType-eq'] = 'lap';
     api_filter['employmentStatus-eq'] = 'self-employed';
     // if (
     //   this.selectedSourcedByStatusforbank &&
@@ -1410,7 +1494,7 @@ export class RejectsComponent implements OnInit {
     }
   }
   getHomeloanLeadsCount(filter = {}) {
-    this.leadsService.getplFIPDistinctLeadsCount(filter).subscribe(
+    this.leadsService.getloanLeadsCount(filter).subscribe(
       (response) => {
         this.homeloanLeadsCount = response;
       },
@@ -1453,7 +1537,7 @@ export class RejectsComponent implements OnInit {
     }
   }
   getHomeloanselfLeadsCount(filter = {}) {
-    this.leadsService.getplFIPDistinctLeadsCount(filter).subscribe(
+    this.leadsService.getloanLeadsCount(filter).subscribe(
       (response) => {
         this.homeloanselfLeadsCount = response;
       },
@@ -1481,6 +1565,7 @@ export class RejectsComponent implements OnInit {
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     api_filter['loanType-eq'] = 'lap';
     api_filter['employmentStatus-eq'] = 'employed';
+    api_filter['leadInternalStatus-eq'] = '10';
     // api_filter['leadInternalStatus-eq'] = '3';
     // if (this.SourcedByForLap && this.SourcedByForLap.name) {
     //   if (this.SourcedByForLap.name == 'All') {
@@ -1510,7 +1595,7 @@ export class RejectsComponent implements OnInit {
     }
   }
   getLapLeadsCount(filter = {}) {
-    this.leadsService.getplFIPDistinctLeadsCount(filter).subscribe(
+    this.leadsService.getloanLeadsCount(filter).subscribe(
       (response) => {
         this.lapLeadsCount = response;
       },
@@ -1524,6 +1609,7 @@ export class RejectsComponent implements OnInit {
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     api_filter['loanType-eq'] = 'lap';
     api_filter['employmentStatus-eq'] = 'self-employed';
+    api_filter['leadInternalStatus-eq'] = '10';
     // api_filter['leadInternalStatus-eq'] = '3';
     // if (this.SourcedByForLap && this.SourcedByForLap.name) {
     //   if (this.SourcedByForLap.name == 'All') {
@@ -1552,7 +1638,7 @@ export class RejectsComponent implements OnInit {
     }
   }
   getLapselfLeadsCount(filter = {}) {
-    this.leadsService.getplFIPDistinctLeadsCount(filter).subscribe(
+    this.leadsService.getloanLeadsCount(filter).subscribe(
       (response) => {
         this.lapselfLeadsCount = response;
       },

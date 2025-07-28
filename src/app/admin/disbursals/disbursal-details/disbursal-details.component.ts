@@ -7,10 +7,11 @@ import { FileUploadComponent } from '../../file-upload/file-upload.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { projectConstantsLocal } from 'src/app/constants/project-constants';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { RoutingService } from 'src/app/services/routing-service';
 interface FormDetail {
   id: number;
-  program: string;
-  bankName: string;
+  // program: string;
+  // bankName: string;
   sanctionedLetter: string[];
   repaymentSchedule: string[];
 }
@@ -52,6 +53,7 @@ export class DisbursalDetailsComponent implements OnInit {
   constructor(
     private location: Location,
     private route: ActivatedRoute,
+    private routingService: RoutingService,
     private dialogService: DialogService,
     private leadsService: LeadsService,
     private toastService: ToastService,
@@ -91,8 +93,8 @@ export class DisbursalDetailsComponent implements OnInit {
   saveFormData(): void {
     const formData: FormDetail[] = this.disbursalDetails.map((detail) => ({
       id: detail.id,
-      program: detail.program,
-      bankName: detail.bankName,
+      // program: detail.program,
+      // bankName: detail.bankName,
       sanctionedLetter: detail.sanctionedLetter
         ? Array.isArray(detail.sanctionedLetter)
           ? [...detail.sanctionedLetter]
@@ -139,8 +141,9 @@ export class DisbursalDetailsComponent implements OnInit {
       (response: any) => {
         this.loading = false;
         this.toastService.showSuccess('Files and Data Saved Successfully');
-        const targetUrl = `user/disbursals`;
-        this.router.navigateByUrl(targetUrl);
+        // const targetUrl = `user/disbursals`;
+        // this.router.navigateByUrl(targetUrl);
+        this.routingService.handleRoute('disbursals', null);
       },
       (error) => {
         this.loading = false;

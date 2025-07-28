@@ -4,6 +4,7 @@ import { LeadsService } from '../../leads/leads.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService } from 'src/app/services/toast.service';
 import { projectConstantsLocal } from 'src/app/constants/project-constants';
+import { RoutingService } from 'src/app/services/routing-service';
 
 interface Program {
   heading: string;
@@ -55,6 +56,7 @@ export class BankSelectionComponent implements OnInit {
     private toastService: ToastService,
     private activatedRoute: ActivatedRoute,
     private leadsService: LeadsService,
+    private routingService: RoutingService,
     private location: Location,
     private router: Router
   ) { }
@@ -175,14 +177,13 @@ export class BankSelectionComponent implements OnInit {
         } else {
           this.changeLeadStatus(this.leadData[0].id, 12);
         }
-        const targetUrl = `user/filesinprocess`;
-        this.router.navigateByUrl(targetUrl);
+        // const targetUrl = `user/filesinprocess`;
+        // this.router.navigateByUrl(targetUrl);
+        this.routingService.handleRoute('filesinprocess', null);
       },
       (error) => {
         this.loading = false;
         this.toastService.showError(error);
-        const targetUrl = `user/filesinprocess`;
-        this.router.navigateByUrl(targetUrl);
       }
     );
   }
@@ -204,14 +205,13 @@ export class BankSelectionComponent implements OnInit {
         this.loading = false;
         this.toastService.showSuccess('Login Info Saved Successfully');
         this.changeLoanLeadStatus(this.leadData[0].leadId, 12);
-        const targetUrl = `user/filesinprocess`;
-        this.router.navigateByUrl(targetUrl);
+        // const targetUrl = `user/filesinprocess`;
+        // this.router.navigateByUrl(targetUrl);
+        this.routingService.handleRoute('filesinprocess', null);
       },
       (error) => {
         this.loading = false;
         this.toastService.showError(error);
-        const targetUrl = `user/filesinprocess`;
-        this.router.navigateByUrl(targetUrl);
       }
     );
   }

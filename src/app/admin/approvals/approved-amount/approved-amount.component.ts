@@ -5,6 +5,7 @@ import { LeadsService } from '../../leads/leads.service';
 import { Location } from '@angular/common';
 import { projectConstantsLocal } from 'src/app/constants/project-constants';
 import { DateTimeProcessorService } from 'src/app/services/date-time-processor.service';
+import { RoutingService } from '../../../services/routing-service';
 @Component({
   selector: 'app-approved-amount',
   templateUrl: './approved-amount.component.html',
@@ -42,6 +43,7 @@ export class ApprovedAmountComponent implements OnInit {
     private location: Location,
     private route: ActivatedRoute,
     private leadsService: LeadsService,
+    private routingService: RoutingService,
     private toastService: ToastService,
     private dateTimeProcessor: DateTimeProcessorService,
     private router: Router
@@ -73,7 +75,7 @@ export class ApprovedAmountComponent implements OnInit {
       this.getApprovalsDetailsById(this.leadId);
     }
   }
- onSanctionDateChange() {
+  onSanctionDateChange() {
     if (this.rowData.approvalDate) {
       this.minDisbursalDate = new Date(this.rowData.approvalDate);
     } else {
@@ -129,10 +131,11 @@ export class ApprovedAmountComponent implements OnInit {
     ];
   }
   saveFormData(): void {
+    const loanType = this.leads[0]?.loanType;
     const formData = this.approvalDetails.map((detail) => ({
       id: detail.id,
-      program: detail.program,
-      bankName: detail.bankName,
+      // program: detail.program,
+      // bankName: detail.bankName,
       lan: detail.lan,
       sanctionedAmount: detail.sanctionedAmount,
       disbursedAmount: detail.disbursedAmount,
@@ -141,12 +144,6 @@ export class ApprovedAmountComponent implements OnInit {
       processCode: detail.processCode,
       productType: detail.productType,
       productTypeName: this.getProductTypeName(detail.productType),
-      // approvalDate: detail.approvalDate
-      //   ? this.moment(detail.approvalDate).format('MM/DD/YYYY')
-      //   : null,
-      // disbursalDate: detail.disbursalDate
-      //   ? this.moment(detail.disbursalDate).format('MM/DD/YYYY')
-      //   : null,
       approvalDate: detail.approvalDate
         ? this.moment(detail.approvalDate).format('YYYY-MM-DD')
         : null,
@@ -157,18 +154,23 @@ export class ApprovedAmountComponent implements OnInit {
       approvedRemarks: detail.approvedRemarks,
     }));
     this.loading = true;
-    this.leadsService.updateApprovalsDetails(this.leadId, formData).subscribe(
-      (response: any) => {
+    const updateFn =
+      loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap'
+        ? this.leadsService.updateplApprovalsDetails.bind(this.leadsService)
+        : this.leadsService.updateApprovalsDetails.bind(this.leadsService);
+    updateFn(this.leadId, formData).subscribe({
+      next: () => {
         this.loading = false;
         this.toastService.showSuccess('Sanctions Info Saved Successfully');
-        const targetUrl = `user/approvals`;
-        this.router.navigateByUrl(targetUrl);
+        // const targetUrl = `user/approvals`;
+        // this.router.navigateByUrl(targetUrl);
+        this.routingService.handleRoute('approvals', null);
       },
-      (error) => {
+      error: (error) => {
         this.loading = false;
         this.toastService.showError(error);
       }
-    );
+    });
   }
 
   saveplFormData(): void {
@@ -197,8 +199,9 @@ export class ApprovedAmountComponent implements OnInit {
       (response: any) => {
         this.loading = false;
         this.toastService.showSuccess('Sanctions Info Saved Successfully');
-        const targetUrl = `user/approvals`;
-        this.router.navigateByUrl(targetUrl);
+        // const targetUrl = `user/approvals`;
+        // this.router.navigateByUrl(targetUrl);
+        this.routingService.handleRoute('approvals', null);
       },
       (error) => {
         this.loading = false;

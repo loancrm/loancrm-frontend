@@ -1,27 +1,14 @@
 <div>
-  <!-- <div class="p-1 m-2 fixed-card" *ngIf="leads">
-    <div class="d-flex justify-content-between">
-      <div
-        class="d-flex align-items-center justify-content-center pointer-cursor"
-        (click)="goBack()"
-      >
-        <span class="me-2 d-flex align-items-center">
-          <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
-        </span>
-        <span class="back-btn-text text-capitalize">{{
-          leads[0]?.businessName | capitalizeFirst
-        }}</span>
-      </div>
-    </div>
-  </div> -->
   <ng-container *ngFor="let item of displayedItems">
     <div class="m-2 p-1" *ngIf="item.data">
       <div class="d-flex justify-content-between">
-        <div class="d-flex align-items-center justify-content-center pointer-cursor" (click)="goBack()">
+        <div
+          class="d-flex align-items-center justify-content-center pointer-cursor"
+          (click)="goBack()"
+        >
           <span class="me-2 d-flex align-items-center">
             <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
           </span>
-
           <b>
             <span class="back-btn-text text-capitalize">
               {{ item.data[item.displayProperty] || "N/A" | capitalizeFirst }}
@@ -35,10 +22,13 @@
   <div class="bread-crumb m-2">
     <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
   </div>
-  <div class="container-fluid m-2" *ngIf="!loading">
+  <div class="container-fluid" *ngIf="!loading">
     <div class="row">
       <div *ngIf="disbursalDetails">
-        <p-table [value]="disbursalDetails" [styleClass]="'p-datatable-striped'">
+        <p-table
+          [value]="disbursalDetails"
+          [styleClass]="'p-datatable-striped'"
+        >
           <ng-template pTemplate="header">
             <tr>
               <th *ngIf="shouldDisplayBlock()">Business Name</th>
@@ -53,20 +43,31 @@
           </ng-template>
           <ng-template pTemplate="body" let-rowData>
             <tr>
-
-
-              <td class="text-capitalize" *ngIf="shouldDisplayBlock()">{{ rowData.businessName ? (rowData.businessName)
-                : '-' }}</td>
-              <td *ngIf="shouldDisplayBlock()">{{ rowData.program ? (rowData.program) : '-' }}</td>
-              <td>{{ rowData.bankName ? (rowData.bankName) : '-' }}</td>
-              <td>{{ rowData.processCode ? (rowData.processCode) : '-' }}</td>
-              <td>{{ rowData.productTypeName ? (rowData.productTypeName) : '-' }}</td>
-              <td>{{ rowData.productTypeName ? (rowData.productTypeName) : '-' }}</td>
-
+              <td class="text-capitalize" *ngIf="shouldDisplayBlock()">
+                {{ rowData.businessName ? rowData.businessName : "-" }}
+              </td>
+              <td *ngIf="shouldDisplayBlock()">
+                {{ rowData.program ? rowData.program : "-" }}
+              </td>
+              <td>{{ rowData.bankName ? rowData.bankName : "-" }}</td>
+              <td>{{ rowData.processCode ? rowData.processCode : "-" }}</td>
               <td>
-                <input pInputText type="number" class="rounded-lg" [style.width.%]="100" [style.height.%]="30"
-                  autocomplete="off" [(ngModel)]="rowData.payoutValue"
-                  (ngModelChange)="updateCalculatedRevenue(rowData)" />
+                {{ rowData.productTypeName ? rowData.productTypeName : "-" }}
+              </td>
+              <td>
+                {{ rowData.productTypeName ? rowData.productTypeName : "-" }}
+              </td>
+              <td>
+                <input
+                  pInputText
+                  type="number"
+                  class="rounded-lg"
+                  [style.width.%]="100"
+                  [style.height.%]="30"
+                  autocomplete="off"
+                  [(ngModel)]="rowData.payoutValue"
+                  (ngModelChange)="updateCalculatedRevenue(rowData)"
+                />
               </td>
               <td>{{ rowData.revenueValue }}</td>
             </tr>
@@ -74,7 +75,12 @@
           <ng-template pTemplate="emptymessage">
             <tr class="text-center">
               <td colspan="7" class="text-center fw-bold">
-                <img src="../../../assets/images/menu/no-data.gif" width="200" height="200" alt="No Data" />
+                <img
+                  src="../../../assets/images/menu/no-data.gif"
+                  width="200"
+                  height="200"
+                  alt="No Data"
+                />
                 <p>No Banks Saved</p>
               </td>
             </tr>
@@ -87,7 +93,13 @@
               <span style="color: #808080">{{ totalRevenueValue }} /-</span>
             </h5>
           </div>
-          <button pButton pRipple type="button" class="p-button-primary me-2 mt-2" (click)="saveFormData()">
+          <button
+            pButton
+            pRipple
+            type="button"
+            class="p-button-primary me-2 mt-2"
+            (click)="saveFormData()"
+          >
             Save Revenue Info
           </button>
         </div>

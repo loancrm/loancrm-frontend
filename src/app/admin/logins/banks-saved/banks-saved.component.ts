@@ -6,6 +6,7 @@ import { ToastService } from 'src/app/services/toast.service';
 import { projectConstantsLocal } from 'src/app/constants/project-constants';
 import { DateTimeProcessorService } from 'src/app/services/date-time-processor.service';
 import { ConfirmationService } from 'primeng/api';
+import { RoutingService } from 'src/app/services/routing-service';
 
 @Component({
   selector: 'app-banks-saved',
@@ -40,6 +41,7 @@ export class BanksSavedComponent implements OnInit {
     private location: Location,
     private route: ActivatedRoute,
     private leadsService: LeadsService,
+    private routingService: RoutingService,
     private toastService: ToastService,
     private router: Router,
     private confirmationService: ConfirmationService,
@@ -162,40 +164,8 @@ export class BanksSavedComponent implements OnInit {
       }
     );
   }
-
   saveFormData(): void {
-    const formData = this.fipDetails.map((detail) => ({
-      id: detail.id,
-      program: detail.program,
-      bankName: detail.bankName,
-      fipStatus: detail.fipStatus,
-      // loginDate: detail.loginDate
-      //   ? this.moment(detail.loginDate).format('MM/DD/YYYY')
-      //   : null,
-      loginDate: detail.loginDate
-        ? this.moment(detail.loginDate).format('YYYY-MM-DD')
-        : null,
-      fipRemarks: detail.fipRemarks,
-    }));
-    // console.log(formData);
-    this.loading = true;
-    this.leadsService.updateFIPDetails(this.leadId, formData).subscribe(
-      (response: any) => {
-        this.loading = false;
-        this.toastService.showSuccess(
-          'Files In Process info Saved Successfully'
-        );
-        const targetUrl = `user/filesinprocess`;
-        this.router.navigateByUrl(targetUrl);
-      },
-      (error) => {
-        this.loading = false;
-        this.toastService.showError(error);
-      }
-    );
-  }
-
-  saveplFormData(): void {
+    const loanType = this.leads[0]?.loanType;
     const formData = this.fipDetails.map((detail) => ({
       id: detail.id,
       fipStatus: detail.fipStatus,
@@ -204,53 +174,54 @@ export class BanksSavedComponent implements OnInit {
         : null,
       fipRemarks: detail.fipRemarks,
     }));
-    // console.log(formData);
     this.loading = true;
-    this.leadsService.updateplFIPDetails(this.leadId, formData).subscribe(
-      (response: any) => {
+    const updateFn =
+      loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap'
+        ? this.leadsService.updateplFIPDetails.bind(this.leadsService)
+        : this.leadsService.updateFIPDetails.bind(this.leadsService);
+
+    updateFn(this.leadId, formData).subscribe({
+      next: () => {
         this.loading = false;
-        this.toastService.showSuccess(
-          'Files In Process info Saved Successfully'
-        );
-        const targetUrl = `user/filesinprocess`;
-        this.router.navigateByUrl(targetUrl);
+        this.toastService.showSuccess('Files In Process info Saved Successfully');
+        // this.router.navigateByUrl('user/filesinprocess');
+        this.routingService.handleRoute('filesinprocess', null);
       },
-      (error) => {
+      error: (error) => {
         this.loading = false;
         this.toastService.showError(error);
-      }
-    );
+      },
+    });
   }
 
-  //   saveFIPFormData(): void {
-  //   const loanType = this.leads[0]?.loanType; // ✅ safely extract loanType
+
+  // saveplFormData(): void {
   //   const formData = this.fipDetails.map((detail) => ({
   //     id: detail.id,
-  //     program: detail.program,
-  //     bankName: detail.bankName,
   //     fipStatus: detail.fipStatus,
   //     loginDate: detail.loginDate
   //       ? this.moment(detail.loginDate).format('YYYY-MM-DD')
   //       : null,
   //     fipRemarks: detail.fipRemarks,
   //   }));
-
+  //   // console.log(formData);
   //   this.loading = true;
-
-  //   this.leadsService
-  //     .updateFIPDetails(this.leadId, loanType, formData)
-  //     .subscribe(
-  //       (response: any) => {
-  //         this.loading = false;
-  //         this.toastService.showSuccess('Files In Process info Saved Successfully');
-  //         this.router.navigateByUrl(`user/filesinprocess`);
-  //       },
-  //       (error) => {
-  //         this.loading = false;
-  //         this.toastService.showError(error?.error || 'Error saving data');
-  //       }
-  //     );
+  //   this.leadsService.updateplFIPDetails(this.leadId, formData).subscribe(
+  //     (response: any) => {
+  //       this.loading = false;
+  //       this.toastService.showSuccess(
+  //         'Files In Process info Saved Successfully'
+  //       );
+  //       const targetUrl = `user/filesinprocess`;
+  //       this.router.navigateByUrl(targetUrl);
+  //     },
+  //     (error) => {
+  //       this.loading = false;
+  //       this.toastService.showError(error);
+  //     }
+  //   );
   // }
+
 
 
   transformLoginInfoDetails(data: any[]): any[] {

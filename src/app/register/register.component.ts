@@ -15,6 +15,7 @@ export class RegisterComponent implements OnInit {
   showPassword: boolean = false;
   loading = false;
   otpSent = false;
+  // isPasswordVisible: boolean = false;
   otpVerified = false;
   otpError = '';
   constructor(
@@ -59,7 +60,9 @@ export class RegisterComponent implements OnInit {
     return this.registerForm.get('password')!;
   }
 
-
+//  togglePasswordVisibility() {
+//     this.isPasswordVisible = !this.isPasswordVisible;
+//   }
   sendOTP() {
     // console.log('Mobile value from form:', this.mobile.value);
     // console.log('Form object:', this.registerForm.value);

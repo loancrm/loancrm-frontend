@@ -105,13 +105,13 @@ export class LandingPageComponent implements OnInit {
     },
   ];
 
-  constructor(private router: Router, private elRef: ElementRef) {}
+  constructor(private router: Router, private elRef: ElementRef) { }
 
   navigateToContact(): void {
     this.router.navigateByUrl('/contact');
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {

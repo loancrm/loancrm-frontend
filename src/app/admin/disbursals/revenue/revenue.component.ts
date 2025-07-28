@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService } from 'src/app/services/toast.service';
 import { LeadsService } from '../../leads/leads.service';
 import { projectConstantsLocal } from 'src/app/constants/project-constants';
+import { RoutingService } from '../../../services/routing-service';
 
 @Component({
   selector: 'app-revenue',
@@ -22,6 +23,7 @@ export class RevenueComponent implements OnInit {
   constructor(
     private location: Location,
     private route: ActivatedRoute,
+    private routingService: RoutingService,
     private leadsService: LeadsService,
     private toastService: ToastService,
     private router: Router
@@ -150,8 +152,9 @@ export class RevenueComponent implements OnInit {
       (response: any) => {
         this.loading = false;
         this.toastService.showSuccess('Revenue info Saved Successfully');
-        const targetUrl = `user/disbursals`;
-        this.router.navigateByUrl(targetUrl);
+        // const targetUrl = `user/disbursals`;
+        // this.router.navigateByUrl(targetUrl);
+        this.routingService.handleRoute('disbursals', null);
       },
       (error) => {
         this.loading = false;

@@ -8,24 +8,12 @@
         <span class="me-2 d-flex align-items-center">
           <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
         </span>
-        <!-- <span class="me-1">
-          <img
-            src="../../../assets/images/menu/disbursal.png"
-            alt="Default Image"
-            class=""
-            style="height: 35px; width: 40px"
-          />
-        </span> -->
         <b>
           <span class="back-btn-text">Disbursals</span>
         </b>
-        <!-- <span class="back-btn-text text-capitalize">Disbursals</span> -->
       </div>
     </div>
   </div>
-  <!-- <div class="bread-crumb">
-    <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
-  </div> -->
   <div class="text-capitalize m-2">
     <p-tabMenu
       [model]="items"
@@ -75,14 +63,6 @@
                     "
                     (keyup.enter)="filterWithBusinessName()"
                   />
-                  <!-- <button
-                type="button"
-                pButton
-                icon="pi pi-search"
-                class="p-button-primary"
-                [disabled]="!businessNameToSearch"
-                (click)="filterWithBusinessName()"
-              ></button> -->
                   <button
                     type="button"
                     pButton
@@ -112,14 +92,6 @@
                     "
                     (keyup.enter)="filterWithMobileNumber()"
                   />
-                  <!-- <button
-                type="button"
-                pButton
-                icon="pi pi-search"
-                class="p-button-primary"
-                [disabled]="!mobileNumberToSearch"
-                (click)="filterWithMobileNumber()"
-              ></button> -->
                   <button
                     type="button"
                     pButton
@@ -425,13 +397,17 @@
             <ng-template pTemplate="body" let-lead>
               <tr [pSelectableRow]="lead">
                 <td>
-                  <span class="table-column-data singleline" *ngIf="lead.customId">{{
-                    lead.customId
-                  }}</span>
+                  <span
+                    class="table-column-data singleline"
+                    *ngIf="lead.customId"
+                    >{{ lead.customId }}</span
+                  >
                 </td>
                 <td>
                   <span class="table-column-data singleline">{{
-                    lead.contactPerson ? (lead.contactPerson | capitalizeFirst) : '-'
+                    lead.contactPerson
+                      ? (lead.contactPerson | capitalizeFirst)
+                      : "-"
                   }}</span>
                 </td>
                 <!-- <td>
@@ -446,18 +422,14 @@
                   }}</span>
                 </td> -->
                 <td>
-                  <span
-                    class="table-column-data"
-                    
-                    >{{ lead.sanctionedAmount ? (lead.sanctionedAmount): '-' }}</span
-                  >
+                  <span class="table-column-data">{{
+                    lead.sanctionedAmount ? lead.sanctionedAmount : "-"
+                  }}</span>
                 </td>
                 <td>
-                  <span
-                    class="table-column-data"
-                    
-                    >{{ lead.disbursedAmount ? (lead.disbursedAmount): '-' }}</span
-                  >
+                  <span class="table-column-data">{{
+                    lead.disbursedAmount ? lead.disbursedAmount : "-"
+                  }}</span>
                 </td>
                 <td
                   *ngIf="
@@ -467,12 +439,16 @@
                   "
                 >
                   <span class="table-column-data singleline">{{
-                    lead.sourcedByName ? (lead.sourcedByName | capitalizeFirst): '-'
+                    lead.sourcedByName
+                      ? (lead.sourcedByName | capitalizeFirst)
+                      : "-"
                   }}</span>
                 </td>
                 <td>
                   <span class="table-column-data">{{
-                    lead.disbursalDate ? (lead.disbursalDate | date : "mediumDate"): '-'
+                    lead.disbursalDate
+                      ? (lead.disbursalDate | date : "mediumDate")
+                      : "-"
                   }}</span>
                 </td>
                 <td>
@@ -548,6 +524,8 @@
                     ? loadLeadsforHome($event)
                     : loadLeadsforHomeself($event)
                 "
+                (onRowSelect)="viewLead($event)"
+                selectionMode="single"
                 dataKey="id"
                 [showCurrentPageReport]="true"
                 [rowsPerPageOptions]="[10, 25, 50]"
@@ -681,7 +659,7 @@
                     >
                       Business Name
                     </th>
-                    <th *ngIf="activeEmploymentStatus.name === 'employed'">
+                    <!-- <th *ngIf="activeEmploymentStatus.name === 'employed'">
                       Designation
                     </th>
                     <th
@@ -710,7 +688,9 @@
                       *ngIf="activeEmploymentStatus.name === 'self-employed'"
                     >
                       Business Turnover
-                    </th>
+                    </th> -->
+                    <th class="text-nowrap">Sanctioned Amount</th>
+                    <th class="text-nowrap">Disbursed Amount</th>
                     <th
                       class="text-nowrap"
                       *ngIf="
@@ -721,70 +701,79 @@
                     >
                       Sourced By
                     </th>
-                    <th class="text-nowrap">Created Date</th>
+                    <!-- <th class="text-nowrap">Created Date</th> -->
+                    <th class="text-nowrap">Disbursal Date</th>
                     <th>Actions</th>
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-lead>
-                  <tr>
+                  <tr [pSelectableRow]="lead">
                     <td>
-                      <span class="table-column-data singleline" *ngIf="lead.customId">{{
-                        lead.customId
+                      <span
+                        class="table-column-data singleline"
+                        *ngIf="lead.customId"
+                        >{{ lead.customId }}</span
+                      >
+                    </td>
+                    <td *ngIf="activeEmploymentStatus.name === 'employed'">
+                      <span class="table-column-data singleline">{{
+                        lead.contactPerson
+                          ? (lead.contactPerson | capitalizeFirst)
+                          : "-"
                       }}</span>
                     </td>
-                    <td *ngIf="activeEmploymentStatus.name === 'employed'">
-                      <span
-                        class="table-column-data singleline"
-                        
-                        >{{ lead.contactPerson ? (lead.contactPerson | capitalizeFirst): '-' }}</span
-                      >
+                    <td *ngIf="activeEmploymentStatus.name === 'self-employed'">
+                      <span class="table-column-data singleline">{{
+                        lead.businessName
+                          ? (lead.businessName | capitalizeFirst)
+                          : "-"
+                      }}</span>
+                    </td>
+                    <!-- <td *ngIf="activeEmploymentStatus.name === 'employed'">
+                      <span class="table-column-data singleline">{{
+                        lead.designation
+                          ? (lead.designation | capitalizeFirst)
+                          : "-"
+                      }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'self-employed'">
-                      <span
-                        class="table-column-data singleline"
-                        
-                        >{{ lead.businessName ? (lead.businessName | capitalizeFirst): '-' }}</span
-                      >
-                    </td>
-                    <td *ngIf="activeEmploymentStatus.name === 'employed'">
-                      <span
-                        class="table-column-data singleline"
-                        
-                        >{{ lead.designation ? (lead.designation | capitalizeFirst): '-' }}</span
-                      >
-                    </td>
-                    <td *ngIf="activeEmploymentStatus.name === 'self-employed'">
-                      <span
-                        class="table-column-data"
-                        
-                        >{{ lead.businessEntity ? (getEntityName(lead.businessEntity)): '-' }}</span
-                      >
+                      <span class="table-column-data">{{
+                        lead.businessEntity
+                          ? getEntityName(lead.businessEntity)
+                          : "-"
+                      }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'employed'">
                       <span class="table-column-data">{{
-                        lead.salary ? (lead.salary): '-'
+                        lead.salary ? lead.salary : "-"
                       }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'self-employed'">
-                      <span
-                        class="table-column-data singleline"
-                        
-                        >{{ lead.contactPerson ? (lead.contactPerson | capitalizeFirst): '-' }}</span
-                      >
+                      <span class="table-column-data singleline">{{
+                        lead.contactPerson
+                          ? (lead.contactPerson | capitalizeFirst)
+                          : "-"
+                      }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'employed'">
-                      <span
-                        class="table-column-data"
-                        
-                        >{{ lead.jobExperience ? (lead.jobExperience): '-' }}</span
-                      >
+                      <span class="table-column-data">{{
+                        lead.jobExperience ? lead.jobExperience : "-"
+                      }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'self-employed'">
-                      <span
-                        class="table-column-data"
-                        
-                        >{{ lead.businessTurnover ? (lead.businessTurnover): '-' }}</span
-                      >
+                      <span class="table-column-data">{{
+                        lead.businessTurnover ? lead.businessTurnover : "-"
+                      }}</span>
+                    </td> -->
+                    <td>
+                      <span class="table-column-data">{{
+                        lead.sanctionedAmount ? lead.sanctionedAmount : "-"
+                      }}</span>
+                    </td>
+                    <td>
+                      <span class="table-column-data">{{
+                        lead.disbursedAmount ? lead.disbursedAmount : "-"
+                      }}</span>
                     </td>
                     <td
                       *ngIf="
@@ -793,46 +782,56 @@
                         userDetails.userType != '3'
                       "
                     >
-                      <span
-                        class="table-column-data singleline"
-                        
-                        >{{ lead.sourcedByName ? (lead.sourcedByName | capitalizeFirst): '-' }}</span
-                      >
-                    </td>
-                    <td>
-                      <span class="table-column-data">{{
-                        lead.createdOn ? (lead.createdOn | date : "mediumDate") : '-'
+                      <span class="table-column-data singleline">{{
+                        lead.sourcedByName
+                          ? (lead.sourcedByName | capitalizeFirst)
+                          : "-"
                       }}</span>
                     </td>
-
-                     <td>
-                  <div class="text-center">
-                    <div class="d-flex">
-                      <img
-                        alt="Disbursal Details"
-                        src="../../../assets/images/icons/disbursal.svg"
-                        width="24px"
-                        height="24px"
-                        class="me-2"
-                        (click)="
-                          disbursalDetails(lead); $event.stopPropagation()
-                        "
-                        pTooltip="Disbursal Details"
-                        tooltipPosition="top"
-                      />
-                      <img
-                        alt="Revenue Details"
-                        *ngIf="userDetails?.userType == 1"
-                        src="../../../assets/images/icons/revenue.svg"
-                        width="24px"
-                        height="24px"
-                        (click)="revenueDetails(lead); $event.stopPropagation()"
-                        pTooltip="Revenue"
-                        tooltipPosition="top"
-                      />
-                    </div>
-                  </div>
-                </td>
+                    <!-- <td>
+                      <span class="table-column-data">{{
+                        lead.createdOn
+                          ? (lead.createdOn | date : "mediumDate")
+                          : "-"
+                      }}</span>
+                    </td> -->
+                    <td>
+                      <span class="table-column-data">{{
+                        lead.disbursalDate
+                          ? (lead.disbursalDate | date : "mediumDate")
+                          : "-"
+                      }}</span>
+                    </td>
+                    <td (click)="$event.stopPropagation()">
+                      <div class="text-center">
+                        <div class="d-flex">
+                          <img
+                            alt="Disbursal Details"
+                            src="../../../assets/images/icons/disbursal.svg"
+                            width="24px"
+                            height="24px"
+                            class="me-2"
+                            (click)="
+                              disbursalDetails(lead); $event.stopPropagation()
+                            "
+                            pTooltip="Disbursal Details"
+                            tooltipPosition="top"
+                          />
+                          <img
+                            alt="Revenue Details"
+                            *ngIf="userDetails?.userType == 1"
+                            src="../../../assets/images/icons/revenue.svg"
+                            width="24px"
+                            height="24px"
+                            (click)="
+                              revenueDetails(lead); $event.stopPropagation()
+                            "
+                            pTooltip="Revenue"
+                            tooltipPosition="top"
+                          />
+                        </div>
+                      </div>
+                    </td>
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="emptymessage">
@@ -880,6 +879,8 @@
                     ? loadLeadsforlap($event)
                     : loadLeadsforlapself($event)
                 "
+                (onRowSelect)="viewLead($event)"
+                selectionMode="single"
                 dataKey="id"
                 [showCurrentPageReport]="true"
                 [rowsPerPageOptions]="[10, 25, 50]"
@@ -1008,7 +1009,7 @@
                     <th *ngIf="activeEmploymentStatus.name === 'self-employed'">
                       Business Name
                     </th>
-                    <th *ngIf="activeEmploymentStatus.name === 'employed'">
+                    <!-- <th *ngIf="activeEmploymentStatus.name === 'employed'">
                       Designation
                     </th>
                     <th *ngIf="activeEmploymentStatus.name === 'self-employed'">
@@ -1022,7 +1023,9 @@
                     </th>
                     <th *ngIf="activeEmploymentStatus.name === 'employed'">
                       Job Experience
-                    </th>
+                    </th> -->
+                    <th class="text-nowrap">Sanctioned Amount</th>
+                    <th class="text-nowrap">Disbursed Amount</th>
                     <th
                       *ngIf="
                         userDetails &&
@@ -1032,63 +1035,72 @@
                     >
                       Sourced By
                     </th>
-                    <th>Created Date</th>
+                    <!-- <th>Created Date</th> -->
+                    <th class="text-nowrap">Disbursal Date</th>
                     <th>Actions</th>
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-lead>
-                  <tr>
+                  <tr [pSelectableRow]="lead">
                     <td>
-                      <span class="table-column-data singleline" >{{
-                        lead.customId || '-'
+                      <span class="table-column-data singleline">{{
+                        lead.customId || "-"
                       }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'employed'">
-                      <span
-                        class="table-column-data singleline"
-                       
-                        >{{ lead.contactPerson ? (lead.contactPerson | capitalizeFirst): '-' }}</span
-                      >
+                      <span class="table-column-data singleline">{{
+                        lead.contactPerson
+                          ? (lead.contactPerson | capitalizeFirst)
+                          : "-"
+                      }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'self-employed'">
-                      <span
-                        class="table-column-data singleline"
-                       
-                        >{{ lead.businessName ? (lead.businessName | capitalizeFirst): '-' }}</span
-                      >
+                      <span class="table-column-data singleline">{{
+                        lead.businessName
+                          ? (lead.businessName | capitalizeFirst)
+                          : "-"
+                      }}</span>
                     </td>
-                    <td *ngIf="activeEmploymentStatus.name === 'employed'">
-                      <span
-                        class="table-column-data singleline"
-                        
-                        >{{ lead.designation ? (lead.designation | capitalizeFirst): '-' }}</span
-                      >
-                    </td>
-                    <td *ngIf="activeEmploymentStatus.name === 'self-employed'">
-                      <span
-                        class="table-column-data"
-                        
-                        >{{ lead.businessEntity ? (getEntityName(lead.businessEntity)) : '-' }}</span
-                      >
+                    <!-- <td *ngIf="activeEmploymentStatus.name === 'employed'">
+                      <span class="table-column-data singleline">{{
+                        lead.designation
+                          ? (lead.designation | capitalizeFirst)
+                          : "-"
+                      }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'self-employed'">
-                      <span
-                        class="table-column-data singleline"
-                        
-                        >{{ lead.contactPerson ? (lead.contactPerson | capitalizeFirst): '-' }}</span
-                      >
+                      <span class="table-column-data">{{
+                        lead.businessEntity
+                          ? getEntityName(lead.businessEntity)
+                          : "-"
+                      }}</span>
+                    </td>
+                    <td *ngIf="activeEmploymentStatus.name === 'self-employed'">
+                      <span class="table-column-data singleline">{{
+                        lead.contactPerson
+                          ? (lead.contactPerson | capitalizeFirst)
+                          : "-"
+                      }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'employed'">
                       <span class="table-column-data">{{
-                        lead.salary ? (lead.salary): '-'
+                        lead.salary ? lead.salary : "-"
                       }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'employed'">
-                      <span
-                        class="table-column-data"
-                        
-                        >{{ lead.jobExperience ? (lead.jobExperience): '-' }}</span
-                      >
+                      <span class="table-column-data">{{
+                        lead.jobExperience ? lead.jobExperience : "-"
+                      }}</span>
+                    </td> -->
+                    <td>
+                      <span class="table-column-data">{{
+                        lead.sanctionedAmount ? lead.sanctionedAmount : "-"
+                      }}</span>
+                    </td>
+                    <td>
+                      <span class="table-column-data">{{
+                        lead.disbursedAmount ? lead.disbursedAmount : "-"
+                      }}</span>
                     </td>
                     <td
                       *ngIf="
@@ -1097,46 +1109,56 @@
                         userDetails.userType != '3'
                       "
                     >
-                      <span
-                        class="table-column-data singleline"
-                        
-                        >{{ lead.sourcedByName ? (lead.sourcedByName | capitalizeFirst): '-' }}</span
-                      >
-                    </td>
-                    <td>
-                      <span class="table-column-data">{{
-                        lead.createdOn? (lead.createdOn | date : "mediumDate"): '-'
+                      <span class="table-column-data singleline">{{
+                        lead.sourcedByName
+                          ? (lead.sourcedByName | capitalizeFirst)
+                          : "-"
                       }}</span>
                     </td>
-
-                      <td>
-                  <div class="text-center">
-                    <div class="d-flex">
-                      <img
-                        alt="Disbursal Details"
-                        src="../../../assets/images/icons/disbursal.svg"
-                        width="24px"
-                        height="24px"
-                        class="me-2"
-                        (click)="
-                          disbursalDetails(lead); $event.stopPropagation()
-                        "
-                        pTooltip="Disbursal Details"
-                        tooltipPosition="top"
-                      />
-                      <img
-                        alt="Revenue Details"
-                        *ngIf="userDetails?.userType == 1"
-                        src="../../../assets/images/icons/revenue.svg"
-                        width="24px"
-                        height="24px"
-                        (click)="revenueDetails(lead); $event.stopPropagation()"
-                        pTooltip="Revenue"
-                        tooltipPosition="top"
-                      />
-                    </div>
-                  </div>
-                </td>
+                    <!-- <td>
+                      <span class="table-column-data">{{
+                        lead.createdOn
+                          ? (lead.createdOn | date : "mediumDate")
+                          : "-"
+                      }}</span>
+                    </td> -->
+                    <td>
+                      <span class="table-column-data">{{
+                        lead.disbursalDate
+                          ? (lead.disbursalDate | date : "mediumDate")
+                          : "-"
+                      }}</span>
+                    </td>
+                    <td (click)="$event.stopPropagation()">
+                      <div class="text-center">
+                        <div class="d-flex">
+                          <img
+                            alt="Disbursal Details"
+                            src="../../../assets/images/icons/disbursal.svg"
+                            width="24px"
+                            height="24px"
+                            class="me-2"
+                            (click)="
+                              disbursalDetails(lead); $event.stopPropagation()
+                            "
+                            pTooltip="Disbursal Details"
+                            tooltipPosition="top"
+                          />
+                          <img
+                            alt="Revenue Details"
+                            *ngIf="userDetails?.userType == 1"
+                            src="../../../assets/images/icons/revenue.svg"
+                            width="24px"
+                            height="24px"
+                            (click)="
+                              revenueDetails(lead); $event.stopPropagation()
+                            "
+                            pTooltip="Revenue"
+                            tooltipPosition="top"
+                          />
+                        </div>
+                      </div>
+                    </td>
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="emptymessage">

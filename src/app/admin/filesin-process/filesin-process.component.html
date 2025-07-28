@@ -5,31 +5,15 @@
         class="d-flex align-items-center justify-content-center pointer-cursor"
         (click)="goBack()"
       >
-        <!-- <span class="back-btn-icon me-2"
-          ><i class="pi pi-arrow-left fw-bold"></i
-        ></span> -->
-
         <span class="me-2 d-flex align-items-center">
           <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
         </span>
-        <!-- <span class="me-1">
-          <img
-            src="../../../assets/images/menu/filesinprocess.png"
-            alt="Default Image"
-            class=""
-            style="height: 35px; width: 40px"
-          />
-        </span> -->
         <b>
           <span class="back-btn-text">Files In Process</span>
         </b>
-        <!-- <span class="back-btn-text text-capitalize">Files In Process</span> -->
       </div>
     </div>
   </div>
-  <!-- <div class="bread-crumb">
-    <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
-  </div> -->
   <div class="text-capitalize m-2">
     <p-tabMenu
       [model]="items"
@@ -79,14 +63,6 @@
                     "
                     (keyup.enter)="filterWithBusinessName()"
                   />
-                  <!-- <button
-                type="button"
-                pButton
-                icon="pi pi-search"
-                class="p-button-primary"
-                [disabled]="!businessNameToSearch"
-                (click)="filterWithBusinessName()"
-              ></button> -->
                   <button
                     type="button"
                     pButton
@@ -538,6 +514,8 @@
                     ? loadLeadsforHome($event)
                     : loadLeadsforHomeself($event)
                 "
+                (onRowSelect)="viewLead($event)"
+                selectionMode="single"
                 dataKey="id"
                 [showCurrentPageReport]="true"
                 [rowsPerPageOptions]="[10, 25, 50]"
@@ -711,12 +689,13 @@
                     >
                       Sourced By
                     </th>
-                    <th class="text-nowrap">Created Date</th>
+                    <!-- <th class="text-nowrap">Created Date</th> -->
+                    <th class="text-nowrap">Login Date</th>
                     <th>Actions</th>
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-lead>
-                  <tr>
+                  <tr [pSelectableRow]="lead">
                     <td>
                       <span class="table-column-data" *ngIf="lead.customId">{{
                         lead.customId
@@ -789,13 +768,19 @@
                         >{{ lead.sourcedByName | capitalizeFirst }}</span
                       >
                     </td>
-                    <td>
+                    <!-- <td>
                       <span class="table-column-data" *ngIf="lead.createdOn">{{
                         lead.createdOn | date : "mediumDate"
                       }}</span>
-                    </td>
-
+                    </td> -->
                     <td>
+                      <span class="table-column-data">{{
+                        lead.loginDate
+                          ? (lead.loginDate | date : "mediumDate")
+                          : "-"
+                      }}</span>
+                    </td>
+                    <td (click)="$event.stopPropagation()">
                       <div class="text-center">
                         <div class="d-flex">
                           <img
@@ -869,6 +854,8 @@
                     ? loadLeadsforlap($event)
                     : loadLeadsforlapself($event)
                 "
+                (onRowSelect)="viewLead($event)"
+                selectionMode="single"
                 dataKey="id"
                 [showCurrentPageReport]="true"
                 [rowsPerPageOptions]="[10, 25, 50]"
@@ -1021,12 +1008,14 @@
                     >
                       Sourced By
                     </th>
-                    <th>Created Date</th>
+                    <!-- <th>Created Date</th> -->
+                    <th class="text-nowrap">Login Date</th>
+
                     <th>Actions</th>
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-lead>
-                  <tr>
+                  <tr [pSelectableRow]="lead">
                     <td>
                       <span class="table-column-data" *ngIf="lead.customId">{{
                         lead.customId
@@ -1092,13 +1081,19 @@
                         >{{ lead.sourcedByName | capitalizeFirst }}</span
                       >
                     </td>
-                    <td>
+                    <!-- <td>
                       <span class="table-column-data" *ngIf="lead.createdOn">{{
                         lead.createdOn | date : "mediumDate"
                       }}</span>
-                    </td>
-
+                    </td> -->
                     <td>
+                      <span class="table-column-data">{{
+                        lead.loginDate
+                          ? (lead.loginDate | date : "mediumDate")
+                          : "-"
+                      }}</span>
+                    </td>
+                    <td (click)="$event.stopPropagation()">
                       <div class="text-center">
                         <div class="d-flex">
                           <img

@@ -8,6 +8,7 @@ import { DateTimeProcessorService } from 'src/app/services/date-time-processor.s
 import { DialogService } from 'primeng/dynamicdialog';
 import { FileUploadComponent } from '../../file-upload/file-upload.component';
 import { projectConstantsLocal } from 'src/app/constants/project-constants';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-loanleaduploads',
@@ -25,6 +26,7 @@ export class LoanleaduploadsComponent implements OnInit {
   aadharNumber: any;
   coApplicantRelation: any;
   coApplicantName: any;
+  capabilities: any;
   cibilScore: any;
   companyName: any;
   panNumber: any;
@@ -53,6 +55,17 @@ export class LoanleaduploadsComponent implements OnInit {
     presentIncomeReturns: [{ filesData: [], links: [], uploadedFiles: [] }],
     pastIncomeReturns: [{ filesData: [], links: [], uploadedFiles: [] }],
     gstDetails: [{ filesData: [], links: [], uploadedFiles: [] }],
+    coApplicantCibilReport: [{ filesData: [], links: [], uploadedFiles: [] }],
+    partnerpanCard: [{ filesData: [], links: [], uploadedFiles: [] }],
+    partneraadharCard: [{ filesData: [], links: [], uploadedFiles: [] }],
+    partnerPhoto: [{ filesData: [], links: [], uploadedFiles: [] }],
+    partnervoterId: [{ filesData: [], links: [], uploadedFiles: [] }],
+    partnerCibilReport: [{ filesData: [], links: [], uploadedFiles: [] }],
+    directorCibilReport: [{ filesData: [], links: [], uploadedFiles: [] }],
+    directorpanCard: [{ filesData: [], links: [], uploadedFiles: [] }],
+    directoraadharCard: [{ filesData: [], links: [], uploadedFiles: [] }],
+    directorPhoto: [{ filesData: [], links: [], uploadedFiles: [] }],
+    directorvoterId: [{ filesData: [], links: [], uploadedFiles: [] }],
   };
   paySlips: any = [
     {
@@ -84,12 +97,38 @@ export class LoanleaduploadsComponent implements OnInit {
       otherDocuments: [],
     },
   ];
+  partnerCibil: any = [
+    {
+      name: '',
+      panNumber: '',
+      aadharNumber: '',
+      mobileNumber: '',
+      cibilScore: '',
+      partnerCibilReport: [],
+    },
+  ];
   financialReturns: any = [
     {
       pastIncomeTax: '',
       pastIncomeReturns: [],
       presentIncomeTax: '',
       presentIncomeReturns: [],
+    },
+  ];
+  partnerKycs: any = [
+    {
+      name: '',
+      panNumber: '',
+      aadharNumber: '',
+      mobileNumber: '',
+      partnerpanCard: [],
+      partneraadharCard: [],
+      partnerPhoto: [],
+      partnervoterId: [],
+      // partnerdocName1: '',
+      // partnerotherDocuments1: [],
+      // partnerdocName2: '',
+      // partnerotherDocuments2: [],
     },
   ];
   gstDetails: any = [
@@ -100,12 +139,49 @@ export class LoanleaduploadsComponent implements OnInit {
       gstDetails: [],
     },
   ];
+  directorsKycs: any = [
+    {
+      name: '',
+      panNumber: '',
+      aadharNumber: '',
+      mobileNumber: '',
+      directorpanCard: [],
+      directoraadharCard: [],
+      directorPhoto: [],
+      directorvoterId: [],
+      // directordocName1: '',
+      // directorotherDocuments1: [],
+      // directordocName2: '',
+      // directorotherDocuments2: [],
+    },
+  ];
+  coApplicantCibil: any = [
+    {
+      name: '',
+      panNumber: '',
+      aadharNumber: '',
+      mobileNumber: '',
+      cibilScore: '',
+      coApplicantCibilReport: [],
+    },
+  ];
+  directorCibil: any = [
+    {
+      name: '',
+      panNumber: '',
+      aadharNumber: '',
+      mobileNumber: '',
+      cibilScore: '',
+      directorCibilReport: [],
+    },
+  ];
   constructor(
     private location: Location,
     private toastService: ToastService,
     private activatedRoute: ActivatedRoute,
     private leadsService: LeadsService,
     private dialogService: DialogService,
+    private confirmationService: ConfirmationService,
     private localStorageService: LocalStorageService,
     private dateTimeProcessor: DateTimeProcessorService
   ) {
@@ -115,6 +191,7 @@ export class LoanleaduploadsComponent implements OnInit {
       this.getLoanLeadById(this.leadId).then((data) => {
         if (data) {
           this.setLeadDocumentsData();
+          this.updateItemsBasedOnCondition();
         }
       });
     }
@@ -133,10 +210,10 @@ export class LoanleaduploadsComponent implements OnInit {
     ];
   }
   ngOnInit() {
+    this.capabilities = this.leadsService.getUserRbac();
     const userDetails =
       this.localStorageService.getItemFromLocalStorage('userDetails');
     this.userDetails = userDetails.user;
-    this.updateItemsBasedOnCondition();
   }
   updateItemsBasedOnCondition() {
     const currentActiveName = this.activeItem?.name;
@@ -183,12 +260,292 @@ export class LoanleaduploadsComponent implements OnInit {
       { data: this.loanleads, displayProperty: loanDisplayProperty },
     ];
   }
+  addDirectorsCibilRow() {
+    let data = {
+      name: '',
+      panNumber: '',
+      aadharNumber: '',
+      mobileNumber: '',
+      cibilScore: '',
+      directorCibilReport: [],
+    };
+    let fileData = { filesData: [], links: [], uploadedFiles: [] };
+
+    this.directorCibil.push(data);
+    this.selectedFiles.directorCibilReport.push(fileData);
+  }
+  deleteDirectorsCibilRow(index) {
+    this.directorCibil.splice(index, 1);
+    this.selectedFiles.directorCibilReport.splice(index, 1);
+  }
+
+  saveDirectorsCibil() {
+    for (let index = 0; index < this.directorCibil.length; index++) {
+      this.directorCibil[index]['directorCibilReport'] = [];
+      if (
+        this.selectedFiles['directorCibilReport'][index] &&
+        this.selectedFiles['directorCibilReport'][index]['links']
+      ) {
+        for (
+          let i = 0;
+          i < this.selectedFiles['directorCibilReport'][index]['links'].length;
+          i++
+        ) {
+          this.directorCibil[index]['directorCibilReport'].push(
+            this.selectedFiles['directorCibilReport'][index]['links'][i]
+          );
+        }
+        for (
+          let i = 0;
+          i <
+          this.selectedFiles['directorCibilReport'][index]['uploadedFiles']
+            .length;
+          i++
+        ) {
+          this.directorCibil[index]['directorCibilReport'].push(
+            this.selectedFiles['directorCibilReport'][index]['uploadedFiles'][i]
+          );
+        }
+      }
+    }
+    let formData = {
+      directorCibil: this.directorCibil,
+    };
+    this.loading = true;
+    this.leadsService.addLoanLeadsDocumentData(this.leadId, formData).subscribe(
+      (data: any) => {
+        this.loading = false;
+        this.toastService.showSuccess('Directors  cibil Saved Successfully');
+        this.getLoanLeadById(this.leadId);
+      },
+      (error) => {
+        this.loading = false;
+        this.toastService.showError(error);
+      }
+    );
+  }
+  saveDirectorsKycs() {
+    for (let index = 0; index < this.directorsKycs.length; index++) {
+      this.directorsKycs[index]['directorpanCard'] = [];
+      this.directorsKycs[index]['directoraadharCard'] = [];
+      this.directorsKycs[index]['directorPhoto'] = [];
+      this.directorsKycs[index]['directorvoterId'] = [];
+      // this.directorsKycs[index]['directorotherDocuments1'] = [];
+      // this.directorsKycs[index]['directorotherDocuments2'] = [];
+      if (
+        this.selectedFiles['directorpanCard'][index] &&
+        this.selectedFiles['directorpanCard'][index]['links']
+      ) {
+        for (
+          let i = 0;
+          i < this.selectedFiles['directorpanCard'][index]['links'].length;
+          i++
+        ) {
+          this.directorsKycs[index]['directorpanCard'].push(
+            this.selectedFiles['directorpanCard'][index]['links'][i]
+          );
+        }
+        for (
+          let i = 0;
+          i <
+          this.selectedFiles['directorpanCard'][index]['uploadedFiles'].length;
+          i++
+        ) {
+          this.directorsKycs[index]['directorpanCard'].push(
+            this.selectedFiles['directorpanCard'][index]['uploadedFiles'][i]
+          );
+        }
+      }
+      if (
+        this.selectedFiles['directoraadharCard'][index] &&
+        this.selectedFiles['directoraadharCard'][index]['links']
+      ) {
+        for (
+          let i = 0;
+          i < this.selectedFiles['directoraadharCard'][index]['links'].length;
+          i++
+        ) {
+          this.directorsKycs[index]['directoraadharCard'].push(
+            this.selectedFiles['directoraadharCard'][index]['links'][i]
+          );
+        }
+        for (
+          let i = 0;
+          i <
+          this.selectedFiles['directoraadharCard'][index]['uploadedFiles']
+            .length;
+          i++
+        ) {
+          this.directorsKycs[index]['directoraadharCard'].push(
+            this.selectedFiles['directoraadharCard'][index]['uploadedFiles'][i]
+          );
+        }
+      }
+      if (
+        this.selectedFiles['directorPhoto'][index] &&
+        this.selectedFiles['directorPhoto'][index]['links']
+      ) {
+        for (
+          let i = 0;
+          i < this.selectedFiles['directorPhoto'][index]['links'].length;
+          i++
+        ) {
+          this.directorsKycs[index]['directorPhoto'].push(
+            this.selectedFiles['directorPhoto'][index]['links'][i]
+          );
+        }
+        for (
+          let i = 0;
+          i <
+          this.selectedFiles['directorPhoto'][index]['uploadedFiles'].length;
+          i++
+        ) {
+          this.directorsKycs[index]['directorPhoto'].push(
+            this.selectedFiles['directorPhoto'][index]['uploadedFiles'][i]
+          );
+        }
+      }
+      if (
+        this.selectedFiles['directorvoterId'][index] &&
+        this.selectedFiles['directorvoterId'][index]['links']
+      ) {
+        for (
+          let i = 0;
+          i < this.selectedFiles['directorvoterId'][index]['links'].length;
+          i++
+        ) {
+          this.directorsKycs[index]['directorvoterId'].push(
+            this.selectedFiles['directorvoterId'][index]['links'][i]
+          );
+        }
+        for (
+          let i = 0;
+          i <
+          this.selectedFiles['directorvoterId'][index]['uploadedFiles'].length;
+          i++
+        ) {
+          this.directorsKycs[index]['directorvoterId'].push(
+            this.selectedFiles['directorvoterId'][index]['uploadedFiles'][i]
+          );
+        }
+      }
+      // if (
+      //   this.selectedFiles['directorotherDocuments1'][index] &&
+      //   this.selectedFiles['directorotherDocuments1'][index]['links']
+      // ) {
+      //   for (
+      //     let i = 0;
+      //     i <
+      //     this.selectedFiles['directorotherDocuments1'][index]['links'].length;
+      //     i++
+      //   ) {
+      //     this.directorsKycs[index]['directorotherDocuments1'].push(
+      //       this.selectedFiles['directorotherDocuments1'][index]['links'][i]
+      //     );
+      //   }
+      //   for (
+      //     let i = 0;
+      //     i <
+      //     this.selectedFiles['directorotherDocuments1'][index]['uploadedFiles']
+      //       .length;
+      //     i++
+      //   ) {
+      //     this.directorsKycs[index]['directorotherDocuments1'].push(
+      //       this.selectedFiles['directorotherDocuments1'][index][
+      //       'uploadedFiles'
+      //       ][i]
+      //     );
+      //   }
+      // }
+      // if (
+      //   this.selectedFiles['directorotherDocuments2'][index] &&
+      //   this.selectedFiles['directorotherDocuments2'][index]['links']
+      // ) {
+      //   for (
+      //     let i = 0;
+      //     i <
+      //     this.selectedFiles['directorotherDocuments2'][index]['links'].length;
+      //     i++
+      //   ) {
+      //     this.directorsKycs[index]['directorotherDocuments2'].push(
+      //       this.selectedFiles['directorotherDocuments2'][index]['links'][i]
+      //     );
+      //   }
+      //   for (
+      //     let i = 0;
+      //     i <
+      //     this.selectedFiles['directorotherDocuments2'][index]['uploadedFiles']
+      //       .length;
+      //     i++
+      //   ) {
+      //     this.directorsKycs[index]['directorotherDocuments2'].push(
+      //       this.selectedFiles['directorotherDocuments2'][index][
+      //       'uploadedFiles'
+      //       ][i]
+      //     );
+      //   }
+      // }
+    }
+    let formData = {
+      directorsKycs: this.directorsKycs,
+    };
+    this.loading = true;
+    this.leadsService.addLoanLeadsDocumentData(this.leadId, formData).subscribe(
+      (data: any) => {
+        this.loading = false;
+        this.toastService.showSuccess('Directors kycs Saved Successfully');
+        this.getLoanLeadById(this.leadId);
+      },
+      (error) => {
+        this.loading = false;
+        this.toastService.showError(error);
+      }
+    );
+  }
+  deleteDirectorsKycsRow(index) {
+    this.directorsKycs.splice(index, 1);
+    this.selectedFiles.directorpanCard.splice(index, 1);
+    this.selectedFiles.directoraadharCard.splice(index, 1);
+    this.selectedFiles.directorPhoto.splice(index, 1);
+    this.selectedFiles.directorvoterId.splice(index, 1);
+    // this.selectedFiles.directorotherDocuments1.splice(index, 1);
+    // this.selectedFiles.directorotherDocuments2.splice(index, 1);
+  }
+  addDirectorsKycsRow() {
+    let data = {
+      name: '',
+      panNumber: '',
+      aadharNumber: '',
+      mobileNumber: '',
+      directorpanCard: [],
+      directoraadharCard: [],
+      directorPhoto: [],
+      directorvoterId: [],
+      // directordocName1: '',
+      // directorotherDocuments1: [],
+      // directordocName2: '',
+      // directorotherDocuments2: [],
+    };
+    let fileData = { filesData: [], links: [], uploadedFiles: [] };
+    let fileData1 = { filesData: [], links: [], uploadedFiles: [] };
+    let fileData2 = { filesData: [], links: [], uploadedFiles: [] };
+    let fileData3 = { filesData: [], links: [], uploadedFiles: [] };
+    let fileData4 = { filesData: [], links: [], uploadedFiles: [] };
+    let fileData5 = { filesData: [], links: [], uploadedFiles: [] };
+    this.directorsKycs.push(data);
+    this.selectedFiles.directorpanCard.push(fileData);
+    this.selectedFiles.directoraadharCard.push(fileData1);
+    this.selectedFiles.directorPhoto.push(fileData2);
+    this.selectedFiles.directorvoterId.push(fileData3);
+    // this.selectedFiles.directorotherDocuments1.push(fileData4);
+    // this.selectedFiles.directorotherDocuments2.push(fileData5);
+  }
   getLoanLeadById(leadId) {
     return new Promise((resolve, reject) => {
       this.leadsService.getLoanLeadById(leadId).subscribe(
         (response: any) => {
           this.loanleads = response;
-          // console.log(this.loanleads);
+          console.log(this.loanleads);
           this.updateItemsBasedOnCondition();
           this.updateDisplayedItems();
           resolve(true);
@@ -199,6 +556,83 @@ export class LoanleaduploadsComponent implements OnInit {
         }
       );
     });
+  }
+  addPartnersCibilRow() {
+    let data = {
+      name: '',
+      panNumber: '',
+      aadharNumber: '',
+      mobileNumber: '',
+      cibilScore: '',
+      partnerCibilReport: [],
+    };
+    let fileData = { filesData: [], links: [], uploadedFiles: [] };
+
+    this.partnerCibil.push(data);
+    this.selectedFiles.partnerCibilReport.push(fileData);
+  }
+  goToCibilScoreCheck() {
+    window.open('https://consumer.experian.in/ECV-OLN/signIn', '_blank');
+  }
+  confirmDelete(file, controlName, docIndex?, fileIndex?) {
+    // console.log('Before Deletion:', this.selectedFiles);
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete this File?',
+      header: 'Confirm Deletion',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.deleteFile(file, controlName, docIndex, fileIndex);
+      },
+    });
+  }
+  deleteFile(
+    fileUrl: string,
+    fileType: string,
+    docIndex?: number,
+    fileIndex?: number
+  ) {
+    const relativePath = fileUrl.substring(fileUrl.indexOf('/uploads'));
+    this.leadsService.deleteFile(relativePath).subscribe(
+      (response: any) => {
+        if (response.message === 'File deleted successfully.') {
+          // console.log('File deleted successfully.');
+          if (this.selectedFiles[fileType]?.uploadedFiles) {
+            this.selectedFiles[fileType].uploadedFiles = this.selectedFiles[
+              fileType
+            ].uploadedFiles.filter((f: string) => f !== fileUrl);
+            // console.log('After Deletion:', this.selectedFiles);
+          } else if (Array.isArray(this.selectedFiles[fileType])) {
+            if (docIndex !== undefined && fileIndex !== undefined) {
+              const document = this.selectedFiles[fileType][docIndex];
+              if (Array.isArray(document?.uploadedFiles)) {
+                document.uploadedFiles.splice(fileIndex, 1);
+                // console.log(
+                //   `After Deletion from ${fileType}[${docIndex}]:`,
+                //   document.uploadedFiles
+                // );
+              }
+              // console.log('After Deletion:', this.selectedFiles);
+            } else {
+              console.error('docIndex or fileIndex is missing.');
+            }
+          } else {
+            console.error(
+              'No uploaded files found for the specified file type.'
+            );
+          }
+          this.toastService.showSuccess('File Deleted Successfully');
+        } else {
+          console.error('Error deleting file:', response.error);
+          this.toastService.showError(response);
+        }
+      },
+      (error) => {
+        console.error('Error deleting file:', error);
+        this.toastService.showError(
+          'Failed to delete file. Please try again later.'
+        );
+      }
+    );
   }
   setLeadDocumentsData() {
     this.contactPerson = this.loanleads[0].contactPerson || '';
@@ -265,6 +699,29 @@ export class LoanleaduploadsComponent implements OnInit {
       });
     }
     if (
+      this.loanleads[0].coApplicantCibil &&
+      this.loanleads[0].coApplicantCibil.length > 0
+    ) {
+      this.coApplicantCibil = [];
+      this.selectedFiles['coApplicantCibilReport'] = [];
+      this.loanleads[0].coApplicantCibil.forEach((statement, index) => {
+        statement['name'] = statement['name'];
+        statement['panNumber'] = statement['panNumber'];
+        statement['aadharNumber'] = statement['aadharNumber'];
+        statement['mobileNumber'] = statement['mobileNumber'];
+        statement['cibilScore'] = statement['cibilScore'];
+
+        let fileData = {
+          filesData: [],
+          links: [],
+          uploadedFiles: statement['coApplicantCibilReport'],
+        };
+
+        this.selectedFiles['coApplicantCibilReport'].push(fileData);
+        this.coApplicantCibil.push(statement);
+      });
+    }
+    if (
       this.loanleads[0].bankStatements &&
       this.loanleads[0].bankStatements.length > 0
     ) {
@@ -280,6 +737,173 @@ export class LoanleaduploadsComponent implements OnInit {
         this.bankStatements.push(statement);
       });
     }
+    if (
+      this.loanleads[0].partnerCibil &&
+      this.loanleads[0].partnerCibil.length > 0
+    ) {
+      this.partnerCibil = [];
+      this.selectedFiles['partnerCibilReport'] = [];
+      this.loanleads[0].partnerCibil.forEach((statement, index) => {
+        statement['name'] = statement['name'];
+        statement['panNumber'] = statement['panNumber'];
+        statement['aadharNumber'] = statement['aadharNumber'];
+        statement['mobileNumber'] = statement['mobileNumber'];
+        statement['cibilScore'] = statement['cibilScore'];
+
+        let fileData = {
+          filesData: [],
+          links: [],
+          uploadedFiles: statement['partnerCibilReport'],
+        };
+
+        this.selectedFiles['partnerCibilReport'].push(fileData);
+        this.partnerCibil.push(statement);
+      });
+    }
+    if (
+      this.loanleads[0].directorsKycs &&
+      this.loanleads[0].directorsKycs.length > 0
+    ) {
+      this.directorsKycs = [];
+      this.selectedFiles['directorpanCard'] = [];
+      this.selectedFiles['directoraadharCard'] = [];
+      this.selectedFiles['directorPhoto'] = [];
+      this.selectedFiles['directorvoterId'] = [];
+      // this.selectedFiles['directorotherDocuments1'] = [];
+      // this.selectedFiles['directorotherDocuments2'] = [];
+
+      this.loanleads[0].directorsKycs.forEach((statement, index) => {
+        statement['name'] = statement['name'];
+        statement['panNumber'] = statement['panNumber'];
+        statement['aadharNumber'] = statement['aadharNumber'];
+        statement['mobileNumber'] = statement['mobileNumber'];
+        // statement['directordocName1'] = statement['directordocName1'];
+        // statement['directordocName2'] = statement['directordocName2'];
+
+        let fileData = {
+          filesData: [],
+          links: [],
+          uploadedFiles: statement['directorpanCard'],
+        };
+        let fileData1 = {
+          filesData: [],
+          links: [],
+          uploadedFiles: statement['directoraadharCard'],
+        };
+        let fileData2 = {
+          filesData: [],
+          links: [],
+          uploadedFiles: statement['directorPhoto'],
+        };
+        let fileData3 = {
+          filesData: [],
+          links: [],
+          uploadedFiles: statement['directorvoterId'],
+        };
+        // let fileData4 = {
+        //   filesData: [],
+        //   links: [],
+        //   uploadedFiles: statement['directorotherDocuments1'],
+        // };
+        // let fileData5 = {
+        //   filesData: [],
+        //   links: [],
+        //   uploadedFiles: statement['directorotherDocuments2'],
+        // };
+
+        this.selectedFiles['directorpanCard'].push(fileData);
+        this.selectedFiles['directoraadharCard'].push(fileData1);
+        this.selectedFiles['directorPhoto'].push(fileData2);
+        this.selectedFiles['directorvoterId'].push(fileData3);
+        // this.selectedFiles['directorotherDocuments1'].push(fileData4);
+        // this.selectedFiles['directorotherDocuments2'].push(fileData5);
+        this.directorsKycs.push(statement);
+      });
+    }
+    if (
+      this.loanleads[0].directorCibil &&
+      this.loanleads[0].directorCibil.length > 0
+    ) {
+      this.directorCibil = [];
+      this.selectedFiles['directorCibilReport'] = [];
+
+      this.loanleads[0].directorCibil.forEach((statement, index) => {
+        statement['name'] = statement['name'];
+        statement['panNumdirectorCibilReportber'] = statement['panNumber'];
+        statement['aadharNumber'] = statement['aadharNumber'];
+        statement['mobileNumber'] = statement['mobileNumber'];
+        statement['cibilScore'] = statement['cibilScore'];
+
+        let fileData = {
+          filesData: [],
+          links: [],
+          uploadedFiles: statement['directorCibilReport'],
+        };
+
+        this.selectedFiles['directorCibilReport'].push(fileData);
+        this.directorCibil.push(statement);
+      });
+    }
+    if (
+      this.loanleads[0].partnerKycs &&
+      this.loanleads[0].partnerKycs.length > 0
+    ) {
+      this.partnerKycs = [];
+      this.selectedFiles['partnerpanCard'] = [];
+      this.selectedFiles['partneraadharCard'] = [];
+      this.selectedFiles['partnerPhoto'] = [];
+      this.selectedFiles['partnervoterId'] = [];
+      // this.selectedFiles['partnerotherDocuments1'] = [];
+      // this.selectedFiles['partnerotherDocuments2'] = [];
+
+      this.loanleads[0].partnerKycs.forEach((statement, index) => {
+        statement['name'] = statement['name'];
+        statement['panNumber'] = statement['panNumber'];
+        statement['aadharNumber'] = statement['aadharNumber'];
+        statement['mobileNumber'] = statement['mobileNumber'];
+        // statement['partnerdocName1'] = statement['partnerdocName1'];
+        // statement['partnerdocName2'] = statement['partnerdocName2'];
+
+        let fileData = {
+          filesData: [],
+          links: [],
+          uploadedFiles: statement['partnerpanCard'],
+        };
+        let fileData1 = {
+          filesData: [],
+          links: [],
+          uploadedFiles: statement['partneraadharCard'],
+        };
+        let fileData2 = {
+          filesData: [],
+          links: [],
+          uploadedFiles: statement['partnerPhoto'],
+        };
+        let fileData3 = {
+          filesData: [],
+          links: [],
+          uploadedFiles: statement['partnervoterId'],
+        };
+        // let fileData4 = {
+        //   filesData: [],
+        //   links: [],
+        //   uploadedFiles: statement['partnerotherDocuments1'],
+        // };
+        // let fileData5 = {
+        //   filesData: [],
+        //   links: [],
+        //   uploadedFiles: statement['partnerotherDocuments2'],
+        // };
+        this.selectedFiles['partnerpanCard'].push(fileData);
+        this.selectedFiles['partneraadharCard'].push(fileData1);
+        this.selectedFiles['partnerPhoto'].push(fileData2);
+        this.selectedFiles['partnervoterId'].push(fileData3);
+        // this.selectedFiles['partnerotherDocuments1'].push(fileData4);
+        // this.selectedFiles['partnerotherDocuments2'].push(fileData5);
+        this.partnerKycs.push(statement);
+      });
+    }
+
     if (
       this.loanleads[0].existingLoans &&
       this.loanleads[0].existingLoans.length > 0
@@ -359,6 +983,36 @@ export class LoanleaduploadsComponent implements OnInit {
       });
     }
   }
+
+  addPartnersKycsRow() {
+    let data = {
+      name: '',
+      panNumber: '',
+      aadharNumber: '',
+      mobileNumber: '',
+      partnerpanCard: [],
+      partneraadharCard: [],
+      partnerPhoto: [],
+      partnervoterId: [],
+      // partnerdocName1: '',
+      // partnerotherDocuments1: [],
+      // partnerdocName2: '',
+      // partnerotherDocuments2: [],
+    };
+    let fileData = { filesData: [], links: [], uploadedFiles: [] };
+    let fileData1 = { filesData: [], links: [], uploadedFiles: [] };
+    let fileData2 = { filesData: [], links: [], uploadedFiles: [] };
+    let fileData3 = { filesData: [], links: [], uploadedFiles: [] };
+    let fileData4 = { filesData: [], links: [], uploadedFiles: [] };
+    let fileData5 = { filesData: [], links: [], uploadedFiles: [] };
+    this.partnerKycs.push(data);
+    this.selectedFiles.partnerpanCard.push(fileData);
+    this.selectedFiles.partneraadharCard.push(fileData1);
+    this.selectedFiles.partnerPhoto.push(fileData2);
+    this.selectedFiles.partnervoterId.push(fileData3);
+    // this.selectedFiles.partnerotherDocuments1.push(fileData4);
+    // this.selectedFiles.partnerotherDocuments2.push(fileData5);
+  }
   addPayslipsRow() {
     let data = {
       date: '',
@@ -368,6 +1022,184 @@ export class LoanleaduploadsComponent implements OnInit {
     let fileData = { filesData: [], links: [], uploadedFiles: [] };
     this.paySlips.push(data);
     this.selectedFiles.paySlips.push(fileData);
+  }
+  savePartnersKycs() {
+    for (let index = 0; index < this.partnerKycs.length; index++) {
+      this.partnerKycs[index]['partnerpanCard'] = [];
+      this.partnerKycs[index]['partneraadharCard'] = [];
+      this.partnerKycs[index]['partnerPhoto'] = [];
+      this.partnerKycs[index]['partnervoterId'] = [];
+      // this.partnerKycs[index]['partnerotherDocuments1'] = [];
+      // this.partnerKycs[index]['partnerotherDocuments2'] = [];
+      if (
+        this.selectedFiles['partnerpanCard'][index] &&
+        this.selectedFiles['partnerpanCard'][index]['links']
+      ) {
+        for (
+          let i = 0;
+          i < this.selectedFiles['partnerpanCard'][index]['links'].length;
+          i++
+        ) {
+          this.partnerKycs[index]['partnerpanCard'].push(
+            this.selectedFiles['partnerpanCard'][index]['links'][i]
+          );
+        }
+        for (
+          let i = 0;
+          i <
+          this.selectedFiles['partnerpanCard'][index]['uploadedFiles'].length;
+          i++
+        ) {
+          this.partnerKycs[index]['partnerpanCard'].push(
+            this.selectedFiles['partnerpanCard'][index]['uploadedFiles'][i]
+          );
+        }
+      }
+      if (
+        this.selectedFiles['partneraadharCard'][index] &&
+        this.selectedFiles['partneraadharCard'][index]['links']
+      ) {
+        for (
+          let i = 0;
+          i < this.selectedFiles['partneraadharCard'][index]['links'].length;
+          i++
+        ) {
+          this.partnerKycs[index]['partneraadharCard'].push(
+            this.selectedFiles['partneraadharCard'][index]['links'][i]
+          );
+        }
+        for (
+          let i = 0;
+          i <
+          this.selectedFiles['partneraadharCard'][index]['uploadedFiles']
+            .length;
+          i++
+        ) {
+          this.partnerKycs[index]['partneraadharCard'].push(
+            this.selectedFiles['partneraadharCard'][index]['uploadedFiles'][i]
+          );
+        }
+      }
+      if (
+        this.selectedFiles['partnerPhoto'][index] &&
+        this.selectedFiles['partnerPhoto'][index]['links']
+      ) {
+        for (
+          let i = 0;
+          i < this.selectedFiles['partnerPhoto'][index]['links'].length;
+          i++
+        ) {
+          this.partnerKycs[index]['partnerPhoto'].push(
+            this.selectedFiles['partnerPhoto'][index]['links'][i]
+          );
+        }
+        for (
+          let i = 0;
+          i < this.selectedFiles['partnerPhoto'][index]['uploadedFiles'].length;
+          i++
+        ) {
+          this.partnerKycs[index]['partnerPhoto'].push(
+            this.selectedFiles['partnerPhoto'][index]['uploadedFiles'][i]
+          );
+        }
+      }
+      if (
+        this.selectedFiles['partnervoterId'][index] &&
+        this.selectedFiles['partnervoterId'][index]['links']
+      ) {
+        for (
+          let i = 0;
+          i < this.selectedFiles['partnervoterId'][index]['links'].length;
+          i++
+        ) {
+          this.partnerKycs[index]['partnervoterId'].push(
+            this.selectedFiles['partnervoterId'][index]['links'][i]
+          );
+        }
+        for (
+          let i = 0;
+          i <
+          this.selectedFiles['partnervoterId'][index]['uploadedFiles'].length;
+          i++
+        ) {
+          this.partnerKycs[index]['partnervoterId'].push(
+            this.selectedFiles['partnervoterId'][index]['uploadedFiles'][i]
+          );
+        }
+      }
+      // if (
+      //   this.selectedFiles['partnerotherDocuments1'][index] &&
+      //   this.selectedFiles['partnerotherDocuments1'][index]['links']
+      // ) {
+      //   for (
+      //     let i = 0;
+      //     i <
+      //     this.selectedFiles['partnerotherDocuments1'][index]['links'].length;
+      //     i++
+      //   ) {
+      //     this.partnerKycs[index]['partnerotherDocuments1'].push(
+      //       this.selectedFiles['partnerotherDocuments1'][index]['links'][i]
+      //     );
+      //   }
+      //   for (
+      //     let i = 0;
+      //     i <
+      //     this.selectedFiles['partnerotherDocuments1'][index]['uploadedFiles']
+      //       .length;
+      //     i++
+      //   ) {
+      //     this.partnerKycs[index]['partnerotherDocuments1'].push(
+      //       this.selectedFiles['partnerotherDocuments1'][index][
+      //       'uploadedFiles'
+      //       ][i]
+      //     );
+      //   }
+      // }
+      // if (
+      //   this.selectedFiles['partnerotherDocuments2'][index] &&
+      //   this.selectedFiles['partnerotherDocuments2'][index]['links']
+      // ) {
+      //   for (
+      //     let i = 0;
+      //     i <
+      //     this.selectedFiles['partnerotherDocuments2'][index]['links'].length;
+      //     i++
+      //   ) {
+      //     this.partnerKycs[index]['partnerotherDocuments2'].push(
+      //       this.selectedFiles['partnerotherDocuments2'][index]['links'][i]
+      //     );
+      //   }
+      //   for (
+      //     let i = 0;
+      //     i <
+      //     this.selectedFiles['partnerotherDocuments2'][index]['uploadedFiles']
+      //       .length;
+      //     i++
+      //   ) {
+      //     this.partnerKycs[index]['partnerotherDocuments2'].push(
+      //       this.selectedFiles['partnerotherDocuments2'][index][
+      //       'uploadedFiles'
+      //       ][i]
+      //     );
+      //   }
+      // }
+    }
+    let formData = {
+      partnerKycs: this.partnerKycs,
+    };
+
+    this.loading = true;
+    this.leadsService.addLoanLeadsDocumentData(this.leadId, formData).subscribe(
+      (data: any) => {
+        this.loading = false;
+        this.toastService.showSuccess('Partners kycs Saved Successfully');
+        this.getLoanLeadById(this.leadId)
+      },
+      (error) => {
+        this.loading = false;
+        this.toastService.showError(error);
+      }
+    );
   }
   addBankStatementsRow() {
     let data = {
@@ -380,6 +1212,65 @@ export class LoanleaduploadsComponent implements OnInit {
     let fileData = { filesData: [], links: [], uploadedFiles: [] };
     this.bankStatements.push(data);
     this.selectedFiles.bankStatements.push(fileData);
+  }
+  savePartnersCibil() {
+    for (let index = 0; index < this.partnerCibil.length; index++) {
+      this.partnerCibil[index]['partnerCibilReport'] = [];
+
+      if (
+        this.selectedFiles['partnerCibilReport'][index] &&
+        this.selectedFiles['partnerCibilReport'][index]['links']
+      ) {
+        for (
+          let i = 0;
+          i < this.selectedFiles['partnerCibilReport'][index]['links'].length;
+          i++
+        ) {
+          this.partnerCibil[index]['partnerCibilReport'].push(
+            this.selectedFiles['partnerCibilReport'][index]['links'][i]
+          );
+        }
+        for (
+          let i = 0;
+          i <
+          this.selectedFiles['partnerCibilReport'][index]['uploadedFiles']
+            .length;
+          i++
+        ) {
+          this.partnerCibil[index]['partnerCibilReport'].push(
+            this.selectedFiles['partnerCibilReport'][index]['uploadedFiles'][i]
+          );
+        }
+      }
+    }
+    let formData = {
+      partnerCibil: this.partnerCibil,
+    };
+    this.loading = true;
+    this.leadsService.addLoanLeadsDocumentData(this.leadId, formData).subscribe(
+      (data: any) => {
+        this.loading = false;
+        this.toastService.showSuccess('Partners cibil Saved Successfully');
+        this.getLoanLeadById(this.leadId);
+      },
+      (error) => {
+        this.loading = false;
+        this.toastService.showError(error);
+      }
+    );
+  }
+  deletePartnersCibilRow(index) {
+    this.partnerCibil.splice(index, 1);
+    this.selectedFiles.partnerCibilReport.splice(index, 1);
+  }
+  deletePartnersKycsRow(index) {
+    this.partnerKycs.splice(index, 1);
+    this.selectedFiles.partnerpanCard.splice(index, 1);
+    this.selectedFiles.partneraadharCard.splice(index, 1);
+    this.selectedFiles.partnerPhoto.splice(index, 1);
+    this.selectedFiles.partnervoterId.splice(index, 1);
+    // this.selectedFiles.partnerotherDocuments1.splice(index, 1);
+    // this.selectedFiles.partnerotherDocuments2.splice(index, 1);
   }
   deletePayslipsRow(index) {
     this.paySlips.splice(index, 1);
@@ -643,11 +1534,44 @@ export class LoanleaduploadsComponent implements OnInit {
     );
   }
   saveCibilSection() {
+    for (let index = 0; index < this.coApplicantCibil.length; index++) {
+      this.coApplicantCibil[index]['coApplicantCibilReport'] = [];
+
+      if (
+        this.selectedFiles['coApplicantCibilReport'][index] &&
+        this.selectedFiles['coApplicantCibilReport'][index]['links']
+      ) {
+        for (
+          let i = 0;
+          i <
+          this.selectedFiles['coApplicantCibilReport'][index]['links'].length;
+          i++
+        ) {
+          this.coApplicantCibil[index]['coApplicantCibilReport'].push(
+            this.selectedFiles['coApplicantCibilReport'][index]['links'][i]
+          );
+        }
+        for (
+          let i = 0;
+          i <
+          this.selectedFiles['coApplicantCibilReport'][index]['uploadedFiles']
+            .length;
+          i++
+        ) {
+          this.coApplicantCibil[index]['coApplicantCibilReport'].push(
+            this.selectedFiles['coApplicantCibilReport'][index][
+            'uploadedFiles'
+            ][i]
+          );
+        }
+      }
+    }
     let formData = {
       contactPerson: this.contactPerson,
       panNumber: this.panNumber,
       aadharNumber: this.aadharNumber,
       cibilScore: this.cibilScore,
+      coApplicantCibil: this.coApplicantCibil,
     };
     formData['cibilReport'] = [];
     if (
