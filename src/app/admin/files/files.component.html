@@ -243,7 +243,7 @@
             <ng-template pTemplate="body" let-lead>
               <tr class="text-capitalize" [pSelectableRow]="lead">
                 <td>
-                  <span class="table-column-data">{{
+                  <span class="table-column-data singleline">{{
                     lead.customId ? lead.customId : "-"
                   }}</span>
                 </td>
@@ -652,14 +652,14 @@
                   }}</span>
                 </td>
                 <td>
-                  <span class="table-column-data">{{
+                  <span class="table-column-data singleline">{{
                     lead.contactPerson
                       ? (lead.contactPerson | capitalizeFirst)
                       : "-"
                   }}</span>
                 </td>
                 <td>
-                  <span class="table-column-data">{{
+                  <span class="table-column-data singleline">{{
                     lead.designation
                       ? (lead.designation | capitalizeFirst)
                       : "-"
@@ -668,13 +668,13 @@
 
                 <td>
                   <span class="table-column-data">{{
-                    lead.salary ? (lead.salary | capitalizeFirst) : "-"
+                    lead.salary ? (lead.salary) : "-"
                   }}</span>
                 </td>
                 <td>
                   <span class="table-column-data">{{
                     lead.jobExperience
-                      ? (lead.jobExperience | capitalizeFirst)
+                      ? (lead.jobExperience)
                       : "-"
                   }}</span>
                 </td>
@@ -685,7 +685,7 @@
                     userDetails.userType != '3'
                   "
                 >
-                  <span class="table-column-data">{{
+                  <span class="table-column-data singleline">{{
                     lead.sourcedByName
                       ? (lead.sourcedByName | capitalizeFirst)
                       : "-"
@@ -1020,26 +1020,26 @@
                 <ng-template pTemplate="body" let-lead>
                   <tr>
                     <td>
-                      <span class="table-column-data">{{
+                      <span class="table-column-data singleline">{{
                         lead.customId ? lead.customId : "-"
                       }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'employed'">
-                      <span class="table-column-data">{{
+                      <span class="table-column-data singleline">{{
                         lead.contactPerson
                           ? (lead.contactPerson | capitalizeFirst)
                           : "-"
                       }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'self-employed'">
-                      <span class="table-column-data">{{
+                      <span class="table-column-data singleline">{{
                         lead.businessName
                           ? (lead.businessName | capitalizeFirst)
                           : "-"
                       }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'employed'">
-                      <span class="table-column-data">{{
+                      <span class="table-column-data singleline">{{
                         lead.designation
                           ? (lead.designation | capitalizeFirst)
                           : "- "
@@ -1054,11 +1054,11 @@
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'employed'">
                       <span class="table-column-data">{{
-                        lead.salary ? (lead.salary | capitalizeFirst) : "-"
+                        lead.salary ? (lead.salary) : "-"
                       }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'self-employed'">
-                      <span class="table-column-data">{{
+                      <span class="table-column-data singleline">{{
                         lead.contactPerson
                           ? (lead.contactPerson | capitalizeFirst)
                           : "-"
@@ -1067,7 +1067,7 @@
                     <td *ngIf="activeEmploymentStatus.name === 'employed'">
                       <span class="table-column-data">{{
                         lead.jobExperience
-                          ? (lead.jobExperience | capitalizeFirst)
+                          ? (lead.jobExperience)
                           : "-"
                       }}</span>
                     </td>
@@ -1083,7 +1083,7 @@
                         userDetails.userType != '3'
                       "
                     >
-                      <span class="table-column-data">{{
+                      <span class="table-column-data singleline">{{
                         lead.sourcedByName
                           ? (lead.sourcedByName | capitalizeFirst)
                           : "-"
@@ -1425,26 +1425,26 @@
                 <ng-template pTemplate="body" let-lead>
                   <tr>
                     <td>
-                      <span class="table-column-data">{{
+                      <span class="table-column-data singleline">{{
                         lead.customId ? lead.customId : "-"
                       }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'employed'">
-                      <span class="table-column-data">{{
+                      <span class="table-column-data singleline">{{
                         lead.contactPerson
                           ? (lead.contactPerson | capitalizeFirst)
                           : "-"
                       }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'self-employed'">
-                      <span class="table-column-data">{{
+                      <span class="table-column-data singleline">{{
                         lead.businessName
                           ? (lead.businessName | capitalizeFirst)
                           : "-"
                       }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'employed'">
-                      <span class="table-column-data">{{
+                      <span class="table-column-data singleline">{{
                         lead.designation
                           ? (lead.designation | capitalizeFirst)
                           : "-"
@@ -1458,7 +1458,7 @@
                       }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'self-employed'">
-                      <span class="table-column-data">{{
+                      <span class="table-column-data singleline">{{
                         lead.contactPerson
                           ? (lead.contactPerson | capitalizeFirst)
                           : "-"
@@ -1466,13 +1466,13 @@
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'employed'">
                       <span class="table-column-data">{{
-                        lead.salary ? (lead.salary | capitalizeFirst) : "-"
+                        lead.salary ? (lead.salary) : "-"
                       }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'employed'">
                       <span class="table-column-data">{{
                         lead.jobExperience
-                          ? (lead.jobExperience | capitalizeFirst)
+                          ? (lead.jobExperience)
                           : "-"
                       }}</span>
                     </td>
@@ -1483,7 +1483,7 @@
                         userDetails.userType != '3'
                       "
                     >
-                      <span class="table-column-data">{{
+                      <span class="table-column-data singleline">{{
                         lead.sourcedByName
                           ? (lead.sourcedByName | capitalizeFirst)
                           : "-"
