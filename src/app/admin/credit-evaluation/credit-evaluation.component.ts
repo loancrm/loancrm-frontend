@@ -748,10 +748,15 @@ export class CreditEvaluationComponent implements OnInit {
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     api_filter['loanType-eq'] = 'personalLoan';
     api_filter['leadInternalStatus-eq'] = '5';
+    // if (this.SourcedByForPersonal && this.SourcedByForPersonal.name) {
+    //   if (this.SourcedByForPersonal.name == 'All') {
+    //     api_filter['leadInternalStatus-eq'] = '5';
+    //   } else {
+    //     api_filter['sourcedBy-eq'] = this.SourcedByForPersonal.id;
+    //   }
+    // }
     if (this.SourcedByForPersonal && this.SourcedByForPersonal.name) {
-      if (this.SourcedByForPersonal.name == 'All') {
-        api_filter['leadInternalStatus-eq'] = '5';
-      } else {
+      if (this.SourcedByForPersonal.name != 'All') {
         api_filter['sourcedBy-eq'] = this.SourcedByForPersonal.id;
       }
     }
@@ -805,10 +810,15 @@ export class CreditEvaluationComponent implements OnInit {
     api_filter['loanType-eq'] = 'homeLoan';
     api_filter['employmentStatus-eq'] = 'employed';
     api_filter['leadInternalStatus-eq'] = '5';
+    // if (this.SourcedByForHome && this.SourcedByForHome.name) {
+    //   if (this.SourcedByForHome.name == 'All') {
+    //     api_filter['leadInternalStatus-eq'] = '5';
+    //   } else {
+    //     api_filter['sourcedBy-eq'] = this.SourcedByForHome.id;
+    //   }
+    // }
     if (this.SourcedByForHome && this.SourcedByForHome.name) {
-      if (this.SourcedByForHome.name == 'All') {
-        api_filter['leadInternalStatus-eq'] = '5';
-      } else {
+      if (this.SourcedByForHome.name != 'All') {
         api_filter['sourcedBy-eq'] = this.SourcedByForHome.id;
       }
     }
@@ -848,10 +858,15 @@ export class CreditEvaluationComponent implements OnInit {
     api_filter['loanType-eq'] = 'homeLoan';
     api_filter['employmentStatus-eq'] = 'self-employed';
     api_filter['leadInternalStatus-eq'] = '5';
+    // if (this.SourcedByForHome && this.SourcedByForHome.name) {
+    //   if (this.SourcedByForHome.name == 'All') {
+    //     api_filter['leadInternalStatus-eq'] = '5';
+    //   } else {
+    //     api_filter['sourcedBy-eq'] = this.SourcedByForHome.id;
+    //   }
+    // }
     if (this.SourcedByForHome && this.SourcedByForHome.name) {
-      if (this.SourcedByForHome.name == 'All') {
-        api_filter['leadInternalStatus-eq'] = '5';
-      } else {
+      if (this.SourcedByForHome.name != 'All') {
         api_filter['sourcedBy-eq'] = this.SourcedByForHome.id;
       }
     }
@@ -891,10 +906,15 @@ export class CreditEvaluationComponent implements OnInit {
     api_filter['loanType-eq'] = 'lap';
     api_filter['employmentStatus-eq'] = 'employed';
     api_filter['leadInternalStatus-eq'] = '5';
+    // if (this.SourcedByForLap && this.SourcedByForLap.name) {
+    //   if (this.SourcedByForLap.name == 'All') {
+    //     api_filter['leadInternalStatus-eq'] = '5';
+    //   } else {
+    //     api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
+    //   }
+    // }
     if (this.SourcedByForLap && this.SourcedByForLap.name) {
-      if (this.SourcedByForLap.name == 'All') {
-        api_filter['leadInternalStatus-eq'] = '5';
-      } else {
+      if (this.SourcedByForLap.name != 'All') {
         api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
       }
     }
@@ -935,10 +955,15 @@ export class CreditEvaluationComponent implements OnInit {
     api_filter['loanType-eq'] = 'lap';
     api_filter['employmentStatus-eq'] = 'self-employed';
     api_filter['leadInternalStatus-eq'] = '5';
+    // if (this.SourcedByForLap && this.SourcedByForLap.name) {
+    //   if (this.SourcedByForLap.name == 'All') {
+    //     api_filter['leadInternalStatus-eq'] = '5';
+    //   } else {
+    //     api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
+    //   }
+    // }
     if (this.SourcedByForLap && this.SourcedByForLap.name) {
-      if (this.SourcedByForLap.name == 'All') {
-        api_filter['leadInternalStatus-eq'] = '5';
-      } else {
+      if (this.SourcedByForLap.name != 'All') {
         api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
       }
     }

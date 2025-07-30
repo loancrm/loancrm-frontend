@@ -87,14 +87,6 @@
                         "
                         (keyup.enter)="filterWithBusinessName()"
                       />
-                      <!-- <button
-                      type="button"
-                      pButton
-                      icon="pi pi-search"
-                      class="p-button-primary"
-                      [disabled]="!businessNameToSearch"
-                      (click)="filterWithBusinessName()"
-                    ></button> -->
                       <button
                         type="button"
                         pButton
@@ -255,15 +247,6 @@
                           [model]="actionItems(lead)"
                           [popup]="true"
                         ></p-menu>
-                        <!-- <button
-                        pButton
-                        type="button"
-                        class="custom-btn"
-                        (click)="menu.toggle($event)"
-                        icon="fas fa-bars"
-                        pTooltip="Actions"
-                        tooltipPosition="top"
-                      ></button> -->
 
                         <img
                           alt="Actions"
@@ -339,14 +322,6 @@
                         "
                         (keyup.enter)="filterWithBusinessNameforBank()"
                       />
-                      <!-- <button
-                      type="button"
-                      pButton
-                      icon="pi pi-search"
-                      class="p-button-primary"
-                      [disabled]="!businessNameToSearchforbank"
-                      (click)="filterWithBusinessNameforBank()"
-                    ></button> -->
                       <button
                         type="button"
                         pButton
@@ -379,14 +354,6 @@
                         "
                         (keyup.enter)="filterWithMobileNumberforbank()"
                       />
-                      <!-- <button
-                      type="button"
-                      pButton
-                      icon="pi pi-search"
-                      class="p-button-primary"
-                      [disabled]="!mobileNumberToSearchforbank"
-                      (click)="filterWithMobileNumberforbank()"
-                    ></button> -->
                       <button
                         type="button"
                         pButton
@@ -511,32 +478,6 @@
                   <td>
                     <div class="text-center">
                       <div class="d-flex">
-                        <!-- <p-menu
-                        appendTo="body"
-                        #bankmenu
-                        [model]="actionItemsforBank(lead)"
-                        [popup]="true"
-                      ></p-menu> -->
-                        <!-- <button
-                        pButton
-                        type="button"
-                        class="custom-btn"
-                        (click)="bankmenu.toggle($event)"
-                        icon="fas fa-bars"
-                        pTooltip="Actions"
-                        tooltipPosition="top"
-                      ></button> -->
-
-                        <!-- <img
-                        src="../../../assets/images/icons/menu.svg"
-                        width="24px"
-                        height="24px"
-                        pTooltip="Actions"
-                        tooltipPosition="top"
-                        (click)="
-                          bankmenu.toggle($event); $event.stopPropagation()
-                        "
-                      /> -->
                         <img
                           alt="Actions"
                           src="../../../assets/images/icons/rejects.svg"
@@ -612,14 +553,6 @@
                         "
                         (keyup.enter)="filterWithBusinessNameforCNI()"
                       />
-                      <!-- <button
-                      type="button"
-                      pButton
-                      icon="pi pi-search"
-                      class="p-button-primary"
-                      [disabled]="!businessNameToSearchcni"
-                      (click)="filterWithBusinessNameforCNI()"
-                    ></button> -->
                       <button
                         type="button"
                         pButton
@@ -652,14 +585,6 @@
                         "
                         (keyup.enter)="filterWithMobileNumbercni()"
                       />
-                      <!-- <button
-                      type="button"
-                      pButton
-                      icon="pi pi-search"
-                      class="p-button-primary"
-                      [disabled]="!mobileNumberToSearchcni"
-                      (click)="filterWithMobileNumbercni()"
-                    ></button> -->
                       <button
                         type="button"
                         pButton
@@ -790,31 +715,6 @@
                   <td>
                     <div class="text-center">
                       <div class="d-flex">
-                        <!-- <p-menu
-                        appendTo="body"
-                        #cnimenu
-                        [model]="actionItemsforCni(lead)"
-                        [popup]="true"
-                      ></p-menu> -->
-                        <!-- <button
-                        pButton
-                        type="button"
-                        class="custom-btn"
-                        (click)="cnimenu.toggle($event)"
-                        icon="fas fa-bars"
-                        pTooltip="Actions"
-                        tooltipPosition="top"
-                      ></button> -->
-                        <!-- <img
-                        src="../../../assets/images/icons/menu.svg"
-                        width="24px"
-                        height="24px"
-                        pTooltip="Actions"
-                        tooltipPosition="top"
-                        (click)="
-                          cnimenu.toggle($event); $event.stopPropagation()
-                        "
-                      /> -->
                         <img
                           alt="CNI Details"
                           src="../../../assets/images/icons/cni-files.svg"
@@ -851,7 +751,6 @@
 
         <div *ngIf="activeItem.name == 'personalLoan'">
           <div style="position: relative">
-            <!-- Absolutely positioned dropdown inside the table container -->
             <div
               class="position-absolute"
               style="
@@ -1046,15 +945,6 @@
                           [model]="plactionItems(lead)"
                           [popup]="true"
                         ></p-menu>
-                        <!-- <button
-                        pButton
-                        type="button"
-                        class="custom-btn"
-                        (click)="menu.toggle($event)"
-                        icon="fas fa-bars"
-                        pTooltip="Actions"
-                        tooltipPosition="top"
-                      ></button> -->
 
                         <img
                           alt="Actions"
@@ -1610,7 +1500,6 @@
                             </button>
                           </div>
                         </div>
-                        <!-- <div class="col-md-3 mt-2 no-padding-small"></div> -->
                         <div class="col-md-3 mt-2 no-padding-small text-right">
                           <div class="d-flex">
                             <div class="flex-grow-1 me-2">
@@ -1949,7 +1838,6 @@
                             </button>
                           </div>
                         </div>
-                        <!-- <div class="col-md-6 mt-2 no-padding-small"></div> -->
                         <div class="col-md-3 mt-2 no-padding-small text-right">
                           <div class="d-flex">
                             <div class="flex-grow-1 me-2">
@@ -2287,7 +2175,6 @@
                             </button>
                           </div>
                         </div>
-                        <!-- <div class="col-md-6 mt-2 no-padding-small"></div> -->
                         <div class="col-md-3 mt-2 no-padding-small text-right">
                           <div class="d-flex">
                             <div class="flex-grow-1 me-2">
@@ -2531,9 +2418,6 @@
                         <td (click)="$event.stopPropagation()">
                           <div class="text-center">
                             <div class="d-flex">
-
-
-
                               <img
                                 alt="CNI Details"
                                 src="../../../assets/images/icons/cni-files.svg"
@@ -2679,7 +2563,6 @@
                             </button>
                           </div>
                         </div>
-                        <!-- <div class="col-md-3 mt-2 no-padding-small"></div> -->
                         <div class="col-md-3 mt-2 no-padding-small text-right">
                           <div class="d-flex">
                             <div class="flex-grow-1 me-2">
@@ -2914,15 +2797,6 @@
                                 [model]="plactionItems(lead)"
                                 [popup]="true"
                               ></p-menu>
-                              <!-- <button
-                        pButton
-                        type="button"
-                        class="custom-btn"
-                        (click)="menu.toggle($event)"
-                        icon="fas fa-bars"
-                        pTooltip="Actions"
-                        tooltipPosition="top"
-                      ></button> -->
 
                               <img
                                 alt="Actions"
@@ -2969,9 +2843,8 @@
                         ? loadlapBankRejectedLeads($event)
                         : loadlapselfBankRejectedLeads($event)
                     "
-                              (onRowSelect)="viewLead($event)"
+                    (onRowSelect)="viewLead($event)"
                     selectionMode="single"
-
                     dataKey="id"
                     [showCurrentPageReport]="true"
                     [rowsPerPageOptions]="[10, 25, 50]"
@@ -3029,7 +2902,6 @@
                             </button>
                           </div>
                         </div>
-                        <!-- <div class="col-md-6 mt-2 no-padding-small"></div> -->
                         <div class="col-md-3 mt-2 no-padding-small text-right">
                           <div class="d-flex">
                             <div class="flex-grow-1 me-2">
@@ -3312,9 +3184,8 @@
                         ? loadlapCNIRejectedLeads($event)
                         : loadlapselfCNIRejectedLeads($event)
                     "
-                              (onRowSelect)="viewLead($event)"
+                    (onRowSelect)="viewLead($event)"
                     selectionMode="single"
-
                     dataKey="id"
                     [showCurrentPageReport]="true"
                     [rowsPerPageOptions]="[10, 25, 50]"
@@ -3368,7 +3239,6 @@
                             </button>
                           </div>
                         </div>
-                        <!-- <div class="col-md-6 mt-2 no-padding-small"></div> -->
                         <div class="col-md-3 mt-2 no-padding-small text-right">
                           <div class="d-flex">
                             <div class="flex-grow-1 me-2">

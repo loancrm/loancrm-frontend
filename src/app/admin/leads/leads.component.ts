@@ -1454,10 +1454,15 @@ export class LeadsComponent implements OnInit {
     } else {
       api_filter['leadInternalStatus-or'] = '1,2';
     }
+    // if (this.SourcedByForHome && this.SourcedByForHome.name) {
+    //   if (this.SourcedByForHome.name == 'All') {
+    //     api_filter['leadInternalStatus-or'] = '1,2';
+    //   } else {
+    //     api_filter['sourcedBy-eq'] = this.SourcedByForHome.id;
+    //   }
+    // }
     if (this.SourcedByForHome && this.SourcedByForHome.name) {
-      if (this.SourcedByForHome.name == 'All') {
-        api_filter['leadInternalStatus-or'] = '1,2';
-      } else {
+      if (this.SourcedByForHome.name != 'All') {
         api_filter['sourcedBy-eq'] = this.SourcedByForHome.id;
       }
     }
@@ -1536,10 +1541,15 @@ export class LeadsComponent implements OnInit {
     } else {
       api_filter['leadInternalStatus-or'] = '1,2';
     }
+    // if (this.SourcedByForLap && this.SourcedByForLap.name) {
+    //   if (this.SourcedByForLap.name == 'All') {
+    //     api_filter['leadInternalStatus-or'] = '1,2';
+    //   } else {
+    //     api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
+    //   }
+    // }
     if (this.SourcedByForLap && this.SourcedByForLap.name) {
-      if (this.SourcedByForLap.name == 'All') {
-        api_filter['leadInternalStatus-or'] = '1,2';
-      } else {
+      if (this.SourcedByForLap.name != 'All') {
         api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
       }
     }

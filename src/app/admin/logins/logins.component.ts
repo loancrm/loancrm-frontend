@@ -188,7 +188,7 @@ export class LoginsComponent {
     // console.log('loadLeadsFn', loadLeadsFn);
     loadLeadsFn.call(this, event);
     this.localStorageService.setItemOnLocalStorage(
-      'filesEmploymentStatusActiveItem',
+      'loginsEmploymentStatusActiveItem',
       event.name
     );
   }
@@ -316,6 +316,8 @@ export class LoginsComponent {
       'loginsActiveItem',
       event.name
     );
+    this.employmentStatus = this.getStatusItems();
+    this.loadEmploymentActiveItem();
   }
   statusChangeForHome(event) {
     this.loadLoanLeads('home');
@@ -386,7 +388,7 @@ export class LoginsComponent {
   loadEmploymentActiveItem() {
     const storedActiveItemName =
       this.localStorageService.getItemFromLocalStorage(
-        'filesEmploymentStatusActiveItem'
+        'loginsEmploymentStatusActiveItem'
       );
     if (storedActiveItemName) {
       this.activeEmploymentStatus =
@@ -968,11 +970,22 @@ export class LoginsComponent {
     return '';
   }
 
-  viewLead(event) {
-    const lead = event.data
-    this.routingService.handleRoute('leads/profile/' + lead.id, null);
-  }
+  // viewLead(event) {
+  //   const lead = event.data
+  //   this.routingService.handleRoute('leads/profile/' + lead.id, null);
+  // }
 
+  viewLead(event: any) {
+    console.log('Row clicked:', event.data);
+    const lead = event.data
+    const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+      this.routingService.handleRoute(`leads/profile/${loanType}/${lead.leadId}`, null);
+    } else {
+      // If no known loanType, omit status from the route
+      this.routingService.handleRoute(`leads/profile/${lead.id}`, null);
+    }
+  }
   // bankSelection(leadId) {
   //   this.routingService.handleRoute('logins/bankSelection/' + leadId, null);
   // }
@@ -1176,13 +1189,13 @@ export class LoginsComponent {
     api_filter['loanType-eq'] = 'lap';
     api_filter['employmentStatus-eq'] = 'employed';
     // api_filter['leadInternalStatus-or'] = '11,12';
-    if (this.SourcedByForLap && this.SourcedByForLap.name) {
-      if (this.SourcedByForLap.name == 'All') {
-        api_filter['leadInternalStatus-or'] = '11,12';
-      } else {
-        api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
-      }
-    }
+    // if (this.SourcedByForLap && this.SourcedByForLap.name) {
+    //   if (this.SourcedByForLap.name == 'All') {
+    //     api_filter['leadInternalStatus-or'] = '11,12';
+    //   } else {
+    //     api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
+    //   }
+    // }
     if (this.selectedlapLoginStatus) {
       // console.log(this.selectedlapLoginStatus)
       if (this.selectedlapLoginStatus && this.selectedlapLoginStatus.name) {
@@ -1191,6 +1204,11 @@ export class LoginsComponent {
         } else {
           api_filter['leadInternalStatus-or'] = '11,12';
         }
+      }
+    }
+    if (this.SourcedByForLap && this.SourcedByForLap.name) {
+      if (this.SourcedByForLap.name != 'All') {
+        api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
       }
     }
     // console.log(api_filter);
@@ -1239,10 +1257,15 @@ export class LoginsComponent {
         }
       }
     }
+    // if (this.SourcedByForLap && this.SourcedByForLap.name) {
+    //   if (this.SourcedByForLap.name == 'All') {
+    //     api_filter['leadInternalStatus-or'] = '11,12';
+    //   } else {
+    //     api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
+    //   }
+    // }
     if (this.SourcedByForLap && this.SourcedByForLap.name) {
-      if (this.SourcedByForLap.name == 'All') {
-        api_filter['leadInternalStatus-or'] = '11,12';
-      } else {
+      if (this.SourcedByForLap.name != 'All') {
         api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
       }
     }
@@ -1281,10 +1304,15 @@ export class LoginsComponent {
         }
       }
     }
+    // if (this.SourcedByForHome && this.SourcedByForHome.name) {
+    //   if (this.SourcedByForHome.name == 'All') {
+    //     api_filter['leadInternalStatus-or'] = '11,12';
+    //   } else {
+    //     api_filter['sourcedBy-eq'] = this.SourcedByForHome.id;
+    //   }
+    // }
     if (this.SourcedByForHome && this.SourcedByForHome.name) {
-      if (this.SourcedByForHome.name == 'All') {
-        api_filter['leadInternalStatus-or'] = '11,12';
-      } else {
+      if (this.SourcedByForHome.name != 'All') {
         api_filter['sourcedBy-eq'] = this.SourcedByForHome.id;
       }
     }
@@ -1392,7 +1420,6 @@ export class LoginsComponent {
       }
     }
     if (this.SourcedByForPersonal && this.SourcedByForPersonal.name) {
-      // console.log(this.SourcedByForPersonal)
       if (this.SourcedByForPersonal.name != 'All') {
         api_filter['sourcedBy-eq'] = this.SourcedByForPersonal.id;
       }

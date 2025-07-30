@@ -198,7 +198,7 @@ export class FilesinProcessComponent implements OnInit {
     // console.log(event);
     this.activeItem = event;
     this.localStorageService.setItemOnLocalStorage(
-      'loginsActiveItem',
+      'filesinprocessActiveItem',
       event.name
     );
     this.employmentStatus = this.getStatusItems();
@@ -206,7 +206,7 @@ export class FilesinProcessComponent implements OnInit {
   }
   loadActiveItem() {
     const storedActiveItemName =
-      this.localStorageService.getItemFromLocalStorage('loginsActiveItem');
+      this.localStorageService.getItemFromLocalStorage('filesinprocessActiveItem');
     if (storedActiveItemName) {
       this.activeItem =
         this.items.find((item) => item.name == storedActiveItemName) ||
@@ -742,10 +742,15 @@ export class FilesinProcessComponent implements OnInit {
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     api_filter['loanType-eq'] = 'personalLoan';
     api_filter['employmentStatus-eq'] = 'employed';
+    // if (this.SourcedByForPersonal && this.SourcedByForPersonal.name) {
+    //   if (this.SourcedByForPersonal.name == 'All') {
+    //     api_filter['leadInternalStatus-eq'] = '12';
+    //   } else {
+    //     api_filter['sourcedBy-eq'] = this.SourcedByForPersonal.id;
+    //   }
+    // }
     if (this.SourcedByForPersonal && this.SourcedByForPersonal.name) {
-      if (this.SourcedByForPersonal.name == 'All') {
-        api_filter['leadInternalStatus-eq'] = '12';
-      } else {
+      if (this.SourcedByForPersonal.name != 'All') {
         api_filter['sourcedBy-eq'] = this.SourcedByForPersonal.id;
       }
     }
@@ -835,14 +840,11 @@ export class FilesinProcessComponent implements OnInit {
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     api_filter['loanType-eq'] = 'homeLoan';
     api_filter['employmentStatus-eq'] = 'employed';
-    // api_filter['leadInternalStatus-eq'] = '3';
-    // if (this.SourcedByForHome && this.SourcedByForHome.name) {
-    //   if (this.SourcedByForHome.name == 'All') {
-    //     api_filter['leadInternalStatus-eq'] = '3';
-    //   } else {
-    //     api_filter['sourcedBy-eq'] = this.SourcedByForHome.id;
-    //   }
-    // }
+    if (this.SourcedByForHome && this.SourcedByForHome.name) {
+      if (this.SourcedByForHome.name != 'All') {
+        api_filter['sourcedBy-eq'] = this.SourcedByForHome.id;
+      }
+    }
     api_filter = Object.assign(
       {},
       api_filter,
@@ -868,14 +870,11 @@ export class FilesinProcessComponent implements OnInit {
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     api_filter['loanType-eq'] = 'homeLoan';
     api_filter['employmentStatus-eq'] = 'self-employed';
-    // api_filter['leadInternalStatus-eq'] = '3';
-    // if (this.SourcedByForHome && this.SourcedByForHome.name) {
-    //   if (this.SourcedByForHome.name == 'All') {
-    //     api_filter['leadInternalStatus-eq'] = '3';
-    //   } else {
-    //     api_filter['sourcedBy-eq'] = this.SourcedByForHome.id;
-    //   }
-    // }
+    if (this.SourcedByForHome && this.SourcedByForHome.name) {
+      if (this.SourcedByForHome.name != 'All') {
+        api_filter['sourcedBy-eq'] = this.SourcedByForHome.id;
+      }
+    }
     api_filter = Object.assign(
       {},
       api_filter,
@@ -901,15 +900,11 @@ export class FilesinProcessComponent implements OnInit {
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     api_filter['loanType-eq'] = 'lap';
     api_filter['employmentStatus-eq'] = 'employed';
-    // api_filter['leadInternalStatus-eq'] = '3';
-    // if (this.SourcedByForLap && this.SourcedByForLap.name) {
-    //   if (this.SourcedByForLap.name == 'All') {
-    //     api_filter['leadInternalStatus-eq'] = '3';
-    //   } else {
-    //     api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
-    //   }
-    // }
-    // console.log(api_filter);
+    if (this.SourcedByForLap && this.SourcedByForLap.name) {
+      if (this.SourcedByForLap.name != 'All') {
+        api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
+      }
+    }
     api_filter = Object.assign(
       {},
       api_filter,
@@ -944,14 +939,11 @@ export class FilesinProcessComponent implements OnInit {
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     api_filter['loanType-eq'] = 'lap';
     api_filter['employmentStatus-eq'] = 'self-employed';
-    // api_filter['leadInternalStatus-eq'] = '3';
-    // if (this.SourcedByForLap && this.SourcedByForLap.name) {
-    //   if (this.SourcedByForLap.name == 'All') {
-    //     api_filter['leadInternalStatus-eq'] = '3';
-    //   } else {
-    //     api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
-    //   }
-    // }
+    if (this.SourcedByForLap && this.SourcedByForLap.name) {
+      if (this.SourcedByForLap.name != 'All') {
+        api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
+      }
+    }
     api_filter = Object.assign(
       {},
       api_filter,

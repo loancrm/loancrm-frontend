@@ -8,6 +8,7 @@ import { RoutingService } from '../../services/routing-service';
 import { ActivatedRoute } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { DateTimeProcessorService } from 'src/app/services/date-time-processor.service';
 
 @Component({
   selector: 'app-files',
@@ -78,6 +79,7 @@ export class FilesComponent implements OnInit {
   totalActiveLeadsCount: any;
   totalStatusLeadsCountArray: any;
   selectedMonth: Date;
+  moment: any;
   version = projectConstantsLocal.VERSION_DESKTOP;
   businessEntities = projectConstantsLocal.BUSINESS_ENTITIES;
   fileStatus: any = projectConstantsLocal.FILE_STATUS;
@@ -86,10 +88,12 @@ export class FilesComponent implements OnInit {
     private leadsService: LeadsService,
     private toastService: ToastService,
     private location: Location,
+    private dateTimeProcessor: DateTimeProcessorService,
     private route: ActivatedRoute,
     private routingService: RoutingService,
     private localStorageService: LocalStorageService
   ) {
+    this.moment = this.dateTimeProcessor.getMoment();
     this.breadCrumbItems = [
       {
         label: ' Home',
@@ -288,12 +292,17 @@ export class FilesComponent implements OnInit {
   loadLeads(event) {
     this.currentTableEvent = event;
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
+    // if (this.selectedMonth) {
+    //   const startOfMonth = new Date(this.selectedMonth.getFullYear(), this.selectedMonth.getMonth(), 1);
+    //   const endOfMonth = new Date(this.selectedMonth.getFullYear(), this.selectedMonth.getMonth() + 1, 0);
+    //   api_filter['docs.createdOn-gte'] = startOfMonth.toISOString().split('T')[0]; // e.g. '2024-07-01'
+    //   api_filter['docs.createdOn-lte'] = endOfMonth.toISOString().split('T')[0];   // e.g. '2024-07-31'
+    // }
     if (this.selectedMonth) {
-      const startOfMonth = new Date(this.selectedMonth.getFullYear(), this.selectedMonth.getMonth(), 1);
-      const endOfMonth = new Date(this.selectedMonth.getFullYear(), this.selectedMonth.getMonth() + 1, 0);
-
-      api_filter['docs.createdOn-gte'] = startOfMonth.toISOString().split('T')[0]; // e.g. '2024-07-01'
-      api_filter['docs.createdOn-lte'] = endOfMonth.toISOString().split('T')[0];   // e.g. '2024-07-31'
+      const startOfMonth = this.moment(this.selectedMonth).startOf('month');
+      const endOfMonth = this.moment(this.selectedMonth).endOf('month');
+      api_filter['docs.createdOn-gte'] = startOfMonth.format('YYYY-MM-DD'); // e.g. '2025-07-01'
+      api_filter['docs.createdOn-lte'] = endOfMonth.format('YYYY-MM-DD');   // e.g. '2025-07-31'
     }
     // api_filter['leadInternalStatus-eq'] = 3;
     if (this.selectedFileStatus) {
@@ -1006,10 +1015,15 @@ export class FilesComponent implements OnInit {
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     api_filter['loanType-eq'] = 'personalLoan';
     api_filter['leadInternalStatus-eq'] = '3';
+    // if (this.SourcedByForPersonal && this.SourcedByForPersonal.name) {
+    //   if (this.SourcedByForPersonal.name == 'All') {
+    //     api_filter['leadInternalStatus-eq'] = '3';
+    //   } else {
+    //     api_filter['sourcedBy-eq'] = this.SourcedByForPersonal.id;
+    //   }
+    // }
     if (this.SourcedByForPersonal && this.SourcedByForPersonal.name) {
-      if (this.SourcedByForPersonal.name == 'All') {
-        api_filter['leadInternalStatus-eq'] = '3';
-      } else {
+      if (this.SourcedByForPersonal.name != 'All') {
         api_filter['sourcedBy-eq'] = this.SourcedByForPersonal.id;
       }
     }
@@ -1179,10 +1193,15 @@ export class FilesComponent implements OnInit {
     api_filter['loanType-eq'] = 'homeLoan';
     api_filter['employmentStatus-eq'] = 'employed';
     api_filter['leadInternalStatus-eq'] = '3';
+    // if (this.SourcedByForHome && this.SourcedByForHome.name) {
+    //   if (this.SourcedByForHome.name == 'All') {
+    //     api_filter['leadInternalStatus-eq'] = '3';
+    //   } else {
+    //     api_filter['sourcedBy-eq'] = this.SourcedByForHome.id;
+    //   }
+    // }
     if (this.SourcedByForHome && this.SourcedByForHome.name) {
-      if (this.SourcedByForHome.name == 'All') {
-        api_filter['leadInternalStatus-eq'] = '3';
-      } else {
+      if (this.SourcedByForHome.name != 'All') {
         api_filter['sourcedBy-eq'] = this.SourcedByForHome.id;
       }
     }
@@ -1223,10 +1242,15 @@ export class FilesComponent implements OnInit {
     api_filter['loanType-eq'] = 'homeLoan';
     api_filter['employmentStatus-eq'] = 'self-employed';
     api_filter['leadInternalStatus-eq'] = '3';
+    // if (this.SourcedByForHome && this.SourcedByForHome.name) {
+    //   if (this.SourcedByForHome.name == 'All') {
+    //     api_filter['leadInternalStatus-eq'] = '3';
+    //   } else {
+    //     api_filter['sourcedBy-eq'] = this.SourcedByForHome.id;
+    //   }
+    // }
     if (this.SourcedByForHome && this.SourcedByForHome.name) {
-      if (this.SourcedByForHome.name == 'All') {
-        api_filter['leadInternalStatus-eq'] = '3';
-      } else {
+      if (this.SourcedByForHome.name != 'All') {
         api_filter['sourcedBy-eq'] = this.SourcedByForHome.id;
       }
     }
@@ -1319,10 +1343,15 @@ export class FilesComponent implements OnInit {
     api_filter['loanType-eq'] = 'lap';
     api_filter['employmentStatus-eq'] = 'employed';
     api_filter['leadInternalStatus-eq'] = '3';
+    // if (this.SourcedByForLap && this.SourcedByForLap.name) {
+    //   if (this.SourcedByForLap.name == 'All') {
+    //     api_filter['leadInternalStatus-eq'] = '3';
+    //   } else {
+    //     api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
+    //   }
+    // }
     if (this.SourcedByForLap && this.SourcedByForLap.name) {
-      if (this.SourcedByForLap.name == 'All') {
-        api_filter['leadInternalStatus-eq'] = '3';
-      } else {
+      if (this.SourcedByForLap.name != 'All') {
         api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
       }
     }
@@ -1364,10 +1393,15 @@ export class FilesComponent implements OnInit {
     api_filter['loanType-eq'] = 'lap';
     api_filter['employmentStatus-eq'] = 'self-employed';
     api_filter['leadInternalStatus-eq'] = '3';
+    // if (this.SourcedByForLap && this.SourcedByForLap.name) {
+    //   if (this.SourcedByForLap.name == 'All') {
+    //     api_filter['leadInternalStatus-eq'] = '3';
+    //   } else {
+    //     api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
+    //   }
+    // }
     if (this.SourcedByForLap && this.SourcedByForLap.name) {
-      if (this.SourcedByForLap.name == 'All') {
-        api_filter['leadInternalStatus-eq'] = '3';
-      } else {
+      if (this.SourcedByForLap.name != 'All') {
         api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
       }
     }

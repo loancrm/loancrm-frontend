@@ -171,7 +171,7 @@ export class DisbursalsComponent implements OnInit {
     // console.log('loadLeadsFn', loadLeadsFn);
     loadLeadsFn.call(this, event);
     this.localStorageService.setItemOnLocalStorage(
-      'creditEmploymentStatusActiveItem',
+      'disbursalEmploymentStatusActiveItem',
       event.name
     );
   }
@@ -371,15 +371,17 @@ export class DisbursalsComponent implements OnInit {
   onActiveItemChange(event) {
     this.activeItem = event;
     this.localStorageService.setItemOnLocalStorage(
-      'loginsActiveItem',
+      'disbursalActiveItem',
       event.name
     );
+    this.employmentStatus = this.getStatusItems();
+    this.loadEmploymentActiveItem();
   }
 
   loadEmploymentActiveItem() {
     const storedActiveItemName =
       this.localStorageService.getItemFromLocalStorage(
-        'filesEmploymentStatusActiveItem'
+        'disbursalEmploymentStatusActiveItem'
       );
     if (storedActiveItemName) {
       this.activeEmploymentStatus =
@@ -392,7 +394,7 @@ export class DisbursalsComponent implements OnInit {
   }
   loadActiveItem() {
     const storedActiveItemName =
-      this.localStorageService.getItemFromLocalStorage('loginsActiveItem');
+      this.localStorageService.getItemFromLocalStorage('disbursalActiveItem');
     if (storedActiveItemName) {
       this.activeItem =
         this.items.find((item) => item.name == storedActiveItemName) ||
@@ -796,14 +798,11 @@ export class DisbursalsComponent implements OnInit {
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     api_filter['loanType-eq'] = 'lap';
     api_filter['employmentStatus-eq'] = 'self-employed';
-    // api_filter['leadInternalStatus-eq'] = '3';
-    // if (this.SourcedByForLap && this.SourcedByForLap.name) {
-    //   if (this.SourcedByForLap.name == 'All') {
-    //     api_filter['leadInternalStatus-eq'] = '3';
-    //   } else {
-    //     api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
-    //   }
-    // }
+    if (this.SourcedByForLap && this.SourcedByForLap.name) {
+      if (this.SourcedByForLap.name != 'All') {
+        api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
+      }
+    }
     api_filter = Object.assign(
       {},
       api_filter,
@@ -852,15 +851,11 @@ export class DisbursalsComponent implements OnInit {
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     api_filter['loanType-eq'] = 'lap';
     api_filter['employmentStatus-eq'] = 'employed';
-    // api_filter['leadInternalStatus-eq'] = '3';
-    // if (this.SourcedByForLap && this.SourcedByForLap.name) {
-    //   if (this.SourcedByForLap.name == 'All') {
-    //     api_filter['leadInternalStatus-eq'] = '3';
-    //   } else {
-    //     api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
-    //   }
-    // }
-    // console.log(api_filter);
+    if (this.SourcedByForLap && this.SourcedByForLap.name) {
+      if (this.SourcedByForLap.name != 'All') {
+        api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
+      }
+    }
     api_filter = Object.assign(
       {},
       api_filter,
@@ -895,15 +890,11 @@ export class DisbursalsComponent implements OnInit {
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     api_filter['loanType-eq'] = 'homeLoan';
     api_filter['employmentStatus-eq'] = 'self-employed';
-    // api_filter['leadInternalStatus-eq'] = '3';
-    // if (this.SourcedByForHome && this.SourcedByForHome.name) {
-    //   if (this.SourcedByForHome.name == 'All') {
-    //     api_filter['leadInternalStatus-eq'] = '3';
-    //   } else {
-    //     api_filter['sourcedBy-eq'] = this.SourcedByForHome.id;
-    //   }
-    // }
-    api_filter = Object.assign(
+    if (this.SourcedByForHome && this.SourcedByForHome.name) {
+      if (this.SourcedByForHome.name != 'All') {
+        api_filter['sourcedBy-eq'] = this.SourcedByForHome.id;
+      }
+    } api_filter = Object.assign(
       {},
       api_filter,
       this.searchFilterForHomeSelf,
@@ -938,14 +929,11 @@ export class DisbursalsComponent implements OnInit {
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     api_filter['loanType-eq'] = 'homeLoan';
     api_filter['employmentStatus-eq'] = 'employed';
-    // api_filter['leadInternalStatus-eq'] = '3';
-    // if (this.SourcedByForHome && this.SourcedByForHome.name) {
-    //   if (this.SourcedByForHome.name == 'All') {
-    //     api_filter['leadInternalStatus-eq'] = '3';
-    //   } else {
-    //     api_filter['sourcedBy-eq'] = this.SourcedByForHome.id;
-    //   }
-    // }
+    if (this.SourcedByForHome && this.SourcedByForHome.name) {
+      if (this.SourcedByForHome.name != 'All') {
+        api_filter['sourcedBy-eq'] = this.SourcedByForHome.id;
+      }
+    }
     api_filter = Object.assign(
       {},
       api_filter,
@@ -981,21 +969,17 @@ export class DisbursalsComponent implements OnInit {
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     api_filter['loanType-eq'] = 'personalLoan';
     api_filter['employmentStatus-eq'] = 'employed';
-    // if (this.SourcedByForPersonal && this.SourcedByForPersonal.name) {
-    //   if (this.SourcedByForPersonal.name == 'All') {
-    //     api_filter['leadInternalStatus-eq'] = '12';
-    //   } else {
-    //     api_filter['sourcedBy-eq'] = this.SourcedByForPersonal.id;
-    //   }
-    // }
+    if (this.SourcedByForPersonal && this.SourcedByForPersonal.name) {
+      if (this.SourcedByForPersonal.name != 'All') {
+        api_filter['sourcedBy-eq'] = this.SourcedByForPersonal.id;
+      }
+    }
     api_filter = Object.assign(
       {},
       api_filter,
       this.searchFilterPersonal,
       this.appliedFilterPersonal
     );
-
-    // console.log(api_filter);
     if (api_filter) {
       this.getpersonalloanLeadsCount(api_filter);
       this.getloanLeads(api_filter);
@@ -1130,7 +1114,6 @@ export class DisbursalsComponent implements OnInit {
     let searchFilterForLap = {
       'contactPerson-like': this.personNameToSearchForHome,
     };
-    // console.log(searchFilterForLap);
     this.applyFiltersLap(searchFilterForLap);
   }
   filterWithPersonNameForHome() {

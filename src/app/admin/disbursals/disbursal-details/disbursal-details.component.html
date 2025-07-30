@@ -64,7 +64,7 @@
                 {{ rowData.program ? rowData.program : "-" }}
               </td>
               <!-- <td>{{ rowData.bankName ? rowData.bankName : "-" }}</td> -->
-              <td>{{ getLenderName(rowData.bankId) }}</td>
+              <td>{{ getLenderName(rowData.bankId) | capitalizeFirst }}</td>
               <td>{{ rowData.processCode ? rowData.processCode : "-" }}</td>
               <td>
                 {{ rowData.productTypeName ? rowData.productTypeName : "-" }}

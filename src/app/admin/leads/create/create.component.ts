@@ -25,7 +25,7 @@ export class CreateComponent {
   breadCrumbItems: any = [];
   today: Date;
   leadForm: UntypedFormGroup;
-  submitted=false
+  submitted = false
   leadSources: any = [];
   leadUsers: any = [];
   files: File[];
@@ -133,18 +133,18 @@ export class CreateComponent {
     this.getLeadUsers();
   }
   preventInvalidKeys(event: KeyboardEvent) {
-  const invalidKeys = ['e', 'E', '+', '-', ' '];
-  if (invalidKeys.includes(event.key)) {
-    event.preventDefault();
+    const invalidKeys = ['e', 'E', '+', '-', ' '];
+    if (invalidKeys.includes(event.key)) {
+      event.preventDefault();
+    }
   }
-}
 
-preventInvalidPaste(event: ClipboardEvent) {
-  const paste = event.clipboardData?.getData('text') || '';
-  if (/[^0-9.]/.test(paste)) {
-    event.preventDefault();
+  preventInvalidPaste(event: ClipboardEvent) {
+    const paste = event.clipboardData?.getData('text') || '';
+    if (/[^0-9.]/.test(paste)) {
+      event.preventDefault();
+    }
   }
-}
 
   ngOnInit() {
     this.today = new Date();
@@ -254,8 +254,8 @@ preventInvalidPaste(event: ClipboardEvent) {
   }
 
   onSubmit(formValues) {
-    this.submitted=true;
-    if(this.leadForm.invalid){
+    this.submitted = true;
+    if (this.leadForm.invalid) {
       return
     }
     let formData: any = {

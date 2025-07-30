@@ -721,6 +721,8 @@ export class ApprovalsComponent implements OnInit {
       'approvalsActiveItem',
       event.name
     );
+    this.employmentStatus = this.getStatusItems();
+    this.loadEmploymentActiveItem();
   }
 
 
@@ -736,6 +738,11 @@ export class ApprovalsComponent implements OnInit {
     //     api_filter['sourcedBy-eq'] = this.SourcedByForPersonal.id;
     //   }
     // }
+    if (this.SourcedByForPersonal && this.SourcedByForPersonal.name) {
+      if (this.SourcedByForPersonal.name != 'All') {
+        api_filter['sourcedBy-eq'] = this.SourcedByForPersonal.id;
+      }
+    }
     api_filter = Object.assign(
       {},
       api_filter,
@@ -831,14 +838,11 @@ export class ApprovalsComponent implements OnInit {
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     api_filter['loanType-eq'] = 'homeLoan';
     api_filter['employmentStatus-eq'] = 'employed';
-    // api_filter['leadInternalStatus-eq'] = '3';
-    // if (this.SourcedByForHome && this.SourcedByForHome.name) {
-    //   if (this.SourcedByForHome.name == 'All') {
-    //     api_filter['leadInternalStatus-eq'] = '3';
-    //   } else {
-    //     api_filter['sourcedBy-eq'] = this.SourcedByForHome.id;
-    //   }
-    // }
+    if (this.SourcedByForHome && this.SourcedByForHome.name) {
+      if (this.SourcedByForHome.name != 'All') {
+        api_filter['sourcedBy-eq'] = this.SourcedByForHome.id;
+      }
+    }
     api_filter = Object.assign(
       {},
       api_filter,
@@ -874,14 +878,11 @@ export class ApprovalsComponent implements OnInit {
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     api_filter['loanType-eq'] = 'homeLoan';
     api_filter['employmentStatus-eq'] = 'self-employed';
-    // api_filter['leadInternalStatus-eq'] = '3';
-    // if (this.SourcedByForHome && this.SourcedByForHome.name) {
-    //   if (this.SourcedByForHome.name == 'All') {
-    //     api_filter['leadInternalStatus-eq'] = '3';
-    //   } else {
-    //     api_filter['sourcedBy-eq'] = this.SourcedByForHome.id;
-    //   }
-    // }
+    if (this.SourcedByForHome && this.SourcedByForHome.name) {
+      if (this.SourcedByForHome.name != 'All') {
+        api_filter['sourcedBy-eq'] = this.SourcedByForHome.id;
+      }
+    }
     api_filter = Object.assign(
       {},
       api_filter,
@@ -917,15 +918,12 @@ export class ApprovalsComponent implements OnInit {
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     api_filter['loanType-eq'] = 'lap';
     api_filter['employmentStatus-eq'] = 'employed';
-    // api_filter['leadInternalStatus-eq'] = '3';
-    // if (this.SourcedByForLap && this.SourcedByForLap.name) {
-    //   if (this.SourcedByForLap.name == 'All') {
-    //     api_filter['leadInternalStatus-eq'] = '3';
-    //   } else {
-    //     api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
-    //   }
-    // }
-    // console.log(api_filter);
+    if (this.SourcedByForLap && this.SourcedByForLap.name) {
+      if (this.SourcedByForLap.name != 'All') {
+        api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
+      }
+    }
+
     api_filter = Object.assign(
       {},
       api_filter,
@@ -968,6 +966,11 @@ export class ApprovalsComponent implements OnInit {
     //     api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
     //   }
     // }
+    if (this.SourcedByForLap && this.SourcedByForLap.name) {
+      if (this.SourcedByForLap.name != 'All') {
+        api_filter['sourcedBy-eq'] = this.SourcedByForLap.id;
+      }
+    }
     api_filter = Object.assign(
       {},
       api_filter,
