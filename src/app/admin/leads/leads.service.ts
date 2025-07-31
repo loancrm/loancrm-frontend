@@ -242,6 +242,10 @@ export class LeadsService {
     const url = 'leads/lead-data/' + leadId;
     return this.serviceMeta.httpGet(url, null, filter);
   }
+  getAllLoanLeadData(leadId, filter = {}) {
+  const url = 'loanleads/getallloandata/' + leadId;
+  return this.serviceMeta.httpGet(url, null, filter);
+  }
   getloanLeads(filter = {}) {
     const url = 'loanleads';
     return this.serviceMeta.httpGet(url, null, filter);

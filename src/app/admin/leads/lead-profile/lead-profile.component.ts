@@ -17,10 +17,10 @@ export class LeadProfileComponent implements OnInit {
   displayedItems: any = [];
   loading: boolean = false;
   leadId: string | null = null;
-  // leads: any = null;
   leadsData: any;
   expandedRows: { [key: string]: boolean } = {};
-  loanleads: any = null;
+  loanType: string = '';
+  employmentStatus: string = '';
   leadUsers: any = [];
   isDialogVisible = false;
   selectLender: any = null;
@@ -34,6 +34,7 @@ export class LeadProfileComponent implements OnInit {
   leadInternalStatusList: any = projectConstantsLocal.LEAD_INTERNAL_STATUS;
   businessEntities: any = projectConstantsLocal.BUSINESS_ENTITIES;
   timelineEvents: { date: Date | null; title: string; image: string; }[];
+
   constructor(
     private route: ActivatedRoute,
     private leadsService: LeadsService,
@@ -47,14 +48,7 @@ export class LeadProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.leadId = this.route.snapshot.paramMap.get('id');
-    // if (this.leadId) {
-    //   this.getAllLeadData(this.leadId)
-    //   // this.getLeadById(this.leadId);
-    //   this.getLoanLeadById(this.leadId);
-    // }
-    const userDetails =
-      this.localStorageService.getItemFromLocalStorage('userDetails');
+    const userDetails = this.localStorageService.getItemFromLocalStorage('userDetails');
     this.userDetails = userDetails.user;
     this.leadId = this.route.snapshot.paramMap.get('id');
     const status = this.route.snapshot.paramMap.get('status');
@@ -64,7 +58,7 @@ export class LeadProfileComponent implements OnInit {
       } else {
         const validStatuses = ['personalLoan', 'homeLoan', 'lap'];
         if (validStatuses.includes(status)) {
-          this.getLoanLeadById(this.leadId);
+          this.getAllLoanLeadData(this.leadId);
         } else {
           console.warn('Unknown status:', status);
           this.getAllLeadData(this.leadId);
@@ -87,6 +81,70 @@ export class LeadProfileComponent implements OnInit {
     this.getLeadUsers();
     this.getLeadSourcesvalues();
   }
+
+  getAllLeadData(leadId: string) {
+    this.loading = true;
+    this.leadsService.getAllLeadData(leadId).subscribe(
+      (response) => {
+        this.leadsData = response;
+        // console.log(this.leadsData);
+        this.loanType = (this.leadsData?.leadData?.loanType || '').toLowerCase();
+        this.employmentStatus = (this.leadsData?.leadData?.employmentStatus || '').toLowerCase();
+        this.updateDisplayedItems();
+        this.setTimelineDates();
+        this.loading = false;
+      },
+      (error: any) => {
+        this.loading = false;
+        this.toastService.showError(error);
+      }
+    );
+  }
+
+  getAllLoanLeadData(leadId: string) {
+    this.loading = true;
+    this.leadsService.getAllLoanLeadData(leadId).subscribe(
+      (response) => {
+        this.leadsData = response;
+        this.leadsData.documents = this.leadsData.documents || {}; 
+        // console.log(this.leadsData);
+        // console.log('Lead Status:', this.leadsData.leadStatusName);
+        // console.log('Lead Internal Status:', this.leadsData.leadData?.leadInternalStatus);
+        this.loanType = (this.leadsData?.leadData?.loanType || '').toLowerCase();
+        this.employmentStatus = (this.leadsData?.leadData?.employmentStatus || '').toLowerCase();
+        this.updateDisplayedItems();
+        this.setTimelineDates();
+        this.loading = false;
+      },
+      (error: any) => {
+        this.loading = false;
+        this.toastService.showError(error);
+      }
+    );
+  }
+
+  isBusinessView(): boolean {
+  return (
+    (this.loanType === 'homeloan' && this.employmentStatus === 'self-employed') ||
+    (this.loanType === 'lap' && this.employmentStatus === 'self-employed') ||
+    (!['personalloan', 'homeloan', 'lap'].includes(this.loanType))
+  );
+}
+
+isPersonalView(): boolean {
+  return (
+    (this.loanType === 'personalloan' && this.employmentStatus === 'employed') ||
+    (this.loanType === 'homeloan' && this.employmentStatus === 'employed') ||
+    (this.loanType === 'lap' && this.employmentStatus === 'employed')
+  );
+}
+
+isProprietorPersonal(): boolean {
+ return ['personalloan', 'homeloan', 'lap'].includes(this.loanType) &&
+         this.employmentStatus === 'employed';
+}
+
+
   getMaskedPhone(phone: any) {
     return this.leadsService.maskPhoneNumber(phone);
   }
@@ -106,22 +164,59 @@ export class LeadProfileComponent implements OnInit {
   toggleRow(index: number | string): void {
     this.expandedRows[index] = !this.expandedRows[index];
   }
-  getAllLeadData(leadId: string) {
-    this.loading = true;
-    this.leadsService.getAllLeadData(leadId).subscribe(
-      (response) => {
-        this.leadsData = response;
-        // console.log('leads full data:', this.leadsData);
-        this.updateDisplayedItems();
-        this.setTimelineDates();
-        this.loading = false; // Ensure loading is set to false after data is processed
-      },
-      (error: any) => {
-        this.loading = false;
-        this.toastService.showError(error);
-      }
-    );
-  }
+  // getAllLeadData(leadId: string) {
+  //   this.loading = true;
+  //   this.leadsService.getAllLeadData(leadId).subscribe(
+  //     (response) => {
+  //       this.leadsData = response;
+  //       this.loanType = (this.leadsData?.leadData?.loanType || '').toLowerCase();
+  //       this.employmentStatus = (this.leadsData?.leadData?.employmentStatus || '').toLowerCase();
+
+  //       // console.log(this.leadsData);
+        
+  //       // console.log('leads full data:', this.leadsData);
+  //       this.updateDisplayedItems();
+  //       this.setTimelineDates();
+  //       this.loading = false; // Ensure loading is set to false after data is processed
+  //     },
+  //     (error: any) => {
+  //       this.loading = false;
+  //       this.toastService.showError(error);
+  //     }
+  //   );
+  // }
+  // getAllLoanLeadData(leadId: string) {
+  //   this.loading = true;
+  //   this.leadsService.getAllLoanLeadData(leadId).subscribe(
+  //     (response) => {
+  //       this.leadsData = response;
+        
+  //       // console.log('loanleads full data:', this.loanleads);
+  //       console.log(this.leadsData.leadData);
+  //       // console.log('loanleads full data:', this.loanleads.logins);
+  //       // console.log("loanleads.logins length:", this.loanleads?.logins?.length);  // ✅ Ensure array exists
+
+  //       // console.log(this.loanleads.leaData.logins);
+  //       // console.log(this.loanleads.leadData.loanType);
+  //       // console.log(this.loanleads.leadData.employmentStatus);
+  //       // console.log(this.loanleads.leadData.salary);
+  //       // console.log(this.loanleads.leadData.sanctionedAmount);
+  //       // console.log(this.loanleads.leadData.logins);
+        
+        
+
+  
+  //       this.updateDisplayedItems();
+  //       this.setTimelineDates();
+  //       this.loading = false; // Ensure loading is set to false after data is processed
+  //     },
+  //     (error: any) => {
+  //       this.loading = false;
+  //       this.toastService.showError(error);
+  //     }
+  //   );
+  // }
+
   saveRemarks(newRemark: string) {
     this.isEditingRemarks = false;
     const leadId = this.leadsData.leadData.id
@@ -151,8 +246,11 @@ export class LeadProfileComponent implements OnInit {
   }
 
   convertToLakhsOrCrores(amount: number): string {
+    // console.log(amount);
+    
     if (amount >= 10000000) {
       const crores = amount / 10000000;
+
       return crores % 1 === 0
         ? crores.toFixed(0) + ' Cr'
         : crores.toFixed(2) + ' Cr';
@@ -164,6 +262,7 @@ export class LeadProfileComponent implements OnInit {
     } else {
       return amount % 1 === 0 ? amount.toFixed(0) : amount.toString();
     }
+  
   }
   setTimelineDates(): void {
     const baseTimeline = [
@@ -226,7 +325,7 @@ export class LeadProfileComponent implements OnInit {
     this.loading = true;
     this.leadsService.getLoanLeadById(id).subscribe(
       (response) => {
-        this.loanleads = response[0];
+        this.leadsData = response[0];
         // console.log('loanleads', this.loanleads);
         this.updateDisplayedItems();
         this.loading = false;
@@ -237,16 +336,38 @@ export class LeadProfileComponent implements OnInit {
       }
     );
   }
-  updateDisplayedItems() {
-    const loanDisplayProperty =
-      this.loanleads && this.loanleads?.employmentStatus === 'employed'
-        ? 'contactPerson'
-        : 'businessName';
+  // updateDisplayedItems() {
+  //   const loanDisplayProperty =
+  //     this.leadsData && this.leadsData?.employmentStatus === 'employed'
+  //       ? 'contactPerson'
+  //       : 'businessName';
+  //   this.displayedItems = [
+  //     { data: this.leadsData?.leadData, displayProperty: 'businessName', image: "assets/images/profile/office.png", },
+  //     { data: this.leadsData, displayProperty: loanDisplayProperty, image: "assets/images/profile/profile.png" },
+  //   ];
+  // }
+ updateDisplayedItems() {
+  if (this.isBusinessView()) {
     this.displayedItems = [
-      { data: this.leadsData?.leadData, displayProperty: 'businessName', image: "assets/images/profile/office.png", },
-      { data: this.loanleads, displayProperty: loanDisplayProperty, image: "assets/images/profile/profile.png" },
+      {
+        data: this.leadsData?.leadData,
+        displayProperty: 'businessName',
+        image: 'assets/images/profile/office.png'
+      }
     ];
+  } else if (this.isPersonalView()) {
+    this.displayedItems = [
+      {
+        data: this.leadsData?.leadData,
+        displayProperty: 'contactPerson',
+        image: 'assets/images/profile/profile.png'
+      }
+    ];
+  } else {
+    this.displayedItems = [];
   }
+}
+
   getSourceName(userId) {
     if (this.leadUsers && this.leadUsers.length > 0) {
       let leadUserName = this.leadUsers.filter(
