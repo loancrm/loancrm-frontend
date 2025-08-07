@@ -135,7 +135,7 @@ const routes: Routes = [
             (m) => m.DisbursalsModule
           ),
       },
-       {
+      {
         path: 'bsanalyzer',
         loadChildren: () =>
           import('./bsanalyzer/bsanalyzer.module').then((m) => m.BsanalyzerModule),
