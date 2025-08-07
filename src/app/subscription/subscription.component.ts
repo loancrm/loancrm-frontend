@@ -118,7 +118,7 @@ export class SubscriptionComponent implements OnInit {
       key: projectConstantsLocal.RAZORPAY_KEY_ID,
       amount: order.amount,
       currency: 'INR',
-      name: 'LOANCRM',
+      name: 'MYLOANCRM',
       description: plan.plan_name,
       order_id: order.id,
       handler: (response: any) => this.verifyPayment(response, plan),

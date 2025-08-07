@@ -243,8 +243,8 @@ export class LeadsService {
     return this.serviceMeta.httpGet(url, null, filter);
   }
   getAllLoanLeadData(leadId, filter = {}) {
-  const url = 'loanleads/getallloandata/' + leadId;
-  return this.serviceMeta.httpGet(url, null, filter);
+    const url = 'loanleads/getallloandata/' + leadId;
+    return this.serviceMeta.httpGet(url, null, filter);
   }
   getloanLeads(filter = {}) {
     const url = 'loanleads';
@@ -883,7 +883,15 @@ export class LeadsService {
     const url = `https://files.loancrm.org/files?type=${type}&leadId=${leadId}&accountId=${accountId}`;
     return this.serviceMeta.httpPost(url, data);
   }
-
+  // downloadZip(leadId: string, accountId: string) {
+  //   const url = `https://files.loancrm.org/files?accountId=${accountId}&leadId=${leadId}&downloadZip=true`;
+  //   return this.serviceMeta.httpGet(url, { responseType: 'blob' });
+  // }
+  downloadZip(leadId: string, accountId: string) {
+    const url = `hrttps://files.loancrm.org/files?accountId=${accountId}&leadId=${leadId}&downloadZip=true`;
+    // const url = `hrttps://files.myloancrm.com/files?accountId=${accountId}&leadId=${leadId}&downloadZip=true`;
+    return this.http.get(url, { responseType: 'blob' }); // bypassing ServiceMeta
+  }
   deleteFile(filePath: string) {
     // console.log(filePath);
     // const url = `https://files.thefintalk.in/files?file_path=${encodeURIComponent(

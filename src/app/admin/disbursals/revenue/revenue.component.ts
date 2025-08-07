@@ -13,6 +13,8 @@ import { RoutingService } from '../../../services/routing-service';
 })
 export class RevenueComponent implements OnInit {
   leads: any = null;
+  bankMap = new Map<number, string>();
+  banks: any = [];
   loading: any;
   totalRevenueValue: number = 0;
   leadId: string | null = null;
@@ -42,6 +44,7 @@ export class RevenueComponent implements OnInit {
       },
       { label: 'Revenue Details' },
     ];
+    this.getBankers();
   }
   ngOnInit(): void {
     this.leadId = this.route.snapshot.paramMap.get('id');
@@ -94,6 +97,25 @@ export class RevenueComponent implements OnInit {
       // { data: this.leads[0], displayProperty: 'businessName' },
       { data: this.leads[0], displayProperty: loanDisplayProperty },
     ];
+  }
+  getBankers(filter = {}) {
+    this.loading = true;
+    this.leadsService.getBankers(filter).subscribe(
+      (response: any) => {
+        this.banks = [{ name: 'All' }, ...response];
+        this.bankMap.clear();
+        for (const bank of response) {
+          if (bank.id && bank.name) {
+            this.bankMap.set(bank.id, bank.name);
+          }
+        }
+        this.loading = false;
+      },
+      (error: any) => {
+        this.loading = false;
+        this.toastService.showError(error);
+      }
+    );
   }
   getDisbursalsDetailsById(leadId) {
     this.loading = true;
@@ -161,5 +183,8 @@ export class RevenueComponent implements OnInit {
         this.toastService.showError(error);
       }
     );
+  }
+  getLenderName(bankId: number): string {
+    return this.bankMap.get(bankId) || '';
   }
 }

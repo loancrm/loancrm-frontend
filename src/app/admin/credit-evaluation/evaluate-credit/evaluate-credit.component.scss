@@ -112,3 +112,23 @@ a {
   overflow-y: auto;
   padding-right: 10px; /* Optional: to avoid scrollbar overlap */
 }
+.custom-tabs .nav-link {
+  color: #1f2c45; /* dark blue */
+  font-weight: normal;
+  border: none;
+  margin: 0 8px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.custom-tabs .nav-link.active {
+  background-color: #29415b; /* orange */
+  color: white;
+  font-weight: medium;
+}
+
+.custom-tabs .nav-link:hover {
+  background-color: #29415b;
+  color: white;
+}

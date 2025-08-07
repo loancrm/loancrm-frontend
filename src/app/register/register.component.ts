@@ -15,7 +15,7 @@ export class RegisterComponent implements OnInit {
   showPassword: boolean = false;
   loading = false;
   otpSent = false;
-  // isPasswordVisible: boolean = false;
+  isPasswordVisible: boolean = false;
   otpVerified = false;
   otpError = '';
   constructor(
@@ -36,7 +36,7 @@ export class RegisterComponent implements OnInit {
         Validators.minLength(6),
         Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/)
       ]],
-      // otp: [''] // ✅ ADD THIS LINE
+      otp: [''] // ✅ ADD THIS LINE
     });
   }
 
@@ -60,9 +60,9 @@ export class RegisterComponent implements OnInit {
     return this.registerForm.get('password')!;
   }
 
-//  togglePasswordVisibility() {
-//     this.isPasswordVisible = !this.isPasswordVisible;
-//   }
+  togglePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible;
+  }
   sendOTP() {
     // console.log('Mobile value from form:', this.mobile.value);
     // console.log('Form object:', this.registerForm.value);
@@ -109,10 +109,10 @@ export class RegisterComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
-    // if (this.registerForm.invalid || !this.otpVerified) {
-    //   if (!this.otpVerified) this.otpError = 'Please verify OTP before registering.';
-    //   return;
-    // }
+    if (this.registerForm.invalid || !this.otpVerified) {
+      if (!this.otpVerified) this.otpError = 'Please verify OTP before registering.';
+      return;
+    }
 
     this.loading = true;
 

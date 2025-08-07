@@ -1,11 +1,11 @@
 /* Full screen background with radial gradient */
 .background-radial-gradient {
-  background-image: url("../../assets/images/loginpage.jpg");
+  background-image: url("../../assets/images/bg-image.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center;
-  background-attachment: fixed;
-  max-height: 100vh;
+  // background-position: center;
+  // background-attachment: fixed;
+  // max-height: 100vh;
 }
 
 /* Decorative shapes */
@@ -38,7 +38,7 @@
 .card {
   // z-index: 1;
   width: 500px;
-  height: 650px;
+  // height: 650px;
   backdrop-filter: blur(30px);
   background-color: #ffffff !important;
   margin-left: 120px;
@@ -104,7 +104,7 @@
 }
 
 /* Button Styling */
-button.p-button {
+.custom-button {
   font-weight: 600;
   border-radius: 8px;
   padding: 0.75rem 1.5rem;
@@ -188,4 +188,23 @@ button.disabled {
   .card::-webkit-scrollbar {
     display: none;
   }
+}
+.orange-button {
+  background-color: #ee7846 !important;
+  border-color: #ee7846 !important;
+  color: #fff !important;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.verifybtn {
+  background-color: #2a405f !important;
+  border-color: #2a405f !important;
+  color: #fff !important;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

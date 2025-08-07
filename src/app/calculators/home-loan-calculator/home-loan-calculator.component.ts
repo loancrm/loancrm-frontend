@@ -228,7 +228,7 @@ export class HomeLoanCalculatorComponent {
       doc.setFont('helvetica', 'medium');
       doc.setTextColor(230, 230, 230); // light gray
       doc.setFontSize(60);
-      doc.text('LoanCRM', centerX, centerY, {
+      doc.text('MyLoanCRM', centerX, centerY, {
         angle: 45,
         align: 'center',
         baseline: 'middle'

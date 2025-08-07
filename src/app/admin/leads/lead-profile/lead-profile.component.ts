@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 import { projectConstantsLocal } from 'src/app/constants/project-constants';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { RoutingService } from 'src/app/services/routing-service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-lead-profile',
@@ -18,6 +19,7 @@ export class LeadProfileComponent implements OnInit {
   loading: boolean = false;
   leadId: string | null = null;
   leadsData: any;
+  accountId: any;
   expandedRows: { [key: string]: boolean } = {};
   loanType: string = '';
   employmentStatus: string = '';
@@ -28,6 +30,8 @@ export class LeadProfileComponent implements OnInit {
   userDetails: any;
   selectedRows: any[] = [];
   isFullscreen = false;
+  bankMap = new Map<number, string>();
+  banks: any = [];
   isEditingRemarks: boolean = false;
   showTableDialog: boolean = false;
   version = projectConstantsLocal.VERSION_DESKTOP;
@@ -40,16 +44,19 @@ export class LeadProfileComponent implements OnInit {
     private leadsService: LeadsService,
     private location: Location,
     private router: Router,
+    private http: HttpClient,
     private toastService: ToastService,
     private routingService: RoutingService,
     private localStorageService: LocalStorageService
   ) {
+    this.getBankers();
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
   ngOnInit(): void {
     const userDetails = this.localStorageService.getItemFromLocalStorage('userDetails');
     this.userDetails = userDetails.user;
+    this.accountId = this.userDetails?.accountId; // make sure accountId is available
     this.leadId = this.route.snapshot.paramMap.get('id');
     const status = this.route.snapshot.paramMap.get('status');
     if (this.leadId) {
@@ -106,7 +113,7 @@ export class LeadProfileComponent implements OnInit {
     this.leadsService.getAllLoanLeadData(leadId).subscribe(
       (response) => {
         this.leadsData = response;
-        this.leadsData.documents = this.leadsData.documents || {}; 
+        this.leadsData.documents = this.leadsData.documents || {};
         // console.log(this.leadsData);
         // console.log('Lead Status:', this.leadsData.leadStatusName);
         // console.log('Lead Internal Status:', this.leadsData.leadData?.leadInternalStatus);
@@ -122,27 +129,55 @@ export class LeadProfileComponent implements OnInit {
       }
     );
   }
+  onDownloadZip(): void {
+    const accountId = 1270983;
+    const leadId = 3745806921;
+    const url = `https://files.loancrm.org/files?accountId=${accountId}&leadId=${leadId}&downloadZip=true`;
+
+    this.http.get(url, { responseType: 'blob' }).subscribe({
+      next: (blob: Blob) => {
+        if (!blob || blob.size === 0) {
+          console.error('Empty or invalid file received.');
+          this.toastService.showError('Empty or invalid ZIP file received.');
+          return;
+        }
+        const downloadURL = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = downloadURL;
+        a.download = `lead_${leadId}_files.zip`;
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(downloadURL);
+      },
+      error: (err) => {
+        console.error('Download failed:', err);
+        this.toastService.showError('ZIP download failed. Please try again.');
+      }
+    });
+  }
 
   isBusinessView(): boolean {
-  return (
-    (this.loanType === 'homeloan' && this.employmentStatus === 'self-employed') ||
-    (this.loanType === 'lap' && this.employmentStatus === 'self-employed') ||
-    (!['personalloan', 'homeloan', 'lap'].includes(this.loanType))
-  );
-}
+    return (
+      (this.loanType === 'homeloan' && this.employmentStatus === 'self-employed') ||
+      (this.loanType === 'lap' && this.employmentStatus === 'self-employed') ||
+      (!['personalloan', 'homeloan', 'lap'].includes(this.loanType))
+    );
+  }
 
-isPersonalView(): boolean {
-  return (
-    (this.loanType === 'personalloan' && this.employmentStatus === 'employed') ||
-    (this.loanType === 'homeloan' && this.employmentStatus === 'employed') ||
-    (this.loanType === 'lap' && this.employmentStatus === 'employed')
-  );
-}
+  isPersonalView(): boolean {
+    return (
+      (this.loanType === 'personalloan' && this.employmentStatus === 'employed') ||
+      (this.loanType === 'homeloan' && this.employmentStatus === 'employed') ||
+      (this.loanType === 'lap' && this.employmentStatus === 'employed')
+    );
+  }
 
-isProprietorPersonal(): boolean {
- return ['personalloan', 'homeloan', 'lap'].includes(this.loanType) &&
-         this.employmentStatus === 'employed';
-}
+  isProprietorPersonal(): boolean {
+    return ['personalloan', 'homeloan', 'lap'].includes(this.loanType) &&
+      this.employmentStatus === 'employed';
+  }
 
 
   getMaskedPhone(phone: any) {
@@ -173,7 +208,6 @@ isProprietorPersonal(): boolean {
   //       this.employmentStatus = (this.leadsData?.leadData?.employmentStatus || '').toLowerCase();
 
   //       // console.log(this.leadsData);
-        
   //       // console.log('leads full data:', this.leadsData);
   //       this.updateDisplayedItems();
   //       this.setTimelineDates();
@@ -190,7 +224,6 @@ isProprietorPersonal(): boolean {
   //   this.leadsService.getAllLoanLeadData(leadId).subscribe(
   //     (response) => {
   //       this.leadsData = response;
-        
   //       // console.log('loanleads full data:', this.loanleads);
   //       console.log(this.leadsData.leadData);
   //       // console.log('loanleads full data:', this.loanleads.logins);
@@ -202,10 +235,6 @@ isProprietorPersonal(): boolean {
   //       // console.log(this.loanleads.leadData.salary);
   //       // console.log(this.loanleads.leadData.sanctionedAmount);
   //       // console.log(this.loanleads.leadData.logins);
-        
-        
-
-  
   //       this.updateDisplayedItems();
   //       this.setTimelineDates();
   //       this.loading = false; // Ensure loading is set to false after data is processed
@@ -247,7 +276,6 @@ isProprietorPersonal(): boolean {
 
   convertToLakhsOrCrores(amount: number): string {
     // console.log(amount);
-    
     if (amount >= 10000000) {
       const crores = amount / 10000000;
 
@@ -262,7 +290,6 @@ isProprietorPersonal(): boolean {
     } else {
       return amount % 1 === 0 ? amount.toFixed(0) : amount.toString();
     }
-  
   }
   setTimelineDates(): void {
     const baseTimeline = [
@@ -346,27 +373,27 @@ isProprietorPersonal(): boolean {
   //     { data: this.leadsData, displayProperty: loanDisplayProperty, image: "assets/images/profile/profile.png" },
   //   ];
   // }
- updateDisplayedItems() {
-  if (this.isBusinessView()) {
-    this.displayedItems = [
-      {
-        data: this.leadsData?.leadData,
-        displayProperty: 'businessName',
-        image: 'assets/images/profile/office.png'
-      }
-    ];
-  } else if (this.isPersonalView()) {
-    this.displayedItems = [
-      {
-        data: this.leadsData?.leadData,
-        displayProperty: 'contactPerson',
-        image: 'assets/images/profile/profile.png'
-      }
-    ];
-  } else {
-    this.displayedItems = [];
+  updateDisplayedItems() {
+    if (this.isBusinessView()) {
+      this.displayedItems = [
+        {
+          data: this.leadsData?.leadData,
+          displayProperty: 'businessName',
+          image: 'assets/images/profile/office.png'
+        }
+      ];
+    } else if (this.isPersonalView()) {
+      this.displayedItems = [
+        {
+          data: this.leadsData?.leadData,
+          displayProperty: 'contactPerson',
+          image: 'assets/images/profile/profile.png'
+        }
+      ];
+    } else {
+      this.displayedItems = [];
+    }
   }
-}
 
   getSourceName(userId) {
     if (this.leadUsers && this.leadUsers.length > 0) {
@@ -451,6 +478,30 @@ isProprietorPersonal(): boolean {
   }
   getFileIcon(fileType) {
     return this.leadsService.getFileIcon(fileType);
+  }
+  getBankers(filter = {}) {
+    this.loading = true;
+    this.leadsService.getBankers(filter).subscribe(
+      (response: any) => {
+        this.banks = [{ name: 'All' }, ...response];
+
+        // Create a Map for quick lookup
+        this.bankMap.clear();
+        for (const bank of response) {
+          if (bank.id && bank.name) {
+            this.bankMap.set(bank.id, bank.name);
+          }
+        }
+        this.loading = false;
+      },
+      (error: any) => {
+        this.loading = false;
+        this.toastService.showError(error);
+      }
+    );
+  }
+  getLenderName(bankId: number): string {
+    return this.bankMap.get(bankId) || '';
   }
   isValidDate(date: any): boolean {
     return date && !isNaN(new Date(date).getTime());

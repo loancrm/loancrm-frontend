@@ -9,6 +9,7 @@ import { FileUploadComponent } from '../../file-upload/file-upload.component';
 import { LeadsService } from '../../leads/leads.service';
 import { ConfirmationService } from 'primeng/api';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { RoutingService } from 'src/app/services/routing-service';
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
@@ -261,6 +262,7 @@ export class UploadComponent implements OnInit {
     private leadsService: LeadsService,
     private dialogService: DialogService,
     private location: Location,
+    private routingService: RoutingService,
     private localStorageService: LocalStorageService,
     private confirmationService: ConfirmationService,
     private dateTimeProcessor: DateTimeProcessorService
@@ -2753,6 +2755,9 @@ export class UploadComponent implements OnInit {
       },
     });
   }
+  analyzeBankStatements() {
+    this.routingService.handleRoute(`bsanalyzer`, null);
+  }
   deleteFile(
     fileUrl: string,
     fileType: string,
@@ -2763,7 +2768,7 @@ export class UploadComponent implements OnInit {
     this.leadsService.deleteFile(relativePath).subscribe(
       (response: any) => {
         if (response.message === 'File deleted successfully.') {
-          // console.log('File deleted successfully.');
+          console.log('File deleted successfully.');
           if (this.selectedFiles[fileType]?.uploadedFiles) {
             this.selectedFiles[fileType].uploadedFiles = this.selectedFiles[
               fileType
@@ -2779,7 +2784,7 @@ export class UploadComponent implements OnInit {
                 //   document.uploadedFiles
                 // );
               }
-              // console.log('After Deletion:', this.selectedFiles);
+              console.log('After Deletion:', this.selectedFiles);
             } else {
               console.error('docIndex or fileIndex is missing.');
             }

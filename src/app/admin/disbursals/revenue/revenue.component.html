@@ -23,7 +23,7 @@
     <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
   </div>
   <div class="container-fluid" *ngIf="!loading">
-    <div class="row">
+    <div class="row text-capitalize">
       <div *ngIf="disbursalDetails">
         <p-table
           [value]="disbursalDetails"
@@ -36,7 +36,7 @@
               <th>Lender</th>
               <th>Process Code</th>
               <th>Product Type</th>
-              <th>Sanctioned Amount</th>
+              <th>Disbursed Amount</th>
               <th style="min-width: 200px">Bank Payout (%)</th>
               <th>Revenue</th>
             </tr>
@@ -49,13 +49,14 @@
               <td *ngIf="shouldDisplayBlock()">
                 {{ rowData.program ? rowData.program : "-" }}
               </td>
-              <td>{{ rowData.bankName ? rowData.bankName : "-" }}</td>
+              <!-- <td>{{ rowData.bankName ? rowData.bankName : "-" }}</td> -->
+              <td>{{ getLenderName(rowData.bankId) | capitalizeFirst }}</td>
               <td>{{ rowData.processCode ? rowData.processCode : "-" }}</td>
               <td>
                 {{ rowData.productTypeName ? rowData.productTypeName : "-" }}
               </td>
               <td>
-                {{ rowData.productTypeName ? rowData.productTypeName : "-" }}
+                {{ rowData.disbursedAmount ? rowData.disbursedAmount : "-" }}
               </td>
               <td>
                 <input

@@ -17,6 +17,8 @@ export class BanksSavedComponent implements OnInit {
   leads: any = null;
   moment: any;
   loading: any;
+  bankMap = new Map<number, string>();
+  banks: any = [];
   version = projectConstantsLocal.VERSION_DESKTOP;
   loginInfoDetails: any[] = [];
   fipDetails: any[] = [];
@@ -47,6 +49,7 @@ export class BanksSavedComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private dateTimeProcessor: DateTimeProcessorService
   ) {
+    this.getBankers();
     this.moment = this.dateTimeProcessor.getMoment();
   }
   ngOnInit(): void {
@@ -249,6 +252,30 @@ export class BanksSavedComponent implements OnInit {
         this.toastService.showError(error);
       }
     );
+  }
+  getBankers(filter = {}) {
+    this.loading = true;
+    this.leadsService.getBankers(filter).subscribe(
+      (response: any) => {
+        this.banks = [{ name: 'All' }, ...response];
+
+        // Create a Map for quick lookup
+        this.bankMap.clear();
+        for (const bank of response) {
+          if (bank.id && bank.name) {
+            this.bankMap.set(bank.id, bank.name);
+          }
+        }
+        this.loading = false;
+      },
+      (error: any) => {
+        this.loading = false;
+        this.toastService.showError(error);
+      }
+    );
+  }
+  getLenderName(bankId: number): string {
+    return this.bankMap.get(bankId) || '';
   }
   goBack(): void {
     this.location.back();

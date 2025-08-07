@@ -79,6 +79,7 @@ export class EvaluateCreditComponent implements OnInit {
   searchFilter: any = {};
   moment: any;
   displayedItems: any = [];
+  activeTab: string = 'dscr'; // default tab
   version = projectConstantsLocal.VERSION_DESKTOP;
   documentTypes = [
     { key: 'gstCertificate', label: 'GST Certificate' },
@@ -293,7 +294,6 @@ export class EvaluateCreditComponent implements OnInit {
   //   const targetUrl = `user/rejects`;
   //   this.router.navigateByUrl(targetUrl);
   // }
-
   sendLeadToReject(lead) {
     console.log('Row clicked:', lead);
     const loanType = lead[0].loanType; // e.g., 'personalloan', 'home loan', etc.
@@ -314,6 +314,9 @@ export class EvaluateCreditComponent implements OnInit {
   //   const targetUrl = `user/logins/bankSelection/${id}`;
   //   this.router.navigateByUrl(targetUrl);
   // }
+  getFileIcon(fileType) {
+    return this.leadsService.getFileIcon(fileType);
+  }
   sendLeadToReadyToLogin(lead) {
 
     console.log('Row clicked:', lead);

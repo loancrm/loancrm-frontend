@@ -300,7 +300,7 @@ export class FilesComponent implements OnInit {
     // }
     if (this.selectedMonth) {
       const startOfMonth = this.moment(this.selectedMonth).startOf('month');
-      const endOfMonth = this.moment(this.selectedMonth).endOf('month');
+      const endOfMonth = this.moment(this.selectedMonth).endOf('month').add(1, 'day');
       api_filter['docs.createdOn-gte'] = startOfMonth.format('YYYY-MM-DD'); // e.g. '2025-07-01'
       api_filter['docs.createdOn-lte'] = endOfMonth.format('YYYY-MM-DD');   // e.g. '2025-07-31'
     }
