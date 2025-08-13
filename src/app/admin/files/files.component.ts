@@ -792,6 +792,7 @@ export class FilesComponent implements OnInit {
   sendFileToCreditEvaluation(lead) {
     this.changeLeadStatus(lead.id, 5);
     this.createDscrTable(lead.id);
+    this.routingService.handleRoute(`credit/evaluate/${lead.id}`, null);
   }
 
   sendplFileToCreditEvaluation(lead: any, leadType: string) {

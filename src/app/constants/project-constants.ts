@@ -157,9 +157,50 @@ export const projectConstantsLocal = {
     { displayName: "LLP", name: "llp" },
     { displayName: 'Private Limited', name: 'privateLimited' },
   ],
+  // STATE_ENTITIES: [
+  //   { displayName: 'Andhra Pradesh', name: 'andhra pradesh' },
+  //   { displayName: 'Telangana', name: 'telangana' },
+  // ],
   STATE_ENTITIES: [
+    // States
     { displayName: 'Andhra Pradesh', name: 'andhra pradesh' },
+    { displayName: 'Arunachal Pradesh', name: 'arunachal pradesh' },
+    { displayName: 'Assam', name: 'assam' },
+    { displayName: 'Bihar', name: 'bihar' },
+    { displayName: 'Chhattisgarh', name: 'chhattisgarh' },
+    { displayName: 'Goa', name: 'goa' },
+    { displayName: 'Gujarat', name: 'gujarat' },
+    { displayName: 'Haryana', name: 'haryana' },
+    { displayName: 'Himachal Pradesh', name: 'himachal pradesh' },
+    { displayName: 'Jharkhand', name: 'jharkhand' },
+    { displayName: 'Karnataka', name: 'karnataka' },
+    { displayName: 'Kerala', name: 'kerala' },
+    { displayName: 'Madhya Pradesh', name: 'madhya pradesh' },
+    { displayName: 'Maharashtra', name: 'maharashtra' },
+    { displayName: 'Manipur', name: 'manipur' },
+    { displayName: 'Meghalaya', name: 'meghalaya' },
+    { displayName: 'Mizoram', name: 'mizoram' },
+    { displayName: 'Nagaland', name: 'nagaland' },
+    { displayName: 'Odisha', name: 'odisha' },
+    { displayName: 'Punjab', name: 'punjab' },
+    { displayName: 'Rajasthan', name: 'rajasthan' },
+    { displayName: 'Sikkim', name: 'sikkim' },
+    { displayName: 'Tamil Nadu', name: 'tamil nadu' },
     { displayName: 'Telangana', name: 'telangana' },
+    { displayName: 'Tripura', name: 'tripura' },
+    { displayName: 'Uttar Pradesh', name: 'uttar pradesh' },
+    { displayName: 'Uttarakhand', name: 'uttarakhand' },
+    { displayName: 'West Bengal', name: 'west bengal' },
+
+    // Union Territories
+    { displayName: 'Andaman and Nicobar Islands', name: 'andaman and nicobar islands' },
+    { displayName: 'Chandigarh', name: 'chandigarh' },
+    { displayName: 'Dadra and Nagar Haveli and Daman and Diu', name: 'dadra and nagar haveli and daman and diu' },
+    { displayName: 'Delhi', name: 'delhi' },
+    { displayName: 'Jammu and Kashmir', name: 'jammu and kashmir' },
+    { displayName: 'Ladakh', name: 'ladakh' },
+    { displayName: 'Lakshadweep', name: 'lakshadweep' },
+    { displayName: 'Puducherry', name: 'puducherry' }
   ],
   BUSINESS_TURNOVER: [
     { displayName: 'Upto 1 Crore', name: 'upto 1 crore' },
@@ -190,6 +231,17 @@ export const projectConstantsLocal = {
     { id: 7, status: 'low_vintage', displayName: 'Low Vintage' },
     { id: 8, status: 'multiple_banks_not_interested', displayName: 'Multiple Banks Not Interested' },
     { id: 9, status: 'cibil_bad', displayName: 'Cibil Bad' }
+  ],
+  LEAD_REMARKS: [
+    { id: 1, status: 'client_will_share_documents', displayName: 'Will share documents' },
+    { id: 2, status: 'client_asked_office_visit', displayName: 'Office visit requested' },
+    { id: 3, status: 'needs_discussion_with_partners', displayName: 'Discuss with partners' },
+    { id: 4, status: 'client_not_responding', displayName: 'Not responding' },
+    { id: 5, status: 'client_out_of_station', displayName: 'Out of station' },
+    { id: 6, status: 'needs_approx_roi_details', displayName: 'Approx ROI details' },
+    { id: 7, status: 'needs_project_confirmation', displayName: 'Project confirmation' },
+    { id: 8, status: 'client_trying_other_banks', displayName: 'Trying other banks' },
+    { id: 9, status: 'multiple_bank_confirmations', displayName: 'Multiple bank confirmation' }
   ],
 
   // RAZORPAY_KEY_ID: "rzp_test_OryiPavGPST3CU",

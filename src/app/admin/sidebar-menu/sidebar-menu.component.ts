@@ -407,13 +407,13 @@ export class SidebarMenuComponent implements OnChanges {
   }
 
   ngOnChanges(changes) {
-    if (changes && changes.showSidebar) {
-      if (this.sidebarMenu && !this.sidebarMenu.visible) {
-        this.sidebarVisible = true;
-      } else {
-        this.sidebarVisible = false;
-      }
+  if (changes && changes.showSidebar) {
+    if (this.sidebarMenu && !this.sidebarMenu.visible) {
+      this.sidebarVisible = true;
+    } else {
+      this.sidebarVisible = false;
     }
+  }
   }
 
   showMenuSection() {

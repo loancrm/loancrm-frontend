@@ -71,6 +71,7 @@ export class LeadsComponent implements OnInit {
   turnoverDetails: any = projectConstantsLocal.BUSINESS_TURNOVER;
   entityDetails: any = projectConstantsLocal.BUSINESS_ENTITIES;
   natureofBusinessDetails: any = projectConstantsLocal.NATURE_OF_BUSINESS;
+  leadRemarksData: any = projectConstantsLocal.LEAD_REMARKS;
   appliedFilter: {};
   appliedFilterPersonal: {};
   appliedFilterLap: {};
@@ -494,7 +495,20 @@ export class LeadsComponent implements OnInit {
         value: option.name,
       })),
     });
-
+    const createDropdownFilterforId = (
+      field: string,
+      title: string,
+      options: any[]
+    ) => ({
+      field,
+      title,
+      type: 'dropdown',
+      filterType: 'eq', // for exact ID match
+      options: options.map((option) => ({
+        label: option.displayName, // what the user sees
+        value: option.id           // the actual ID value used in filtering
+      })),
+    });
     const createDateRangeFilter = () => [
       { field: 'createdOn', title: 'From', type: 'date', filterType: 'gte' },
       { field: 'createdOn', title: 'To', type: 'date', filterType: 'lte' },
@@ -509,6 +523,7 @@ export class LeadsComponent implements OnInit {
     const entityOptions = this.entityDetails;
     const turnoverOptions = this.turnoverDetails;
     const natureOfBusinessOptions = this.natureofBusinessDetails;
+    const leadRemarks = this.leadRemarksData;
     const commonFilters = [
       {
         header: 'Lead Id',
@@ -573,6 +588,16 @@ export class LeadsComponent implements OnInit {
             'natureOfBusiness',
             'Nature of Business',
             natureOfBusinessOptions
+          ),
+        ],
+      },
+      {
+        header: 'Lead Remarks',
+        data: [
+          createDropdownFilterforId(
+            'leadRemarks',
+            'Lead Remarks',
+            leadRemarks
           ),
         ],
       },
@@ -888,6 +913,7 @@ export class LeadsComponent implements OnInit {
   sendLeadToFiles(lead) {
     this.changeLeadStatus(lead.id, 3);
     this.createleadDocumentsTable(lead);
+    this.routingService.handleRoute(`files/upload/${lead.id}`, null);
   }
 
   sendLeadToFollowUps(lead) {

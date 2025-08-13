@@ -179,7 +179,8 @@ export class BankSelectionComponent implements OnInit {
         }
         // const targetUrl = `user/filesinprocess`;
         // this.router.navigateByUrl(targetUrl);
-        this.routingService.handleRoute('filesinprocess', null);
+        // this.routingService.handleRoute('filesinprocess', null);
+        this.routingService.handleRoute(`logins/banksSaved/${this.leadData[0].id}`, null);
       },
       (error) => {
         this.loading = false;

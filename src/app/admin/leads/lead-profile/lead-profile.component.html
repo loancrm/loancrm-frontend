@@ -536,10 +536,12 @@
                       *ngIf="leadsData?.leadData?.primaryPhone"
                     >
                       <img
+                        (click)="openWhatsApp(leadsData?.leadData?.primaryPhone)"
                         src="assets/images/icons/Phone.svg"
                         alt="Phone"
                         width="20"
                         height="20"
+                        class="pointer-cursor"
                       />
                       {{
                         userDetails.userType == 3

@@ -16,6 +16,8 @@ import { FileUploadComponent } from '../../file-upload/file-upload.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ConfirmationService } from 'primeng/api';
 import moment from 'moment-timezone';
+// import axios from 'axios';
+// import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
@@ -33,6 +35,7 @@ export class CreateComponent {
     audioFiles: { filesData: [], links: [], uploadedFiles: [] },
   };
   businessEntities: any = projectConstantsLocal.BUSINESS_ENTITIES;
+  leadRemarks: any = projectConstantsLocal.LEAD_REMARKS;
   businessTurnover: any = projectConstantsLocal.BUSINESS_TURNOVER;
   natureOfBusines: any = projectConstantsLocal.NATURE_OF_BUSINESS;
   stateEntities: any = projectConstantsLocal.STATE_ENTITIES;
@@ -52,6 +55,7 @@ export class CreateComponent {
   version = projectConstantsLocal.VERSION_DESKTOP;
   constructor(
     private location: Location,
+    // private http: HttpClient,
     private formBuilder: UntypedFormBuilder,
     private leadsService: LeadsService,
     private toastService: ToastService,
@@ -102,6 +106,7 @@ export class CreateComponent {
               odRequirement: this.leadData[0]?.odRequirement,
               calledFrom: this.leadData[0]?.calledFrom,
               remarks: this.leadData[0]?.remarks,
+              leadRemarks: this.leadData[0]?.leadRemarks,
               createdOn: this.moment(this.leadData[0]?.createdOn).format(
                 'YYYY-MM-DD  HH:mm:ss'
               ),
@@ -177,6 +182,41 @@ export class CreateComponent {
   onStepChange(event: any) {
     this.activeIndex = event.index;
   }
+  // async onCityChange(event: any) {
+  //   const city = event.target.value;
+  //   if (city.length >= 2) {
+  //     try {
+  //       const res = await axios.get(`https://api.postalpincode.in/postoffice/${city}`);
+  //       if (res.data[0]?.Status === 'Success') {
+  //         const po = res.data[0].PostOffice[0];
+  //         this.leadForm.patchValue({
+  //           state: po.State,
+  //           pincode: po.Pincode
+  //         });
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching city details:", error);
+  //     }
+  //   }
+  // }
+
+  // async onPincodeChange(event: any) {
+  //   const pincode = event.target.value;
+  //   if (/^\d{6}$/.test(pincode)) {
+  //     try {
+  //       const res = await axios.get(`https://api.postalpincode.in/pincode/${pincode}`);
+  //       if (res.data[0]?.Status === 'Success') {
+  //         const po = res.data[0].PostOffice[0];
+  //         this.leadForm.patchValue({
+  //           city: po.District,
+  //           state: po.State
+  //         });
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching pincode details:", error);
+  //     }
+  //   }
+  // }
 
   onTabChange(event: any) {
     this.activeIndex = event.index;
@@ -214,6 +254,7 @@ export class CreateComponent {
       odRequirement: [''],
       calledFrom: ['', Validators.compose([Validators.required])],
       remarks: ['', Validators.compose([Validators.required])],
+      leadRemarks: ['', Validators.compose([Validators.required])],
     });
     if (
       this.userDetails &&
@@ -281,6 +322,7 @@ export class CreateComponent {
       odRequirement: formValues.odRequirement,
       existingLoanDetails: formValues.existingLoanDetails,
       remarks: formValues.remarks,
+      leadRemarks: formValues.leadRemarks,
       calledFrom: formValues.calledFrom,
       createdBy:
         this.userDetails &&

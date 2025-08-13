@@ -171,6 +171,8 @@ export class SubscriptionComponent implements OnInit {
   createSubscription(plan: any): void {
     const subscriptionData = {
       accountId: this.accountId,
+      name: this.user.name,
+      emailId: this.user.email,
       plan_name: plan.plan_name,
       plan_type: plan.plan_type,
       price: plan.price,

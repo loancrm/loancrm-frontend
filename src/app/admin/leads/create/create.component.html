@@ -393,6 +393,8 @@
                             [showClear]="true"
                             appendTo="body"
                             styleClass="w-100"
+                            [filter]="true"
+                            filterPlaceholder="Search..."
                             [dropdownIcon]="'fa fa-caret-down'"
                           ></p-dropdown>
                         </div>
@@ -901,6 +903,24 @@
                               Bank Name is required.
                             </small>
                           </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mt-2">
+                        <div>
+                          <div class="my-1">
+                            <label>Lead Remarks&nbsp;</label>
+                          </div>
+                          <p-dropdown
+                            [options]="leadRemarks"
+                            formControlName="leadRemarks"
+                            optionLabel="displayName"
+                            optionValue="id"
+                            [showClear]="true"
+                            appendTo="body"
+                            styleClass="w-100"
+                            placeholder="Select Lead Remarks"
+                            [dropdownIcon]="'fa fa-caret-down'"
+                          ></p-dropdown>
                         </div>
                       </div>
                       <div class="col-md-12">

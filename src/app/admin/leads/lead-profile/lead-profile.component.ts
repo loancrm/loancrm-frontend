@@ -188,6 +188,10 @@ export class LeadProfileComponent implements OnInit {
     const fileExtension = file.split('.').pop()?.toLowerCase();
     return !!fileExtension && imageExtensions.includes(fileExtension);
   }
+  openWhatsApp(number: string) {
+    const whatsappUrl = `https://wa.me/${number}`;
+    window.open(whatsappUrl, '_blank');
+  }
 
   toggleFullscreen() {
     this.isFullscreen = !this.isFullscreen;
