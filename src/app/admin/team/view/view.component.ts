@@ -95,6 +95,7 @@ export class ViewComponent {
   totalSanctionsCount: any = 0;
   inHouseRejectsCount: any = 0;
   disbursalleads: any = [];
+  sanctionleads: any = [];
   activeItem: any;
   events: any[];
   callbackevents: any[];
@@ -182,6 +183,7 @@ export class ViewComponent {
       // console.log(this.userId);
       this.getUsersDetailsById(this.userId);
       this.getDisbursalLeadsforcount();
+      this.getSanctionedLeadsforcount();
     }
     this.setFilterConfig();
     this.getUserRoles();
@@ -1634,17 +1636,40 @@ export class ViewComponent {
       (response) => {
         this.disbursalleads = response;
         // console.log(this.disbursalleads);
-        this.totalSanctionedAmount = this.disbursalleads.reduce((sum, lead) => {
-          return sum + (lead.sanctionedAmount || 0);
-        }, 0);
+        // this.totalSanctionedAmount = this.disbursalleads.reduce((sum, lead) => {
+        //   return sum + (lead.sanctionedAmount || 0);
+        // }, 0);
         this.totalDisbursedAmount = this.disbursalleads.reduce((sum, lead) => {
           return sum + (lead.disbursedAmount || 0);
         }, 0);
-        this.totalSanctionedAmountInLakhsOrCrores = this.convertToLakhsOrCrores(
-          this.totalSanctionedAmount
-        );
+        // this.totalSanctionedAmountInLakhsOrCrores = this.convertToLakhsOrCrores(
+        //   this.totalSanctionedAmount
+        // );
         this.totalDisbursedAmountInLakhsOrCrores = this.convertToLakhsOrCrores(
           this.totalDisbursedAmount
+        );
+        // console.log('Total Sanctioned Amount:', this.totalSanctionedAmount);
+        // console.log('Total Disbursed Amount:', this.totalDisbursedAmount);
+        this.loading = false;
+      },
+      (error: any) => {
+        this.loading = false;
+        this.toastService.showError(error);
+      }
+    );
+  }
+  getSanctionedLeadsforcount(filter = {}) {
+    this.loading = true;
+    filter['sourcedBy-eq'] = this.userId;
+    this.leadsService.getApprovalsLeads(filter).subscribe(
+      (response) => {
+        this.sanctionleads = response;
+        console.log(this.sanctionleads);
+        this.totalSanctionedAmount = this.sanctionleads.reduce((sum, lead) => {
+          return sum + (lead.sanctionedAmount || 0);
+        }, 0);
+        this.totalSanctionedAmountInLakhsOrCrores = this.convertToLakhsOrCrores(
+          this.totalSanctionedAmount
         );
         // console.log('Total Sanctioned Amount:', this.totalSanctionedAmount);
         // console.log('Total Disbursed Amount:', this.totalDisbursedAmount);
