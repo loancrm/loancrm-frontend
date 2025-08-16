@@ -663,6 +663,8 @@
                     ? homeloanLeadsCount
                     : homeloanselfLeadsCount
                 "
+                (onRowSelect)="viewLead($event)"
+                selectionMode="single"
                 [loading]="loanleadsLoading"
                 responsiveLayout="scroll"
                 scrollHeight="flex"
@@ -830,7 +832,7 @@
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-lead>
-                  <tr>
+                  <tr  [pSelectableRow]="lead">
                     <td>
                       <span class="table-column-data singleline">{{
                         lead.customId || "-"
@@ -993,6 +995,8 @@
                     ? lapLeadsCount
                     : lapselfLeadsCount
                 "
+                (onRowSelect)="viewLead($event)"
+                selectionMode="single"
                 [loading]="loanleadsLoading"
                 responsiveLayout="scroll"
                 scrollHeight="flex"
@@ -1139,7 +1143,7 @@
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-lead>
-                  <tr>
+                  <tr  [pSelectableRow]="lead">
                     <td>
                       <span class="table-column-data singleline">{{
                         lead.customId || "-"

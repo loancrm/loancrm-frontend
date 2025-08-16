@@ -582,6 +582,8 @@
                 [showCurrentPageReport]="true"
                 [rowsPerPageOptions]="[10, 25, 50]"
                 [paginator]="true"
+                (onRowSelect)="viewLead($event)"
+                selectionMode="single"
                 [rows]="10"
                 class="p-datatable-striped"
                 [totalRecords]="
@@ -773,7 +775,7 @@
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-lead>
-                  <tr>
+                  <tr  [pSelectableRow]="lead">
                     <td>
                       <span class="table-column-data singleline">{{
                         lead.customId || '-'
@@ -926,6 +928,8 @@
                     : loadLeadsforlapself($event)
                 "
                 dataKey="id"
+                (onRowSelect)="viewLead($event)"
+                selectionMode="single"
                 [showCurrentPageReport]="true"
                 [rowsPerPageOptions]="[10, 25, 50]"
                 [paginator]="true"
@@ -1100,7 +1104,7 @@
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-lead>
-                  <tr>
+                  <tr [pSelectableRow]="lead">
                     <td>
                       <span class="table-column-data singleline">{{
                         lead.customId || '-'

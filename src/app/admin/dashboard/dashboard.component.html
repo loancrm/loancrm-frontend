@@ -247,10 +247,10 @@
             <!-- Body -->
             <ng-template pTemplate="body" let-rowData>
               <tr [pSelectableRow]="rowData">
-                <td>{{ rowData.customId }}</td>
-                <td>{{ rowData.businessName | capitalizeFirst }}</td>
+                 <td>{{ rowData.customId ? (rowData.customId): '-' }}</td>
+                <td>{{ rowData.businessName ? (rowData.businessName | capitalizeFirst): '-' }}</td>
                 <td>
-                  {{ getSourceName(rowData.sourcedBy) | capitalizeFirst }}
+                  {{ rowData.sourcedBy ? (getSourceName(rowData.sourcedBy) | capitalizeFirst) : '-' }}
                 </td>
               </tr>
             </ng-template>
