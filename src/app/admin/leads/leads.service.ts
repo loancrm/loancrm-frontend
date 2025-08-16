@@ -326,6 +326,9 @@ export class LeadsService {
     const url = 'reports/exportApprovals';
     return this.serviceMeta.httpGet(url, null, filter);
   }
+   getExportedLoanLeads(filter = {}) {
+  return this.serviceMeta.httpGet('reports/exportLoanLeads', null, filter);
+  }
   exportDisbursalLeads(filter = {}) {
     const url = 'reports/exportDisbursals';
     return this.serviceMeta.httpGet(url, null, filter);

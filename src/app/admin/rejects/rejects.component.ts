@@ -155,6 +155,35 @@ export class RejectsComponent implements OnInit {
     if (storedAppliedFilterbank) {
       this.appliedFilterforbank = storedAppliedFilterbank;
     }
+    const storedLoginStatus = this.localStorageService.getItemFromLocalStorage('selectedLoginStatus');
+if (storedLoginStatus) {
+  const matched = this.rejectStatus.find(item => item.name === storedLoginStatus);
+  if (matched) {
+    this.selectedLoginStatus = matched;
+  }
+}
+const storedPlLoginStatus = this.localStorageService.getItemFromLocalStorage('selectedplLoginStatus');
+if (storedPlLoginStatus) {
+  const matched = this.rejectStatus.find(item => item.name === storedPlLoginStatus);
+  if (matched) {
+    this.selectedplLoginStatus = matched;
+  }
+}
+const storedHlLoginStatus = this.localStorageService.getItemFromLocalStorage('selectedhlLoginStatus');
+if (storedHlLoginStatus) {
+  const matched = this.rejectStatus.find(item => item.name === storedHlLoginStatus);
+  if (matched) {
+    this.selectedhlLoginStatus = matched;
+  }
+}
+const storedLapLoginStatus = this.localStorageService.getItemFromLocalStorage('storedlapLoginStatus');
+if (storedLapLoginStatus) {
+  const matched = this.rejectStatus.find(item => item.name === storedLapLoginStatus);
+  if (matched) {
+    this.selectedlapLoginStatus = matched;
+  }
+}
+
     const storedStatus = this.localStorageService.getItemFromLocalStorage('selectedInhouseRejects');
     if (storedStatus) {
       this.selectedSourcedByStatus = storedStatus;
@@ -207,8 +236,6 @@ export class RejectsComponent implements OnInit {
       },
     ];
   }
-
-
 
   loadActiveItem() {
     const storedActiveItemName =
@@ -579,18 +606,21 @@ export class RejectsComponent implements OnInit {
     this.loadBankRejectedLeads(this.currentTableEvent);
   }
   loginstatusChange(event: any) {
-    this.selectedLoginStatus = event.value; // store the whole object if needed
-  }
+  this.selectedLoginStatus = event.value;
+  this.localStorageService.setItemOnLocalStorage('selectedLoginStatus', event.value.name);
+}
   loginhlstatusChange(event: any) {
-    this.selectedhlLoginStatus = event.value; // store the whole object if needed
-  }
+  this.selectedhlLoginStatus = event.value;
+  this.localStorageService.setItemOnLocalStorage('selectedhlLoginStatus', event.value.name);
+}
   loginlapstatusChange(event: any) {
     this.selectedlapLoginStatus = event.value; // store the whole object if needed
+    this.localStorageService.setItemOnLocalStorage('storedlapLoginStatus', event.value.name);
   }
   loginplstatusChange(event: any) {
-    this.selectedplLoginStatus = event.value; // store the whole object if needed
+  this.selectedplLoginStatus = event.value;
+  this.localStorageService.setItemOnLocalStorage('selectedplLoginStatus', event.value.name);
   }
-
   loadLeads(event) {
     this.currentTableEvent = event;
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
@@ -612,7 +642,6 @@ export class RejectsComponent implements OnInit {
       this.getTotalLeads(api_filter);
     }
   }
-
 
   loadplLeads(event) {
     this.currentTableEvent = event;
