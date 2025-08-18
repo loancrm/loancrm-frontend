@@ -2758,6 +2758,9 @@ export class UploadComponent implements OnInit {
   analyzeBankStatements() {
     this.routingService.handleRoute(`bsanalyzer`, null);
   }
+  viewReport() {
+    this.routingService.handleRoute(`bsanalyzer/bank-report/${this.leadId}`, null);
+  }
   deleteFile(
     fileUrl: string,
     fileType: string,

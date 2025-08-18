@@ -7,7 +7,11 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   { path: '', component: BsanalyzerComponent },
-
+  {
+    path: 'bank-report/:id',
+    loadChildren: () =>
+      import('./analyzed-bank-report/analyzed-bank-report.module').then((m) => m.AnalyzedBankReportModule),
+  },
 ];
 @NgModule({
   declarations: [

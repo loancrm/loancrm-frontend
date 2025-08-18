@@ -156,7 +156,10 @@
   <app-preloader></app-preloader>
 </div>
 
-<div *ngIf="!loading && selectedReportConfig && selectedReportConfig.fields" class="no-select">
+<div
+  *ngIf="!loading && selectedReportConfig && selectedReportConfig.fields"
+  class="no-select"
+>
   <!-- Breadcrumb & Back -->
   <div class="bread-crumb m-2">
     <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
@@ -165,20 +168,44 @@
   <div class="p-1 m-2">
     <div class="d-flex justify-content-between">
       <!-- Back Button -->
-      <div (click)="goBack()" class="d-flex align-items-center justify-content-center pointer-cursor">
+      <div
+        (click)="goBack()"
+        class="d-flex align-items-center justify-content-center pointer-cursor"
+      >
         <span class="me-2 d-flex align-items-center">
           <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
         </span>
         <b>
-          <span *ngIf="selectedReportConfig.reportName" class="back-btn-text fw-bold">
+          <span
+            *ngIf="selectedReportConfig.reportName"
+            class="back-btn-text fw-bold"
+          >
             {{ selectedReportConfig.reportName }} Report
           </span>
         </b>
       </div>
 
       <!-- ✅ Loan Type Dropdown (now supports more report types) -->
-      <div class="m-2"
-           *ngIf="['LEADS', 'LOANLEADS', 'CALLBACKS', 'FILESINPROCESS', 'SANCTIONFILES', 'DISBURSALFILES', 'BANKREJECTEDFILES', 'CNIFILES', 'CNIDETAILS', 'SANCTIONDETAILS', 'LOGINSDONEDETAILS', 'DISBURSALDETAILS', 'LOGINFILES'].includes(reportType)">
+      <div
+        class="m-2"
+        *ngIf="
+          [
+            'LEADS',
+            'LOANLEADS',
+            'CALLBACKS',
+            'FILESINPROCESS',
+            'SANCTIONFILES',
+            'DISBURSALFILES',
+            'BANKREJECTEDFILES',
+            'CNIFILES',
+            'CNIDETAILS',
+            'SANCTIONDETAILS',
+            'LOGINSDONEDETAILS',
+            'DISBURSALDETAILS',
+            'LOGINFILES'
+          ].includes(reportType)
+        "
+      >
         <label for="loanTypeSelect" class="fw-bold">Select Loan Type:</label>
         <p-dropdown
           [options]="loanTypes"
@@ -194,7 +221,10 @@
   </div>
 
   <!-- Ask for Employment Status -->
-  <div *ngIf="showEmploymentSelector && !selectedEmploymentStatus" class="m-2 w-100 text-center">
+  <div
+    *ngIf="showEmploymentSelector && !selectedEmploymentStatus"
+    class="m-2 w-100 text-center"
+  >
     <div class="card p-3">
       <h5>Select Employment Status</h5>
       <div class="d-flex justify-content-center gap-3 mt-2">
@@ -202,7 +232,8 @@
           pButton
           class="p-button-primary"
           *ngFor="let status of employmentStatuses"
-          (click)="onEmploymentStatusSelect(status.value)">
+          (click)="onEmploymentStatusSelect(status.value)"
+        >
           {{ status.label }}
         </button>
       </div>
@@ -210,11 +241,18 @@
   </div>
 
   <!-- Report Filters Form -->
-  <div class="card report-fields m-2" *ngIf="!showEmploymentSelector || selectedEmploymentStatus">
+  <div
+    class="card report-fields m-2"
+    *ngIf="!showEmploymentSelector || selectedEmploymentStatus"
+  >
     <div class="row">
-      <ng-container *ngFor="let field of selectedReportConfig.fields; let i = index">
+      <ng-container
+        *ngFor="let field of selectedReportConfig.fields; let i = index"
+      >
         <div class="col-xl-3 col-md-4 col-sm-6 mt-2">
-          <label [htmlFor]="field.field" *ngIf="!field.disabled">{{ field.title }}</label>
+          <label [htmlFor]="field.field" *ngIf="!field.disabled">{{
+            field.title
+          }}</label>
 
           <!-- Text Field -->
           <input
@@ -255,7 +293,8 @@
                 src="../../../../assets/images/icons/calendar.svg"
                 alt="Calendar Icon"
                 class="calendar-custom-img"
-                (click)="calendar.toggle()" />
+                (click)="calendar.toggle()"
+              />
             </div>
           </span>
 
@@ -287,7 +326,8 @@
               [dropdownIcon]="'fa fa-caret-down'"
               [autoDisplayFirst]="false"
               appendTo="body"
-              (onChange)="onTimePeriodChange($event, field, i)">
+              (onChange)="onTimePeriodChange($event, field, i)"
+            >
             </p-dropdown>
           </span>
 
@@ -299,7 +339,12 @@
                   pInputText
                   class="disable-field"
                   [placeholder]="'Select ' + field.title"
-                  [value]="getLabelsFromData(field, reportData[field.field + '-' + field.filterType])"
+                  [value]="
+                    getLabelsFromData(
+                      field,
+                      reportData[field.field + '-' + field.filterType]
+                    )
+                  "
                   [style]="{ width: field.fieldWidth || '100%' }"
                 />
               </div>
@@ -319,7 +364,8 @@
           <button
             pButton
             class="p-button-primary me-2"
-            (click)="generateReport(selectedReportConfig.reportType)">
+            (click)="generateReport(selectedReportConfig.reportType)"
+          >
             Generate Report
           </button>
         </div>

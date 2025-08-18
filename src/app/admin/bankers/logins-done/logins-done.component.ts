@@ -115,10 +115,21 @@ export class LoginsDoneComponent implements OnInit {
       }
     );
   }
+  // viewLead(event: any) {
+  //   // console.log('Row clicked:', event.data);
+  //   const lead = event.data;
+  //   this.routingService.handleRoute('leads/profile/' + lead.leadId, null);
+  // }
   viewLead(event: any) {
     // console.log('Row clicked:', event.data);
-    const lead = event.data;
-    this.routingService.handleRoute('leads/profile/' + lead.leadId, null);
+    const lead = event.data
+    const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+      this.routingService.handleRoute(`leads/profile/${loanType}/${lead.leadId}`, null);
+    } else {
+      // If no known loanType, omit status from the route
+      this.routingService.handleRoute(`leads/profile/${lead.id}`, null);
+    }
   }
   onRowEditSave(event: any) {
     const lender = event.data;

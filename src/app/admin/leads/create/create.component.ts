@@ -16,8 +16,8 @@ import { FileUploadComponent } from '../../file-upload/file-upload.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ConfirmationService } from 'primeng/api';
 import moment from 'moment-timezone';
-// import axios from 'axios';
-// import { HttpClient } from '@angular/common/http';
+import axios from 'axios';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
@@ -55,7 +55,7 @@ export class CreateComponent {
   version = projectConstantsLocal.VERSION_DESKTOP;
   constructor(
     private location: Location,
-    // private http: HttpClient,
+    private http: HttpClient,
     private formBuilder: UntypedFormBuilder,
     private leadsService: LeadsService,
     private toastService: ToastService,
@@ -200,26 +200,49 @@ export class CreateComponent {
   //   }
   // }
 
-  // async onPincodeChange(event: any) {
-  //   const pincode = event.target.value;
-  //   if (/^\d{6}$/.test(pincode)) {
-  //     try {
-  //       const res = await axios.get(`https://api.postalpincode.in/pincode/${pincode}`);
-  //       if (res.data[0]?.Status === 'Success') {
-  //         const po = res.data[0].PostOffice[0];
-  //         this.leadForm.patchValue({
-  //           city: po.District,
-  //           state: po.State
-  //         });
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching pincode details:", error);
-  //     }
-  //   }
-  // }
+  async onPincodeChange(event: any) {
+    const pincode = event.target.value;
 
-  onTabChange(event: any) {
-    this.activeIndex = event.index;
+    if (pincode.length === 6) {
+      try {
+        const response = await axios.get(`https://api.postalpincode.in/pincode/${pincode}`);
+        const res = response.data;
+
+        if (res[0]?.Status === 'Error' || !res[0]?.PostOffice) {
+          // Show error message (using your toastService)
+          this.toastService.showError({ error: 'Invalid Pincode' });
+          // Clear city & state if previously set
+          this.leadForm.patchValue({
+            city: '',
+            state: ''
+          });
+          return;
+        }
+
+        if (res[0]?.PostOffice?.length) {
+          const po = res[0].PostOffice[0];
+
+          // Autofill city
+          this.leadForm.patchValue({
+            city: po.District
+          });
+
+          // Match state with your dropdown options (case-insensitive)
+          const matchedState = this.stateEntities.find(
+            state => state.displayName.toLowerCase() === po.State.toLowerCase()
+          );
+
+          if (matchedState) {
+            this.leadForm.patchValue({
+              state: matchedState.name // must match optionValue
+            });
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching pincode details:', error);
+        this.toastService.showError({ error: 'Unable to fetch pincode details.' });
+      }
+    }
   }
   createForm() {
     this.leadForm = this.formBuilder.group({
