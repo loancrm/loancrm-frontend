@@ -1,12 +1,12 @@
 <div>
-  <div class="p-1 m-2 fixed-card">
+  <div class="p-1 m-2 fixed-card"  style="background-color: #f7f7f7;">
     <div class="d-flex justify-content-between">
       <div
         class="d-flex align-items-center justify-content-center pointer-cursor"
         (click)="goBack()"
       >
         <span class="me-2 d-flex align-items-center">
-          <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
+          <img src="../../../assets/images/icons/Vector.png" alt="Back" />
         </span>
         <!-- <span class="me-1">
           <img
@@ -76,7 +76,17 @@
                 [disabled]="!businessNameToSearch"
                 (click)="filterWithBusinessName()"
               ></button> -->
-              <button
+              <span
+                        class="input-group-text p-button-primary"
+                        (click)="filterWithBusinessName()"
+                      >
+                        <img
+                          src="../../../assets/images/icons/search.svg"
+                          alt="Search"
+                          style="width: 14px; height: 14px; cursor: pointer"
+                        />
+                    </span>
+              <!-- <button
                 type="button"
                 pButton
                 class="p-button-primary"
@@ -90,7 +100,7 @@
                   height="16"
                   style="vertical-align: middle"
                 />
-              </button>
+              </button> -->
             </div>
           </div>
           <div class="col-md-3 mt-2 no-padding-small">
@@ -113,7 +123,17 @@
                 [disabled]="!mobileNumberToSearch"
                 (click)="filterWithMobileNumber()"
               ></button> -->
-              <button
+              <span
+                        class="input-group-text p-button-primary"
+                        (click)="filterWithMobileNumber()"
+                      >
+                        <img
+                          src="../../../assets/images/icons/search.svg"
+                          alt="Search"
+                          style="width: 14px; height: 14px; cursor: pointer"
+                        />
+                    </span>
+              <!-- <button
                 type="button"
                 pButton
                 class="p-button-primary"
@@ -127,7 +147,7 @@
                   height="16"
                   style="vertical-align: middle"
                 />
-              </button>
+              </button> -->
             </div>
           </div>
           <div
@@ -153,7 +173,7 @@
                     [style]="{ width: '100%' }"
                     [options]="leadUsers"
                     (onChange)="statusChange($event)"
-                    [dropdownIcon]="'fa fa-caret-down'"
+                    [dropdownIcon]="'pi pi-chevron-down'"
                     [(ngModel)]="selectedSoucedByStatus"
                     optionLabel="name"
                     dataKey="name"
@@ -251,7 +271,7 @@
           </td>
 
           <td>
-            <div class="text-center pointer-cursor">
+            <div class="text-center pointer-cursor tableimage">
               <div class="d-flex">
                 <!-- <button
                   pButton

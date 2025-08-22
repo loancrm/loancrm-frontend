@@ -706,7 +706,7 @@ export class DashboardComponent implements OnInit {
         routerLink: 'leads',
         condition: this.capabilities.leads,
         backgroundColor: '#EBF3FE',
-        color: '#EE7846',
+        // color: '#4D54B8',
         icon: '../../../assets/images/icons/leads.svg'
       },
       // {
@@ -734,7 +734,8 @@ export class DashboardComponent implements OnInit {
         routerLink: 'files',
         condition: this.capabilities.files,
         backgroundColor: '#FBF2EF',
-        color: '#FFC001',
+        // color: '#FFC001',
+        // iconColor: '#4D54B8',
         icon: '../../../assets/images/icons/files.svg'
       },
       // {
@@ -780,7 +781,7 @@ export class DashboardComponent implements OnInit {
         routerLink: 'approvals',
         condition: this.capabilities.approvals,
         backgroundColor: '#F2F7F2',
-        color: '#3A5D82',
+        // color: '#3A5D82',
         icon: '../../../assets/images/icons/sanctions.svg'
       },
       {
@@ -790,7 +791,7 @@ export class DashboardComponent implements OnInit {
         routerLink: 'disbursals',
         condition: this.capabilities.disbursals,
         backgroundColor: '#FDF5E6',
-        color: '#DCA600',
+        // color: '#DCA600',
         icon: '../../../assets/images/icons/disbursal.svg'
       },
       {
@@ -801,7 +802,7 @@ export class DashboardComponent implements OnInit {
         routerLink: 'rejects',
         condition: this.capabilities.rejects,
         backgroundColor: '#FAE5E6',
-        color: '#BB5D5E',
+        // color: '#BB5D5E',
         icon: '../../../assets/images/icons/rejects.svg'
       },
       {
@@ -811,7 +812,7 @@ export class DashboardComponent implements OnInit {
         routerLink: 'team',
         condition: this.capabilities.team,
         backgroundColor: '#FF7948',
-        color: '#4878AC',
+        // color: '#4878AC',
         icon: '../../../assets/images/icons/team.svg'
       },
 
@@ -1298,8 +1299,8 @@ export class DashboardComponent implements OnInit {
             this.fiProcessCountforFilter,
             this.approvalCountforFilter,
             this.disbursalCountforFilter,
-          ]
-        }
+          ],
+        },
       ],
       chart: {
         height: 300,
@@ -1334,7 +1335,7 @@ export class DashboardComponent implements OnInit {
       title: {
         text: 'Agent-Based Metrics',
         align: 'left',
-        style: { fontSize: '18px', color: '#29415B' },
+        style: { fontSize: '18px', color: '#1E1E1E', fontWeight: 400, letterSpacing: '0.15px'},
       },
       plotOptions: {
         bar: {
@@ -1343,7 +1344,8 @@ export class DashboardComponent implements OnInit {
           borderRadius: 2
         }
       },
-      colors: ['#EE7846', '#DCA600', '#BB5D5E', '#FABE06', '#3A5D82', '#4878AC'],
+      colors: ['#C7C2E8', '#ABA5DC', '#706EC4', '#706EC4', '#706EC4', '#4D54B8'],
+      // colors: ['#E3E0F4', '#C7C2E8', '#ABA5DC', '#8E89D0', '#706EC4', '#535AB4'],
       dataLabels: {
         enabled: true,
       },
@@ -1351,17 +1353,19 @@ export class DashboardComponent implements OnInit {
         categories: ['Leads', 'Follow Ups', 'Files', 'Files In Process', 'Sanctions', 'Disbursals'],
         title: {
           text: 'Metrics',
+          style: { fontWeight: 500}
         },
         labels: {
           style: {
             fontSize: '10px',
             fontWeight: 400
           }
-        }
+        },
       },
       yaxis: {
         title: {
           text: 'Count',
+          style: { fontWeight: 500}
         },
       },
       legend: {
@@ -1375,7 +1379,12 @@ export class DashboardComponent implements OnInit {
           height: 12,
           radius: 12,
         },
-      }
+        itemMargin: {
+    horizontal: 7, 
+    vertical: 10 
+  }
+      },
+      
     };
   }
   onBarClick(event: any) {
@@ -1613,11 +1622,11 @@ export class DashboardComponent implements OnInit {
         type: 'donut',
         toolbar: { show: false },
       },
-      colors: ['#FF7948', '#4878AC'],
+      colors: ['#535AB4', '#8E89D0'],
       title: {
         text: 'Leads Callback Trends',
         align: 'left',
-        style: { fontSize: '18px', color: '#29415B' },
+        style: { fontSize: '18px',  color: '#1E1E1E', fontWeight: 400, letterSpacing: '0.15px' },
       },
       legend: {
         show: false,
@@ -1652,109 +1661,84 @@ export class DashboardComponent implements OnInit {
 
     this.setBarChartOptionsForFilter();
     this.ApprovedDisbursedAmountChartOptions = {
-      series: [
-        {
-          name: 'Sanctioned',
-          data: this.sanctionedAmounts,
-        },
-        {
-          name: 'Disbursed',
-          data: this.disbursedAmounts,
-        },
-      ],
-      chart: {
-        height: 300,
-        type: 'bar',
-        toolbar: { show: false },
-        events: {
-          dataPointSelection: (event, chartContext, config) => {
-            if (
-              this.userDetails &&
-              this.userDetails.userType &&
-              this.userDetails.userType == '1'
-            ) {
-              const seriesIndex = config.seriesIndex;
-              const dataPointIndex = config.dataPointIndex;
-              const clickedMonth = this.monthLabels[dataPointIndex];
-              const selectedDate = this.moment(clickedMonth, 'MMM YYYY');
-              const startDate = selectedDate
-                .startOf('month')
-                .format('YYYY-MM-DD');
-              const endDate = selectedDate.endOf('month').format('YYYY-MM-DD');
-              if (seriesIndex === 0) {
-                this.router.navigate(['/user/approvals'], {
-                  queryParams: { startDate, endDate },
-                });
-              } else if (seriesIndex === 1) {
-                this.router.navigate(['/user/disbursals'], {
-                  queryParams: { startDate, endDate },
-                });
-              }
-            }
-          },
-        },
+  series: [
+    {
+      name: 'Sanctioned',
+      data: this.sanctionedAmounts,
+    },
+    {
+      name: 'Disbursed',
+      data: this.disbursedAmounts,
+    },
+  ],
+  chart: {
+    height: 300,
+    type: 'bar',
+    toolbar: { show: false },
+    events: {
+      dataPointSelection: (event, chartContext, config) => {
+        if (
+          this.userDetails &&
+this.userDetails.userType &&
+          this.userDetails.userType == '1'
+        ) {
+          const seriesIndex = config.seriesIndex;
+          const dataPointIndex = config.dataPointIndex;
+          const clickedMonth = this.monthLabels[dataPointIndex];
+          const selectedDate = this.moment(clickedMonth, 'MMM YYYY');
+          const startDate = selectedDate.startOf('month').format('YYYY-MM-DD');
+          const endDate = selectedDate.endOf('month').format('YYYY-MM-DD');
+
+          if (seriesIndex === 0) {
+            this.router.navigate(['/user/approvals'], { queryParams: { startDate, endDate } });
+          } else if (seriesIndex === 1) {
+            this.router.navigate(['/user/disbursals'], { queryParams: { startDate, endDate } });
+          }
+        }
       },
-      // colors: ['#2A004E', '#F76C6C'],
-      colors: ['#EE7846', '#29415B'],
-      dataLabels: {
-        enabled: true,
-        formatter: (value: number) => {
-          return this.convertToLakhsOrCrores(value);
-        },
-        style: {
-          fontSize: '12px',
-        },
-      },
-      stroke: { curve: 'smooth' },
-      title: {
-        text: 'Monthly Sanctions and Disbursals',
-        align: 'left',
-        style: { fontSize: '18px', color: '#29415B' },
-      },
-      grid: {
-        // borderColor: '#e7e7e7',
-        // row: { colors: ['#f3f3f3', 'transparent'], opacity: 0.5 },
-      },
-      markers: { size: 1 },
-      xaxis: {
-        categories: this.monthLabels,
-        title: {
-          text: 'Month',
-          // style: {
-          //   color: '#ffffff',
-          // }
-        },
-        labels: {
-          // style: {
-          //   colors: '#ffffff',
-          // },
-        },
-      },
-      yaxis: {
-        title: {
-          text: 'Amount',
-          // style: {
-          //   color: '#ffffff',
-          // }
-        },
-        labels: {
-          // style: {
-          //   colors: '#ffffff'
-          // },
-          formatter: (value: number) => this.convertToLakhsOrCrores(value),
-        },
-      },
-      legend: {
-        position: 'top',
-        horizontalAlign: 'right',
-        floating: true,
-        offsetY: -20,
-        offsetX: -5,
-        labels: {
-          // colors: '#ffffff',
-        },
-      },
-    };
+    },
+  },
+  // colors: ['#4D54B8', '#706EC4'],
+  colors: ['#535AB4', '#8E89D0'],
+  plotOptions: {
+    bar: {
+      horizontal: false,
+      columnWidth: '70%',  
+      barGap: 1,            // adds gap between bars in same group
+    },
+  },
+  dataLabels: {
+    enabled: true,
+    formatter: (value: number) => {
+      return this.convertToLakhsOrCrores(value);
+    },
+    style: { fontSize: '8px' },
+  },
+  stroke: { show: true, width: 2, colors: ['transparent'] },
+  title: {
+    text: 'Monthly Sanctions and Disbursals',
+    align: 'left',
+    style: { fontSize: '18px', color: '#1E1E1E', fontWeight: 400, letterSpacing: '0.15px' },
+  },
+  xaxis: {
+    categories: this.monthLabels,
+    title: { text: 'Month', style: { fontWeight: 500} },
+
+  },
+  yaxis: {
+    title: { text: 'Amount', style: { fontWeight: 500} },
+    labels: {
+      formatter: (value: number) => this.convertToLakhsOrCrores(value),
+    },
+  },
+  legend: {
+    position: 'top',
+    horizontalAlign: 'right',
+    floating: true,
+    offsetY: -20,
+    offsetX: -5,
+  },
+};
   }
   goToRoute(route) {
     this.routingService.setFeatureRoute('user');

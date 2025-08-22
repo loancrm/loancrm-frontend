@@ -1,6 +1,6 @@
 /* Full screen background with radial gradient */
 .background-radial-gradient {
-  background-image: url("../../assets/images/bg-image.jpg");
+  // background-image: url("../../assets/images/bg-image.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   // background-position: center;
@@ -46,7 +46,12 @@
   border-radius: 1rem;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
-
+.p-float-label{
+  height: 60px !important;
+}
+input{
+  height: 50px !important;
+}
 /* Input Fields */
 // input[type="text"],
 // input[type="email"],
@@ -71,10 +76,15 @@
   border-radius: 5px;
   padding: 0;
   z-index: 2;
+  background:none !important;
+}
+.p-inputgroup-addon img{
+  filter: invert(40%) sepia(10%) saturate(800%) hue-rotate(210deg) brightness(95%) contrast(90%) !important;
 }
 .p-inputgroup input {
   // padding-right: 40px !important;
   border-radius: 5px;
+  // height: 45px !important;
 }
 
 .p-inputgroup-addon img {
@@ -190,13 +200,15 @@ button.disabled {
   }
 }
 .orange-button {
-  background-color: #ee7846 !important;
-  border-color: #ee7846 !important;
+  background-color: #8E89D0!important;
+  border-color: #8E89D0 !important;
   color: #fff !important;
   white-space: nowrap;
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 50px !important;
+  border-radius: 4px !important;
 }
 
 .verifybtn {

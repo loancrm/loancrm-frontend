@@ -262,14 +262,25 @@ export class TeamComponent implements OnInit {
   getStatusColor(status: string): {
     textColor: string;
     backgroundColor: string;
+    dotColor: string;
+    width: string;
   } {
     switch (status) {
       case 'Active':
-        return { textColor: '#5DCC0B', backgroundColor: '#E4F7D6' };
+        return { textColor: '#037847',
+        backgroundColor: '#ECFDF3',
+        dotColor: '#14BA6D',
+        width: '81px' };
       case 'Inactive':
-        return { textColor: '#FF555A', backgroundColor: '#FFE2E3' };
+        return { textColor: '#364254',
+        backgroundColor: '#F2F4F7',
+        dotColor: '#364254',
+        width: '81px' };
       default:
-        return { textColor: 'black', backgroundColor: 'white' };
+        return { textColor: 'black',
+        backgroundColor: 'white',
+        dotColor: 'gray',
+        width: '54px' };
     }
   }
   applyConfigFilters(event) {

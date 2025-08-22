@@ -22,9 +22,24 @@
 // }
 .search-btn {
   background-color: #fff !important;
-  border-color: lightgray !important;
+  // border-color: lightgray !important;
   border-bottom-right-radius: 8px !important;
   border-top-right-radius: 8px !important;
   border-bottom-left-radius: 0 !important;
   border-top-left-radius: 0 !important;
+}
+input {
+  position: relative;
+  overflow: hidden; /* Hide any overflow */
+  // width: 383px !important;
+  // height: 45px !important;
+  border-top-left-radius: 8px !important;
+  border-bottom-left-radius: 8px !important;
+  border: none !important;
+  color: #838383 !important;
+  // box-shadow: none !important;
+} 
+
+.search-btn img{
+  filter: brightness(0) saturate(100%) invert(46%) sepia(0%) saturate(0%) hue-rotate(187deg) brightness(91%) contrast(86%);
 }

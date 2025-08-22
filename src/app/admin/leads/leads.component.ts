@@ -942,18 +942,36 @@ export class LeadsComponent implements OnInit {
   // }
 
   getStatusColor(status: string): {
-    textColor: string;
-    backgroundColor: string;
-  } {
-    switch (status) {
-      case 'New':
-        return { textColor: '#5DCC0B', backgroundColor: '#E4F7D6' };
-      case 'Archived':
-        return { textColor: '#FFBA15', backgroundColor: '#FFF3D6' };
-      default:
-        return { textColor: 'black', backgroundColor: 'white' };
-    }
+  textColor: string;
+  backgroundColor: string;
+  dotColor: string;
+  width: string;
+} {
+  switch (status) {
+    case 'New':
+      return {
+        textColor: '#037847',
+        backgroundColor: '#ECFDF3',
+        dotColor: '#14BA6D',
+        width: '54px'
+      };
+    case 'Archived':
+      return {
+        textColor: '#364254',
+        backgroundColor: '#F2F4F7',
+        dotColor: '#364254',
+        width: '81px'
+      };
+    default:
+      return {
+        textColor: 'black',
+        backgroundColor: 'white',
+        dotColor: 'gray',
+        width: '54px'
+      };
   }
+}
+
   loadLeads(event) {
     this.currentTableEvent = event;
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);

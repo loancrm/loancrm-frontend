@@ -1,4 +1,7 @@
 <div>
+  <div class="bread-crumb">
+      <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
+    </div>
   <div>
     <div class="p-1 m-2">
       <div class="d-flex justify-content-between">
@@ -7,7 +10,7 @@
           (click)="goBack()"
         >
           <span class="me-2 d-flex align-items-center">
-            <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
+            <img src="../../../assets/images/icons/Vector.png" alt="Back" />
           </span>
           <!-- <span class="me-1"></span> -->
           <b>
@@ -31,7 +34,7 @@
       <div class="col-md-3">
         <div
           *ngFor="let step of steps; let i = index"
-          class="step-card m-2 p-3 rounded shadow-sm"
+          class="step-card p-2 rounded"
           [ngClass]="{ 'active-step-card': activeIndex === i }"
           (click)="activeIndex = i"
         >
@@ -60,7 +63,7 @@
               />
             </div> -->
                   <div class="col-md-12">
-                    <h5 style="color: #29415b">Business Details</h5>
+                    <h5 style="color: #535AB4">Business Details</h5>
                     <div class="row">
                       <div class="col-md-4 mt-2">
                         <div>
@@ -114,7 +117,7 @@
                             [showClear]="true"
                             appendTo="body"
                             placeholder="Select Business Entity"
-                            [dropdownIcon]="'fa fa-caret-down'"
+                            [dropdownIcon]="'pi pi-chevron-down'"
                             styleClass="w-100"
                           ></p-dropdown>
                           <!-- Error message for invalid Business Entity -->
@@ -189,7 +192,7 @@
                             [showClear]="true"
                             appendTo="body"
                             placeholder="Select Nature Of Business"
-                            [dropdownIcon]="'fa fa-caret-down'"
+                            [dropdownIcon]="'pi pi-chevron-down'"
                             styleClass="w-100"
                           ></p-dropdown>
                           <!-- Error message for invalid Nature Of Business -->
@@ -262,7 +265,7 @@
                             [showClear]="true"
                             appendTo="body"
                             placeholder="Select Business Turnover"
-                            [dropdownIcon]="'fa fa-caret-down'"
+                            [dropdownIcon]="'pi pi-chevron-down'"
                             styleClass="w-100"
                           ></p-dropdown>
                           <!-- Error message for invalid Business Turnover -->
@@ -395,7 +398,7 @@
                             styleClass="w-100"
                             [filter]="true"
                             filterPlaceholder="Search..."
-                            [dropdownIcon]="'fa fa-caret-down'"
+                            [dropdownIcon]="'pi pi-chevron-down'"
                           ></p-dropdown>
                         </div>
                       </div>
@@ -655,7 +658,7 @@
                             appendTo="body"
                             styleClass="w-100"
                             placeholder="Had Own House ?"
-                            [dropdownIcon]="'fa fa-caret-down'"
+                            [dropdownIcon]="'pi pi-chevron-down'"
                           ></p-dropdown>
                           <!-- Error message for Had Own House -->
                           <div
@@ -776,7 +779,7 @@
                             appendTo="body"
                             styleClass="w-100"
                             placeholder="Select Lead Source"
-                            [dropdownIcon]="'fa fa-caret-down'"
+                            [dropdownIcon]="'pi pi-chevron-down'"
                           ></p-dropdown>
                         </div>
                       </div>
@@ -805,7 +808,7 @@
                             appendTo="body"
                             [showClear]="true"
                             placeholder="Select Sourced By"
-                            [dropdownIcon]="'fa fa-caret-down'"
+                            [dropdownIcon]="'pi pi-chevron-down'"
                             [filter]="true"
                             filterPlaceholder="Search..."
                           ></p-dropdown>
@@ -920,7 +923,7 @@
                             appendTo="body"
                             styleClass="w-100"
                             placeholder="Select Lead Remarks"
-                            [dropdownIcon]="'fa fa-caret-down'"
+                            [dropdownIcon]="'pi pi-chevron-down'"
                           ></p-dropdown>
                         </div>
                       </div>
@@ -962,7 +965,7 @@
                 </div>
               </div>
             </div>
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between mt-3">
               <button
                 pButton
                 type="button"
@@ -987,10 +990,11 @@
                 pButton
                 pRipple
                 type="button"
+                label="Go Back"
                 class="p-button-info me-2"
-                (click)="goBack()"
+                (click)="goBack()" 
               >
-                Go Back
+
               </button>
               <button
                 pButton

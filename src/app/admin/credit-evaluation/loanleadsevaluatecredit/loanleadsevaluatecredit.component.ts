@@ -47,7 +47,22 @@ export class LoanleadsevaluatecreditComponent {
       }
     });
   }
+   // STEP LIST (Matches UI sidebar)
+  steps = [
+    { label: 'Application Information' },
+    { label: 'Company Details' },
+    { label: 'Bank Statements' },
+    { label: 'Existing Loans' },
+    { label: 'FIOR Calculations' },
+  ];
 
+  // TRACK WHICH STEP IS ACTIVE
+  selectedSection: number = 0;
+
+  // UPDATE SECTION INDEX
+  setSection(index: number): void {
+    this.selectedSection = index;
+  }
 
   getLeadById(leadId: any): void {
     this.leadsService.getLoanLeadById(leadId).subscribe(

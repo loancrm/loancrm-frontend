@@ -124,7 +124,9 @@ export class HeaderComponent implements OnInit {
             this.upgradeButtonLabel = sub.plan_name === 'Free Trial' ? 'Upgrade Now' : 'Renew';
             this.showUpgradeButton = true;
           } else if (diff <= 1) {
-            this.displayPlanStatus = `${sub.plan_name} - Expires in 1 day`;
+            // this.displayPlanStatus = `${sub.plan_name} - Expires in 1 day`;
+            this.displayPlanStatus = `${sub.plan_name}`;
+            // this.upgradeMessage = `Your ${sub.plan_name} plan will expire in 1 day.`;
             this.upgradeMessage = `Your ${sub.plan_name} plan will expire in 1 day.`;
             this.upgradeButtonLabel = sub.plan_name === 'Free Trial' ? 'Upgrade Now' : 'Renew';
             this.showUpgradeButton = true;
@@ -134,7 +136,8 @@ export class HeaderComponent implements OnInit {
             this.upgradeButtonLabel = sub.plan_name === 'Free Trial' ? 'Upgrade Now' : 'Renew';
             this.showUpgradeButton = true;
           } else {
-            this.displayPlanStatus = `${sub.plan_name} - Active`;
+            // this.displayPlanStatus = `${sub.plan_name} - Active`;
+           this.displayPlanStatus = `${sub.plan_name}`;
             this.upgradeMessage = '';
             this.showUpgradeButton = false;
           }

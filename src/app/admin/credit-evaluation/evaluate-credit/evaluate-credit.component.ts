@@ -195,7 +195,25 @@ export class EvaluateCreditComponent implements OnInit {
       });
     }
   }
+   // STEP LIST (Matches UI sidebar)
+  steps = [
+    { label: 'Business Information' },
+    { label: 'Firm Documents' },
+    { label: 'Existing Loan Details' },
+    { label: 'DSCR Calculation' },
+    { label: 'BTO Calculation' },
+    { label: 'GST Calculation' },
+    { label: 'Credit Summary Sheet' },
+  ];
 
+  // TRACK WHICH STEP IS ACTIVE
+  selectedSection: number = 0;
+
+  // UPDATE SECTION INDEX
+  setSection(index: number): void {
+    this.selectedSection = index;
+  }
+  
   ngOnInit(): void {
     // this.activatedRoute.params.subscribe((params) => {
     //   if (params && params['id']) {

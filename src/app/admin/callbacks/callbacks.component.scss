@@ -5,8 +5,18 @@
 
 ::ng-deep .custom-dropdown .p-dropdown-label.p-placeholder,
 ::ng-deep .custom-dropdown .p-dropdown-trigger {
-  color: #ffffff;
+  color: #ffffff !important;
 }
+/* Change dropdown placeholder text color */
+::ng-deep .custom-dropdown .p-dropdown-label.p-placeholder {
+  color: #ffffff !important;
+}
+
+/* Ensure selected value stays default (not white) */
+::ng-deep .custom-dropdown .p-dropdown-label {
+  color: #000000; /* normal text color when option is selected */
+}
+
 // .statusdata {
 //   padding-top: 4px;
 //   padding-bottom: 4px;
@@ -38,11 +48,77 @@
   width: 100% !important;
   margin: auto;
 }
+input {
+  position: relative;
+  overflow: hidden; /* Hide any overflow */
+  // width: 383px !important;
+  // height: 45px !important;
+  border-top-left-radius: 8px !important;
+  border-bottom-left-radius: 8px !important;
+  border: none !important;
+  color: #838383 !important;
+  box-shadow: 0 0 4px 0 #00000040 !important;
+} 
 .p-button-primary {
   background-color:#fff !important;
-  border-color: lightgray !important;
+  // border-color: lightgray !important;
   border-bottom-right-radius: 8px !important;
   border-top-right-radius: 8px !important;
   border-bottom-left-radius: 0 !important;
   border-top-left-radius: 0 !important;
+  // border: none !important;
+  // box-shadow: 0 0 4px 0 #00000040 !important;
+  color: #ffffff;
 }
+.p-button-primary img{
+  filter: brightness(0) saturate(100%) invert(46%) sepia(0%) saturate(0%) hue-rotate(187deg) brightness(91%) contrast(86%);
+}
+
+::ng-deep .p-tabmenu {
+  background-color: #f7f7f7;
+
+  .p-tabmenu-nav {
+    background-color: #f7f7f7;
+    border: none;
+
+    li {
+      border: none;
+      border-radius: 0;
+      transition: all 0.3s ease;
+
+      a {
+        border: none;
+        outline: none;
+        border-radius: 0;
+        background: transparent;
+        color: #1b1f2b;
+        padding: 1rem;
+
+        &:hover {
+          background-color: #DFE5EF;
+          color: #535AB4;
+        }
+
+        &:focus {
+          outline: none !important;
+          box-shadow: none !important;
+        }
+      }
+
+      &.p-highlight {
+        background-color: #DFE5EF !important;
+        // border: 1px solid #535AB4 !important;
+        border-bottom: 3px solid #535ABA !important;
+        border-radius: 6px 6px 0 0 !important;
+
+        a {
+          color: #535AB4 !important;
+        }
+      }
+    }
+  }
+}
+.custom-menu-item:hover {
+  background-color: #DFE5EF;
+}
+

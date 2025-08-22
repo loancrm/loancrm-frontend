@@ -48,7 +48,7 @@
           <img
             src="../../../assets/images/icons/search.svg"
             alt="Search"
-            style="width: 14px; height: 14px; cursor: pointer"
+            style="width: 15px; height: 15px; cursor: pointer"
           />
         </span>
         <input
@@ -70,7 +70,7 @@
         class="desktop-only"
       >
         <div class="border-0 rounded-4 p-4 mx-auto text-center my-account-card">
-          <h4 class="fw-bold mb-4">My Account</h4>
+          <h4 class="fw-bold mb-4" style="color: #4D54B8;">My Account</h4>
           <div class="d-flex justify-content-center mb-3">
             <img
               [src]="
@@ -100,7 +100,7 @@
             >
               <i class="fa fa-user me-2"></i>View Profile
             </button>
-            <button class="btn btn-outline-danger" (click)="userLogout()">
+            <button class="btn btn-outline-danger custom-secondary-btn" (click)="userLogout()">
               <i class="fa fa-sign-out me-2"></i>Logout
             </button>
           </div>
@@ -115,16 +115,26 @@
           class="d-flex flex-column align-items-start me-3 text-nowrap"
           *ngIf="userDetails.userType == 1"
         >
-          <!-- 🔵 Header Badge -->
+        <span
+          class="subscription-badge text-capitalize d-flex align-items-center"
+          *ngIf="subscriptionPlanName"
+          (click)="overlayPanel.toggle($event)"
+        >
           <span
-            class="subscription-badge text-capitalize"
-            *ngIf="subscriptionPlanName"
-            (click)="overlayPanel.toggle($event)"
-          >
-            {{ displayPlanStatus }}
-          </span>
-
-          <!-- ⚙️ Overlay Panel -->
+            [ngStyle]="{
+              'display': 'inline-block',
+              'width': '10px',
+              'height': '10px',
+              'border-radius': '50%',
+              'margin-right': '6px',
+              'background-color':
+                subscriptionStatus === 'Active'
+                  ? ( (moment(subscriptionEndDate).diff(moment(), 'days') <= 7) ? 'orange' : 'green' )
+                  : 'red'
+            }"
+          ></span>
+          {{ displayPlanStatus }}
+        </span>
           <p-overlayPanel
             #overlayPanel
             [dismissable]="true"
@@ -167,10 +177,9 @@
             </div>
           </p-overlayPanel>
         </div>
-
         <!-- Right: User Info and Image -->
-        <div class="d-flex align-items-center" (click)="sidebarVisible = true">
-          <div class="text-end me-2">
+        <div class="d-flex align-items-start" (click)="sidebarVisible = true">
+          <div class="text-start me-4">
             <p class="profile text-capitalize text-nowrap mb-0">
               {{ userDetails.name | capitalizeFirst }}
             </p>
@@ -189,6 +198,7 @@
             [style.height.px]="45"
             [style.width.px]="45"
             style="object-fit: cover; border-radius: 50%"
+            
           />
         </div>
       </div>

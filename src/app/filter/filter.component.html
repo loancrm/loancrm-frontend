@@ -51,7 +51,7 @@
                     [optionLabel]="field.label"
                     appendTo="body"
                     [showClear]="true"
-                    [dropdownIcon]="'fa fa-caret-down'"
+                    [dropdownIcon]="'pi pi-chevron-down'"
                     [autoDisplayFirst]="false"
                   >
                   </p-dropdown>
@@ -85,7 +85,7 @@
                       width: field.fieldWidth ? field.fieldWidth : '100%'
                     }"
                     [(ngModel)]="filter[field.field + '-' + field.filterType]"
-                    [dropdownIcon]="'fa fa-caret-down'"
+                    [dropdownIcon]="'pi pi-chevron-down'"
                     [options]="field.options"
                     appendTo="body"
                     [optionValue]="field.value"
@@ -142,7 +142,7 @@
                 [optionLabel]="field.label"
                 appendTo="body"
                 [showClear]="true"
-                [dropdownIcon]="'fa fa-caret-down'"
+                [dropdownIcon]="'pi pi-chevron-down'"
                 [autoDisplayFirst]="false"
               ></p-dropdown>
             </span>
@@ -178,7 +178,7 @@
                   width: field.fieldWidth ? field.fieldWidth : '100%'
                 }"
                 [(ngModel)]="filter[field.field + '-' + field.filterType]"
-                [dropdownIcon]="'fa fa-caret-down'"
+                [dropdownIcon]="'pi pi-chevron-down'"
                 [options]="field.options"
                 appendTo="body"
                 [optionValue]="field.value"
@@ -230,7 +230,7 @@
       alt="Filter"
       [style.width]="iconSize"
       [style.height]="iconSize"
-      style="cursor: pointer"
+      style="cursor: pointer; filter: brightness(0) invert(1);"
     />
     <sup
       class="indication-dot"

@@ -1,12 +1,16 @@
 <div>
+   <div class="bread-crumb">
+      <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
+    </div>
   <div class="p-1 m-2">
     <div class="d-flex justify-content-between">
       <div
         class="d-flex align-items-center justify-content-center pointer-cursor"
         (click)="goBack()"
+         style="height: 36px; width: 98px; gap: 8px;"
       >
         <span class="me-2 d-flex align-items-center">
-          <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
+          <img src="../../../assets/images/icons/Vector.png" alt="Back"/>
         </span>
         <b>
           <span class="back-btn-text"> Leads </span>
@@ -23,7 +27,6 @@
             (onChange)="onLoanTypeSelect($event)"
             [showClear]="true"
             appendTo="body"
-            [dropdownIcon]="'fa fa-caret-down'"
             styleClass="custom-dropdown p-button-primary"
           ></p-dropdown>
         </ng-container>
@@ -70,7 +73,7 @@
             styleClass="p-datatable-customers "
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} leads"
           >
-            <ng-template pTemplate="caption">
+            <ng-template pTemplate="caption"  style="background-color: #f7f7f7;">
               <!-------Adding one searchbar in business name and phone number-->
               <div class="row">
                 <div class="col-md-3 mt-2 no-padding-small">
@@ -93,7 +96,8 @@
                       [disabled]="!businessNameToSearch"
                       (click)="filterWithBusinessName()"
                     ></button> -->
-                    <button
+                    <!--currently working button-->
+                    <!-- <button  
                       type="button"
                       pButton
                       class="p-button-primary"
@@ -107,11 +111,22 @@
                         height="16"
                         style="vertical-align: middle"
                       />
-                    </button>
+                    </button> -->
+
+                    <span
+                        class="input-group-text p-button-primary"
+                        (click)="filterWithBusinessName()"
+                      >
+                        <img
+                          src="../../../assets/images/icons/search.svg"
+                          alt="Search"
+                          style="width: 14px; height: 14px; cursor: pointer"
+                        />
+                    </span>
                   </div>
                 </div>
                 <div
-                  class="col-md-3 mt-2 no-padding-small"
+                  class="col-md-3 mt-2 no-padding-small "
                   *ngIf="
                     userDetails &&
                     userDetails.userType &&
@@ -120,20 +135,22 @@
                 ></div>
                 <div class="col-md-3 mt-2 no-padding-small">
                   <div
-                    class="p-inputgroup"
+                    class="p-inputgroup  position-relative"
                     *ngIf="
                       userDetails &&
                       userDetails.userType &&
                       userDetails.userType != '3'
                     "
+                    
                   >
                     <br class="d-lg-none d-md-none" />
                     <p-dropdown
-                      styleClass="text-left"
+                      styleClass="text-left custom-dropdowns"
                       [style]="{ width: '100%' }"
                       [options]="leadUsers"
                       (onChange)="statusChangeforSourcedBy($event)"
-                      [dropdownIcon]="'fa fa-caret-down'"
+                      [dropdownIcon]="'pi pi-chevron-down'"
+                      
                       [(ngModel)]="selectedSourcedByStatus"
                       optionLabel="name"
                       dataKey="name"
@@ -142,28 +159,56 @@
                       filterPlaceholder="Search..."
                     >
                     </p-dropdown>
+                    <!-- Custom Icon -->
+                        <!-- <img
+                          src="../../../../assets/images/icons/Vector.svg"
+                          class="custom-dropdowns-icon"
+                          alt="dropdown icon"
+                        /> -->
                   </div>
                 </div>
                 <div class="col-md-3 mt-2 no-padding-small text-right">
                   <div class="d-flex">
-                    <div class="flex-grow-1 me-2">
+                    <!-- <div class="flex-grow-1 me-2">
                       <p-dropdown
-                        styleClass="text-left"
+                        styleClass="text-left custom-dropdowns"
                         [style]="{ width: '100%' }"
                         [options]="leadStatus"
                         (onChange)="statusChange($event)"
-                        [dropdownIcon]="'fa fa-caret-down'"
+                        [dropdownIcon]="'pi pi-chevron-down'"
                         [(ngModel)]="selectedLeadStatus"
                         optionLabel="displayName"
                         dataKey="name"
                         appendTo="body"
                       >
                       </p-dropdown>
-                    </div>
+                    </div> -->
+                    <div class="flex-grow-1 me-2 position-relative custom-dropdown-wrapper">
+                        <p-dropdown
+                          styleClass="text-left custom-dropdowns"
+                          [style]="{ width: '100%' }"
+                          [options]="leadStatus"
+                          (onChange)="statusChange($event)"
+                          [dropdownIcon]="'pi pi-chevron-down'"
+                          [(ngModel)]="selectedLeadStatus"
+                          optionLabel="displayName"
+                          dataKey="name"
+                          appendTo="body"
+                        >
+                        </p-dropdown>
+
+                        <!-- Custom Icon -->
+                        <!-- <img
+                          src="../../../../assets/images/icons/Vector.svg"
+                          class="custom-dropdown-icon"
+                          alt="dropdown icon"
+                        /> -->
+                      </div>
+
                     <div class="d-flex align-items-center pointer-cursor">
                       <app-filter
                         [position]="'right'"
-                        [iconColor]="'#33009C'"
+                        [iconColor]="'#ffffff'"
                         [iconSize]="'28px!important'"
                         (filterEvent)="applyConfigFilters($event, '')"
                         [filterConfig]="filterConfig"
@@ -260,21 +305,37 @@
                 </td>
                 <td>
                   <span
-                    class="table-column-data fw-bold statusdata"
-                    *ngIf="lead.leadInternalStatus"
+                    class="d-inline-flex align-items-center justify-content-start gap-2"
                     [ngStyle]="{
-                      color: getStatusColor(
-                        getStatusName(lead.leadInternalStatus)
-                      ).textColor,
-
+                      backgroundColor: getStatusColor(getStatusName(lead.leadInternalStatus)).backgroundColor,
+                      color: getStatusColor(getStatusName(lead.leadInternalStatus)).textColor,
+                      height: '22px',
+                      width: getStatusColor(getStatusName(lead.leadInternalStatus)).width,
+                      borderRadius: '16px',
+                      fontSize: '12px',
+                      fontWeight: 500,
+                      paddingLeft: '8px'
                     }"
                   >
+                    <!-- Dot -->
+                    <span
+                      class="rounded-circle"
+                      [ngStyle]="{
+                        backgroundColor: getStatusColor(getStatusName(lead.leadInternalStatus)).dotColor,
+                        width: '8px',
+                        height: '8px',
+                        display: 'inline-block'
+                      }"
+                    ></span>
+
+                    <!-- Status Text -->
                     {{ getStatusName(lead.leadInternalStatus) }}
                   </span>
                 </td>
+
                 <td>
                   <div class="text-center" style="text-align: left">
-                    <div class="d-flex">
+                    <div class="d-flex tableimage">
                       <!-- <button
                         pButton
                         pRipple
@@ -309,7 +370,7 @@
                         #menu
                         [model]="actionItems(lead)"
                         [popup]="true"
-                      ></p-menu>
+                      ></p-menu>                     
                       <img
                         alt="Actions"
                         src="../../../assets/images/icons/menu.svg"
@@ -339,6 +400,7 @@
                         pTooltip="Actions"
                         tooltipPosition="top"
                       ></button> -->
+                      
                     </div>
                   </div>
                 </td>
@@ -347,12 +409,12 @@
             <ng-template pTemplate="emptymessage">
               <tr class="text-center">
                 <td colspan="10" class="text-center fw-bold">
-                  <img
+                  <!-- <img
                     alt="No Data"
                     src="../../../assets/images/menu/no-data.gif"
                     width="200"
                     height="200"
-                  />
+                  /> -->
                   <p>No Leads Found</p>
                 </td>
               </tr>
@@ -454,7 +516,7 @@
                       [style]="{ width: '100%' }"
                       [options]="leadUsers"
                       (onChange)="statusChangeForPersonal($event)"
-                      [dropdownIcon]="'fa fa-caret-down'"
+                      [dropdownIcon]="'pi pi-chevron-down'"
                       [(ngModel)]="SourcedByForPersonal"
                       optionLabel="name"
                       dataKey="name"
@@ -473,7 +535,7 @@
                         [style]="{ width: '100%' }"
                         [options]="leadStatus"
                         (onChange)="statusChangeForPersonal($event)"
-                        [dropdownIcon]="'fa fa-caret-down'"
+                        [dropdownIcon]="'pi pi-chevron-down'"
                         [(ngModel)]="selectedPersonalLeadStatus"
                         optionLabel="displayName"
                         dataKey="name"
@@ -578,7 +640,7 @@
                   }}</span>
                 </td>
                 <td>
-                  <span
+                  <!-- <span
                     class="table-column-data fw-bold statusdata"
                     *ngIf="lead.leadInternalStatus"
                     [ngStyle]="{
@@ -589,11 +651,38 @@
                     }"
                   >
                     {{ getStatusName(lead.leadInternalStatus) }}
-                  </span>
+                  </span> -->
+                  <span
+                class="d-inline-flex align-items-center justify-content-start gap-2"
+                [ngStyle]="{
+                  backgroundColor: getStatusColor(getStatusName(lead.leadInternalStatus)).backgroundColor,
+                  color: getStatusColor(getStatusName(lead.leadInternalStatus)).textColor,
+                  height: '22px',
+                  width: getStatusColor(getStatusName(lead.leadInternalStatus)).width,
+                  borderRadius: '16px',
+                  fontSize: '12px',
+                  fontWeight: 500,
+                  paddingLeft: '8px'
+                }"
+              >
+                <!-- Dot -->
+                <span
+                  class="rounded-circle"
+                  [ngStyle]="{
+                    backgroundColor: getStatusColor(getStatusName(lead.leadInternalStatus)).dotColor,
+                    width: '8px',
+                    height: '8px',
+                    display: 'inline-block'
+                  }"
+                ></span>
+
+                <!-- Status Text -->
+                {{ getStatusName(lead.leadInternalStatus) }}
+              </span>
                 </td>
                 <td>
                   <div class="text-center">
-                    <div class="d-flex">
+                    <div class="d-flex tableimage">
                       <!-- <button
                         pButton
                         pRipple
@@ -798,7 +887,7 @@
                               ? statusChangeForHome($event)
                               : statusChangeForHomeSelf($event)
                           "
-                          [dropdownIcon]="'fa fa-caret-down'"
+                          [dropdownIcon]="'pi pi-chevron-down'"
                           [(ngModel)]="SourcedByForHome"
                           optionLabel="name"
                           dataKey="name"
@@ -821,7 +910,7 @@
                                 ? statusChangeForHome($event)
                                 : statusChangeForHomeSelf($event)
                             "
-                            [dropdownIcon]="'fa fa-caret-down'"
+                            [dropdownIcon]="'pi pi-chevron-down'"
                             [(ngModel)]="selectedHomeLeadStatus"
                             optionLabel="displayName"
                             dataKey="name"
@@ -1002,7 +1091,7 @@
                       }}</span>
                     </td>
                     <td>
-                      <span
+                      <!-- <span
                         class="table-column-data fw-bold statusdata"
                         [ngStyle]="{
                           color: getStatusColor(
@@ -1012,11 +1101,38 @@
                         }"
                       >
                         {{ getStatusName(lead.leadInternalStatus) }}
-                      </span>
+                      </span> -->
+                      <span
+                class="d-inline-flex align-items-center justify-content-start gap-2"
+                [ngStyle]="{
+                  backgroundColor: getStatusColor(getStatusName(lead.leadInternalStatus)).backgroundColor,
+                  color: getStatusColor(getStatusName(lead.leadInternalStatus)).textColor,
+                  height: '22px',
+                  width: getStatusColor(getStatusName(lead.leadInternalStatus)).width,
+                  borderRadius: '16px',
+                  fontSize: '12px',
+                  fontWeight: 500,
+                  paddingLeft: '8px'
+                }"
+              >
+                <!-- Dot -->
+                <span
+                  class="rounded-circle"
+                  [ngStyle]="{
+                    backgroundColor: getStatusColor(getStatusName(lead.leadInternalStatus)).dotColor,
+                    width: '8px',
+                    height: '8px',
+                    display: 'inline-block'
+                  }"
+                ></span>
+
+                <!-- Status Text -->
+                {{ getStatusName(lead.leadInternalStatus) }}
+              </span>
                     </td>
                     <td>
                       <div class="text-center">
-                        <div class="d-flex">
+                        <div class="d-flex tableimage">
                           <!-- <button
                             pButton
                             pRipple
@@ -1226,7 +1342,7 @@
                               ? statusChangeForLap($event)
                               : statusChangeForLapSelf($event)
                           "
-                          [dropdownIcon]="'fa fa-caret-down'"
+                          [dropdownIcon]="'pi pi-chevron-down'"
                           [(ngModel)]="SourcedByForLap"
                           optionLabel="name"
                           dataKey="name"
@@ -1249,7 +1365,7 @@
                                 ? statusChangeForLap($event)
                                 : statusChangeForLapSelf($event)
                             "
-                            [dropdownIcon]="'fa fa-caret-down'"
+                            [dropdownIcon]="'pi pi-chevron-down'"
                             [(ngModel)]="selectedLapLeadStatus"
                             optionLabel="displayName"
                             dataKey="name"
@@ -1422,7 +1538,7 @@
                       }}</span>
                     </td>
                     <td>
-                      <span
+                      <!-- <span
                         class="table-column-data fw-bold statusdata"
                         *ngIf="lead.leadInternalStatus"
                         [ngStyle]="{
@@ -1433,11 +1549,38 @@
                         }"
                       >
                         {{ getStatusName(lead.leadInternalStatus) }}
-                      </span>
+                      </span> -->
+                      <span
+                class="d-inline-flex align-items-center justify-content-start gap-2"
+                [ngStyle]="{
+                  backgroundColor: getStatusColor(getStatusName(lead.leadInternalStatus)).backgroundColor,
+                  color: getStatusColor(getStatusName(lead.leadInternalStatus)).textColor,
+                  height: '22px',
+                  width: getStatusColor(getStatusName(lead.leadInternalStatus)).width,
+                  borderRadius: '16px',
+                  fontSize: '12px',
+                  fontWeight: 500,
+                  paddingLeft: '8px'
+                }"
+              >
+                <!-- Dot -->
+                <span
+                  class="rounded-circle"
+                  [ngStyle]="{
+                    backgroundColor: getStatusColor(getStatusName(lead.leadInternalStatus)).dotColor,
+                    width: '8px',
+                    height: '8px',
+                    display: 'inline-block'
+                  }"
+                ></span>
+
+                <!-- Status Text -->
+                {{ getStatusName(lead.leadInternalStatus) }}
+              </span>
                     </td>
                     <td>
                       <div class="text-center">
-                        <div class="d-flex">
+                        <div class="d-flex tableimage">
                           <!-- <img
                             src="../../../assets/images/icons/eye.svg"
                             width="24px"
@@ -1498,16 +1641,60 @@
         </ng-container>
       </div>
       <div *ngIf="activeItem.name == 'professionalLoans'">
-        <p>Comming soon ....</p>
+        <!-- <div class="card" style="height: 500px; width: 950px; border-radius: 8px; box-shadow: 0 0 4px 0; margin-left: 200px; margin-top: 50px;">
+          <div class="d-flex">
+            <img src="../../../assets/images/Group (2).svg" alt="" style="height: 398px; width: 280.68px;">
+          <img src="../../../assets/images/Group (1).svg" alt="" style="height: 75px; width: 461px; margin-top: 150px;">
+          </div>
+         </div> -->
+         <div class="card" style="height: 500px; width: 950px; border-radius: 8px; box-shadow: 0 0 4px 0; margin-left: 200px; margin-top: 50px;">
+          <div class="d-flex">
+            <img src="../../../assets/images/Group (2).svg" alt="" style="height: 398px; width: 280.68px;">
+          <img src="../../../assets/images/Group (1).svg" alt="" style="height: 75px; width: 461px; margin-top: 150px;">
+          </div>
+         </div>
       </div>
       <div *ngIf="activeItem.name == 'educationlLoans'">
-        <p>Comming soon ....</p>
+        <!-- <div class="card" style="height: 500px; width: 950px; border-radius: 8px; box-shadow: 0 0 4px 0; margin-left: 200px; margin-top: 50px;">
+          <div class="d-flex">
+            <img src="../../../assets/images/Group (2).svg" alt="" style="height: 398px; width: 280.68px;">
+          <img src="../../../assets/images/Group (1).svg" alt="" style="height: 75px; width: 461px; margin-top: 150px;">
+          </div>
+         </div> -->
+         <div class="card" style="height: 500px; width: 950px; border-radius: 8px; box-shadow: 0 0 4px 0; margin-left: 200px; margin-top: 50px;">
+          <div class="d-flex">
+            <img src="../../../assets/images/Group (2).svg" alt="" style="height: 398px; width: 280.68px;">
+          <img src="../../../assets/images/Group (1).svg" alt="" style="height: 75px; width: 461px; margin-top: 150px;">
+          </div>
+         </div>
       </div>
       <div *ngIf="activeItem.name == 'carLoan'">
-        <p>Comming soon ....</p>
+        <!-- <div class="card" style="height: 500px; width: 950px; border-radius: 8px; box-shadow: 0 0 4px 0; margin-left: 200px; margin-top: 50px;">
+          <div class="d-flex">
+            <img src="../../../assets/images/Group (2).svg" alt="" style="height: 398px; width: 280.68px;">
+          <img src="../../../assets/images/Group (1).svg" alt="" style="height: 75px; width: 461px; margin-top: 150px;">
+          </div>
+         </div> -->
+         <div class="card" style="height: 500px; width: 950px; border-radius: 8px; box-shadow: 0 0 4px 0; margin-left: 200px; margin-top: 50px;">
+          <div class="d-flex">
+            <img src="../../../assets/images/Group (2).svg" alt="" style="height: 398px; width: 280.68px;">
+          <img src="../../../assets/images/Group (1).svg" alt="" style="height: 75px; width: 461px; margin-top: 150px;">
+          </div>
+         </div>
       </div>
       <div *ngIf="activeItem.name == 'commercialVehicleLoan'">
-        <p>Comming soon ....</p>
+        <!-- <div class="card" style="height: 500px; width: 950px; border-radius: 8px; box-shadow: 0 0 4px 0; margin-left: 200px; margin-top: 50px;">
+          <div class="d-flex">
+            <img src="../../../assets/images/Group (2).svg" alt="" style="height: 398px; width: 280.68px;">
+          <img src="../../../assets/images/Group (1).svg" alt="" style="height: 75px; width: 461px; margin-top: 150px;">
+          </div>
+         </div> -->
+         <div class="card" style="height: 500px; width: 950px; border-radius: 8px; box-shadow: 0 0 4px 0; margin-left: 200px; margin-top: 50px;">
+          <div class="d-flex">
+            <img src="../../../assets/images/Group (2).svg" alt="" style="height: 398px; width: 280.68px;">
+          <img src="../../../assets/images/Group (1).svg" alt="" style="height: 75px; width: 461px; margin-top: 150px;">
+          </div>
+         </div>
       </div>
     </div>
   </div>

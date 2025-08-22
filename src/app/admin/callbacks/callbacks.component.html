@@ -6,7 +6,7 @@
         (click)="goBack()"
       >
         <span class="me-2 d-flex align-items-center">
-          <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
+          <img src="../../../assets/images/icons/Vector.png" alt="Back" />
         </span>
         <b class="back-btn-text">Callbacks</b>
       </div>
@@ -34,7 +34,7 @@
             (onChange)="onLoanTypeSelect($event)"
             [showClear]="true"
             appendTo="body"
-            [dropdownIcon]="'fa fa-caret-down'"
+            [dropdownIcon]="'pi pi-chevron-down'"
             styleClass="custom-dropdown p-button-primary"
           ></p-dropdown>
         </ng-container>
@@ -100,10 +100,20 @@
                     [disabled]="!businessNameToSearch"
                     (click)="filterWithBusinessName()"
                   ></button> -->
-                  <button
+                  <span
+                        class="input-group-text p-button-primary"
+                        (click)="filterWithBusinessName()"
+                      >
+                        <img
+                          src="../../../assets/images/icons/search.svg"
+                          alt="Search"
+                          style="width: 14px; height: 14px; cursor: pointer"
+                        />
+                    </span>
+                  <!-- <button
                     type="button"
                     pButton
-                    class="p-button-primary"
+                    class="p-button-primary tableimage"
                     [disabled]="!businessNameToSearch"
                     (click)="filterWithBusinessName()"
                   >
@@ -113,8 +123,9 @@
                       width="16"
                       height="16"
                       style="vertical-align: middle"
+                      
                     />
-                  </button>
+                  </button> -->
                 </div>
               </div>
               <div
@@ -135,11 +146,11 @@
                   "
                 >
                   <p-dropdown
-                    styleClass="text-left"
+                    styleClass="text-left custom-dropdowns"
                     [style]="{ width: '100%' }"
                     [options]="leadUsers"
                     (onChange)="statusChangesourcedBy($event)"
-                    [dropdownIcon]="'fa fa-caret-down'"
+                    [dropdownIcon]="'pi pi-chevron-down'"
                     [(ngModel)]="selectedSoucedByStatus"
                     optionLabel="name"
                     dataKey="name"
@@ -158,7 +169,7 @@
                       [style]="{ width: '100%' }"
                       [options]="callbackStatus"
                       (onChange)="statusChange($event)"
-                      [dropdownIcon]="'fa fa-caret-down'"
+                      [dropdownIcon]="'pi pi-chevron-down'"
                       [(ngModel)]="selectedCallbackStatus"
                       optionLabel="displayName"
                       appendTo="body"
@@ -252,7 +263,7 @@
                 }}</span>
               </td>
               <td>
-                <span
+                <!-- <span
                   class="table-column-data fw-bold statusdata"
                   *ngIf="callback.callbackInternalStatus"
                   [ngStyle]="{
@@ -263,11 +274,38 @@
                   }"
                 >
                   {{ getStatusName(callback.callbackInternalStatus) }}
-                </span>
+                </span> -->
+                <span
+                    class="d-inline-flex align-items-center justify-content-start gap-2"
+                    [ngStyle]="{
+                      backgroundColor: getStatusColor(getStatusName(callback.callbackInternalStatus)).backgroundColor,
+                      color: getStatusColor(getStatusName(callback.callbackInternalStatus)).textColor,
+                      height: '22px',
+                      width: getStatusColor(getStatusName(callback.callbackInternalStatus)).width,
+                      borderRadius: '16px',
+                      fontSize: '12px',
+                      fontWeight: 500,
+                      paddingLeft: '8px'
+                    }"
+                  >
+                    <!-- Dot -->
+                    <span
+                      class="rounded-circle"
+                      [ngStyle]="{
+                        backgroundColor: getStatusColor(getStatusName(callback.callbackInternalStatus)).dotColor,
+                        width: '8px',
+                        height: '8px',
+                        display: 'inline-block'
+                      }"
+                    ></span>
+
+                    <!-- Status Text -->
+                    {{ getStatusName(callback.callbackInternalStatus) }}
+                  </span>
               </td>
               <td>
                 <div
-                  class="text-center d-flex pointer-cursor"
+                  class="text-center d-flex pointer-cursor tableimage"
                   *ngIf="callback.callbackInternalStatus !== 3"
                 >
                   <div class="d-flex">
@@ -307,7 +345,6 @@
                     pTooltip="Actions"
                     tooltipPosition="top"
                   ></button> -->
-
                   <img
                     alt="Actions"
                     src="../../../assets/images/icons/menu.svg"
@@ -319,7 +356,7 @@
                   />
                 </div>
                 <div
-                  class="text-center d-flex pointer-cursor"
+                  class="text-center d-flex pointer-cursor tableimage"
                   *ngIf="callback.callbackInternalStatus == 3"
                 >
                   <!-- <button
@@ -348,12 +385,12 @@
           <ng-template pTemplate="emptymessage">
             <tr class="text-center">
               <td colspan="10" class="text-center fw-bold">
-                <img
+                <!-- <img
                   alt="No Data"
                   src="../../../assets/images/menu/no-data.gif"
                   width="200"
                   height="200"
-                />
+                /> -->
                 <p>No Callbacks Found</p>
               </td>
             </tr>
@@ -417,6 +454,7 @@
                     class="p-button-primary"
                     [disabled]="!personNameToSearch"
                     (click)="filterWithPersonName()"
+                    
                   >
                     <img
                       alt="Search"
@@ -452,7 +490,7 @@
                     [style]="{ width: '100%' }"
                     [options]="leadUsers"
                     (onChange)="statusChangeForPersonal($event)"
-                    [dropdownIcon]="'fa fa-caret-down'"
+                    [dropdownIcon]="'pi pi-chevron-down'"
                     [(ngModel)]="SourcedByForPersonal"
                     optionLabel="name"
                     dataKey="name"
@@ -471,7 +509,7 @@
                       [style]="{ width: '100%' }"
                       [options]="callbackStatus"
                       (onChange)="statusChangeForPersonal1($event)"
-                      [dropdownIcon]="'fa fa-caret-down'"
+                      [dropdownIcon]="'pi pi-chevron-down'"
                       [(ngModel)]="selectedPersonalCallbackStatus"
                       optionLabel="displayName"
                       appendTo="body"
@@ -567,7 +605,7 @@
                 }}</span>
               </td>
               <td>
-                <span
+                <!-- <span
                   class="table-column-data fw-bold statusdata"
                   *ngIf="callback.callbackInternalStatus"
                   [ngStyle]="{
@@ -577,11 +615,38 @@
                   }"
                 >
                   {{ getStatusName(callback.callbackInternalStatus) }}
-                </span>
+                </span> -->
+                <span
+                    class="d-inline-flex align-items-center justify-content-start gap-2"
+                    [ngStyle]="{
+                      backgroundColor: getStatusColor(getStatusName(callback.callbackInternalStatus)).backgroundColor,
+                      color: getStatusColor(getStatusName(callback.callbackInternalStatus)).textColor,
+                      height: '22px',
+                      width: getStatusColor(getStatusName(callback.callbackInternalStatus)).width,
+                      borderRadius: '16px',
+                      fontSize: '12px',
+                      fontWeight: 500,
+                      paddingLeft: '8px'
+                    }"
+                  >
+                    <!-- Dot -->
+                    <span
+                      class="rounded-circle"
+                      [ngStyle]="{
+                        backgroundColor: getStatusColor(getStatusName(callback.callbackInternalStatus)).dotColor,
+                        width: '8px',
+                        height: '8px',
+                        display: 'inline-block'
+                      }"
+                    ></span>
+
+                    <!-- Status Text -->
+                    {{ getStatusName(callback.callbackInternalStatus) }}
+                  </span>
               </td>
               <td>
                 <div
-                  class="text-center d-flex pointer-cursor"
+                  class="text-center d-flex pointer-cursor tableimage"
                   *ngIf="callback.callbackInternalStatus !== 3"
                 >
                   <div class="d-flex">
@@ -632,7 +697,7 @@
                   />
                 </div>
                 <div
-                  class="text-center d-flex pointer-cursor"
+                  class="text-center d-flex pointer-cursor tableimage"
                   *ngIf="callback.callbackInternalStatus == 3"
                 >
                   <!-- <button
@@ -789,7 +854,7 @@
                               ? sourcedByChangeForHome($event)
                               : sourcedByChangeForHomeSelf($event)
                           "
-                          [dropdownIcon]="'fa fa-caret-down'"
+                          [dropdownIcon]="'pi pi-chevron-down'"
                           [(ngModel)]="SourcedByForHome"
                           optionLabel="name"
                           dataKey="name"
@@ -812,7 +877,7 @@
                                 ? statusChangeForHome($event)
                                 : statusChangeForHomeSelf($event)
                             "
-                            [dropdownIcon]="'fa fa-caret-down'"
+                            [dropdownIcon]="'pi pi-chevron-down'"
                             [(ngModel)]="selectedHomeCallbackStatus"
                             optionLabel="displayName"
                             dataKey="name"
@@ -938,7 +1003,7 @@
                       >
                     </td>
                     <td>
-                      <span
+                      <!-- <span
                         class="table-column-data fw-bold statusdata"
                         *ngIf="callback.callbackInternalStatus"
                         [ngStyle]="{
@@ -948,11 +1013,38 @@
                         }"
                       >
                         {{ getStatusName(callback.callbackInternalStatus) }}
+                      </span> -->
+                      <span
+                        class="d-inline-flex align-items-center justify-content-start gap-2"
+                        [ngStyle]="{
+                          backgroundColor: getStatusColor(getStatusName(callback.callbackInternalStatus)).backgroundColor,
+                          color: getStatusColor(getStatusName(callback.callbackInternalStatus)).textColor,
+                          height: '22px',
+                          width: getStatusColor(getStatusName(callback.callbackInternalStatus)).width,
+                          borderRadius: '16px',
+                          fontSize: '12px',
+                          fontWeight: 500,
+                          paddingLeft: '8px'
+                        }"
+                      >
+                        <!-- Dot -->
+                        <span
+                          class="rounded-circle"
+                          [ngStyle]="{
+                            backgroundColor: getStatusColor(getStatusName(callback.callbackInternalStatus)).dotColor,
+                            width: '8px',
+                            height: '8px',
+                            display: 'inline-block'
+                          }"
+                        ></span>
+
+                        <!-- Status Text -->
+                        {{ getStatusName(callback.callbackInternalStatus) }}
                       </span>
                     </td>
                     <td>
                       <div
-                        class="text-center d-flex pointer-cursor"
+                        class="text-center d-flex pointer-cursor tableimage"
                         *ngIf="callback.callbackInternalStatus !== 3"
                       >
                         <div class="d-flex">
@@ -1003,7 +1095,7 @@
                         />
                       </div>
                       <div
-                        class="text-center d-flex"
+                        class="text-center d-flex tableimage"
                         *ngIf="callback.callbackInternalStatus == 3"
                       >
                         <!-- <button
@@ -1033,12 +1125,12 @@
                 <ng-template pTemplate="emptymessage">
                   <tr class="text-center">
                     <td colspan="10" class="text-center fw-bold">
-                      <img
+                      <!-- <img
                       alt="No Data"
                         src="../../../assets/images/menu/no-data.gif"
                         width="200"
                         height="200"
-                      />
+                      /> -->
                       <p>No Callbacks Found</p>
                     </td>
                   </tr>
@@ -1162,7 +1254,7 @@
                               ? sourcedByChangeForLap($event)
                               : sourcedByChangeForLapSelf($event)
                           "
-                          [dropdownIcon]="'fa fa-caret-down'"
+                          [dropdownIcon]="'pi pi-chevron-down'"
                           [(ngModel)]="SourcedByForLap"
                           optionLabel="name"
                           dataKey="name"
@@ -1185,7 +1277,7 @@
                                 ? statusChangeForLap($event)
                                 : statusChangeForLapSelf($event)
                             "
-                            [dropdownIcon]="'fa fa-caret-down'"
+                            [dropdownIcon]="'pi pi-chevron-down'"
                             [(ngModel)]="selectedLapCallbackStatus"
                             optionLabel="displayName"
                             dataKey="name"
@@ -1320,7 +1412,7 @@
                       >
                     </td>
                     <td>
-                      <span
+                      <!-- <span
                         class="table-column-data fw-bold statusdata"
                         *ngIf="callback.callbackInternalStatus"
                         [ngStyle]="{
@@ -1331,11 +1423,38 @@
                         }"
                       >
                         {{ getStatusName(callback.callbackInternalStatus) }}
+                      </span> -->
+                      <span
+                        class="d-inline-flex align-items-center justify-content-start gap-2"
+                        [ngStyle]="{
+                          backgroundColor: getStatusColor(getStatusName(callback.callbackInternalStatus)).backgroundColor,
+                          color: getStatusColor(getStatusName(callback.callbackInternalStatus)).textColor,
+                          height: '22px',
+                          width: getStatusColor(getStatusName(callback.callbackInternalStatus)).width,
+                          borderRadius: '16px',
+                          fontSize: '12px',
+                          fontWeight: 500,
+                          paddingLeft: '8px'
+                        }"
+                      >
+                        <!-- Dot -->
+                        <span
+                          class="rounded-circle"
+                          [ngStyle]="{
+                            backgroundColor: getStatusColor(getStatusName(callback.callbackInternalStatus)).dotColor,
+                            width: '8px',
+                            height: '8px',
+                            display: 'inline-block'
+                          }"
+                        ></span>
+
+                        <!-- Status Text -->
+                        {{ getStatusName(callback.callbackInternalStatus) }}
                       </span>
                     </td>
                     <td>
                       <div
-                        class="text-center d-flex pointer-cursor"
+                        class="text-center d-flex pointer-cursor tableimage"
                         *ngIf="callback.callbackInternalStatus !== 3"
                       >
                         <div class="d-flex">
@@ -1386,7 +1505,7 @@
                         />
                       </div>
                       <div
-                        class="text-center d-flex"
+                        class="text-center d-flex tableimage"
                         *ngIf="callback.callbackInternalStatus == 3"
                       >
                         <!-- <button
@@ -1416,12 +1535,12 @@
                 <ng-template pTemplate="emptymessage">
                   <tr class="text-center">
                     <td colspan="10" class="text-center fw-bold">
-                      <img
+                      <!-- <img
                       alt="No Data"
                         src="../../../assets/images/menu/no-data.gif"
                         width="200"
                         height="200"
-                      />
+                      /> -->
                       <p>No Callbacks Found</p>
                     </td>
                   </tr>
@@ -1432,16 +1551,60 @@
         </ng-container>
       </div>
       <div *ngIf="activeItem.name == 'professionalLoans'">
-        <p>Comming soon ....</p>
+        <!-- <div class="card" style="height: 500px; width: 950px; border-radius: 8px; box-shadow: 0 0 4px 0; margin-left: 200px; margin-top: 50px;">
+          <div class="d-flex">
+            <img src="../../../assets/images/Group (2).svg" alt="" style="height: 398px; width: 280.68px;">
+          <img src="../../../assets/images/Group (1).svg" alt="" style="height: 75px; width: 461px; margin-top: 150px;">
+          </div>
+         </div> -->
+         <div class="card" style="height: 500px; width: 950px; border-radius: 8px; box-shadow: 0 0 4px 0; margin-left: 200px; margin-top: 50px;">
+          <div class="d-flex">
+            <img src="../../../assets/images/Group (2).svg" alt="" style="height: 398px; width: 280.68px;">
+          <img src="../../../assets/images/Group (1).svg" alt="" style="height: 75px; width: 461px; margin-top: 150px;">
+          </div>
+         </div>
       </div>
       <div *ngIf="activeItem.name == 'educationlLoans'">
-        <p>Comming soon ....</p>
+        <!-- <div class="card" style="height: 500px; width: 950px; border-radius: 8px; box-shadow: 0 0 4px 0; margin-left: 200px; margin-top: 50px;">
+          <div class="d-flex">
+            <img src="../../../assets/images/Group (2).svg" alt="" style="height: 398px; width: 280.68px;">
+          <img src="../../../assets/images/Group (1).svg" alt="" style="height: 75px; width: 461px; margin-top: 150px;">
+          </div>
+         </div> -->
+         <div class="card" style="height: 500px; width: 950px; border-radius: 8px; box-shadow: 0 0 4px 0; margin-left: 200px; margin-top: 50px;">
+          <div class="d-flex">
+            <img src="../../../assets/images/Group (2).svg" alt="" style="height: 398px; width: 280.68px;">
+          <img src="../../../assets/images/Group (1).svg" alt="" style="height: 75px; width: 461px; margin-top: 150px;">
+          </div>
+         </div>
       </div>
       <div *ngIf="activeItem.name == 'carLoan'">
-        <p>Comming soon ....</p>
+        <!-- <div class="card" style="height: 500px; width: 950px; border-radius: 8px; box-shadow: 0 0 4px 0; margin-left: 200px; margin-top: 50px;">
+          <div class="d-flex">
+            <img src="../../../assets/images/Group (2).svg" alt="" style="height: 398px; width: 280.68px;">
+          <img src="../../../assets/images/Group (1).svg" alt="" style="height: 75px; width: 461px; margin-top: 150px;">
+          </div>
+         </div> -->
+         <div class="card" style="height: 500px; width: 950px; border-radius: 8px; box-shadow: 0 0 4px 0; margin-left: 200px; margin-top: 50px;">
+          <div class="d-flex">
+            <img src="../../../assets/images/Group (2).svg" alt="" style="height: 398px; width: 280.68px;">
+          <img src="../../../assets/images/Group (1).svg" alt="" style="height: 75px; width: 461px; margin-top: 150px;">
+          </div>
+         </div>
       </div>
       <div *ngIf="activeItem.name == 'commercialVehicleLoan'">
-        <p>Comming soon ....</p>
+        <!-- <div class="card" style="height: 500px; width: 950px; border-radius: 8px; box-shadow: 0 0 4px 0; margin-left: 200px; margin-top: 50px;">
+          <div class="d-flex">
+            <img src="../../../assets/images/Group (2).svg" alt="" style="height: 398px; width: 280.68px;">
+          <img src="../../../assets/images/Group (1).svg" alt="" style="height: 75px; width: 461px; margin-top: 150px;">
+          </div>
+         </div> -->
+         <div class="card" style="height: 500px; width: 950px; border-radius: 8px; box-shadow: 0 0 4px 0; margin-left: 200px; margin-top: 50px;">
+          <div class="d-flex">
+            <img src="../../../assets/images/Group (2).svg" alt="" style="height: 398px; width: 280.68px;">
+          <img src="../../../assets/images/Group (1).svg" alt="" style="height: 75px; width: 461px; margin-top: 150px;">
+          </div>
+         </div>
       </div>
 
       <!-- <div
@@ -1521,7 +1684,7 @@
                     [style]="{ width: '100%' }"
                     [options]="leadUsers"
                     (onChange)="statusChangeConverted($event)"
-                    [dropdownIcon]="'fa fa-caret-down'"
+                    [dropdownIcon]="'pi pi-chevron-down'"
                     [(ngModel)]="selectedSoucedByConverted"
                     optionLabel="name"
                     dataKey="name"

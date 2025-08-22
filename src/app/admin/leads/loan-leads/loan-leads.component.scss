@@ -1,5 +1,8 @@
 .card {
-  border: none;
+  border: 1px solid #FFFFFF;
+  border-radius: 12px !important;
+  box-shadow: 0px 0px 4px 0px #00000040 !important;
+  margin-right: 20px !important;
 }
 
 .p-inputtext,
@@ -10,7 +13,7 @@
 
 label {
   // font-weight: 600;
-  font-size: medium;
+  font-size: 14px;
 }
 .p-button-sm {
   width: 10px;
@@ -49,14 +52,21 @@ label {
   background-color: #f4f4f4;
   border-radius: 20px;
 }
+::ng-deep .custom-steps {
+  border-radius: 5px !important;
 
+  cursor: pointer;
+
+  padding-top: 20px;
+}
 ::ng-deep .custom-steps .p-steps-item {
   color: #29415b;
   font-weight: bold;
 }
 
 ::ng-deep .custom-steps .p-steps-item.p-highlight .p-steps-title {
-  color: #51c297;
+   background-color: #f8fdcf;
+  color: #29415b;
 }
 
 ::ng-deep .custom-steps .p-steps-item .p-steps-number {
@@ -78,7 +88,14 @@ label {
 ::ng-deep .custom-steps .p-steps-title {
   margin: 10px;
 }
-
+:host ::ng-deep .p-steps-item .p-menuitem-link {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+:host ::ng-deep .p-steps-item:not(.p-highlight) .p-menuitem-link:hover {
+  background: #f9f9f9;
+  border-color: #ffffff;
+}
 .p-fluid {
   padding: 15px;
 }
@@ -227,7 +244,7 @@ label {
 
 // .option-card:hover,
 .option-card.selected {
-  background: #29415b;
+  background: #8E89D0;
   color: white;
   // box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
 }
@@ -264,19 +281,24 @@ label {
   color: #29415b;
 }
 .step-card {
-  background-color: #fff;
-  border: 1px solid transparent;
+  margin-left: 35px !important;
+  padding: 15px !important;
+  background-color: #f7f7f7;
+  border:none !important;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
+  box-shadow: none !important;
 }
 
 .step-card:hover {
-  background-color: rgb(191, 200, 210);
+  color: #535AB4;
+  border-radius: 0 !important;
 }
 
 .active-step-card {
-  border-left: 5px solid #29415b;
-  background-color: #e9f5ff;
+   border-left: 2px solid #535AB4 !important;
+  color: #535AB4;
+  border-radius: 0 !important;
 }
 .calendar-custom-img {
   position: absolute;

@@ -907,16 +907,18 @@ export class CallbacksComponent implements OnInit {
   getStatusColor(status: string): {
     textColor: string;
     backgroundColor: string;
+    dotColor: string;
+    width: string;
   } {
     switch (status) {
       case 'New':
-        return { textColor: '#5DCC0B', backgroundColor: '#E4F7D6' };
+        return { textColor: '#037847', backgroundColor: '#ECFDF3',dotColor: '#14BA6D', width: '54px'};
       case 'Archived':
-        return { textColor: '#FFBA15', backgroundColor: '#FFF3D6' };
+        return { textColor: '#364254', backgroundColor: '#F2F4F7',dotColor: '#6C778B', width: '81px' };
       case 'Converted':
-        return { textColor: '#7B1FA2', backgroundColor: '#EAD1F7' }; // Purple theme
+        return { textColor: '#8E89D0', backgroundColor: '#EDF3FE',dotColor: '#8E89D0', width: '100px' }; // Purple theme
       default:
-        return { textColor: 'black', backgroundColor: 'white' };
+        return { textColor: 'black', backgroundColor: 'white', dotColor: 'gray', width: '81px' };
     }
   }
 

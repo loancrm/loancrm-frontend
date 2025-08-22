@@ -6,7 +6,12 @@
   // background-attachment: fixed;
   // min-height: 100vh;
 }
-
+.calucard img {
+  filter: invert(40%) sepia(10%) saturate(800%) hue-rotate(210deg) brightness(95%) contrast(90%) !important;
+}
+.p-inputgroup-addon img {
+  filter: invert(40%) sepia(10%) saturate(800%) hue-rotate(210deg) brightness(95%) contrast(90%) !important;
+}
 .card {
   background-color: #ffffff;
   border-radius: 10px;
@@ -52,7 +57,7 @@
   .line {
     flex: 1;
     height: 3px;
-    background: linear-gradient(to right, transparent, orangered, transparent);
+    background: linear-gradient(to right, transparent, #535AB4, transparent);
     border-radius: 2px;
     max-width: 150px;
   }
@@ -79,7 +84,7 @@
   }
 
   .calucard {
-    width: 100%;
+    width: 100px !important;
     margin-bottom: 20px;
   }
 

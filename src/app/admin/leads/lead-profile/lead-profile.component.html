@@ -1,4 +1,7 @@
 <div>
+  <div class="bread-crumb">
+      <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
+  </div>
   <ng-container *ngFor="let item of displayedItems">
     <div class="m-2 p-1" *ngIf="item.data">
       <div class="d-flex justify-content-between align-items-center">
@@ -7,15 +10,15 @@
           (click)="goBack()"
         >
           <span class="me-2 d-flex align-items-center">
-            <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
+            <img src="../../../assets/images/icons/Vector.png" alt="Back" />
           </span>
-          <span class="me-1">
+          <!-- <span class="me-1">
             <img
               [src]="item.image"
               alt="Profile Image"
               style="height: 35px; width: 40px"
             />
-          </span>
+          </span> -->
           <b>
             <span class="back-btn-text text-capitalize">
               {{ item.data[item.displayProperty] || "N/A" | capitalizeFirst }}
@@ -504,15 +507,15 @@
                   >
                     <!-- Business Name -->
                     <h5 class="mb-2 mb-md-0">
-                      <b>{{
+                      <span style="color: #535AB4; font-size: 20px;">{{
                         (leadsData.leadData.businessName | capitalizeFirst) ||
                           "-"
-                      }}</b>
+                      }}</span>
                     </h5>
 
                     <!-- Status Badge -->
                     <div class="d-flex gap-2 align-items-center me-4">
-                      <small class="text-muted">Status:</small>
+                      <small class="text-muted"><span style="color: #737373; font-style: 600; font-size: 18px;"> Status:</span></small>
                       <span
                         class="badge p-2 rounded-3"
                         style="background-color: #e6e6f5; color: #13003a"
@@ -543,12 +546,14 @@
                         height="20"
                         class="pointer-cursor"
                       />
-                      {{
+                      <span class="phone">
+                        {{
                         userDetails.userType == 3
                           ? getMaskedPhone(leadsData?.leadData?.primaryPhone)
                           : leadsData?.leadData?.primaryPhone
                       }}
-                      <ng-container *ngIf="leadsData?.leadData?.secondaryPhone">
+                      </span>
+                      <ng-container *ngIf="leadsData?.leadData?.secondaryPhone"  class="phone">
                         ,
                         {{
                           userDetails.userType == 3
@@ -571,7 +576,7 @@
                         width="20"
                         height="20"
                       />
-                      {{ leadsData.leadData.businessEmail }}
+                      <span  class="phone">{{ leadsData.leadData.businessEmail }}</span>
                     </span>
 
                     <!-- Location -->
@@ -585,7 +590,7 @@
                         width="20"
                         height="20"
                       />
-                      {{ leadsData.leadData.city | capitalizeFirst }}
+                      <span class="phone">{{ leadsData.leadData.city | capitalizeFirst }}</span>
                     </span>
                   </small>
                 </div>
@@ -593,8 +598,8 @@
                 <div class="row mt-3">
                   <div class="col-md-3 col-sm-4 col-6 mb-3">
                     <div>
-                      <div class="text-muted">Business Entity</div>
-                      <div class="fw-bold">
+                      <div class="text-muted"><span class="business">Business Entity</span></div>
+                      <div class="fw-bold values">
                         {{
                           (getEntityName(leadsData.leadData.businessEntity)
                             | capitalizeFirst) || "-"
@@ -609,7 +614,7 @@
                     "
                   >
                     <div>
-                      <div class="text-muted">Business Vintage</div>
+                      <div class="text-muted"><span class="business">Business Vintage</span></div>
                       <div class="fw-bold">
                         {{
                           (leadsData.leadData.businessOperatingSince
@@ -625,7 +630,7 @@
                     "
                   >
                     <div>
-                      <div class="text-muted">Business Vintage</div>
+                      <div class="text-muted"><span class="business">Business Vintage</span></div>
                       <div class="fw-bold">
                         {{
                           (leadsData.leadData.businessVintage
@@ -641,7 +646,7 @@
                     "
                   >
                     <div>
-                      <div class="text-muted">Nature of Business</div>
+                      <div class="text-muted"><span class="business">Nature of Business</span></div>
                       <div class="fw-bold">
                         {{
                           (leadsData.leadData.natureOfBusiness
@@ -657,7 +662,7 @@
                     "
                   >
                     <div>
-                      <div class="text-muted">Nature of Business</div>
+                      <div class="text-muted"><span class="business">Nature of Business</span></div>
                       <div class="fw-bold">
                         {{
                           (leadsData.leadData.natureofBusiness
@@ -668,7 +673,7 @@
                   </div>
                   <div class="col-md-3 col-sm-4 col-6 mb-3">
                     <div>
-                      <div class="text-muted">Product</div>
+                      <div class="text-muted"><span class="business">Product</span></div>
                       <div class="fw-bold">
                         {{
                           (leadsData.leadData.product | capitalizeFirst) || "-"
@@ -678,7 +683,7 @@
                   </div>
                   <div class="col-md-3 col-sm-4 col-6 mb-3">
                     <div>
-                      <div class="text-muted">Turnover</div>
+                      <div class="text-muted"><span class="business">Turnover</span></div>
                       <div class="fw-bold">
                         {{
                           (leadsData.leadData.businessTurnover
@@ -689,7 +694,7 @@
                   </div>
                   <div class="col-md-3 col-sm-4 col-6 mb-3">
                     <div>
-                      <div class="text-muted">Contact Person</div>
+                      <div class="text-muted"><span class="business">Contact Person</span></div>
                       <div class="fw-bold">
                         {{
                           (leadsData.leadData.contactPerson
@@ -703,7 +708,7 @@
                     *ngIf="leadsData.leadData.loanRequirement"
                   >
                     <div>
-                      <div class="text-muted">Loan Requirement</div>
+                      <div class="text-muted"><span class="business">Loan Requirement</span></div>
                       <div class="fw-bold">
                         {{
                           (leadsData.leadData.loanRequirement
@@ -717,7 +722,7 @@
                     *ngIf="leadsData.leadData.odRequirement"
                   >
                     <div>
-                      <div class="text-muted">OD Requirement</div>
+                      <div class="text-muted"><span class="business">OD Requirement</span></div>
                       <div class="fw-bold">
                         {{
                           (leadsData.leadData.odRequirement
@@ -728,7 +733,7 @@
                   </div>
                   <div class="col-md-3 col-sm-4 col-6 mb-3">
                     <div>
-                      <div class="text-muted">Had Own House?</div>
+                      <div class="text-muted"><span class="business">Had Own House?</span></div>
                       <div class="fw-bold">
                         {{
                           (leadsData.leadData.hadOwnHouse | capitalizeFirst) ||
@@ -739,7 +744,7 @@
                   </div>
                   <div class="col-md-3 col-sm-4 col-6 mb-3">
                     <div>
-                      <div class="text-muted">Existing Loan Details</div>
+                      <div class="text-muted"><span class="business">Existing Loan Details</span></div>
                       <div class="fw-bold">
                         {{
                           (leadsData.leadData.existingLoanDetails
@@ -750,7 +755,7 @@
                   </div>
                   <div class="col-md-3 col-sm-4 col-6 mb-3">
                     <div>
-                      <div class="text-muted">Called From</div>
+                      <div class="text-muted"><span class="business">Called From</span></div>
                       <div class="fw-bold">
                         {{
                           (leadsData.leadData.calledFrom | capitalizeFirst) ||
@@ -761,7 +766,7 @@
                   </div>
                   <div class="col-md-3 col-sm-4 col-6 mb-3">
                     <div>
-                      <div class="text-muted">Lead Source</div>
+                      <div class="text-muted"><span class="business">Lead Source</span></div>
                       <div class="fw-bold">
                         {{
                           (getLeadSourceName(leadsData.leadData.leadSource)
@@ -772,7 +777,7 @@
                   </div>
                   <div class="col-md-3 col-sm-4 col-6 mb-3">
                     <div>
-                      <div class="text-muted">Last Updated</div>
+                      <div class="text-muted"><span class="business">Last Updated</span></div>
                       <div class="fw-bold">
                         {{
                           leadsData.leadData.lastUpdatedOn
@@ -786,7 +791,7 @@
                     *ngIf="leadsData.leadData.sanctionedAmount"
                   >
                     <div>
-                      <div class="text-muted">Sanctioned Amount</div>
+                      <div class="text-muted"><span class="business">Sanctioned Amount</span></div>
                       <div class="fw-bold">
                         {{ leadsData.leadData.sanctionedAmount }} ({{
                           convertToLakhsOrCrores(
@@ -801,7 +806,7 @@
                     *ngIf="leadsData.leadData.disbursedAmount"
                   >
                     <div>
-                      <div class="text-muted">Disbursed Amount</div>
+                      <div class="text-muted"><span class="business">Disbursed Amount</span></div>
                       <div class="fw-bold">
                         {{ leadsData.leadData.disbursedAmount }} ({{
                           convertToLakhsOrCrores(
@@ -813,7 +818,7 @@
                   </div>
                   <div class="col-12 mb-3" *ngIf="leadsData.leadData.remarks">
                     <div>
-                      <div class="text-muted">Remarks</div>
+                      <div class="text-muted"><span class="business">Remarks</span></div>
                       <div class="fw-bold">
                         {{
                           (leadsData.leadData.remarks | capitalizeFirst) || "-"
@@ -996,7 +1001,8 @@
                               aria-expanded="true"
                               aria-controls="collapseBank"
                             >
-                              Bank Statements
+                              <span class="p-accordion-toggle-icon pi pi-chevron-right"></span>
+                            <span class="p-accordion-header-text">Business Documents</span>
                             </button>
                           </h2>
                           <div
@@ -5796,16 +5802,20 @@
                   [align]="'left'"
                 >
                   <ng-template pTemplate="marker" let-event>
-                    <span class="custom-marker">
-                      <img
-                        [src]="event.image"
-                        alt="Event Icon"
-                        width="20"
-                        height="20"
-                        class="timeline-icon"
-                      />
-                    </span>
-                  </ng-template>
+                  <span
+                    class="custom-marker"
+                    [ngClass]="{ 'marker-filled': event.date, 'marker-pending': !event.date }"
+                  >
+                    <img
+                      [src]="event.image"
+                      alt="Event Icon"
+                      width="20"
+                      height="20"
+                      class="timeline-icon"
+                      [ngClass]="{ 'white-icon': event.date }"
+                    />
+                  </span>
+                </ng-template>
 
                   <ng-template pTemplate="opposite" let-event>
                     <p class="text-muted p-1 date-text">
@@ -5938,7 +5948,7 @@
                 </div>
 
                 <div class="row mt-3">
-                  <div class="col-md-3 col-sm-4 col-6 mb-3">
+                  <div class="col-md-3 col-sm-4 col-6 mb-3 business">
                     <div>
                       <div class="text-muted">CompanyName</div>
                       <div class="fw-bold">
@@ -5950,7 +5960,7 @@
                     </div>
                   </div>
 
-                  <div class="col-md-3 col-sm-4 col-6 mb-3">
+                  <div class="col-md-3 col-sm-4 col-6 mb-3 business">
                     <div>
                       <div class="text-muted">Designation</div>
                       <div class="fw-bold">
@@ -5962,7 +5972,7 @@
                     </div>
                   </div>
 
-                  <div class="col-md-3 col-sm-4 col-6 mb-3">
+                  <div class="col-md-3 col-sm-4 col-6 mb-3 business">
                     <div>
                       <div class="text-muted">CompanyAddress</div>
                       <div class="fw-bold">
@@ -5974,7 +5984,7 @@
                     </div>
                   </div>
 
-                  <div class="col-md-3 col-sm-4 col-6 mb-3">
+                  <div class="col-md-3 col-sm-4 col-6 mb-3 business">
                     <div>
                       <div class="text-muted">JobExperience</div>
                       <div class="fw-bold">
@@ -5983,7 +5993,7 @@
                     </div>
                   </div>
 
-                  <div class="col-md-3 col-sm-4 col-6 mb-3">
+                  <div class="col-md-3 col-sm-4 col-6 mb-3 business">
                     <div>
                       <div class="text-muted">Salary</div>
                       <div class="fw-bold">
@@ -6036,7 +6046,7 @@
                       </div>
                     </div> -->
 
-                  <div class="col-md-3 col-sm-4 col-6 mb-3">
+                  <div class="col-md-3 col-sm-4 col-6 mb-3 business">
                     <div>
                       <div class="text-muted">Contact Person</div>
                       <div class="fw-bold">
@@ -6049,7 +6059,7 @@
                   </div>
 
                   <div
-                    class="col-md-3 col-sm-4 col-6 mb-3"
+                    class="col-md-3 col-sm-4 col-6 mb-3 business"
                     *ngIf="leadsData.leadData.loanRequirement"
                   >
                     <div>
@@ -6064,7 +6074,7 @@
                   </div>
 
                   <div
-                    class="col-md-3 col-sm-4 col-6 mb-3"
+                    class="col-md-3 col-sm-4 col-6 mb-3 business"
                     *ngIf="leadsData.leadData.odRequirement"
                   >
                     <div>
@@ -6078,7 +6088,7 @@
                     </div>
                   </div>
 
-                  <div class="col-md-3 col-sm-4 col-6 mb-3">
+                  <div class="col-md-3 col-sm-4 col-6 mb-3 business">
                     <div>
                       <div class="text-muted">Had Own House?</div>
                       <div class="fw-bold">
@@ -6090,7 +6100,7 @@
                     </div>
                   </div>
 
-                  <div class="col-md-3 col-sm-4 col-6 mb-3">
+                  <div class="col-md-3 col-sm-4 col-6 mb-3 business">
                     <div>
                       <div class="text-muted">Existing Loan Details</div>
                       <div class="fw-bold">
@@ -6102,7 +6112,7 @@
                     </div>
                   </div>
 
-                  <div class="col-md-3 col-sm-4 col-6 mb-3">
+                  <div class="col-md-3 col-sm-4 col-6 mb-3 business">
                     <div>
                       <div class="text-muted">Called From</div>
                       <div class="fw-bold">
@@ -6114,7 +6124,7 @@
                     </div>
                   </div>
 
-                  <div class="col-md-3 col-sm-4 col-6 mb-3">
+                  <div class="col-md-3 col-sm-4 col-6 mb-3 business">
                     <div>
                       <div class="text-muted">Lead Source</div>
                       <div class="fw-bold">
@@ -6126,7 +6136,7 @@
                     </div>
                   </div>
 
-                  <div class="col-md-3 col-sm-4 col-6 mb-3">
+                  <div class="col-md-3 col-sm-4 col-6 mb-3 business">
                     <div>
                       <div class="text-muted">Last Updated</div>
                       <div class="fw-bold">
@@ -6139,7 +6149,7 @@
                   </div>
 
                   <div
-                    class="col-md-3 col-sm-4 col-6 mb-3"
+                    class="col-md-3 col-sm-4 col-6 mb-3 business"
                     *ngIf="leadsData.leadData.sanctionedAmount"
                   >
                     <div>
@@ -6155,7 +6165,7 @@
                   </div>
 
                   <div
-                    class="col-md-3 col-sm-4 col-6 mb-3"
+                    class="col-md-3 col-sm-4 col-6 mb-3 business"
                     *ngIf="leadsData.leadData.disbursedAmount"
                   >
                     <div>
@@ -6170,7 +6180,7 @@
                     </div>
                   </div>
 
-                  <div class="col-12 mb-3" *ngIf="leadsData.leadData.remarks">
+                  <div class="col-12 mb-3 business" *ngIf="leadsData.leadData.remarks">
                     <div>
                       <div class="text-muted">Remarks</div>
                       <div class="fw-bold">
@@ -6235,7 +6245,7 @@
 
               <div class="mb-3">
                 <ul
-                  class="nav nav-tabs px-2 pt-2 custom-tabs p-2"
+                  class="nav nav-tabs px-2 pt-2 custom-tabs p-2 g-5"
                   role="tablist"
                 >
                   <li class="nav-item" role="presentation">
@@ -8588,7 +8598,7 @@
                 <div class="d-flex flex-column gap-3">
                   <!-- Lead Sourced By -->
                   <div>
-                    <div class="text-muted mb-1 fw-semibold small">
+                    <div class="text-muted mb-1 fw-bold small">
                       Sourced By
                     </div>
                     <div
@@ -8656,18 +8666,21 @@
                   styleClass="custom-timeline"
                   [align]="'left'"
                 >
-                  <ng-template pTemplate="marker" let-event>
-                    <span class="custom-marker">
-                      <img
-                        [src]="event.image"
-                        alt="Event Icon"
-                        width="20"
-                        height="20"
-                        class="timeline-icon"
-                      />
-                    </span>
-                  </ng-template>
-
+                <ng-template pTemplate="marker" let-event>
+                  <span
+                    class="custom-marker"
+                    [ngClass]="{ 'marker-filled': event.date, 'marker-pending': !event.date }"
+                  >
+                    <img
+                      [src]="event.image"
+                      alt="Event Icon"
+                      width="20"
+                      height="20"
+                      class="timeline-icon"
+                      [ngClass]="{ 'white-icon': event.date }"
+                    />
+                  </span>
+                </ng-template>
                   <ng-template pTemplate="opposite" let-event>
                     <p class="text-muted p-1 date-text">
                       {{

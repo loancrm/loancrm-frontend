@@ -70,7 +70,7 @@
               [(ngModel)]="reportData[field.field + '-' + field.filterType]"
               [optionLabel]="field.label"
               appendTo="body"
-              [dropdownIcon]="'fa fa-caret-down'"
+              [dropdownIcon]="'pi pi-chevron-down'"
               [autoDisplayFirst]="field.autoDisplayFirst ? true : false"
               [filter]="field.showFilter ? true : false"
             >
@@ -86,7 +86,7 @@
               [(ngModel)]="reportData[field.field + '-' + field.filterType]"
               [optionLabel]="field.label"
               appendTo="body"
-              [dropdownIcon]="'fa fa-caret-down'"
+              [dropdownIcon]="'pi pi-chevron-down'"
               [autoDisplayFirst]="false"
               [filter]="field.showFilter ? true : false"
               (onChange)="onTimePeriodChange($event, field, i)"
@@ -101,7 +101,7 @@
               styleClass="text-left"
               [style]="{ width: field.fieldWidth ? field.fieldWidth : '100%' }"
               [(ngModel)]="reportData[field.field + '-' + field.filterType]"
-              [dropdownIcon]="'fa fa-caret-down'"
+              [dropdownIcon]="'pi pi-chevron-down'"
               [options]="field.options"
               appendTo="body"
               [optionValue]="field.value"
@@ -173,7 +173,7 @@
         class="d-flex align-items-center justify-content-center pointer-cursor"
       >
         <span class="me-2 d-flex align-items-center">
-          <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
+          <img src="../../../assets/images/icons/Vector.png" alt="Back" />
         </span>
         <b>
           <span
@@ -323,7 +323,7 @@
               [optionValue]="field.value"
               [(ngModel)]="reportData[field.field + '-' + field.filterType]"
               [style]="{ width: field.fieldWidth || '100%' }"
-              [dropdownIcon]="'fa fa-caret-down'"
+              [dropdownIcon]="'pi pi-chevron-down'"
               [autoDisplayFirst]="false"
               appendTo="body"
               (onChange)="onTimePeriodChange($event, field, i)"

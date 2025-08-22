@@ -1,12 +1,12 @@
 <div>
-  <div class="p-1 m-2 fixed-card">
+  <div class="p-1 m-2 fixed-card"  style="background-color: #f7f7f7;">
     <div class="d-flex justify-content-between">
       <div
         class="d-flex align-items-center justify-content-center pointer-cursor"
         (click)="goBack()"
       >
         <span class="me-2 d-flex align-items-center">
-          <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
+          <img src="../../../assets/images/icons/Vector.png" alt="Back" />
         </span>
         <!-- <span class="me-1">
           <img
@@ -87,7 +87,17 @@
                 [disabled]="!userNameToSearch"
                 (click)="filterWithName()"
               ></button> -->
-              <button
+              <span
+                        class="input-group-text search-btn"
+                        (click)="filterWithName()"
+                      >
+                        <img
+                          src="../../../assets/images/icons/search.svg"
+                          alt="Search"
+                          style="width: 14px; height: 14px; cursor: pointer"
+                        />
+                    </span>
+              <!-- <button
                 type="button"
                 pButton
                 class="p-button-primary search-btn"
@@ -101,7 +111,7 @@
                   height="16"
                   style="vertical-align: middle"
                 />
-              </button>
+              </button> -->
             </div>
           </div>
 
@@ -115,7 +125,7 @@
                   [style]="{ width: '100%' }"
                   [options]="usersStatus"
                   (onChange)="statusChange($event)"
-                  [dropdownIcon]="'fa fa-caret-down'"
+                  [dropdownIcon]="'pi pi-chevron-down'"
                   [(ngModel)]="selectedTeamStatus"
                   optionLabel="displayName"
                   dataKey="name"
@@ -222,7 +232,7 @@
             }}</span>
           </td>
           <td>
-            <span
+            <!-- <span
               class="table-column-data fw-bold statusdata"
               *ngIf="team.status"
               [ngStyle]="{
@@ -231,11 +241,39 @@
               }"
             >
               {{ team.status }}
-            </span>
+            </span> -->
+          <span
+            class="table-column-data fw-bold statusdata d-inline-flex align-items-center gap-2"
+            *ngIf="team.status"
+            [ngStyle]="{
+              backgroundColor: getStatusColor(team.status).backgroundColor,
+              color: getStatusColor(team.status).textColor,
+              height: '22px',
+              width: getStatusColor(team.status).width,
+              borderRadius: '16px',
+              fontSize: '12px',
+              fontWeight: 500,
+              paddingLeft: '8px'
+            }"
+          >
+            <!-- Dot -->
+            <span
+              class="rounded-circle"
+              [ngStyle]="{
+                backgroundColor: getStatusColor(team.status).dotColor,
+                width: '8px',
+                height: '8px',
+                display: 'inline-block'
+              }"
+            ></span>
+
+            <!-- Status Text -->
+            {{ team.status }}
+          </span>
           </td>
           <td>
-            <div class="text-center d-flex">
-              <div class="d-flex">
+            <div class="text-center d-flex tableimage">
+              <div class="d-flex tableimage">
                 <!-- <button
                   pButton
                   pRipple
@@ -308,12 +346,12 @@
       <ng-template pTemplate="emptymessage">
         <tr class="text-center">
           <td colspan="10" class="text-center fw-bold">
-            <img
+            <!-- <img
               alt="No Data"
               src="../../../assets/images/menu/no-data.gif"
               width="200"
               height="200"
-            />
+            /> -->
             <p>No users Found</p>
           </td>
         </tr>

@@ -127,7 +127,7 @@
               [options]="dropdownOptions"
               optionLabel="label"
               [(ngModel)]="selectedDropdownOption"
-              [dropdownIcon]="'fa fa-caret-down'"
+              [dropdownIcon]="'pi pi-chevron-down'"
               (onChange)="onChangeDropdown($event.value)"
               filterPlaceholder="Search..."
               [appendTo]="'body'"
@@ -170,7 +170,7 @@
               [style]="{ width: '100%' }"
               [options]="leadUsers"
               (onChange)="statusChange($event)"
-              [dropdownIcon]="'fa fa-caret-down'"
+              [dropdownIcon]="'pi pi-chevron-down'"
               [(ngModel)]="selectedSoucedByStatus"
               optionLabel="name"
               dataKey="name"
@@ -301,7 +301,7 @@
               styleClass="text-left"
               optionLabel="label"
               [(ngModel)]="selectedDropdownOption"
-              [dropdownIcon]="'fa fa-caret-down'"
+              [dropdownIcon]="'pi pi-chevron-down'"
               (onChange)="onChangeDropdown($event.value)"
               placeholder="Select an option"
               filterPlaceholder="Search..."
@@ -338,7 +338,7 @@
       <!-- <br /> -->
       <!-- </div> -->
     </div>
-    <footer class="footer-card text-center text-lg-start mx-2 my-4">
+    <!-- <footer class="footer-card text-center text-lg-start mx-2 my-4">
       <div class="text-center">
         © 2024
         <span style="color: #ee7846">
@@ -347,6 +347,17 @@
           ></span
         >
         &nbsp; | All Rights Reserved
+      </div>
+    </footer> -->
+    <footer class="footer-card text-center text-lg-start mx-2 my-4">
+      <div class="text-center">
+        <span style="color: #737373;">© 2024</span> &nbsp;
+        <span style="color: #706EC4">
+          <span style="color: #4D54B8">My</span>Loan<span style="color: #4D54B8"
+            >CRM.</span
+          ></span
+        >
+        &nbsp; <span style="color: #737373;"> | All Rights Reserved</span>
       </div>
     </footer>
   </div>

@@ -1,5 +1,8 @@
 .card {
-  border: none;
+  border: 1px solid #FFFFFF;
+  border-radius: 12px !important;
+  box-shadow: 0px 0px 4px 0px #00000040 !important;
+  margin-right: 20px !important;
 }
 
 .p-inputtext,
@@ -203,17 +206,24 @@ label {
   color: #29415b;
 }
 .step-card {
-  background-color: #fff;
-  border: 1px solid transparent;
+  margin-left: 35px !important;
+  padding: 15px !important;
+  background-color: #f7f7f7;
+  border:none !important;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
+  box-shadow: none !important;
 }
 
 .step-card:hover {
-  background-color: rgb(191, 200, 210);
+  // background-color: rgb(206, 250, 8);
+  color: #535AB4;
+  border-radius: 0 !important;
 }
 
 .active-step-card {
-  border-left: 5px solid #29415b;
-  background-color: #e9f5ff;
+  border-left: 2px solid #535AB4 !important;
+  color: #535AB4;
+  border-radius: 0 !important;
+  // background-color: #fff0e9;
 }

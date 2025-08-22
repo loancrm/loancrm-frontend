@@ -416,28 +416,32 @@ export class ViewComponent {
         type: 'bar',
         toolbar: { show: true },
       },
-      plotOptions: {
-        bar: {
-          distributed: false,
-        },
-      },
+      
       // colors: ['#01B8AA', '#6962AD'],
       // colors: ['#2A004E', '#F76C6C'],
-      colors: ['#EE7846', '#29415B'],
+      colors: ['#535AB4', '#8E89D0'],
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '70%',  
+          barGap: 1,
+        },
+      },
       dataLabels: {
         enabled: true,
         formatter: (value: number) => {
           return this.convertToLakhsOrCrores(value);
         },
         style: {
-          fontSize: '12px',
+          fontSize: '10px',
         },
+        
       },
-      stroke: { curve: 'smooth' },
+      stroke: { show: true, width: 2, colors: ['transparent'] },
       title: {
         text: 'Monthly Financial Metrics',
         align: 'left',
-        style: { fontSize: '18px', color: '#29415b' },
+        style: { fontSize: '24px', color: '#1E1E1E',fontWeight: 400, letterSpacing: '0.15px' },
       },
       grid: {
         borderColor: '#e7e7e7',
@@ -529,11 +533,11 @@ export class ViewComponent {
         type: 'donut',
         toolbar: { show: true },
       },
-      colors: ['#FF7948', '#4878AC', '#FE746E'],
+      colors: ['#E3E0F4', '#535AB4', '#FE746E'],
       title: {
         text: 'Total Leads and Files Insights',
         align: 'left',
-        style: { fontSize: '18px', color: '#29415b' },
+        style: { fontSize: '24px', color: '#1E1E1E',fontWeight: 400, letterSpacing: '0.15px'},
       },
       // legend: {
       //   show: false,

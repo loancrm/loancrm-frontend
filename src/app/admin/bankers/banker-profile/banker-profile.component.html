@@ -9,7 +9,7 @@
         (click)="goBack()"
       >
         <span class="me-2 d-flex align-items-center">
-          <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
+          <img src="../../../assets/images/icons/Vector.png" alt="Back" />
         </span>
         <!-- <span class="me-1">
         <img
@@ -36,11 +36,11 @@
   <div class="bg-color">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-6">
-          <div class="card p-4 banker-profile">
-            <div class="row">
+        <div class="col-md-4">
+          <div class="card p-4 banker-profile" style="width: 350px; height: 330px; margin-left: 5px;">
+            <div class="col" style="justify-content: center; align-items: center;">
               <div
-                class="col-md-4 d-flex justify-content-center align-items-center"
+                class="d-flex justify-content-center align-items-center"
               >
                 <!-- <div
                   *ngIf="
@@ -95,7 +95,7 @@
                       [src]="'//' + bankers.imageFiles[0]"
                       alt="Image"
                       class="img-thumbnail"
-                      style="height: 120px; width: 240px"
+                      style="height: 170px; width: 184px"
                     />
                   </a>
                 </ng-container>
@@ -103,91 +103,122 @@
                   <img
                     src="../../../../assets/images/menu/noImage.png"
                     alt="Default Image"
-                    style="height: 120px; width: 240px"
+                    style="height: 184px; width: 184px"
                   />
                 </ng-template>
               </div>
-              <div class="col-md-8 text-center">
+              <div class="text-center">
                 <div *ngIf="bankers">
-                  <div class="">
-                    <span class="bankname text-capitalize">{{
-                      bankers.name | capitalizeFirst
-                    }}</span>
-                  </div>
-                  <div class="">
-                    <label class="bankerid">Banker ID:&nbsp;</label>
-                    <span style="color: #ee7846">{{ bankers.bankerId }}</span>
-                  </div>
-                  <div>
-                    <label class="bankStatus">Status:&nbsp;</label>
-                    <span
-                      class="table-column-data fw-bold statusdata"
-                      *ngIf="bankers.bankerInternalStatus"
-                      [ngStyle]="{
-                        color: getStatusColor(
-                          getStatusName(bankers.bankerInternalStatus)
-                        ).textColor,
-                        'background-color': getStatusColor(
-                          getStatusName(bankers.bankerInternalStatus)
-                        ).backgroundColor
-                      }"
-                    >
-                      {{ getStatusName(bankers.bankerInternalStatus) }}
-                    </span>
+                  <!-- Banker Name -->
+                  <span
+                    class="bankname text-capitalize"
+                    style="color: #535AB4; font-size: 20px; font-weight: 600;"
+                  >
+                    {{ bankers.name | capitalizeFirst }}
+                  </span>
+
+                  <!-- Row: Banker ID + Status -->
+                  <div class="d-flex justify-content-center gap-5 mt-3">
+                    <!-- Banker ID -->
+                    <div>
+                      <label class="bankerid d-block" style="font-weight: 600; font-size: 14px;">
+                        Banker ID
+                      </label>
+                      <span style="color: #737373; font-weight: 400; font-size: 16px;">
+                        {{ bankers.bankerId }}
+                      </span>
+                    </div>
+
+                    <!-- Status -->
+                    <div>
+                      <label class="bankStatus d-block" style="font-weight: 600; font-size: 14px;">
+                        Status
+                      </label>
+                      <span
+                        class="d-inline-flex align-items-center justify-content-start gap-2"
+                        *ngIf="bankers.bankerInternalStatus"
+                        [ngStyle]="{
+                          backgroundColor: getStatusColor(getStatusName(bankers.bankerInternalStatus)).backgroundColor,
+                          color: getStatusColor(getStatusName(bankers.bankerInternalStatus)).textColor,
+                          height: '22px',
+                          borderRadius: '16px',
+                          fontSize: '12px',
+                          fontWeight: 500,
+                          padding: '0 8px'
+                        }"
+                      >
+                        <!-- Dot -->
+                        <span
+                          class="rounded-circle"
+                          [ngStyle]="{
+                            backgroundColor: getStatusColor(getStatusName(bankers.bankerInternalStatus)).dotColor,
+                            width: '8px',
+                            height: '8px',
+                            display: 'inline-block'
+                          }"
+                        ></span>
+
+                        <!-- Status Text -->
+                        {{ getStatusName(bankers.bankerInternalStatus) }}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-md-6 text-capitalize mb-3" *ngIf="bankers">
-          <div class="card p-4 banker-profile" *ngIf="bankers.branchDetails">
-            <div
-              *ngFor="let branch of bankers.branchDetails; let i = index"
-              class="mb-3"
-            >
-              <div class="flex justify-content-center">
-                <p-accordion [multiple]="true" [activeIndex]="[0]">
+        <div class="col-md-6 text-capitalize mb-3" *ngIf="bankers" style="width: 800px;">
+          <div *ngIf="bankers.branchDetails">
+            <!-- Loop each branch separately -->
+            <div *ngFor="let branch of bankers.branchDetails; let i = index" class="mb-3">
+              <div class="card p-3 branch-card">
+                <p-accordion [multiple]="false" [activeIndex]="0">
                   <p-accordionTab
-                    header="Branch-{{ i + 1 }} Details"
+                    header="Branch Details-{{ i + 1 }}"
                     [headerStyleClass]="'accordion-header'"
                   >
                     <div class="mt-3">
-                      <div class="info-line">
-                        <div class="label d-flex justify-content-between">
-                          Branch <b>:&nbsp;</b>
+                      <div class="row">
+                        <!-- Branch -->
+                        <div class="col-md-3 col-sm-6 mb-3">
+                          <div class="info-line">
+                            <div class="label">Branch</div>
+                            <div class="value">{{ branch?.branch | capitalizeFirst }}</div>
+                          </div>
                         </div>
-                        <div class="value">
-                          {{ branch?.branch | capitalizeFirst }}
+
+                        <!-- Contact Person -->
+                        <div class="col-md-3 col-sm-6 mb-3">
+                          <div class="info-line">
+                            <div class="label">Contact Person</div>
+                            <div class="value">{{ branch?.contactPerson | capitalizeFirst }}</div>
+                          </div>
                         </div>
-                      </div>
-                      <div class="info-line">
-                        <div class="label d-flex justify-content-between">
-                          Contact Person <b>:&nbsp;</b>
+
+                        <!-- Designation -->
+                        <div class="col-md-3 col-sm-6 mb-3">
+                          <div class="info-line">
+                            <div class="label">Designation</div>
+                            <div class="value">{{ branch?.designation | capitalizeFirst }}</div>
+                          </div>
                         </div>
-                        <div class="value">
-                          {{ branch?.contactPerson | capitalizeFirst }}
+
+                        <!-- Mobile Number -->
+                        <div class="col-md-3 col-sm-6 mb-3">
+                          <div class="info-line">
+                            <div class="label">Mobile Number</div>
+                            <div class="value">{{ branch?.phone }}</div>
+                          </div>
                         </div>
-                      </div>
-                      <div class="info-line">
-                        <div class="label d-flex justify-content-between">
-                          Designation <b>:&nbsp;</b>
+
+                        <!-- Email -->
+                        <div class="col-md-3 col-sm-6 mb-3">
+                          <div class="info-line">
+                            <div class="label">Email</div>
+                            <div class="value email">{{ branch?.email }}</div>
+                          </div>
                         </div>
-                        <div class="value">
-                          {{ branch?.designation | capitalizeFirst }}
-                        </div>
-                      </div>
-                      <div class="info-line">
-                        <div class="label d-flex justify-content-between">
-                          Mobile Number<b>:&nbsp;</b>
-                        </div>
-                        <div class="value">{{ branch?.phone }}</div>
-                      </div>
-                      <div class="info-line">
-                        <div class="label d-flex justify-content-between">
-                          Email<b>:&nbsp;</b>
-                        </div>
-                        <div class="value email">{{ branch?.email }}</div>
                       </div>
                     </div>
                   </p-accordionTab>

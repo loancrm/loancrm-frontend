@@ -179,7 +179,7 @@
   </div>
 </section> -->
 
-<section
+<!-- <section
   class="d-flex align-items-center justify-content-center min-vh-100 background-radial-gradient"
 >
   <div class="container-fluid">
@@ -329,6 +329,181 @@
                 <img src="../../assets/images/icons/home.svg" alt="Home Loan" />
                 <h6 class="fw-bold mt-2 calci-heading">Home Loan</h6>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+
+<section class="d-flex min-vh-100">
+  <div class="row flex-grow-1 m-0">
+    <!-- Left Illustration -->
+    <div
+      class="col-lg-6 d-flex justify-content-center align-items-center text-center p-0"
+      style="background: linear-gradient(135deg, #6b5bd6, #8a78f0);"
+    >
+      <img
+        src="../../assets/images/loginlatest.svg"
+        alt="Illustration"
+        class="img-fluid"
+        style="max-height: 80%;"
+      />
+    </div>
+
+    <!-- Right Form Section -->
+    <div class="col-lg-6 d-flex justify-content-center align-items-center">
+      <div class="col-lg-6 col-md-10 col-sm-12 m-2">
+        <div class="card shadow-sm mx-auto" style="width: 70vh; border: none;">
+          <div class="card-body p-4">
+            <div class="d-flex justify-content-center mb-2">
+              <img
+                src="../../assets/images/myloancrm.svg"
+                alt="Business Logo"
+                width="200"
+                height="40"
+                loading="lazy"
+              />
+            </div>
+
+            <div class="text-center card-greeting fw-semibold mb-4 fs-6">
+              Hi, Welcome Back 👋
+            </div>
+
+            <form
+              [formGroup]="loginForm"
+              (ngSubmit)="onSubmit(loginForm.value)"
+              novalidate
+            >
+              <div class="mb-2">
+                <label class="form-label fw-medium mt-1" for="username"
+                  >Email or Phone Number</label
+                >
+                <input
+                  pInputText
+                  type="text"
+                  id="username"
+                  formControlName="username"
+                  placeholder="Enter your email or phone number"
+                  autocomplete="off"
+                  class="form-control"
+                />
+              </div>
+
+              <div class="mb-2 position-relative">
+                <label class="form-label fw-medium" for="password"
+                  >Password</label
+                >
+                <div class="p-inputgroup">
+                  <input
+                    pInputText
+                    id="password"
+                    [type]="isPasswordVisible ? 'text' : 'password'"
+                    formControlName="password"
+                    placeholder="Enter your password"
+                    autocomplete="off"
+                    class="form-control"
+                  />
+                  <span
+                    class="p-inputgroup-addon border-start-0"
+                    (click)="togglePasswordVisibility()"
+                    style="cursor: pointer"
+                  >
+                    <img
+                      [src]="
+                        isPasswordVisible
+                          ? 'assets/images/icons/eye-slash.svg'
+                          : 'assets/images/icons/eye.svg'
+                      "
+                      alt="Toggle Password Visibility"
+                      width="20"
+                      height="20"
+                    />
+                  </span>
+                </div>
+
+                <div class="text-end m-2">
+                  <a
+                    class="text-decoration-none forgot-text"
+                    (click)="doForgotPassword()"
+                    style="cursor: pointer;"
+                  >
+                    <span style="color: #4D4D4D;">Forgot Password?</span>
+                  </a>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                pButton
+                pRipple
+                class="w-100 p-button-primary d-flex align-items-center justify-content-center"
+                [disabled]="!loginForm.valid || api_loading"
+                
+              >
+                <span style="color: #4D4D4D;">Sign In</span>
+              </button>
+
+              <div class="text-center mt-3">
+                <span class="text-muted">Don't have an account? </span>
+                <a
+                  routerLink="/user/register"
+                  class="text-decoration-none"
+                  style="color: #535AB4"
+                  >Sign Up</a
+                >
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="">
+          <div class="calculator-heading my-3 d-flex align-items-center">
+            <div class="line flex-grow-1"></div>
+            <h6 class="mx-2 mb-0">Use Our Calculator</h6>
+            <div class="line flex-grow-1"></div>
+          </div>
+
+          <div class="d-flex justify-content-center gap-4 flex-nowrap">
+            <div
+              class="calucard text-center shadow-sm py-3 px-4"
+              routerLink="/calculator/business"
+              style="width: 180px; white-space: nowrap; cursor: pointer;"
+            >
+              <img
+                src="../../assets/images/icons/businessloan.svg"
+                alt="Business Loan"
+                class="mb-2"
+              />
+              <h6 class="fw-bold calci-heading mb-0">Business Loan</h6>
+            </div>
+
+            <div
+              class="calucard text-center shadow-sm py-3 px-4"
+              routerLink="/calculator/personal"
+              style="width: 180px; white-space: nowrap; cursor: pointer;"
+            >
+              <img
+                src="../../assets/images/icons/team.svg"
+                alt="Personal Loan"
+                class="mb-2"
+              />
+              <h6 class="fw-bold calci-heading mb-0">Personal Loan</h6>
+            </div>
+
+            <div
+              class="calucard text-center shadow-sm py-3 px-4"
+              routerLink="/calculator/home"
+              style="width: 180px; white-space: nowrap; cursor: pointer;"
+            >
+              <img
+                src="../../assets/images/icons/home.svg"
+                alt="Home Loan"
+                class="mb-2"
+              />
+              <h6 class="fw-bold calci-heading mb-0">Home Loan</h6>
             </div>
           </div>
         </div>

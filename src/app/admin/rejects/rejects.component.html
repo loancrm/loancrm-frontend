@@ -1,12 +1,12 @@
 <div>
-  <div class="p-1 m-2 fixed-card">
+  <div class="p-1 m-2 fixed-card"  style="background-color: #f7f7f7;">
     <div class="d-flex justify-content-between align-items-center">
       <div
         class="d-flex align-items-center justify-content-center pointer-cursor"
         (click)="goBack()"
       >
         <span class="me-2 d-flex align-items-center">
-          <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
+          <img src="../../../assets/images/icons/Vector.png" alt="Back" />
         </span>
         <b>
           <span class="back-btn-text">Rejects</span>
@@ -87,7 +87,17 @@
                         "
                         (keyup.enter)="filterWithBusinessName()"
                       />
-                      <button
+                      <span
+                        class="input-group-text p-button-primary"
+                        (click)="filterWithBusinessName()"
+                      >
+                        <img
+                          src="../../../assets/images/icons/search.svg"
+                          alt="Search"
+                          style="width: 14px; height: 14px; cursor: pointer"
+                        />
+                    </span>
+                      <!-- <button
                         type="button"
                         pButton
                         class="p-button-primary"
@@ -101,7 +111,7 @@
                           height="16"
                           style="vertical-align: middle"
                         />
-                      </button>
+                      </button> -->
                     </div>
                   </div>
                   <div class="col-md-3 no-padding-small">
@@ -116,8 +126,17 @@
                         "
                         (keyup.enter)="filterWithMobileNumber()"
                       />
-
-                      <button
+                      <span
+                        class="input-group-text p-button-primary"
+                        (click)="filterWithMobileNumber()"
+                      >
+                        <img
+                          src="../../../assets/images/icons/search.svg"
+                          alt="Search"
+                          style="width: 14px; height: 14px; cursor: pointer"
+                        />
+                    </span>
+                      <!-- <button
                         type="button"
                         pButton
                         class="p-button-primary"
@@ -131,7 +150,7 @@
                           height="16"
                           style="vertical-align: middle"
                         />
-                      </button>
+                      </button> -->
                     </div>
                   </div>
                   <div class="col-md-3 no-padding-small text-right">
@@ -143,7 +162,7 @@
                             [style]="{ width: '100%' }"
                             [options]="leadUsers"
                             (onChange)="statusChange($event)"
-                            [dropdownIcon]="'fa fa-caret-down'"
+                            [dropdownIcon]="'pi pi-chevron-down'"
                             [(ngModel)]="selectedSourcedByStatus"
                             optionLabel="name"
                             dataKey="name"
@@ -240,7 +259,7 @@
                   </td>
                   <td>
                     <div class="text-center">
-                      <div class="d-flex">
+                      <div class="d-flex tableimage">
                         <p-menu
                           appendTo="body"
                           #menu
@@ -267,13 +286,13 @@
               <ng-template pTemplate="emptymessage">
                 <tr class="text-center">
                   <td colspan="10" class="text-center fw-bold">
-                    <img
+                    <!-- <img
                       alt="No Data"
                       src="../../../assets/images/menu/no-data.gif"
                       width="200"
                       height="200"
-                    />
-                    <p>No Rejected Leads Found</p>
+                    /> -->
+                    <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No Rejected Leads Found</p>
                   </td>
                 </tr>
               </ng-template>
@@ -322,7 +341,17 @@
                         "
                         (keyup.enter)="filterWithBusinessNameforBank()"
                       />
-                      <button
+                      <span
+                        class="input-group-text p-button-primary"
+                        (click)="filterWithBusinessNameforBank()"
+                      >
+                        <img
+                          src="../../../assets/images/icons/search.svg"
+                          alt="Search"
+                          style="width: 14px; height: 14px; cursor: pointer"
+                        />
+                    </span>
+                      <!-- <button
                         type="button"
                         pButton
                         class="p-button-primary"
@@ -336,7 +365,7 @@
                           height="16"
                           style="vertical-align: middle"
                         />
-                      </button>
+                      </button> -->
                     </div>
                   </div>
                   <div class="col-md-3 no-padding-small">
@@ -354,7 +383,17 @@
                         "
                         (keyup.enter)="filterWithMobileNumberforbank()"
                       />
-                      <button
+                      <span
+                        class="input-group-text p-button-primary"
+                        (click)="filterWithMobileNumberforbank()"
+                      >
+                        <img
+                          src="../../../assets/images/icons/search.svg"
+                          alt="Search"
+                          style="width: 14px; height: 14px; cursor: pointer"
+                        />
+                    </span>
+                      <!-- <button
                         type="button"
                         pButton
                         class="p-button-primary"
@@ -368,7 +407,7 @@
                           height="16"
                           style="vertical-align: middle"
                         />
-                      </button>
+                      </button> -->
                     </div>
                   </div>
                   <div class="col-md-3 no-padding-small text-right">
@@ -380,7 +419,7 @@
                             [style]="{ width: '100%' }"
                             [options]="leadUsers"
                             (onChange)="statusChangeforbank($event)"
-                            [dropdownIcon]="'fa fa-caret-down'"
+                            [dropdownIcon]="'pi pi-chevron-down'"
                             [(ngModel)]="selectedSourcedByStatusforbank"
                             optionLabel="name"
                             dataKey="name"
@@ -477,7 +516,7 @@
                   </td>
                   <td>
                     <div class="text-center">
-                      <div class="d-flex">
+                      <div class="d-flex tableimage">
                         <img
                           alt="Actions"
                           src="../../../assets/images/icons/rejects.svg"
@@ -498,13 +537,13 @@
               <ng-template pTemplate="emptymessage">
                 <tr class="text-center">
                   <td colspan="10" class="text-center fw-bold">
-                    <img
+                    <!-- <img
                       alt="No Data"
                       src="../../../assets/images/menu/no-data.gif"
                       width="200"
                       height="200"
-                    />
-                    <p>No Rejected Leads Found</p>
+                    /> -->
+                    <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No Rejected Leads Found</p>
                   </td>
                 </tr>
               </ng-template>
@@ -553,6 +592,16 @@
                         "
                         (keyup.enter)="filterWithBusinessNameforCNI()"
                       />
+                      <span
+                        class="input-group-text p-button-primary"
+                        (click)="filterWithBusinessNameforCNI()"
+                      >
+                        <img
+                          src="../../../assets/images/icons/search.svg"
+                          alt="Search"
+                          style="width: 14px; height: 14px; cursor: pointer"
+                        />
+                    </span>
                       <button
                         type="button"
                         pButton
@@ -585,7 +634,17 @@
                         "
                         (keyup.enter)="filterWithMobileNumbercni()"
                       />
-                      <button
+                      <span
+                        class="input-group-text p-button-primary"
+                        (click)="filterWithMobileNumbercni()"
+                      >
+                        <img
+                          src="../../../assets/images/icons/search.svg"
+                          alt="Search"
+                          style="width: 14px; height: 14px; cursor: pointer"
+                        />
+                    </span>
+                      <!-- <button
                         type="button"
                         pButton
                         class="p-button-primary"
@@ -599,7 +658,7 @@
                           height="16"
                           style="vertical-align: middle"
                         />
-                      </button>
+                      </button> -->
                     </div>
                   </div>
                   <div class="col-md-3 no-padding-small text-right">
@@ -611,7 +670,7 @@
                             [style]="{ width: '100%' }"
                             [options]="leadUsers"
                             (onChange)="statusChangeforcni($event)"
-                            [dropdownIcon]="'fa fa-caret-down'"
+                            [dropdownIcon]="'pi pi-chevron-down'"
                             [(ngModel)]="selectedSourcedByStatusforcni"
                             optionLabel="name"
                             dataKey="name"
@@ -714,7 +773,7 @@
                   </td>
                   <td>
                     <div class="text-center">
-                      <div class="d-flex">
+                      <div class="d-flex tableimage">
                         <img
                           alt="CNI Details"
                           src="../../../assets/images/icons/cni-files.svg"
@@ -735,13 +794,13 @@
               <ng-template pTemplate="emptymessage">
                 <tr class="text-center">
                   <td colspan="10" class="text-center fw-bold">
-                    <img
+                    <!-- <img
                       alt="No Data"
                       src="../../../assets/images/menu/no-data.gif"
                       width="200"
                       height="200"
-                    />
-                    <p>No Rejected Leads Found</p>
+                    /> -->
+                    <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No Rejected Leads Found</p>
                   </td>
                 </tr>
               </ng-template>
@@ -816,8 +875,17 @@
                         "
                         (keyup.enter)="filterWithBusinessNameForPersonal()"
                       />
-
-                      <button
+                      <span
+                        class="input-group-text p-button-primary"
+                        (click)="filterWithBusinessNameForPersonal()"
+                      >
+                        <img
+                          src="../../../assets/images/icons/search.svg"
+                          alt="Search"
+                          style="width: 14px; height: 14px; cursor: pointer"
+                        />
+                    </span>
+                      <!-- <button
                         type="button"
                         pButton
                         class="p-button-primary"
@@ -831,10 +899,10 @@
                           height="16"
                           style="vertical-align: middle"
                         />
-                      </button>
+                      </button> -->
                     </div>
                   </div>
-                  <div class="col-md-3 no-padding-small"></div>
+                  <!-- <div class="col-md-3 no-padding-small"></div> -->
                   <div class="col-md-3 no-padding-small text-right">
                     <div class="d-flex">
                       <div class="flex-grow-1 me-2">
@@ -844,7 +912,7 @@
                             [style]="{ width: '100%' }"
                             [options]="leadUsers"
                             (onChange)="plstatusChange($event)"
-                            [dropdownIcon]="'fa fa-caret-down'"
+                            [dropdownIcon]="'pi pi-chevron-down'"
                             [(ngModel)]="selectedplSourcedByStatus"
                             optionLabel="name"
                             dataKey="name"
@@ -938,7 +1006,7 @@
                   </td>
                   <td>
                     <div class="text-center">
-                      <div class="d-flex">
+                      <div class="d-flex tableimage">
                         <p-menu
                           appendTo="body"
                           #menu
@@ -965,13 +1033,13 @@
               <ng-template pTemplate="emptymessage">
                 <tr class="text-center">
                   <td colspan="10" class="text-center fw-bold">
-                    <img
+                    <!-- <img
                       alt="No Data"
                       src="../../../assets/images/menu/no-data.gif"
                       width="200"
                       height="200"
-                    />
-                    <p>No Rejected Leads Found</p>
+                    /> -->
+                    <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No Rejected Leads Found</p>
                   </td>
                 </tr>
               </ng-template>
@@ -1020,8 +1088,17 @@
                         "
                         (keyup.enter)="filterWithBusinessNameforplBank()"
                       />
-
-                      <button
+                      <span
+                        class="input-group-text p-button-primary"
+                        (click)="filterWithBusinessNameforplBank()"
+                      >
+                        <img
+                          src="../../../assets/images/icons/search.svg"
+                          alt="Search"
+                          style="width: 14px; height: 14px; cursor: pointer"
+                        />
+                    </span>
+                      <!-- <button
                         type="button"
                         pButton
                         class="p-button-primary"
@@ -1035,10 +1112,10 @@
                           height="16"
                           style="vertical-align: middle"
                         />
-                      </button>
+                      </button> -->
                     </div>
                   </div>
-                  <div class="col-md-3 no-padding-small"></div>
+                  <!-- <div class="col-md-3 no-padding-small"></div> -->
                   <div class="col-md-3 no-padding-small text-right">
                     <div class="d-flex">
                       <div class="flex-grow-1 me-2">
@@ -1048,7 +1125,7 @@
                             [style]="{ width: '100%' }"
                             [options]="leadUsers"
                             (onChange)="plstatusChangeforbank($event)"
-                            [dropdownIcon]="'fa fa-caret-down'"
+                            [dropdownIcon]="'pi pi-chevron-down'"
                             [(ngModel)]="selectedplSourcedByStatusforbank"
                             optionLabel="name"
                             dataKey="name"
@@ -1146,7 +1223,7 @@
                   </td>
                   <td>
                     <div class="text-center">
-                      <div class="d-flex">
+                      <div class="d-flex tableimage">
                         <img
                           alt="Rejects Details"
                           src="../../../assets/images/icons/rejects.svg"
@@ -1167,13 +1244,13 @@
               <ng-template pTemplate="emptymessage">
                 <tr class="text-center">
                   <td colspan="10" class="text-center fw-bold">
-                    <img
+                    <!-- <img
                       alt="No Data"
                       src="../../../assets/images/menu/no-data.gif"
                       width="200"
                       height="200"
-                    />
-                    <p>No Rejected Leads Found</p>
+                    /> -->
+                    <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No Rejected Leads Found</p>
                   </td>
                 </tr>
               </ng-template>
@@ -1222,8 +1299,17 @@
                         "
                         (keyup.enter)="filterWithBusinessNameforplCNI()"
                       />
-
-                      <button
+                      <span
+                        class="input-group-text p-button-primary"
+                        (click)="filterWithBusinessNameforplCNI()"
+                      >
+                        <img
+                          src="../../../assets/images/icons/search.svg"
+                          alt="Search"
+                          style="width: 14px; height: 14px; cursor: pointer"
+                        />
+                    </span>
+                      <!-- <button
                         type="button"
                         pButton
                         class="p-button-primary"
@@ -1237,10 +1323,10 @@
                           height="16"
                           style="vertical-align: middle"
                         />
-                      </button>
+                      </button> -->
                     </div>
                   </div>
-                  <div class="col-md-3 no-padding-small"></div>
+                  <!-- <div class="col-md-3 no-padding-small"></div> -->
                   <div class="col-md-3 no-padding-small text-right">
                     <div class="d-flex">
                       <div class="flex-grow-1 me-2">
@@ -1250,7 +1336,7 @@
                             [style]="{ width: '100%' }"
                             [options]="leadUsers"
                             (onChange)="statusChangeforplcni($event)"
-                            [dropdownIcon]="'fa fa-caret-down'"
+                            [dropdownIcon]="'pi pi-chevron-down'"
                             [(ngModel)]="selectedSourcedByStatusforplcni"
                             optionLabel="name"
                             dataKey="name"
@@ -1356,7 +1442,7 @@
                   </td>
                   <td>
                     <div class="text-center">
-                      <div class="d-flex">
+                      <div class="d-flex tableimage">
                         <img
                           alt="CNI Details"
                           src="../../../assets/images/icons/cni-files.svg"
@@ -1375,13 +1461,13 @@
               <ng-template pTemplate="emptymessage">
                 <tr class="text-center">
                   <td colspan="10" class="text-center fw-bold">
-                    <img
+                    <!-- <img
                       alt="No Data"
                       src="../../../assets/images/menu/no-data.gif"
                       width="200"
                       height="200"
-                    />
-                    <p>No Rejected Leads Found</p>
+                    /> -->
+                    <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No Rejected Leads Found</p>
                   </td>
                 </tr>
               </ng-template>
@@ -1482,8 +1568,17 @@
                               (ngModelChange)="handleInputChange($event)"
                               (keyup.enter)="filterBasedOnEmploymentStatus()"
                             />
-
-                            <button
+                            <span
+                        class="input-group-text p-button-primary"
+                        (click)="filterBasedOnEmploymentStatus()"
+                      >
+                        <img
+                          src="../../../assets/images/icons/search.svg"
+                          alt="Search"
+                          style="width: 14px; height: 14px; cursor: pointer"
+                        />
+                    </span>
+                            <!-- <button
                               type="button"
                               pButton
                               class="p-button-primary"
@@ -1497,7 +1592,7 @@
                                 height="16"
                                 style="vertical-align: middle"
                               />
-                            </button>
+                            </button> -->
                           </div>
                         </div>
                         <div class="col-md-3 mt-2 no-padding-small text-right">
@@ -1521,7 +1616,7 @@
                                       ? statusChangeForHome($event)
                                       : statusChangeForHomeSelf($event)
                                   "
-                                  [dropdownIcon]="'fa fa-caret-down'"
+                                  [dropdownIcon]="'pi pi-chevron-down'"
                                   [(ngModel)]="SourcedByForHome"
                                   optionLabel="name"
                                   dataKey="name"
@@ -1727,7 +1822,7 @@
 
                         <td (click)="$event.stopPropagation()">
                           <div class="text-center">
-                            <div class="d-flex">
+                            <div class="d-flex tableimage">
                               <p-menu
                                 appendTo="body"
                                 #menu
@@ -1753,12 +1848,12 @@
                     <ng-template pTemplate="emptymessage">
                       <tr class="text-center">
                         <td colspan="10" class="text-center fw-bold">
-                          <img
+                          <!-- <img
                             src="../../../assets/images/menu/no-data.gif"
                             width="200"
                             height="200"
-                          />
-                          <p>No Files Found</p>
+                          /> -->
+                          <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No Files Found</p>
                         </td>
                       </tr>
                     </ng-template>
@@ -1820,8 +1915,17 @@
                               (ngModelChange)="handleInputChange($event)"
                               (keyup.enter)="filterBasedOnEmploymentStatus()"
                             />
-
-                            <button
+                            <span
+                        class="input-group-text p-button-primary"
+                        (click)="filterBasedOnEmploymentStatus()"
+                      >
+                        <img
+                          src="../../../assets/images/icons/search.svg"
+                          alt="Search"
+                          style="width: 14px; height: 14px; cursor: pointer"
+                        />
+                    </span>
+                            <!-- <button
                               type="button"
                               pButton
                               class="p-button-primary"
@@ -1835,7 +1939,7 @@
                                 height="16"
                                 style="vertical-align: middle"
                               />
-                            </button>
+                            </button> -->
                           </div>
                         </div>
                         <div class="col-md-3 mt-2 no-padding-small text-right">
@@ -1859,7 +1963,7 @@
                                       ? statusChangeForHome($event)
                                       : statusChangeForHomeSelf($event)
                                   "
-                                  [dropdownIcon]="'fa fa-caret-down'"
+                                  [dropdownIcon]="'pi pi-chevron-down'"
                                   [(ngModel)]="SourcedByForHome"
                                   optionLabel="name"
                                   dataKey="name"
@@ -2072,7 +2176,7 @@
                         </td>
                         <td (click)="$event.stopPropagation()">
                           <div class="text-center">
-                            <div class="d-flex">
+                            <div class="d-flex tableimage">
                               <img
                                 alt="Actions"
                                 src="../../../assets/images/icons/rejects.svg"
@@ -2094,12 +2198,12 @@
                     <ng-template pTemplate="emptymessage">
                       <tr class="text-center">
                         <td colspan="10" class="text-center fw-bold">
-                          <img
+                          <!-- <img
                             src="../../../assets/images/menu/no-data.gif"
                             width="200"
                             height="200"
-                          />
-                          <p>No Files Found</p>
+                          /> -->
+                          <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No Files Found</p>
                         </td>
                       </tr>
                     </ng-template>
@@ -2157,8 +2261,17 @@
                               (ngModelChange)="handleInputChange($event)"
                               (keyup.enter)="filterBasedOnEmploymentStatus()"
                             />
-
-                            <button
+                            <span
+                        class="input-group-text p-button-primary"
+                        (click)="filterBasedOnEmploymentStatus()"
+                      >
+                        <img
+                          src="../../../assets/images/icons/search.svg"
+                          alt="Search"
+                          style="width: 14px; height: 14px; cursor: pointer"
+                        />
+                    </span>
+                            <!-- <button
                               type="button"
                               pButton
                               class="p-button-primary"
@@ -2172,7 +2285,7 @@
                                 height="16"
                                 style="vertical-align: middle"
                               />
-                            </button>
+                            </button> -->
                           </div>
                         </div>
                         <div class="col-md-3 mt-2 no-padding-small text-right">
@@ -2196,7 +2309,7 @@
                                       ? statusChangeForHome($event)
                                       : statusChangeForHomeSelf($event)
                                   "
-                                  [dropdownIcon]="'fa fa-caret-down'"
+                                  [dropdownIcon]="'pi pi-chevron-down'"
                                   [(ngModel)]="SourcedByForHome"
                                   optionLabel="name"
                                   dataKey="name"
@@ -2417,7 +2530,7 @@
                         </td>
                         <td (click)="$event.stopPropagation()">
                           <div class="text-center">
-                            <div class="d-flex">
+                            <div class="d-flex tableimage">
                               <img
                                 alt="CNI Details"
                                 src="../../../assets/images/icons/cni-files.svg"
@@ -2438,12 +2551,12 @@
                     <ng-template pTemplate="emptymessage">
                       <tr class="text-center">
                         <td colspan="10" class="text-center fw-bold">
-                          <img
+                          <!-- <img
                             src="../../../assets/images/menu/no-data.gif"
                             width="200"
                             height="200"
-                          />
-                          <p>No Files Found</p>
+                          /> -->
+                          <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No Files Found</p>
                         </td>
                       </tr>
                     </ng-template>
@@ -2547,8 +2660,17 @@
                               (ngModelChange)="handleInputChange($event)"
                               (keyup.enter)="filterBasedOnEmploymentStatus()"
                             />
-
-                            <button
+                            <span
+                        class="input-group-text p-button-primary"
+                        (click)="filterBasedOnEmploymentStatus()"
+                      >
+                        <img
+                          src="../../../assets/images/icons/search.svg"
+                          alt="Search"
+                          style="width: 14px; height: 14px; cursor: pointer"
+                        />
+                    </span>
+                            <!-- <button
                               type="button"
                               pButton
                               class="p-button-primary"
@@ -2562,7 +2684,7 @@
                                 height="16"
                                 style="vertical-align: middle"
                               />
-                            </button>
+                            </button> -->
                           </div>
                         </div>
                         <div class="col-md-3 mt-2 no-padding-small text-right">
@@ -2586,7 +2708,7 @@
                                       ? statusChangeForHome($event)
                                       : statusChangeForHomeSelf($event)
                                   "
-                                  [dropdownIcon]="'fa fa-caret-down'"
+                                  [dropdownIcon]="'pi pi-chevron-down'"
                                   [(ngModel)]="SourcedByForHome"
                                   optionLabel="name"
                                   dataKey="name"
@@ -2792,7 +2914,7 @@
 
                         <td>
                           <div class="text-center">
-                            <div class="d-flex">
+                            <div class="d-flex tableimage">
                               <p-menu
                                 appendTo="body"
                                 #menu
@@ -2819,12 +2941,12 @@
                     <ng-template pTemplate="emptymessage">
                       <tr class="text-center">
                         <td colspan="10" class="text-center fw-bold">
-                          <img
+                          <!-- <img
                             src="../../../assets/images/menu/no-data.gif"
                             width="200"
                             height="200"
-                          />
-                          <p>No Files Found</p>
+                          /> -->
+                          <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No Files Found</p>
                         </td>
                       </tr>
                     </ng-template>
@@ -2886,8 +3008,17 @@
                               (ngModelChange)="handleInputChange($event)"
                               (keyup.enter)="filterBasedOnEmploymentStatus()"
                             />
-
-                            <button
+                            <span
+                        class="input-group-text p-button-primary"
+                        (click)="filterBasedOnEmploymentStatus()"
+                      >
+                        <img
+                          src="../../../assets/images/icons/search.svg"
+                          alt="Search"
+                          style="width: 14px; height: 14px; cursor: pointer"
+                        />
+                    </span>
+                            <!-- <button
                               type="button"
                               pButton
                               class="p-button-primary"
@@ -2901,7 +3032,7 @@
                                 height="16"
                                 style="vertical-align: middle"
                               />
-                            </button>
+                            </button> -->
                           </div>
                         </div>
                         <div class="col-md-3 mt-2 no-padding-small text-right">
@@ -2925,7 +3056,7 @@
                                       ? statusChangeForHome($event)
                                       : statusChangeForHomeSelf($event)
                                   "
-                                  [dropdownIcon]="'fa fa-caret-down'"
+                                  [dropdownIcon]="'pi pi-chevron-down'"
                                   [(ngModel)]="SourcedByForHome"
                                   optionLabel="name"
                                   dataKey="name"
@@ -3138,7 +3269,7 @@
                         </td>
                         <td (click)="$event.stopPropagation()">
                           <div class="text-center">
-                            <div class="d-flex">
+                            <div class="d-flex tableimage">
                               <img
                                 alt="Actions"
                                 src="../../../assets/images/icons/rejects.svg"
@@ -3160,12 +3291,12 @@
                     <ng-template pTemplate="emptymessage">
                       <tr class="text-center">
                         <td colspan="10" class="text-center fw-bold">
-                          <img
+                          <!-- <img
                             src="../../../assets/images/menu/no-data.gif"
                             width="200"
                             height="200"
-                          />
-                          <p>No Files Found</p>
+                          /> -->
+                          <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No Files Found</p>
                         </td>
                       </tr>
                     </ng-template>
@@ -3223,8 +3354,17 @@
                               (ngModelChange)="handleInputChange($event)"
                               (keyup.enter)="filterBasedOnEmploymentStatus()"
                             />
-
-                            <button
+                            <span
+                        class="input-group-text p-button-primary"
+                        (click)="filterBasedOnEmploymentStatus()"
+                      >
+                        <img
+                          src="../../../assets/images/icons/search.svg"
+                          alt="Search"
+                          style="width: 14px; height: 14px; cursor: pointer"
+                        />
+                    </span>
+                            <!-- <button
                               type="button"
                               pButton
                               class="p-button-primary"
@@ -3238,7 +3378,7 @@
                                 height="16"
                                 style="vertical-align: middle"
                               />
-                            </button>
+                            </button> -->
                           </div>
                         </div>
                         <div class="col-md-3 mt-2 no-padding-small text-right">
@@ -3262,7 +3402,7 @@
                                       ? statusChangeForHome($event)
                                       : statusChangeForHomeSelf($event)
                                   "
-                                  [dropdownIcon]="'fa fa-caret-down'"
+                                  [dropdownIcon]="'pi pi-chevron-down'"
                                   [(ngModel)]="SourcedByForHome"
                                   optionLabel="name"
                                   dataKey="name"
@@ -3483,7 +3623,7 @@
                         </td>
                         <td (click)="$event.stopPropagation()">
                           <div class="text-center">
-                            <div class="d-flex">
+                            <div class="d-flex tableimage">
                               <img
                                 alt="CNI Details"
                                 src="../../../assets/images/icons/cni-files.svg"
@@ -3504,12 +3644,12 @@
                     <ng-template pTemplate="emptymessage">
                       <tr class="text-center">
                         <td colspan="10" class="text-center fw-bold">
-                          <img
+                          <!-- <img
                             src="../../../assets/images/menu/no-data.gif"
                             width="200"
                             height="200"
-                          />
-                          <p>No Files Found</p>
+                          /> -->
+                          <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No Files Found</p>
                         </td>
                       </tr>
                     </ng-template>
@@ -3520,16 +3660,36 @@
           </div>
         </div>
         <div *ngIf="activeItem.name == 'professionalLoans'">
-          <p>Comming soon ....</p>
+          <div class="card" style="height: 500px; width: 950px; border-radius: 8px; box-shadow: 0 0 4px 0; margin-left: 200px; margin-top: 50px;">
+          <div class="d-flex">
+            <img src="../../../assets/images/Group (2).svg" alt="" style="height: 398px; width: 280.68px;">
+          <img src="../../../assets/images/Group (1).svg" alt="" style="height: 75px; width: 461px; margin-top: 150px;">
+          </div>
+         </div>
         </div>
         <div *ngIf="activeItem.name == 'educationlLoans'">
-          <p>Comming soon ....</p>
+          <div class="card" style="height: 500px; width: 950px; border-radius: 8px; box-shadow: 0 0 4px 0; margin-left: 200px; margin-top: 50px;">
+          <div class="d-flex">
+            <img src="../../../assets/images/Group (2).svg" alt="" style="height: 398px; width: 280.68px;">
+          <img src="../../../assets/images/Group (1).svg" alt="" style="height: 75px; width: 461px; margin-top: 150px;">
+          </div>
+         </div>
         </div>
         <div *ngIf="activeItem.name == 'carLoan'">
-          <p>Comming soon ....</p>
+          <div class="card" style="height: 500px; width: 950px; border-radius: 8px; box-shadow: 0 0 4px 0; margin-left: 200px; margin-top: 50px;">
+          <div class="d-flex">
+            <img src="../../../assets/images/Group (2).svg" alt="" style="height: 398px; width: 280.68px;">
+          <img src="../../../assets/images/Group (1).svg" alt="" style="height: 75px; width: 461px; margin-top: 150px;">
+          </div>
+         </div>
         </div>
         <div *ngIf="activeItem.name == 'commercialVehicleLoan'">
-          <p>Comming soon ....</p>
+          <div class="card" style="height: 500px; width: 950px; border-radius: 8px; box-shadow: 0 0 4px 0; margin-left: 200px; margin-top: 50px;">
+          <div class="d-flex">
+            <img src="../../../assets/images/Group (2).svg" alt="" style="height: 398px; width: 280.68px;">
+          <img src="../../../assets/images/Group (1).svg" alt="" style="height: 75px; width: 461px; margin-top: 150px;">
+          </div>
+         </div>
         </div>
       </div>
     </div>

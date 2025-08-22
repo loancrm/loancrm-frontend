@@ -6,7 +6,7 @@
     <div class="d-flex justify-content-between">
       <div class="pointer-cursor d-flex align-items-center" (click)="goBack()">
         <span class="me-2 d-flex align-items-center">
-          <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
+          <img src="../../../assets/images/icons/Vector.png" alt="Back" />
         </span>
         <!-- <span class="me-2">
           <ng-container
@@ -131,11 +131,15 @@
                     pButton
                     pRipple
                     type="button"
-                    [class.p-button-success]="userDetails?.status === 'Active'"
-                    [class.p-button-danger]="userDetails?.status !== 'Active'"
                     class="custom-button"
+                    [ngClass]="{
+                      'active-status': userDetails?.status === 'Active',
+                      'inactive-status': userDetails?.status !== 'Active'
+                    }"
+                     style="border-radius: 16px;"
                   >
-                    {{ userDetails?.status || "-" }}
+                    <span class="status-dot"></span>
+                    {{ userDetails?.status || '-' }}
                   </button>
                 </div>
               </div>
@@ -189,11 +193,11 @@
       <!-- Financial Summary Section -->
       <div class="col-lg-4 col-md-6 col-sm-12">
         <div
-          class="card shadow-sm"
-          style="background-color: #29415b; color: #ffffff"
+          class="card"
+          style="background-color: #ffffff; color: #ffffff; border: none;"
         >
           <div class="card-body">
-            <h5 class="mb-4 fw-bold" style="color: #ee7846">
+            <h5 class="mb-4 fw-bold" style="color: #4D54B8; font-size: 24px;">
               Financial Summary
             </h5>
 
@@ -202,19 +206,20 @@
               <div
                 class="card col-12 mb-3"
                 style="
-                  background-color: #455970;
+                  background-color: #ffffff;
                   color: #ffffff;
                   border-radius: 12px;
+                  border: none;
                 "
               >
                 <div class="d-flex justify-content-between align-items-center">
-                  <span style="color: #fff">Sanctioned Amount</span>
+                  <span style="color: #101828; font-size: 18px;">Sanctioned Amount</span>
                   <span
                     class="fw-bold text-end"
-                    style="font-size: 18px; color: #ee7846"
+                    style="font-size: 18px; color: #706EC4"
                   >
                     ₹{{ totalSanctionedAmount | number }}<br />
-                    <small style="color: #fff"
+                    <small style="color: #737373"
                       >({{ totalSanctionedAmountInLakhsOrCrores }})</small
                     >
                   </span>
@@ -225,19 +230,20 @@
               <div
                 class="card col-12"
                 style="
-                  background-color: #455970;
+                  background-color: #ffffff;
                   color: #ffffff;
                   border-radius: 12px;
+                  border: none;
                 "
               >
                 <div class="d-flex justify-content-between align-items-center">
-                  <span style="color: #fff">Disbursed Amount</span>
+                  <span style="color: #101828; font-size: 18px;">Disbursed Amount</span>
                   <span
                     class="fw-bold text-end"
-                    style="font-size: 18px; color: #ee7846"
+                    style="font-size: 18px; color: #706EC4"
                   >
                     ₹{{ totalDisbursedAmount | number }}<br />
-                    <small style="color: #fff"
+                    <small style="color: #737373"
                       >({{ totalDisbursedAmountInLakhsOrCrores }})</small
                     >
                   </span>
@@ -321,7 +327,7 @@
                       </div>
                       <div class="count-box">
                         <p>{{ totalLeadsCount }}</p>
-                        <h5>New Leads</h5>
+                        <span style="color: #1E1E1E; font-weight: 400; font-size: 22px;">New Leads</span>
                       </div>
                     </div>
                   </div>
@@ -367,7 +373,8 @@
                       </div>
                       <div class="count-box">
                         <p>{{ callBacksCount }}</p>
-                        <h5>New Callbacks</h5>
+                        <span style="color: #1E1E1E; font-weight: 400; font-size: 22px;">New Callbacks</span>
+                        <!-- <h5>New Callbacks</h5> -->
                       </div>
                     </div>
                   </div>
@@ -398,7 +405,7 @@
         </div>
         <div *ngIf="activeItem.name == 'files'">
           <div class="card tab-card">
-            <div class="row p-5">
+            <div class="row p-5 d-flex justify-content-evenly">
               <div class="col-md-2 me-4">
                 <div class="box" (click)="redirectTo('files')">
                   <div class="text-center">
@@ -406,12 +413,13 @@
                       <img
                         alt="Files Icon"
                         src="../../../../assets/images/icons/files.svg"
-                        width="60"
+                        width="40"
                       />
                     </div>
                     <div class="count-box">
                       <p>{{ totalfilesCount }}</p>
-                      <h5>Files</h5>
+                      <span style="color: #1E1E1E; font-weight: 400; font-size: 22px;">Files</span>
+                      <!-- <h5>Files</h5> -->
                     </div>
                   </div>
                 </div>
@@ -439,12 +447,13 @@
                       <img
                         alt="Credit Icon"
                         src="../../../../assets/images/icons/credit.svg"
-                        width="60"
+                        width="40"
                       />
                     </div>
                     <div class="count-box">
                       <p>{{ totalCreditsCount }}</p>
-                      <h5>Credit Evaluation</h5>
+                      <span style="color: #1E1E1E; font-weight: 400; font-size: 22px;">Credit Evaluation</span>
+                      <!-- <h5>Credit Evaluation</h5> -->
                     </div>
                   </div>
                 </div>
@@ -456,12 +465,13 @@
                       <img
                         alt="Logins Icon"
                         src="../../../../assets/images/icons/logins.svg"
-                        width="60"
+                        width="40"
                       />
                     </div>
                     <div class="count-box">
                       <p>{{ totalLoginsCount }}</p>
-                      <h5>Logins</h5>
+                      <span style="color: #1E1E1E; font-weight: 400; font-size: 22px;">Logins</span>
+                      <!-- <h5>Logins</h5> -->
                     </div>
                   </div>
                 </div>
@@ -516,6 +526,17 @@
                           "
                           (keyup.enter)="filterWithBusinessNamefollow()"
                         />
+                        <span
+                        class="input-group-text p-button-primary"
+                        (click)="filterWithBusinessNamefollow()"
+                        style="background-color: #ffffff; border: none; border-left: 1px solid gray;"
+                      >
+                        <img
+                          src="../../../assets/images/icons/search.svg"
+                          alt="Search"
+                          style="width: 14px; height: 14px; cursor: pointer"
+                        />
+                        </span>
                         <!-- <button
                           type="button"
                           pButton
@@ -524,7 +545,8 @@
                           [disabled]="!businessNameToSearchfollowups"
                           (click)="filterWithBusinessNamefollow()"
                         ></button> -->
-                        <button
+                        <!---Correctly working-->
+                        <!-- <button
                           type="button"
                           pButton
                           class="p-button-primary"
@@ -538,7 +560,7 @@
                             height="16"
                             style="vertical-align: middle"
                           />
-                        </button>
+                        </button> -->
                       </div>
                     </div>
                     <div class="col-md-3 mt-2 no-padding-small">
@@ -556,6 +578,17 @@
                           "
                           (keyup.enter)="filterWithMobileNumberFollow()"
                         />
+                        <span
+                        class="input-group-text p-button-primary"
+                        (click)="filterWithMobileNumberFollow()"
+                        style="background-color: #ffffff; border: none; border-left: 1px solid gray;"
+                      >
+                        <img
+                          src="../../../assets/images/icons/search.svg"
+                          alt="Search"
+                          style="width: 14px; height: 14px; cursor: pointer"
+                        />
+                        </span>
                         <!-- <button
                           type="button"
                           pButton
@@ -564,7 +597,8 @@
                           [disabled]="!mobileNumberToSearchfollow"
                           (click)="filterWithMobileNumberFollow()"
                         ></button> -->
-                        <button
+                        
+                        <!-- <button
                           type="button"
                           pButton
                           class="p-button-primary"
@@ -578,7 +612,7 @@
                             height="16"
                             style="vertical-align: middle"
                           />
-                        </button>
+                        </button> -->
                       </div>
                     </div>
                     <div class="col-md-3 mt-2 no-padding-small"></div>
@@ -744,13 +778,13 @@
                 <ng-template pTemplate="emptymessage">
                   <tr class="text-center">
                     <td colspan="10" class="text-center fw-bold">
-                      <img
+                      <!-- <img
                         alt="No Data"
                         src="../../../assets/images/menu/no-data.gif"
                         width="200"
                         height="200"
-                      />
-                      <p>No Follow Ups Found</p>
+                      /> -->
+                      <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No Follow Ups Found</p>
                     </td>
                   </tr>
                 </ng-template>
@@ -804,6 +838,17 @@
                           "
                           (keyup.enter)="filterWithBusinessNamefip()"
                         />
+                        <span
+                        class="input-group-text p-button-primary"
+                        (click)="filterWithBusinessNamefip()"
+                        style="background-color: #ffffff; border: none; border-left: 1px solid gray;"
+                      >
+                        <img
+                          src="../../../assets/images/icons/search.svg"
+                          alt="Search"
+                          style="width: 14px; height: 14px; cursor: pointer"
+                        />
+                        </span>
                         <!-- <button
                           type="button"
                           pButton
@@ -812,7 +857,7 @@
                           [disabled]="!businessNameToSearchfip"
                           (click)="filterWithBusinessNamefip()"
                         ></button> -->
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           class="p-button-primary"
@@ -826,7 +871,7 @@
                             height="16"
                             style="vertical-align: middle"
                           />
-                        </button>
+                        </button> -->
                       </div>
                     </div>
                     <div class="col-md-3 mt-2 no-padding-small">
@@ -844,6 +889,17 @@
                           "
                           (keyup.enter)="filterWithMobileNumberfip()"
                         />
+                        <span
+                        class="input-group-text p-button-primary"
+                        (click)="filterWithMobileNumberfip()"
+                        style="background-color: #ffffff; border: none; border-left: 1px solid #6E6C6C;"
+                      >
+                        <img
+                          src="../../../assets/images/icons/search.svg"
+                          alt="Search"
+                          style="width: 14px; height: 14px; cursor: pointer"
+                        />
+                        </span>
                         <!-- <button
                           type="button"
                           pButton
@@ -852,7 +908,7 @@
                           [disabled]="!mobileNumberToSearchfip"
                           (click)="filterWithMobileNumberfip()"
                         ></button> -->
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           class="p-button-primary"
@@ -866,13 +922,13 @@
                             height="16"
                             style="vertical-align: middle"
                           />
-                        </button>
+                        </button> -->
                       </div>
                     </div>
-                    <div class="col-md-3 mt-2 no-padding-small"></div>
+                    <!-- <div class="col-md-3 mt-2 no-padding-small"></div> -->
                     <div class="col-md-3 mt-2 no-padding-small text-right">
                       <div class="d-flex">
-                        <div class="flex-grow-1 me-2"></div>
+                        <!-- <div class="flex-grow-1 me-2"></div> -->
                         <div class="d-flex align-items-center pointer-cursor">
                           <app-filter
                             [position]="'right'"
@@ -981,13 +1037,13 @@
                 <ng-template pTemplate="emptymessage">
                   <tr class="text-center">
                     <td colspan="10" class="text-center fw-bold">
-                      <img
+                      <!-- <img
                         alt="No Data"
                         src="../../../assets/images/menu/no-data.gif"
                         width="200"
                         height="200"
-                      />
-                      <p>No Files In Process Found</p>
+                      /> -->
+                      <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No Follow Ups Found</p>
                     </td>
                   </tr>
                 </ng-template>
@@ -1107,10 +1163,10 @@
                         </button>
                       </div>
                     </div>
-                    <div class="col-md-3 mt-2 no-padding-small"></div>
+                    <!-- <div class="col-md-3 mt-2 no-padding-small"></div> -->
                     <div class="col-md-3 mt-2 no-padding-small text-right">
                       <div class="d-flex">
-                        <div class="flex-grow-1 me-2"></div>
+                        <!-- <div class="flex-grow-1 me-2"></div> -->
                         <div class="d-flex align-items-center pointer-cursor">
                           <app-filter
                             [position]="'right'"
@@ -1207,13 +1263,13 @@
                 <ng-template pTemplate="emptymessage">
                   <tr class="text-center">
                     <td colspan="10" class="text-center fw-bold">
-                      <img
+                      <!-- <img
                         alt="No Data"
                         src="../../../assets/images/menu/no-data.gif"
                         width="200"
                         height="200"
-                      />
-                      <p>No Sanctions Found</p>
+                      /> -->
+                      <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No Follow Ups Found</p>
                     </td>
                   </tr>
                 </ng-template>
@@ -1357,10 +1413,10 @@
                         </button>
                       </div>
                     </div>
-                    <div class="col-md-3 mt-2 no-padding-small"></div>
+                    <!-- <div class="col-md-3 mt-2 no-padding-small"></div> -->
                     <div class="col-md-3 mt-2 no-padding-small text-right">
                       <div class="d-flex">
-                        <div class="flex-grow-1 me-2"></div>
+                        <!-- <div class="flex-grow-1 me-2"></div> -->
                         <div class="d-flex align-items-center pointer-cursor">
                           <app-filter
                             [position]="'right'"
@@ -1457,13 +1513,13 @@
                 <ng-template pTemplate="emptymessage">
                   <tr class="text-center">
                     <td colspan="10" class="text-center fw-bold">
-                      <img
+                      <!-- <img
                         alt="No Data"
                         src="../../../assets/images/menu/no-data.gif"
                         width="200"
                         height="200"
-                      />
-                      <p>No Disbursals Found</p>
+                      /> -->
+                      <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No Follow Ups Found</p>
                     </td>
                   </tr>
                 </ng-template>
@@ -1582,10 +1638,10 @@
                         </button>
                       </div>
                     </div>
-                    <div class="col-md-3 mt-2 no-padding-small"></div>
+                    <!-- <div class="col-md-3 mt-2 no-padding-small"></div> -->
                     <div class="col-md-3 mt-2 no-padding-small text-right">
                       <div class="d-flex">
-                        <div class="flex-grow-1 me-2"></div>
+                        <!-- <div class="flex-grow-1 me-2"></div> -->
                         <div class="d-flex align-items-center pointer-cursor">
                           <app-filter
                             [position]="'right'"
@@ -1687,13 +1743,14 @@
                 <ng-template pTemplate="emptymessage">
                   <tr class="text-center">
                     <td colspan="10" class="text-center fw-bold">
-                      <img
+                      <!-- <img
                         alt="No Data"
                         src="../../../assets/images/menu/no-data.gif"
                         width="200"
                         height="200"
-                      />
-                      <p>No In House Rejects Found</p>
+                      /> -->
+                      <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No In House Rejects Found</p>
+                      
                     </td>
                   </tr>
                 </ng-template>
@@ -1812,12 +1869,12 @@
                         </button>
                       </div>
                     </div>
-                    <div class="col-md-3 mt-2 no-padding-small"></div>
+                    <!-- <div class="col-md-3 mt-2 no-padding-small"></div> -->
                     <div class="col-md-3 mt-2 no-padding-small text-right">
                       <div class="d-flex">
-                        <div class="flex-grow-1 me-2">
+                        <!-- <div class="flex-grow-1 me-2">
                           <div class="p-inputgroup"></div>
-                        </div>
+                        </div> -->
                         <div class="d-flex align-items-center pointer-cursor">
                           <app-filter
                             [position]="'right'"
@@ -1917,13 +1974,13 @@
                 <ng-template pTemplate="emptymessage">
                   <tr class="text-center">
                     <td colspan="10" class="text-center fw-bold">
-                      <img
+                      <!-- <img
                         alt="No Data"
                         src="../../../assets/images/menu/no-data.gif"
                         width="200"
                         height="200"
-                      />
-                      <p>No Rejected Leads Found</p>
+                      /> -->
+                      <p  style="color: #535AB4; font-weight: 400; font-size: 18px;">No Rejected Leads Found</p>
                     </td>
                   </tr>
                 </ng-template>
@@ -2043,12 +2100,12 @@
                         </button>
                       </div>
                     </div>
-                    <div class="col-md-3 mt-2 no-padding-small"></div>
+                    <!-- <div class="col-md-3 mt-2 no-padding-small"></div> -->
                     <div class="col-md-3 mt-2 no-padding-small text-right">
                       <div class="d-flex">
-                        <div class="flex-grow-1 me-2">
+                        <!-- <div class="flex-grow-1 me-2">
                           <div class="p-inputgroup"></div>
-                        </div>
+                        </div> -->
                         <div class="d-flex align-items-center pointer-cursor">
                           <app-filter
                             [position]="'right'"
@@ -2156,13 +2213,13 @@
                 <ng-template pTemplate="emptymessage">
                   <tr class="text-center">
                     <td colspan="10" class="text-center fw-bold">
-                      <img
+                      <!-- <img
                         alt="No Data"
                         src="../../../assets/images/menu/no-data.gif"
                         width="200"
                         height="200"
-                      />
-                      <p>No Rejected Leads Found</p>
+                      /> -->
+                      <p  style="color: #535AB4; font-weight: 400; font-size: 18px;">No Rejected Leads Found</p>
                     </td>
                   </tr>
                 </ng-template>

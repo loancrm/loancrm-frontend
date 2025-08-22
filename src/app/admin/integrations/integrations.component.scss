@@ -1,0 +1,17 @@
+.btn{
+    background-color: #8E89D0;
+    border: none !important;
+    border-radius: 4px;
+    color: #ffffff;
+}
+
+.fa{
+    color: #8E89D0 !important;
+}
+
+img{
+    filter: brightness(0) saturate(100%) invert(28%) sepia(64%) saturate(507%)
+    hue-rotate(209deg) brightness(95%) contrast(92%);
+    height: 45px;
+    width: 45px;
+}
