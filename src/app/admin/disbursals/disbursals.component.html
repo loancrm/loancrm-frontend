@@ -186,7 +186,7 @@
           </ng-template>
           <ng-template pTemplate="body" let-lead>
             <tr class="text-capitalize" [pSelectableRow]="lead">
-              <td>
+              <td class="leadid">
                 <span class="table-column-data">{{
                   lead.customId || "-"
                 }}</span>
@@ -417,7 +417,7 @@
             </ng-template>
             <ng-template pTemplate="body" let-lead>
               <tr [pSelectableRow]="lead">
-                <td>
+                <td class="leadid">
                   <span
                     class="table-column-data singleline"
                     *ngIf="lead.customId"
@@ -697,7 +697,7 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-lead>
                   <tr [pSelectableRow]="lead">
-                    <td>
+                    <td class="leadid">
                       <span
                         class="table-column-data singleline"
                         *ngIf="lead.customId"
@@ -981,7 +981,7 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-lead>
                   <tr [pSelectableRow]="lead">
-                    <td>
+                    <td class="leadid">
                       <span class="table-column-data singleline">{{
                         lead.customId || "-"
                       }}</span>

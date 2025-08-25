@@ -7,6 +7,7 @@ import { io, Socket } from 'socket.io-client';
 import { projectConstantsLocal } from 'src/app/constants/project-constants';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import * as pdfjsLib from 'pdfjs-dist';
 @Injectable({
   providedIn: 'root',
 })
@@ -24,6 +25,8 @@ export class LeadsService {
     private localStorageService: LocalStorageService,
     private http: HttpClient
   ) {
+    (pdfjsLib as any).GlobalWorkerOptions.workerSrc =
+      `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${(pdfjsLib as any).version}/pdf.worker.js`;
     this.moment = this.dateTimeProcessor.getMoment();
   }
 
@@ -36,6 +39,151 @@ export class LeadsService {
   //     });
   // }
 
+async extractDataFromPdf(file: File): Promise<any> {
+  const arrayBuffer = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+
+  let textContent = "";
+  for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+    const page = await pdf.getPage(pageNum);
+    const text = await page.getTextContent();
+    text.items.forEach((item: any) => {
+      textContent += item.str + "\n"; // preserve newlines
+    });
+  }
+
+  // ---------- GSTIN ----------
+  const gstinMatch = textContent.match(
+    /\b\d{2}[A-Z]{5}\d{4}[A-Z][1-9A-Z]Z[0-9A-Z]\b/
+  );
+  const gstin = gstinMatch ? gstinMatch[0] : "";
+
+  // ---------- State ----------
+  const gstStateCodes: { [key: string]: string } = {
+    "01": "Jammu & Kashmir",
+    "02": "Himachal Pradesh",
+    "03": "Punjab",
+    "04": "Chandigarh",
+    "05": "Uttarakhand",
+    "06": "Haryana",
+    "07": "Delhi",
+    "08": "Rajasthan",
+    "09": "Uttar Pradesh",
+    "10": "Bihar",
+    "11": "Sikkim",
+    "12": "Arunachal Pradesh",
+    "13": "Nagaland",
+    "14": "Manipur",
+    "15": "Mizoram",
+    "16": "Tripura",
+    "17": "Meghalaya",
+    "18": "Assam",
+    "19": "West Bengal",
+    "20": "Jharkhand",
+    "21": "Odisha",
+    "22": "Chhattisgarh",
+    "23": "Madhya Pradesh",
+    "24": "Gujarat",
+    "25": "Daman and Diu",
+    "26": "Dadra and Nagar Haveli",
+    "27": "Maharashtra",
+    "28": "Andhra Pradesh",
+    "29": "Karnataka",
+    "30": "Goa",
+    "31": "Lakshadweep",
+    "32": "Kerala",
+    "33": "Tamil Nadu",
+    "34": "Puducherry",
+    "35": "Andaman and Nicobar Islands",
+    "36": "Telangana",
+    "37": "Andhra Pradesh",
+  };
+  let state = "";
+  if (gstin) {
+    const code = gstin.substring(0, 2);
+    state = gstStateCodes[code] || code;
+  }
+
+  // ---------- ARN ----------
+  const arnMatch = textContent.match(/ARN\s+([A-Z0-9]+)/i);
+  const arn = arnMatch ? arnMatch[1] : "";
+
+  // ---------- ARN Date ----------
+  const arnDateMatch = textContent.match(
+    /Date\s+of\s+ARN\s+(\d{2}\/\d{2}\/\d{4})/i
+  );
+  const filingDate = arnDateMatch ? arnDateMatch[1] : "";
+
+  // ---------- Year ----------
+  const yearMatch = textContent.match(/Year\s+(\d{4}-\d{2}|\d{4}-\d{4})/i);
+  const year = yearMatch ? yearMatch[1] : "";
+
+  // ---------- Period (Month) ----------
+  const periodMatch = textContent.match(/Period\s+(\w+)/i);
+  const month = periodMatch ? periodMatch[1] : "";
+
+  // ---------- Table 3.1 Extraction ----------
+  function extractTotalTaxable(tableText: string) {
+  const breakdown: { [key: string]: number } = { a: 0, b: 0, c: 0, d: 0, e: 0 };
+  let currentRow: string | null = null;
+  let gotFirstNumber = false;
+
+  // Split into tokens (words/numbers) instead of lines
+  const tokens = tableText.split(/\s+/);
+
+  for (const token of tokens) {
+    if (!token) continue;
+
+    // Detect row headers
+    if (/^\(?a\)?$/i.test(token)) { currentRow = "a"; gotFirstNumber = false; continue; }
+    if (/^\(?b\)?$/i.test(token)) { currentRow = "b"; gotFirstNumber = false; continue; }
+    if (/^\(?c\)?$/i.test(token)) { currentRow = "c"; gotFirstNumber = false; continue; }
+    if (/^\(?d\)?$/i.test(token)) { currentRow = "d"; gotFirstNumber = false; continue; }
+    if (/^\(?e\)?$/i.test(token)) { currentRow = "e"; gotFirstNumber = false; continue; }
+
+    // Capture first number after row header
+    if (currentRow && !gotFirstNumber) {
+      if (/^(?:\d{1,3}(?:,\d{3})*|\d+)\.\d{2}$/.test(token)) {
+        breakdown[currentRow] = parseFloat(token.replace(/,/g, ""));
+        gotFirstNumber = true;
+      }
+    }
+  }
+
+  const total = Object.values(breakdown).reduce((a, b) => a + b, 0);
+  return { total, breakdown };
+}
+
+
+  let totalTaxable = '';
+  let breakdown: { [key: string]: number } = {
+    a: 0,
+    b: 0,
+    c: 0,
+    d: 0,
+    e: 0,
+  };
+
+  const tableMatch = textContent.match(/3\.1[\s\S]*?(?=3\.2|$)/i);
+  if (tableMatch) {
+    const tableText = tableMatch[0];
+    const result = extractTotalTaxable(tableText);
+    totalTaxable = result.total.toString();
+    breakdown = result.breakdown;
+  }
+
+  // ---------- Final Result ----------
+  return {
+    gstin,
+    operatingState: state,
+    year,
+    month,
+    arn,
+    filingDate,
+    totalTaxableValue: totalTaxable,
+    taxableBreakdown: breakdown,
+  };
+}
 
 
   toggleSidebar() {

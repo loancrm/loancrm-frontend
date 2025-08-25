@@ -63,53 +63,21 @@
             styleClass="p-datatable-customers "
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} files"
           >
-            <ng-template pTemplate="caption">
+            <ng-template pTemplate="caption"  style="background-color: #f7f7f7;">
               <div class="row">
                 <div class="col-md-3 mt-2 no-padding-small">
-                  <div class="p-inputgroup">
+                  <div class="p-inputgroup custom-search">
                     <input
                       type="text"
                       pInputText
                       placeholder="Search File with Business Name"
                       [(ngModel)]="businessNameToSearch"
-                      (ngModelChange)="
-                        inputValueChangeEvent('loanId', businessNameToSearch)
-                      "
+                      (ngModelChange)="inputValueChangeEvent('loanId', businessNameToSearch)"
                       (keyup.enter)="filterWithBusinessName()"
                     />
-                    <!-- <button
-                      type="button"
-                      pButton
-                      icon="pi pi-search"
-                      class="p-button-primary"
-                      [disabled]="!businessNameToSearch"
-                      (click)="filterWithBusinessName()"
-                    ></button> -->
-                    <span
-                        class="input-group-text p-button-primary"
-                        (click)="filterWithBusinessName()"
-                      >
-                        <img
-                          src="../../../assets/images/icons/search.svg"
-                          alt="Search"
-                          style="width: 14px; height: 14px; cursor: pointer"
-                        />
+                    <span class="input-group-text search-btn" (click)="filterWithBusinessName()">
+                      <img src="../../../assets/images/icons/search.svg" alt="Search" />
                     </span>
-                    <!-- <button
-                      type="button"
-                      pButton
-                      class="p-button-primary"
-                      [disabled]="!businessNameToSearch"
-                      (click)="filterWithBusinessName()"
-                    >
-                      <img
-                        src="assets/images/icons/search.svg"
-                        alt="Search"
-                        width="16"
-                        height="16"
-                        style="vertical-align: middle"
-                      />
-                    </button> -->
                   </div>
                 </div>
                 <!-- <div class="col-md-4 mt-2 no-padding-small">
@@ -252,7 +220,7 @@
             </ng-template>
             <ng-template pTemplate="body" let-lead>
               <tr class="text-capitalize" [pSelectableRow]="lead">
-                <td>
+                <td class="leadid">
                   <span class="table-column-data singleline">{{
                     lead.customId ? lead.customId : "-"
                   }}</span>
@@ -666,7 +634,7 @@
             </ng-template>
             <ng-template pTemplate="body" let-lead>
               <tr [pSelectableRow]="lead">
-                <td>
+                <td class="leadid">
                   <span class="table-column-data">{{
                     lead.customId ? lead.customId : "-"
                   }}</span>
@@ -1049,7 +1017,7 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-lead>
                   <tr>
-                    <td>
+                    <td class="leadid">
                       <span class="table-column-data singleline">{{
                         lead.customId ? lead.customId : "-"
                       }}</span>
@@ -1464,7 +1432,7 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-lead>
                   <tr>
-                    <td>
+                    <td class="leadid">
                       <span class="table-column-data singleline">{{
                         lead.customId ? lead.customId : "-"
                       }}</span>

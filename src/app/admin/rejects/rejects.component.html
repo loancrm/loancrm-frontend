@@ -205,7 +205,7 @@
               </ng-template>
               <ng-template pTemplate="body" let-lead>
                 <tr class="text-capitalize" [pSelectableRow]="lead">
-                  <td>
+                  <td class="leadid">
                     <span class="table-column-data singleline">{{
                       lead.customId
                     }}</span>
@@ -462,7 +462,7 @@
               </ng-template>
               <ng-template pTemplate="body" let-lead>
                 <tr class="text-capitalize" [pSelectableRow]="lead">
-                  <td>
+                  <td class="leadid">
                     <span class="table-column-data singleline">{{
                       lead.customId
                     }}</span>
@@ -602,7 +602,7 @@
                           style="width: 14px; height: 14px; cursor: pointer"
                         />
                     </span>
-                      <button
+                      <!-- <button
                         type="button"
                         pButton
                         class="p-button-primary"
@@ -616,7 +616,7 @@
                           height="16"
                           style="vertical-align: middle"
                         />
-                      </button>
+                      </button> -->
                     </div>
                   </div>
                   <div class="col-md-3 no-padding-small">
@@ -714,7 +714,7 @@
               </ng-template>
               <ng-template pTemplate="body" let-lead>
                 <tr class="text-capitalize" [pSelectableRow]="lead">
-                  <td>
+                  <td class="leadid">
                     <span class="table-column-data singleline">{{
                       lead.customId ? lead.customId : "-"
                     }}</span>
@@ -955,7 +955,7 @@
               </ng-template>
               <ng-template pTemplate="body" let-lead>
                 <tr class="text-capitalize" [pSelectableRow]="lead">
-                  <td>
+                  <td class="leadid">
                     <span class="table-column-data singleline">{{
                       lead.customId
                     }}</span>
@@ -1168,7 +1168,7 @@
               </ng-template>
               <ng-template pTemplate="body" let-lead>
                 <tr class="text-capitalize" [pSelectableRow]="lead">
-                  <td>
+                  <td class="leadid">
                     <span
                       class="table-column-data singleline"
                       *ngIf="lead.customId"
@@ -1380,7 +1380,7 @@
               </ng-template>
               <ng-template pTemplate="body" let-lead>
                 <tr class="text-capitalize" [pSelectableRow]="lead">
-                  <td>
+                  <td class="leadid">
                     <span
                       class="table-column-data singleline"
                       *ngIf="lead.customId"
@@ -1726,7 +1726,7 @@
                     </ng-template>
                     <ng-template pTemplate="body" let-lead>
                       <tr [pSelectableRow]="lead">
-                        <td>
+                        <td class="leadid">
                           <span
                             class="table-column-data singleline"
                             *ngIf="lead.customId"
@@ -2074,7 +2074,7 @@
                     </ng-template>
                     <ng-template pTemplate="body" let-lead>
                       <tr [pSelectableRow]="lead">
-                        <td>
+                        <td class="leadid">
                           <span
                             class="table-column-data singleline"
                             *ngIf="lead.customId"
@@ -2421,7 +2421,7 @@
                     </ng-template>
                     <ng-template pTemplate="body" let-lead>
                       <tr [pSelectableRow]="lead">
-                        <td>
+                        <td class="leadid">
                           <span
                             class="table-column-data"
                             *ngIf="lead.customId"
@@ -2818,7 +2818,7 @@
                     </ng-template>
                     <ng-template pTemplate="body" let-lead>
                       <tr  [pSelectableRow]="lead">
-                        <td>
+                        <td class="leadid">
                           <span
                             class="table-column-data singleline"
                             *ngIf="lead.customId"
@@ -3167,7 +3167,7 @@
                     </ng-template>
                     <ng-template pTemplate="body" let-lead>
                       <tr [pSelectableRow]="lead">
-                        <td>
+                        <td class="leadid">
                           <span
                             class="table-column-data singleline"
                             *ngIf="lead.customId"
@@ -3514,7 +3514,7 @@
                     </ng-template>
                     <ng-template pTemplate="body" let-lead>
                       <tr [pSelectableRow]="lead">
-                        <td>
+                        <td class="leadid">
                           <span
                             class="table-column-data"
                             *ngIf="lead.customId"
