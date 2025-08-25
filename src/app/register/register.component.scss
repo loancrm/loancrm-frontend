@@ -46,12 +46,7 @@
   border-radius: 1rem;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
-.p-float-label{
-  height: 60px !important;
-}
-input{
-  height: 50px !important;
-}
+
 /* Input Fields */
 // input[type="text"],
 // input[type="email"],
@@ -76,10 +71,11 @@ input{
   border-radius: 5px;
   padding: 0;
   z-index: 2;
-  background:none !important;
+  background: none !important;
 }
-.p-inputgroup-addon img{
-  filter: invert(40%) sepia(10%) saturate(800%) hue-rotate(210deg) brightness(95%) contrast(90%) !important;
+.p-inputgroup-addon img {
+  filter: invert(40%) sepia(10%) saturate(800%) hue-rotate(210deg)
+    brightness(95%) contrast(90%) !important;
 }
 .p-inputgroup input {
   // padding-right: 40px !important;
@@ -200,23 +196,23 @@ button.disabled {
   }
 }
 .orange-button {
-  background-color: #8E89D0!important;
-  border-color: #8E89D0 !important;
+  background-color: #8e89d0 !important;
+  border-color: #8e89d0 !important;
   color: #fff !important;
   white-space: nowrap;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 50px !important;
   border-radius: 4px !important;
 }
 
 .verifybtn {
-  background-color: #2a405f !important;
-  border-color: #2a405f !important;
+  background-color: #8e89d0 !important;
+  border-color: #8e89d0 !important;
   color: #fff !important;
   white-space: nowrap;
   display: flex;
   align-items: center;
+  border-radius: 4px !important;
   justify-content: center;
 }

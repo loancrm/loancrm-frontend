@@ -136,10 +136,10 @@
                       'active-status': userDetails?.status === 'Active',
                       'inactive-status': userDetails?.status !== 'Active'
                     }"
-                     style="border-radius: 16px;"
+                    style="border-radius: 16px"
                   >
                     <span class="status-dot"></span>
-                    {{ userDetails?.status || '-' }}
+                    {{ userDetails?.status || "-" }}
                   </button>
                 </div>
               </div>
@@ -194,10 +194,10 @@
       <div class="col-lg-4 col-md-6 col-sm-12">
         <div
           class="card"
-          style="background-color: #ffffff; color: #ffffff; border: none;"
+          style="background-color: #ffffff; color: #ffffff; border: none"
         >
           <div class="card-body">
-            <h5 class="mb-4 fw-bold" style="color: #4D54B8; font-size: 24px;">
+            <h5 class="mb-4 fw-bold" style="color: #3A42A7; font-size: 24px">
               Financial Summary
             </h5>
 
@@ -213,10 +213,12 @@
                 "
               >
                 <div class="d-flex justify-content-between align-items-center">
-                  <span style="color: #101828; font-size: 18px;">Sanctioned Amount</span>
+                  <span style="color: #101828; font-size: 18px"
+                    >Sanctioned Amount</span
+                  >
                   <span
                     class="fw-bold text-end"
-                    style="font-size: 18px; color: #706EC4"
+                    style="font-size: 18px; color: #706ec4"
                   >
                     ₹{{ totalSanctionedAmount | number }}<br />
                     <small style="color: #737373"
@@ -237,10 +239,12 @@
                 "
               >
                 <div class="d-flex justify-content-between align-items-center">
-                  <span style="color: #101828; font-size: 18px;">Disbursed Amount</span>
+                  <span style="color: #101828; font-size: 18px"
+                    >Disbursed Amount</span
+                  >
                   <span
                     class="fw-bold text-end"
-                    style="font-size: 18px; color: #706EC4"
+                    style="font-size: 18px; color: #706ec4"
                   >
                     ₹{{ totalDisbursedAmount | number }}<br />
                     <small style="color: #737373"
@@ -283,11 +287,16 @@
                         0
                     "
                   >
-                    <img
+                    <!-- <img
                       class="nodata"
                       [src]="chartDisplayMessage1"
                       alt="No Data Available"
-                    />
+                    /> -->
+                    <p
+                      style="color: #535ab4; font-weight: 400; font-size: 18px"
+                    >
+                      No Files Found
+                    </p>
                   </span>
                 </div>
               </div>
@@ -299,11 +308,16 @@
                     [chartOptions]="amountBarChartOptions"
                   ></app-apex-charts>
                   <span *ngIf="areAllValuesZero()">
-                    <img
+                    <!-- <img
                       class="nodata"
                       [src]="chartDisplayMessage1"
                       alt="No Data Available"
-                    />
+                    /> -->
+                    <p
+                      style="color: #535ab4; font-weight: 400; font-size: 18px"
+                    >
+                      No Amount Data Available
+                    </p>
                   </span>
                 </div>
               </div>
@@ -327,7 +341,14 @@
                       </div>
                       <div class="count-box">
                         <p>{{ totalLeadsCount }}</p>
-                        <span style="color: #1E1E1E; font-weight: 400; font-size: 22px;">New Leads</span>
+                        <span
+                          style="
+                            color: #1e1e1e;
+                            font-weight: 400;
+                            font-size: 22px;
+                          "
+                          >New Leads</span
+                        >
                       </div>
                     </div>
                   </div>
@@ -373,7 +394,14 @@
                       </div>
                       <div class="count-box">
                         <p>{{ callBacksCount }}</p>
-                        <span style="color: #1E1E1E; font-weight: 400; font-size: 22px;">New Callbacks</span>
+                        <span
+                          style="
+                            color: #1e1e1e;
+                            font-weight: 400;
+                            font-size: 22px;
+                          "
+                          >New Callbacks</span
+                        >
                         <!-- <h5>New Callbacks</h5> -->
                       </div>
                     </div>
@@ -418,7 +446,14 @@
                     </div>
                     <div class="count-box">
                       <p>{{ totalfilesCount }}</p>
-                      <span style="color: #1E1E1E; font-weight: 400; font-size: 22px;">Files</span>
+                      <span
+                        style="
+                          color: #1e1e1e;
+                          font-weight: 400;
+                          font-size: 22px;
+                        "
+                        >Files</span
+                      >
                       <!-- <h5>Files</h5> -->
                     </div>
                   </div>
@@ -452,7 +487,14 @@
                     </div>
                     <div class="count-box">
                       <p>{{ totalCreditsCount }}</p>
-                      <span style="color: #1E1E1E; font-weight: 400; font-size: 22px;">Credit Evaluation</span>
+                      <span
+                        style="
+                          color: #1e1e1e;
+                          font-weight: 400;
+                          font-size: 22px;
+                        "
+                        >Credit Evaluation</span
+                      >
                       <!-- <h5>Credit Evaluation</h5> -->
                     </div>
                   </div>
@@ -470,7 +512,14 @@
                     </div>
                     <div class="count-box">
                       <p>{{ totalLoginsCount }}</p>
-                      <span style="color: #1E1E1E; font-weight: 400; font-size: 22px;">Logins</span>
+                      <span
+                        style="
+                          color: #1e1e1e;
+                          font-weight: 400;
+                          font-size: 22px;
+                        "
+                        >Logins</span
+                      >
                       <!-- <h5>Logins</h5> -->
                     </div>
                   </div>
@@ -527,15 +576,19 @@
                           (keyup.enter)="filterWithBusinessNamefollow()"
                         />
                         <span
-                        class="input-group-text p-button-primary"
-                        (click)="filterWithBusinessNamefollow()"
-                        style="background-color: #ffffff; border: none; border-left: 1px solid gray;"
-                      >
-                        <img
-                          src="../../../assets/images/icons/search.svg"
-                          alt="Search"
-                          style="width: 14px; height: 14px; cursor: pointer"
-                        />
+                          class="input-group-text p-button-primary"
+                          (click)="filterWithBusinessNamefollow()"
+                          style="
+                            background-color: #ffffff;
+                            border: none;
+                            border-left: 1px solid gray;
+                          "
+                        >
+                          <img
+                            src="../../../assets/images/icons/search.svg"
+                            alt="Search"
+                            style="width: 14px; height: 14px; cursor: pointer"
+                          />
                         </span>
                         <!-- <button
                           type="button"
@@ -579,15 +632,19 @@
                           (keyup.enter)="filterWithMobileNumberFollow()"
                         />
                         <span
-                        class="input-group-text p-button-primary"
-                        (click)="filterWithMobileNumberFollow()"
-                        style="background-color: #ffffff; border: none; border-left: 1px solid gray;"
-                      >
-                        <img
-                          src="../../../assets/images/icons/search.svg"
-                          alt="Search"
-                          style="width: 14px; height: 14px; cursor: pointer"
-                        />
+                          class="input-group-text p-button-primary"
+                          (click)="filterWithMobileNumberFollow()"
+                          style="
+                            background-color: #ffffff;
+                            border: none;
+                            border-left: 1px solid gray;
+                          "
+                        >
+                          <img
+                            src="../../../assets/images/icons/search.svg"
+                            alt="Search"
+                            style="width: 14px; height: 14px; cursor: pointer"
+                          />
                         </span>
                         <!-- <button
                           type="button"
@@ -597,7 +654,7 @@
                           [disabled]="!mobileNumberToSearchfollow"
                           (click)="filterWithMobileNumberFollow()"
                         ></button> -->
-                        
+
                         <!-- <button
                           type="button"
                           pButton
@@ -784,7 +841,15 @@
                         width="200"
                         height="200"
                       /> -->
-                      <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No Follow Ups Found</p>
+                      <p
+                        style="
+                          color: #535ab4;
+                          font-weight: 400;
+                          font-size: 18px;
+                        "
+                      >
+                        No Follow Ups Found
+                      </p>
                     </td>
                   </tr>
                 </ng-template>
@@ -839,15 +904,19 @@
                           (keyup.enter)="filterWithBusinessNamefip()"
                         />
                         <span
-                        class="input-group-text p-button-primary"
-                        (click)="filterWithBusinessNamefip()"
-                        style="background-color: #ffffff; border: none; border-left: 1px solid gray;"
-                      >
-                        <img
-                          src="../../../assets/images/icons/search.svg"
-                          alt="Search"
-                          style="width: 14px; height: 14px; cursor: pointer"
-                        />
+                          class="input-group-text p-button-primary"
+                          (click)="filterWithBusinessNamefip()"
+                          style="
+                            background-color: #ffffff;
+                            border: none;
+                            border-left: 1px solid gray;
+                          "
+                        >
+                          <img
+                            src="../../../assets/images/icons/search.svg"
+                            alt="Search"
+                            style="width: 14px; height: 14px; cursor: pointer"
+                          />
                         </span>
                         <!-- <button
                           type="button"
@@ -890,15 +959,19 @@
                           (keyup.enter)="filterWithMobileNumberfip()"
                         />
                         <span
-                        class="input-group-text p-button-primary"
-                        (click)="filterWithMobileNumberfip()"
-                        style="background-color: #ffffff; border: none; border-left: 1px solid #6E6C6C;"
-                      >
-                        <img
-                          src="../../../assets/images/icons/search.svg"
-                          alt="Search"
-                          style="width: 14px; height: 14px; cursor: pointer"
-                        />
+                          class="input-group-text p-button-primary"
+                          (click)="filterWithMobileNumberfip()"
+                          style="
+                            background-color: #ffffff;
+                            border: none;
+                            border-left: 1px solid #6e6c6c;
+                          "
+                        >
+                          <img
+                            src="../../../assets/images/icons/search.svg"
+                            alt="Search"
+                            style="width: 14px; height: 14px; cursor: pointer"
+                          />
                         </span>
                         <!-- <button
                           type="button"
@@ -1043,7 +1116,15 @@
                         width="200"
                         height="200"
                       /> -->
-                      <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No Follow Ups Found</p>
+                      <p
+                        style="
+                          color: #535ab4;
+                          font-weight: 400;
+                          font-size: 18px;
+                        "
+                      >
+                        No Follow Ups Found
+                      </p>
                     </td>
                   </tr>
                 </ng-template>
@@ -1269,7 +1350,15 @@
                         width="200"
                         height="200"
                       /> -->
-                      <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No Follow Ups Found</p>
+                      <p
+                        style="
+                          color: #535ab4;
+                          font-weight: 400;
+                          font-size: 18px;
+                        "
+                      >
+                        No Follow Ups Found
+                      </p>
                     </td>
                   </tr>
                 </ng-template>
@@ -1519,7 +1608,15 @@
                         width="200"
                         height="200"
                       /> -->
-                      <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No Follow Ups Found</p>
+                      <p
+                        style="
+                          color: #535ab4;
+                          font-weight: 400;
+                          font-size: 18px;
+                        "
+                      >
+                        No Follow Ups Found
+                      </p>
                     </td>
                   </tr>
                 </ng-template>
@@ -1749,8 +1846,15 @@
                         width="200"
                         height="200"
                       /> -->
-                      <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No In House Rejects Found</p>
-                      
+                      <p
+                        style="
+                          color: #535ab4;
+                          font-weight: 400;
+                          font-size: 18px;
+                        "
+                      >
+                        No In House Rejects Found
+                      </p>
                     </td>
                   </tr>
                 </ng-template>
@@ -1980,7 +2084,15 @@
                         width="200"
                         height="200"
                       /> -->
-                      <p  style="color: #535AB4; font-weight: 400; font-size: 18px;">No Rejected Leads Found</p>
+                      <p
+                        style="
+                          color: #535ab4;
+                          font-weight: 400;
+                          font-size: 18px;
+                        "
+                      >
+                        No Rejected Leads Found
+                      </p>
                     </td>
                   </tr>
                 </ng-template>
@@ -2219,7 +2331,15 @@
                         width="200"
                         height="200"
                       /> -->
-                      <p  style="color: #535AB4; font-weight: 400; font-size: 18px;">No Rejected Leads Found</p>
+                      <p
+                        style="
+                          color: #535ab4;
+                          font-weight: 400;
+                          font-size: 18px;
+                        "
+                      >
+                        No Rejected Leads Found
+                      </p>
                     </td>
                   </tr>
                 </ng-template>

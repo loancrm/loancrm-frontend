@@ -706,7 +706,7 @@ export class DashboardComponent implements OnInit {
         routerLink: 'leads',
         condition: this.capabilities.leads,
         backgroundColor: '#EBF3FE',
-        // color: '#4D54B8',
+        // color: '#3A42A7',
         icon: '../../../assets/images/icons/leads.svg'
       },
       // {
@@ -735,7 +735,7 @@ export class DashboardComponent implements OnInit {
         condition: this.capabilities.files,
         backgroundColor: '#FBF2EF',
         // color: '#FFC001',
-        // iconColor: '#4D54B8',
+        // iconColor: '#3A42A7',
         icon: '../../../assets/images/icons/files.svg'
       },
       // {
@@ -1027,7 +1027,7 @@ export class DashboardComponent implements OnInit {
     //     title: {
     //       display: true,
     //       text: 'Agent-Based Metrics',
-    //       color: '#29415B',
+    //       color: '#000',
     //       align: 'start',
     //       font: { size: 18 }
     //     }
@@ -1218,7 +1218,7 @@ export class DashboardComponent implements OnInit {
     //   title: {
     //     text: 'Agent-Based Metrics',
     //     align: 'left',
-    //     style: { fontSize: '18px', color: '#29415B' },
+    //     style: { fontSize: '18px', color: '#000' },
     //   },
     //   grid: {
     //     // borderColor: '#e7e7e7',
@@ -1335,7 +1335,7 @@ export class DashboardComponent implements OnInit {
       title: {
         text: 'Agent-Based Metrics',
         align: 'left',
-        style: { fontSize: '18px', color: '#1E1E1E', fontWeight: 400, letterSpacing: '0.15px'},
+        style: { fontSize: '18px', color: '#1E1E1E', fontWeight: 400, letterSpacing: '0.15px' },
       },
       plotOptions: {
         bar: {
@@ -1344,7 +1344,7 @@ export class DashboardComponent implements OnInit {
           borderRadius: 2
         }
       },
-      colors: ['#C7C2E8', '#ABA5DC', '#706EC4', '#706EC4', '#706EC4', '#4D54B8'],
+      colors: ['#C7C2E8', '#ABA5DC', '#706EC4', '#706EC4', '#706EC4', '#3A42A7'],
       // colors: ['#E3E0F4', '#C7C2E8', '#ABA5DC', '#8E89D0', '#706EC4', '#535AB4'],
       dataLabels: {
         enabled: true,
@@ -1353,7 +1353,7 @@ export class DashboardComponent implements OnInit {
         categories: ['Leads', 'Follow Ups', 'Files', 'Files In Process', 'Sanctions', 'Disbursals'],
         title: {
           text: 'Metrics',
-          style: { fontWeight: 500}
+          style: { fontWeight: 500 }
         },
         labels: {
           style: {
@@ -1365,7 +1365,7 @@ export class DashboardComponent implements OnInit {
       yaxis: {
         title: {
           text: 'Count',
-          style: { fontWeight: 500}
+          style: { fontWeight: 500 }
         },
       },
       legend: {
@@ -1380,11 +1380,12 @@ export class DashboardComponent implements OnInit {
           radius: 12,
         },
         itemMargin: {
-    horizontal: 7, 
-    vertical: 10 
-  }
+          horizontal: 8,
+          vertical: 10
+        }
       },
-      
+
+
     };
   }
   onBarClick(event: any) {
@@ -1499,7 +1500,7 @@ export class DashboardComponent implements OnInit {
         toolbar: { show: false },
         // background: '#33009C',
       },
-      colors: ['#33009C', '#ff0043'],
+      colors: ['#535AB4', '#8E89D0'],
       // colors: ['', '#ff0043'],
       //colors: ['#0FA4AF', '#964734'],
       //colors: ['#A1BE95', '#F98866'],
@@ -1509,7 +1510,7 @@ export class DashboardComponent implements OnInit {
       title: {
         text: 'Monthly Leads and Callbacks',
         align: 'left',
-        style: { fontSize: '18px', color: '#29415B' },
+        style: { fontSize: '18px', color: '#000' },
         // style: { fontSize: '18px', color: '#33009C' },
       },
       grid: {
@@ -1590,7 +1591,7 @@ export class DashboardComponent implements OnInit {
     //   title: {
     //     text: 'Leads Callback Trends',
     //     align: 'left',
-    //     style: { fontSize: '18px', color: '#29415B' },
+    //     style: { fontSize: '18px', color: '#000' },
     //   },
     //   legend: {
     //     show: true,
@@ -1626,7 +1627,7 @@ export class DashboardComponent implements OnInit {
       title: {
         text: 'Leads Callback Trends',
         align: 'left',
-        style: { fontSize: '18px',  color: '#1E1E1E', fontWeight: 400, letterSpacing: '0.15px' },
+        style: { fontSize: '18px', color: '#1E1E1E', fontWeight: 400, letterSpacing: '0.15px' },
       },
       legend: {
         show: false,
@@ -1661,84 +1662,84 @@ export class DashboardComponent implements OnInit {
 
     this.setBarChartOptionsForFilter();
     this.ApprovedDisbursedAmountChartOptions = {
-  series: [
-    {
-      name: 'Sanctioned',
-      data: this.sanctionedAmounts,
-    },
-    {
-      name: 'Disbursed',
-      data: this.disbursedAmounts,
-    },
-  ],
-  chart: {
-    height: 300,
-    type: 'bar',
-    toolbar: { show: false },
-    events: {
-      dataPointSelection: (event, chartContext, config) => {
-        if (
-          this.userDetails &&
-this.userDetails.userType &&
-          this.userDetails.userType == '1'
-        ) {
-          const seriesIndex = config.seriesIndex;
-          const dataPointIndex = config.dataPointIndex;
-          const clickedMonth = this.monthLabels[dataPointIndex];
-          const selectedDate = this.moment(clickedMonth, 'MMM YYYY');
-          const startDate = selectedDate.startOf('month').format('YYYY-MM-DD');
-          const endDate = selectedDate.endOf('month').format('YYYY-MM-DD');
+      series: [
+        {
+          name: 'Sanctioned',
+          data: this.sanctionedAmounts,
+        },
+        {
+          name: 'Disbursed',
+          data: this.disbursedAmounts,
+        },
+      ],
+      chart: {
+        height: 300,
+        type: 'bar',
+        toolbar: { show: false },
+        events: {
+          dataPointSelection: (event, chartContext, config) => {
+            if (
+              this.userDetails &&
+              this.userDetails.userType &&
+              this.userDetails.userType == '1'
+            ) {
+              const seriesIndex = config.seriesIndex;
+              const dataPointIndex = config.dataPointIndex;
+              const clickedMonth = this.monthLabels[dataPointIndex];
+              const selectedDate = this.moment(clickedMonth, 'MMM YYYY');
+              const startDate = selectedDate.startOf('month').format('YYYY-MM-DD');
+              const endDate = selectedDate.endOf('month').format('YYYY-MM-DD');
 
-          if (seriesIndex === 0) {
-            this.router.navigate(['/user/approvals'], { queryParams: { startDate, endDate } });
-          } else if (seriesIndex === 1) {
-            this.router.navigate(['/user/disbursals'], { queryParams: { startDate, endDate } });
-          }
-        }
+              if (seriesIndex === 0) {
+                this.router.navigate(['/user/approvals'], { queryParams: { startDate, endDate } });
+              } else if (seriesIndex === 1) {
+                this.router.navigate(['/user/disbursals'], { queryParams: { startDate, endDate } });
+              }
+            }
+          },
+        },
       },
-    },
-  },
-  // colors: ['#4D54B8', '#706EC4'],
-  colors: ['#535AB4', '#8E89D0'],
-  plotOptions: {
-    bar: {
-      horizontal: false,
-      columnWidth: '70%',  
-      barGap: 1,            // adds gap between bars in same group
-    },
-  },
-  dataLabels: {
-    enabled: true,
-    formatter: (value: number) => {
-      return this.convertToLakhsOrCrores(value);
-    },
-    style: { fontSize: '8px' },
-  },
-  stroke: { show: true, width: 2, colors: ['transparent'] },
-  title: {
-    text: 'Monthly Sanctions and Disbursals',
-    align: 'left',
-    style: { fontSize: '18px', color: '#1E1E1E', fontWeight: 400, letterSpacing: '0.15px' },
-  },
-  xaxis: {
-    categories: this.monthLabels,
-    title: { text: 'Month', style: { fontWeight: 500} },
+      // colors: ['#3A42A7', '#706EC4'],
+      colors: ['#535AB4', '#8E89D0'],
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '70%',
+          barGap: 1,            // adds gap between bars in same group
+        },
+      },
+      dataLabels: {
+        enabled: true,
+        formatter: (value: number) => {
+          return this.convertToLakhsOrCrores(value);
+        },
+        style: { fontSize: '8px' },
+      },
+      stroke: { show: true, width: 2, colors: ['transparent'] },
+      title: {
+        text: 'Monthly Sanctions and Disbursals',
+        align: 'left',
+        style: { fontSize: '18px', color: '#1E1E1E', fontWeight: 400, letterSpacing: '0.15px' },
+      },
+      xaxis: {
+        categories: this.monthLabels,
+        title: { text: 'Month', style: { fontWeight: 500 } },
 
-  },
-  yaxis: {
-    title: { text: 'Amount', style: { fontWeight: 500} },
-    labels: {
-      formatter: (value: number) => this.convertToLakhsOrCrores(value),
-    },
-  },
-  legend: {
-    position: 'top',
-    horizontalAlign: 'right',
-    floating: true,
-    offsetY: -20,
-    offsetX: -5,
-  },
-};
+      },
+      yaxis: {
+        title: { text: 'Amount', style: { fontWeight: 500 } },
+        labels: {
+          formatter: (value: number) => this.convertToLakhsOrCrores(value),
+        },
+      },
+      legend: {
+        position: 'top',
+        horizontalAlign: 'right',
+        floating: true,
+        offsetY: -20,
+        offsetX: -5,
+      },
+    };
   }
   goToRoute(route) {
     this.routingService.setFeatureRoute('user');

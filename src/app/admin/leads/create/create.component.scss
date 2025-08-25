@@ -67,19 +67,19 @@ label {
 }
 
 ::ng-deep .custom-steps .p-steps-item {
-  color: #29415b;
+  color: #000;
   font-weight: bold;
 }
 
 ::ng-deep .custom-steps .p-steps-item .p-steps-number {
-  color: #29415b;
+  color: #000;
   border-radius: 50%;
   padding: 5px 10px;
 }
 
 ::ng-deep .custom-steps .p-steps-item.p-highlight .p-steps-number {
   background-color: #f8fdcf;
-  color: #29415b;
+  color: #000;
 }
 
 ::ng-deep .custom-steps .p-steps-item.p-disabled .p-steps-number {
@@ -104,19 +104,19 @@ label {
 }
 
 :host ::ng-deep .p-steps-item:not(.p-highlight) .p-steps-title {
-  color: #29415b !important;
+  color: #000 !important;
   font-weight: bold;
 }
 
 :host ::ng-deep .p-steps-item.p-highlight .p-menuitem-link {
-  background: #29415b;
+  background: #000;
   border-color: #999999;
   // box-shadow: 0 0 10px 1px rgba(48, 60, 193, 0.25);
 }
 
 :host ::ng-deep .custom-steps .p-steps-item.p-highlight .p-steps-number {
   background-color: #f8fdcf;
-  color: #29415b;
+  color: #000;
 }
 
 :host ::ng-deep .p-steps-item .p-steps-connector {
@@ -203,7 +203,7 @@ label {
 
 ::ng-deep .custom-steps-vertical .p-steps-title {
   font-weight: 500;
-  color: #29415b;
+  color: #000;
 }
 .step-card {
   margin-left: 35px !important;

@@ -704,29 +704,30 @@
   transition: background-color 0.2s;
 
   &.active {
-    background-color: #E3E0F4;
-    color: #4D54B8 !important;
+    background-color: #edf3fe;
+    color: #3a42a7 !important;
     font-weight: 500;
     border-radius: 8px;
 
     img {
       // filter: brightness(0) invert(1);
-        filter: brightness(0) saturate(100%) invert(21%) sepia(65%) saturate(2298%) hue-rotate(211deg) brightness(89%) contrast(93%);
+      filter: brightness(0) saturate(100%) invert(21%) sepia(65%)
+        saturate(2298%) hue-rotate(211deg) brightness(89%) contrast(93%);
     }
     .sidebar-label {
-      color: #4D54B8 !important; // ⬅️ Match label color to active image/text
+      color: #3a42a7 !important; // ⬅️ Match label color to active image/text
     }
-  
-  &:not(.active):hover {
-    background-color: #f2f2f2;
-    border-radius: 8px;
+
+    &:not(.active):hover {
+      background-color: #f2f2f2;
+      border-radius: 8px;
+    }
   }
 }
+.nav-link img {
+  filter: brightness(0) saturate(100%) invert(46%) sepia(0%) saturate(0%)
+    hue-rotate(187deg) brightness(91%) contrast(86%);
 }
-  .nav-link img {
-  filter: brightness(0) saturate(100%) invert(46%) sepia(0%) saturate(0%) hue-rotate(187deg) brightness(91%) contrast(86%);
-} 
-
 
 .sidebar-footer {
   border-top: 1px solid #f0f0f0;
@@ -738,7 +739,6 @@
   font-weight: 500 !important;
   letter-spacing: 0.15px;
 }
-
 
 .sidebar-overlay {
   display: none;

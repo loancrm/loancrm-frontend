@@ -79,6 +79,9 @@ export class EvaluateCreditComponent implements OnInit {
   searchFilter: any = {};
   moment: any;
   displayedItems: any = [];
+  turnoverChangeMessage: string = '';
+  profitChangeMessage: string = '';
+
   activeTab: string = 'dscr'; // default tab
   version = projectConstantsLocal.VERSION_DESKTOP;
   documentTypes = [
@@ -195,7 +198,7 @@ export class EvaluateCreditComponent implements OnInit {
       });
     }
   }
-   // STEP LIST (Matches UI sidebar)
+  // STEP LIST (Matches UI sidebar)
   steps = [
     { label: 'Business Information' },
     { label: 'Firm Documents' },
@@ -213,7 +216,7 @@ export class EvaluateCreditComponent implements OnInit {
   setSection(index: number): void {
     this.selectedSection = index;
   }
-  
+
   ngOnInit(): void {
     // this.activatedRoute.params.subscribe((params) => {
     //   if (params && params['id']) {
@@ -307,6 +310,47 @@ export class EvaluateCreditComponent implements OnInit {
       }
     );
   }
+
+  calculateChanges() {
+    // --- Turnover ---
+    if (this.turnoverAy1 !== null && this.turnoverAy1 !== undefined &&
+      this.turnoverAy2 !== null && this.turnoverAy2 !== undefined) {
+
+      const diffTurnover = this.turnoverAy1 - this.turnoverAy2;
+      const percentageTurnover = ((diffTurnover / this.turnoverAy2) * 100).toFixed(2);
+
+      if (diffTurnover > 0) {
+        this.turnoverChangeMessage = `Rise of ${percentageTurnover}% compared to ${this.getFinancialYear(1)}`;
+      } else if (diffTurnover < 0) {
+        this.turnoverChangeMessage = `Dip of ${Math.abs(+percentageTurnover)}% compared to ${this.getFinancialYear(1)}`;
+      } else {
+        this.turnoverChangeMessage = `No Change in Turnover compared to ${this.getFinancialYear(1)}`;
+      }
+    } else {
+      this.turnoverChangeMessage = '⚠️ Please enter values for both years of Turnover';
+    }
+
+    // --- Profit After Tax ---
+    if (this.profitaftertaxAy1 !== null && this.profitaftertaxAy1 !== undefined &&
+      this.profitaftertaxAy2 !== null && this.profitaftertaxAy2 !== undefined) {
+
+      const diffProfit = this.profitaftertaxAy1 - this.profitaftertaxAy2;
+      const percentageProfit = ((diffProfit / this.profitaftertaxAy2) * 100).toFixed(2);
+
+      if (diffProfit > 0) {
+        this.profitChangeMessage = `Rise of ${percentageProfit}% compared to ${this.getFinancialYear(1)}`;
+      } else if (diffProfit < 0) {
+        this.profitChangeMessage = `Dip of ${Math.abs(+percentageProfit)}% compared to ${this.getFinancialYear(1)}`;
+      } else {
+        this.profitChangeMessage = `No Change in Profit After Tax compared to ${this.getFinancialYear(1)}`;
+      }
+    } else {
+      this.profitChangeMessage = '⚠️ Please enter values for both years of Profit After Tax';
+    }
+  }
+
+
+
   // sendLeadToReject(lead) {
   //   this.changeLeadStatus(lead[0].id, 10);
   //   const targetUrl = `user/rejects`;

@@ -223,7 +223,7 @@
       </ng-template>
       <ng-template pTemplate="body" let-lead>
         <tr [pSelectableRow]="lead">
-          <td>
+          <td class="leadid">
             <span class="table-column-data singleline">{{
               lead.customId ? lead.customId : "-"
             }}</span>
@@ -355,13 +355,13 @@
       <ng-template pTemplate="emptymessage">
         <tr class="text-center">
           <td colspan="10" class="text-center fw-bold">
-            <img
+            <!-- <img
               alt="No Data"
               src="../../../assets/images/menu/no-data.gif"
               width="200"
               height="200"
-            />
-            <p>No Follow Ups Found</p>
+            /> -->
+           <p style="color: #535ab4; font-weight: 400; font-size: 18px">No Follow Ups Found</p>
           </td>
         </tr>
       </ng-template>

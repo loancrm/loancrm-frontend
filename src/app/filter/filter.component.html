@@ -221,21 +221,14 @@
   ></i> -->
   <!-- <img src="../../assets/images/icons/Filter.svg" width="24px" height="24px" /> -->
 
-  <div
-    style="position: relative; display: inline-block"
-    (click)="sidebarVisible = true"
-  >
+  <div class="filter-wrapper" (click)="sidebarVisible = true">
     <img
       src="../../assets/images/icons/Filter.svg"
       alt="Filter"
-      [style.width]="iconSize"
-      [style.height]="iconSize"
-      style="cursor: pointer; filter: brightness(0) invert(1);"
+      widtxh="24px"
+      height="24px"
+      class="filter-icon"
     />
-    <sup
-      class="indication-dot"
-      *ngIf="showIndicationIcon"
-      style="position: absolute; top: 0; right: 0"
-    ></sup>
+    <sup class="indication-dot" *ngIf="showIndicationIcon"></sup>
   </div>
 </div>

@@ -337,27 +337,28 @@
   </div>
 </section> -->
 
-
 <section class="d-flex min-vh-100">
   <div class="row flex-grow-1 m-0">
     <!-- Left Illustration -->
     <div
       class="col-lg-6 d-flex justify-content-center align-items-center text-center p-0"
-      style="background: linear-gradient(135deg, #6b5bd6, #8a78f0);"
+      style="
+        background: linear-gradient(168.87deg, #8e89d0 4.21%, #535ab4 86.71%);
+      "
     >
       <img
         src="../../assets/images/loginlatest.svg"
         alt="Illustration"
         class="img-fluid"
-        style="max-height: 80%;"
+        style="max-height: 80%"
       />
     </div>
 
     <!-- Right Form Section -->
     <div class="col-lg-6 d-flex justify-content-center align-items-center">
-      <div class="col-lg-6 col-md-10 col-sm-12 m-2">
-        <div class="card shadow-sm mx-auto" style="width: 70vh; border: none;">
-          <div class="card-body p-4">
+      <div class="col-lg-6 col-md-10 col-sm-12 m-2" style="width: 70vh">
+        <div class="card shadow-sm mx-auto" style="border: none">
+          <div class="card-body p-2">
             <div class="d-flex justify-content-center mb-2">
               <img
                 src="../../assets/images/myloancrm.svg"
@@ -428,9 +429,9 @@
                   <a
                     class="text-decoration-none forgot-text"
                     (click)="doForgotPassword()"
-                    style="cursor: pointer;"
+                    style="cursor: pointer"
                   >
-                    <span style="color: #4D4D4D;">Forgot Password?</span>
+                    <span style="color: #4d4d4d">Forgot Password?</span>
                   </a>
                 </div>
               </div>
@@ -441,9 +442,8 @@
                 pRipple
                 class="w-100 p-button-primary d-flex align-items-center justify-content-center"
                 [disabled]="!loginForm.valid || api_loading"
-                
               >
-                <span style="color: #4D4D4D;">Sign In</span>
+                <span style="color: #fff">Sign In</span>
               </button>
 
               <div class="text-center mt-3">
@@ -451,15 +451,14 @@
                 <a
                   routerLink="/user/register"
                   class="text-decoration-none"
-                  style="color: #535AB4"
+                  style="color: #535ab4"
                   >Sign Up</a
                 >
               </div>
             </form>
           </div>
         </div>
-
-        <div class="">
+        <div>
           <div class="calculator-heading my-3 d-flex align-items-center">
             <div class="line flex-grow-1"></div>
             <h6 class="mx-2 mb-0">Use Our Calculator</h6>
@@ -470,7 +469,7 @@
             <div
               class="calucard text-center shadow-sm py-3 px-4"
               routerLink="/calculator/business"
-              style="width: 180px; white-space: nowrap; cursor: pointer;"
+              style="width: 180px; white-space: nowrap; cursor: pointer"
             >
               <img
                 src="../../assets/images/icons/businessloan.svg"
@@ -483,7 +482,7 @@
             <div
               class="calucard text-center shadow-sm py-3 px-4"
               routerLink="/calculator/personal"
-              style="width: 180px; white-space: nowrap; cursor: pointer;"
+              style="width: 180px; white-space: nowrap; cursor: pointer"
             >
               <img
                 src="../../assets/images/icons/team.svg"
@@ -496,7 +495,7 @@
             <div
               class="calucard text-center shadow-sm py-3 px-4"
               routerLink="/calculator/home"
-              style="width: 180px; white-space: nowrap; cursor: pointer;"
+              style="width: 180px; white-space: nowrap; cursor: pointer"
             >
               <img
                 src="../../assets/images/icons/home.svg"

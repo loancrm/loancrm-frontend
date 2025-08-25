@@ -31,7 +31,7 @@
 }
 .card-header {
   background-color: #f1f1f1;
-  color: #29415b;
+  color: #000;
   font-weight: bold;
   font-size: 20px;
 }
@@ -279,7 +279,7 @@ small {
 }
 
 .accordion-dark .table tbody tr:hover {
-  background-color: #29415b;
+  background-color: #000;
 }
 
 /* Buttons inside body */
@@ -310,21 +310,21 @@ small {
 
 ::ng-deep .p-table .p-button-outlined {
   color: #fff;
-  border-color: #29415b;
+  border-color: #000;
 }
 
 ::ng-deep .p-table .p-button-info {
-  background-color: #29415b;
+  background-color: #000;
   color: #fff;
 }
 
 ::ng-deep .p-panel {
-  background-color: #29415b;
+  background-color: #000;
   color: #fff;
   border-radius: 0.75rem;
 }
 .files-card {
-  // background-color: #29415B;
+  // background-color: #000;
   // border-left: 5px solid #fff !important;
   // color: #fff;
   padding: 1px;
@@ -385,7 +385,7 @@ button.nav-link.active .tab-icon {
 .business .text-muted{
   color: #101828 !important;
   font-weight: 500 !important;
-  font-size: 18px;
+  font-size: 16px;
 }
 .z-screen {
   position: fixed;
@@ -456,7 +456,7 @@ button.nav-link.active .tab-icon {
 .business{
   color: #101828;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 14px;
 }
 // .container {
 //   display: flex;

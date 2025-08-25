@@ -45,13 +45,13 @@
 
 .card-title {
   font-weight: 500 !important;
-  color: #1E1E1E;
+  color: #1e1e1e;
   font-size: 24px;
   letter-spacing: 0.15px;
 }
 
 .card-title span {
-  color: #535AB4;
+  color: #535ab4;
 }
 .body {
   background-color: #f7f7f7 !important;
@@ -81,23 +81,23 @@ span img {
   border-radius: 4px;
 }
 // .card-icon{
-//   color:#4D54B8
+//   color:#3A42A7
 // }
 // .card-icon {
 //   border: 1px solid #E3E0F4;
 //   border-radius: 23.5px;
 //   padding: 11px;
-  
+
 // }
 
 .sidebaricon {
   font-size: 1.2rem;
   width: 20px !important;
-  
 }
 .dashboardicon img {
-  color: #fff !important;
-  
+  // color: #fff !important;
+  filter: invert(69%) sepia(17%) saturate(799%) hue-rotate(212deg)
+    brightness(92%) contrast(87%) !important;
 }
 .cards:hover {
   transform: scale(1.05);
@@ -116,7 +116,7 @@ span img {
   transform: scale(1.1);
   transition: transform 0.3s ease;
 }
-.dashboardicon{
+.dashboardicon {
   width: 40px !important;
   height: 40px !important;
   background-color: #ffffff !important;
@@ -174,15 +174,15 @@ span img {
 // }
 .card-heading {
   color: #838383 !important;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 400;
   letter-spacing: 0.15px;
   // font-style: roboto;
 }
 .card-count {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 600;
-  color: #29415b;
+  color: #000 !important;
 }
 .custom-loader-overlay {
   position: absolute;
@@ -215,8 +215,7 @@ span img {
 }
 
 .card img {
-  filter: brightness(0) saturate(100%) invert(54%) sepia(12%) saturate(899%) hue-rotate(211deg) brightness(94%) contrast(93%) !important;
+  filter: brightness(0) saturate(100%) invert(54%) sepia(12%) saturate(899%)
+    hue-rotate(211deg) brightness(94%) contrast(93%) !important;
   transition: filter 0.3s ease;
 }
-
-

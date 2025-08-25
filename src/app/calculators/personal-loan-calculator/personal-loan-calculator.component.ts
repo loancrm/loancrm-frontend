@@ -47,11 +47,6 @@ export class PersonalLoanCalculatorComponent implements OnInit {
     }
   }
   // Restrict the manual input to only numbers <= 4
-  onTenureInput() {
-    if (this.tenure > 4) {
-      this.tenure = 4; // Automatically set to 4 if user enters a value greater than 4
-    }
-  }
 
   // Restrict keys (only allow digits 0-9)
   restrictTenureKeys(event: KeyboardEvent) {

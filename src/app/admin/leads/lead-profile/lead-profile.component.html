@@ -1,6 +1,6 @@
 <div>
   <div class="bread-crumb">
-      <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
+    <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
   </div>
   <ng-container *ngFor="let item of displayedItems">
     <div class="m-2 p-1" *ngIf="item.data">
@@ -26,10 +26,20 @@
           </b>
         </div>
         <div>
-          <!-- <button class="btn btn-outline-primary" (click)="onDownloadZip()">
+          <button
+            *ngIf="
+              this.userDetails.userType == 1 &&
+              ![1, 2, 16].includes(leadsData?.leadData?.leadInternalStatus)
+            "
+            pButton
+            pRipple
+            type="button"
+            class="p-button-info"
+            (click)="onDownloadZip(item.data[item.displayProperty])"
+          >
             <i class="pi pi-download me-1"></i>
             Download Files
-          </button> -->
+          </button>
         </div>
       </div>
     </div>
@@ -507,7 +517,7 @@
                   >
                     <!-- Business Name -->
                     <h5 class="mb-2 mb-md-0">
-                      <span style="color: #535AB4; font-size: 20px;">{{
+                      <span style="color: #535ab4; font-size: 20px">{{
                         (leadsData.leadData.businessName | capitalizeFirst) ||
                           "-"
                       }}</span>
@@ -515,7 +525,17 @@
 
                     <!-- Status Badge -->
                     <div class="d-flex gap-2 align-items-center me-4">
-                      <small class="text-muted"><span style="color: #737373; font-style: 600; font-size: 18px;"> Status:</span></small>
+                      <small class="text-muted"
+                        ><span
+                          style="
+                            color: #737373;
+                            font-style: 600;
+                            font-size: 18px;
+                          "
+                        >
+                          Status:</span
+                        ></small
+                      >
                       <span
                         class="badge p-2 rounded-3"
                         style="background-color: #e6e6f5; color: #13003a"
@@ -539,7 +559,9 @@
                       *ngIf="leadsData?.leadData?.primaryPhone"
                     >
                       <img
-                        (click)="openWhatsApp(leadsData?.leadData?.primaryPhone)"
+                        (click)="
+                          openWhatsApp(leadsData?.leadData?.primaryPhone)
+                        "
                         src="assets/images/icons/Phone.svg"
                         alt="Phone"
                         width="20"
@@ -548,12 +570,15 @@
                       />
                       <span class="phone">
                         {{
-                        userDetails.userType == 3
-                          ? getMaskedPhone(leadsData?.leadData?.primaryPhone)
-                          : leadsData?.leadData?.primaryPhone
-                      }}
+                          userDetails.userType == 3
+                            ? getMaskedPhone(leadsData?.leadData?.primaryPhone)
+                            : leadsData?.leadData?.primaryPhone
+                        }}
                       </span>
-                      <ng-container *ngIf="leadsData?.leadData?.secondaryPhone"  class="phone">
+                      <ng-container
+                        *ngIf="leadsData?.leadData?.secondaryPhone"
+                        class="phone"
+                      >
                         ,
                         {{
                           userDetails.userType == 3
@@ -576,7 +601,9 @@
                         width="20"
                         height="20"
                       />
-                      <span  class="phone">{{ leadsData.leadData.businessEmail }}</span>
+                      <span class="phone">{{
+                        leadsData.leadData.businessEmail
+                      }}</span>
                     </span>
 
                     <!-- Location -->
@@ -590,7 +617,9 @@
                         width="20"
                         height="20"
                       />
-                      <span class="phone">{{ leadsData.leadData.city | capitalizeFirst }}</span>
+                      <span class="phone">{{
+                        leadsData.leadData.city | capitalizeFirst
+                      }}</span>
                     </span>
                   </small>
                 </div>
@@ -598,7 +627,9 @@
                 <div class="row mt-3">
                   <div class="col-md-3 col-sm-4 col-6 mb-3">
                     <div>
-                      <div class="text-muted"><span class="business">Business Entity</span></div>
+                      <div class="text-muted">
+                        <span class="business">Business Entity</span>
+                      </div>
                       <div class="fw-bold values">
                         {{
                           (getEntityName(leadsData.leadData.businessEntity)
@@ -614,7 +645,9 @@
                     "
                   >
                     <div>
-                      <div class="text-muted"><span class="business">Business Vintage</span></div>
+                      <div class="text-muted">
+                        <span class="business">Business Vintage</span>
+                      </div>
                       <div class="fw-bold">
                         {{
                           (leadsData.leadData.businessOperatingSince
@@ -630,7 +663,9 @@
                     "
                   >
                     <div>
-                      <div class="text-muted"><span class="business">Business Vintage</span></div>
+                      <div class="text-muted">
+                        <span class="business">Business Vintage</span>
+                      </div>
                       <div class="fw-bold">
                         {{
                           (leadsData.leadData.businessVintage
@@ -646,7 +681,9 @@
                     "
                   >
                     <div>
-                      <div class="text-muted"><span class="business">Nature of Business</span></div>
+                      <div class="text-muted">
+                        <span class="business">Nature of Business</span>
+                      </div>
                       <div class="fw-bold">
                         {{
                           (leadsData.leadData.natureOfBusiness
@@ -662,7 +699,9 @@
                     "
                   >
                     <div>
-                      <div class="text-muted"><span class="business">Nature of Business</span></div>
+                      <div class="text-muted">
+                        <span class="business">Nature of Business</span>
+                      </div>
                       <div class="fw-bold">
                         {{
                           (leadsData.leadData.natureofBusiness
@@ -673,7 +712,9 @@
                   </div>
                   <div class="col-md-3 col-sm-4 col-6 mb-3">
                     <div>
-                      <div class="text-muted"><span class="business">Product</span></div>
+                      <div class="text-muted">
+                        <span class="business">Product</span>
+                      </div>
                       <div class="fw-bold">
                         {{
                           (leadsData.leadData.product | capitalizeFirst) || "-"
@@ -683,7 +724,9 @@
                   </div>
                   <div class="col-md-3 col-sm-4 col-6 mb-3">
                     <div>
-                      <div class="text-muted"><span class="business">Turnover</span></div>
+                      <div class="text-muted">
+                        <span class="business">Turnover</span>
+                      </div>
                       <div class="fw-bold">
                         {{
                           (leadsData.leadData.businessTurnover
@@ -694,7 +737,9 @@
                   </div>
                   <div class="col-md-3 col-sm-4 col-6 mb-3">
                     <div>
-                      <div class="text-muted"><span class="business">Contact Person</span></div>
+                      <div class="text-muted">
+                        <span class="business">Contact Person</span>
+                      </div>
                       <div class="fw-bold">
                         {{
                           (leadsData.leadData.contactPerson
@@ -708,7 +753,9 @@
                     *ngIf="leadsData.leadData.loanRequirement"
                   >
                     <div>
-                      <div class="text-muted"><span class="business">Loan Requirement</span></div>
+                      <div class="text-muted">
+                        <span class="business">Loan Requirement</span>
+                      </div>
                       <div class="fw-bold">
                         {{
                           (leadsData.leadData.loanRequirement
@@ -722,7 +769,9 @@
                     *ngIf="leadsData.leadData.odRequirement"
                   >
                     <div>
-                      <div class="text-muted"><span class="business">OD Requirement</span></div>
+                      <div class="text-muted">
+                        <span class="business">OD Requirement</span>
+                      </div>
                       <div class="fw-bold">
                         {{
                           (leadsData.leadData.odRequirement
@@ -733,7 +782,9 @@
                   </div>
                   <div class="col-md-3 col-sm-4 col-6 mb-3">
                     <div>
-                      <div class="text-muted"><span class="business">Had Own House?</span></div>
+                      <div class="text-muted">
+                        <span class="business">Had Own House?</span>
+                      </div>
                       <div class="fw-bold">
                         {{
                           (leadsData.leadData.hadOwnHouse | capitalizeFirst) ||
@@ -744,7 +795,9 @@
                   </div>
                   <div class="col-md-3 col-sm-4 col-6 mb-3">
                     <div>
-                      <div class="text-muted"><span class="business">Existing Loan Details</span></div>
+                      <div class="text-muted">
+                        <span class="business">Existing Loan Details</span>
+                      </div>
                       <div class="fw-bold">
                         {{
                           (leadsData.leadData.existingLoanDetails
@@ -755,7 +808,9 @@
                   </div>
                   <div class="col-md-3 col-sm-4 col-6 mb-3">
                     <div>
-                      <div class="text-muted"><span class="business">Called From</span></div>
+                      <div class="text-muted">
+                        <span class="business">Called From</span>
+                      </div>
                       <div class="fw-bold">
                         {{
                           (leadsData.leadData.calledFrom | capitalizeFirst) ||
@@ -766,7 +821,9 @@
                   </div>
                   <div class="col-md-3 col-sm-4 col-6 mb-3">
                     <div>
-                      <div class="text-muted"><span class="business">Lead Source</span></div>
+                      <div class="text-muted">
+                        <span class="business">Lead Source</span>
+                      </div>
                       <div class="fw-bold">
                         {{
                           (getLeadSourceName(leadsData.leadData.leadSource)
@@ -777,7 +834,9 @@
                   </div>
                   <div class="col-md-3 col-sm-4 col-6 mb-3">
                     <div>
-                      <div class="text-muted"><span class="business">Last Updated</span></div>
+                      <div class="text-muted">
+                        <span class="business">Last Updated</span>
+                      </div>
                       <div class="fw-bold">
                         {{
                           leadsData.leadData.lastUpdatedOn
@@ -791,7 +850,9 @@
                     *ngIf="leadsData.leadData.sanctionedAmount"
                   >
                     <div>
-                      <div class="text-muted"><span class="business">Sanctioned Amount</span></div>
+                      <div class="text-muted">
+                        <span class="business">Sanctioned Amount</span>
+                      </div>
                       <div class="fw-bold">
                         {{ leadsData.leadData.sanctionedAmount }} ({{
                           convertToLakhsOrCrores(
@@ -806,7 +867,9 @@
                     *ngIf="leadsData.leadData.disbursedAmount"
                   >
                     <div>
-                      <div class="text-muted"><span class="business">Disbursed Amount</span></div>
+                      <div class="text-muted">
+                        <span class="business">Disbursed Amount</span>
+                      </div>
                       <div class="fw-bold">
                         {{ leadsData.leadData.disbursedAmount }} ({{
                           convertToLakhsOrCrores(
@@ -818,7 +881,9 @@
                   </div>
                   <div class="col-12 mb-3" *ngIf="leadsData.leadData.remarks">
                     <div>
-                      <div class="text-muted"><span class="business">Remarks</span></div>
+                      <div class="text-muted">
+                        <span class="business">Remarks</span>
+                      </div>
                       <div class="fw-bold">
                         {{
                           (leadsData.leadData.remarks | capitalizeFirst) || "-"
@@ -981,13 +1046,21 @@
                       <!-- Bank Statements -->
                       <div *ngIf="leadsData?.documents == null">
                         <div class="text-center fw-bold">
-                          <img
+                          <!-- <img
                             alt="No Files"
                             src="../../../../assets/images/menu/no-files.gif"
                             width="200"
                             height="200"
-                          />
-                          <p>No partials have been uploaded.</p>
+                          /> -->
+                          <p
+                            style="
+                              color: #535ab4;
+                              font-weight: 400;
+                              font-size: 18px;
+                            "
+                          >
+                            No partials have been uploaded.
+                          </p>
                         </div>
                       </div>
                       <div *ngIf="leadsData?.documents">
@@ -1001,8 +1074,12 @@
                               aria-expanded="true"
                               aria-controls="collapseBank"
                             >
-                              <span class="p-accordion-toggle-icon pi pi-chevron-right"></span>
-                            <span class="p-accordion-header-text">Business Documents</span>
+                              <span
+                                class="p-accordion-toggle-icon pi pi-chevron-right"
+                              ></span>
+                              <span class="p-accordion-header-text"
+                                >Business Documents</span
+                              >
                             </button>
                           </h2>
                           <div
@@ -1026,7 +1103,15 @@
                                 <h6 class="text-primary mb-3">
                                   Current Account statements
                                 </h6>
-                                <p>No data available.</p>
+                                <p
+                                  style="
+                                    color: #535ab4;
+                                    font-weight: 400;
+                                    font-size: 18px;
+                                  "
+                                >
+                                  No data available.
+                                </p>
                               </div>
                               <div
                                 *ngIf="
@@ -1198,7 +1283,15 @@
                                 <h6 class="text-primary mb-3">
                                   OD Account statements
                                 </h6>
-                                <p>No data available.</p>
+                                <p
+                                  style="
+                                    color: #535ab4;
+                                    font-weight: 400;
+                                    font-size: 18px;
+                                  "
+                                >
+                                  No data available.
+                                </p>
                               </div>
                             </div>
 
@@ -1216,7 +1309,15 @@
                                 <h6 class="text-primary mb-3">
                                   Current Account statements
                                 </h6>
-                                <p>No data available.</p>
+                                <p
+                                  style="
+                                    color: #535ab4;
+                                    font-weight: 400;
+                                    font-size: 18px;
+                                  "
+                                >
+                                  No data available.
+                                </p>
                               </div>
                               <div
                                 *ngIf="
@@ -1322,7 +1423,15 @@
                                   leadsData?.documents?.financialReturns == null
                                 "
                               >
-                                <p>No data available.</p>
+                                <p
+                                  style="
+                                    color: #535ab4;
+                                    font-weight: 400;
+                                    font-size: 18px;
+                                  "
+                                >
+                                  No data available.
+                                </p>
                               </div>
                               <div
                                 class="row"
@@ -1428,7 +1537,15 @@
                               <div
                                 *ngIf="leadsData?.documents?.gstDetails == null"
                               >
-                                <p>No data available.</p>
+                                <p
+                                  style="
+                                    color: #535ab4;
+                                    font-weight: 400;
+                                    font-size: 18px;
+                                  "
+                                >
+                                  No data available.
+                                </p>
                               </div>
                               <div
                                 *ngIf="
@@ -1527,7 +1644,15 @@
                                   !leadsData?.documents?.saleAgreement?.length
                                 "
                               >
-                                <p>No data available.</p>
+                                <p
+                                  style="
+                                    color: #535ab4;
+                                    font-weight: 400;
+                                    font-size: 18px;
+                                  "
+                                >
+                                  No data available.
+                                </p>
                               </div>
 
                               <div class="row mt-3">
@@ -1643,7 +1768,15 @@
                                 "
                               >
                                 <h6 class="text-primary mb-3">Cibil Reports</h6>
-                                <p>No data available.</p>
+                                <p
+                                  style="
+                                    color: #535ab4;
+                                    font-weight: 400;
+                                    font-size: 18px;
+                                  "
+                                >
+                                  No data available.
+                                </p>
                               </div>
                               <div
                                 *ngIf="
@@ -1726,7 +1859,15 @@
                                 "
                               >
                                 <h6 class="text-primary mb-3">Cibil Reports</h6>
-                                <p>No data available.</p>
+                                <p
+                                  style="
+                                    color: #535ab4;
+                                    font-weight: 400;
+                                    font-size: 18px;
+                                  "
+                                >
+                                  No data available.
+                                </p>
                               </div>
                               <div
                                 *ngIf="
@@ -2173,7 +2314,15 @@
                                   leadsData?.documents?.existingLoans == null
                                 "
                               >
-                                <p>No data available.</p>
+                                <p
+                                  style="
+                                    color: #535ab4;
+                                    font-weight: 400;
+                                    font-size: 18px;
+                                  "
+                                >
+                                  No data available.
+                                </p>
                               </div>
                               <div
                                 class="mt-2"
@@ -2906,7 +3055,15 @@
                                   width="200"
                                   height="200"
                                 />
-                                <p>No KYC's have been uploaded.</p>
+                                <p
+                                  style="
+                                    color: #535ab4;
+                                    font-weight: 400;
+                                    font-size: 18px;
+                                  "
+                                >
+                                  No KYC's have been uploaded.
+                                </p>
                               </div>
                             </ng-template>
                             <!-- DIRECTORS KYC SECTION -->
@@ -3975,7 +4132,15 @@
                                   width="200"
                                   height="200"
                                 />
-                                <p>No KYC's have been uploaded.</p>
+                                <p
+                                  style="
+                                    color: #535ab4;
+                                    font-weight: 400;
+                                    font-size: 18px;
+                                  "
+                                >
+                                  No KYC's have been uploaded.
+                                </p>
                               </div>
                             </ng-template>
                             <!-- DIRECTORS KYC SECTION -->
@@ -4853,12 +5018,12 @@
                         "
                       >
                         <div class="text-center fw-bold">
-                          <img
+                          <!-- <img
                             alt="No Data"
                             src="../../../../assets/images/menu/no-data.gif"
                             width="200"
                             height="200"
-                          />
+                          /> -->
                           <p>Credit Evaluation not Done</p>
                         </div>
                       </div>
@@ -5526,12 +5691,12 @@
                       "
                     >
                       <div class="text-center fw-bold">
-                        <img
+                        <!-- <img
                           alt="No Data"
                           src="../../../../assets/images/menu/no-data.gif"
                           width="200"
                           height="200"
-                        />
+                        /> -->
                         <p>Lender Selection not Done</p>
                       </div>
                     </div>
@@ -5802,20 +5967,23 @@
                   [align]="'left'"
                 >
                   <ng-template pTemplate="marker" let-event>
-                  <span
-                    class="custom-marker"
-                    [ngClass]="{ 'marker-filled': event.date, 'marker-pending': !event.date }"
-                  >
-                    <img
-                      [src]="event.image"
-                      alt="Event Icon"
-                      width="20"
-                      height="20"
-                      class="timeline-icon"
-                      [ngClass]="{ 'white-icon': event.date }"
-                    />
-                  </span>
-                </ng-template>
+                    <span
+                      class="custom-marker"
+                      [ngClass]="{
+                        'marker-filled': event.date,
+                        'marker-pending': !event.date
+                      }"
+                    >
+                      <img
+                        [src]="event.image"
+                        alt="Event Icon"
+                        width="20"
+                        height="20"
+                        class="timeline-icon"
+                        [ngClass]="{ 'white-icon': event.date }"
+                      />
+                    </span>
+                  </ng-template>
 
                   <ng-template pTemplate="opposite" let-event>
                     <p class="text-muted p-1 date-text">
@@ -6180,7 +6348,10 @@
                     </div>
                   </div>
 
-                  <div class="col-12 mb-3 business" *ngIf="leadsData.leadData.remarks">
+                  <div
+                    class="col-12 mb-3 business"
+                    *ngIf="leadsData.leadData.remarks"
+                  >
                     <div>
                       <div class="text-muted">Remarks</div>
                       <div class="fw-bold">
@@ -6349,7 +6520,15 @@
                             width="200"
                             height="200"
                           />
-                          <p>No partials have been uploaded.</p>
+                          <p
+                            style="
+                              color: #535ab4;
+                              font-weight: 400;
+                              font-size: 18px;
+                            "
+                          >
+                            No partials have been uploaded.
+                          </p>
                         </div>
                       </div>
                       <div *ngIf="leadsData?.documents">
@@ -6383,7 +6562,15 @@
                                 <h6 class="text-primary mb-3">
                                   Current Account statements
                                 </h6>
-                                <p>No data available.</p>
+                                <p
+                                  style="
+                                    color: #535ab4;
+                                    font-weight: 400;
+                                    font-size: 18px;
+                                  "
+                                >
+                                  No data available.
+                                </p>
                               </div>
                               <div
                                 *ngIf="
@@ -6487,7 +6674,15 @@
                               <div
                                 *ngIf="!leadsData?.documents?.paySlips?.length"
                               >
-                                <p>No data available.</p>
+                                <p
+                                  style="
+                                    color: #535ab4;
+                                    font-weight: 400;
+                                    font-size: 18px;
+                                  "
+                                >
+                                  No data available.
+                                </p>
                               </div>
                               <div
                                 *ngIf="
@@ -6629,7 +6824,15 @@
                               <div
                                 *ngIf="!leadsData?.documents?.paySlips?.length"
                               >
-                                <p>No data available.</p>
+                                <p
+                                  style="
+                                    color: #535ab4;
+                                    font-weight: 400;
+                                    font-size: 18px;
+                                  "
+                                >
+                                  No data available.
+                                </p>
                               </div>
                               <div
                                 *ngIf="
@@ -7112,7 +7315,15 @@
                                   leadsData?.documents?.existingLoans == null
                                 "
                               >
-                                <p>No data available.</p>
+                                <p
+                                  style="
+                                    color: #535ab4;
+                                    font-weight: 400;
+                                    font-size: 18px;
+                                  "
+                                >
+                                  No data available.
+                                </p>
                               </div>
                               <div
                                 class="mt-2"
@@ -7610,7 +7821,15 @@
                                   width="200"
                                   height="200"
                                 />
-                                <p>No KYC's have been uploaded.</p>
+                                <p
+                                  style="
+                                    color: #535ab4;
+                                    font-weight: 400;
+                                    font-size: 18px;
+                                  "
+                                >
+                                  No KYC's have been uploaded.
+                                </p>
                               </div>
                             </ng-template>
                             <!-- DIRECTORS KYC SECTION -->
@@ -7731,12 +7950,12 @@
                         "
                       >
                         <div class="text-center fw-bold">
-                          <img
+                          <!-- <img
                             alt="No Data"
                             src="../../../../assets/images/menu/no-data.gif"
                             width="200"
                             height="200"
-                          />
+                          /> -->
                           <p>Credit Evaluation not Done</p>
                         </div>
                       </div>
@@ -8392,12 +8611,12 @@
                       "
                     >
                       <div class="text-center fw-bold">
-                        <img
+                        <!-- <img
                           alt="No Data"
                           src="../../../../assets/images/menu/no-data.gif"
                           width="200"
                           height="200"
-                        />
+                        /> -->
                         <p>Lender Selection not Done</p>
                       </div>
                     </div>
@@ -8598,9 +8817,7 @@
                 <div class="d-flex flex-column gap-3">
                   <!-- Lead Sourced By -->
                   <div>
-                    <div class="text-muted mb-1 fw-bold small">
-                      Sourced By
-                    </div>
+                    <div class="text-muted mb-1 fw-bold small">Sourced By</div>
                     <div
                       class="d-flex align-items-center gap-2 p-1 sourced-by-outline"
                     >
@@ -8666,21 +8883,24 @@
                   styleClass="custom-timeline"
                   [align]="'left'"
                 >
-                <ng-template pTemplate="marker" let-event>
-                  <span
-                    class="custom-marker"
-                    [ngClass]="{ 'marker-filled': event.date, 'marker-pending': !event.date }"
-                  >
-                    <img
-                      [src]="event.image"
-                      alt="Event Icon"
-                      width="20"
-                      height="20"
-                      class="timeline-icon"
-                      [ngClass]="{ 'white-icon': event.date }"
-                    />
-                  </span>
-                </ng-template>
+                  <ng-template pTemplate="marker" let-event>
+                    <span
+                      class="custom-marker"
+                      [ngClass]="{
+                        'marker-filled': event.date,
+                        'marker-pending': !event.date
+                      }"
+                    >
+                      <img
+                        [src]="event.image"
+                        alt="Event Icon"
+                        width="20"
+                        height="20"
+                        class="timeline-icon"
+                        [ngClass]="{ 'white-icon': event.date }"
+                      />
+                    </span>
+                  </ng-template>
                   <ng-template pTemplate="opposite" let-event>
                     <p class="text-muted p-1 date-text">
                       {{

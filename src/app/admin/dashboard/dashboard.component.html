@@ -98,7 +98,7 @@
                   alt="{{ card.name }}"
                   width="24"
                   height="24"
-                  style="filter: brightness(0) invert(1)"
+                 
                 />
               </div>
             </div>
@@ -203,7 +203,10 @@
                 followupsCountforFilter == 0
               "
             >
-              <img [src]="chartDisplayMessage1" alt="No Data Available" />
+              <!-- <img [src]="chartDisplayMessage1" alt="No Data Available" /> -->
+              <p style="color: #535ab4; font-weight: 400; font-size: 18px">
+                No Data Available
+              </p>
             </span>
           </div>
         </div>
@@ -247,10 +250,20 @@
             <!-- Body -->
             <ng-template pTemplate="body" let-rowData>
               <tr [pSelectableRow]="rowData">
-                 <td>{{ rowData.customId ? (rowData.customId): '-' }}</td>
-                <td>{{ rowData.businessName ? (rowData.businessName | capitalizeFirst): '-' }}</td>
-                <td>
-                  {{ rowData.sourcedBy ? (getSourceName(rowData.sourcedBy) | capitalizeFirst) : '-' }}
+                <td class="dashboardtable">{{ rowData.customId ? rowData.customId : "-" }}</td>
+                <td class="dashboardtable">
+                  {{
+                    rowData.businessName
+                      ? (rowData.businessName | capitalizeFirst)
+                      : "-"
+                  }}
+                </td>
+                <td class="dashboardtable">
+                  {{
+                    rowData.sourcedBy
+                      ? (getSourceName(rowData.sourcedBy) | capitalizeFirst)
+                      : "-"
+                  }}
                 </td>
               </tr>
             </ng-template>
@@ -259,13 +272,15 @@
             <ng-template pTemplate="emptymessage">
               <tr class="text-center">
                 <td colspan="10" class="text-center fw-bold">
-                  <img
+                  <!-- <img
                     alt="No Data"
                     src="../../../assets/images/menu/no-data.gif"
                     width="200"
                     height="200"
-                  />
-                  <p>No Files In Process</p>
+                  /> -->
+                  <p style="color: #535ab4; font-weight: 400; font-size: 18px">
+                    No Files In Process
+                  </p>
                 </td>
               </tr>
             </ng-template>
@@ -279,7 +294,10 @@
             [chartOptions]="ApprovedDisbursedAmountChartOptions"
           ></app-apex-charts>
           <span *ngIf="allCountsZero">
-            <img [src]="chartDisplayMessage1" alt="No Data Available" />
+            <!-- <img [src]="chartDisplayMessage1" alt="No Data Available" /> -->
+            <p style="color: #535ab4; font-weight: 400; font-size: 18px">
+              No Data Available
+            </p>
           </span>
         </div>
       </div>
@@ -342,7 +360,7 @@
       <div class="text-center">
         © 2024
         <span style="color: #ee7846">
-          <span style="color: #29415b">My</span>Loan<span style="color: #29415b"
+          <span style="color: #000">My</span>Loan<span style="color: #000"
             >CRM.</span
           ></span
         >
@@ -351,13 +369,13 @@
     </footer> -->
     <footer class="footer-card text-center text-lg-start mx-2 my-4">
       <div class="text-center">
-        <span style="color: #737373;">© 2024</span> &nbsp;
-        <span style="color: #706EC4">
-          <span style="color: #4D54B8">My</span>Loan<span style="color: #4D54B8"
+        <span style="color: #737373">© 2024</span> &nbsp;
+        <span style="color: #706ec4">
+          <span style="color: #4d54b8">My</span>Loan<span style="color: #4d54b8"
             >CRM.</span
           ></span
         >
-        &nbsp; <span style="color: #737373;"> | All Rights Reserved</span>
+        &nbsp; <span style="color: #737373"> | All Rights Reserved</span>
       </div>
     </footer>
   </div>

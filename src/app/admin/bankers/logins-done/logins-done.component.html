@@ -33,7 +33,7 @@
       style="color: #ee7846; font-size: 23px"
     >
       <div class="">
-        <span style="color: #29415b; font-size: 23px">Logins Done in </span
+        <span style="color: #000; font-size: 23px">Logins Done in </span
         >{{ bankers.name | uppercasePipe }}
       </div>
     </div>
@@ -150,13 +150,13 @@
         <ng-template pTemplate="emptymessage">
           <tr class="text-center">
             <td colspan="5" class="text-center fw-bold">
-              <img
+              <!-- <img
               alt="No Data"
                 src="../../../assets/images/menu/no-data.gif"
                 width="200"
                 height="200"
-              />
-              <p>No Logins Done Found</p>
+              /> -->
+              <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No Logins Done Found</p>
             </td>
           </tr>
         </ng-template>

@@ -129,33 +129,44 @@ export class LeadProfileComponent implements OnInit {
       }
     );
   }
-  onDownloadZip(): void {
-    const accountId = 1270983;
-    const leadId = 3745806921;
-    const url = `https://files.loancrm.org/files?accountId=${accountId}&leadId=${leadId}&downloadZip=true`;
+  // onDownloadZip(): void {
+  //   const accountId = 1270983;
+  //   const leadId = 3745806921;
+  //   const url = `https://files.loancrm.org/files?accountId=${accountId}&leadId=${leadId}&downloadZip=true`;
 
-    this.http.get(url, { responseType: 'blob' }).subscribe({
-      next: (blob: Blob) => {
-        if (!blob || blob.size === 0) {
-          console.error('Empty or invalid file received.');
-          this.toastService.showError('Empty or invalid ZIP file received.');
-          return;
-        }
-        const downloadURL = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = downloadURL;
-        a.download = `lead_${leadId}_files.zip`;
-        a.style.display = 'none';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(downloadURL);
-      },
-      error: (err) => {
-        console.error('Download failed:', err);
-        this.toastService.showError('ZIP download failed. Please try again.');
-      }
-    });
+  //   this.http.get(url, { responseType: 'blob' }).subscribe({
+  //     next: (blob: Blob) => {
+  //       if (!blob || blob.size === 0) {
+  //         console.error('Empty or invalid file received.');
+  //         this.toastService.showError('Empty or invalid ZIP file received.');
+  //         return;
+  //       }
+  //       const downloadURL = window.URL.createObjectURL(blob);
+  //       const a = document.createElement('a');
+  //       a.href = downloadURL;
+  //       a.download = `lead_${leadId}_files.zip`;
+  //       a.style.display = 'none';
+  //       document.body.appendChild(a);
+  //       a.click();
+  //       document.body.removeChild(a);
+  //       window.URL.revokeObjectURL(downloadURL);
+  //     },
+  //     error: (err) => {
+  //       console.error('Download failed:', err);
+  //       this.toastService.showError('ZIP download failed. Please try again.');
+  //     }
+  //   });
+  // }
+
+  onDownloadZip(applicantname): void {
+    const name = applicantname
+    console.log(name)
+    if (this.leadId) {
+      const url = this.leadsService.downloadZip(this.accountId, this.leadId, name);
+      window.open(url, '_blank'); // Opens in new tab
+    } else {
+      this.toastService.showError('Lead ID is missing. Cannot download ZIP.');
+    }
   }
 
   isBusinessView(): boolean {

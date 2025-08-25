@@ -70,7 +70,7 @@
         class="desktop-only"
       >
         <div class="border-0 rounded-4 p-4 mx-auto text-center my-account-card">
-          <h4 class="fw-bold mb-4" style="color: #4D54B8;">My Account</h4>
+          <h4 class="fw-bold mb-4" style="color: #3A42A7;">My Account</h4>
           <div class="d-flex justify-content-center mb-3">
             <img
               [src]="
@@ -112,7 +112,7 @@
       >
         <!-- Left: Subscription Details -->
         <div
-          class="d-flex flex-column align-items-start me-3 text-nowrap"
+          class="d-flex flex-column align-items-start me-3 text-nowrap "
           *ngIf="userDetails.userType == 1"
         >
         <span
@@ -124,7 +124,7 @@
             [ngStyle]="{
               'display': 'inline-block',
               'width': '10px',
-              'height': '10px',
+              'height': '8px',
               'border-radius': '50%',
               'margin-right': '6px',
               'background-color':
@@ -179,7 +179,7 @@
         </div>
         <!-- Right: User Info and Image -->
         <div class="d-flex align-items-start" (click)="sidebarVisible = true">
-          <div class="text-start me-4">
+          <div class="text-start me-2">
             <p class="profile text-capitalize text-nowrap mb-0">
               {{ userDetails.name | capitalizeFirst }}
             </p>
@@ -198,7 +198,7 @@
             [style.height.px]="45"
             [style.width.px]="45"
             style="object-fit: cover; border-radius: 50%"
-            
+
           />
         </div>
       </div>

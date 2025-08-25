@@ -169,7 +169,7 @@
           class="text-capitalize"
           [ngClass]="{ 'disabled-row': team.disabled }"
         >
-          <td>
+          <td class="leadid">
             <span class="table-column-data" *ngIf="team.userId">{{
               team.userId
             }}</span>
@@ -352,7 +352,7 @@
               width="200"
               height="200"
             /> -->
-            <p>No users Found</p>
+           <p style="color: #535ab4; font-weight: 400; font-size: 18px">No users Found</p>
           </td>
         </tr>
       </ng-template>
