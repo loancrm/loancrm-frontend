@@ -1,12 +1,12 @@
 /* Full screen background with radial gradient */
-.background-radial-gradient {
-  // background-image: url("../../assets/images/bg-image.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  // background-position: center;
-  // background-attachment: fixed;
-  // max-height: 100vh;
-}
+// .background-radial-gradient {
+//   // background-image: url("../../assets/images/bg-image.jpg");
+//   // background-size: cover;
+//   // background-repeat: no-repeat;
+//   // background-position: center;
+//   // background-attachment: fixed;
+//   // max-height: 100vh;
+// }
 
 /* Decorative shapes */
 // #radius-shape-1,
@@ -35,17 +35,17 @@
 // }
 
 /* Card Styling */
-.card {
-  // z-index: 1;
-  width: 500px;
-  // height: 650px;
-  backdrop-filter: blur(30px);
-  background-color: #ffffff !important;
-  margin-left: 120px;
-  border: none;
-  border-radius: 1rem;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-}
+// .card {
+//   // z-index: 1;
+//   width: 500px;
+//   // height: 650px;
+//   backdrop-filter: blur(30px);
+//   background-color: #ffffff !important;
+//   margin-left: 120px;
+//   border: none;
+//   border-radius: 1rem;
+//   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+// }
 
 /* Input Fields */
 // input[type="text"],
@@ -61,6 +61,10 @@
 // .input-group {
 //   position: relative;
 // }
+section{
+  height: 100% !important;
+  overflow: hidden !important;
+}
 .p-inputgroup-addon {
   position: absolute;
   right: 1px;
@@ -215,4 +219,16 @@ button.disabled {
   align-items: center;
   border-radius: 4px !important;
   justify-content: center;
+}
+
+/* Mobile Responsive Fix */
+@media (max-width: 991px) {
+  .card {
+    width: 90% !important; /* make card fit nicely */
+    margin: auto; /* center horizontally */
+  }
+  .col-lg-6.d-flex {
+    justify-content: center !important;
+    align-items: center !important;
+  }
 }
