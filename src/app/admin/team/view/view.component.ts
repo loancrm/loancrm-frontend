@@ -90,7 +90,6 @@ export class ViewComponent {
   thisMonthCallbackCount: any = 0;
   lastBeforeMonthCallbackCount: any = 0;
   totalfilesCount: any = 0;
-  // partialsCount: any = 0;
   totalCreditsCount: any = 0;
   totalSanctionsCount: any = 0;
   inHouseRejectsCount: any = 0;
@@ -191,7 +190,6 @@ export class ViewComponent {
     this.loadAmount(event);
     this.loadCallBacks(event);
     this.loadFiles(event);
-    // this.loadPartialFiles(event);
     this.loadCredits(event);
     this.loadLogins(event);
     this.loadInhouseRejectLeads(event);
@@ -416,14 +414,13 @@ export class ViewComponent {
         type: 'bar',
         toolbar: { show: true },
       },
-      
       // colors: ['#01B8AA', '#6962AD'],
       // colors: ['#2A004E', '#F76C6C'],
       colors: ['#535AB4', '#8E89D0'],
       plotOptions: {
         bar: {
           horizontal: false,
-          columnWidth: '70%',  
+          columnWidth: '70%',
           barGap: 1,
         },
       },
@@ -435,7 +432,6 @@ export class ViewComponent {
         style: {
           fontSize: '10px',
         },
-        
       },
       stroke: { show: true, width: 2, colors: ['transparent'] },
       title: {
@@ -500,7 +496,6 @@ export class ViewComponent {
       series: [
         this.totalLeadsCount,
         this.totalfilesCount +
-        // this.partialsCount +
         this.totalCreditsCount +
         this.totalLoginsCount +
         this.allProcessedFilesCount +
@@ -679,27 +674,6 @@ export class ViewComponent {
       }
     );
   }
-  // loadPartialFiles(event) {
-  //   this.currentTableEvent = event;
-  //   let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
-  //   api_filter['leadInternalStatus-eq'] = 4;
-  //   api_filter['sourcedBy-eq'] = this.userId;
-  //   api_filter = Object.assign({}, api_filter);
-  //   if (api_filter) {
-  //     this.getPartialFilesCount(api_filter);
-  //   }
-  // }
-
-  // getPartialFilesCount(filter = {}) {
-  //   this.leadsService.getLeadsCount(filter).subscribe(
-  //     (leadsCount) => {
-  //       this.partialsCount = leadsCount;
-  //     },
-  //     (error: any) => {
-  //       this.toastService.showError(error);
-  //     }
-  //   );
-  // }
   getEntityName(entity) {
     if (this.businessEntities && this.businessEntities.length > 0) {
       let entityName = this.businessEntities.filter(

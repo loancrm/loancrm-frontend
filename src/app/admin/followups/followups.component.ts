@@ -101,25 +101,19 @@ export class FollowupsComponent implements OnInit {
       menuItems[0].items.push({
         label: 'Send to Files',
         icon: 'pi pi-sign-in',
-      command: () => {
-            // Check if businessEntity is filled before sending to files
-            if (!lead.businessEntity || lead.businessEntity.trim() === '') {
-              // Show error message if businessEntity is empty
-              this.toastService.showToast('error', 'Business Entity Required', 'Please fill in the Business Entity field.');
-              return;  // Exit the function to prevent sending the lead to files
-            }
-            
-            // Proceed to send to files if businessEntity is filled
-            this.sendLeadToFiles(lead);
-          },  
-      });
-      // menuItems[0].items.push({
-      //   label: 'Send to Partial',
-      //   icon: 'pi pi-sign-in',
-      //   command: () => this.sendLeadToPartialFiles(lead),
-      // });
-    }
+        command: () => {
+          // Check if businessEntity is filled before sending to files
+          if (!lead.businessEntity || lead.businessEntity.trim() === '') {
+            // Show error message if businessEntity is empty
+            this.toastService.showToast('error', 'Business Entity Required', 'Please fill in the Business Entity field.');
+            return;  // Exit the function to prevent sending the lead to files
+          }
 
+          // Proceed to send to files if businessEntity is filled
+          this.sendLeadToFiles(lead);
+        },
+      });
+    }
     return menuItems;
   }
   getEntityName(entity) {
@@ -142,11 +136,6 @@ export class FollowupsComponent implements OnInit {
   }
   sendToLead(lead) {
     this.changeLeadStatus(lead.id, 1);
-  }
-
-  sendLeadToPartialFiles(lead) {
-    this.changeLeadStatus(lead.id, 4);
-    this.createleadDocumentsTable(lead);
   }
   createleadDocumentsTable(lead) {
     this.loading = true;

@@ -49,20 +49,6 @@ const routes: Routes = [
         loadChildren: () =>
           import('./files/files.module').then((m) => m.FilesModule),
       },
-      // {
-      //   path: 'partial',
-      //   loadChildren: () =>
-      //     import('./partial-files/partial-files.module').then(
-      //       (m) => m.PartialFilesModule
-      //     ),
-      // },
-      // {
-      //   path: 'partial/:type',
-      //   loadChildren: () =>
-      //     import('./partial-files/partial-files.module').then(
-      //       (m) => m.PartialFilesModule
-      //     ),
-      // },
       {
         path: 'credit',
         loadChildren: () =>

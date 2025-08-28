@@ -109,183 +109,386 @@
     </p-table>
   </div>
 </div> -->
+<p-tabView
+  [(activeIndex)]="activeTab"
+  (onChange)="onTabChange()"
+  class="custom-tabview"
+>
+  <!-- Flat Rate Tab -->
+  <p-tabPanel header="Flat Rate">
+    <div class="container my-5">
+      <h2 class="text-center mb-4 fw-bold heading">
+        Buisness Loan - Flat Rate EMI Calculator
+      </h2>
 
-<div class="container my-5">
-  <h2 class="text-center mb-4 fw-bold heading">
-    Buisness Loan - Flat Rate EMI Calculator
-  </h2>
+      <div class="row g-4 align-items-start">
+        <!-- Input Panel -->
+        <div class="col-md-4">
+          <div class="p-4 border-0">
+            <div class="form-group mb-3">
+              <label><strong>Business Name</strong></label>
+              <input
+                type="text"
+                pInputText
+                class="form-control"
+                placeholder="Enter your business name"
+                [(ngModel)]="businessName"
+              />
+            </div>
+            <div class="form-group mb-3">
+              <div
+                class="d-flex justify-content-between align-items-center mb-1"
+              >
+                <label class="mb-0"><strong>Loan Amount (₹)</strong></label>
+                <!-- Loan Amount -->
+                <input
+                  type="number"
+                  [(ngModel)]="loanAmount"
+                  class="form-control form-control-sm ms-2"
+                  style="width: 200px"
+                  (keydown)="preventInvalidKeys($event)"
+                  (paste)="preventInvalidPaste($event)"
+                  (input)="limitInputLength($event)"
+                  maxlength="8"
+                />
+              </div>
+              <p-slider
+                [(ngModel)]="loanAmount"
+                [min]="50000"
+                [max]="10000000"
+                [step]="10000"
+                [style]="{ width: '100%' }"
+              ></p-slider>
+            </div>
 
-  <div class="row g-4 align-items-start">
-    <!-- Input Panel -->
-    <div class="col-md-4">
-      <div class="p-4 border-0">
-        <div class="form-group mb-3">
-          <label><strong>Business Name</strong></label>
-          <input
-            type="text"
-            pInputText
-            class="form-control"
-            placeholder="Enter your business name"
-            [(ngModel)]="businessName"
-          />
-        </div>
-        <div class="form-group mb-3">
-          <div class="d-flex justify-content-between align-items-center mb-1">
-            <label class="mb-0"><strong>Loan Amount (₹)</strong></label>
-            <!-- Loan Amount -->
-            <input
-              type="number"
-              [(ngModel)]="loanAmount"
-              class="form-control form-control-sm ms-2"
-              style="width: 200px"
-              (keydown)="preventInvalidKeys($event)"
-              (paste)="preventInvalidPaste($event)"
-              (input)="limitInputLength($event)"
-              maxlength="8"
-            />
+            <div class="form-group mb-3">
+              <div
+                class="d-flex justify-content-between align-items-center mb-1"
+              >
+                <label class="mb-0"><strong>Interest Rate (%)</strong></label>
+                <input
+                  type="tel"
+                  [(ngModel)]="interestRate"
+                  class="form-control form-control-sm ms-2"
+                  style="width: 200px"
+                  step="0.05"
+                  maxlength="5"
+                />
+              </div>
+              <p-slider
+                [(ngModel)]="interestRate"
+                [min]="5"
+                [max]="15"
+                [step]="0.5"
+                [style]="{ width: '100%' }"
+              ></p-slider>
+            </div>
+
+            <div class="form-group mb-3">
+              <div
+                class="d-flex justify-content-between align-items-center mb-1"
+              >
+                <label class="mb-0"><strong>Tenure (Years)</strong></label>
+                <input
+                  type="number"
+                  [(ngModel)]="tenure"
+                  class="form-control form-control-sm ms-2"
+                  style="width: 200px"
+                  (keydown)="restrictTenureKeys($event)"
+                  (paste)="preventInvalidPaste($event)"
+                  (input)="tenure = tenure > 4 ? 4 : tenure"
+                  maxlength="1"
+                />
+              </div>
+              <p-slider
+                [(ngModel)]="tenure"
+                [min]="1"
+                [max]="4"
+                [step]="1"
+                [style]="{ width: '100%' }"
+              ></p-slider>
+            </div>
+
+            <button
+              pButton
+              label="Calculate EMI"
+              class="w-100 p-button-raised p-button-rounded"
+              style="background-color: #29415b; border: none"
+              (click)="calculateEMI()"
+            ></button>
           </div>
-          <p-slider
-            [(ngModel)]="loanAmount"
-            [min]="50000"
-            [max]="10000000"
-            [step]="10000"
-            [style]="{ width: '100%' }"
-          ></p-slider>
         </div>
 
-        <div class="form-group mb-3">
-          <div class="d-flex justify-content-between align-items-center mb-1">
-            <label class="mb-0"><strong>Interest Rate (%)</strong></label>
-            <input
-              type="tel"
-              [(ngModel)]="interestRate"
-              class="form-control form-control-sm ms-2"
-              style="width: 200px"
-              step="0.05"
-              maxlength="5"
-            />
+        <div class="col-md-4" *ngIf="emi">
+          <div class="p-4">
+            <div class="card-body text-center p-4">
+              <h4 class="mb-2 emi-heading fw-bold">Monthly EMI</h4>
+              <h2 class="emi-value mb-4 fw-bold">₹{{ emi }}</h2>
+
+              <div class="d-flex flex-column gap-2">
+                <div class="d-flex justify-content-between">
+                  <span class="fw-semibold">Total Payable:</span>
+                  <span>₹{{ totalPayable }}</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <span class="fw-semibold">Principal:</span>
+                  <span>₹{{ loanAmount }}</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <span class="fw-semibold">Interest:</span>
+                  <span>₹{{ totalInterest }}</span>
+                </div>
+              </div>
+            </div>
           </div>
-          <p-slider
-            [(ngModel)]="interestRate"
-            [min]="5"
-            [max]="15"
-            [step]="0.5"
-            [style]="{ width: '100%' }"
-          ></p-slider>
         </div>
 
-        <div class="form-group mb-3">
-          <div class="d-flex justify-content-between align-items-center mb-1">
-            <label class="mb-0"><strong>Tenure (Years)</strong></label>
-            <input
-              type="number"
-              [(ngModel)]="tenure"
-              class="form-control form-control-sm ms-2"
-              style="width: 200px"
-              (keydown)="restrictTenureKeys($event)"
-              (paste)="preventInvalidPaste($event)"
-              (input)="tenure = tenure > 4 ? 4 : tenure"
-              maxlength="1"
-            />
+        <!-- Chart -->
+        <div class="col-md-4" *ngIf="piechartOptions">
+          <div class="p-3">
+            <app-apex-charts [chartOptions]="piechartOptions"></app-apex-charts>
           </div>
-          <p-slider
-            [(ngModel)]="tenure"
-            [min]="1"
-            [max]="4"
-            [step]="1"
-            [style]="{ width: '100%' }"
-          ></p-slider>
+        </div>
+      </div>
+
+      <!-- Repayment Schedule & PDF Download -->
+      <div class="mt-3" *ngIf="repaymentSchedule.length > 0">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h5 class="mb-0" style="color: #29415b">📆 Repayment Schedule</h5>
+          <button
+            pButton
+            icon="pi pi-download"
+            class="p-button-text p-button-sm p-button-secondary"
+            [disabled]="!businessName"
+            label="Download PDF"
+            (click)="generatePDF()"
+          ></button>
         </div>
 
-        <button
-          pButton
-          label="Calculate EMI"
-          class="w-100 p-button-raised p-button-rounded"
-          style="background-color: #29415b; border: none"
-          (click)="calculateEMI()"
-        ></button>
+        <p-table
+          [value]="repaymentSchedule"
+          [responsiveLayout]="'scroll'"
+          class="p-datatable-striped p-datatable-gridlines"
+          styleClass="p-shadow-2"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th>S. No.</th>
+              <th>Month</th>
+              <th>EMI (₹)</th>
+              <th>Principal (₹)</th>
+              <th>Interest (₹)</th>
+              <th>Balance (₹)</th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-row let-i="rowIndex">
+            <tr>
+              <td>{{ i + 1 }}</td>
+              <td>{{ row.month }}</td>
+              <td>{{ row.emi }}</td>
+              <td>{{ row.principal }}</td>
+              <td>{{ row.interest }}</td>
+              <td>{{ row.balance }}</td>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="6" class="text-center">
+                No repayment data available.
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
       </div>
     </div>
+  </p-tabPanel>
 
-    <div class="col-md-4" *ngIf="emi">
-      <div class="p-4">
-        <div class="card-body text-center p-4">
-          <h4 class="mb-2 emi-heading fw-bold">Monthly EMI</h4>
-          <h2 class="emi-value mb-4 fw-bold">₹{{ emi }}</h2>
+  <!-- Diminishing Rate Tab -->
+  <p-tabPanel header="Diminishing Rate">
+    <div class="container my-5">
+      <h2 class="text-center mb-4 fw-bold heading">
+        Buisness Loan - Diminishing Rate EMI Calculator
+      </h2>
 
-          <div class="d-flex flex-column gap-2">
-            <div class="d-flex justify-content-between">
-              <span class="fw-semibold">Total Payable:</span>
-              <span>₹{{ totalPayable }}</span>
+      <div class="row g-4 align-items-start">
+        <div class="col-md-4">
+          <div class="p-4 border-0">
+            <div class="form-group mb-3">
+              <label><strong>Business Name</strong></label>
+              <input
+                type="text"
+                pInputText
+                class="form-control"
+                placeholder="Enter Business name"
+                [(ngModel)]="businessName"
+              />
             </div>
-            <div class="d-flex justify-content-between">
-              <span class="fw-semibold">Principal:</span>
-              <span>₹{{ loanAmount }}</span>
+            <div class="form-group mb-3">
+              <div
+                class="d-flex justify-content-between align-items-center mb-1"
+              >
+                <label class="mb-0"><strong>Loan Amount (₹)</strong></label>
+                <input
+                  type="number"
+                  [(ngModel)]="diminishingloanAmount"
+                  class="form-control form-control-sm ms-2"
+                  style="width: 200px"
+                  (keydown)="preventInvalidKeys($event)"
+                  (paste)="preventInvalidPaste($event)"
+                  (input)="limitInputLengthfordiminishing($event, 'personal')"
+                />
+              </div>
+              <p-slider
+                [(ngModel)]="diminishingloanAmount"
+                [min]="50000"
+                [max]="10000000"
+                [step]="10000"
+                [style]="{ width: '100%' }"
+              ></p-slider>
             </div>
-            <div class="d-flex justify-content-between">
-              <span class="fw-semibold">Interest:</span>
-              <span>₹{{ totalInterest }}</span>
+
+            <div class="form-group mb-3">
+              <div
+                class="d-flex justify-content-between align-items-center mb-1"
+              >
+                <label class="mb-0"><strong>Interest Rate (%)</strong></label>
+                <input
+                  type="tel"
+                  [(ngModel)]="diminishinginterestRate"
+                  class="form-control form-control-sm ms-2"
+                  style="width: 200px"
+                  maxlength="5"
+                />
+              </div>
+              <p-slider
+                [(ngModel)]="diminishinginterestRate"
+                [min]="5"
+                [max]="25"
+                [step]="0.25"
+                [style]="{ width: '100%' }"
+              ></p-slider>
+            </div>
+
+            <div class="form-group mb-3">
+              <div
+                class="d-flex justify-content-between align-items-center mb-1"
+              >
+                <label class="mb-0"><strong>Tenure (Years)</strong></label>
+                <input
+                  type="number"
+                  [(ngModel)]="diminishingtenure"
+                  class="form-control form-control-sm ms-2"
+                  style="width: 200px"
+                  (keydown)="restrictTenureKeysdiminishing($event)"
+                  (paste)="preventInvalidPaste($event)"
+                  (input)="
+                    diminishingtenure =
+                      diminishingtenure > 8 ? 8 : diminishingtenure
+                  "
+                  maxlength="1"
+                />
+              </div>
+              <p-slider
+                [(ngModel)]="diminishingtenure"
+                [min]="1"
+                [max]="8"
+                [step]="1"
+                [style]="{ width: '100%' }"
+              ></p-slider>
+            </div>
+            <button
+              pButton
+              label="Calculate EMI"
+              class="w-100 p-button-raised p-button-rounded"
+              style="background-color: #29415b; border: none"
+              (click)="calculateDiminishingEMI()"
+            ></button>
+          </div>
+        </div>
+        <div class="col-md-4" *ngIf="diminishingemi">
+          <div class="p-4">
+            <div class="card-body text-center p-4">
+              <h4 class="mb-2 emi-heading fw-bold">Monthly EMI</h4>
+              <h2 class="emi-value mb-4 fw-bold">₹{{ diminishingemi }}</h2>
+
+              <div class="d-flex flex-column gap-2">
+                <div class="d-flex justify-content-between">
+                  <span class="fw-semibold">Total Payable:</span>
+                  <span>₹{{ diminishingtotalPayable }}</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <span class="fw-semibold">Principal:</span>
+                  <span>₹{{ diminishingloanAmount }}</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <span class="fw-semibold">Interest:</span>
+                  <span>₹{{ diminishingtotalInterest }}</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+        <div class="col-md-4" *ngIf="diminishingpiechartOptions">
+          <div class="p-3">
+            <app-apex-charts
+              [chartOptions]="diminishingpiechartOptions"
+            ></app-apex-charts>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-3" *ngIf="diminishingrepaymentSchedule.length > 0">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h5 class="mb-0" style="color: #29415b">📆 Repayment Schedule</h5>
+          <button
+            pButton
+            icon="pi pi-download"
+            class="p-button-text p-button-sm p-button-secondary"
+            [disabled]="!businessName"
+            label="Download PDF"
+            (click)="generatediminishingPDF()"
+          ></button>
+        </div>
+
+        <p-table
+          [value]="diminishingrepaymentSchedule"
+          [responsiveLayout]="'scroll'"
+          class="p-datatable-striped p-datatable-gridlines"
+          styleClass="p-shadow-2"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th>S. No.</th>
+              <th>Month</th>
+              <th>EMI (₹)</th>
+              <th>Principal (₹)</th>
+              <th>Interest (₹)</th>
+              <th>Balance (₹)</th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-row let-i="rowIndex">
+            <tr>
+              <td>{{ i + 1 }}</td>
+              <td>{{ row.month }}</td>
+              <td>{{ row.emi }}</td>
+              <td>{{ row.principal }}</td>
+              <td>{{ row.interest }}</td>
+              <td>{{ row.balance }}</td>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="6" class="text-center">
+                No repayment data available.
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
       </div>
     </div>
-
-    <!-- Chart -->
-    <div class="col-md-4" *ngIf="piechartOptions">
-      <div class="p-3">
-        <app-apex-charts [chartOptions]="piechartOptions"></app-apex-charts>
-      </div>
-    </div>
-  </div>
-
-  <!-- Repayment Schedule & PDF Download -->
-  <div class="mt-3" *ngIf="repaymentSchedule.length > 0">
-    <div class="d-flex justify-content-between align-items-center mb-2">
-      <h5 class="mb-0" style="color: #29415b">📆 Repayment Schedule</h5>
-      <button
-        pButton
-        icon="pi pi-download"
-        class="p-button-text p-button-sm p-button-secondary"
-        [disabled]="!businessName"
-        label="Download PDF"
-        (click)="generatePDF()"
-      ></button>
-    </div>
-
-    <p-table
-      [value]="repaymentSchedule"
-      [responsiveLayout]="'scroll'"
-      class="p-datatable-striped p-datatable-gridlines"
-      styleClass="p-shadow-2"
-    >
-      <ng-template pTemplate="header">
-        <tr>
-          <th>S. No.</th>
-          <th>Month</th>
-          <th>EMI (₹)</th>
-          <th>Principal (₹)</th>
-          <th>Interest (₹)</th>
-          <th>Balance (₹)</th>
-        </tr>
-      </ng-template>
-
-      <ng-template pTemplate="body" let-row let-i="rowIndex">
-        <tr>
-          <td>{{ i + 1 }}</td>
-          <td>{{ row.month }}</td>
-          <td>{{ row.emi }}</td>
-          <td>{{ row.principal }}</td>
-          <td>{{ row.interest }}</td>
-          <td>{{ row.balance }}</td>
-        </tr>
-      </ng-template>
-
-      <ng-template pTemplate="emptymessage">
-        <tr>
-          <td colspan="6" class="text-center">No repayment data available.</td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </div>
-</div>
+  </p-tabPanel>
+</p-tabView>

@@ -1712,7 +1712,7 @@
                       </button>
                     </div>
                   </div>
-                  <div
+                  <!-- <div
                     class="mt-3 fw-bold d-flex justify-content-center mt-3"
                     *ngIf="btoValue"
                   >
@@ -1723,6 +1723,37 @@
                         {{ btoValue }}</span
                       >
                     </h6>
+                  </div> -->
+                  <div
+                    class="mt-3 fw-bold d-flex justify-content-center"
+                    *ngIf="btoValue"
+                  >
+                    <div class="text-center">
+                      <h6>
+                        Eligible EMI in BTO Program:
+                        <span style="color: #8e89d0; font-weight: bold">{{
+                          btoValue
+                        }}</span>
+                      </h6>
+                      <h6>
+                        Loan Amount:
+                        <span style="color: #8e89d0; font-weight: bold">{{
+                          btoloanAmount
+                        }}</span>
+                      </h6>
+                      <h6>
+                        Tenure:
+                        <span style="color: #8e89d0; font-weight: bold"
+                          >{{ btotenure }} months</span
+                        >
+                      </h6>
+                      <h6>
+                        Interest Rate:
+                        <span style="color: #8e89d0; font-weight: bold"
+                          >{{ btointerest }} %</span
+                        >
+                      </h6>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -2039,7 +2070,7 @@
                         </button>
                       </div>
                     </div>
-                    <div
+                    <!-- <div
                       class="mt-3 fw-bold d-flex justify-content-center mt-3"
                       *ngIf="gstValue"
                     >
@@ -2050,6 +2081,38 @@
                           {{ gstValue }}</span
                         >
                       </h6>
+                    </div> -->
+
+                    <div
+                      class="mt-3 fw-bold d-flex justify-content-center"
+                      *ngIf="gstValue"
+                    >
+                      <div class="text-center">
+                        <h6>
+                          Eligible EMI in GST Program:
+                          <span style="color: #8e89d0; font-weight: bold">{{
+                            gstValue
+                          }}</span>
+                        </h6>
+                        <h6>
+                          Loan Amount:
+                          <span style="color: #8e89d0; font-weight: bold">{{
+                            gstloanAmount
+                          }}</span>
+                        </h6>
+                        <h6>
+                          Tenure:
+                          <span style="color: #8e89d0; font-weight: bold"
+                            >{{ gstTenure }} months</span
+                          >
+                        </h6>
+                        <h6>
+                          Interest Rate:
+                          <span style="color: #8e89d0; font-weight: bold"
+                            >{{ gstInterest }} %</span
+                          >
+                        </h6>
+                      </div>
                     </div>
                   </div>
                 </div>

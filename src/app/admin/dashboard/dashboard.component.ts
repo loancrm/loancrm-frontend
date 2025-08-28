@@ -31,7 +31,6 @@ export class DashboardComponent implements OnInit {
   callbacksCountforFilter: any = 0;
   disbursalCountforFilter: any = 0;
   filesCountforFilter: any = 0;
-  partialsCountforFilter: any = 0;
   fiProcessCountforFilter: any = 0;
   approvalCountforFilter: any = 0;
   callBacksCount: any = 0;
@@ -47,7 +46,6 @@ export class DashboardComponent implements OnInit {
   totalbankrejectLeadsCount: any = 0;
   totalcniLeadsCount: any = 0;
   totalFilesCount: any = 0;
-  // totalPartialCount: any = 0;
   totalCreditCount: any = 0;
   bankersCount: any = 0;
   loginsCount: any = 0;
@@ -155,7 +153,6 @@ export class DashboardComponent implements OnInit {
     this.getLeadCountforFilter();
     this.getFollowUpCountforFilter();
     this.getFilesCountforFilter();
-    // this.getPartialFilesCountforFilter();
     this.getApprovalsCountforFilter();
     this.fetchAllAmounts();
     this.fetchFileCreditCounts();
@@ -409,23 +406,6 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
-  // getPartialFilesCountforFilter(filter = {}) {
-  //   if (this.selectedSoucedByStatus && this.selectedSoucedByStatus.name) {
-  //     if (this.selectedSoucedByStatus.name == 'All') {
-  //     } else {
-  //       filter['sourcedBy-eq'] = this.selectedSoucedByStatus.id;
-  //     }
-  //   }
-  //   this.leadsService.getPartialCountStatus(filter).subscribe(
-  //     (response) => {
-  //       this.partialsCountforFilter = response;
-  //       this.setBarChartOptionsForFilter();
-  //     },
-  //     (error: any) => {
-  //       this.toastService.showError(error);
-  //     }
-  //   );
-  // }
 
   getFIPProcessDistinctLeadsCountforFilter(filter = {}) {
     if (this.selectedSoucedByStatus && this.selectedSoucedByStatus.name) {
@@ -477,7 +457,6 @@ export class DashboardComponent implements OnInit {
     }
     forkJoin([
       this.leadsService?.getFilesCountStatus(filesFilter),
-      // this.leadsService?.getPartialCountStatus(filter),
       this.leadsService?.getCreditEvaluationCountStatus(filter),
       this.leadsService?.getRejectsCountStatus(filter),
       this.leadsService?.getNewBankersCount(filter),
@@ -489,7 +468,6 @@ export class DashboardComponent implements OnInit {
     ]).subscribe(
       ([
         filesCount,
-        // partialCount,
         creditCount,
         rejectsCount,
         bankersCount,
@@ -500,7 +478,6 @@ export class DashboardComponent implements OnInit {
         teamCount,
       ]: any) => {
         this.totalFilesCount = filesCount;
-        // this.totalPartialCount = partialCount;
         this.totalCreditCount = creditCount;
         this.totalRejectsCount = rejectsCount || 0;
         this.bankersCount = bankersCount;
@@ -604,15 +581,6 @@ export class DashboardComponent implements OnInit {
     //     backgroundColor: '#FBF2EF',
     //     color: '#5A3A2E',
     //   },
-    //   // {
-    //   //   name: 'partial',
-    //   //   displayName: 'Partial Files',
-    //   //   count: this.totalPartialCount,
-    //   //   routerLink: 'partial',
-    //   //   condition: this.capabilities.partial,
-    //   //   backgroundColor: '#EBF3FE',
-    //   //   color: '#254D70',
-    //   // },
     //   {
     //     name: 'credit',
     //     displayName: 'Credit Evaluation',
@@ -738,15 +706,6 @@ export class DashboardComponent implements OnInit {
         // iconColor: '#3A42A7',
         icon: '../../../assets/images/icons/files.svg'
       },
-      // {
-      //   name: 'partial',
-      //   displayName: 'Partial Files',
-      //   count: this.totalPartialCount,
-      //   routerLink: 'partial',
-      //   condition: this.capabilities.partial,
-      //   backgroundColor: '#EBF3FE',
-      //   color: '#254D70',
-      // },
       // {
       //   name: 'credit',
       //   displayName: 'Credit Evaluation',
@@ -940,7 +899,6 @@ export class DashboardComponent implements OnInit {
     this.getFollowUpCountforFilter();
     this.getApprovalsCountforFilter();
     this.getFilesCountforFilter();
-    // this.getPartialFilesCountforFilter();
     this.getFIPProcessDistinctLeadsCountforFilter();
     this.getDisbursalLeadCountforFilter();
   }
@@ -1084,11 +1042,7 @@ export class DashboardComponent implements OnInit {
     //       name: 'Follow Ups',
     //       data: [this.followupsCountforFilter],
     //     },
-    //     {
-    //       name: 'Files',
-    //       // data: [this.filesCountforFilter + this.partialsCountforFilter],
-    //       data: [this.filesCountforFilter],
-    //     },
+    //
     //     {
     //       name: 'Files In Process',
     //       data: [this.fiProcessCountforFilter],

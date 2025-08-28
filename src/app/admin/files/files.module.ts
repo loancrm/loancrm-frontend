@@ -14,6 +14,7 @@ import { CapitalizeFirstPipe } from 'src/app/pipes/capitalize.pipe';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { CalendarModule } from 'primeng/calendar';
+import { CommingSoonModule } from '../comming-soon/comming-soon.module';
 const routes: Routes = [
   { path: '', component: FilesComponent },
   {
@@ -57,8 +58,9 @@ const routes: Routes = [
     BreadcrumbModule,
     OverlayPanelModule,
     MenuModule,
+    CommingSoonModule,
     CalendarModule,
     [RouterModule.forChild(routes)],
   ],
 })
-export class FilesModule {}
+export class FilesModule { }

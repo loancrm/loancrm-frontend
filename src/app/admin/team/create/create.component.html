@@ -57,7 +57,7 @@
             <div>
               <div class="my-1">
                 <label>
-                  Employee Id&nbsp;<span
+                  User Id&nbsp;<span
                     ><sup class="text-danger">*</sup></span
                   ></label
                 >
@@ -67,26 +67,25 @@
                 class="rounded-lg"
                 type="text"
                 formControlName="userId"
-                placeholder="Enter Employee Id"
+                placeholder="Enter User Id"
                 autocomplete="off"
               />
               <!---Error message for invalid Employee Id-->
               <div
-              *ngIf="
-                teamForm.get('userId')?.invalid &&
-                (teamForm.get('userId')?.touched ||
-                  teamForm.get('userId')?.dirty)
-                  "
+                *ngIf="
+                  teamForm.get('userId')?.invalid &&
+                  (teamForm.get('userId')?.touched ||
+                    teamForm.get('userId')?.dirty)
+                "
               >
-              <small
-                class="text-danger"
-                *ngIf="teamForm.get('userId')?.errors?.['required']"
+                <small
+                  class="text-danger"
+                  *ngIf="teamForm.get('userId')?.errors?.['required']"
                 >
-                 Employee Id is required
-               </small>
+                  User Id is required
+                </small>
+              </div>
             </div>
-            </div>
-
           </div>
           <div class="col-md-4 mt-2">
             <div>
@@ -107,16 +106,15 @@
               <div
                 *ngIf="
                   teamForm.get('name')?.invalid &&
-                  (teamForm.get('name')?.touched ||
-                    teamForm.get('name')?.dirty)
-                    "
-                    >
-                  <small 
-                    class="text-danger"
-                    *ngIf="teamForm.get('name')?.errors?.['required']"
-                    >
-                       name is required.
-                  </small>
+                  (teamForm.get('name')?.touched || teamForm.get('name')?.dirty)
+                "
+              >
+                <small
+                  class="text-danger"
+                  *ngIf="teamForm.get('name')?.errors?.['required']"
+                >
+                  name is required.
+                </small>
               </div>
             </div>
           </div>
@@ -128,7 +126,6 @@
                     ><sup class="text-danger">*</sup></span
                   ></label
                 >
-                
               </div>
               <input
                 pInputText
@@ -139,22 +136,22 @@
                 autocomplete="off"
                 maxlength="10"
                 minlength="10"
-               />
+              />
 
               <div
-               *ngIf="
+                *ngIf="
                   teamForm.get('phone')?.invalid &&
                   (teamForm.get('phone')?.touched ||
-                  teamForm.get('phone')?.dirty)
-                  "
-                 >
-                   <small 
-                     class="text-danger"
-                     *ngIf="teamForm.get('phone')?.errors?.['required']"
-                     >
-                      Phone Number is required 
-                    </small>
-                  </div>
+                    teamForm.get('phone')?.dirty)
+                "
+              >
+                <small
+                  class="text-danger"
+                  *ngIf="teamForm.get('phone')?.errors?.['required']"
+                >
+                  Phone Number is required
+                </small>
+              </div>
             </div>
           </div>
           <div class="col-md-4 mt-2">
@@ -174,21 +171,21 @@
                 formControlName="email"
                 autocomplete="off"
               />
-              <div 
+              <div
                 *ngIf="
-                teamForm.get('email')?.invalid &&
-                (teamForm.get('email')?.touched ||
-                teamForm.get('email')?.dirty)
+                  teamForm.get('email')?.invalid &&
+                  (teamForm.get('email')?.touched ||
+                    teamForm.get('email')?.dirty)
                 "
-                >
-                  <small
-                    class="text-danger"
-                    *ngIf="teamForm.get('email')?.errors?.['required']
+              >
+                <small
+                  class="text-danger"
+                  *ngIf="teamForm.get('email')?.errors?.['required']
                     "
-                    >
-                      Email Id is required
-                    </small>
-                  </div>
+                >
+                  Email Id is required
+                </small>
+              </div>
             </div>
           </div>
           <div class="col-md-4 mt-2">
@@ -205,7 +202,7 @@
               optionLabel="name"
               optionValue="id"
               [showClear]="true"
-              placeholder="Select Team"
+              placeholder="Select Designation"
               appendTo="body"
               [dropdownIcon]="'pi pi-chevron-down'"
             ></p-dropdown>
@@ -213,18 +210,17 @@
               *ngIf="
                 teamForm.get('userType')?.invalid &&
                 (teamForm.get('userType')?.touched ||
-                 teamForm.get('userType')?.dirty)
-                 "
-                 >
-                  <small
-                   class="text-danger"
-                   *ngIf="teamForm.get('userType')?.errors?.['required']"
-                   >
-                    Designation is required
-                  </small>
-                </div>
+                  teamForm.get('userType')?.dirty)
+              "
+            >
+              <small
+                class="text-danger"
+                *ngIf="teamForm.get('userType')?.errors?.['required']"
+              >
+                Designation is required
+              </small>
+            </div>
           </div>
-        
 
           <div class="col-md-4 mt-2">
             <div>
@@ -262,18 +258,20 @@
                   class="calendar-custom-img"
                   (click)="calendar.toggle()"
                 />
-                  <div
-                    *ngIf="
+                <div
+                  *ngIf="
                     teamForm.get('joiningDate')?.invalid &&
                     (teamForm.get('joiningDate')?.touched ||
                       teamForm.get('joiningDate')?.dirty)
-                      "
-                      >
-                        <small 
-                        class="text-danger"
-                        *ngIf="teamForm.get('joiningDate')?.errors?.['required']"
-                        >
-                          Joining date is required</small></div>
+                  "
+                >
+                  <small
+                    class="text-danger"
+                    *ngIf="teamForm.get('joiningDate')?.errors?.['required']"
+                  >
+                    Joining date is required</small
+                  >
+                </div>
               </div>
             </div>
           </div>
@@ -340,7 +338,7 @@
             [disabled]="!teamForm.valid"
             class="p-button-primary"
           >
-            {{ actionType == "create" ? "Add" : "Update" }} Team
+            {{ actionType == "create" ? "Add" : "Update" }} User
           </button>
         </div>
       </div>

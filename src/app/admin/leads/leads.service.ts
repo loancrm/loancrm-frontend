@@ -570,7 +570,6 @@ export class LeadsService {
       leads: rbac.includes('leads'),
       callbacks: rbac.includes('callbacks'),
       files: rbac.includes('files'),
-      // partial: rbac.includes('partial'),
       credit: rbac.includes('credit'),
       logins: rbac.includes('logins'),
       filesinprocess: rbac.includes('filesinprocess'),
@@ -817,10 +816,6 @@ export class LeadsService {
     const url = 'counts/files';
     return this.serviceMeta.httpGet(url, null, filter);
   }
-  // getPartialCountStatus(filter = {}) {
-  //   const url = 'counts/partial';
-  //   return this.serviceMeta.httpGet(url, null, filter);
-  // }
   getCreditEvaluationCountStatus(filter = {}) {
     const url = 'counts/credit';
     return this.serviceMeta.httpGet(url, null, filter);

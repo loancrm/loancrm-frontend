@@ -27,7 +27,7 @@ export class CreateComponent {
   teamId: any;
   loading: any;
   teamData: any;
-  heading: any = 'Create Employee';
+  heading: any = 'Create User';
   actionType: any = 'create';
   moment: any;
   capabilities: any;
@@ -54,7 +54,7 @@ export class CreateComponent {
       if (params && params['id']) {
         this.teamId = params['id'];
         this.actionType = 'update';
-        this.heading = 'Update Employee';
+        this.heading = 'Update User';
         this.getTeamDetailsById().then((data) => {
           if (data) {
             // console.log('teamData', this.teamData);

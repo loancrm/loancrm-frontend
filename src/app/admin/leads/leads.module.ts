@@ -13,7 +13,9 @@ import { MenuModule } from 'primeng/menu';
 import { FilterModule } from 'src/app/filter/filter.module';
 import { CapitalizeFirstPipe } from 'src/app/pipes/capitalize.pipe';
 import { TabMenuModule } from 'primeng/tabmenu';
-
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { CommingSoonModule } from "../comming-soon/comming-soon.module";
 const routes: Routes = [
   { path: '', component: LeadsComponent },
   {
@@ -64,10 +66,13 @@ const routes: Routes = [
     DropdownModule,
     ButtonModule,
     BreadcrumbModule,
+    MatMenuModule,
+    MatButtonModule,
     MenuModule,
     FilterModule,
     TabMenuModule,
     [RouterModule.forChild(routes)],
-  ],
+    CommingSoonModule
+],
 })
-export class LeadsModule {}
+export class LeadsModule { }

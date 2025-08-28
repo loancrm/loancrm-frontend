@@ -5711,7 +5711,6 @@
                         [(selection)]="selectedRows"
                         dataKey="id"
                         responsiveLayout="scroll"
-                        (onRowSelect)="showUserDetails($event)"
                         selectionMode="multiple"
                         class="custom-dark-table"
                       >
@@ -7956,7 +7955,15 @@
                             width="200"
                             height="200"
                           /> -->
-                          <p>Credit Evaluation not Done</p>
+                          <p
+                            style="
+                              color: #535ab4;
+                              font-weight: 400;
+                              font-size: 18px;
+                            "
+                          >
+                            Credit Evaluation not Done
+                          </p>
                         </div>
                       </div>
                       <div *ngIf="leadsData?.credits">
@@ -8617,7 +8624,15 @@
                           width="200"
                           height="200"
                         /> -->
-                        <p>Lender Selection not Done</p>
+                        <p
+                          style="
+                            color: #535ab4;
+                            font-weight: 400;
+                            font-size: 18px;
+                          "
+                        >
+                          Lender Selection not Done
+                        </p>
                       </div>
                     </div>
                     <div

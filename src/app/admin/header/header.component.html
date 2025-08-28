@@ -64,13 +64,18 @@
 
     <!-- Profile & Sidebar -->
     <div class="flex desktop-only justify-content-center align-items-center">
+      <div
+        class="header-sidebar-overlay"
+        *ngIf="sidebarVisible"
+        (click)="sidebarVisible = false"
+      ></div>
       <p-sidebar
         [(visible)]="sidebarVisible"
         position="right"
         class="desktop-only"
       >
         <div class="border-0 rounded-4 p-4 mx-auto text-center my-account-card">
-          <h4 class="fw-bold mb-4" style="color: #3A42A7;">My Account</h4>
+          <h4 class="fw-bold mb-4" style="color: #3a42a7">My Account</h4>
           <div class="d-flex justify-content-center mb-3">
             <img
               [src]="
@@ -100,7 +105,10 @@
             >
               <i class="fa fa-user me-2"></i>View Profile
             </button>
-            <button class="btn btn-outline-danger custom-secondary-btn" (click)="userLogout()">
+            <button
+              class="btn btn-outline-danger custom-secondary-btn"
+              (click)="userLogout()"
+            >
               <i class="fa fa-sign-out me-2"></i>Logout
             </button>
           </div>
@@ -112,29 +120,31 @@
       >
         <!-- Left: Subscription Details -->
         <div
-          class="d-flex flex-column align-items-start me-3 text-nowrap "
+          class="d-flex flex-column align-items-start me-3 text-nowrap"
           *ngIf="userDetails.userType == 1"
         >
-        <span
-          class="subscription-badge text-capitalize d-flex align-items-center"
-          *ngIf="subscriptionPlanName"
-          (click)="overlayPanel.toggle($event)"
-        >
           <span
-            [ngStyle]="{
-              'display': 'inline-block',
-              'width': '10px',
-              'height': '8px',
-              'border-radius': '50%',
-              'margin-right': '6px',
-              'background-color':
-                subscriptionStatus === 'Active'
-                  ? ( (moment(subscriptionEndDate).diff(moment(), 'days') <= 7) ? 'orange' : 'green' )
-                  : 'red'
-            }"
-          ></span>
-          {{ displayPlanStatus }}
-        </span>
+            class="subscription-badge text-capitalize d-flex align-items-center"
+            *ngIf="subscriptionPlanName"
+            (click)="overlayPanel.toggle($event)"
+          >
+            <span
+              [ngStyle]="{
+                display: 'inline-block',
+                width: '10px',
+                height: '8px',
+                'border-radius': '50%',
+                'margin-right': '6px',
+                'background-color':
+                  subscriptionStatus === 'Active'
+                    ? moment(subscriptionEndDate).diff(moment(), 'days') <= 7
+                      ? 'orange'
+                      : 'green'
+                    : 'red'
+              }"
+            ></span>
+            {{ displayPlanStatus }}
+          </span>
           <p-overlayPanel
             #overlayPanel
             [dismissable]="true"
@@ -198,7 +208,6 @@
             [style.height.px]="45"
             [style.width.px]="45"
             style="object-fit: cover; border-radius: 50%"
-
           />
         </div>
       </div>

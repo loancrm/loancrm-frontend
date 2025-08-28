@@ -224,13 +224,15 @@ export const projectConstantsLocal = {
   FILE_REMARKS: [
     { id: 1, status: 'will_share_documents', displayName: 'Will Share Documents' },
     { id: 2, status: 'received_partials', displayName: 'Received Partials' },
-    { id: 3, status: 'roi_and_tenure_concern', displayName: 'Loan Amount Concern or ROI Concern or Tenure Concern' },
+    { id: 3, status: 'roi_concern', displayName: 'Loan Amount Concern' },
     { id: 4, status: 'client_not_responding', displayName: 'Client Not Responding to Calls' },
     { id: 5, status: 'client_out_of_station', displayName: 'Client Out of Station' },
     { id: 6, status: 'not_interested_presently', displayName: 'Present Not Interested' },
     { id: 7, status: 'low_vintage', displayName: 'Low Vintage' },
     { id: 8, status: 'multiple_banks_not_interested', displayName: 'Multiple Banks Not Interested' },
-    { id: 9, status: 'cibil_bad', displayName: 'Cibil Bad' }
+    { id: 9, status: 'cibil_bad', displayName: 'Cibil Bad' },
+    { id: 10, status: 'roi_concern', displayName: 'ROI Concern' },
+    { id: 11, status: 'tenure_concern', displayName: 'Tenure Concern' }
   ],
   LEAD_REMARKS: [
     { id: 1, status: 'client_will_share_documents', displayName: 'Will share documents' },

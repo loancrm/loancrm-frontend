@@ -98,7 +98,6 @@
                   alt="{{ card.name }}"
                   width="24"
                   height="24"
-                 
                 />
               </div>
             </div>
@@ -138,12 +137,19 @@
           </div>
           <div>
             <app-apex-charts [chartOptions]="pieChartOptions"></app-apex-charts>
-            <span
-              ><img
+            <span>
+              <!-- <img
                 [src]="chartDisplayMessage"
                 *ngIf="chartDisplayMessage"
                 alt="No Data Available"
-            /></span>
+            /> -->
+              <p
+                *ngIf="chartDisplayMessage"
+                style="color: #535ab4; font-weight: 400; font-size: 18px"
+              >
+                No Data Available
+              </p>
+            </span>
           </div>
         </div>
       </div>
@@ -196,7 +202,7 @@
             <span
               *ngIf="
                 leadsCountforFilter == 0 &&
-                filesCountforFilter + partialsCountforFilter == 0 &&
+                filesCountforFilter == 0 &&
                 fiProcessCountforFilter == 0 &&
                 approvalCountforFilter == 0 &&
                 disbursalCountforFilter == 0 &&
@@ -250,7 +256,9 @@
             <!-- Body -->
             <ng-template pTemplate="body" let-rowData>
               <tr [pSelectableRow]="rowData">
-                <td class="dashboardtable">{{ rowData.customId ? rowData.customId : "-" }}</td>
+                <td class="dashboardtable">
+                  {{ rowData.customId ? rowData.customId : "-" }}
+                </td>
                 <td class="dashboardtable">
                   {{
                     rowData.businessName
@@ -330,12 +338,19 @@
           </div>
           <div>
             <app-apex-charts [chartOptions]="pieChartOptions"></app-apex-charts>
-            <span
-              ><img
+            <span>
+              <!-- <img
                 [src]="chartDisplayMessage"
                 *ngIf="chartDisplayMessage"
                 alt="No Data Available"
-            /></span>
+            /> -->
+              <p
+                *ngIf="chartDisplayMessage"
+                style="color: #535ab4; font-weight: 400; font-size: 18px"
+              >
+                No Data Available
+              </p>
+            </span>
           </div>
         </div>
       </div>

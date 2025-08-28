@@ -2612,7 +2612,6 @@ export class UploadComponent implements OnInit {
       gstDetails: this.gstDetails,
     };
     console.log(formData);
-    
     this.loading = true;
     this.leadsService.addLeadDocuments(this.leadId, formData).subscribe(
       (data: any) => {
@@ -2626,70 +2625,70 @@ export class UploadComponent implements OnInit {
       }
     );
   }
-//   saveGstDetails() {
-//   for (let index = 0; index < this.gstDetails.length; index++) {
-//     const filingPeriod = this.gstDetails[index]['filingPeriod'];
+  //   saveGstDetails() {
+  //   for (let index = 0; index < this.gstDetails.length; index++) {
+  //     const filingPeriod = this.gstDetails[index]['filingPeriod'];
 
-//     // ✅ Ensure filingPeriod is always formatted dd/MM/yyyy string
-//     if (filingPeriod) {
-//       if (filingPeriod instanceof Date) {
-//         // Convert Date → dd/MM/yyyy
-//         this.gstDetails[index]['filingPeriod'] = this.moment(filingPeriod).format('DD/MM/YYYY');
-//       } else {
-//         // Already string → try parsing then format again
-//         this.gstDetails[index]['filingPeriod'] = this.moment(filingPeriod, [
-//           'DD/MM/YYYY',
-//           'MM/DD/YYYY',
-//           'YYYY-MM-DD',
-//         ]).format('DD/MM/YYYY');
-//       }
-//     }
+  //     // ✅ Ensure filingPeriod is always formatted dd/MM/yyyy string
+  //     if (filingPeriod) {
+  //       if (filingPeriod instanceof Date) {
+  //         // Convert Date → dd/MM/yyyy
+  //         this.gstDetails[index]['filingPeriod'] = this.moment(filingPeriod).format('DD/MM/YYYY');
+  //       } else {
+  //         // Already string → try parsing then format again
+  //         this.gstDetails[index]['filingPeriod'] = this.moment(filingPeriod, [
+  //           'DD/MM/YYYY',
+  //           'MM/DD/YYYY',
+  //           'YYYY-MM-DD',
+  //         ]).format('DD/MM/YYYY');
+  //       }
+  //     }
 
-//     // ✅ Collect GST Attachments
-//     this.gstDetails[index]['gstDetails'] = [];
-//     if (
-//       this.selectedFiles['gstDetails'][index] &&
-//       this.selectedFiles['gstDetails'][index]['links']
-//     ) {
-//       for (
-//         let i = 0;
-//         i < this.selectedFiles['gstDetails'][index]['links'].length;
-//         i++
-//       ) {
-//         this.gstDetails[index]['gstDetails'].push(
-//           this.selectedFiles['gstDetails'][index]['links'][i]
-//         );
-//       }
-//       for (
-//         let i = 0;
-//         i < this.selectedFiles['gstDetails'][index]['uploadedFiles'].length;
-//         i++
-//       ) {
-//         this.gstDetails[index]['gstDetails'].push(
-//           this.selectedFiles['gstDetails'][index]['uploadedFiles'][i]
-//         );
-//       }
-//     }
-//   }
+  //     // ✅ Collect GST Attachments
+  //     this.gstDetails[index]['gstDetails'] = [];
+  //     if (
+  //       this.selectedFiles['gstDetails'][index] &&
+  //       this.selectedFiles['gstDetails'][index]['links']
+  //     ) {
+  //       for (
+  //         let i = 0;
+  //         i < this.selectedFiles['gstDetails'][index]['links'].length;
+  //         i++
+  //       ) {
+  //         this.gstDetails[index]['gstDetails'].push(
+  //           this.selectedFiles['gstDetails'][index]['links'][i]
+  //         );
+  //       }
+  //       for (
+  //         let i = 0;
+  //         i < this.selectedFiles['gstDetails'][index]['uploadedFiles'].length;
+  //         i++
+  //       ) {
+  //         this.gstDetails[index]['gstDetails'].push(
+  //           this.selectedFiles['gstDetails'][index]['uploadedFiles'][i]
+  //         );
+  //       }
+  //     }
+  //   }
 
-//   // ✅ Final payload
-//   let formData = {
-//     gstDetails: this.gstDetails,
-//   };
+  //   // ✅ Final payload
+  //   let formData = {
+  //     gstDetails: this.gstDetails,
+  //   };
 
-//   this.loading = true;
-//   this.leadsService.addLeadDocuments(this.leadId, formData).subscribe(
-//     (data: any) => {
-//       this.loading = false;
-//       this.toastService.showSuccess('GST Details Saved Successfully');
-//       this.getLeadDocumentsById(this.leadId);
-//     },
-//     (error) => {
-//       this.loading = false;
-//       this.toastService.showError(error);
-//     }
-//   );
-// }
+  //   this.loading = true;
+  //   this.leadsService.addLeadDocuments(this.leadId, formData).subscribe(
+  //     (data: any) => {
+  //       this.loading = false;
+  //       this.toastService.showSuccess('GST Details Saved Successfully');
+  //       this.getLeadDocumentsById(this.leadId);
+  //     },
+  //     (error) => {
+  //       this.loading = false;
+  //       this.toastService.showError(error);
+  //     }
+  //   );
+  // }
 
   saveExistingLoans() {
     for (let index = 0; index < this.existingLoans.length; index++) {
@@ -2769,41 +2768,40 @@ export class UploadComponent implements OnInit {
       for (let file of files) {
         if (file && !file['fileuploaded']) {
           formData.append('files', file);
-          if (file.type === 'application/pdf') {
-            this.leadsService.extractDataFromPdf(file).then((data) => {
-              console.log('📄 Extracted PDF Data:', data);
+          console.log(fileType)
+          if (fileType == 'gstDetails') {
+            if (file.type === 'application/pdf') {
+              this.leadsService.extractDataFromPdf(file).then((data) => {
+                console.log('📄 Extracted PDF Data:', data);
+                const parsedDate = this.parseDate(data.filingDate); // ✅ convert to Date for UI
+                if (index || index === 0) {
+                  this.gstDetails[index] = {
+                    ...this.gstDetails[index],
+                    operatingState: data.operatingState || '',
+                    filingPeriod: parsedDate,   // ✅ Date object (works with p-calendar)
+                    gst3BSale: data.totalTaxableValue || '',
+                    // arn: data.arn || '',
+                    // gstin: data.gstin || '',
+                    // taxableBreakdown: data.taxableBreakdown || {},
+                  };
+                } else {
+                  this.gstDetails[0] = {
+                    ...this.gstDetails[0],
+                    operatingState: data.operatingState || '',
+                    filingPeriod: parsedDate,   // ✅ Date object
+                    gst3BSale: data.totalTaxableValue || '',
+                    // arn: data.arn || '',
+                    // gstin: data.gstin || '',
+                    // taxableBreakdown: data.taxableBreakdown || {},
+                  };
+                }
 
-              const parsedDate = this.parseDate(data.filingDate); // ✅ convert to Date for UI
-
-              if (index || index === 0) {
-                this.gstDetails[index] = {
-                  ...this.gstDetails[index],
-                  operatingState: data.operatingState || '',
-                  filingPeriod: parsedDate,   // ✅ Date object (works with p-calendar)
-                  gst3BSale: data.totalTaxableValue || '',
-                  // arn: data.arn || '',
-                  // gstin: data.gstin || '',
-                  // taxableBreakdown: data.taxableBreakdown || {},
-                };
-              } else {
-                this.gstDetails[0] = {
-                  ...this.gstDetails[0],
-                  operatingState: data.operatingState || '',
-                  filingPeriod: parsedDate,   // ✅ Date object
-                  gst3BSale: data.totalTaxableValue || '',
-                  // arn: data.arn || '',
-                  // gstin: data.gstin || '',
-                  // taxableBreakdown: data.taxableBreakdown || {},
-                };
-              }
-
-              this.toastService.showInfo('PDF Data Extracted & Filled');
-            });
+                this.toastService.showInfo('PDF Data Extracted & Filled');
+              });
+            }
           }
-          
         }
       }
-      
       const accountId = this.userDetails?.accountId || 'default'; // make sure accountId is available
 
       this.leadsService.uploadFiles(formData, this.leadId, fileType, accountId).subscribe(
@@ -2845,21 +2843,20 @@ export class UploadComponent implements OnInit {
     }
   }
 
-parseDate(dateStr: string): Date | null {
-  if (!dateStr) return null;
+  parseDate(dateStr: string): Date | null {
+    if (!dateStr) return null;
 
-  // Expecting dd/MM/yyyy
-  const parts = dateStr.split('/');
-  if (parts.length === 3) {
-    const day = parseInt(parts[0], 10);
-    const month = parseInt(parts[1], 10) - 1; // JS months are 0-based
-    const year = parseInt(parts[2], 10);
-    return new Date(year, month, day);
+    // Expecting dd/MM/yyyy
+    const parts = dateStr.split('/');
+    if (parts.length === 3) {
+      const day = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10) - 1; // JS months are 0-based
+      const year = parseInt(parts[2], 10);
+      return new Date(year, month, day);
+    }
+    return null;
   }
-  return null;
-}
 
-  
 
   confirmDelete(file, controlName, docIndex?, fileIndex?) {
     // console.log('Before Deletion:', this.selectedFiles);

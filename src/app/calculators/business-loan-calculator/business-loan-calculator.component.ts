@@ -1,55 +1,84 @@
 import { Component, OnInit } from '@angular/core';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+
 @Component({
   selector: 'app-business-loan-calculator',
   templateUrl: './business-loan-calculator.component.html',
   styleUrls: ['./business-loan-calculator.component.scss']
 })
 export class BusinessLoanCalculatorComponent implements OnInit {
+
+  // Flat Loan
   loanAmount: number = 500000;
   interestRate: number = 10;
-  tenure: number = 2;
-
+  tenure: number = 2; // years
   emi: number = 0;
   totalInterest: number = 0;
   totalPayable: number = 0;
-
   repaymentSchedule: any[] = [];
-  groupedSchedule: { [key: string]: any[] } = {};
-  groupedYears: { year: string }[] = [];
-  expandedRows: { [key: string]: boolean } = {};
 
+  // Diminishing Loan
+  diminishingloanAmount: number = 500000;
+  diminishinginterestRate: number = 10;
+  diminishingtenure: number = 2;
+  diminishingemi: number = 0;
+  diminishingtotalInterest: number = 0;
+  diminishingtotalPayable: number = 0;
+  diminishingrepaymentSchedule: any[] = [];
+
+  // Common
+  activeTab: number = 0;
   piechartOptions: any;
+  diminishingpiechartOptions: any;
   businessName: string = '';
+
+  constructor() { }
+
+  ngOnInit(): void {
+    this.calculateEMI();
+    this.calculateDiminishingEMI();
+  }
+
+  /** Prevent invalid key entry */
   preventInvalidKeys(event: KeyboardEvent) {
-    const invalidKeys = ['e', 'E', '+', '-', '.', ' '];
-    if (invalidKeys.includes(event.key)) {
-      event.preventDefault();
-    }
+    const invalidKeys = ['e', 'E', '+', '-', ' '];
+    if (invalidKeys.includes(event.key)) event.preventDefault();
   }
 
   preventInvalidPaste(event: ClipboardEvent) {
     const paste = event.clipboardData?.getData('text') || '';
-    if (/[^0-9.]/.test(paste)) {
-      event.preventDefault();
-    }
+    if (/[^0-9.]/.test(paste)) event.preventDefault();
   }
+
+  /** Input limiters */
   limitInputLength(event: Event): void {
     const input = event.target as HTMLInputElement;
     const value = input.value.slice(0, 8);
     input.value = value;
     this.loanAmount = Number(value);
   }
-  // Restrict the manual input to only numbers <= 4
-  onTenureInput() {
-    if (this.tenure > 4) {
-      this.tenure = 4; // Automatically set to 4 if user enters a value greater than 4
+  limitInputLengthfordiminishing(event: Event, field: 'personal' | 'business'): void {
+    const input = event.target as HTMLInputElement;
+    const value = input.value.slice(0, 8);
+    input.value = value;
+
+    if (field === 'personal') {
+      this.diminishingloanAmount = Number(value);
+    } else if (field === 'business') {
+      this.diminishingloanAmount = Number(value); // if you're also handling business loan
     }
   }
-
-  // Restrict keys (only allow digits 0-9)
   restrictTenureKeys(event: KeyboardEvent) {
+    const value = (event.target as HTMLInputElement).value;
+    if (!/[0-9]/.test(event.key) && !['Backspace', 'Delete', 'Tab'].includes(event.key)) {
+      event.preventDefault();
+    }
+    if (parseInt(value + event.key) > 4) event.preventDefault();
+  }
+
+
+  restrictTenureKeysdiminishing(event: KeyboardEvent) {
     const value = (event.target as HTMLInputElement).value;
 
     // Allow only numbers and the necessary keys (backspace, delete, etc.)
@@ -58,96 +87,25 @@ export class BusinessLoanCalculatorComponent implements OnInit {
     }
 
     // If the value is greater than 4, prevent entering more digits
-    if (parseInt(value + event.key) > 4) {
+    if (parseInt(value + event.key) > 8) {
       event.preventDefault();
     }
   }
 
-  //  limitInterestRate(event: Event): void {
-  //   const input = event.target as HTMLInputElement;
-  //   let value = parseFloat(input.value);
-
-  //   // Restrict to max 15.99 and min 1
-  //   if (value > 15.99) {
-  //     value = 15.99;
-  //   }
-
-  //   if (value < 1) {
-  //     value = 1;
-  //   }
-  // }
   limitInterestRate(event: Event): void {
     const input = event.target as HTMLInputElement;
     let value = parseFloat(input.value);
+    if (isNaN(value)) return;
 
-    // Restrict to max 15.99 and min 1
-    if (value > 15.99) {
-      value = 15.99;
-    }
+    if (value > 15.99) value = 15.99;
+    if (value < 1) value = 1;
 
-    if (value < 1) {
-      value = 1;
-    }
-
-    // Update the input's value immediately, so the user sees the restriction
     input.value = value.toFixed(2);
-
-    // Update the model in Angular as well
     this.interestRate = value;
-  }
-  constructor() { }
-
-  ngOnInit(): void {
     this.calculateEMI();
   }
 
-  // calculateEMI(): void {
-  //   const totalInterest = (this.loanAmount * this.interestRate * this.tenure) / 100;
-  //   const totalPayable = this.loanAmount + totalInterest;
-  //   const months = this.tenure * 12;
-  //   const emi = Math.round(totalPayable / months);
-
-  //   this.emi = emi;
-  //   this.totalInterest = Math.round(totalInterest);
-  //   this.totalPayable = Math.round(totalPayable);
-
-  //   this.repaymentSchedule = [];
-  //   this.groupedSchedule = {};
-  //   this.groupedYears = [];
-
-  //   let balance = totalPayable;
-  //   const startDate = new Date();
-
-  //   for (let i = 0; i < months; i++) {
-  //     const monthDate = new Date(startDate);
-  //     monthDate.setMonth(startDate.getMonth() + i);
-
-  //     const monthName = monthDate.toLocaleString('default', { month: 'long' });
-  //     const year = monthDate.getFullYear().toString();
-
-  //     const principalPart = Math.round(this.loanAmount / months);
-  //     const interestPart = Math.round(totalInterest / months);
-  //     balance -= emi;
-
-  //     const row = {
-  //       month: `${monthName}-${year}`,
-  //       emi,
-  //       principal: principalPart,
-  //       interest: interestPart,
-  //       balance: balance > 0 ? Math.round(balance) : 0
-  //     };
-
-  //     if (!this.groupedSchedule[year]) {
-  //       this.groupedSchedule[year] = [];
-  //     }
-  //     this.groupedSchedule[year].push(row);
-  //   }
-
-  //   this.groupedYears = Object.keys(this.groupedSchedule).map(year => ({ year }));
-
-  //   this.updateChart();
-  // }
-
+  /** Flat EMI calculation */
   calculateEMI(): void {
     const totalInterest = (this.loanAmount * this.interestRate * this.tenure) / 100;
     const totalPayable = this.loanAmount + totalInterest;
@@ -178,157 +136,147 @@ export class BusinessLoanCalculatorComponent implements OnInit {
     this.updateChart();
   }
 
-  toggleRow(year: string): void {
-    this.expandedRows[year] = !this.expandedRows[year];
+  /** Diminishing EMI calculation */
+  calculateDiminishingEMI(): void {
+    const principal = this.diminishingloanAmount;
+    const months = this.diminishingtenure * 12;
+    const monthlyRate = this.diminishinginterestRate / 12 / 100;
+
+    const emi =
+      (principal * monthlyRate * Math.pow(1 + monthlyRate, months)) /
+      (Math.pow(1 + monthlyRate, months) - 1);
+
+    this.diminishingemi = Math.round(emi);
+    this.diminishingrepaymentSchedule = [];
+    this.diminishingtotalInterest = 0;
+
+    let balance = principal;
+
+    for (let i = 1; i <= months; i++) {
+      const interestPart = Math.round(balance * monthlyRate);
+      const principalPart = Math.round(this.diminishingemi - interestPart);
+      balance -= principalPart;
+      this.diminishingtotalInterest += interestPart;
+
+      this.diminishingrepaymentSchedule.push({
+        month: `Month ${i}`,
+        emi: this.diminishingemi,
+        principal: principalPart,
+        interest: interestPart,
+        balance: balance > 0 ? Math.round(balance) : 0
+      });
+    }
+
+    this.diminishingtotalPayable = Math.round(this.diminishingemi * months);
+    this.updateChart();
   }
 
-  getYearlyTotal(year: string, field: 'emi' | 'principal' | 'interest'): number {
-    return this.groupedSchedule[year].reduce((sum, row) => sum + Number(row[field]), 0);
-  }
-
-  enforceRange(event: Event, modelName: 'loanAmount' | 'interestRate' | 'tenure', min: number, max: number): void {
-    const input = event.target as HTMLInputElement;
-    let value = parseFloat(input.value);
-
-    if (isNaN(value)) return;
-
-    if (value > max) value = max;
-    if (value < min) value = min;
-
-    // Update the corresponding model
-    this[modelName] = value;
-  }
-
+  /** Chart update */
   updateChart(): void {
     this.piechartOptions = {
       series: [this.loanAmount, this.totalInterest],
-      chart: {
-        type: 'donut',
-        height: 320,
-        offsetY: -20
-      },
+      chart: { type: 'donut', height: 320 },
       labels: ['Principal', 'Interest'],
-      // plotOptions: {
-      //   pie: {
-      //     startAngle: -90,
-      //     endAngle: 90,
-      //     donut: {
-      //       size: '75%'
-      //     }
-      //   }
-      // },
       colors: ['#29415B', '#EE7846'],
-      legend: {
-        position: 'bottom'
-      },
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {
-            chart: {
-              width: 300
-            },
-            legend: {
-              position: 'bottom'
-            }
-          }
-        }
-      ]
+      legend: { position: 'bottom' }
+    };
+
+    this.diminishingpiechartOptions = {
+      series: [this.diminishingloanAmount, this.diminishingtotalInterest],
+      chart: { type: 'donut', height: 320 },
+      labels: ['Principal', 'Interest'],
+      colors: ['#000', '#EE7846'],
+      legend: { position: 'bottom' }
     };
   }
 
+  /** PDF for flat loan */
   generatePDF(): void {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
-
     const businessName = this.businessName;
 
-    // ✅ 1. Watermark
     const addWatermark = () => {
-      const centerX = pageWidth / 2;
-      const centerY = pageHeight / 2;
       doc.setFont('helvetica', 'medium');
-      doc.setTextColor(230, 230, 230); // light gray
+      doc.setTextColor(230, 230, 230);
       doc.setFontSize(60);
-      doc.text('MyLoanCRM', centerX, centerY, {
-        angle: 45,
-        align: 'center',
-        baseline: 'middle'
-      });
+      doc.text('MyLoanCRM', pageWidth / 2, pageHeight / 2, { angle: 45, align: 'center' });
     };
-    // ✅ 2. Header
+
     const addHeader = () => {
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(18);
-      doc.setTextColor('#29415B');
-      doc.text(businessName?.toUpperCase() || 'LOAN REPORT', pageWidth / 2, 15, {
-        align: 'center',
-      });
+      doc.setTextColor('#000');
+      doc.text(businessName?.toUpperCase() || 'LOAN REPORT', pageWidth / 2, 15, { align: 'center' });
     };
 
-    // ✅ 3. Draw header and summary table first
     addHeader();
-
-    // ✅ 4. Summary Table (3 left + 3 right)
     autoTable(doc, {
       startY: 30,
-      margin: { left: 14, right: 14 },
       body: [
         ['Loan Amount:', `Rs. ${this.loanAmount}`, 'Monthly EMI:', `Rs. ${this.emi}`],
         ['Interest Rate (Flat):', `${this.interestRate}%`, 'Interest:', `Rs. ${this.totalInterest}`],
         ['Tenure:', `${this.tenure} years`, 'Total Payable:', `Rs. ${this.totalPayable}`],
       ],
-      styles: {
-        fontSize: 10,
-        font: 'helvetica',
-        cellPadding: 2,
-      },
-      columnStyles: {
-        0: { fontStyle: 'bold', cellWidth: 40 },
-        1: { cellWidth: 50 },
-        2: { fontStyle: 'bold', cellWidth: 40 },
-        3: { cellWidth: 50 },
-      },
       theme: 'grid',
     });
-    doc.setFontSize(13);
-    doc.setFont('helvetica', 'bold');
-    doc.setTextColor('#29415B');
+
     doc.text('Repayment Schedule', 14, 65);
-    // ✅ 5. Repayment Table
     autoTable(doc, {
-      head: [[
-        'S. No.', 'Month', 'EMI (Rs.)', 'Principal (Rs.)', 'Interest (Rs.)', 'Balance (Rs.)'
-      ]],
-      body: this.repaymentSchedule.map((row, index) => [
-        index + 1,
-        row.month,
-        `${row.emi}`,
-        `${row.principal}`,
-        `${row.interest}`,
-        `${row.balance}`,
-      ]),
+      head: [['S. No.', 'Month', 'EMI', 'Principal', 'Interest', 'Balance']],
+      body: this.repaymentSchedule.map((r, i) => [i + 1, r.month, r.emi, r.principal, r.interest, r.balance]),
       startY: 70,
-      margin: { top: 25 },
-      styles: {
-        fontSize: 9,
-        font: 'helvetica',
-      },
-      headStyles: {
-        fillColor: [41, 65, 91],
-        textColor: 255,
-      },
-      didDrawPage: () => {
-        addWatermark();
-        addHeader();
-      },
+      headStyles: { fillColor: [41, 65, 91], textColor: 255 },
+      didDrawPage: () => { addWatermark(); addHeader(); }
     });
 
-    // ✅ 6. Save the file
-    doc.save(`${this.businessName?.toUpperCase() || 'LOAN'}-EMI-REPORT.pdf`);
+    doc.save(`${businessName?.toUpperCase() || 'LOAN'}-EMI-REPORT.pdf`);
   }
+  onTabChange() {
+    this.updateChart();
+  }
+  /** PDF for diminishing loan */
+  generatediminishingPDF(): void {
+    const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const businessName = this.businessName;
 
+    const addWatermark = () => {
+      doc.setFont('helvetica', 'medium');
+      doc.setTextColor(230, 230, 230);
+      doc.setFontSize(60);
+      doc.text('MyLoanCRM', pageWidth / 2, pageHeight / 2, { angle: 45, align: 'center' });
+    };
 
+    const addHeader = () => {
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(18);
+      doc.setTextColor('#29415B');
+      doc.text(businessName?.toUpperCase() || 'LOAN REPORT', pageWidth / 2, 15, { align: 'center' });
+    };
 
+    addHeader();
+    autoTable(doc, {
+      startY: 30,
+      body: [
+        ['Loan Amount:', `Rs. ${this.diminishingloanAmount}`, 'Monthly EMI:', `Rs. ${this.diminishingemi}`],
+        ['Interest Rate (Diminishing):', `${this.diminishinginterestRate}%`, 'Interest:', `Rs. ${this.diminishingtotalInterest}`],
+        ['Tenure:', `${this.diminishingtenure} years`, 'Total Payable:', `Rs. ${this.diminishingtotalPayable}`],
+      ],
+      theme: 'grid',
+    });
+
+    doc.text('Repayment Schedule', 14, 65);
+    autoTable(doc, {
+      head: [['S. No.', 'Month', 'EMI', 'Principal', 'Interest', 'Balance']],
+      body: this.diminishingrepaymentSchedule.map((r, i) => [i + 1, r.month, r.emi, r.principal, r.interest, r.balance]),
+      startY: 70,
+      headStyles: { fillColor: [41, 65, 91], textColor: 255 },
+      didDrawPage: () => { addWatermark(); addHeader(); }
+    });
+
+    doc.save(`${businessName?.toUpperCase() || 'LOAN'}-DIMINISHING-REPORT.pdf`);
+  }
 }

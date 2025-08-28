@@ -1,5 +1,5 @@
 <div>
-  <div class="p-1 m-2 fixed-card"  style="background-color: #f7f7f7;">
+  <div class="p-1 m-2 fixed-card" style="background-color: #f7f7f7">
     <div class="d-flex justify-content-between">
       <div
         class="d-flex align-items-center justify-content-center pointer-cursor"
@@ -88,15 +88,15 @@
                 (click)="filterWithName()"
               ></button> -->
               <span
-                        class="input-group-text search-btn"
-                        (click)="filterWithName()"
-                      >
-                        <img
-                          src="../../../assets/images/icons/search.svg"
-                          alt="Search"
-                          style="width: 14px; height: 14px; cursor: pointer"
-                        />
-                    </span>
+                class="input-group-text search-btn"
+                (click)="filterWithName()"
+              >
+                <img
+                  src="../../../assets/images/icons/search.svg"
+                  alt="Search"
+                  style="width: 14px; height: 14px; cursor: pointer"
+                />
+              </span>
               <!-- <button
                 type="button"
                 pButton
@@ -152,7 +152,7 @@
       </ng-template>
       <ng-template pTemplate="header" let-columns>
         <tr>
-          <th class="text-nowrap">Employee Id</th>
+          <th class="text-nowrap">User Id</th>
           <th>Name</th>
           <th>Phone Number</th>
           <th class="text-nowrap">Email</th>
@@ -160,7 +160,7 @@
           <th>Designation</th>
           <th>Date</th>
           <th>Status</th>
-          <th>Actions</th>
+          <th class="text-nowrap">Quick Actions</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-team>
@@ -242,34 +242,34 @@
             >
               {{ team.status }}
             </span> -->
-          <span
-            class="table-column-data fw-bold statusdata d-inline-flex align-items-center gap-2"
-            *ngIf="team.status"
-            [ngStyle]="{
-              backgroundColor: getStatusColor(team.status).backgroundColor,
-              color: getStatusColor(team.status).textColor,
-              height: '22px',
-              width: getStatusColor(team.status).width,
-              borderRadius: '16px',
-              fontSize: '12px',
-              fontWeight: 500,
-              paddingLeft: '8px'
-            }"
-          >
-            <!-- Dot -->
             <span
-              class="rounded-circle"
+              class="table-column-data fw-bold statusdata d-inline-flex align-items-center gap-2"
+              *ngIf="team.status"
               [ngStyle]="{
-                backgroundColor: getStatusColor(team.status).dotColor,
-                width: '8px',
-                height: '8px',
-                display: 'inline-block'
+                backgroundColor: getStatusColor(team.status).backgroundColor,
+                color: getStatusColor(team.status).textColor,
+                height: '22px',
+                width: getStatusColor(team.status).width,
+                borderRadius: '16px',
+                fontSize: '12px',
+                fontWeight: 500,
+                paddingLeft: '8px'
               }"
-            ></span>
+            >
+              <!-- Dot -->
+              <span
+                class="rounded-circle"
+                [ngStyle]="{
+                  backgroundColor: getStatusColor(team.status).dotColor,
+                  width: '8px',
+                  height: '8px',
+                  display: 'inline-block'
+                }"
+              ></span>
 
-            <!-- Status Text -->
-            {{ team.status }}
-          </span>
+              <!-- Status Text -->
+              {{ team.status }}
+            </span>
           </td>
           <td>
             <div class="text-center d-flex tableimage">
@@ -352,7 +352,9 @@
               width="200"
               height="200"
             /> -->
-           <p style="color: #535ab4; font-weight: 400; font-size: 18px">No users Found</p>
+            <p style="color: #535ab4; font-weight: 400; font-size: 18px">
+              No users Found
+            </p>
           </td>
         </tr>
       </ng-template>

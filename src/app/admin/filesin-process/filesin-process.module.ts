@@ -12,6 +12,7 @@ import { TableModule } from 'primeng/table';
 import { FilterModule } from 'src/app/filter/filter.module';
 import { CapitalizeFirstPipe } from 'src/app/pipes/capitalize.pipe';
 import { TabMenuModule } from 'primeng/tabmenu';
+import { CommingSoonModule } from '../comming-soon/comming-soon.module';
 
 const routes: Routes = [{ path: '', component: FilesinProcessComponent }];
 
@@ -29,7 +30,8 @@ const routes: Routes = [{ path: '', component: FilesinProcessComponent }];
     CapitalizeFirstPipe,
     TabMenuModule,
     FilterModule,
+    CommingSoonModule,
     [RouterModule.forChild(routes)],
   ],
 })
-export class FilesinProcessModule {}
+export class FilesinProcessModule { }

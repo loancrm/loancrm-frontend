@@ -246,14 +246,6 @@ export class SidebarMenuComponent implements OnChanges {
         thumbnail: 'files.png',
         showOutside: true,
       },
-      // {
-      //   name: 'Partial Files',
-      //   condition: this.capabilities.files,
-      //   routerLink: 'partial',
-      //   image: 'partial.gif',
-      //   thumbnail: 'partial.png',
-      //   showOutside: true,
-      // },
       {
         name: 'Credit Eval',
         condition: this.capabilities.credit,

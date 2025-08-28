@@ -12,6 +12,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FilterModule } from 'src/app/filter/filter.module';
 import { CapitalizeFirstPipe } from 'src/app/pipes/capitalize.pipe';
 import { TabMenuModule } from 'primeng/tabmenu';
+import { CommingSoonModule } from '../comming-soon/comming-soon.module';
 
 const routes: Routes = [
   { path: '', component: CreditEvaluationComponent },
@@ -52,6 +53,7 @@ const routes: Routes = [
     MenuModule,
     TabMenuModule,
     InputTextModule,
+    CommingSoonModule,
     [RouterModule.forChild(routes)],
   ],
 })

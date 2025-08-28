@@ -782,6 +782,10 @@
   padding: 4px 8px !important;
   height: 32px !important;
 }
+.searchbtn img {
+  filter: brightness(0) saturate(100%) invert(46%) sepia(0%) saturate(0%)
+    hue-rotate(187deg) brightness(91%) contrast(86%);
+}
 
 .searchField {
   border-top-right-radius: 10px !important;

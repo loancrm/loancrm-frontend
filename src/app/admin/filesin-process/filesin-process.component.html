@@ -1,5 +1,5 @@
 <div>
-  <div class="p-1 m-2 fixed-card"  style="background-color: #f7f7f7;">
+  <div class="p-1 m-2 fixed-card" style="background-color: #f7f7f7">
     <div class="d-flex justify-content-between">
       <div
         class="d-flex align-items-center justify-content-center pointer-cursor"
@@ -64,15 +64,15 @@
                     (keyup.enter)="filterWithBusinessName()"
                   />
                   <span
-                        class="input-group-text p-button-primary"
-                        (click)="filterWithBusinessName()"
-                      >
-                        <img
-                          src="../../../assets/images/icons/search.svg"
-                          alt="Search"
-                          style="width: 14px; height: 14px; cursor: pointer"
-                        />
-                    </span>
+                    class="input-group-text p-button-primary"
+                    (click)="filterWithBusinessName()"
+                  >
+                    <img
+                      src="../../../assets/images/icons/search.svg"
+                      alt="Search"
+                      style="width: 14px; height: 14px; cursor: pointer"
+                    />
+                  </span>
                   <!-- <button
                     type="button"
                     pButton
@@ -103,15 +103,15 @@
                     (keyup.enter)="filterWithMobileNumber()"
                   />
                   <span
-                        class="input-group-text p-button-primary"
-                        (click)="filterWithMobileNumber()"
-                      >
-                        <img
-                          src="../../../assets/images/icons/search.svg"
-                          alt="Search"
-                          style="width: 14px; height: 14px; cursor: pointer"
-                        />
-                    </span>
+                    class="input-group-text p-button-primary"
+                    (click)="filterWithMobileNumber()"
+                  >
+                    <img
+                      src="../../../assets/images/icons/search.svg"
+                      alt="Search"
+                      style="width: 14px; height: 14px; cursor: pointer"
+                    />
+                  </span>
                   <!-- <button
                     type="button"
                     pButton
@@ -183,7 +183,7 @@
               <th class="text-nowrap">Sourced By</th>
               <!-- <th class="text-nowrap">Created Date</th> -->
               <th class="text-nowrap">Login Date</th>
-              <th>Actions</th>
+              <th class="text-nowrap">Quick Actions</th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-lead>
@@ -270,7 +270,9 @@
                   width="200"
                   height="200"
                 /> -->
-                <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No Files In Process Found</p>
+                <p style="color: #535ab4; font-weight: 400; font-size: 18px">
+                  No Files In Process Found
+                </p>
               </td>
             </tr>
           </ng-template>
@@ -323,14 +325,14 @@
                       (keyup.enter)="filterWithBusinessNameForPersonal()"
                     />
                     <span
-                        class="input-group-text p-button-primary"
-                        (click)="filterWithBusinessNameForPersonal()"
-                      >
-                        <img
-                          src="../../../assets/images/icons/search.svg"
-                          alt="Search"
-                          style="width: 14px; height: 14px; cursor: pointer"
-                        />
+                      class="input-group-text p-button-primary"
+                      (click)="filterWithBusinessNameForPersonal()"
+                    >
+                      <img
+                        src="../../../assets/images/icons/search.svg"
+                        alt="Search"
+                        style="width: 14px; height: 14px; cursor: pointer"
+                      />
                     </span>
                     <!-- <button
                       type="button"
@@ -413,7 +415,7 @@
                   Sourced By
                 </th>
                 <th class="text-nowrap">Login Date</th>
-                <th>Actions</th>
+                <th class="text-nowrap">Quick Actions</th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-lead>
@@ -507,7 +509,9 @@
                     width="200"
                     height="200"
                   /> -->
-                  <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No Files Found</p>
+                  <p style="color: #535ab4; font-weight: 400; font-size: 18px">
+                    No Files Found
+                  </p>
                 </td>
               </tr>
             </ng-template>
@@ -589,15 +593,15 @@
                           (keyup.enter)="filterBasedOnEmploymentStatus()"
                         />
                         <span
-                        class="input-group-text p-button-primary"
-                        (click)="filterBasedOnEmploymentStatus()"
-                      >
-                        <img
-                          src="../../../assets/images/icons/search.svg"
-                          alt="Search"
-                          style="width: 14px; height: 14px; cursor: pointer"
-                        />
-                    </span>
+                          class="input-group-text p-button-primary"
+                          (click)="filterBasedOnEmploymentStatus()"
+                        >
+                          <img
+                            src="../../../assets/images/icons/search.svg"
+                            alt="Search"
+                            style="width: 14px; height: 14px; cursor: pointer"
+                          />
+                        </span>
                         <!-- <button
                           type="button"
                           pButton
@@ -733,7 +737,7 @@
                     </th>
                     <!-- <th class="text-nowrap">Created Date</th> -->
                     <th class="text-nowrap">Login Date</th>
-                    <th>Actions</th>
+                    <th class="text-nowrap">Quick Actions</th>
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-lead>
@@ -860,7 +864,15 @@
                         width="200"
                         height="200"
                       /> -->
-                      <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No Files Found</p>
+                      <p
+                        style="
+                          color: #535ab4;
+                          font-weight: 400;
+                          font-size: 18px;
+                        "
+                      >
+                        No Files Found
+                      </p>
                     </td>
                   </tr>
                 </ng-template>
@@ -938,15 +950,15 @@
                           (keyup.enter)="filterBasedOnEmploymentStatus()"
                         />
                         <span
-                        class="input-group-text p-button-primary"
-                        (click)="filterBasedOnEmploymentStatus()"
-                      >
-                        <img
-                          src="../../../assets/images/icons/search.svg"
-                          alt="Search"
-                          style="width: 14px; height: 14px; cursor: pointer"
-                        />
-                    </span>
+                          class="input-group-text p-button-primary"
+                          (click)="filterBasedOnEmploymentStatus()"
+                        >
+                          <img
+                            src="../../../assets/images/icons/search.svg"
+                            alt="Search"
+                            style="width: 14px; height: 14px; cursor: pointer"
+                          />
+                        </span>
                         <!-- <button
                           type="button"
                           pButton
@@ -1062,7 +1074,7 @@
                     <!-- <th>Created Date</th> -->
                     <th class="text-nowrap">Login Date</th>
 
-                    <th>Actions</th>
+                    <th class="text-nowrap">Quick Actions</th>
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-lead>
@@ -1182,7 +1194,15 @@
                         width="200"
                         height="200"
                       /> -->
-                      <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No Files Found</p>
+                      <p
+                        style="
+                          color: #535ab4;
+                          font-weight: 400;
+                          font-size: 18px;
+                        "
+                      >
+                        No Files Found
+                      </p>
                     </td>
                   </tr>
                 </ng-template>
@@ -1192,48 +1212,16 @@
         </ng-container>
       </div>
       <div *ngIf="activeItem.name == 'professionalLoans'">
-        <!-- <div class="card" style="height: 500px; width: 950px; border-radius: 8px; box-shadow: 0 0 4px 0; margin-left: 200px; margin-top: 50px;">
-          <div class="d-flex">
-            <img src="../../../assets/images/Group (2).svg" alt="" style="height: 398px; width: 280.68px;">
-          <img src="../../../assets/images/Group (1).svg" alt="" style="height: 75px; width: 461px; margin-top: 150px;">
-          </div>
-         </div> -->
-         <div class="card" style="height: 500px; width: 950px; border-radius: 8px; box-shadow: 0 0 4px 0; margin-left: 200px; margin-top: 50px;">
-          <div class="d-flex">
-            <img src="../../../assets/images/Group (2).svg" alt="" style="height: 398px; width: 280.68px;">
-          <img src="../../../assets/images/Group (1).svg" alt="" style="height: 75px; width: 461px; margin-top: 150px;">
-          </div>
-         </div>
+        <app-comming-soon></app-comming-soon>
       </div>
       <div *ngIf="activeItem.name == 'educationlLoans'">
-        <!-- <div class="card" style="height: 500px; width: 950px; border-radius: 8px; box-shadow: 0 0 4px 0; margin-left: 200px; margin-top: 50px;">
-          <div class="d-flex">
-            <img src="../../../assets/images/Group (2).svg" alt="" style="height: 398px; width: 280.68px;">
-          <img src="../../../assets/images/Group (1).svg" alt="" style="height: 75px; width: 461px; margin-top: 150px;">
-          </div>
-         </div> -->
-         <div class="card" style="height: 500px; width: 950px; border-radius: 8px; box-shadow: 0 0 4px 0; margin-left: 200px; margin-top: 50px;">
-          <div class="d-flex">
-            <img src="../../../assets/images/Group (2).svg" alt="" style="height: 398px; width: 280.68px;">
-          <img src="../../../assets/images/Group (1).svg" alt="" style="height: 75px; width: 461px; margin-top: 150px;">
-          </div>
-         </div>
+        <app-comming-soon></app-comming-soon>
       </div>
       <div *ngIf="activeItem.name == 'carLoan'">
-        <div class="card" style="height: 500px; width: 950px; border-radius: 8px; box-shadow: 0 0 4px 0; margin-left: 200px; margin-top: 50px;">
-          <div class="d-flex">
-            <img src="../../../assets/images/Group (2).svg" alt="" style="height: 398px; width: 280.68px;">
-          <img src="../../../assets/images/Group (1).svg" alt="" style="height: 75px; width: 461px; margin-top: 150px;">
-          </div>
-         </div>
+        <app-comming-soon></app-comming-soon>
       </div>
       <div *ngIf="activeItem.name == 'commercialVehicleLoan'">
-        <div class="card" style="height: 500px; width: 950px; border-radius: 8px; box-shadow: 0 0 4px 0; margin-left: 200px; margin-top: 50px;">
-          <div class="d-flex">
-            <img src="../../../assets/images/Group (2).svg" alt="" style="height: 398px; width: 280.68px;">
-          <img src="../../../assets/images/Group (1).svg" alt="" style="height: 75px; width: 461px; margin-top: 150px;">
-          </div>
-         </div>
+        <app-comming-soon></app-comming-soon>
       </div>
     </div>
   </div>

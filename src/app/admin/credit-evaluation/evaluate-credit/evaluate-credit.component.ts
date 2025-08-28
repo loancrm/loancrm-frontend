@@ -81,7 +81,14 @@ export class EvaluateCreditComponent implements OnInit {
   displayedItems: any = [];
   turnoverChangeMessage: string = '';
   profitChangeMessage: string = '';
+  btotenure = 36;         // 60 months (5 years)
+  btointerest = 18;
+  btoloanAmount: any;
 
+
+  gstTenure = 36;         // 60 months (5 years)
+  gstInterest = 18;
+  gstloanAmount: any;
   activeTab: string = 'dscr'; // default tab
   version = projectConstantsLocal.VERSION_DESKTOP;
   documentTypes = [
@@ -194,6 +201,15 @@ export class EvaluateCreditComponent implements OnInit {
       this.getDscrValuesById(this.leadId).then((data) => {
         if (data) {
           this.setDscrValuesData();
+
+          if (this.btoValue) {
+            console.log(this.btoValue);
+            this.calculateBTOLoanAmount();
+          }
+          if (this.gstValue) {
+            this.calculateGSTLoanAmount();
+          }
+
         }
       });
     }
@@ -237,7 +253,6 @@ export class EvaluateCreditComponent implements OnInit {
 
     this.breadCrumbItems = [
       {
-
         label: ' Home',
         routerLink: '/user/dashboard',
         queryParams: { v: this.version },
@@ -271,6 +286,25 @@ export class EvaluateCreditComponent implements OnInit {
       // { data: this.leadData[0], displayProperty: 'businessName' },
       { data: this.leadData[0], displayProperty: loanDisplayProperty },
     ];
+  }
+  calculateBTOLoanAmount() {
+    const R = this.btointerest / 12 / 100; // monthly rate
+    const N = this.btotenure;
+    const numerator = this.btoValue * (Math.pow(1 + R, N) - 1);
+    const denominator = R * Math.pow(1 + R, N);
+    const loanAmount = numerator / denominator;
+    // ✅ Round off to nearest rupee
+    this.btoloanAmount = Math.round(loanAmount); // Loan Amount
+  }
+
+  calculateGSTLoanAmount() {
+    const R = this.gstInterest / 12 / 100; // monthly rate
+    const N = this.gstTenure;
+    const numerator = this.gstValue * (Math.pow(1 + R, N) - 1);
+    const denominator = R * Math.pow(1 + R, N);
+    const loanAmount = numerator / denominator;
+    // ✅ Round off to nearest rupee
+    this.gstloanAmount = Math.round(loanAmount); // Loan Amount
   }
   changeLeadStatus(leadId, statusId) {
     this.loading = true;
@@ -554,6 +588,7 @@ export class EvaluateCreditComponent implements OnInit {
       (data: any) => {
         if (data) {
           this.gstValue = data.gstValue;
+          this.calculateGSTLoanAmount()
           this.loading = false;
           this.toastService.showSuccess('Calculated and saved Successfully');
         }
@@ -578,6 +613,7 @@ export class EvaluateCreditComponent implements OnInit {
         if (data) {
           this.btoValue = data.btoValue;
           this.loading = false;
+          this.calculateBTOLoanAmount()
           this.toastService.showSuccess('Calculated and saved Successfully');
         }
       },

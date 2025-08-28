@@ -1,4 +1,9 @@
 <div class="filter-sidebar text-start sidebar-design">
+<div
+  class="filter-sidebar-overlay"
+  *ngIf="sidebarVisible"
+  (click)="sidebarVisible = false"
+></div>
   <p-sidebar
     [(visible)]="sidebarVisible"
     position="{{ position }}"

@@ -165,3 +165,12 @@
   // background-color: red;
   border-radius: 50%;
 }
+.filter-sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  // background: rgba(0, 0, 0, 0.5); // dimmed effect
+  z-index: 999; // make sure it’s just below the filter sidebar
+}

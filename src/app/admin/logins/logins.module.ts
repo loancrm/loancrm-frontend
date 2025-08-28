@@ -12,6 +12,7 @@ import { TableModule } from 'primeng/table';
 import { FilterModule } from 'src/app/filter/filter.module';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { CapitalizeFirstPipe } from 'src/app/pipes/capitalize.pipe';
+import { CommingSoonModule } from '../comming-soon/comming-soon.module';
 const routes: Routes = [
   { path: '', component: LoginsComponent },
   {
@@ -58,6 +59,7 @@ const routes: Routes = [
     CapitalizeFirstPipe,
     TabMenuModule,
     FilterModule,
+    CommingSoonModule,
     [RouterModule.forChild(routes)],
   ],
 })
