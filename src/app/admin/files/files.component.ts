@@ -35,7 +35,7 @@ export class FilesComponent implements OnInit {
   appliedFilterHome: {};
   appliedFilterHomeself: {};
   personalloanLeadsCount: any = 0;
-  professionalloanLeadsCount: any =0;
+  professionalloanLeadsCount: any = 0;
   items: any;
   searchInputValue: string = '';
   lapselfLeadsCount: any = 0;
@@ -48,7 +48,7 @@ export class FilesComponent implements OnInit {
   businessNameToSearchForHome: any;
   searchFilterForLap: any = {};
   searchFilterPersonal: any = {};
-  searchFilterProfessional: any={};
+  searchFilterProfessional: any = {};
   homeloanLeadsCount: any = 0;
   mobileNumberToSearch: any;
   leadStatus: any = projectConstantsLocal.LEAD_STATUS;
@@ -134,7 +134,7 @@ export class FilesComponent implements OnInit {
     // });
     // this.loadEmploymentActiveItem();
     this.setFilterConfig();
-    const loanTypes = ['', 'Personal', 'Home', 'Homeself', 'Lap', 'Lapself','Professional'];
+    const loanTypes = ['', 'Personal', 'Home', 'Homeself', 'Lap', 'Lapself', 'Professional'];
     loanTypes.forEach((type) => {
       const localStorageKey = `filesAppliedFilter${type}`;
       const storedFilter =
@@ -217,14 +217,31 @@ export class FilesComponent implements OnInit {
   getStatusColor(status: string): {
     textColor: string;
     backgroundColor: string;
+    dotColor: string;
+    width: string;
   } {
     switch (status) {
       case 'Files':
-        return { textColor: '#5DCC0B', backgroundColor: '#E4F7D6' };
+        return {
+          textColor: '#037847',
+          backgroundColor: '#ECFDF3',
+          dotColor: '#14BA6D',
+          width: '54px'
+        };
       case 'CNI':
-        return { textColor: '#FFBA15', backgroundColor: '#FFF3D6' };
+        return {
+          textColor: '#364254',
+          backgroundColor: '#F2F4F7',
+          dotColor: '#364254',
+          width: '50px'
+        };
       default:
-        return { textColor: 'black', backgroundColor: 'white' };
+        return {
+          textColor: 'black',
+          backgroundColor: 'white',
+          dotColor: 'gray',
+          width: '54px'
+        };
     }
   }
   getTotalLeadsCountArray(filter = {}) {
@@ -623,11 +640,11 @@ export class FilesComponent implements OnInit {
       },
       { header: 'City', data: [createTextFilter('city', 'City Name')] },
       {
-        header: 'Had Own House',
+        header: 'Property Type',
         data: [
           createDropdownFilter(
             'hadOwnHouse',
-            'Had Own House',
+            'Property Type',
             hadOwnHouseOptions
           ),
         ],
@@ -704,11 +721,11 @@ export class FilesComponent implements OnInit {
         data: [createTextFilter('city', 'City Name')],
       },
       {
-        header: 'Had Own House',
+        header: 'Property Type',
         data: [
           createDropdownFilter(
             'hadOwnHouse',
-            'Had Own House',
+            'Property Type',
             hadOwnHouseOptions
           ),
         ],
@@ -744,11 +761,11 @@ export class FilesComponent implements OnInit {
         data: [createTextFilter('city', 'City Name')],
       },
       {
-        header: 'Had Own House',
+        header: 'Property Type',
         data: [
           createDropdownFilter(
             'hadOwnHouse',
-            'Had Own House',
+            'Property Type',
             hadOwnHouseOptions
           ),
         ],
@@ -872,12 +889,12 @@ export class FilesComponent implements OnInit {
   }
 
   getDesignationType(userId: any): string {
-  if (this.designationType && this.designationType.length > 0) {
-    const designationType = this.designationType.find(user => user.id == userId);
-    return designationType?.displayName || '';
+    if (this.designationType && this.designationType.length > 0) {
+      const designationType = this.designationType.find(user => user.id == userId);
+      return designationType?.displayName || '';
+    }
+    return '';
   }
-  return '';
-}
   getTotalLeadsFilesCount(filter = {}) {
     this.leadsService.getFilesCount(filter).subscribe(
       (leadsCount) => {

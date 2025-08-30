@@ -1112,11 +1112,11 @@ export class ViewComponent {
         ],
       },
       {
-        header: 'Had Own House',
+        header: 'Property Type',
         data: [
           {
             field: 'hadOwnHouse',
-            title: 'Had Own House',
+            title: 'Property Type',
             type: 'dropdown',
             filterType: 'like',
             options: this.hadOwnHouse.map((ownHouse) => ({

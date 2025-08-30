@@ -126,6 +126,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./bsanalyzer/bsanalyzer.module').then((m) => m.BsanalyzerModule),
       },
+      {
+        path: 'bsanalyzer/:reportId',
+        loadChildren: () =>
+          import('./bsanalyzer/bsanalyzer.module').then((m) => m.BsanalyzerModule),
+      },
     ],
   },
 ];

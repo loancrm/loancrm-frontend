@@ -2,6 +2,9 @@ import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular
 import { BsanalyzerService } from '../bsanalyzer.service';
 import { ActivatedRoute } from '@angular/router';
 import { TreeNode } from 'primeng/api';
+import { Location } from '@angular/common';
+import { RoutingService } from 'src/app/services/routing-service';
+
 interface TabItem {
   label: string;
   id: string;
@@ -22,14 +25,27 @@ export class AnalyzedBankReportComponent implements OnInit {
   accountData: any = {};         // Full report from API
   loading: boolean = false;
   overviewData: any;
+  months: any;
   dailyBalanceData: any;
   bouncedChequeData: any;
   categoriesData: any;
   irregularitiesData: any;
   cashFlowData: any;
+  cashFlowAnalysisData: any;
   bizCashFlow: any;
   duplicateTxnsData: any;
+  recurringPaymentsData: any;
+  amlAnalysisData: any;
+  loansData: any;
+  emiPaymentsData: any;
+  recurringDepositsData: any;
+  salaryData: any;
+  odccUtilizationData: any;
+  avaliableBalanceData: any;
+  monthlySummaryData: any[] = [];
+  chartOptions: any;
   countePartyData: any;
+  upiTxnsData: any;
   overviewLoading = false;
   transactionData: any[] = [];
   totalTransactions = 0;
@@ -72,18 +88,25 @@ export class AnalyzedBankReportComponent implements OnInit {
     { label: 'Salary', id: 'salary' },
     { label: 'OD/CC Utilization', id: 'od-cc-utilization' }
   ];
-
+  accountId = "HDFC_BANK_1";
+  accountReferenceNumber = 'HDFC_BANK_1';
   visibleTabs: TabItem[] = [];
   overflowTabs: TabItem[] = [];
   activeTabId: string = 'summary';
   monthList: string[] = [];
+  reportId = 1233333
   dailyBalanceTable: any[] = [];
+  report: any
   constructor(
+    private routingService: RoutingService,
     private route: ActivatedRoute,
+    private location: Location,
     private bankService: BsanalyzerService
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.fetchReport();
+  }
 
   ngAfterViewInit() {
     setTimeout(() => {
@@ -99,6 +122,28 @@ export class AnalyzedBankReportComponent implements OnInit {
     this.updateActiveIndex();
   }
 
+  editReport(reportId: string) {
+    if (reportId) {
+      this.routingService.handleRoute(`bsanalyzer/${reportId}`, null);
+
+      // this.router.navigate(['/reports/edit', reportId]); // adjust route as per your routing config
+    }
+  }
+  fetchReport() {
+    const params = {
+      reportId: this.reportId,
+      // accountReferenceNumber: this.accountReferenceNumber
+    };
+    this.bankService.fetchReport(params).subscribe({
+      next: (res: any) => {
+        console.log('Fetched report:', res);
+        this.report = res;
+      },
+      error: (err) => {
+        console.error('Error fetching report', err);
+      }
+    });
+  }
   calculateTabs() {
     if (!this.tabContainer?.nativeElement) return;
 
@@ -115,7 +160,7 @@ export class AnalyzedBankReportComponent implements OnInit {
         this.visibleTabs.push(tab);
       } else {
         this.overflowTabs.push(tab);
-        console.log(this.overflowTabs)
+        // console.log(this.overflowTabs)
       }
     }
   }
@@ -146,8 +191,8 @@ export class AnalyzedBankReportComponent implements OnInit {
     return this.overflowTabs.map(tab => ({
       label: tab.label,
       command: () => {
-        console.log('Clicked overflow tab:', tab);   // log full tab object
-        console.log('Tab ID:', tab.id);              // log only id
+        // console.log('Clicked overflow tab:', tab);   // log full tab object
+        // console.log('Tab ID:', tab.id);              // log only id
 
         this.activeTabId = tab.id;
         this.updateActiveIndex();
@@ -177,65 +222,65 @@ export class AnalyzedBankReportComponent implements OnInit {
       case 'counterparty':
         this.loadCounterparty();
         break;
-      // case 'aml-analysis':
-      //   this.loadAmlAnalysis();
-      //   break;
-      // case 'recurring-payments':
-      //   this.loadRecurringPayments();
-      //   break;
-      // case 'loans':
-      //   this.loadLoans();
-      //   break;
+      case 'aml-analysis':
+        this.loadAmlAnalysis();
+        break;
+      case 'recurring-payments':
+        this.loadRecurringPayments();
+        break;
+      case 'loans':
+        this.loadLoans();
+        break;
       // case 'loans-analysis':
       //   this.loadLoansAnalysis();
       //   break;
       case 'daily-balance':
         this.loadDailyBalance();
         break;
-      // case 'monthly-summary':
-      //   this.loadMonthlySummary();
-      //   break;
+      case 'monthly-summary':
+        this.loadMonthlySummary();
+        break;
       case 'categories':
         this.loadCategories();
         break;
-      // case 'emi-payments':
-      //   this.loadEmiPayments();
-      //   break;
+      case 'emi-payments':
+        this.loadEmiPayments();
+        break;
       case 'bounced-cheques':
         this.loadBouncedCheques();
         break;
-      // case 'upi-txns-analysis':
-      //   this.loadUpiTxnsAnalysis();
-      //   break;
+      case 'upi-txns-analysis':
+        this.loadUpiTxnsAnalysis();
+        break;
       case 'cash-flow':
         this.loadCashFlow();
         break;
-      // case 'cash-flow-analysis':
-      //   this.loadCashFlowAnalysis();
-      //   break;
-      // case 'recurring-deposits':
-      //   this.loadRecurringDeposits();
-      //   break;
+      case 'cash-flow-analysis':
+        this.loadCashFlowAnalysis();
+        break;
+      case 'recurring-deposits':
+        this.loadRecurringDeposits();
+        break;
       case 'biz-cash-flow':
         this.loadBizCashFlow();
         break;
-      // case 'available-balance':
-      //   this.loadAvailableBalance();
-      //   break;
+      case 'available-balance':
+        this.loadAvailableBalance();
+        break;
       case 'duplicate-txns':
         this.loadDuplicateTxns();
         break;
-        // case 'inter-bank-transfers':
-        //   this.loadInterBankTransfers();
-        //   break;
-        // case 'circular-txns':
-        //   this.loadCircularTxns();
-        //   break;
-        // case 'salary':
-        //   this.loadSalary();
-        //   break;
-        // case 'od-cc-utilization':
-        //   this.loadOdCcUtilization();
+      // case 'inter-bank-transfers':
+      //   this.loadInterBankTransfers();
+      //   break;
+      // case 'circular-txns':
+      //   this.loadCircularTxns();
+      //   break;
+      case 'salary':
+        this.loadSalary();
+        break;
+      case 'od-cc-utilization':
+        this.loadOdCcUtilization();
         break;
       default:
         console.warn(`No function mapped for tabId: ${tabId}`);
@@ -248,19 +293,24 @@ export class AnalyzedBankReportComponent implements OnInit {
   }
   loadSummary() {
     this.loading = true;
-    this.bankService.extractSummaryDetails("1").subscribe({
+    const params = {
+      // accountId: this.accountId,
+      accountReferenceNumber: this.accountReferenceNumber
+    };
+
+    this.bankService.extractSummaryDetails(params).subscribe({
       next: (data: any[]) => {
         this.reportData = data;
         const bankAccountsSection = this.reportData.filter(
           sec => sec.sectionName === 'Bank Accounts'
         );
         if (bankAccountsSection) {
-          console.log(bankAccountsSection)
+          // console.log(bankAccountsSection)
           this.accountData = bankAccountsSection.find(
             (v: any) => v.setId === 2
           );
           if (this.accountData?.sectionValues) {
-            console.log()
+            // console.log()
             this.bankAccountDetails = this.accountData.sectionValues.reduce(
               (acc: any, item: any) => {
                 acc[item.key] = item.value || '-';
@@ -299,7 +349,11 @@ export class AnalyzedBankReportComponent implements OnInit {
 
   loadOverviewData() {
     this.overviewLoading = true;
-    this.bankService.extractOverviewDetails("1") // replace with your API call
+    const params = {
+      // accountId: this.accountId,
+      accountReferenceNumber: this.accountReferenceNumber
+    };
+    this.bankService.extractOverviewDetails(params) // replace with your API call
       .subscribe({
         next: (res) => {
           this.overviewData = res;
@@ -319,8 +373,7 @@ export class AnalyzedBankReportComponent implements OnInit {
     const rows = event.rows;
     const sortBy = event.sortField || 'transaction_date';
     const order = event.sortOrder === 1 ? 'asc' : 'desc';
-    const accountId = "1";
-    const accountReferenceNumber = '1';
+
 
     // Extract filters from PrimeNG table
     const tableFilters = {};
@@ -343,8 +396,9 @@ export class AnalyzedBankReportComponent implements OnInit {
       rows,
       sortBy,
       order,
-      accountId,
-      // accountReferenceNumber
+      // accountId: this.accountId,
+      accountReferenceNumber: this.accountReferenceNumber
+
     };
 
     this.bankService.extractTransactions(params, tableFilters)
@@ -364,8 +418,13 @@ export class AnalyzedBankReportComponent implements OnInit {
 
 
   loadIrregularities() {
+
     this.overviewLoading = true;
-    this.bankService.extractIrregularities("1") // replace with your API call
+    const params = {
+      // accountId: this.accountId,
+      accountReferenceNumber: this.accountReferenceNumber
+    };
+    this.bankService.extractIrregularities(params) // replace with your API call
       .subscribe({
         next: (res) => {
           this.irregularitiesData = res;
@@ -380,7 +439,11 @@ export class AnalyzedBankReportComponent implements OnInit {
 
   loadCounterparty() {
     this.overviewLoading = true;
-    this.bankService.extractCounterparty("1") // replace with your API call
+    const params = {
+      // accountId: this.accountId,
+      accountReferenceNumber: this.accountReferenceNumber
+    };
+    this.bankService.extractCounterparty(params) // replace with your API call
       .subscribe({
         next: (res) => {
           this.countePartyData = res;
@@ -394,9 +457,13 @@ export class AnalyzedBankReportComponent implements OnInit {
   }
 
   loadDailyBalance() {
-    console.log("daily balance")
+    // console.log("daily balance")
     this.overviewLoading = true;
-    this.bankService.extractDailyBalance("1") // replace with your API call
+    const params = {
+      // accountId: this.accountId,
+      accountReferenceNumber: this.accountReferenceNumber
+    };
+    this.bankService.extractDailyBalance(params) // replace with your API call
       .subscribe({
         next: (res) => {
           this.dailyBalanceData = res;
@@ -418,7 +485,7 @@ export class AnalyzedBankReportComponent implements OnInit {
     if (!this.monthList.includes('Average')) {
       this.monthList = ['Average', ...this.monthList];
     }
-    console.log(this.monthList)
+    // console.log(this.monthList)
     // Transform day object into table rows
     this.dailyBalanceTable = Object.keys(this.dailyBalanceData.day).map(dayKey => {
       const row: any = { day: dayKey };
@@ -431,7 +498,11 @@ export class AnalyzedBankReportComponent implements OnInit {
 
   loadCategories() {
     this.overviewLoading = true;
-    this.bankService.extractCategories("1") // replace with your API call
+    const params = {
+      // accountId: this.accountId,
+      accountReferenceNumber: this.accountReferenceNumber
+    };
+    this.bankService.extractCategories(params) // replace with your API call
       .subscribe({
         next: (res) => {
           this.categoriesData = res; // whole object
@@ -439,7 +510,7 @@ export class AnalyzedBankReportComponent implements OnInit {
             .map((cat: any) => this.mapToTreeNode(cat));
           this.outflowCategories = (this.categoriesData.outflows || [])
             .map((cat: any) => this.mapToTreeNode(cat));
-          console.log(this.inflowCategories);
+          // console.log(this.inflowCategories);
           this.overviewLoading = false;
         },
         error: () => {
@@ -465,7 +536,11 @@ export class AnalyzedBankReportComponent implements OnInit {
 
   loadBouncedCheques() {
     this.overviewLoading = true;
-    this.bankService.extractBouncedChequeDetails("1") // replace with your API call
+    const params = {
+      // accountId: this.accountId,
+      accountReferenceNumber: this.accountReferenceNumber
+    };
+    this.bankService.extractBouncedChequeDetails(params) // replace with your API call
       .subscribe({
         next: (res) => {
           this.bouncedChequeData = res;
@@ -486,7 +561,11 @@ export class AnalyzedBankReportComponent implements OnInit {
 
   loadCashFlow() {
     this.overviewLoading = true;
-    this.bankService.extractCashFlowDetails("1") // replace with your API call
+    const params = {
+      // accountId: this.accountId,
+      accountReferenceNumber: this.accountReferenceNumber
+    };
+    this.bankService.extractCashFlowDetails(params) // replace with your API call
       .subscribe({
         next: (res) => {
           this.cashFlowData = res;
@@ -502,7 +581,11 @@ export class AnalyzedBankReportComponent implements OnInit {
 
   loadBizCashFlow() {
     this.overviewLoading = true;
-    this.bankService.extractBusinessCashFlowDetails("1") // replace with your API call
+    const params = {
+      // accountId: this.accountId,
+      accountReferenceNumber: this.accountReferenceNumber
+    };
+    this.bankService.extractBusinessCashFlowDetails(params) // replace with your API call
       .subscribe({
         next: (res) => {
           this.bizCashFlow = res;
@@ -518,7 +601,11 @@ export class AnalyzedBankReportComponent implements OnInit {
 
   loadDuplicateTxns() {
     this.overviewLoading = true;
-    this.bankService.extractDuplicateTransactions("1") // replace with your API call
+    const params = {
+      // accountId: this.accountId,
+      accountReferenceNumber: this.accountReferenceNumber
+    };
+    this.bankService.extractDuplicateTransactions(params) // replace with your API call
       .subscribe({
         next: (res) => {
           this.duplicateTxnsData = res;
@@ -527,6 +614,376 @@ export class AnalyzedBankReportComponent implements OnInit {
         },
         error: () => {
           this.duplicateTxnsData = null;
+          this.overviewLoading = false;
+        }
+      });
+  }
+
+  loadRecurringPayments() {
+    this.overviewLoading = true;
+    const params = {
+      // accountId: this.accountId,
+      accountReferenceNumber: this.accountReferenceNumber,
+      type: "recurringPayments"
+    };
+    this.bankService.extractPatternDetails(params) // replace with your API call
+      .subscribe({
+        next: (res) => {
+          this.recurringPaymentsData = res;
+          this.overviewLoading = false;
+        },
+        error: () => {
+          this.recurringPaymentsData = null;
+          this.overviewLoading = false;
+        }
+      });
+  }
+  loadLoans() {
+    this.overviewLoading = true;
+    const params = {
+      // accountId: this.accountId,
+      accountReferenceNumber: this.accountReferenceNumber,
+      type: "loans"
+    };
+    this.bankService.extractPatternDetails(params) // replace with your API call
+      .subscribe({
+        next: (res) => {
+          this.loansData = res;
+          this.overviewLoading = false;
+        },
+        error: () => {
+          this.loansData = null;
+          this.overviewLoading = false;
+        }
+      });
+  }
+
+  loadEmiPayments() {
+    this.overviewLoading = true;
+    const params = {
+      // accountId: this.accountId,
+      accountReferenceNumber: this.accountReferenceNumber,
+      type: "emi"
+    };
+    this.bankService.extractPatternDetails(params) // replace with your API call
+      .subscribe({
+        next: (res) => {
+          this.emiPaymentsData = res;
+          this.overviewLoading = false;
+        },
+        error: () => {
+          this.emiPaymentsData = null;
+          this.overviewLoading = false;
+        }
+      });
+  }
+
+  loadRecurringDeposits() {
+    this.overviewLoading = true;
+    const params = {
+      // accountId: this.accountId,
+      accountReferenceNumber: this.accountReferenceNumber,
+      type: "recurringDeposits"
+    };
+    this.bankService.extractPatternDetails(params) // replace with your API call
+      .subscribe({
+        next: (res) => {
+          this.recurringDepositsData = res;
+          this.overviewLoading = false;
+        },
+        error: () => {
+          this.recurringDepositsData = null;
+          this.overviewLoading = false;
+        }
+      });
+  }
+
+  loadSalary() {
+    this.overviewLoading = true;
+    const params = {
+      // accountId: this.accountId,
+      accountReferenceNumber: this.accountReferenceNumber,
+      type: "salary"
+    };
+    this.bankService.extractPatternDetails(params) // replace with your API call
+      .subscribe({
+        next: (res) => {
+          this.salaryData = res;
+          this.overviewLoading = false;
+        },
+        error: () => {
+          this.salaryData = null;
+          this.overviewLoading = false;
+        }
+      });
+  }
+
+  loadOdCcUtilization() {
+    this.overviewLoading = true;
+    const params = {
+      // accountId: this.accountId,
+      accountReferenceNumber: this.accountReferenceNumber
+    };
+    this.bankService.extractOdCCUtilization(params) // replace with your API call
+      .subscribe({
+        next: (res) => {
+          this.odccUtilizationData = res;
+          this.overviewLoading = false;
+        },
+        error: () => {
+          this.odccUtilizationData = null;
+          this.overviewLoading = false;
+        }
+      });
+  }
+  loadAvailableBalance() {
+    this.overviewLoading = true;
+    const params = {
+      // accountId: this.accountId,
+      accountReferenceNumber: this.accountReferenceNumber
+    };
+    this.bankService.extractAvailableBalance(params) // replace with your API call
+      .subscribe({
+        next: (res) => {
+          this.avaliableBalanceData = res;
+          this.overviewLoading = false;
+          this.setChartOptions();
+        },
+        error: () => {
+          this.avaliableBalanceData = null;
+          this.overviewLoading = false;
+        }
+      });
+  }
+
+  setChartOptions() {
+    const categories = this.avaliableBalanceData.entirePeriod.map(item => Number(item.balanceBucket));
+    const seriesData = this.avaliableBalanceData.entirePeriod.map(item => Number(item.availabilityPct));
+    this.chartOptions = {
+      series: [
+        {
+          name: "Occurrence %",
+          data: seriesData
+        }
+      ],
+      chart: {
+        type: "area",
+        height: 350,
+        zoom: { enabled: false }
+      },
+      dataLabels: { enabled: false },
+      stroke: { curve: "smooth" },
+      fill: {
+        type: "gradient",
+        gradient: {
+          shadeIntensity: 1,
+          opacityFrom: 0.6,
+          opacityTo: 0.1,
+          stops: [0, 100]
+        }
+      },
+      xaxis: {
+        categories: categories,
+        title: { text: "Balance Amount" },
+        labels: {
+          formatter: (val: any) => {
+            if (val === undefined || val === null) return "";   // 👈 prevent crash
+            return val.toString().replace(/\B(?=(\d{2})+(?!\d))/g, ",");
+          }
+        }
+      },
+      yaxis: {
+        title: { text: "Occurrence % (Occurred Days / Total Days)" },
+        max: 100
+      },
+      tooltip: {
+        y: {
+          formatter: (val: number) => `${val}%`
+        }
+      }
+    };
+  }
+  goBack() {
+    this.location.back();
+  }
+  loadMonthlySummary() {
+    this.overviewLoading = true;
+    const params = {
+      // accountId: this.accountId,
+      accountReferenceNumber: this.accountReferenceNumber
+    };
+    this.bankService.extractTransactionSummary(params) // replace with your API call
+      .subscribe({
+        next: (res) => {
+          this.months = res.months;
+          this.monthlySummaryData = this.transformPivot(res);
+          this.overviewLoading = false;
+        },
+        error: () => {
+          this.monthlySummaryData = [];
+          this.overviewLoading = false;
+        }
+      });
+  }
+
+  transformPivot(apiResponse: any): any[] {
+    const { months, closingBalance, ...categories } = apiResponse;
+
+    const treeData: any[] = [];
+
+    // ✅ 1. Opening Balance
+    const openingNode: any = { data: { name: 'Opening Balance' } };
+    months.forEach((m, idx) => {
+      const prevBalance = idx === 0
+        ? null
+        : closingBalance.find((b: any) => b.month === months[idx - 1]);
+
+      openingNode.data[m] = {
+        amount: prevBalance ? Number(prevBalance.amount).toFixed(2) : '-',
+        txn: null
+      };
+    });
+    treeData.push(openingNode);
+
+    // ✅ 2. Dynamic categories (Deposits, Withdrawals, etc.)
+    Object.entries(categories).forEach(([catKey, catValue]: any) => {
+      // Example: "dataDeposits": { Deposits: { data:[...], Loan:{}, Tax Return:{} } }
+      Object.entries(catValue).forEach(([catName, catDetail]: any) => {
+        const node: any = { data: { name: catName }, children: [] };
+
+        // Fill parent (if it has direct "data")
+        if (catDetail?.data) {
+          months.forEach(m => {
+            const match = catDetail.data.find(
+              (d: any) => d.month.toLowerCase().replace(/\s+/g, '') === m.toLowerCase().replace(/\s+/g, '')
+            );
+            node.data[m] = {
+              amount: match ? Number(match.amount).toFixed(2) : '-',
+              txn: match ? match.count : '-'
+            };
+          });
+        }
+
+        // Fill children (Loan, Tax Return, etc.)
+        Object.entries(catDetail).forEach(([subKey, subValue]: any) => {
+          if (subKey === 'data') return; // skip main data
+          const subNode: any = { data: { name: subKey } };
+
+          months.forEach(m => {
+            const match = subValue?.data?.find(
+              (d: any) => d.month.toLowerCase().replace(/\s+/g, '') === m.toLowerCase().replace(/\s+/g, '')
+            );
+            subNode.data[m] = {
+              amount: match ? Number(match.amount).toFixed(2) : '-',
+              txn: match ? match.count : '-'
+            };
+          });
+
+          node.children.push(subNode);
+        });
+
+        treeData.push(node);
+      });
+    });
+
+    // ✅ 3. Closing Balance
+    const closingNode: any = { data: { name: 'Closing Balance' } };
+    months.forEach(m => {
+      const cb = closingBalance.find(
+        (b: any) => b.month.toLowerCase().replace(/\s+/g, '') === m.toLowerCase().replace(/\s+/g, '')
+      );
+      closingNode.data[m] = {
+        amount: cb ? Number(cb.amount).toFixed(2) : '-',
+        txn: null
+      };
+    });
+    treeData.push(closingNode);
+
+    // console.log("Monthly summary:", treeData);
+    return treeData;
+  }
+  downloadCam() {
+    const params = {
+      // accountId: this.accountId,
+      accountReferenceNumber: this.accountReferenceNumber
+    };
+    this.bankService.downloadCamFile(params).subscribe({
+      next: (blob: Blob) => {
+        // Check if the blob is actually an Excel file
+
+
+        // Create Excel download
+        const file = new Blob([blob], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        const url = window.URL.createObjectURL(file);
+        window.open(url, "_blank")
+        // const a = document.createElement('a');
+        // a.href = url;
+        // a.download = 'report.xlsx';
+        // document.body.appendChild(a);
+        // a.click();
+        // document.body.removeChild(a);
+        // window.URL.revokeObjectURL(url);
+      },
+      error: (err) => console.error('Download failed:', err)
+    });
+  }
+
+
+
+  loadAmlAnalysis() {
+    this.overviewLoading = true;
+    const params = {
+      // accountId: this.accountId,
+      accountReferenceNumber: this.accountReferenceNumber
+    };
+    this.bankService.extractAMLAnalysis(params) // replace with your API call
+      .subscribe({
+        next: (res) => {
+          this.amlAnalysisData = res;
+          this.overviewLoading = false;
+        },
+        error: () => {
+          this.amlAnalysisData = null;
+          this.overviewLoading = false;
+        }
+      });
+  }
+
+
+  loadUpiTxnsAnalysis() {
+    this.overviewLoading = true;
+    const params = {
+      // accountId: this.accountId,
+      accountReferenceNumber: this.accountReferenceNumber
+    };
+    this.bankService.extractUPIAnalysis(params) // replace with your API call
+      .subscribe({
+        next: (res) => {
+          this.upiTxnsData = res;
+          this.overviewLoading = false;
+        },
+        error: () => {
+          this.upiTxnsData = null;
+          this.overviewLoading = false;
+        }
+      });
+  }
+
+
+  loadCashFlowAnalysis() {
+    this.overviewLoading = true;
+    const params = {
+      // accountId: this.accountId,
+      accountReferenceNumber: this.accountReferenceNumber
+    };
+    this.bankService.extractCashFlowAnalysis(params) // replace with your API call
+      .subscribe({
+        next: (res) => {
+          this.cashFlowAnalysisData = res;
+          this.overviewLoading = false;
+        },
+        error: () => {
+          this.cashFlowAnalysisData = null;
           this.overviewLoading = false;
         }
       });

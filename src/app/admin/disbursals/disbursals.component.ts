@@ -76,7 +76,7 @@ export class DisbursalsComponent implements OnInit {
   homeloanLeadsCount: any = 0;
   appliedFilterHome: {};
   searchFilterPersonal: any = {};
-  searchFilterProfessional: any={};
+  searchFilterProfessional: any = {};
   @ViewChild('personalleadsTable') personalleadsTable!: Table;
   @ViewChild('professionalLoansTable') professionalLoansTable!: Table;
   @ViewChild('HomeleadsTable') HomeleadsTable!: Table;
@@ -323,11 +323,11 @@ export class DisbursalsComponent implements OnInit {
         ],
       },
       {
-        header: 'Had Own House',
+        header: 'Property Type',
         data: [
           {
             field: 'hadOwnHouse',
-            title: 'Had Own House',
+            title: 'Property Type',
             type: 'dropdown',
             filterType: 'like',
             options: this.hadOwnHouse.map((ownHouse) => ({

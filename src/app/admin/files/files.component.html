@@ -1,5 +1,5 @@
 <div>
-  <div class="p-1 m-2 fixed-card" style="background-color: #f7f7f7;">
+  <div class="p-1 m-2 fixed-card" style="background-color: #f7f7f7">
     <div class="d-flex justify-content-between">
       <div
         class="d-flex align-items-center justify-content-center pointer-cursor"
@@ -63,7 +63,7 @@
             styleClass="p-datatable-customers "
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} files"
           >
-            <ng-template pTemplate="caption"  style="background-color: #f7f7f7;">
+            <ng-template pTemplate="caption" style="background-color: #f7f7f7">
               <div class="row">
                 <div class="col-md-3 mt-2 no-padding-small">
                   <div class="p-inputgroup custom-search">
@@ -72,11 +72,19 @@
                       pInputText
                       placeholder="Search File with Business Name"
                       [(ngModel)]="businessNameToSearch"
-                      (ngModelChange)="inputValueChangeEvent('loanId', businessNameToSearch)"
+                      (ngModelChange)="
+                        inputValueChangeEvent('loanId', businessNameToSearch)
+                      "
                       (keyup.enter)="filterWithBusinessName()"
                     />
-                    <span class="input-group-text search-btn" (click)="filterWithBusinessName()">
-                      <img src="../../../assets/images/icons/search.svg" alt="Search" />
+                    <span
+                      class="input-group-text search-btn"
+                      (click)="filterWithBusinessName()"
+                    >
+                      <img
+                        src="../../../assets/images/icons/search.svg"
+                        alt="Search"
+                      />
                     </span>
                   </div>
                 </div>
@@ -214,8 +222,8 @@
                 <!-- <th class="text-nowrap">Created Date</th> -->
                 <th class="text-nowrap">Uploaded Date</th>
                 <th>Remarks</th>
-                <!-- <th>Status</th> -->
-                <th>Actions</th>
+                <th>Status</th>
+                <th class="text-nowrap">Quick Actions</th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-lead>
@@ -329,6 +337,43 @@
                     [disabled]="userDetails?.userType == 3"
                   ></p-dropdown>
                 </td>
+                <td>
+                  <span
+                    class="d-inline-flex align-items-center justify-content-start gap-2"
+                    [ngStyle]="{
+                      backgroundColor: getStatusColor(
+                        getStatusName(lead.leadInternalStatus)
+                      ).backgroundColor,
+                      color: getStatusColor(
+                        getStatusName(lead.leadInternalStatus)
+                      ).textColor,
+                      height: '22px',
+                      width: getStatusColor(
+                        getStatusName(lead.leadInternalStatus)
+                      ).width,
+                      borderRadius: '16px',
+                      fontSize: '12px',
+                      fontWeight: 500,
+                      paddingLeft: '8px'
+                    }"
+                  >
+                    <!--Dot -->
+                    <span
+                      class="rounded-circle"
+                      [ngStyle]="{
+                        backgroundColor: getStatusColor(
+                          getStatusName(lead.leadInternalStatus)
+                        ).dotColor,
+                        width: '8px',
+                        height: '8px',
+                        display: 'inline-block'
+                      }"
+                    >
+                    </span>
+                    {{ getStatusName(lead.leadInternalStatus) }}
+                  </span>
+                </td>
+
                 <!-- <td>
                   <span
                     class="table-column-data fw-bold statusdata"
@@ -477,7 +522,9 @@
                     width="200"
                     height="200"
                   /> -->
-                  <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No Files Found</p>
+                  <p style="color: #535ab4; font-weight: 400; font-size: 18px">
+                    No Files Found
+                  </p>
                 </td>
               </tr>
             </ng-template>
@@ -539,14 +586,14 @@
                       (click)="filterWithBusinessNameForPersonal()"
                     ></button> -->
                     <span
-                        class="input-group-text p-button-primary"
-                        (click)="filterWithBusinessNameForPersonal()"
-                      >
-                        <img
-                          src="../../../assets/images/icons/search.svg"
-                          alt="Search"
-                          style="width: 14px; height: 14px; cursor: pointer"
-                        />
+                      class="input-group-text p-button-primary"
+                      (click)="filterWithBusinessNameForPersonal()"
+                    >
+                      <img
+                        src="../../../assets/images/icons/search.svg"
+                        alt="Search"
+                        style="width: 14px; height: 14px; cursor: pointer"
+                      />
                     </span>
                     <!-- <button
                       type="button"
@@ -629,7 +676,7 @@
                   Sourced By
                 </th>
                 <th class="text-nowrap">Created Date</th>
-                <th>Actions</th>
+                <th class="text-nowrap">Quick Actions</th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-lead>
@@ -656,14 +703,12 @@
 
                 <td>
                   <span class="table-column-data">{{
-                    lead.salary ? (lead.salary) : "-"
+                    lead.salary ? lead.salary : "-"
                   }}</span>
                 </td>
                 <td>
                   <span class="table-column-data">{{
-                    lead.jobExperience
-                      ? (lead.jobExperience)
-                      : "-"
+                    lead.jobExperience ? lead.jobExperience : "-"
                   }}</span>
                 </td>
                 <td
@@ -787,7 +832,9 @@
                     width="200"
                     height="200"
                   /> -->
-                  <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No Files Found</p>
+                  <p style="color: #535ab4; font-weight: 400; font-size: 18px">
+                    No Files Found
+                  </p>
                 </td>
               </tr>
             </ng-template>
@@ -869,15 +916,15 @@
                           (click)="filterBasedOnEmploymentStatus()"
                         ></button> -->
                         <span
-                        class="input-group-text p-button-primary"
-                        (click)="filterBasedOnEmploymentStatus()"
-                      >
-                        <img
-                          src="../../../assets/images/icons/search.svg"
-                          alt="Search"
-                          style="width: 14px; height: 14px; cursor: pointer"
-                        />
-                    </span>
+                          class="input-group-text p-button-primary"
+                          (click)="filterBasedOnEmploymentStatus()"
+                        >
+                          <img
+                            src="../../../assets/images/icons/search.svg"
+                            alt="Search"
+                            style="width: 14px; height: 14px; cursor: pointer"
+                          />
+                        </span>
                         <!-- <button
                           type="button"
                           pButton
@@ -1012,7 +1059,7 @@
                       Sourced By
                     </th>
                     <th class="text-nowrap">Created Date</th>
-                    <th>Actions</th>
+                    <th class="text-nowrap">Quick Actions</th>
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-lead>
@@ -1052,7 +1099,7 @@
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'employed'">
                       <span class="table-column-data">{{
-                        lead.salary ? (lead.salary) : "-"
+                        lead.salary ? lead.salary : "-"
                       }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'self-employed'">
@@ -1064,9 +1111,7 @@
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'employed'">
                       <span class="table-column-data">{{
-                        lead.jobExperience
-                          ? (lead.jobExperience)
-                          : "-"
+                        lead.jobExperience ? lead.jobExperience : "-"
                       }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'self-employed'">
@@ -1221,7 +1266,15 @@
                         width="200"
                         height="200"
                       /> -->
-                      <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No Files Found</p>
+                      <p
+                        style="
+                          color: #535ab4;
+                          font-weight: 400;
+                          font-size: 18px;
+                        "
+                      >
+                        No Files Found
+                      </p>
                     </td>
                   </tr>
                 </ng-template>
@@ -1305,15 +1358,15 @@
                           (click)="filterBasedOnEmploymentStatus()"
                         ></button> -->
                         <span
-                        class="input-group-text p-button-primary"
-                        (click)="filterBasedOnEmploymentStatus()"
-                      >
-                        <img
-                          src="../../../assets/images/icons/search.svg"
-                          alt="Search"
-                          style="width: 14px; height: 14px; cursor: pointer"
-                        />
-                    </span>
+                          class="input-group-text p-button-primary"
+                          (click)="filterBasedOnEmploymentStatus()"
+                        >
+                          <img
+                            src="../../../assets/images/icons/search.svg"
+                            alt="Search"
+                            style="width: 14px; height: 14px; cursor: pointer"
+                          />
+                        </span>
                         <!-- <button
                           type="button"
                           pButton
@@ -1427,7 +1480,7 @@
                       Sourced By
                     </th>
                     <th>Created Date</th>
-                    <th>Actions</th>
+                    <th class="text-nowrap">Quick Actions</th>
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-lead>
@@ -1474,14 +1527,12 @@
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'employed'">
                       <span class="table-column-data">{{
-                        lead.salary ? (lead.salary) : "-"
+                        lead.salary ? lead.salary : "-"
                       }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'employed'">
                       <span class="table-column-data">{{
-                        lead.jobExperience
-                          ? (lead.jobExperience)
-                          : "-"
+                        lead.jobExperience ? lead.jobExperience : "-"
                       }}</span>
                     </td>
                     <td
@@ -1629,7 +1680,15 @@
                         width="200"
                         height="200"
                       /> -->
-                      <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No Files Found</p>
+                      <p
+                        style="
+                          color: #535ab4;
+                          font-weight: 400;
+                          font-size: 18px;
+                        "
+                      >
+                        No Files Found
+                      </p>
                     </td>
                   </tr>
                 </ng-template>
@@ -1641,7 +1700,7 @@
       <div *ngIf="activeItem.name == 'professionalLoans'">
         <div class="text-capitalize">
           <p-table
-           #professionalleadsTable
+            #professionalleadsTable
             [value]="loanLeads"
             [sortOrder]="-1"
             [lazy]="true"
@@ -1693,14 +1752,14 @@
                       (click)="filterWithBusinessNameForPersonal()"
                     ></button> -->
                     <span
-                        class="input-group-text p-button-primary"
-                        (click)="filterWithBusinessNameForProfessional()"
-                      >
-                        <img
-                          src="../../../assets/images/icons/search.svg"
-                          alt="Search"
-                          style="width: 14px; height: 14px; cursor: pointer"
-                        />
+                      class="input-group-text p-button-primary"
+                      (click)="filterWithBusinessNameForProfessional()"
+                    >
+                      <img
+                        src="../../../assets/images/icons/search.svg"
+                        alt="Search"
+                        style="width: 14px; height: 14px; cursor: pointer"
+                      />
                     </span>
                     <!-- <button
                       type="button"
@@ -1783,7 +1842,7 @@
                   Sourced By
                 </th>
                 <th class="text-nowrap">Created Date</th>
-                <th>Actions</th>
+                <th class="text-nowrap">Quick Actions</th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-lead>
@@ -1811,21 +1870,20 @@
                   <span class="table-column-data singleline">
                     {{
                       lead.designation
-                        ? (getDesignationType(lead.designation) | capitalizeFirst)
+                        ? (getDesignationType(lead.designation)
+                          | capitalizeFirst)
                         : "-"
                     }}
                   </span>
                 </td>
                 <td>
                   <span class="table-column-data">{{
-                    lead.salary ? (lead.salary) : "-"
+                    lead.salary ? lead.salary : "-"
                   }}</span>
                 </td>
                 <td>
                   <span class="table-column-data">{{
-                    lead.jobExperience
-                      ? (lead.jobExperience)
-                      : "-"
+                    lead.jobExperience ? lead.jobExperience : "-"
                   }}</span>
                 </td>
                 <td
@@ -1949,45 +2007,23 @@
                     width="200"
                     height="200"
                   /> -->
-                  <p style="color: #535AB4; font-weight: 400; font-size: 18px;">No Files Found</p>
+                  <p style="color: #535ab4; font-weight: 400; font-size: 18px">
+                    No Files Found
+                  </p>
                 </td>
               </tr>
             </ng-template>
           </p-table>
         </div>
-          <!-- <div class="card comingsoon" style="height: 450px; width: 950px; border-radius: 8px; box-shadow: 0 0 4px 0; margin-left: 200px; margin-top: 50px;">
-          <div class="d-flex">
-            <img src="../../../assets/images/Group (2).svg" alt="comingsoonimg" style="height: 398px; width: 280.68px; margin-top: 31px;">
-          <img src="../../../assets/images/Group (1).svg" alt="comingsoonName" style="height: 75px; width: 461px; margin-top: 150px;">
-          </div>
-         </div> -->
       </div>
       <div *ngIf="activeItem.name == 'educationlLoans'">
         <app-comming-soon></app-comming-soon>
-          <!-- <div class="card comingsoon" style="height: 450px; width: 950px; border-radius: 8px; box-shadow: 0 0 4px 0; margin-left: 200px; margin-top: 50px;">
-          <div class="d-flex">
-            <img src="../../../assets/images/Group (2).svg" alt="comingsoonimg" style="height: 398px; width: 280.68px; margin-top: 31px;">
-          <img src="../../../assets/images/Group (1).svg" alt="comingsoonName" style="height: 75px; width: 461px; margin-top: 150px;">
-          </div>
-         </div> -->
       </div>
       <div *ngIf="activeItem.name == 'carLoan'">
-        <!--  <div class="card comingsoon" style="height: 450px; width: 950px; border-radius: 8px; box-shadow: 0 0 4px 0; margin-left: 200px; margin-top: 50px;">
-          <div class="d-flex">
-            <img src="../../../assets/images/Group (2).svg" alt="comingsoonimg" style="height: 398px; width: 280.68px; margin-top: 31px;">
-          <img src="../../../assets/images/Group (1).svg" alt="comingsoonName" style="height: 75px; width: 461px; margin-top: 150px;">
-          </div>
-         </div> -->
-          <app-comming-soon></app-comming-soon>
+        <app-comming-soon></app-comming-soon>
       </div>
       <div *ngIf="activeItem.name == 'commercialVehicleLoan'">
         <app-comming-soon></app-comming-soon>
-          <!-- <div class="card comingsoon" style="height: 450px; width: 950px; border-radius: 8px; box-shadow: 0 0 4px 0; margin-left: 200px; margin-top: 50px;">
-          <div class="d-flex">
-            <img src="../../../assets/images/Group (2).svg" alt="comingsoonimg" style="height: 398px; width: 280.68px; margin-top: 31px;">
-          <img src="../../../assets/images/Group (1).svg" alt="comingsoonName" style="height: 75px; width: 461px; margin-top: 150px;">
-          </div>
-         </div> -->
       </div>
     </div>
   </div>

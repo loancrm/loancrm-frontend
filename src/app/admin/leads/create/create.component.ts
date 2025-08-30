@@ -320,6 +320,7 @@ export class CreateComponent {
   onSubmit(formValues) {
     this.submitted = true;
     if (this.leadForm.invalid) {
+      this.toastService.showError({ error: "Please fill all mandatory fields." });
       return
     }
     let formData: any = {

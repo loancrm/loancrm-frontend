@@ -544,11 +544,11 @@ export class LeadsComponent implements OnInit {
       },
       { header: 'City', data: [createTextFilter('city', 'City Name')] },
       {
-        header: 'Had Own House',
+        header: 'Property Type',
         data: [
           createDropdownFilter(
             'hadOwnHouse',
-            'Had Own House',
+            'Property Type',
             hadOwnHouseOptions
           ),
         ],
@@ -631,11 +631,11 @@ export class LeadsComponent implements OnInit {
         data: [createTextFilter('city', 'City Name')],
       },
       {
-        header: 'Had Own House',
+        header: 'Property Type',
         data: [
           createDropdownFilter(
             'hadOwnHouse',
-            'Had Own House',
+            'Property Type',
             hadOwnHouseOptions
           ),
         ],
@@ -676,11 +676,11 @@ export class LeadsComponent implements OnInit {
         data: [createTextFilter('city', 'City Name')],
       },
       {
-        header: 'Had Own House',
+        header: 'Property Type',
         data: [
           createDropdownFilter(
             'hadOwnHouse',
-            'Had Own House',
+            'Property Type',
             hadOwnHouseOptions
           ),
         ],

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { BsanalyzerComponent } from './bsanalyzer.component';
 import { FileUploadModule } from 'primeng/fileupload';
 import { RouterModule, Routes } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     FileUploadModule,
     [RouterModule.forChild(routes)],
   ]

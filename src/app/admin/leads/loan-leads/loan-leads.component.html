@@ -544,7 +544,7 @@
                               placeholder="Salatyed/UnSalaryed"
                               [dropdownIcon]="'pi pi-chevron-down'"
                             ></p-dropdown>
-                            <!-- Error message for invalid Had Own House -->
+                            <!-- Error message for invalid Property Type -->
                             <!-- <div
                               *ngIf="
                                 leadForm.get('salaryedtype')?.invalid &&
@@ -776,7 +776,7 @@
                           <div>
                             <div class="my-1">
                               <label
-                                >Had Own House ?&nbsp;
+                               > Property Type &nbsp;
                                 <span
                                   ><sup class="text-danger">*</sup></span
                                 ></label
@@ -790,10 +790,10 @@
                               [showClear]="true"
                               styleClass="w-100"
                               appendTo="body"
-                              placeholder="Had Own House ?"
+                              placeholder = "Select Property Type"
                               [dropdownIcon]="'pi pi-chevron-down'"
                             ></p-dropdown>
-                            <!-- Error message for invalid Had Own House -->
+                            <!-- Error message for invalid Property Type -->
                             <div
                               *ngIf="
                                 leadForm.get('hadOwnHouse')?.invalid &&
@@ -805,7 +805,7 @@
                                 class="text-danger"
                                 *ngIf="leadForm.get('hadOwnHouse')?.errors?.['required']"
                               >
-                                Had Own House is required.
+                                Property Type is required.
                               </small>
                             </div>
                           </div>
@@ -1759,7 +1759,7 @@
                           <div>
                             <div class="my-1">
                               <label
-                                >Had Own House ?&nbsp;
+                               > Property Type &nbsp;
                                 <span
                                   ><sup class="text-danger">*</sup></span
                                 ></label
@@ -1773,10 +1773,10 @@
                               [showClear]="true"
                               styleClass="w-100"
                               appendTo="body"
-                              placeholder="Had Own House ?"
+                             placeholder = "Select Property Type"
                               [dropdownIcon]="'pi pi-chevron-down'"
                             ></p-dropdown>
-                            <!-- Error message for invalid Contact Had Own House -->
+                            <!-- Error message for invalid Contact Property Type -->
                             <div
                               *ngIf="
                                 leadFormforBusiness.get('hadOwnHouse')
@@ -1790,7 +1790,7 @@
                                 class="text-danger"
                                 *ngIf="leadFormforBusiness.get('hadOwnHouse')?.errors?.['required']"
                               >
-                                Had Own House is required.
+                                Property Type is required.
                               </small>
                             </div>
                           </div>

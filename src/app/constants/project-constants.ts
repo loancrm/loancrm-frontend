@@ -105,7 +105,7 @@ export const projectConstantsLocal = {
     { id: 2, name: 'personalLoan', displayName: 'Personal Loan' },
     { id: 3, name: 'homeLoan', displayName: 'Home Loan' },
     { id: 4, name: 'lap', displayName: 'LAP' },
-    {id: 5, name: 'professionalLoans', displayName: 'Professional Loan' }
+    { id: 5, name: 'professionalLoans', displayName: 'Professional Loan' }
   ],
   LEAD_INTERNAL_STATUS: [
     { id: '1', status: 'new', displayName: 'New' },
@@ -210,9 +210,14 @@ export const projectConstantsLocal = {
     { displayName: '5 - 10 Crores', name: '5 - 10 crores' },
     { displayName: 'Above 10 Crores', name: 'above 10 crores' },
   ],
+  // YES_OR_NO: [
+  //   { displayName: 'Yes', name: 'yes' },
+  //   { displayName: 'No', name: 'no' },
+  // ],
+
   YES_OR_NO: [
-    { displayName: 'Yes', name: 'yes' },
-    { displayName: 'No', name: 'no' },
+    { displayName: 'Own', name: 'own' },
+    { displayName: 'Rented', name: 'rented' },
   ],
   NATURE_OF_BUSINESS: [
     { displayName: 'Manufacturing', name: 'manufacturing' },
@@ -246,13 +251,13 @@ export const projectConstantsLocal = {
     { id: 8, status: 'client_trying_other_banks', displayName: 'Trying other banks' },
     { id: 9, status: 'multiple_bank_confirmations', displayName: 'Multiple bank confirmation' }
   ],
-  SALARYED_OR_UNSALARYED:[
-    {id: 1, status: 'salary', displayName: 'Salaryed'},
-    {id: 2, status: 'unsalaryed', displayName: 'Un Salaryed'}
+  SALARYED_OR_UNSALARYED: [
+    { id: 1, status: 'Salaried', displayName: 'Salaried' },
+    { id: 2, status: 'selfEmployed', displayName: 'Self Employed' }
   ],
-  DOCTOR_OR_CA:[
-    {id: 1, status: 'doctor', displayName: 'Doctor'},
-    {id: 2, status: 'ca', displayName: 'CA'}
+  DOCTOR_OR_CA: [
+    { id: 1, status: 'doctor', displayName: 'Doctor' },
+    { id: 2, status: 'ca', displayName: 'CA' }
   ],
 
   // RAZORPAY_KEY_ID: "rzp_test_OryiPavGPST3CU",

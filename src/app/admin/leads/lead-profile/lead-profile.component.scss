@@ -195,7 +195,6 @@ small {
   background-color: #EDF3FE;
   border-bottom: 2px solid #ffffff33;
   border-radius: 0.5rem 0.5rem 0 0;
-  
 }
 
 .custom-tabs .nav-link {
@@ -369,11 +368,9 @@ button.nav-link.active .tab-icon {
 }
 // .timeline-icon {
 //   filter: brightness(0) saturate(100%) invert(30%) sepia(45%) saturate(1693%) hue-rotate(211deg) brightness(94%) contrast(85%);
-  
 // }
 .file-icon{
   filter: brightness(0) saturate(100%) invert(30%) sepia(45%) saturate(1693%) hue-rotate(211deg) brightness(94%) contrast(85%);
-  
 }
 .fw-bold {
   font-size: 14px !important;
@@ -610,4 +607,16 @@ button.nav-link.active .tab-icon {
 }
 ::ng-deep .p-accordion .p-accordion-header .p-accordion-header-text {
   order: 1;
+}
+.edit-icon {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
+  z-index: 9999;
+}
+@media(max-width: 768px) {
+  .edit-icon {
+    right: 2rem;
+  }
 }

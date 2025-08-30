@@ -53,15 +53,15 @@ export class LoanLeadsComponent {
   loanType: string;
   version = projectConstantsLocal.VERSION_DESKTOP;
   preventNonNumeric(event: KeyboardEvent): void {
-  const allowedKeys = ['Backspace', 'Tab', 'ArrowLeft', 'ArrowRight', 'Delete'];
-  const key = event.key;
+    const allowedKeys = ['Backspace', 'Tab', 'ArrowLeft', 'ArrowRight', 'Delete'];
+    const key = event.key;
 
-  const isDigit = key >= '0' && key <= '9';
+    const isDigit = key >= '0' && key <= '9';
 
-  if (!isDigit && !allowedKeys.includes(key)) {
-    event.preventDefault();
+    if (!isDigit && !allowedKeys.includes(key)) {
+      event.preventDefault();
+    }
   }
-}
 
   constructor(
     private location: Location,
@@ -102,37 +102,37 @@ export class LoanLeadsComponent {
             (this.employmentStatus = this.leadData[0]?.employmentStatus),
               (this.loanType = this.leadData[0].loanType),
               // console.log('leadData', this.leadData);
-            this.leadForm.patchValue({
-              contactPerson: this.leadData[0]?.contactPerson,
-              primaryPhone: this.leadData[0]?.primaryPhone,
-              secondaryPhone: this.leadData[0]?.secondaryPhone,
-              email: this.leadData[0]?.email,
-              addressLine1: this.leadData[0]?.addressLine1,
-              addressLine2: this.leadData[0]?.addressLine2,
-              city: this.leadData[0]?.city,
-              state: this.leadData[0]?.state,
-              pincode: this.leadData[0]?.pincode,
-              companyName: this.leadData[0]?.companyName,
-              designation: this.leadData[0]?.designation,
-              designationtype: this.leadData[0]?.designationtype,
-              employmentType: this.leadData[0]?.employmentType,
-              salary: this.leadData[0]?.salary,
-              jobExperience: this.leadData[0]?.jobExperience,
-              companyAddress: this.leadData[0]?.companyAddress,
-              existingLoanDetails: this.leadData[0]?.existingLoanDetails,
-              leadSource: this.leadData[0]?.leadSource,
-              sourcedBy: this.leadData[0]?.sourcedBy,
-              hadOwnHouse: this.leadData[0]?.hadOwnHouse,
-              loanRequirement: this.leadData[0]?.loanRequirement,
-              propertyType: this.leadData[0]?.propertyType,
-              propertyValue: this.leadData[0]?.propertyValue,
-              propertyLocation: this.leadData[0]?.propertyLocation,
-              remarks: this.leadData[0]?.remarks,
-              calledFrom: this.leadData[0]?.calledFrom,
-              createdOn: this.moment(this.leadData[0]?.createdOn).format(
-                'YYYY-MM-DD  HH:mm:ss'
-              ),
-            });
+              this.leadForm.patchValue({
+                contactPerson: this.leadData[0]?.contactPerson,
+                primaryPhone: this.leadData[0]?.primaryPhone,
+                secondaryPhone: this.leadData[0]?.secondaryPhone,
+                email: this.leadData[0]?.email,
+                addressLine1: this.leadData[0]?.addressLine1,
+                addressLine2: this.leadData[0]?.addressLine2,
+                city: this.leadData[0]?.city,
+                state: this.leadData[0]?.state,
+                pincode: this.leadData[0]?.pincode,
+                companyName: this.leadData[0]?.companyName,
+                designation: this.leadData[0]?.designation,
+                designationtype: this.leadData[0]?.designationtype,
+                employmentType: this.leadData[0]?.employmentType,
+                salary: this.leadData[0]?.salary,
+                jobExperience: this.leadData[0]?.jobExperience,
+                companyAddress: this.leadData[0]?.companyAddress,
+                existingLoanDetails: this.leadData[0]?.existingLoanDetails,
+                leadSource: this.leadData[0]?.leadSource,
+                sourcedBy: this.leadData[0]?.sourcedBy,
+                hadOwnHouse: this.leadData[0]?.hadOwnHouse,
+                loanRequirement: this.leadData[0]?.loanRequirement,
+                propertyType: this.leadData[0]?.propertyType,
+                propertyValue: this.leadData[0]?.propertyValue,
+                propertyLocation: this.leadData[0]?.propertyLocation,
+                remarks: this.leadData[0]?.remarks,
+                calledFrom: this.leadData[0]?.calledFrom,
+                createdOn: this.moment(this.leadData[0]?.createdOn).format(
+                  'YYYY-MM-DD  HH:mm:ss'
+                ),
+              });
             this.leadFormforBusiness.patchValue({
               contactPerson: this.leadData[0]?.contactPerson,
               primaryPhone: this.leadData[0]?.primaryPhone,
@@ -199,8 +199,8 @@ export class LoanLeadsComponent {
     //   this.employmentStatus = 'employed';
     // }
     if (this.loanType == 'professionalLoans') {
-    this.employmentStatus = 'employed';
-  }
+      this.employmentStatus = 'employed';
+    }
   }
   onStepChange(event: any) {
     this.activeIndex = event.index;
@@ -214,8 +214,8 @@ export class LoanLeadsComponent {
       primaryPhone: [
         '',
         Validators.compose([
-        Validators.required,
-        Validators.pattern(/^[6-9]\d{9}$/),
+          Validators.required,
+          Validators.pattern(/^[6-9]\d{9}$/),
 
         ]),
       ],
@@ -227,10 +227,10 @@ export class LoanLeadsComponent {
       state: [''],
       pincode: [''],
       companyName: ['', Validators.compose([Validators.required])],
-      designation: ['', Validators.compose([Validators.required])],
-      designationtype: ['', Validators.compose([Validators.required])],
+      // designation: ['', Validators.compose([Validators.required])],
+      // designationtype: ['', Validators.compose([Validators.required])],
       salary: ['', Validators.compose([Validators.required])],
-      employmentType:['', Validators.compose([Validators.required])],
+      // employmentType: ['', Validators.compose([Validators.required])],
       jobExperience: ['', Validators.compose([Validators.required])],
       companyAddress: ['', Validators.compose([Validators.required])],
       existingLoanDetails: ['', Validators.compose([Validators.required])],
@@ -250,8 +250,8 @@ export class LoanLeadsComponent {
       primaryPhone: [
         '',
         Validators.compose([
-        Validators.required,
-        Validators.pattern(/^[6-9]\d{9}$/),
+          Validators.required,
+          Validators.pattern(/^[6-9]\d{9}$/),
         ]),
       ],
       secondaryPhone: [''],
@@ -291,6 +291,21 @@ export class LoanLeadsComponent {
         this.userDetails.id
       );
       this.leadFormforBusiness.controls['leadSource'].setValue(1);
+    }
+    if (this.loanType === 'professionalLoans') {
+      this.leadForm.addControl(
+        'designationtype',
+        this.formBuilder.control('', Validators.required)
+      );
+      this.leadForm.addControl(
+        'employmentType',
+        this.formBuilder.control('', Validators.required)
+      );
+    } else {
+      this.leadForm.addControl(
+        'designation',
+        this.formBuilder.control('', Validators.required)
+      );
     }
   }
   getLeadSourcesValues(filter = {}) {
@@ -339,11 +354,9 @@ export class LoanLeadsComponent {
       pincode: formValues.pincode,
       companyName: formValues.companyName,
       designation:
-    this.loanType === "personalLoan"
-      ? formValues.designation
-      : this.loanType === "professionalLoans"
-      ? formValues.designationtype
-      : "",
+        this.loanType === "professionalLoans"
+          ? formValues.designationtype
+          : formValues.designation,
       // designation: formValues.designation,
       // designation: formValues.designationtype,
       salary: formValues.salary,
@@ -377,18 +390,18 @@ export class LoanLeadsComponent {
       //   );
       // }
 
-        if (formValues.createdOn) {
-              formData.createdOn = moment(formValues.createdOn)
-                .tz('Asia/Kolkata') // Convert to IST
-                .set({
-                  hour: moment().tz('Asia/Kolkata').hour(), // Set the current hour in IST
-                  minute: moment().tz('Asia/Kolkata').minute(), // Set the current minute in IST
-                  second: moment().tz('Asia/Kolkata').second(), // Set the current second in IST
-                  millisecond: moment().tz('Asia/Kolkata').millisecond(), // Set the current millisecond in IST
-                })
-                .utc()
-                .format('YYYY-MM-DD HH:mm:ss'); // Format as UTC time
-            }
+      if (formValues.createdOn) {
+        formData.createdOn = moment(formValues.createdOn)
+          .tz('Asia/Kolkata') // Convert to IST
+          .set({
+            hour: moment().tz('Asia/Kolkata').hour(), // Set the current hour in IST
+            minute: moment().tz('Asia/Kolkata').minute(), // Set the current minute in IST
+            second: moment().tz('Asia/Kolkata').second(), // Set the current second in IST
+            millisecond: moment().tz('Asia/Kolkata').millisecond(), // Set the current millisecond in IST
+          })
+          .utc()
+          .format('YYYY-MM-DD HH:mm:ss'); // Format as UTC time
+      }
       this.loading = true;
       this.leadsService.createLoanLead(formData).subscribe(
         (data) => {
@@ -406,29 +419,29 @@ export class LoanLeadsComponent {
         }
       );
     } else if (this.actionType == 'update') {
-       if (formValues.createdOn) {
+      if (formValues.createdOn) {
 
-              const newCreatedOn = this.moment(formValues.createdOn).format(
-                'YYYY-MM-DD'
-              );
-              const currentCreatedOn = this.moment(this.leadData[0].createdOn).format(
-                'YYYY-MM-DD'
-              );
-              // console.log(newCreatedOn);
-              // console.log(currentCreatedOn);
-              if (newCreatedOn !== currentCreatedOn) {
-                formData.createdOn = moment(formValues.createdOn)
-                  .tz('Asia/Kolkata') // Convert to IST
-                  .set({
-                    hour: moment().tz('Asia/Kolkata').hour(), // Set the current hour in IST
-                    minute: moment().tz('Asia/Kolkata').minute(), // Set the current minute in IST
-                    second: moment().tz('Asia/Kolkata').second(), // Set the current second in IST
-                    millisecond: moment().tz('Asia/Kolkata').millisecond(), // Set current millisecond in IST
-                  })
-                  .utc()
-                  .format('YYYY-MM-DD HH:mm:ss'); // Format as Asian time (IST)
-              }
-            }
+        const newCreatedOn = this.moment(formValues.createdOn).format(
+          'YYYY-MM-DD'
+        );
+        const currentCreatedOn = this.moment(this.leadData[0].createdOn).format(
+          'YYYY-MM-DD'
+        );
+        // console.log(newCreatedOn);
+        // console.log(currentCreatedOn);
+        if (newCreatedOn !== currentCreatedOn) {
+          formData.createdOn = moment(formValues.createdOn)
+            .tz('Asia/Kolkata') // Convert to IST
+            .set({
+              hour: moment().tz('Asia/Kolkata').hour(), // Set the current hour in IST
+              minute: moment().tz('Asia/Kolkata').minute(), // Set the current minute in IST
+              second: moment().tz('Asia/Kolkata').second(), // Set the current second in IST
+              millisecond: moment().tz('Asia/Kolkata').millisecond(), // Set current millisecond in IST
+            })
+            .utc()
+            .format('YYYY-MM-DD HH:mm:ss'); // Format as Asian time (IST)
+        }
+      }
       this.loading = true;
       this.leadsService.updateLoanLead(this.leadId, formData).subscribe(
         (data) => {

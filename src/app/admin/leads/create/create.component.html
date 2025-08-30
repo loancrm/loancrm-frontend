@@ -1,7 +1,7 @@
 <div>
   <div class="bread-crumb">
-      <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
-    </div>
+    <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
+  </div>
   <div>
     <div class="p-1 m-2">
       <div class="d-flex justify-content-between">
@@ -63,7 +63,7 @@
               />
             </div> -->
                   <div class="col-md-12">
-                    <h5 style="color: #535AB4">Business Details</h5>
+                    <h5 style="color: #535ab4">Business Details</h5>
                     <div class="row">
                       <div class="col-md-4 mt-2">
                         <div>
@@ -643,7 +643,7 @@
                         <div>
                           <div class="my-1">
                             <label
-                              >Had Own House ?&nbsp;
+                              >Property Type &nbsp;
                               <span
                                 ><sup class="text-danger">*</sup></span
                               ></label
@@ -657,10 +657,10 @@
                             [showClear]="true"
                             appendTo="body"
                             styleClass="w-100"
-                            placeholder="Had Own House ?"
+                            placeholder="Select Property Type"
                             [dropdownIcon]="'pi pi-chevron-down'"
                           ></p-dropdown>
-                          <!-- Error message for Had Own House -->
+                          <!-- Error message for Property Type -->
                           <div
                             *ngIf="
                               (submitted &&
@@ -673,7 +673,7 @@
                               class="text-danger"
                               *ngIf="leadForm.get('hadOwnHouse')?.errors?.['required']"
                             >
-                              Had Own House is required.
+                              Property Type is required.
                             </small>
                           </div>
                         </div>
@@ -912,7 +912,12 @@
                       <div class="col-md-4 mt-2">
                         <div>
                           <div class="my-1">
-                            <label>Lead Remarks&nbsp;</label>
+                            <label
+                              >Lead Remarks &nbsp;
+                              <span
+                                ><sup class="text-danger">*</sup></span
+                              ></label
+                            >
                           </div>
                           <p-dropdown
                             [options]="leadRemarks"
@@ -992,10 +997,8 @@
                 type="button"
                 label="Go Back"
                 class="p-button-info me-2"
-                (click)="goBack()" 
-              >
-
-              </button>
+                (click)="goBack()"
+              ></button>
               <button
                 pButton
                 pRipple
