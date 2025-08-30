@@ -29,6 +29,7 @@ export class LeadsComponent implements OnInit {
   totalLeadsCount: any = 0;
   totalloanLeadsCount: any = 0;
   personalloanLeadsCount: any = 0;
+  professionalloanLeadsCount: any = 0;
   homeloanselfLeadsCount: any = 0;
   lapselfLeadsCount: any = 0;
   lapLeadsCount: any = 0;
@@ -36,11 +37,13 @@ export class LeadsComponent implements OnInit {
   leadIdToSearch: any;
   businessNameToSearch: any;
   businessNameToSearchForPersonal: any;
+  businessNameToSearchForProfessional: any;
   personNameToSearchForHome: any;
   businessNameToSearchForHome: any;
   sourcedByToSearch: any;
   selectedSourcedByStatus: any;
   SourcedByForPersonal: any;
+  SourcedByForProfessional: any;
   SourcedByForHome: any;
   SourcedByForLap: any;
   leadStatus: any = projectConstantsLocal.LEAD_STATUS;
@@ -50,17 +53,20 @@ export class LeadsComponent implements OnInit {
   selectedLapLeadStatus = this.leadStatus[1];
   // selectedHomeLeadStatus = this.leadStatus[1];
   selectedPersonalLeadStatus = this.leadStatus[1];
+  selectedProfessionalLeadStatus = this.leadStatus[1];
   loanTypes: any = projectConstantsLocal.LOAN_TYPES;
   leadInternalStatusList: any = projectConstantsLocal.LEAD_INTERNAL_STATUS;
   hadOwnHouse = projectConstantsLocal.YES_OR_NO;
   searchFilter: any = {};
   searchFilterPersonal: any = {};
+  searchFilterProfessional: any = {};
   searchFilterForHomeSelf: any = {};
   searchFilterForLapSelf: any = {};
   @ViewChild('leadsTable') leadsTable!: Table;
   @ViewChild('personalleadsTable') personalleadsTable!: Table;
   @ViewChild('HomeleadsTable') HomeleadsTable!: Table;
   @ViewChild('LapleadsTable') LapleadsTable!: Table;
+  @ViewChild('professionalleadsTable') professionalleadsTable!: Table;
   searchInputValue: string = '';
   breadCrumbItems: any = [];
   leadSources: any = [];
@@ -72,8 +78,11 @@ export class LeadsComponent implements OnInit {
   entityDetails: any = projectConstantsLocal.BUSINESS_ENTITIES;
   natureofBusinessDetails: any = projectConstantsLocal.NATURE_OF_BUSINESS;
   leadRemarksData: any = projectConstantsLocal.LEAD_REMARKS;
+  designationType: any = projectConstantsLocal.DOCTOR_OR_CA;
+  employmentType: any = projectConstantsLocal.SALARYED_OR_UNSALARYED;
   appliedFilter: {};
   appliedFilterPersonal: {};
+  appliedFilterProfessional: {};
   appliedFilterLap: {};
   appliedFilterLapself: {};
   appliedFilterHomeself: {};
@@ -130,7 +139,7 @@ export class LeadsComponent implements OnInit {
     this.setFilterConfig();
     this.capabilities = this.leadsService.getUserRbac();
     console.log(this.capabilities);
-    const loanTypes = ['', 'Personal', 'Home', 'Homeself', 'Lap', 'Lapself'];
+    const loanTypes = ['', 'Personal', 'Home', 'Homeself', 'Lap', 'Lapself', 'professionalLoans'];
     loanTypes.forEach((type) => {
       const localStorageKey = `leadsAppliedFilter${type}`;
       const storedFilter =
@@ -237,7 +246,7 @@ export class LeadsComponent implements OnInit {
         name: 'lap',
       },
       {
-        label: `Professional Loans (0)`,
+        label: `Professional Loans (${this.totalLeadsCountArray?.ProfessionalLoancount || 0})`,
         name: 'professionalLoans',
       },
       {
@@ -899,6 +908,9 @@ export class LeadsComponent implements OnInit {
       case 'lapself':
         this.loadLeadsforlapself(this.currentTableEvent);
         break;
+      case 'professional':
+        this.loapLeadsforprofessional(this.currentTableEvent);
+        break
       default:
         console.error('Unknown lead type');
     }
@@ -1031,6 +1043,22 @@ export class LeadsComponent implements OnInit {
     }
     return '';
   }
+
+  getDesignationType(userId: any): string {
+  if (this.designationType && this.designationType.length > 0) {
+    const designationType = this.designationType.find(user => user.id == userId);
+    return designationType?.displayName || '';
+  }
+  return '';
+}
+
+  getEmploymentType(userId: any): string {
+  if (this.employmentType && this.employmentType.length > 0) {
+    const employmentType = this.employmentType.find(user => user.id == userId);
+    return employmentType?.displayName || '';
+  }
+  return '';
+}
 
   getTotalLeadsCount(filter = {}) {
     this.leadsService.getLeadsCount(filter).subscribe(
@@ -1234,6 +1262,12 @@ export class LeadsComponent implements OnInit {
       this.personalleadsTable.reset();
     }
   }
+  inputValueChangeEventForProfessional(dataType, value) {
+    if (value == '') {
+      this.searchFilterProfessional = {};
+      this.professionalleadsTable.reset();
+    }
+  }
 
   applyFiltersHome(searchFilterForHome = {}) {
     this.searchFilterForHome = searchFilterForHome;
@@ -1342,16 +1376,28 @@ export class LeadsComponent implements OnInit {
   statusChangeForLapSelf(event) {
     this.loadLoanLeads('lapself');
   }
-
+  statusChangeForprofessional(event) {
+    this.loadLoanLeads('professional');
+  }
   filterWithBusinessNameForPersonal() {
     let searchFilterPersonal = {
       'contactPerson-like': this.businessNameToSearchForPersonal,
     };
     this.applyFiltersPersonal(searchFilterPersonal);
   }
+  filterWithBusinessNameForProfessional() {
+    let searchFilterProfessional = {
+      'contactPerson-like': this.businessNameToSearchForProfessional,
+    };
+    this.applyFiltersProfessional(searchFilterProfessional);
+  }
   applyFiltersPersonal(searchFilterPersonal = {}) {
     this.searchFilterPersonal = searchFilterPersonal;
     this.loadLoanLeads('personal');
+  }
+  applyFiltersProfessional(searchFilterProfessional = {}) {
+    this.searchFilterProfessional = searchFilterProfessional;
+    this.loadLoanLeads('professional');
   }
   createLead() {
     this.routingService.handleRoute('leads/create', null);
@@ -1368,7 +1414,7 @@ export class LeadsComponent implements OnInit {
     console.log('Row clicked:', event.data);
     const lead = event.data
     const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
-    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans') {
       this.routingService.handleRoute(`leads/profile/${loanType}/${lead.leadId}`, null);
     } else {
       // If no known loanType, omit status from the route
@@ -1439,6 +1485,49 @@ export class LeadsComponent implements OnInit {
     console.log(api_filter);
     if (api_filter) {
       this.getpersonalloanLeadsCount(api_filter);
+      this.getloanLeads(api_filter);
+    }
+  }
+
+  loapLeadsforprofessional(event){
+    this.currentTableEvent = event;
+    let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
+    api_filter['loanType-eq'] = 'professionalLoans';
+    if (this.selectedProfessionalLeadStatus) {
+      if (
+        this.selectedProfessionalLeadStatus &&
+        this.selectedProfessionalLeadStatus.name
+      ) {
+        if (this.selectedProfessionalLeadStatus.name != 'all') {
+          api_filter['leadInternalStatus-eq'] =
+            this.selectedProfessionalLeadStatus.id;
+        } else {
+          api_filter['leadInternalStatus-or'] = '1,2';
+        }
+      }
+    }
+    if (this.SourcedByForProfessional && this.SourcedByForProfessional.name) {
+      if (this.SourcedByForProfessional.name != 'All') {
+        api_filter['sourcedBy-eq'] = this.SourcedByForProfessional.id;
+      }
+    }
+    if (
+      this.userDetails &&
+      this.userDetails.id &&
+      this.userDetails.userType &&
+      this.userDetails.userType == '3'
+    ) {
+      api_filter['sourcedBy-eq'] = this.userDetails.id;
+    }
+    api_filter = Object.assign(
+      {},
+      api_filter,
+      this.searchFilterProfessional,
+      this.appliedFilterProfessional
+    );
+    console.log(api_filter);
+    if (api_filter) {
+      this.getprofessionalloanLeadsCount(api_filter);
       this.getloanLeads(api_filter);
     }
   }
@@ -1628,6 +1717,17 @@ export class LeadsComponent implements OnInit {
     );
   }
 
+  getprofessionalloanLeadsCount(filter = {}) {
+    this.leadsService.getloanLeadsCount(filter).subscribe(
+      (response) => {
+        this.professionalloanLeadsCount = response;
+        console.log(`PriofessionalloanLeadCount${this.professionalloanLeadsCount}`);
+      },
+      (error: any) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
   getHomeloanLeadsCount(filter = {}) {
     this.leadsService.getloanLeadsCount(filter).subscribe(
       (response) => {

@@ -63,7 +63,7 @@ export class BanksSavedComponent implements OnInit {
       if (!status) {
         this.getLeadById(this.leadId);
       } else {
-        const validStatuses = ['personalLoan', 'homeLoan', 'lap'];
+        const validStatuses = ['personalLoan', 'homeLoan', 'lap', 'professionalLoans'];
         if (validStatuses.includes(status)) {
           this.getLoanLeadById(this.leadId);
         } else {
@@ -179,7 +179,7 @@ export class BanksSavedComponent implements OnInit {
     }));
     this.loading = true;
     const updateFn =
-      loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap'
+      loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans'
         ? this.leadsService.updateplFIPDetails.bind(this.leadsService)
         : this.leadsService.updateFIPDetails.bind(this.leadsService);
 

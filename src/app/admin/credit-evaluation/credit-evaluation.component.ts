@@ -28,6 +28,7 @@ export class CreditEvaluationComponent implements OnInit {
   searchFilter: any = {};
   @ViewChild('leadsTable') leadsTable!: Table;
   @ViewChild('personalleadsTable') personalleadsTable!: Table;
+  @ViewChild('professionalleadsTable') professionalleadsTable!: Table;
   @ViewChild('HomeleadsTable') HomeleadsTable!: Table;
   @ViewChild('LapleadsTable') LapleadsTable!: Table;
   leadSources: any = [];
@@ -39,9 +40,12 @@ export class CreditEvaluationComponent implements OnInit {
   totalActiveLeadsCount: any;
   totalLeadsCountArray: any;
   businessNameToSearchForPersonal: any;
+  businessNameToSearchForProfessional: any;
   searchFilterForHome: any = {};
   searchFilterPersonal: any = {};
+  searchFilterProfessional: any={};
   SourcedByForPersonal: any;
+  SourcedByForProfessional: any;
   appliedFilterPersonal: {};
   appliedFilterLapself: {};
   personalfilterConfig: any[] = [];
@@ -51,6 +55,7 @@ export class CreditEvaluationComponent implements OnInit {
   HomeSelffilterConfig: any[] = [];
   personNameToSearchForHome: any;
   personalloanLeadsCount: any = 0;
+  professionalloanLeadsCount: any =0;
   homeloanselfLeadsCount: any = 0;
   homeloanLeadsCount: any = 0;
   loanleadsLoading: any;
@@ -76,6 +81,7 @@ export class CreditEvaluationComponent implements OnInit {
   hadOwnHouse = projectConstantsLocal.YES_OR_NO;
   version = projectConstantsLocal.VERSION_DESKTOP;
   businessEntities = projectConstantsLocal.BUSINESS_ENTITIES;
+  designationType: any = projectConstantsLocal.DOCTOR_OR_CA;
   items: any;
   constructor(
     private location: Location,
@@ -291,7 +297,7 @@ export class CreditEvaluationComponent implements OnInit {
         name: 'lap',
       },
       {
-        label: `Professional Loans (0)`,
+        label: `Professional Loans (${this.totalLeadsCountArray?.ProfessionalLoancount || 0})`,
         name: 'professionalLoans',
       },
       {
@@ -539,6 +545,9 @@ export class CreditEvaluationComponent implements OnInit {
       case 'Lapself':
         this.loadLoanLeads('lapself');
         break;
+      case 'professional':
+        this.loadLeads('professional');
+        break;
       default:
         this.loadLeads(null);
         break;
@@ -614,7 +623,13 @@ export class CreditEvaluationComponent implements OnInit {
     }
     return '';
   }
-
+  getDesignationType(userId: any): string {
+  if (this.designationType && this.designationType.length > 0) {
+    const designationType = this.designationType.find(user => user.id == userId);
+    return designationType?.displayName || '';
+  }
+  return '';
+}
   getStatusName(statusId) {
     if (this.leadInternalStatusList && this.leadInternalStatusList.length > 0) {
       let leadStatusName = this.leadInternalStatusList.filter(
@@ -638,7 +653,7 @@ export class CreditEvaluationComponent implements OnInit {
     // console.log('Row clicked:', event.data);
     const lead = event.data
     const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
-    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans') {
       this.routingService.handleRoute(`leads/profile/${loanType}/${lead.leadId}`, null);
     } else {
       // If no known loanType, omit status from the route
@@ -672,7 +687,7 @@ export class CreditEvaluationComponent implements OnInit {
   evaluateCredit(lead) {
 
     const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
-    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans') {
       this.routingService.handleRoute(`credit/evaluate/${loanType}/${lead.leadId}`, null);
     } else {
       // If no known loanType, omit status from the route
@@ -718,6 +733,16 @@ export class CreditEvaluationComponent implements OnInit {
     };
     this.applyFiltersPersonal(searchFilterPersonal);
   }
+   filterWithBusinessNameForProfessional() {
+    let searchFilterProfessional = {
+      'contactPerson-like': this.businessNameToSearchForProfessional,
+    };
+    this.applyFiltersProfessional(searchFilterProfessional);
+  }
+  applyFiltersProfessional(searchFilterProfessional = {}) {
+    this.searchFilterProfessional = searchFilterProfessional;
+    this.loadLoanLeads('professional');
+  }
   applyFiltersPersonal(searchFilterPersonal = {}) {
     this.searchFilterPersonal = searchFilterPersonal;
     this.loadLoanLeads('personal');
@@ -738,6 +763,9 @@ export class CreditEvaluationComponent implements OnInit {
         break;
       case 'lapself':
         this.loadLeadsforlapself(this.currentTableEvent);
+        break;
+      case 'professional':
+        this.loadLeadsforprofessional(this.currentTableEvent);
         break;
       default:
         console.error('Unknown lead type');
@@ -764,7 +792,8 @@ export class CreditEvaluationComponent implements OnInit {
       {},
       api_filter,
       this.searchFilterPersonal,
-      this.appliedFilterPersonal
+      this.appliedFilterPersonal,
+      
     );
     if (
       this.userDetails &&
@@ -777,6 +806,43 @@ export class CreditEvaluationComponent implements OnInit {
     // console.log(api_filter);
     if (api_filter) {
       this.getpersonalloanLeadsCount(api_filter);
+      this.getloanLeads(api_filter);
+    }
+  }
+  loadLeadsforprofessional(event) {
+    this.currentTableEvent = event;
+    let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
+    api_filter['loanType-eq'] = 'professionalLoans';
+    api_filter['leadInternalStatus-eq'] = '5';
+    // if (this.SourcedByForPersonal && this.SourcedByForPersonal.name) {
+    //   if (this.SourcedByForPersonal.name == 'All') {
+    //     api_filter['leadInternalStatus-eq'] = '3';
+    //   } else {
+    //     api_filter['sourcedBy-eq'] = this.SourcedByForPersonal.id;
+    //   }
+    // }
+    if (this.SourcedByForProfessional && this.SourcedByForProfessional.name) {
+      if (this.SourcedByForProfessional.name != 'All') {
+        api_filter['sourcedBy-eq'] = this.SourcedByForProfessional.id;
+      }
+    }
+    api_filter = Object.assign(
+      {},
+      api_filter,
+      this.searchFilterProfessional,
+      this.applyFiltersProfessional
+    );
+    if (
+      this.userDetails &&
+      this.userDetails.id &&
+      this.userDetails.userType &&
+      this.userDetails.userType == '3'
+    ) {
+      api_filter['sourcedBy-eq'] = this.userDetails.id;
+    }
+    // console.log(api_filter);
+    if (api_filter) {
+      this.getprofessionalloanLeadsCount(api_filter);
       this.getloanLeads(api_filter);
     }
   }
@@ -797,6 +863,17 @@ export class CreditEvaluationComponent implements OnInit {
     this.leadsService.getloanLeadsCount(filter).subscribe(
       (response) => {
         this.personalloanLeadsCount = response;
+        // console.log(this.personalloanLeadsCount);
+      },
+      (error: any) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
+  getprofessionalloanLeadsCount(filter = {}) {
+    this.leadsService.getloanLeadsCount(filter).subscribe(
+      (response) => {
+        this.professionalloanLeadsCount = response;
         // console.log(this.personalloanLeadsCount);
       },
       (error: any) => {
@@ -1001,7 +1078,12 @@ export class CreditEvaluationComponent implements OnInit {
       this.searchFilterPersonal = {};
       this.personalleadsTable.reset();
     }
-
+  }
+  inputValueChangeEventForProfessional(dataType, value) {
+    if (value == '') {
+      this.searchFilterProfessional = {};
+      this.professionalleadsTable.reset();
+    }
   }
   // viewLoanLead(event) {
   //   const lead = event.data
@@ -1010,6 +1092,10 @@ export class CreditEvaluationComponent implements OnInit {
 
   statusChangeForPersonal(event) {
     this.loadLoanLeads('personal');
+  }
+
+  statusChangeForProfessional(event) {
+    this.loadLoanLeads('professional');
   }
 
   actionItemsForLead(lead: any, leadType: string): MenuItem[] {

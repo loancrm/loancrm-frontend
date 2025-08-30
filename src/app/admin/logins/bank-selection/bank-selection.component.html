@@ -265,7 +265,8 @@
         <button
           *ngIf="
             leadData &&
-            ((leadData[0].loanType === 'personalLoan' &&
+            (leadData[0].loanType === 'professionalLoans' ||
+              (leadData[0].loanType === 'personalLoan' &&
               leadData[0].employmentStatus === 'employed') ||
               (leadData[0].loanType === 'homeLoan' &&
                 leadData[0].employmentStatus === 'employed') ||

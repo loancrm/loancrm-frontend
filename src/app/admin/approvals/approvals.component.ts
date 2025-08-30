@@ -37,6 +37,7 @@ export class ApprovalsComponent implements OnInit {
   entityDetails: any = projectConstantsLocal.BUSINESS_ENTITIES;
   natureofBusinessDetails: any = projectConstantsLocal.NATURE_OF_BUSINESS;
   hadOwnHouse = projectConstantsLocal.YES_OR_NO;
+  designationType = projectConstantsLocal.DOCTOR_OR_CA
   startDate: string = '';
   endDate: string = '';
   moment: any;
@@ -51,9 +52,12 @@ export class ApprovalsComponent implements OnInit {
   loanleadsLoading: any;
   loanLeads: any = [];
   SourcedByForPersonal: any;
+  SourcedByForProfessional: any;
   appliedFilterPersonal: {};
+  appliedFilterProfessional: {};
   appliedFilterLap: {};
   searchFilterPersonal: any = {};
+  searchFilterProfessional: any={};
   personalloanLeadsCount: any = 0;
   appliedFilterHome: {};
   searchFilterForHome: any = {};
@@ -61,9 +65,11 @@ export class ApprovalsComponent implements OnInit {
   SourcedByForHome: any;
   searchFilterForLapSelf: any = {};
   @ViewChild('personalleadsTable') personalleadsTable!: Table;
+  @ViewChild('professionalLoansTable') professionalLoansTable!: Table;
   @ViewChild('HomeleadsTable') HomeleadsTable!: Table;
   @ViewChild('LapleadsTable') LapleadsTable!: Table;
   businessNameToSearchForPersonal: any;
+  businessNameToSearchForProfessional: any;
   homeloanLeadsCount: any = 0;
   appliedFilterHomeself: {};
   homeloanselfLeadsCount: any = 0;
@@ -630,7 +636,7 @@ export class ApprovalsComponent implements OnInit {
   approvalDetails(lead) {
 
     const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
-    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans') {
       this.routingService.handleRoute(`approvals/approvalDetails/${loanType}/${lead.leadId}`, null);
     } else {
       // If no known loanType, omit status from the route
@@ -701,6 +707,9 @@ export class ApprovalsComponent implements OnInit {
       case 'Lapself':
         this.loadLoanLeads('lapself');
         break;
+      case 'professional':
+        this.loadLoanLeads('professional');
+        break;
       default:
         this.loadLeads(null);
         break;
@@ -756,6 +765,28 @@ export class ApprovalsComponent implements OnInit {
       this.getloanLeads(api_filter);
     }
   }
+  loadLeadsforprofessional(event) {
+    this.currentTableEvent = event;
+    let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
+    api_filter['loanType-eq'] = 'professionalLoans';
+    api_filter['employmentStatus-eq'] = 'employed';
+    if (this.SourcedByForProfessional && this.SourcedByForProfessional.name) {
+      if (this.SourcedByForProfessional.name != 'All') {
+        api_filter['sourcedBy-eq'] = this.SourcedByForProfessional.id;
+      }
+    }
+    api_filter = Object.assign(
+      {},
+      api_filter,
+      this.searchFilterProfessional,
+      this.appliedFilterProfessional
+    );
+    console.log(api_filter);
+    if (api_filter) {
+      this.getpersonalloanLeadsCount(api_filter);
+      this.getloanLeads(api_filter);
+    }
+  }
   getloanLeads(filter = {}) {
     this.loanleadsLoading = true;
     this.leadsService.getplApprovalsLeads(filter).subscribe(
@@ -789,7 +820,7 @@ export class ApprovalsComponent implements OnInit {
     // console.log('Row clicked:', event.data);
     const lead = event.data
     const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
-    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans') {
       this.routingService.handleRoute(`leads/profile/${loanType}/${lead.leadId}`, null);
     } else {
       // If no known loanType, omit status from the route
@@ -802,15 +833,31 @@ export class ApprovalsComponent implements OnInit {
       this.personalleadsTable.reset();
     }
   }
+  inputValueChangeEventForProfessional(dataType, value) {
+    if (value == '') {
+      this.searchFilterProfessional = {};
+      this.professionalLoansTable.reset();
+    }
+  }
   filterWithBusinessNameForPersonal() {
     let searchFilterPersonal = {
       'contactPerson-like': this.businessNameToSearchForPersonal,
     };
     this.applyFiltersPersonal(searchFilterPersonal);
   }
+  filterWithBusinessNameForProfessional() {
+    let searchFilterProfessional = {
+      'contactPerson-like': this.businessNameToSearchForProfessional,
+    };
+    this.applyFiltersProfessional(searchFilterProfessional);
+  }
   applyFiltersPersonal(searchFilterPersonal = {}) {
     this.searchFilterPersonal = searchFilterPersonal;
     this.loadLoanLeads('personal');
+  }
+  applyFiltersProfessional(searchFilterProfessional = {}) {
+    this.searchFilterProfessional = searchFilterProfessional;
+    this.loadLoanLeads('professional');
   }
   loadLoanLeads(leadType: string) {
     switch (leadType) {
@@ -828,6 +875,9 @@ export class ApprovalsComponent implements OnInit {
         break;
       case 'lapself':
         this.loadLeadsforlapself(this.currentTableEvent);
+        break;
+      case 'professional':
+        this.loadLeadsforprofessional(this.currentTableEvent);
         break;
       default:
         console.error('Unknown lead type');
@@ -1003,6 +1053,9 @@ export class ApprovalsComponent implements OnInit {
   statusChangeForPersonal(event) {
     this.loadLoanLeads('personal');
   }
+  statusChangeForProfessional(event) {
+    this.loadLoanLeads('professional');
+  }
   handleInputChange(value: string): void {
     this.searchInputValue = value;
     if (this.activeEmploymentStatus.name === 'employed') {
@@ -1141,6 +1194,13 @@ export class ApprovalsComponent implements OnInit {
     }
     return '';
   }
+  getDesignationType(userId: any): string {
+  if (this.designationType && this.designationType.length > 0) {
+    const designationType = this.designationType.find(user => user.id == userId);
+    return designationType?.displayName || '';
+  }
+  return '';
+}
   goBack() {
     this.location.back();
   }

@@ -64,7 +64,7 @@ export class ApprovedAmountComponent implements OnInit {
       if (!status) {
         this.getLeadById(this.leadId);
       } else {
-        const validStatuses = ['personalLoan', 'homeLoan', 'lap'];
+        const validStatuses = ['personalLoan', 'homeLoan', 'lap', 'professionalLoans'];
         if (validStatuses.includes(status)) {
           this.getLoanLeadById(this.leadId);
         } else {
@@ -155,7 +155,7 @@ export class ApprovedAmountComponent implements OnInit {
     }));
     this.loading = true;
     const updateFn =
-      loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap'
+      loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans'
         ? this.leadsService.updateplApprovalsDetails.bind(this.leadsService)
         : this.leadsService.updateApprovalsDetails.bind(this.leadsService);
     updateFn(this.leadId, formData).subscribe({

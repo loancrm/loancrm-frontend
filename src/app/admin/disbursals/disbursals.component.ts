@@ -53,10 +53,12 @@ export class DisbursalsComponent implements OnInit {
   totalLeadsCountArray: any;
   loanleadsLoading: any;
   businessNameToSearchForPersonal: any;
+  businessNameToSearchForProfessional: any;
   totalStatusLeadsCountArray: any;
   SourcedByForLap: any;
   loanLeads: any = [];
   SourcedByForPersonal: any;
+  SourcedByForProfessional: any;
   appliedFilterPersonal: {};
   searchFilterForLapSelf: any = {};
   personalfilterConfig: any[] = [];
@@ -74,7 +76,9 @@ export class DisbursalsComponent implements OnInit {
   homeloanLeadsCount: any = 0;
   appliedFilterHome: {};
   searchFilterPersonal: any = {};
+  searchFilterProfessional: any={};
   @ViewChild('personalleadsTable') personalleadsTable!: Table;
+  @ViewChild('professionalLoansTable') professionalLoansTable!: Table;
   @ViewChild('HomeleadsTable') HomeleadsTable!: Table;
   @ViewChild('LapleadsTable') LapleadsTable!: Table;
   searchInputValue: string = '';
@@ -546,7 +550,7 @@ export class DisbursalsComponent implements OnInit {
     // console.log('Row clicked:', event.data);
     const lead = event.data
     const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
-    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans') {
       this.routingService.handleRoute(`leads/profile/${loanType}/${lead.leadId}`, null);
     } else {
       // If no known loanType, omit status from the route
@@ -691,7 +695,7 @@ export class DisbursalsComponent implements OnInit {
   disbursalDetails(lead) {
 
     const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
-    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans') {
       this.routingService.handleRoute(`disbursals/disbursalDetails/${loanType}/${lead.leadId}`, null);
     } else {
       // If no known loanType, omit status from the route
@@ -706,7 +710,7 @@ export class DisbursalsComponent implements OnInit {
   revenueDetails(lead) {
 
     const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
-    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans') {
       this.routingService.handleRoute(`disbursals/revenue/${loanType}/${lead.leadId}`, null);
     } else {
       // If no known loanType, omit status from the route
@@ -757,6 +761,9 @@ export class DisbursalsComponent implements OnInit {
       case 'Lapself':
         this.loadLoanLeads('lapself');
         break;
+      case 'professional':
+        this.loadLoanLeads('professional');
+        break;
       default:
         this.loadLeads(null);
         break;
@@ -788,6 +795,9 @@ export class DisbursalsComponent implements OnInit {
         break;
       case 'lapself':
         this.loadLeadsforlapself(this.currentTableEvent);
+        break;
+      case 'professional':
+        this.loadLeadsforprofessional(this.currentTableEvent);
         break;
       default:
         console.error('Unknown lead type');
@@ -985,6 +995,35 @@ export class DisbursalsComponent implements OnInit {
       this.getloanLeads(api_filter);
     }
   }
+  loadLeadsforprofessional(event) {
+    this.currentTableEvent = event;
+    let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
+    api_filter['loanType-eq'] = 'professionalLoans';
+    api_filter['employmentStatus-eq'] = 'employed';
+    // if (this.SourcedByForPersonal && this.SourcedByForPersonal.name) {
+    //   if (this.SourcedByForPersonal.name == 'All') {
+    //     api_filter['leadInternalStatus-eq'] = '3';
+    //   } else {
+    //     api_filter['sourcedBy-eq'] = this.SourcedByForPersonal.id;
+    //   }
+    // }
+    if (this.SourcedByForProfessional && this.SourcedByForProfessional.name) {
+      if (this.SourcedByForProfessional.name != 'All') {
+        api_filter['sourcedBy-eq'] = this.SourcedByForProfessional.id;
+      }
+    }
+    api_filter = Object.assign(
+      {},
+      api_filter,
+      this.searchFilterProfessional,
+      this.applyFiltersProfessional
+    );
+    console.log(api_filter);
+    if (api_filter) {
+      this.getpersonalloanLeadsCount(api_filter);
+      this.getloanLeads(api_filter);
+    }
+  }
   viewLoanLead(event) {
     const lead = event.data
     this.routingService.handleRoute('files/loanleadview/' + lead.leadId, null);
@@ -995,11 +1034,27 @@ export class DisbursalsComponent implements OnInit {
       this.personalleadsTable.reset();
     }
   }
+  inputValueChangeEventForProfessional(dataType, value) {
+    if (value == '') {
+      this.searchFilterProfessional = {};
+      this.professionalLoansTable.reset();
+    }
+  }
   filterWithBusinessNameForPersonal() {
     let searchFilterPersonal = {
       'contactPerson-like': this.businessNameToSearchForPersonal,
     };
     this.applyFiltersPersonal(searchFilterPersonal);
+  }
+  filterWithBusinessNameForProfessional() {
+    let searchFilterProfessional = {
+      'contactPerson-like': this.businessNameToSearchForProfessional,
+    };
+    this.applyFiltersProfessional(searchFilterProfessional);
+  }
+  applyFiltersProfessional(searchFilterProfessional = {}) {
+    this.searchFilterProfessional = searchFilterProfessional;
+    this.loadLoanLeads('professional');
   }
   applyFiltersPersonal(searchFilterPersonal = {}) {
     this.searchFilterPersonal = searchFilterPersonal;
@@ -1007,6 +1062,9 @@ export class DisbursalsComponent implements OnInit {
   }
   statusChangeForPersonal(event) {
     this.loadLoanLeads('personal');
+  }
+  statusChangeForProfessional(event) {
+    this.loadLoanLeads('professional');
   }
   getpersonalloanLeadsCount(filter = {}) {
     this.leadsService.getplDisbursalLeadCount(filter).subscribe(

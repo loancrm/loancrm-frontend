@@ -182,7 +182,7 @@ export class LoanleadsevaluatecreditComponent {
     this.changeLoanLeadStatus(lead[0].leadId, 11);
     const loanType = lead[0].loanType; // e.g., 'personalloan', 'home loan', etc.
     // console.log(loanType)
-    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans') {
       this.routingService.handleRoute(`logins/bankSelection/${loanType}/${lead[0].leadId}`, null);
     }
   }

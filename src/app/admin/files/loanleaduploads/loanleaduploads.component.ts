@@ -33,6 +33,8 @@ export class LoanleaduploadsComponent implements OnInit {
   loanleads: any;
   userDetails: any;
   version = projectConstantsLocal.VERSION_DESKTOP;
+  designationType: any = projectConstantsLocal.DOCTOR_OR_CA;
+  employeeType: any = projectConstantsLocal.SALARYED_OR_UNSALARYED
   breadCrumbItems: any = [];
   selectedFiles: any = {
     panCard: { filesData: [], links: [], uploadedFiles: [] },
@@ -46,6 +48,10 @@ export class LoanleaduploadsComponent implements OnInit {
     coApplicantVoterId: { filesData: [], links: [], uploadedFiles: [] },
     cibilReport: { filesData: [], links: [], uploadedFiles: [] },
     companyId: { filesData: [], links: [], uploadedFiles: [] },
+    membershipCertificate: {filesData: [], links: [], uploadedFiles: []},
+    practicingCertificate: {filesData: [], links: [], uploadedFiles: []},
+    graduationCertificate: {filesData: [], links: [], uploadedFiles: [] },
+    pgCertificate: {filesData: [], links: [], uploadedFiles: [] },
     paySlips: [{ filesData: [], links: [], uploadedFiles: [] }],
     bankStatements: [{ filesData: [], links: [], uploadedFiles: [] }],
     residenceProof: { filesData: [], links: [], uploadedFiles: [] },
@@ -240,6 +246,12 @@ export class LoanleaduploadsComponent implements OnInit {
         { label: 'GST', name: 'gst' },
         { label: 'Sale Details', name: 'saledetails' }
       );
+    }
+    if (isEmployed && loanType === 'professionalLoans') {
+      this.items.push({ label: 'Financials', name: 'financials' });
+    }
+    if (isEmployed && loanType === 'professionalLoans') {
+      this.items.push({ label: 'Company Details', name: 'companydetails' });
     }
     // this.activeItem = this.items[0];
 
@@ -680,6 +692,22 @@ export class LoanleaduploadsComponent implements OnInit {
     if (this.loanleads[0].companyId) {
       this.selectedFiles['companyId']['uploadedFiles'] =
         this.loanleads[0].companyId;
+    }
+    if (this.loanleads[0].membershipCertificate) {
+      this.selectedFiles['membershipCertificate']['uploadedFiles'] =
+        this.loanleads[0].membershipCertificate;
+    }
+    if (this.loanleads[0].practicingCertificat) {
+      this.selectedFiles['practicingCertificate']['uploadedFiles'] =
+        this.loanleads[0].practicingCertificat;
+    }
+    if (this.loanleads[0].graduationCertificate) {
+      this.selectedFiles['graduationCertificate']['uploadedFiles'] =
+        this.loanleads[0].graduationCertificate;
+    }
+    if (this.loanleads[0].pgCertificate) {
+      this.selectedFiles['pgCertificate']['uploadedFiles'] =
+        this.loanleads[0].pgCertificate;
     }
     if (this.loanleads[0].gstCertificate) {
       this.selectedFiles['gstCertificate']['uploadedFiles'] =
@@ -1667,8 +1695,96 @@ export class LoanleaduploadsComponent implements OnInit {
         formData['companyId'].push(
           this.selectedFiles['companyId']['uploadedFiles'][i]
         );
+      }        
       }
-    }
+      formData['membershipCertificate'] = [];
+      if (
+        this.selectedFiles['membershipCertificate'] &&
+        this.selectedFiles['membershipCertificate']['links']
+      ) {
+        for (
+          let i = 0;
+          i < this.selectedFiles['membershipCertificate']['links'].length;
+          i++
+        ) {
+          formData['membershipCertificate'].push(this.selectedFiles['membershipCertificate']['links'][i]);
+        }
+        for (
+          let i = 0;
+          i < this.selectedFiles['membershipCertificate']['uploadedFiles'].length;
+          i++
+        ) {
+          formData['membershipCertificate'].push(
+            this.selectedFiles['membershipCertificate']['uploadedFiles'][i]
+          );
+        }
+      }
+      formData['practicingCertificate'] = [];
+      if (
+        this.selectedFiles['practicingCertificate'] &&
+        this.selectedFiles['practicingCertificate']['links']
+      ) {
+        for (
+          let i = 0;
+          i < this.selectedFiles['practicingCertificate']['links'].length;
+          i++
+        ) {
+          formData['practicingCertificate'].push(this.selectedFiles['practicingCertificate']['links'][i]);
+        }
+        for (
+          let i = 0;
+          i < this.selectedFiles['practicingCertificate']['uploadedFiles'].length;
+          i++
+        ) {
+          formData['practicingCertificate'].push(
+            this.selectedFiles['practicingCertificate']['uploadedFiles'][i]
+          );
+        }
+      }
+      formData['graduationCertificate'] = [];
+      if (
+        this.selectedFiles['graduationCertificate'] &&
+        this.selectedFiles['graduationCertificate']['links']
+      ) {
+        for (
+          let i = 0;
+          i < this.selectedFiles['graduationCertificate']['links'].length;
+          i++
+        ) {
+          formData['graduationCertificate'].push(this.selectedFiles['graduationCertificate']['links'][i]);
+        }
+        for (
+          let i = 0;
+          i < this.selectedFiles['graduationCertificate']['uploadedFiles'].length;
+          i++
+        ) {
+          formData['graduationCertificate'].push(
+            this.selectedFiles['graduationCertificate']['uploadedFiles'][i]
+          );
+        }
+      }
+      formData['pgCertificate'] = [];
+      if (
+        this.selectedFiles['pgCertificate'] &&
+        this.selectedFiles['pgCertificate']['links']
+      ) {
+        for (
+          let i = 0;
+          i < this.selectedFiles['pgCertificate']['links'].length;
+          i++
+        ) {
+          formData['pgCertificate'].push(this.selectedFiles['pgCertificate']['links'][i]);
+        }
+        for (
+          let i = 0;
+          i < this.selectedFiles['pgCertificate']['uploadedFiles'].length;
+          i++
+        ) {
+          formData['pgCertificate'].push(
+            this.selectedFiles['pgCertificate']['uploadedFiles'][i]
+          );
+        }
+      }
     // console.log(formData);
     // console.log(this.leadId);
     this.loading = true;
@@ -1685,6 +1801,23 @@ export class LoanleaduploadsComponent implements OnInit {
       }
     );
   }
+  getDesignationType(userId: any): string {
+  if (this.designationType && this.designationType.length > 0) {
+    const designationType = this.designationType.find(user => user.id == userId);
+    return designationType?.displayName || '';
+  }
+  return '';
+}
+
+getemployeeType(userId: any): string {
+  if (this.employeeType && this.employeeType.length > 0) {
+    const employeeType = this.employeeType.find(user => user.id == userId);
+    return employeeType?.displayName || '';
+  }
+  return '';
+}
+
+
   saveBankStatementsSection() {
     for (let index = 0; index < this.bankStatements.length; index++) {
       this.bankStatements[index]['from'] = this.moment(

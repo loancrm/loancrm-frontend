@@ -33,12 +33,14 @@ export class FilesinProcessComponent implements OnInit {
   entityDetails: any = projectConstantsLocal.BUSINESS_ENTITIES;
   natureofBusinessDetails: any = projectConstantsLocal.NATURE_OF_BUSINESS;
   hadOwnHouse = projectConstantsLocal.YES_OR_NO;
+  designationType = projectConstantsLocal.DOCTOR_OR_CA
   selectedSourcedByStatus: any;
   apiLoading: any;
   version = projectConstantsLocal.VERSION_DESKTOP;
   businessEntities = projectConstantsLocal.BUSINESS_ENTITIES
   @ViewChild('leadsTable') leadsTable!: Table;
   @ViewChild('personalleadsTable') personalleadsTable!: Table;
+  @ViewChild('professionalLoansTable') professionalLoansTable!: Table;
   @ViewChild('HomeleadsTable') HomeleadsTable!: Table;
   @ViewChild('LapleadsTable') LapleadsTable!: Table;
   loanleadsLoading: any;
@@ -50,10 +52,13 @@ export class FilesinProcessComponent implements OnInit {
   activeItem: any = null;
   activeEmploymentStatus: any;
   SourcedByForPersonal: any;
+  SourcedByForProfessional: any;
   appliedFilterPersonal: {};
   searchFilterPersonal: any = {};
+  searchFilterProfessional: any={};
   loanLeads: any = [];
   businessNameToSearchForPersonal: any;
+  businessNameToSearchForProfessional: any;
   personalloanLeadsCount: any = 0;
   homeloanselfLeadsCount: any = 0;
   personNameToSearchForHome: any;
@@ -544,7 +549,7 @@ export class FilesinProcessComponent implements OnInit {
     // console.log('Row clicked:', event.data);
     const lead = event.data
     const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
-    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans') {
       this.routingService.handleRoute(`leads/profile/${loanType}/${lead.leadId}`, null);
     } else {
       // If no known loanType, omit status from the route
@@ -617,7 +622,7 @@ export class FilesinProcessComponent implements OnInit {
   // }
   bankSelection(lead) {
     const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
-    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans') {
       this.routingService.handleRoute(`logins/bankSelection/${loanType}/${lead.leadId}`, null);
     } else {
       // If no known loanType, omit status from the route
@@ -626,7 +631,7 @@ export class FilesinProcessComponent implements OnInit {
   }
   savedBanks(lead) {
     const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
-    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans') {
       this.routingService.handleRoute(`logins/banksSaved/${loanType}/${lead.leadId}`, null);
     } else {
       // If no known loanType, omit status from the route
@@ -723,6 +728,9 @@ export class FilesinProcessComponent implements OnInit {
       case 'Lapself':
         this.loadLoanLeads('lapself');
         break;
+      case 'professional':
+        this.loadLoanLeads('professional');
+        break;
       default:
         this.loadLeads(null);
         break;
@@ -767,6 +775,36 @@ export class FilesinProcessComponent implements OnInit {
       this.getloanLeads(api_filter);
     }
   }
+  loadLeadsforprofessional(event) {
+    this.currentTableEvent = event;
+    let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
+    api_filter['loanType-eq'] = 'professionalLoans';
+    api_filter['employmentStatus-eq'] = 'employed';
+    // if (this.SourcedByForPersonal && this.SourcedByForPersonal.name) {
+    //   if (this.SourcedByForPersonal.name == 'All') {
+    //     api_filter['leadInternalStatus-eq'] = '3';
+    //   } else {
+    //     api_filter['sourcedBy-eq'] = this.SourcedByForPersonal.id;
+    //   }
+    // }
+    if (this.SourcedByForProfessional && this.SourcedByForProfessional.name) {
+      if (this.SourcedByForProfessional.name != 'All') {
+        api_filter['sourcedBy-eq'] = this.SourcedByForProfessional.id;
+      }
+    }
+    api_filter = Object.assign(
+      {},
+      api_filter,
+      this.searchFilterProfessional,
+      this.applyFiltersProfessional
+    );
+    console.log(api_filter);
+    if (api_filter) {
+      this.getpersonalloanLeadsCount(api_filter);
+      this.getloanLeads(api_filter);
+    }
+  }
+  
   getloanLeads(filter = {}) {
     this.loanleadsLoading = true;
     this.leadsService.getplFIPDistinctLeads(filter).subscribe(
@@ -804,15 +842,31 @@ export class FilesinProcessComponent implements OnInit {
       this.personalleadsTable.reset();
     }
   }
+  inputValueChangeEventForProfessional(dataType, value) {
+    if (value == '') {
+      this.searchFilterProfessional = {};
+      this.professionalLoansTable.reset();
+    }
+  }
   filterWithBusinessNameForPersonal() {
     let searchFilterPersonal = {
       'contactPerson-like': this.businessNameToSearchForPersonal,
     };
     this.applyFiltersPersonal(searchFilterPersonal);
   }
+  filterWithBusinessNameForProfessional() {
+    let searchFilterProfessional = {
+      'contactPerson-like': this.businessNameToSearchForProfessional,
+    };
+    this.applyFiltersProfessional(searchFilterProfessional);
+  }
   applyFiltersPersonal(searchFilterPersonal = {}) {
     this.searchFilterPersonal = searchFilterPersonal;
     this.loadLoanLeads('personal');
+  }
+   applyFiltersProfessional(searchFilterProfessional = {}) {
+    this.searchFilterProfessional = searchFilterProfessional;
+    this.loadLoanLeads('professional');
   }
   loadLoanLeads(leadType: string) {
     switch (leadType) {
@@ -830,6 +884,9 @@ export class FilesinProcessComponent implements OnInit {
         break;
       case 'lapself':
         this.loadLeadsforlapself(this.currentTableEvent);
+        break;
+      case 'professional':
+        this.loadLeadsforprofessional(this.currentTableEvent);
         break;
       default:
         console.error('Unknown lead type');
@@ -996,6 +1053,9 @@ export class FilesinProcessComponent implements OnInit {
   statusChangeForPersonal(event) {
     this.loadLoanLeads('personal');
   }
+  statusChangeForProfessional(event) {
+    this.loadLoanLeads('professional');
+  }
   goBack() {
     this.location.back();
   }
@@ -1123,4 +1183,11 @@ export class FilesinProcessComponent implements OnInit {
   statusChangeForLapSelf(event) {
     this.loadLoanLeads('lapself');
   }
+  getDesignationType(userId: any): string {
+  if (this.designationType && this.designationType.length > 0) {
+    const designationType = this.designationType.find(user => user.id == userId);
+    return designationType?.displayName || '';
+  }
+  return '';
+}
 }

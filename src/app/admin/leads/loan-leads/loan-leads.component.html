@@ -106,8 +106,7 @@
   </div>
 </div>
 
-<ng-container
-  *ngIf="loanType == 'personalLoan' || employmentStatus == 'employed'"
+<ng-container *ngIf="loanType == 'personalLoan' || employmentStatus == 'employed'"
 >
   <div class="bg-color" *ngIf="!loading">
     <!-- <p-steps
@@ -452,7 +451,7 @@
                             </div>
                           </div>
                         </div>
-                        <div class="col-md-4 mt-2">
+                        <div class="col-md-4 mt-2" *ngIf="loanType == 'personalLoan'">
                           <div>
                             <div class="my-1">
                               <label
@@ -484,6 +483,82 @@
                                 Designation is required.
                               </small>
                             </div>
+                          </div>
+                        </div>
+                         <div class="col-md-4 mt-2" *ngIf="loanType == 'professionalLoans'">
+                          <div>
+                            <div class="my-1">
+                              <label
+                                >Designation Type&nbsp;<span
+                                  ><sup class="text-danger">*</sup></span
+                                ></label
+                              >
+                            </div>
+                            <p-dropdown
+                              [options]="designationtype"
+                              formControlName="designationtype"
+                              optionLabel="displayName"
+                              optionValue="id"
+                              [showClear]="true"
+                              appendTo="body"
+                              styleClass="w-100"
+                              appendTo="body"
+                              placeholder="Designation Type"
+                              [dropdownIcon]="'pi pi-chevron-down'"
+                            ></p-dropdown>
+                            <!-- Error message for invalid Designation -->
+                            <div
+                              *ngIf="
+                                leadForm.get('designation')?.invalid &&
+                                (leadForm.get('designation')?.touched ||
+                                  leadForm.get('designation')?.dirty)
+                              "
+                            >
+                              <small
+                                class="text-danger"
+                                *ngIf="leadForm.get('designation')?.errors?.['required']"
+                              >
+                                Designation is required.
+                              </small>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4 mt-2" *ngIf="loanType == 'professionalLoans'">
+                          <div>
+                            <div class="my-1">
+                              <label
+                                >Salaryed Type&nbsp;<span
+                                  ><sup class="text-danger">*</sup></span
+                                ></label
+                              >
+                            </div>
+                            <p-dropdown
+                              [options]="salaryedtype"
+                              formControlName="employmentType"
+                              optionLabel="displayName"
+                              optionValue="id"
+                              [showClear]="true"
+                              appendTo="body"
+                              styleClass="w-100"
+                              appendTo="body"
+                              placeholder="Salatyed/UnSalaryed"
+                              [dropdownIcon]="'pi pi-chevron-down'"
+                            ></p-dropdown>
+                            <!-- Error message for invalid Had Own House -->
+                            <!-- <div
+                              *ngIf="
+                                leadForm.get('salaryedtype')?.invalid &&
+                                (leadForm.get('salaryedtype')?.touched ||
+                                  leadForm.get('salaryedtype')?.dirty)
+                              "
+                            >
+                              <small
+                                class="text-danger"
+                                *ngIf="leadForm.get('salaryedtype')?.errors?.['required']"
+                              >
+                                Salaryed Type is required.
+                              </small>
+                            </div> -->
                           </div>
                         </div>
                         <div class="col-md-4 mt-2">

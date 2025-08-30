@@ -38,6 +38,7 @@ export class LoginsComponent {
   @ViewChild('leadsTable') leadsTable!: Table;
   // @ViewChild('leadsTableforfip') leadsTableforfip!: Table;
   @ViewChild('personalleadsTable') personalleadsTable!: Table;
+  @ViewChild('professionalleadsTable') professionalleadsTable!: Table;
   @ViewChild('HomeleadsTable') HomeleadsTable!: Table;
   @ViewChild('LapleadsTable') LapleadsTable!: Table;
   leadSources: any = [];
@@ -55,8 +56,10 @@ export class LoginsComponent {
   version = projectConstantsLocal.VERSION_DESKTOP;
   businessEntities = projectConstantsLocal.BUSINESS_ENTITIES;
   loginStatus: any = projectConstantsLocal.LOGIN_STATUS;
+  designationType = projectConstantsLocal.DOCTOR_OR_CA
   selectedLoginStatus = this.loginStatus[1];
   selectedplLoginStatus = this.loginStatus[1];
+  selectedpfLoginStatus = this.loginStatus[1];
   selectedhlLoginStatus = this.loginStatus[1];
   selectedlapLoginStatus = this.loginStatus[1];
   selectedhlselfLoginStatus = this.loginStatus[1];
@@ -67,6 +70,7 @@ export class LoginsComponent {
   employmentStatus: any;
   activeEmploymentStatus: any;
   personalloanLeadsCount: any = 0;
+  professionalloanLeadsCount: any =0;
   SourcedByForLap: any;
   loanleadsLoading: any;
   HomeSelffilterConfig: any[] = [];
@@ -83,13 +87,16 @@ export class LoginsComponent {
   appliedFilterHomeself: {};
   appliedFilterHome: {};
   SourcedByForPersonal: any;
+  SourcedByForProfessional: any;
   searchFilterPersonal: any = {};
+  searchFilterProfessional: any={};
   appliedFilterPersonal: {};
   homeloanselfLeadsCount: any = 0;
   homeloanLeadsCount: any = 0;
   loanLeads: any = [];
   personalfilterConfig: any[] = [];
   businessNameToSearchForPersonal: any;
+  businessNameToSearchForProfessional: any;
   constructor(
     private location: Location,
     private leadsService: LeadsService,
@@ -368,7 +375,7 @@ export class LoginsComponent {
         name: 'lap',
       },
       {
-        label: `Professional Loans (0)`,
+        label: `Professional Loans (${this.totalLeadsCountArray?.ProfessionalLoancount || 0})`,
         name: 'professionalLoans',
       },
       {
@@ -840,6 +847,13 @@ export class LoginsComponent {
     // );
     this.loadLoanLeads('personal');
   }
+  pfloginstatusChange(event) {
+    // this.localStorageService.setItemOnLocalStorage(
+    //   'selectedLogins',
+    //   event.value
+    // );
+    this.loadLoanLeads('professional');
+  }
   hlloginstatusChange(event) {
     // this.localStorageService.setItemOnLocalStorage(
     //   'selectedLogins',
@@ -979,7 +993,7 @@ export class LoginsComponent {
     console.log('Row clicked:', event.data);
     const lead = event.data
     const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
-    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans') {
       this.routingService.handleRoute(`leads/profile/${loanType}/${lead.leadId}`, null);
     } else {
       // If no known loanType, omit status from the route
@@ -992,7 +1006,7 @@ export class LoginsComponent {
 
   bankSelection(lead) {
     const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
-    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans') {
       this.routingService.handleRoute(`logins/bankSelection/${loanType}/${lead.leadId}`, null);
     } else {
       // If no known loanType, omit status from the route
@@ -1116,6 +1130,12 @@ export class LoginsComponent {
     return [];
   }
 
+  getpfMenuItems(lead: any) {
+    if (lead.leadInternalStatus == 11) return this.actionItemsForLead(lead, 'professional');
+    if (lead.leadInternalStatus == 12) return this.actionItemsplfip(lead);
+    return [];
+  }
+
   evaluateCredit(leadId) {
     this.routingService.handleRoute('credit/evaluate/' + leadId, null);
   }
@@ -1178,6 +1198,9 @@ export class LoginsComponent {
         break;
       case 'lapself':
         this.loadLeadsforlapself(this.currentTableEvent);
+        break;
+      case 'professional':
+        this.loadLeadsforprofessional(this.currentTableEvent);
         break;
       default:
         console.error('Unknown lead type');
@@ -1445,6 +1468,55 @@ export class LoginsComponent {
       this.getloanLeads(api_filter);
     }
   }
+
+  loadLeadsforprofessional(event) {
+    this.currentTableEvent = event;
+    let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
+    api_filter['loanType-eq'] = 'professionalLoans';
+    api_filter['leadInternalStatus-eq'] = '5';
+    // if (this.SourcedByForPersonal && this.SourcedByForPersonal.name) {
+    //   if (this.SourcedByForPersonal.name == 'All') {
+    //     api_filter['leadInternalStatus-eq'] = '3';
+    //   } else {
+    //     api_filter['sourcedBy-eq'] = this.SourcedByForPersonal.id;
+    //   }
+    // }
+    if (this.selectedpfLoginStatus) {
+      // console.log(this.selectedplLoginStatus)
+      if (this.selectedpfLoginStatus && this.selectedpfLoginStatus.name) {
+        if (this.selectedpfLoginStatus.name != 'all') {
+          api_filter['leadInternalStatus-eq'] = this.selectedpfLoginStatus.id;
+        } else {
+          api_filter['leadInternalStatus-or'] = '11,12';
+        }
+      }
+    }
+    if (this.SourcedByForProfessional && this.SourcedByForProfessional.name) {
+      if (this.SourcedByForProfessional.name != 'All') {
+        api_filter['sourcedBy-eq'] = this.SourcedByForProfessional.id;
+      }
+    }
+    api_filter = Object.assign(
+      {},
+      api_filter,
+      this.searchFilterProfessional,
+      this.applyFiltersProfessional
+    );
+    if (
+      this.userDetails &&
+      this.userDetails.id &&
+      this.userDetails.userType &&
+      this.userDetails.userType == '3'
+    ) {
+      api_filter['sourcedBy-eq'] = this.userDetails.id;
+    }
+    // console.log(api_filter);
+    if (api_filter) {
+      this.getprofessionalloanLeadsCount(api_filter);
+      this.getloanLeads(api_filter);
+    }
+  }
+
   getHomeloanLeadsCount(filter = {}) {
     this.leadsService.getloanLeadsCount(filter).subscribe(
       (response) => {
@@ -1459,6 +1531,17 @@ export class LoginsComponent {
     this.leadsService.getloanLeadsCount(filter).subscribe(
       (response) => {
         this.personalloanLeadsCount = response;
+        // console.log(this.personalloanLeadsCount);
+      },
+      (error: any) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
+  getprofessionalloanLeadsCount(filter = {}) {
+    this.leadsService.getloanLeadsCount(filter).subscribe(
+      (response) => {
+        this.professionalloanLeadsCount = response;
         // console.log(this.personalloanLeadsCount);
       },
       (error: any) => {
@@ -1489,9 +1572,19 @@ export class LoginsComponent {
     };
     this.applyFiltersPersonal(searchFilterPersonal);
   }
+  filterWithBusinessNameForProfessional() {
+    let searchFilterProfessional = {
+      'contactPerson-like': this.businessNameToSearchForProfessional,
+    };
+    this.applyFiltersProfessional(searchFilterProfessional);
+  }
   applyFiltersPersonal(searchFilterPersonal = {}) {
     this.searchFilterPersonal = searchFilterPersonal;
     this.loadLoanLeads('personal');
+  }
+  applyFiltersProfessional(searchFilterProfessional = {}) {
+    this.searchFilterProfessional = searchFilterProfessional;
+    this.loadLoanLeads('professional');
   }
   inputValueChangeEventForPersonal(dataType, value) {
     if (value == '') {
@@ -1500,8 +1593,17 @@ export class LoginsComponent {
     }
 
   }
+  inputValueChangeEventForProfessional(dataType, value) {
+    if (value == '') {
+      this.searchFilterProfessional = {};
+      this.professionalleadsTable.reset();
+    }
+  }
   statusChangeForPersonal(event) {
     this.loadLoanLeads('personal');
+  }
+  statusChangeForProfessional(event) {
+    this.loadLoanLeads('professional');
   }
   actionItemsForLead(lead: any, leadType: string): MenuItem[] {
     const menuItems: MenuItem[] = [
@@ -1535,6 +1637,13 @@ export class LoginsComponent {
       }
     );
   }
+  getDesignationType(userId: any): string {
+  if (this.designationType && this.designationType.length > 0) {
+    const designationType = this.designationType.find(user => user.id == userId);
+    return designationType?.displayName || '';
+  }
+  return '';
+}
 
   goBack() {
     this.location.back();

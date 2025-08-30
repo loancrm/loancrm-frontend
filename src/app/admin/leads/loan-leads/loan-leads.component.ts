@@ -36,6 +36,8 @@ export class LoanLeadsComponent {
   businessTurnover: any = projectConstantsLocal.BUSINESS_TURNOVER;
   natureOfBusines: any = projectConstantsLocal.NATURE_OF_BUSINESS;
   employmentStatus: any = projectConstantsLocal.EMPLOYMENT_STATUS;
+  salaryedtype: any = projectConstantsLocal.SALARYED_OR_UNSALARYED;
+  designationtype: any = projectConstantsLocal.DOCTOR_OR_CA;
   natureOfBusinessSuggestions: any;
   citySuggestions: any;
   userDetails: any;
@@ -112,6 +114,8 @@ export class LoanLeadsComponent {
               pincode: this.leadData[0]?.pincode,
               companyName: this.leadData[0]?.companyName,
               designation: this.leadData[0]?.designation,
+              designationtype: this.leadData[0]?.designationtype,
+              employmentType: this.leadData[0]?.employmentType,
               salary: this.leadData[0]?.salary,
               jobExperience: this.leadData[0]?.jobExperience,
               companyAddress: this.leadData[0]?.companyAddress,
@@ -191,6 +195,12 @@ export class LoanLeadsComponent {
     if (this.loanType == 'personalLoan') {
       this.employmentStatus = 'employed';
     }
+    // if(this.loanType == 'professionalLoans') {
+    //   this.employmentStatus = 'employed';
+    // }
+    if (this.loanType == 'professionalLoans') {
+    this.employmentStatus = 'employed';
+  }
   }
   onStepChange(event: any) {
     this.activeIndex = event.index;
@@ -218,7 +228,9 @@ export class LoanLeadsComponent {
       pincode: [''],
       companyName: ['', Validators.compose([Validators.required])],
       designation: ['', Validators.compose([Validators.required])],
+      designationtype: ['', Validators.compose([Validators.required])],
       salary: ['', Validators.compose([Validators.required])],
+      employmentType:['', Validators.compose([Validators.required])],
       jobExperience: ['', Validators.compose([Validators.required])],
       companyAddress: ['', Validators.compose([Validators.required])],
       existingLoanDetails: ['', Validators.compose([Validators.required])],
@@ -326,8 +338,16 @@ export class LoanLeadsComponent {
       state: formValues.state,
       pincode: formValues.pincode,
       companyName: formValues.companyName,
-      designation: formValues.designation,
+      designation:
+    this.loanType === "personalLoan"
+      ? formValues.designation
+      : this.loanType === "professionalLoans"
+      ? formValues.designationtype
+      : "",
+      // designation: formValues.designation,
+      // designation: formValues.designationtype,
       salary: formValues.salary,
+      employmentType: formValues.employmentType,
       jobExperience: formValues.jobExperience,
       companyAddress: formValues.companyAddress,
       leadSource: formValues.leadSource,

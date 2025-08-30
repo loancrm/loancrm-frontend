@@ -36,6 +36,7 @@
         *ngIf="
           loanleads[0]?.businessEntity === 'proprietorship' ||
           loanleads[0]?.loanType === 'personalLoan' ||
+          loanleads[0]?.loanType === 'professionalLoans' ||
           (loanleads[0]?.loanType === 'homeLoan' &&
             loanleads[0]?.employmentStatus === 'employed') ||
           (loanleads[0]?.loanType === 'lap' &&
@@ -2596,6 +2597,417 @@
 
           <!-- Payslips Section -->
           <div>
+            <h5 class="fw-bold mt-4" style="color: #000">Payslips</h5>
+
+            <div class="my-1 text-end">
+              <button
+                pButton
+                pRipple
+                type="button"
+                class="p-button-primary me-2"
+                (click)="addPayslipsRow()"
+              >
+                <i class="pi pi-plus"></i>&nbsp;Add Additional Payslip
+              </button>
+            </div>
+
+            <div class="row" *ngFor="let slip of paySlips; let i = index">
+              <!-- Date -->
+              <div class="col-md-4 mt-2">
+                <label class="my-1">Date&nbsp;</label>
+                <div class="custom-calendar-wrapper w-100 position-relative">
+                  <p-calendar
+                    #calendar
+                    [(ngModel)]="slip.date"
+                    placeholder="Select Date"
+                    [showIcon]="false"
+                    [showButtonBar]="true"
+                    appendTo="body"
+                    styleClass="w-100 custom-calendar-input"
+                  ></p-calendar>
+                  <img
+                    src="../../../../assets/images/icons/calendar.svg"
+                    alt="Calendar Icon"
+                    class="calendar-custom-img"
+                    (click)="calendar.toggle()"
+                  />
+                </div>
+              </div>
+
+              <!-- Salary -->
+              <div class="col-md-4 mt-2">
+                <label class="my-1">Salary&nbsp;</label>
+                <input
+                  pInputText
+                  class="rounded-lg w-100"
+                  type="text"
+                  placeholder="Enter Salary"
+                  [(ngModel)]="slip.salary"
+                  autocomplete="off"
+                />
+              </div>
+
+              <!-- Payslip Upload -->
+              <div class="col-md-3 mt-2">
+                <label class="text-success my-1">Payslip</label>
+                <div class="d-flex">
+                  <button
+                    pButton
+                    pRipple
+                    type="button"
+                    class="p-button-info"
+                    (click)="uploadFiles('paySlips', '*/*', i)"
+                  >
+                    <i class="pi pi-upload"></i>&nbsp;Upload Files
+                  </button>
+                  <button
+                    *ngIf="i > 0"
+                    pButton
+                    pRipple
+                    type="button"
+                    class="p-button-danger ml-1"
+                    (click)="deletePayslipsRow(i)"
+                  >
+                    <i class="pi pi-times"></i>
+                  </button>
+                </div>
+
+                <div
+                  *ngIf="loanleads?.[0]?.paySlips?.[i]?.paySlips?.length"
+                  class="mt-2"
+                >
+                  <ng-container
+                    *ngFor="let file of loanleads[0].paySlips[i].paySlips"
+                  >
+                    <a [href]="'//' + file" target="_blank" class="me-2">
+                      <i
+                        [class]="getFileIcon(file.split('.').pop())"
+                        class="file-icon"
+                      ></i>
+                    </a>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Save Button -->
+          <div class="my-3 text-center">
+            <button
+              pButton
+              pRipple
+              type="button"
+              class="p-button-primary me-2"
+              (click)="saveCompanyDetailsSection()"
+            >
+              <i class="pi pi-save"></i>&nbsp;Save
+            </button>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container
+        *ngIf="
+              loanleads?.length &&
+              (loanleads[0].loanType === 'professionalLoans' &&
+              loanleads[0].employmentStatus === 'employed')
+            "
+      >
+      
+        <div *ngIf="activeItem.name == 'financials'">
+          <div>
+            <div
+              class="row mt-5"
+              *ngFor="let kycs of financialReturns; let i = index"
+            >
+              <div class="col-md-3 mt-2">
+                <div>
+                  <div class="my-1">
+                    <label>Annual Year&nbsp; </label>
+                  </div>
+                  <input
+                    pInputText
+                    class="rounded-lg"
+                    [style]="{ width: '100%' }"
+                    type="text"
+                    placeholder="Enter Year"
+                    [(ngModel)]="kycs['pastIncomeTax']"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+              <div class="col-md-3 mt-2">
+                <div>
+                  <div class="my-1">
+                    <label class="text-success">Attachments</label>
+                  </div>
+                  <div class="d-flex">
+                    <button
+                      pButton
+                      pRipple
+                      type="button"
+                      class="p-button-info"
+                      (click)="uploadFiles('pastIncomeReturns', '*/*', i)"
+                    >
+                      <i class="pi pi-upload"></i>&nbsp;Upload Files
+                    </button>
+                  </div>
+                </div>
+                <div
+                  *ngIf="
+                    loanleads &&
+                    loanleads[0].financialReturns &&
+                    loanleads[0].financialReturns[i] &&
+                    loanleads[0].financialReturns[i].pastIncomeReturns &&
+                    loanleads[0].financialReturns[i].pastIncomeReturns.length >
+                      0
+                  "
+                  class="mt-2"
+                >
+                  <span
+                    *ngFor="
+                      let file of loanleads[0].financialReturns[i]
+                        .pastIncomeReturns
+                    "
+                    class="me-2"
+                  >
+                    <a [href]="'//' + file" target="_blank">
+                      <i
+                        [class]="getFileIcon(file.split('.').pop())"
+                        class="file-icon"
+                      ></i>
+                    </a>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-3 mt-2">
+                <div>
+                  <div class="my-1">
+                    <label>Annual Year &nbsp; </label>
+                  </div>
+                  <input
+                    pInputText
+                    class="rounded-lg"
+                    [style]="{ width: '100%' }"
+                    type="text"
+                    placeholder="Enter Year"
+                    [(ngModel)]="kycs['presentIncomeTax']"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+              <div class="col-md-3 mt-2">
+                <div>
+                  <div class="my-1">
+                    <label class="text-success">Attachments</label>
+                  </div>
+                  <div class="d-flex">
+                    <button
+                      pButton
+                      pRipple
+                      type="button"
+                      class="p-button-info"
+                      (click)="uploadFiles('presentIncomeReturns', '*/*', i)"
+                    >
+                      <i class="pi pi-upload"></i>&nbsp;Upload Files
+                    </button>
+                  </div>
+                </div>
+                <div
+                  *ngIf="
+                    loanleads &&
+                    loanleads[0].financialReturns &&
+                    loanleads[0].financialReturns[i] &&
+                    loanleads[0].financialReturns[i].presentIncomeReturns &&
+                    loanleads[0].financialReturns[i].presentIncomeReturns
+                      .length > 0
+                  "
+                  class="mt-2"
+                >
+                  <span
+                    *ngFor="
+                      let file of loanleads[0].financialReturns[i]
+                        .presentIncomeReturns
+                    "
+                    class="me-2"
+                  >
+                    <a [href]="'//' + file" target="_blank">
+                      <i
+                        [class]="getFileIcon(file.split('.').pop())"
+                        class="file-icon"
+                      ></i>
+                    </a>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="my-3 text-center">
+            <button
+              pButton
+              pRipple
+              type="button"
+              class="p-button-primary me-2"
+              (click)="saveFinancialReturns()"
+            >
+              <i class="pi pi-save"></i>&nbsp;Save
+            </button>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container
+        *ngIf="
+              loanleads?.length &&
+              (loanleads[0].loanType === 'professionalLoans' &&
+              loanleads[0].employmentStatus === 'employed')
+            "
+      >
+        <div *ngIf="activeItem.name === 'companydetails'">
+          <div class="row">
+            <!-- Company Name -->
+            <div class="col-md-4 mt-2">
+              <label class="my-1">Company Name&nbsp;</label>
+              <input
+                pInputText
+                class="rounded-lg w-100"
+                type="text"
+                placeholder="Enter Person Name"
+                [(ngModel)]="companyName"
+                autocomplete="off"
+                required
+              />
+            </div>
+
+            <!-- Company ID Upload -->
+            <div class="col-md-3 mt-2">
+              <div class="my-1">
+                <label class="text-success my-1">Company Id&nbsp;</label>
+              </div>
+              <div class="d-flex">
+                <button
+                  pButton
+                  pRipple
+                  type="button"
+                  class="p-button-info me-2"
+                  (click)="uploadFiles('companyId', '*/*')"
+                >
+                  <i class="pi pi-upload"></i>&nbsp;Upload Files
+                </button>
+                <div *ngIf="loanleads?.[0]?.companyId?.length" class="mt-2">
+                <ng-container *ngFor="let file of loanleads[0].companyId">
+                  <a [href]="'//' + file" target="_blank" class="me-2">
+                    <i
+                      [class]="getFileIcon(file.split('.').pop())"
+                      class="file-icon"
+                    ></i>
+                  </a>
+                </ng-container>
+              </div>
+              </div>
+              <div *ngIf="getDesignationType(loanleads[0]?.designation) === 'CA'">
+                 <div class="my-1">
+                <label class="text-success my-1">Membership certificate (COM)&nbsp;</label>
+              </div>
+              <div class="d-flex">
+                <button
+                  pButton
+                  pRipple
+                  type="button"
+                  class="p-button-info me-2"
+                  (click)="uploadFiles('membershipCertificate', '*/*')"
+                >
+                  <i class="pi pi-upload"></i>&nbsp;Upload Files
+                </button>
+                <div *ngIf="loanleads?.[0]?.membershipCertificate?.length" class="mt-2">
+                <ng-container *ngFor="let file of loanleads[0].membershipCertificate">
+                  <a [href]="'//' + file" target="_blank" class="me-2">
+                    <i
+                      [class]="getFileIcon(file.split('.').pop())"
+                      class="file-icon"
+                    ></i>
+                  </a>
+                </ng-container>
+              </div>
+              </div>
+              <div class="my-1">
+                <label class="text-success my-1">Practicing certificate (COP)&nbsp;</label>
+              </div>
+              <div class="d-flex">
+                <button
+                  pButton
+                  pRipple
+                  type="button"
+                  class="p-button-info me-2"
+                  (click)="uploadFiles('practicingCertificate', '*/*')"
+                >
+                  <i class="pi pi-upload"></i>&nbsp;Upload Files
+                </button>
+                <div *ngIf="loanleads?.[0]?.practicingCertificate?.length" class="mt-2">
+                <ng-container *ngFor="let file of loanleads[0].practicingCertificate">
+                  <a [href]="'//' + file" target="_blank" class="me-2">
+                    <i
+                      [class]="getFileIcon(file.split('.').pop())"
+                      class="file-icon"
+                    ></i>
+                  </a>
+                </ng-container>
+              </div>
+              </div>
+              </div>
+              <div *ngIf="getDesignationType(loanleads[0]?.designation) === 'Doctor'">
+                <div class="my-1">
+                  <label class="text-success my-1">Graduation Certificate&nbsp;</label>
+                </div>
+                <div class="d-flex">
+                  <button
+                    pButton
+                    pRipple
+                    type="button"
+                    class="p-button-info me-2"
+                    (click)="uploadFiles('graduationCertificate', '*/*')"
+                  >
+                    <i class="pi pi-upload"></i>&nbsp;Upload Files
+                  </button>
+                  <div *ngIf="loanleads?.[0]?.graduationCertificate?.length" class="mt-2">
+                  <ng-container *ngFor="let file of loanleads[0].graduationCertificate">
+                    <a [href]="'//' + file" target="_blank" class="me-2">
+                      <i
+                        [class]="getFileIcon(file.split('.').pop())"
+                        class="file-icon"
+                      ></i>
+                    </a>
+                  </ng-container>
+                </div>
+                </div>
+                <div class="my-1">
+                  <label class="text-success my-1">Pg Certificate&nbsp;</label>
+                </div>
+                <div class="d-flex">
+                  <button
+                    pButton
+                    pRipple
+                    type="button"
+                    class="p-button-info me-2"
+                    (click)="uploadFiles('pgCertificate', '*/*')"
+                  >
+                    <i class="pi pi-upload"></i>&nbsp;Upload Files
+                  </button>
+                  <div *ngIf="loanleads?.[0]?.pgCertificate?.length" class="mt-2">
+                  <ng-container *ngFor="let file of loanleads[0].pgCertificate">
+                    <a [href]="'//' + file" target="_blank" class="me-2">
+                      <i
+                        [class]="getFileIcon(file.split('.').pop())"
+                        class="file-icon"
+                      ></i>
+                    </a>
+                  </ng-container>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payslips Section -->
+          <div *ngIf="getemployeeType(loanleads[0]?.employmentType) === 'Salaryed'">
             <h5 class="fw-bold mt-4" style="color: #000">Payslips</h5>
 
             <div class="my-1 text-end">

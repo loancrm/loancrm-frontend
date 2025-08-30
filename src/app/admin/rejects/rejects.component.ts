@@ -23,32 +23,45 @@ export class RejectsComponent implements OnInit {
   mobileNumberToSearchforbank: any;
   businessNameToSearchforbank: any;
   businessNameToSearchforplbank: any;
+  businessNameToSearchforpfbank: any;
   mobileNumberToSearchcni: any;
   businessNameToSearchcni: any;
   businessNameToSearchplcni: any;
+  businessNameToSearchpfcni: any;
   currentTableEvent: any;
   selectedSourcedByStatus: any;
   selectedplSourcedByStatus: any;
+  selectedpfSourcedByStatus: any;
   selectedSourcedByStatusforbank: any;
   selectedplSourcedByStatusforbank: any;
+  selectedpfSourcedByStatusforbank: any;
   selectedSourcedByStatusforcni: any;
   selectedSourcedByStatusforplcni: any;
+  selectedSourcedByStatusforpfcni: any;
   leadStatus: any = projectConstantsLocal.REJECTED_STATUS;
+  designationType: any = projectConstantsLocal.DOCTOR_OR_CA
   appliedFilter: {};
   plappliedFilter: {};
+  pfappliedFilter: {};
   appliedFilterforbank: {};
   plappliedFilterforbank: {};
+  pfappliedFilterforbank: {};
   appliedFilterforcni: {};
   plappliedFilterforcni: {};
+  pfappliedFilterforcni: {};
   filterConfig: any[] = [];
   searchFilter: any = {};
   plsearchFilter: any = {};
+  pfsearchFilter: any = {};
   mobileNumberToSearch: any;
   businessNameToSearchForPersonal: any;
+  businessNameToSearchForProfessional: any;
   searchFilterbank: any = {};
   plsearchFilterbank: any = {};
+  pfsearchFilterbank: any = {};
   searchFiltercni: any = {};
   plsearchFiltercni: any = {};
+  pfsearchFiltercni: any = {};
   HomefilterConfig: any[] = [];
   HomeSelffilterConfig: any[] = [];
   appliedFilterHome: {};
@@ -61,8 +74,10 @@ export class RejectsComponent implements OnInit {
   @ViewChild('leadsTable') leadsTable!: Table;
   @ViewChild('leadsTablebank') leadsTablebank!: Table;
   @ViewChild('plleadsTablebank') plleadsTablebank!: Table;
+  @ViewChild('pfleadsTablebank') pfleadsTablebank!: Table;
   @ViewChild('leadsTablecni') leadsTablecni!: Table;
   @ViewChild('plleadsTablecni') plleadsTablecni!: Table;
+  @ViewChild('pfleadsTablecni') pfleadsTablecni!: Table;
   leadSources: any = [];
   activeItem: any;
   items: any;
@@ -101,7 +116,9 @@ export class RejectsComponent implements OnInit {
   selectedhlLoginStatus = this.rejectStatus[0];
   selectedlapLoginStatus = this.rejectStatus[0];
   selectedplLoginStatus = this.rejectStatus[0];
+  selectedpfLoginStatus = this.rejectStatus[0];
   @ViewChild('personalleadsTable') personalleadsTable!: Table;
+  @ViewChild('professionalLoansTable') professionalLoansTable!: Table;
   constructor(
     private location: Location,
     private leadsService: LeadsService,
@@ -167,6 +184,13 @@ if (storedPlLoginStatus) {
   const matched = this.rejectStatus.find(item => item.name === storedPlLoginStatus);
   if (matched) {
     this.selectedplLoginStatus = matched;
+  }
+}
+const storedPfLoginStatus = this.localStorageService.getItemFromLocalStorage('selectedpfLoginStatus');
+if (storedPfLoginStatus) {
+  const matched = this.rejectStatus.find(item => item.name === storedPfLoginStatus);
+  if (matched) {
+    this.selectedpfLoginStatus = matched;
   }
 }
 const storedHlLoginStatus = this.localStorageService.getItemFromLocalStorage('selectedhlLoginStatus');
@@ -621,6 +645,10 @@ if (storedLapLoginStatus) {
   this.selectedplLoginStatus = event.value;
   this.localStorageService.setItemOnLocalStorage('selectedplLoginStatus', event.value.name);
   }
+  loginpfstatusChange(event: any) {
+  this.selectedpfLoginStatus = event.value;
+  this.localStorageService.setItemOnLocalStorage('selectedpfLoginStatus', event.value.name);
+  }
   loadLeads(event) {
     this.currentTableEvent = event;
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
@@ -660,6 +688,30 @@ if (storedLapLoginStatus) {
       api_filter,
       this.plsearchFilter,
       this.plappliedFilter
+    );
+    if (api_filter) {
+      this.getplTotalLeadsCount(api_filter);
+      this.getplTotalLeads(api_filter);
+    }
+  }
+
+  loadpfLeads(event) {
+    this.currentTableEvent = event;
+    let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
+    api_filter['loanType-eq'] = 'professionalLoans';
+    api_filter['employmentStatus-eq'] = 'employed';
+    api_filter['leadInternalStatus-eq'] = '10';
+    if (this.selectedpfSourcedByStatus && this.selectedpfSourcedByStatus.name) {
+      if (this.selectedpfSourcedByStatus.name != 'All') {
+        api_filter['sourcedBy-eq'] = this.selectedpfSourcedByStatus.id;
+      }
+    }
+    // console.log(api_filter);
+    api_filter = Object.assign(
+      {},
+      api_filter,
+      this.pfsearchFilter,
+      this.pfappliedFilter
     );
     if (api_filter) {
       this.getplTotalLeadsCount(api_filter);
@@ -905,6 +957,30 @@ if (storedLapLoginStatus) {
       this.getplBankRejectsLeads(api_filter);
     }
   }
+  loadpfBankRejectedLeads(event) {
+    this.currentTableEvent = event;
+    let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
+    api_filter['loanType-eq'] = 'professionalLoans';
+    api_filter['employmentStatus-eq'] = 'employed';
+    if (
+      this.selectedpfSourcedByStatusforbank &&
+      this.selectedpfSourcedByStatusforbank.name
+    ) {
+      if (this.selectedpfSourcedByStatusforbank.name != 'All') {
+        api_filter['sourcedBy-eq'] = this.selectedpfSourcedByStatusforbank.id;
+      }
+    }
+    api_filter = Object.assign(
+      {},
+      api_filter,
+      this.pfsearchFilterbank,
+      this.pfappliedFilterforbank
+    );
+    if (api_filter) {
+      this.getplBankRejectedLeadCount(api_filter);
+      this.getplBankRejectsLeads(api_filter);
+    }
+  }
   getplBankRejectsLeads(filter = {}) {
     this.apiLoading = true;
     this.leadsService.getplBankRejectsLeads(filter).subscribe(
@@ -977,7 +1053,44 @@ if (storedLapLoginStatus) {
       this.getplCNIRejectsLeads(api_filter);
     }
   }
+  loadpfCNIRejectedLeads(event) {
+    this.currentTableEvent = event;
+    let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
+    api_filter['loanType-eq'] = 'professionalLoans';
+    api_filter['employmentStatus-eq'] = 'employed';
+    if (
+      this.selectedSourcedByStatusforpfcni &&
+      this.selectedSourcedByStatusforpfcni.name
+    ) {
+      if (this.selectedSourcedByStatusforpfcni.name != 'All') {
+        api_filter['sourcedBy-eq'] = this.selectedSourcedByStatusforpfcni.id;
+      }
+    }
+    api_filter = Object.assign(
+      {},
+      api_filter,
+      this.pfsearchFiltercni,
+      this.pfappliedFilterforcni
+    );
+    if (api_filter) {
+      this.getplCNIRejectedLeadCount(api_filter);
+      this.getpfCNIRejectsLeads(api_filter);
+    }
+  }
   getplCNIRejectsLeads(filter = {}) {
+    this.apiLoading = true;
+    this.leadsService.getplCNIRejectsLeads(filter).subscribe(
+      (leads) => {
+        this.leads = leads;
+        this.apiLoading = false;
+      },
+      (error: any) => {
+        this.apiLoading = false;
+        this.toastService.showError(error);
+      }
+    );
+  }
+  getpfCNIRejectsLeads(filter = {}) {
     this.apiLoading = true;
     this.leadsService.getplCNIRejectsLeads(filter).subscribe(
       (leads) => {
@@ -1016,11 +1129,24 @@ if (storedLapLoginStatus) {
     // );
     this.loadplLeads(this.currentTableEvent);
   }
+   pfstatusChange(event) {
+    // this.localStorageService.setItemOnLocalStorage(
+    //   'selectedInhouseRejects',
+    //   event.value
+    // );
+    this.loadpfLeads(this.currentTableEvent);
+  }
   filterWithBusinessNameForPersonal() {
     let searchFilterPersonal = {
       'contactPerson-like': this.businessNameToSearchForPersonal,
     };
     this.applyFiltersPersonal(searchFilterPersonal);
+  }
+  filterWithBusinessNameForProfessional() {
+    let searchFilterProfessional = {
+      'contactPerson-like': this.businessNameToSearchForProfessional,
+    };
+    this.applyFiltersProfessional(searchFilterProfessional);
   }
 
   filterWithBusinessNameforplBank() {
@@ -1029,9 +1155,19 @@ if (storedLapLoginStatus) {
     };
     this.applyFiltersplbank(searchFilterPersonal);
   }
+  filterWithBusinessNameforpfBank() {
+    let searchFilterProfessional = {
+      'contactPerson-like': this.businessNameToSearchforpfbank,
+    };
+    this.applyFiltersplbank(searchFilterProfessional);
+  }
   applyFiltersPersonal(searchFilterPersonal = {}) {
     this.plsearchFilter = searchFilterPersonal;
     this.loadplLeads(this.currentTableEvent);
+  }
+  applyFiltersProfessional(searchFilterProfessional = {}) {
+    this.pfsearchFilter = searchFilterProfessional;
+    this.loadpfLeads(this.currentTableEvent);
   }
   statusChangeforcni(event) {
     this.localStorageService.setItemOnLocalStorage('selectedCNI', event.value);
@@ -1041,6 +1177,10 @@ if (storedLapLoginStatus) {
   statusChangeforplcni(event) {
     this.localStorageService.setItemOnLocalStorage('selectedCNI', event.value);
     this.loadplCNIRejectedLeads(this.currentTableEvent);
+  }
+  statusChangeforpfcni(event) {
+    this.localStorageService.setItemOnLocalStorage('selectedCNI', event.value);
+    this.loadpfCNIRejectedLeads(this.currentTableEvent);
   }
   statusChangeforbank(event) {
     this.localStorageService.setItemOnLocalStorage(
@@ -1056,6 +1196,13 @@ if (storedLapLoginStatus) {
       event.value
     );
     this.loadplBankRejectedLeads(this.currentTableEvent);
+  }
+   pfstatusChangeforbank(event) {
+    this.localStorageService.setItemOnLocalStorage(
+      'selectedBankRejects',
+      event.value
+    );
+    this.loadpfBankRejectedLeads(this.currentTableEvent);
   }
   getTotalLeadsFilesCount(filter = {}) {
     this.leadsService.getLeadsCount(filter).subscribe(
@@ -1166,6 +1313,12 @@ if (storedLapLoginStatus) {
       this.plleadsTablecni.reset();
     }
   }
+  inputValueChangeEventpfcni(dataType, value) {
+    if (value == '') {
+      this.pfsearchFiltercni = {};
+      this.pfleadsTablecni.reset();
+    }
+  }
   inputValueChangeEventforbank(dataType, value) {
     if (value == '') {
       this.searchFilterbank = {};
@@ -1177,6 +1330,12 @@ if (storedLapLoginStatus) {
     if (value == '') {
       this.plsearchFilterbank = {};
       this.plleadsTablebank.reset();
+    }
+  }
+  inputValueChangeEventforpfbank(dataType, value) {
+    if (value == '') {
+      this.pfsearchFilterbank = {};
+      this.pfleadsTablebank.reset();
     }
   }
   filterWithBusinessName() {
@@ -1194,10 +1353,20 @@ if (storedLapLoginStatus) {
     };
     this.applyFiltersforplCni(searchFilterPersonal);
   }
+  filterWithBusinessNameforpfCNI() {
+    let searchFilterPersonal = {
+      'contactPerson-like': this.businessNameToSearchpfcni,
+    };
+    this.applyFiltersforpfCni(searchFilterPersonal);
+  }
 
   applyFiltersforplCni(searchFiltercni = {}) {
     this.plsearchFiltercni = searchFiltercni;
     this.loadplCNIRejectedLeads(this.currentTableEvent);
+  }
+  applyFiltersforpfCni(searchFiltercni = {}) {
+    this.pfsearchFiltercni = searchFiltercni;
+    this.loadpfCNIRejectedLeads(this.currentTableEvent);
   }
   filterWithBusinessNameforBank() {
     let searchFilterbank = {
@@ -1272,7 +1441,7 @@ if (storedLapLoginStatus) {
     // console.log('Row clicked:', event.data);
     const lead = event.data
     const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
-    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans') {
       this.routingService.handleRoute(`leads/profile/${loanType}/${lead.leadId}`, null);
     } else {
       // If no known loanType, omit status from the route
@@ -1286,7 +1455,7 @@ if (storedLapLoginStatus) {
 
   plrejectsDetails(lead) {
     const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
-    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans') {
       this.routingService.handleRoute(`rejects/rejectsDetails/${loanType}/${lead.leadId}`, null);
     } else {
       // If no known loanType, omit status from the route
@@ -1306,7 +1475,7 @@ if (storedLapLoginStatus) {
   plcniDetails(lead) {
     // console.log('plcniDetails', lead);
     const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
-    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans') {
       this.routingService.handleRoute(`rejects/cniDetails/${loanType}/${lead.leadId}`, null);
     } else {
       this.routingService.handleRoute(`rejects/cniDetails/${lead.id}`, null);
@@ -1487,6 +1656,12 @@ if (storedLapLoginStatus) {
     if (value == '') {
       this.plsearchFilter = {};
       this.personalleadsTable.reset();
+    }
+  }
+  inputValueChangeEventForProfessional(dataType, value) {
+    if (value == '') {
+      this.pfsearchFilter = {};
+      this.professionalLoansTable.reset();
     }
   }
   loadLeadsforHome(event) {
@@ -1805,6 +1980,9 @@ if (storedLapLoginStatus) {
       case 'lapself':
         this.loadLeadsforlapself(this.currentTableEvent);
         break;
+      // case 'professional':
+      //   this.loadLeadsforlapself(this.currentTableEvent);
+      //   break;
       default:
         console.error('Unknown lead type');
     }
@@ -1821,4 +1999,11 @@ if (storedLapLoginStatus) {
   statusChangeForLapSelf(event) {
     this.loadLoanLeads('lapself');
   }
+  getDesignationType(userId: any): string {
+  if (this.designationType && this.designationType.length > 0) {
+    const designationType = this.designationType.find(user => user.id == userId);
+    return designationType?.displayName || '';
+  }
+  return '';
+}
 }

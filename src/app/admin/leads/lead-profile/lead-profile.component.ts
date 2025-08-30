@@ -37,6 +37,7 @@ export class LeadProfileComponent implements OnInit {
   version = projectConstantsLocal.VERSION_DESKTOP;
   leadInternalStatusList: any = projectConstantsLocal.LEAD_INTERNAL_STATUS;
   businessEntities: any = projectConstantsLocal.BUSINESS_ENTITIES;
+  designationType: any = projectConstantsLocal.DOCTOR_OR_CA;
   timelineEvents: { date: Date | null; title: string; image: string; }[];
 
   constructor(
@@ -63,7 +64,7 @@ export class LeadProfileComponent implements OnInit {
       if (!status) {
         this.getAllLeadData(this.leadId);
       } else {
-        const validStatuses = ['personalLoan', 'homeLoan', 'lap'];
+        const validStatuses = ['personalLoan', 'homeLoan', 'lap', 'professionalLoans'];
         if (validStatuses.includes(status)) {
           this.getAllLoanLeadData(this.leadId);
         } else {
@@ -169,26 +170,60 @@ export class LeadProfileComponent implements OnInit {
     }
   }
 
-  isBusinessView(): boolean {
-    return (
-      (this.loanType === 'homeloan' && this.employmentStatus === 'self-employed') ||
-      (this.loanType === 'lap' && this.employmentStatus === 'self-employed') ||
-      (!['personalloan', 'homeloan', 'lap'].includes(this.loanType))
-    );
-  }
+ isBusinessView(): boolean {
+  const lt = (this.loanType || '').toLowerCase();
+  const es = (this.employmentStatus || '').toLowerCase();
+  return (
+    (lt === 'homeloan' && es === 'self-employed') ||
+    (lt === 'lap' && es === 'self-employed') ||
+    (!['personalloan', 'homeloan', 'lap', 'professionalloans'].includes(lt))
+  );
+}
+
 
   isPersonalView(): boolean {
-    return (
-      (this.loanType === 'personalloan' && this.employmentStatus === 'employed') ||
-      (this.loanType === 'homeloan' && this.employmentStatus === 'employed') ||
-      (this.loanType === 'lap' && this.employmentStatus === 'employed')
-    );
+  const lt = (this.loanType || '').toLowerCase();
+  const es = (this.employmentStatus || '').toLowerCase();
+  return (
+    (lt === 'personalloan' && es === 'employed') ||
+    (lt === 'homeloan' && es === 'employed') ||
+    (lt === 'lap' && es === 'employed') ||
+    (lt === 'professionalloans' && es === 'employed')
+  );
+}
+isdesignation():boolean {
+  const lt = (this.loanType || '').toLowerCase();
+  const es = (this.employmentStatus || '').toLowerCase();
+  return (
+    (lt === 'personalloan' && es === 'employed') ||
+    (lt === 'homeloan' && es === 'employed') ||
+    (lt === 'lap' && es === 'employed')
+  );
+}
+isdesignationtype():boolean {
+   const lt = (this.loanType || '').toLowerCase();
+  return (
+    (lt === 'professionalloans')
+  );
+}
+  isProprietorPersonal(): boolean {
+  const lt = (this.loanType || '').toLowerCase();
+  const es = (this.employmentStatus || '').toLowerCase();
+  return ['personalloan', 'homeloan', 'lap', 'professionalloans'].includes(lt) && es === 'employed';
+}
+getDesignationValue(value: any, loanType: string): string {
+  if (!value) return '';
+
+  // Case 1: ProfessionalLoans → lookup by ID
+  if (loanType?.toLowerCase() === 'professionalloans') {
+    const found = this.designationType.find(user => user.id == value);
+    return found?.displayName || '';
   }
 
-  isProprietorPersonal(): boolean {
-    return ['personalloan', 'homeloan', 'lap'].includes(this.loanType) &&
-      this.employmentStatus === 'employed';
-  }
+  // Case 2: Other loans → already text
+  return value;
+}
+
 
 
   getMaskedPhone(phone: any) {
@@ -419,6 +454,50 @@ export class LeadProfileComponent implements OnInit {
     }
     return '';
   }
+//   getDesignationType(value: any): string {
+//   if (!value) return '';
+
+//   // Ensure list exists
+//   if (Array.isArray(this.designationType) && this.designationType.length > 0) {
+//     // Convert both to string to avoid type mismatch
+//     const found = this.designationType.find(user => String(user.id) === String(value));
+//     if (found) {
+//       return found.displayName;
+//     }
+//   }
+
+//   // If nothing matched → fallback: show text as-is
+//   if (typeof value === 'string') {
+//     return value;
+//   }
+
+//   return '';
+// }
+
+  getDesignationType(value: any): string {
+  if (!value) return '';
+
+  if (Array.isArray(this.designationType) && this.designationType.length > 0) {
+    const found = this.designationType.find(
+      user => String(user.id) === String(value)
+    );
+    if (found) {
+      console.log('Designation found:', found.displayName);  // 👈 Debug
+      return found.displayName;
+    }
+  }
+
+  if (typeof value === 'string') {
+    console.log('Designation string:', value);  // 👈 Debug
+    return value;
+  }
+
+  return '';
+}
+
+
+
+
   getStatusName(statusId) {
     if (this.leadInternalStatusList && this.leadInternalStatusList.length > 0) {
       let leadStatusName = this.leadInternalStatusList.filter(

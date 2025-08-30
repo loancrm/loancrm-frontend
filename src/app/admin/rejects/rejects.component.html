@@ -3756,7 +3756,688 @@
           </div>
         </div>
         <div *ngIf="activeItem.name == 'professionalLoans'">
-          <app-comming-soon></app-comming-soon>
+          <div style="position: relative">
+            <div
+              class="position-absolute"
+              style="
+                top: 15px;
+                right: 10px;
+                z-index: 10;
+                width: 25%;
+                max-width: 300px;
+              "
+            >
+              <p-dropdown
+                [options]="rejectStatus"
+                (onChange)="loginpfstatusChange($event)"
+                [(ngModel)]="selectedpfLoginStatus"
+                optionLabel="displayName"
+                dataKey="name"
+                appendTo="body"
+                styleClass="w-100"
+              ></p-dropdown>
+            </div>
+
+            <p-table
+              #professionalLoansTable
+              *ngIf="selectedpfLoginStatus?.name === 'inHouseRejects'"
+              [value]="leads"
+              [lazy]="true"
+              selectionMode="single"
+              (onLazyLoad)="loadpfLeads($event)"
+              (onRowSelect)="viewLead($event)"
+              dataKey="id"
+              [showCurrentPageReport]="true"
+              [rowsPerPageOptions]="[10, 25, 50]"
+              [paginator]="true"
+              [rows]="10"
+              [totalRecords]="totalLeadsCount"
+              [loading]="apiLoading"
+              responsiveLayout="scroll"
+              scrollHeight="flex"
+              class="p-datatable-striped"
+              [globalFilterFields]="[
+                'referenceNo',
+                'customer.firstName',
+                'partner.partnerName',
+                'status'
+              ]"
+              styleClass="p-datatable-customers "
+              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} In House Rejected leads"
+            >
+              <ng-template pTemplate="caption">
+                <div class="row">
+                  <div class="col-md-3 no-padding-small">
+                    <div class="p-inputgroup">
+                      <input
+                        type="text"
+                        pInputText
+                        placeholder="Search File with Applicant Name"
+                        [(ngModel)]="businessNameToSearchForProfessional"
+                        (ngModelChange)="
+                          inputValueChangeEventForProfessional(
+                            'loanId',
+                            businessNameToSearchForProfessional
+                          )
+                        "
+                        (keyup.enter)="filterWithBusinessNameForProfessional()"
+                      />
+                      <span
+                        class="input-group-text p-button-primary"
+                        (click)="filterWithBusinessNameForProfessional()"
+                      >
+                        <img
+                          src="../../../assets/images/icons/search.svg"
+                          alt="Search"
+                          style="width: 14px; height: 14px; cursor: pointer"
+                        />
+                      </span>
+                      <!-- <button
+                        type="button"
+                        pButton
+                        class="p-button-primary"
+                        [disabled]="!businessNameToSearchForPersonal"
+                        (click)="filterWithBusinessNameForPersonal()"
+                      >
+                        <img
+                          src="assets/images/icons/search.svg"
+                          alt="Search"
+                          width="16"
+                          height="16"
+                          style="vertical-align: middle"
+                        />
+                      </button> -->
+                    </div>
+                  </div>
+                  <!-- <div class="col-md-3 no-padding-small"></div> -->
+                  <div class="col-md-3 no-padding-small text-right">
+                    <div class="d-flex">
+                      <div class="flex-grow-1 me-2">
+                        <div class="p-inputgroup">
+                          <p-dropdown
+                            styleClass="text-left"
+                            [style]="{ width: '100%' }"
+                            [options]="leadUsers"
+                            (onChange)="pfstatusChange($event)"
+                            [dropdownIcon]="'pi pi-chevron-down'"
+                            [(ngModel)]="selectedpfSourcedByStatus"
+                            optionLabel="name"
+                            dataKey="name"
+                            appendTo="body"
+                            [filter]="true"
+                            filterPlaceholder="Search..."
+                          >
+                          </p-dropdown>
+                        </div>
+                      </div>
+                      <div class="d-flex align-items-center pointer-cursor">
+                        <!-- <app-filter
+                          [position]="'right'"
+                          [iconColor]="'#33009C'"
+                          [iconSize]="'28px!important'"
+                          (filterEvent)="applyConfigFilters($event)"
+                          [filterConfig]="filterConfig"
+                          [showFilterIndication]="appliedFilter"
+                          pTooltip="Filter"
+                          tooltipPosition="top"
+                        >
+                        </app-filter> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th class="text-nowrap">Lead Id</th>
+                  <th class="text-nowrap">Applicant Name</th>
+                  <th>Designation Type</th>
+                  <th>Salary</th>
+                  <th class="text-nowrap">Job Experience</th>
+                  <th class="text-nowrap">Sourced By</th>
+                  <th class="text-nowrap">Created Date</th>
+                  <th class="text-nowrap">Remarks</th>
+                  <th class="text-nowrap">Quick Actions</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-lead>
+                <tr class="text-capitalize" [pSelectableRow]="lead">
+                  <td class="leadid">
+                    <span class="table-column-data singleline">{{
+                      lead.customId
+                    }}</span>
+                  </td>
+                  <td>
+                    <span class="table-column-data singleline">{{
+                      lead.contactPerson
+                        ? (lead.contactPerson | capitalizeFirst)
+                        : "-"
+                    }}</span>
+                  </td>
+                  <td>
+                    <span class="table-column-data singleline">
+                     {{
+                      lead.designation
+                        ? (getDesignationType(lead.designation) | capitalizeFirst)
+                        : "-"
+                    }}
+                  </span>
+                  </td>
+
+                  <td>
+                    <span class="table-column-data" *ngIf="lead.salary">{{
+                      lead.salary ? lead.salary : "-"
+                    }}</span>
+                  </td>
+                  <td>
+                    <span class="table-column-data">{{
+                      lead.jobExperience ? lead.jobExperience : "-"
+                    }}</span>
+                  </td>
+                  <td>
+                    <span class="table-column-data singleline">{{
+                      lead.sourcedBy
+                        ? (getSourceName(lead.sourcedBy) | capitalizeFirst)
+                        : "-"
+                    }}</span>
+                  </td>
+                  <td>
+                    <span class="table-column-data">{{
+                      lead.createdOn
+                        ? (lead.createdOn | date : "mediumDate")
+                        : "-"
+                    }}</span>
+                  </td>
+                  <td>
+                    <span class="table-column-data singleline">{{
+                      lead.remarks ? (lead.remarks | capitalizeFirst) : "-"
+                    }}</span>
+                  </td>
+                  <td>
+                    <div class="text-center">
+                      <div class="d-flex tableimage">
+                        <p-menu
+                          appendTo="body"
+                          #menu
+                          [model]="plactionItems(lead)"
+                          [popup]="true"
+                        ></p-menu>
+
+                        <img
+                          alt="Actions"
+                          src="../../../assets/images/icons/menu.svg"
+                          width="24px"
+                          height="24px"
+                          pTooltip="Actions"
+                          tooltipPosition="top"
+                          (click)="
+                            menu.toggle($event); $event.stopPropagation()
+                          "
+                        />
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                <tr class="text-center">
+                  <td colspan="10" class="text-center fw-bold">
+                    <!-- <img
+                      alt="No Data"
+                      src="../../../assets/images/menu/no-data.gif"
+                      width="200"
+                      height="200"
+                    /> -->
+                    <p
+                      style="color: #535ab4; font-weight: 400; font-size: 18px"
+                    >
+                      No Rejected Leads Found
+                    </p>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+            <p-table
+              *ngIf="selectedpfLoginStatus?.name === 'bankersRejects'"
+              #pfleadsTablebank
+              [value]="leads"
+              [lazy]="true"
+              (onLazyLoad)="loadpfBankRejectedLeads($event)"
+              (onRowSelect)="viewLead($event)"
+              selectionMode="single"
+              dataKey="id"
+              [showCurrentPageReport]="true"
+              [rowsPerPageOptions]="[10, 25, 50]"
+              [paginator]="true"
+              [rows]="10"
+              [totalRecords]="totalLeadsCount"
+              [loading]="apiLoading"
+              responsiveLayout="scroll"
+              scrollHeight="flex"
+              class="p-datatable-striped"
+              [globalFilterFields]="[
+                'referenceNo',
+                'customer.firstName',
+                'partner.partnerName',
+                'status'
+              ]"
+              styleClass="p-datatable-customers "
+              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Banks Rejected leads"
+            >
+              <ng-template pTemplate="caption">
+                <div class="row">
+                  <div class="col-md-3 no-padding-small">
+                    <div class="p-inputgroup">
+                      <input
+                        type="text"
+                        pInputText
+                        placeholder="Search File with Applicant Name"
+                        [(ngModel)]="businessNameToSearchforpfbank"
+                        (ngModelChange)="
+                          inputValueChangeEventforpfbank(
+                            'loanId',
+                            businessNameToSearchforpfbank
+                          )
+                        "
+                        (keyup.enter)="filterWithBusinessNameforpfBank()"
+                      />
+                      <span
+                        class="input-group-text p-button-primary"
+                        (click)="filterWithBusinessNameforpfBank()"
+                      >
+                        <img
+                          src="../../../assets/images/icons/search.svg"
+                          alt="Search"
+                          style="width: 14px; height: 14px; cursor: pointer"
+                        />
+                      </span>
+                      <!-- <button
+                        type="button"
+                        pButton
+                        class="p-button-primary"
+                        [disabled]="!businessNameToSearchforplbank"
+                        (click)="filterWithBusinessNameforplBank()"
+                      >
+                        <img
+                          src="assets/images/icons/search.svg"
+                          alt="Search"
+                          width="16"
+                          height="16"
+                          style="vertical-align: middle"
+                        />
+                      </button> -->
+                    </div>
+                  </div>
+                  <!-- <div class="col-md-3 no-padding-small"></div> -->
+                  <div class="col-md-3 no-padding-small text-right">
+                    <div class="d-flex">
+                      <div class="flex-grow-1 me-2">
+                        <div class="p-inputgroup">
+                          <p-dropdown
+                            styleClass="text-left"
+                            [style]="{ width: '100%' }"
+                            [options]="leadUsers"
+                            (onChange)="pfstatusChangeforbank($event)"
+                            [dropdownIcon]="'pi pi-chevron-down'"
+                            [(ngModel)]="selectedpfSourcedByStatusforbank"
+                            optionLabel="name"
+                            dataKey="name"
+                            appendTo="body"
+                            [filter]="true"
+                            filterPlaceholder="Search..."
+                          >
+                          </p-dropdown>
+                        </div>
+                      </div>
+                      <div class="d-flex align-items-center pointer-cursor">
+                        <!-- <app-filter
+                          [position]="'right'"
+                          [iconColor]="'#33009C'"
+                          [iconSize]="'28px!important'"
+                          (filterEvent)="applyConfigFilters($event)"
+                          [filterConfig]="filterConfig"
+                          [showFilterIndication]="appliedFilter"
+                          pTooltip="Filter"
+                          tooltipPosition="top"
+                        >
+                        </app-filter> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th class="text-nowrap">Lead Id</th>
+                  <th class="text-nowrap">Applicant Name</th>
+                  <th>Designation Type</th>
+                  <th>Salary</th>
+                  <th class="text-nowrap">Job Experience</th>
+                  <th class="text-nowrap">Sourced By</th>
+                  <th class="text-nowrap">Created Date</th>
+                  <th class="text-nowrap">Login Date</th>
+                  <th class="text-nowrap">Quick Actions</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-lead>
+                <tr class="text-capitalize" [pSelectableRow]="lead">
+                  <td class="leadid">
+                    <span
+                      class="table-column-data singleline"
+                      *ngIf="lead.customId"
+                      >{{ lead.customId }}</span
+                    >
+                  </td>
+                  <td>
+                    <span class="table-column-data singleline">{{
+                      lead.contactPerson
+                        ? (lead.contactPerson | capitalizeFirst)
+                        : "-"
+                    }}</span>
+                  </td>
+                  <td>
+                    <span class="table-column-data singleline">
+                    {{
+                      lead.designation
+                        ? (getDesignationType(lead.designation) | capitalizeFirst)
+                        : "-"
+                    }}
+                  </span>
+                  </td>
+
+                  <td>
+                    <span class="table-column-data">{{
+                      lead.salary ? lead.salary : "-"
+                    }}</span>
+                  </td>
+                  <td>
+                    <span class="table-column-data">{{
+                      lead.jobExperience ? lead.jobExperience : "-"
+                    }}</span>
+                  </td>
+                  <td>
+                    <span class="table-column-data singleline">{{
+                      lead.sourcedBy
+                        ? (getSourceName(lead.sourcedBy) | capitalizeFirst)
+                        : "-"
+                    }}</span>
+                  </td>
+                  <td>
+                    <span class="table-column-data">{{
+                      lead.createdOn
+                        ? (lead.createdOn | date : "mediumDate")
+                        : "-"
+                    }}</span>
+                  </td>
+                  <td>
+                    <span class="table-column-data">{{
+                      lead.loginDate
+                        ? (lead.loginDate | date : "mediumDate")
+                        : "-"
+                    }}</span>
+                  </td>
+                  <td>
+                    <div class="text-center">
+                      <div class="d-flex tableimage">
+                        <img
+                          alt="Rejects Details"
+                          src="../../../assets/images/icons/rejects.svg"
+                          width="24px"
+                          height="24px"
+                          class="me-2"
+                          (click)="
+                            plrejectsDetails(lead); $event.stopPropagation()
+                          "
+                          pTooltip="Rejects Details"
+                          tooltipPosition="top"
+                        />
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                <tr class="text-center">
+                  <td colspan="10" class="text-center fw-bold">
+                    <!-- <img
+                      alt="No Data"
+                      src="../../../assets/images/menu/no-data.gif"
+                      width="200"
+                      height="200"
+                    /> -->
+                    <p
+                      style="color: #535ab4; font-weight: 400; font-size: 18px"
+                    >
+                      No Rejected Leads Found
+                    </p>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+            <p-table
+              *ngIf="selectedpfLoginStatus?.name === 'cnis'"
+              #pfleadsTablecni
+              [value]="leads"
+              [lazy]="true"
+              (onLazyLoad)="loadpfCNIRejectedLeads($event)"
+              (onRowSelect)="viewLead($event)"
+              selectionMode="single"
+              dataKey="id"
+              [showCurrentPageReport]="true"
+              [rowsPerPageOptions]="[10, 25, 50]"
+              [paginator]="true"
+              [rows]="10"
+              [totalRecords]="totalLeadsCount"
+              [loading]="apiLoading"
+              responsiveLayout="scroll"
+              scrollHeight="flex"
+              class="p-datatable-striped"
+              [globalFilterFields]="[
+                'referenceNo',
+                'customer.firstName',
+                'partner.partnerName',
+                'status'
+              ]"
+              styleClass="p-datatable-customers "
+              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Cni leads"
+            >
+              <ng-template pTemplate="caption">
+                <div class="row">
+                  <div class="col-md-3 no-padding-small">
+                    <div class="p-inputgroup">
+                      <input
+                        type="text"
+                        pInputText
+                        placeholder="Search File with Applicant Name"
+                        [(ngModel)]="businessNameToSearchpfcni"
+                        (ngModelChange)="
+                          inputValueChangeEventpfcni(
+                            'loanId',
+                            businessNameToSearchpfcni
+                          )
+                        "
+                        (keyup.enter)="filterWithBusinessNameforpfCNI()"
+                      />
+                      <span
+                        class="input-group-text p-button-primary"
+                        (click)="filterWithBusinessNameforpfCNI()"
+                      >
+                        <img
+                          src="../../../assets/images/icons/search.svg"
+                          alt="Search"
+                          style="width: 14px; height: 14px; cursor: pointer"
+                        />
+                      </span>
+                      <!-- <button
+                        type="button"
+                        pButton
+                        class="p-button-primary"
+                        [disabled]="!businessNameToSearchplcni"
+                        (click)="filterWithBusinessNameforplCNI()"
+                      >
+                        <img
+                          src="assets/images/icons/search.svg"
+                          alt="Search"
+                          width="16"
+                          height="16"
+                          style="vertical-align: middle"
+                        />
+                      </button> -->
+                    </div>
+                  </div>
+                  <!-- <div class="col-md-3 no-padding-small"></div> -->
+                  <div class="col-md-3 no-padding-small text-right">
+                    <div class="d-flex">
+                      <div class="flex-grow-1 me-2">
+                        <div class="p-inputgroup">
+                          <p-dropdown
+                            styleClass="text-left"
+                            [style]="{ width: '100%' }"
+                            [options]="leadUsers"
+                            (onChange)="statusChangeforpfcni($event)"
+                            [dropdownIcon]="'pi pi-chevron-down'"
+                            [(ngModel)]="selectedSourcedByStatusforpfcni"
+                            optionLabel="name"
+                            dataKey="name"
+                            appendTo="body"
+                            [filter]="true"
+                            filterPlaceholder="Search..."
+                          >
+                          </p-dropdown>
+                        </div>
+                      </div>
+                      <div class="d-flex align-items-center pointer-cursor">
+                        <!-- <app-filter
+                          [position]="'right'"
+                          [iconColor]="'#33009C'"
+                          [iconSize]="'28px!important'"
+                          (filterEvent)="applyConfigFilters($event)"
+                          [filterConfig]="filterConfig"
+                          [showFilterIndication]="appliedFilter"
+                          pTooltip="Filter"
+                          tooltipPosition="top"
+                        >
+                        </app-filter> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th class="text-nowrap">Lead Id</th>
+                  <th class="text-nowrap">Applicant Name</th>
+                  <th>Designation Type</th>
+                  <th>Salary</th>
+                  <th class="text-nowrap">Job Experience</th>
+                  <th class="text-nowrap">Sourced By</th>
+                  <th class="text-nowrap">Created Date</th>
+                  <th class="text-nowrap">Login Date</th>
+                  <th class="text-nowrap">Sanction Date</th>
+                  <th class="text-nowrap">Quick Actions</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-lead>
+                <tr class="text-capitalize" [pSelectableRow]="lead">
+                  <td class="leadid">
+                    <span
+                      class="table-column-data singleline"
+                      *ngIf="lead.customId"
+                      >{{ lead.customId }}</span
+                    >
+                  </td>
+                  <td>
+                    <span class="table-column-data singleline">{{
+                      lead.contactPerson
+                        ? (lead.contactPerson | capitalizeFirst)
+                        : "-"
+                    }}</span>
+                  </td>
+                  <td>
+                    <span class="table-column-data singleline">
+                      {{
+                      lead.designation
+                        ? (getDesignationType(lead.designation) | capitalizeFirst)
+                        : "-"
+                    }}
+                    </span>
+                  </td>
+
+                  <td>
+                    <span class="table-column-data">{{
+                      lead.salary ? lead.salary : "-"
+                    }}</span>
+                  </td>
+                  <td>
+                    <span class="table-column-data">{{
+                      lead.jobExperience ? lead.jobExperience : "-"
+                    }}</span>
+                  </td>
+                  <td>
+                    <span class="table-column-data singleline">{{
+                      lead.sourcedBy
+                        ? (getSourceName(lead.sourcedBy) | capitalizeFirst)
+                        : "-"
+                    }}</span>
+                  </td>
+                  <td>
+                    <span class="table-column-data">{{
+                      lead.createdOn
+                        ? (lead.createdOn | date : "mediumDate")
+                        : "-"
+                    }}</span>
+                  </td>
+                  <td>
+                    <span class="table-column-data">{{
+                      lead.loginDate
+                        ? (lead.loginDate | date : "mediumDate")
+                        : "-"
+                    }}</span>
+                  </td>
+                  <td>
+                    <span class="table-column-data">{{
+                      lead.approvalDate
+                        ? (lead.approvalDate | date : "mediumDate")
+                        : "-"
+                    }}</span>
+                  </td>
+                  <td>
+                    <div class="text-center">
+                      <div class="d-flex tableimage">
+                        <img
+                          alt="CNI Details"
+                          src="../../../assets/images/icons/cni-files.svg"
+                          width="24px"
+                          height="24px"
+                          class="me-2"
+                          (click)="plcniDetails(lead); $event.stopPropagation()"
+                          pTooltip="CNI Details"
+                          tooltipPosition="top"
+                        />
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                <tr class="text-center">
+                  <td colspan="10" class="text-center fw-bold">
+                    <!-- <img
+                      alt="No Data"
+                      src="../../../assets/images/menu/no-data.gif"
+                      width="200"
+                      height="200"
+                    /> -->
+                    <p
+                      style="color: #535ab4; font-weight: 400; font-size: 18px"
+                    >
+                      No Rejected Leads Found
+                    </p>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
         </div>
         <div *ngIf="activeItem.name == 'educationlLoans'">
           <app-comming-soon></app-comming-soon>

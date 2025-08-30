@@ -74,7 +74,7 @@ export class BankSelectionComponent implements OnInit {
       if (!status) {
         this.getLeadById(this.leadId);
       } else {
-        const validStatuses = ['personalLoan', 'homeLoan', 'lap'];
+        const validStatuses = ['personalLoan', 'homeLoan', 'lap', 'professionalLoans'];
         if (validStatuses.includes(status)) {
           this.getLoanLeadById(this.leadId);
         } else {

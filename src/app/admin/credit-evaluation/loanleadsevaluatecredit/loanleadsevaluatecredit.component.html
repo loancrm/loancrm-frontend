@@ -630,13 +630,132 @@
                             </span>
                           </div>
                         </div>
+
+                        <div>
+                          <div *ngIf="leadData[0]?.designation === 1">
+                          <div class="label fw-bold mb-1">
+                          <span
+                            style="
+                              color: #101828;
+                              font-weight: 500;
+                              margin-left: 30px;
+                            "
+                            >Graduation Certificate</span
+                          >
+                        </div>
+                        <div class="value">
+                          <div
+                            *ngIf="
+                              leadData &&
+                              leadData[0]?.graduationCertificate &&
+                              leadData[0]?.graduationCertificate?.length > 0
+                            "
+                          >
+                            <span
+                              *ngFor="let file of leadData[0]?.graduationCertificate"
+                              class="me-2"
+                            >
+                              <a [href]="'//' + file" target="_blank">View</a>
+                            </span>
+                          </div>
+                        </div>
+
+                        <div class="label fw-bold mb-1">
+                          <span
+                            style="
+                              color: #101828;
+                              font-weight: 500;
+                              margin-left: 30px;
+                            "
+                            >Pg Certificate</span
+                          >
+                        </div>
+                        <div class="value">
+                          <div
+                            *ngIf="
+                              leadData &&
+                              leadData[0]?.pgCertificate &&
+                              leadData[0]?.pgCertificate?.length > 0
+                            "
+                          >
+                            <span
+                              *ngFor="let file of leadData[0]?.pgCertificate"
+                              class="me-2"
+                            >
+                              <a [href]="'//' + file" target="_blank">View</a>
+                            </span>
+                          </div>
+                        </div>
+                          </div>
+
+                          <div *ngIf="leadData[0]?.designation === 2">
+                            <div class="label fw-bold mb-1">
+                            <span
+                              style="
+                                color: #101828;
+                                font-weight: 500;
+                                margin-left: 30px;
+                              "
+                              >Membership Certificate (COM)</span
+                            >
+                          </div>
+                          <div class="value">
+                            <div
+                              *ngIf="
+                                leadData &&
+                                leadData[0]?.membershipCertificate &&
+                                leadData[0]?.membershipCertificate?.length > 0
+                              "
+                            >
+                              <span
+                                *ngFor="let file of leadData[0]?.membershipCertificate"
+                                class="me-2"
+                              >
+                                <a [href]="'//' + file" target="_blank">View</a>
+                              </span>
+                            </div>
+                          </div>
+
+                          <div class="label fw-bold mb-1">
+                            <span
+                              style="
+                                color: #101828;
+                                font-weight: 500;
+                                margin-left: 30px;
+                              "
+                              >Practicing Certificate(COP)</span
+                            >
+                          </div>
+                          <div class="value">
+                            <div
+                              *ngIf="
+                                leadData &&
+                                leadData[0]?.practicingCertificate &&
+                                leadData[0]?.practicingCertificate?.length > 0
+                              "
+                            >
+                              <span
+                                *ngFor="let file of leadData[0]?.practicingCertificate"
+                                class="me-2"
+                              >
+                                <a [href]="'//' + file" target="_blank">View</a>
+                              </span>
+                            </div>
+                          </div>
+                          </div>
+                        </div>
                       </div>
+
+                      
                     </div>
                   </div>
                   <!-- End Company Row -->
 
                   <!-- Payslips -->
-                  <div *ngIf="leadData[0]?.paySlips">
+                  <div *ngIf="(leadData[0]?.employmentType === 1) 
+                              || (leadData[0]?.loanType === 'personalLoan') 
+                              || ((leadData[0]?.loanType === 'homeLoan') && (leadData[0]?.employmentStatus === 'employed'))">
+                    <div *ngIf="leadData[0]?.paySlips">
                     <div
                       *ngFor="let kyc of leadData[0]?.paySlips; let i = index"
                       class="business-details mt-3"
@@ -679,6 +798,7 @@
                         </div>
                       </div>
                     </div>
+                  </div>
                   </div>
                   <!-- End Payslips -->
                 </div>
