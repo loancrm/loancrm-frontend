@@ -425,6 +425,8 @@ export class FilesinProcessComponent implements OnInit {
         this.getpersonalloanLeadsCountfortab(),
         this.getHomeloanLeadsCountfortab(),
         this.getHomeloanselfLeadsCountfortab(),
+        this.getlapselfLeadsCountfortab(),
+        this.getlapLeadsCountfortab()
       ]);
     } catch (error) { }
   }

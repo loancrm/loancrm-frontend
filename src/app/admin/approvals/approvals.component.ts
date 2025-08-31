@@ -57,12 +57,17 @@ export class ApprovalsComponent implements OnInit {
   appliedFilterProfessional: {};
   appliedFilterLap: {};
   searchFilterPersonal: any = {};
-  searchFilterProfessional: any={};
+  searchFilterProfessional: any = {};
   personalloanLeadsCount: any = 0;
   appliedFilterHome: {};
   searchFilterForHome: any = {};
   lapselfLeadsCount: any = 0;
   SourcedByForHome: any;
+  lapLeadsCounttab: any = 0;
+  lapselfLeadsCounttab: any = 0
+  personalloanLeadsCounttab: any = 0
+  homeloanLeadsCounttab: any = 0
+  homeloanselfLeadsCounttab: any = 0
   searchFilterForLapSelf: any = {};
   @ViewChild('personalleadsTable') personalleadsTable!: Table;
   @ViewChild('professionalLoansTable') professionalLoansTable!: Table;
@@ -323,16 +328,16 @@ export class ApprovalsComponent implements OnInit {
       {
         // label: `Personal Loan (${this.totalLeadsCountArray?.personalcount || 0
         //   })`,
-        label: `Personal Loan (${this.totalLeadsCountArray || 0
+        label: `Personal Loan (${this.personalloanLeadsCounttab || 0
           })`,
         name: 'personalLoan',
       },
       {
-        label: `Home Loan (${this.totalLeadsCountArray?.homeLoancount || 0})`,
+        label: `Home Loan (${(this.homeloanselfLeadsCounttab + this.homeloanLeadsCounttab) || 0})`,
         name: 'homeLoan',
       },
       {
-        label: `LAP (${this.totalLeadsCountArray?.LAPLoancount || 0})`,
+        label: `LAP (${(this.lapLeadsCounttab + this.lapselfLeadsCounttab) || 0})`,
         name: 'lap',
       },
       {
@@ -362,22 +367,22 @@ export class ApprovalsComponent implements OnInit {
     if (this.activeItem.name === 'homeLoan') {
       return [
         {
-          label: `Employed (${this.totalStatusLeadsCountArray.homeLoancount || 0})`,
+          label: `Employed (${this.homeloanLeadsCounttab || 0})`,
           name: 'employed',
         },
         {
-          label: `Self Employed (${this.totalStatusLeadsCountArray.homeLoanSelfcount || 0})`,
+          label: `Self Employed (${this.homeloanselfLeadsCounttab || 0})`,
           name: 'self-employed',
         },
       ];
     } else if (this.activeItem.name === 'lap') {
       return [
         {
-          label: `Employed (${this.totalStatusLeadsCountArray.LAPLoancount || 0})`,
+          label: `Employed (${this.lapLeadsCounttab || 0})`,
           name: 'employed',
         },
         {
-          label: `Self Employed (${this.totalStatusLeadsCountArray.LAPLoanSelfcount || 0})`,
+          label: `Self Employed (${this.lapselfLeadsCounttab || 0})`,
           name: 'self-employed',
         },
       ];
@@ -416,7 +421,11 @@ export class ApprovalsComponent implements OnInit {
       await Promise.all([
         this.getTotalLeadsCountArray(event),
         this.getbusinessloanleadsCount(event),
-        this.getStatusLeadsCountArray(event)
+        this.getStatusLeadsCountArray(event),
+        this.getpersonalloanLeadsCountfortab(),
+        this.getHomeloanLeadsCountfortab(),
+        this.getHomeloanselfLeadsCountfortab(), this.getlapselfLeadsCountfortab(),
+        this.getlapLeadsCountfortab()
       ]);
     } catch (error) { }
   }
@@ -1195,13 +1204,155 @@ export class ApprovalsComponent implements OnInit {
     return '';
   }
   getDesignationType(userId: any): string {
-  if (this.designationType && this.designationType.length > 0) {
-    const designationType = this.designationType.find(user => user.id == userId);
-    return designationType?.displayName || '';
+    if (this.designationType && this.designationType.length > 0) {
+      const designationType = this.designationType.find(user => user.id == userId);
+      return designationType?.displayName || '';
+    }
+    return '';
   }
-  return '';
-}
   goBack() {
     this.location.back();
+  }
+
+  getpersonalloanLeadsCountfortab() {
+    let filter = {}
+    if (
+      this.userDetails &&
+      this.userDetails?.id &&
+      this.userDetails?.userType &&
+      this.userDetails?.userType == '3'
+    ) {
+      filter['sourcedBy-eq'] = this.userDetails.id;
+    }
+    filter['loanType-eq'] = 'personalLoan';
+    filter['employmentStatus-eq'] = 'employed';
+    console.log(filter)
+    this.leadsService.getplApprovedLeadCount(filter).subscribe(
+      (response) => {
+        this.personalloanLeadsCounttab = response;
+        console.log(this.personalloanLeadsCounttab);
+        this.items = this.getFilteredItems();
+        // this.activeItem = this.items[0];
+        this.loadActiveItem();
+      },
+      (error: any) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
+
+  getHomeloanLeadsCountfortab() {
+    let filter = {}
+    if (
+      this.userDetails &&
+      this.userDetails?.id &&
+      this.userDetails?.userType &&
+      this.userDetails?.userType == '3'
+    ) {
+      filter['sourcedBy-eq'] = this.userDetails.id;
+    }
+    filter['loanType-eq'] = 'homeLoan';
+    filter['employmentStatus-eq'] = 'employed';
+    console.log(filter)
+    this.leadsService.getplApprovedLeadCount(filter).subscribe(
+      (response) => {
+        this.homeloanLeadsCounttab = response;
+        // console.log(this.homeloanLeadsCounttab);
+        this.items = this.getFilteredItems();
+        // this.activeItem = this.items[0];
+        this.loadActiveItem();
+        this.employmentStatus = this.getStatusItems();
+        this.loadEmploymentActiveItem();
+      },
+      (error: any) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
+
+  getlapLeadsCountfortab() {
+    let filter = {}
+    if (
+      this.userDetails &&
+      this.userDetails?.id &&
+      this.userDetails?.userType &&
+      this.userDetails?.userType == '3'
+    ) {
+      filter['sourcedBy-eq'] = this.userDetails.id;
+    }
+    filter['loanType-eq'] = 'lap';
+    filter['employmentStatus-eq'] = 'employed';
+    console.log(filter)
+    this.leadsService.getplApprovedLeadCount(filter).subscribe(
+      (response) => {
+        this.lapLeadsCounttab = response;
+        // console.log(this.homeloanLeadsCounttab);
+        this.items = this.getFilteredItems();
+        // this.activeItem = this.items[0];
+        this.loadActiveItem();
+        this.employmentStatus = this.getStatusItems();
+        this.loadEmploymentActiveItem();
+      },
+      (error: any) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
+
+  getlapselfLeadsCountfortab() {
+    let filter = {}
+    if (
+      this.userDetails &&
+      this.userDetails?.id &&
+      this.userDetails?.userType &&
+      this.userDetails?.userType == '3'
+    ) {
+      filter['sourcedBy-eq'] = this.userDetails.id;
+    }
+    filter['loanType-eq'] = 'lap';
+    filter['employmentStatus-eq'] = 'self-employed';
+    console.log(filter)
+    this.leadsService.getplApprovedLeadCount(filter).subscribe(
+      (response) => {
+        this.lapselfLeadsCounttab = response;
+        // console.log(this.homeloanLeadsCounttab);
+        this.items = this.getFilteredItems();
+        // this.activeItem = this.items[0];
+        this.loadActiveItem();
+        this.employmentStatus = this.getStatusItems();
+        this.loadEmploymentActiveItem();
+      },
+      (error: any) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
+  getHomeloanselfLeadsCountfortab() {
+    let filter = {}
+    if (
+      this.userDetails &&
+      this.userDetails?.id &&
+      this.userDetails?.userType &&
+      this.userDetails?.userType == '3'
+    ) {
+      filter['sourcedBy-eq'] = this.userDetails.id;
+    }
+    filter['loanType-eq'] = 'homeLoan';
+    filter['employmentStatus-eq'] = 'self-employed';
+    console.log(filter)
+    this.leadsService.getplApprovedLeadCount(filter).subscribe(
+      (response) => {
+        this.homeloanselfLeadsCounttab = response;
+        // console.log(this.homeloanLeadsCounttab);
+        this.items = this.getFilteredItems();
+        // this.activeItem = this.items[0];
+        this.loadActiveItem();
+        this.employmentStatus = this.getStatusItems();
+        this.loadEmploymentActiveItem();
+      },
+      (error: any) => {
+        this.toastService.showError(error);
+      }
+    );
   }
 }

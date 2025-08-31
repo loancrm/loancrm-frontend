@@ -17,6 +17,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { ConfirmationService } from 'primeng/api';
 import moment from 'moment-timezone';
 import axios from 'axios';
+import { ToWords } from 'to-words';
 import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-create',
@@ -26,6 +27,9 @@ import { HttpClient } from '@angular/common/http';
 export class CreateComponent {
   breadCrumbItems: any = [];
   today: Date;
+  loanRequirementInWords: string = '';
+  odRequirementInWords: string = '';
+  private toWords = new ToWords();
   leadForm: UntypedFormGroup;
   submitted = false
   leadSources: any = [];
@@ -160,6 +164,20 @@ export class CreateComponent {
     this.capabilities = this.leadsService.getUserRbac();
     // console.log(this.capabilities);
     this.createForm();
+    this.leadForm.get('loanRequirement')?.valueChanges.subscribe(value => {
+      if (value) {
+        this.loanRequirementInWords = this.toWords.convert(Number(value));
+      } else {
+        this.loanRequirementInWords = '';
+      }
+    });
+    this.leadForm.get('odRequirement')?.valueChanges.subscribe(value => {
+      if (value) {
+        this.odRequirementInWords = this.toWords.convert(Number(value));
+      } else {
+        this.odRequirementInWords = '';
+      }
+    });
     const phoneControl = this.leadForm.get('primaryPhone');
     phoneControl?.valueChanges.subscribe(value => {
       // Only trigger validation when exactly 10 digits are entered

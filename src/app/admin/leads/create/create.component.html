@@ -596,6 +596,12 @@
                             (paste)="preventInvalidPaste($event)"
                           />
                         </div>
+                        <div
+                          *ngIf="loanRequirementInWords"
+                          class="mt-2 amountinwords"
+                        >
+                          <span>{{ loanRequirementInWords }}</span>
+                        </div>
                       </div>
                       <div class="col-md-4 mt-2">
                         <div>
@@ -614,6 +620,12 @@
                             (keydown)="preventInvalidKeys($event)"
                             (paste)="preventInvalidPaste($event)"
                           />
+                        </div>
+                        <div
+                          *ngIf="odRequirementInWords"
+                          class="mt-2 amountinwords"
+                        >
+                          <span>{{ odRequirementInWords }}</span>
                         </div>
                       </div>
                     </div>
