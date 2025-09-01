@@ -46,10 +46,12 @@ export class LeadsComponent implements OnInit {
   SourcedByForProfessional: any;
   SourcedByForHome: any;
   SourcedByForLap: any;
+  SourcedByForCar: any;
   leadStatus: any = projectConstantsLocal.LEAD_STATUS;
   currentTableEvent: any;
   selectedLeadStatus = this.leadStatus[1];
   selectedHomeLeadStatus = this.leadStatus[1];
+  selectedCarLeadStatus = this.leadStatus[1];
   selectedLapLeadStatus = this.leadStatus[1];
   // selectedHomeLeadStatus = this.leadStatus[1];
   selectedPersonalLeadStatus = this.leadStatus[1];
@@ -65,6 +67,7 @@ export class LeadsComponent implements OnInit {
   @ViewChild('leadsTable') leadsTable!: Table;
   @ViewChild('personalleadsTable') personalleadsTable!: Table;
   @ViewChild('HomeleadsTable') HomeleadsTable!: Table;
+  @ViewChild('CarleadsTable') CarleadsTable!: Table;
   @ViewChild('LapleadsTable') LapleadsTable!: Table;
   @ViewChild('professionalleadsTable') professionalleadsTable!: Table;
   searchInputValue: string = '';
@@ -139,7 +142,7 @@ export class LeadsComponent implements OnInit {
     this.setFilterConfig();
     this.capabilities = this.leadsService.getUserRbac();
     console.log(this.capabilities);
-    const loanTypes = ['', 'Personal', 'Home', 'Homeself', 'Lap', 'Lapself', 'professionalLoans'];
+    const loanTypes = ['', 'Personal', 'Home', 'Homeself', 'Lap', 'Lapself', 'professionalLoans','carLoan'];
     loanTypes.forEach((type) => {
       const localStorageKey = `leadsAppliedFilter${type}`;
       const storedFilter =
@@ -292,7 +295,18 @@ export class LeadsComponent implements OnInit {
           name: 'self-employed',
         },
       ];
-    }
+    } else if (this.activeItem.name === 'carLoan') {
+      return [
+        {
+          label: `Employed (${this.totalStatusLeadsCountArray.LAPLoancount || 0})`,
+          name: 'employed',
+        },
+        {
+          label: `Self Employed (${this.totalStatusLeadsCountArray.LAPLoanSelfcount || 0})`,
+          name: 'self-employed',
+        },
+      ];
+    } 
 
     // Default case (if activeItem is neither homeLoan nor LAP)
     return [];
@@ -314,20 +328,48 @@ export class LeadsComponent implements OnInit {
     const { name: itemName } = this.activeItem;
     console.log(name);
     console.log(itemName);
-    const loadLeadsFn =
-      name === 'employed'
-        ? itemName === 'homeLoan'
-          ? this.loadLeadsforHome
-          : this.loadLeadsforlap
-        : itemName === 'homeLoan'
-          ? this.loadLeadsforHomeself
-          : this.loadLeadsforlapself;
+    // const loadLeadsFn =
+    //   name === 'employed'
+    //     ? itemName === 'homeLoan'
+    //       ? this.loadLeadsforHome
+    //       : this.loadLeadsforlap
+    //     : itemName === 'homeLoan'
+    //       ? this.loadLeadsforHomeself
+    //       : this.loadLeadsforlapself;
 
+    // loadLeadsFn.call(this, event);
+    // this.localStorageService.setItemOnLocalStorage(
+    //   'employmentStatusActiveItem',
+    //   event.name
+    // );
+    let loadLeadsFn: Function | null = null;
+
+  if (name === 'employed') {
+    if (itemName === 'homeLoan') {
+      loadLeadsFn = this.loadLeadsforHome;
+    } else if (itemName === 'lap') {
+      loadLeadsFn = this.loadLeadsforlap;
+    } else if (itemName === 'carLoan') {
+      loadLeadsFn = this.loadLeadsforCar;
+    }
+  } else {
+    if (itemName === 'homeLoan') {
+      loadLeadsFn = this.loadLeadsforHomeself;
+    } else if (itemName === 'lap') {
+      loadLeadsFn = this.loadLeadsforlapself;
+    } else if (itemName === 'carLoan') {
+      loadLeadsFn = this.loadLeadsforCarself;
+    }
+  }
+
+  if (loadLeadsFn) {
     loadLeadsFn.call(this, event);
-    this.localStorageService.setItemOnLocalStorage(
-      'employmentStatusActiveItem',
-      event.name
-    );
+  }
+
+  this.localStorageService.setItemOnLocalStorage(
+    'employmentStatusActiveItem',
+    event.name
+  );
   }
   toggleDropdown() {
     this.dropdownVisible = !this.dropdownVisible;
@@ -911,6 +953,12 @@ export class LeadsComponent implements OnInit {
       case 'professional':
         this.loapLeadsforprofessional(this.currentTableEvent);
         break
+      case 'car':
+        this.loadLeadsforCar(this.currentTableEvent);
+        break;
+      case 'carself':
+        this.loadLeadsforCarself(this.currentTableEvent);
+        break;
       default:
         console.error('Unknown lead type');
     }
@@ -1702,6 +1750,93 @@ export class LeadsComponent implements OnInit {
     );
     if (api_filter) {
       this.getLapselfLeadsCount(api_filter);
+      this.getloanLeads(api_filter);
+    }
+  }
+  loadLeadsforCar(event) {
+    this.currentTableEvent = event;
+    let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
+    api_filter['loanType-eq'] = 'carLoan';
+    api_filter['employmentStatus-eq'] = 'employed';
+    if (this.selectedCarLeadStatus) {
+      if (this.selectedCarLeadStatus && this.selectedCarLeadStatus.name) {
+        if (this.selectedCarLeadStatus.name != 'all') {
+          api_filter['leadInternalStatus-eq'] = this.selectedCarLeadStatus.id;
+        } else {
+          api_filter['leadInternalStatus-or'] = '1,2';
+        }
+      }
+    }
+    if (this.SourcedByForCar && this.SourcedByForCar.name) {
+      if (this.SourcedByForCar.name != 'All') {
+        api_filter['sourcedBy-eq'] = this.SourcedByForCar.id;
+      }
+    }
+    if (
+      this.userDetails &&
+      this.userDetails.id &&
+      this.userDetails.userType &&
+      this.userDetails.userType == '3'
+    ) {
+      api_filter['sourcedBy-eq'] = this.userDetails.id;
+    }
+    api_filter = Object.assign(
+      {},
+      api_filter,
+      this.searchFilterForHome,
+      this.appliedFilterHome
+    );
+    console.log(api_filter);
+    if (api_filter) {
+      this.getHomeloanLeadsCount(api_filter);
+      this.getloanLeads(api_filter);
+    }
+  }
+  loadLeadsforCarself(event) {
+    this.currentTableEvent = event;
+    let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
+    api_filter['loanType-eq'] = 'carLoan';
+    api_filter['employmentStatus-eq'] = 'self-employed';
+    if (this.selectedCarLeadStatus) {
+      if (this.selectedCarLeadStatus && this.selectedCarLeadStatus.name) {
+        if (this.selectedCarLeadStatus.name != 'all') {
+          api_filter['leadInternalStatus-eq'] = this.selectedCarLeadStatus.id;
+        } else {
+          api_filter['leadInternalStatus-or'] = '1,2';
+        }
+      }
+    } else {
+      api_filter['leadInternalStatus-or'] = '1,2';
+    }
+    // if (this.SourcedByForHome && this.SourcedByForHome.name) {
+    //   if (this.SourcedByForHome.name == 'All') {
+    //     api_filter['leadInternalStatus-or'] = '1,2';
+    //   } else {
+    //     api_filter['sourcedBy-eq'] = this.SourcedByForHome.id;
+    //   }
+    // }
+    if (this.SourcedByForCar && this.SourcedByForCar.name) {
+      if (this.SourcedByForCar.name != 'All') {
+        api_filter['sourcedBy-eq'] = this.SourcedByForCar.id;
+      }
+    }
+    if (
+      this.userDetails &&
+      this.userDetails.id &&
+      this.userDetails.userType &&
+      this.userDetails.userType == '3'
+    ) {
+      api_filter['sourcedBy-eq'] = this.userDetails.id;
+    }
+    api_filter = Object.assign(
+      {},
+      api_filter,
+      this.searchFilterForHomeSelf,
+      this.appliedFilterHomeself
+    );
+    if (api_filter) {
+      console.log(api_filter);
+      this.getHomeloanselfLeadsCount(api_filter);
       this.getloanLeads(api_filter);
     }
   }
