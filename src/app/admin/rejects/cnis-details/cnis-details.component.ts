@@ -53,7 +53,7 @@ export class CnisDetailsComponent implements OnInit {
       if (!status) {
         this.getLeadById(this.leadId);
       } else {
-        const validStatuses = ['personalLoan', 'homeLoan', 'lap'];
+        const validStatuses = ['personalLoan', 'homeLoan', 'lap', 'carLoan'];
         if (validStatuses.includes(status)) {
           this.getLoanLeadById(this.leadId);
         } else {
@@ -112,7 +112,7 @@ export class CnisDetailsComponent implements OnInit {
     const lead = this.leads?.[0];
     if (!lead) return false;
     const isSelfEmployedHomeOrLap =
-      (lead.loanType === 'homeLoan' || lead.loanType === 'lap') &&
+      (lead.loanType === 'homeLoan' || lead.loanType === 'lap' || lead.loanType === 'carLoan') &&
       lead.employmentStatus === 'self-employed';
     const loanTypeNotExists = !('loanType' in lead);
     return isSelfEmployedHomeOrLap || loanTypeNotExists;

@@ -29,6 +29,7 @@ export class LoanleaduploadsComponent implements OnInit {
   capabilities: any;
   cibilScore: any;
   companyName: any;
+  newCarQuotation: any;
   panNumber: any;
   loanleads: any;
   userDetails: any;
@@ -48,6 +49,8 @@ export class LoanleaduploadsComponent implements OnInit {
     coApplicantVoterId: { filesData: [], links: [], uploadedFiles: [] },
     cibilReport: { filesData: [], links: [], uploadedFiles: [] },
     companyId: { filesData: [], links: [], uploadedFiles: [] },
+    newCarQuotationFile: { filesData: [], links: [], uploadedFiles: [] },
+    rcCopy: { filesData: [], links: [], uploadedFiles: [] },
     membershipCertificate: {filesData: [], links: [], uploadedFiles: []},
     practicingCertificate: {filesData: [], links: [], uploadedFiles: []},
     graduationCertificate: {filesData: [], links: [], uploadedFiles: [] },
@@ -233,7 +236,7 @@ export class LoanleaduploadsComponent implements OnInit {
     ];
     const isEmployed = employmentStatus === 'employed';
     const isSelfEmployed = employmentStatus === 'self-employed';
-    const isHomeOrLap = loanType === 'homeLoan' || loanType === 'lap';
+    const isHomeOrLap = loanType === 'homeLoan' || loanType === 'lap' || loanType ==='carLoan';
     if (isEmployed && (loanType === 'homeLoan' || loanType === 'lap')) {
       this.items.push({ label: 'Sale Details', name: 'saledetails' });
     }
@@ -654,6 +657,7 @@ export class LoanleaduploadsComponent implements OnInit {
     this.panNumber = this.loanleads[0].panNumber || '';
     this.cibilScore = this.loanleads[0].cibilScore || '';
     this.companyName = this.loanleads[0].companyName || '';
+    this.newCarQuotation = this. loanleads[0].newCarQuotation || '';
     if (this.loanleads[0].panCard) {
       this.selectedFiles['panCard']['uploadedFiles'] =
         this.loanleads[0].panCard;
@@ -708,6 +712,14 @@ export class LoanleaduploadsComponent implements OnInit {
     if (this.loanleads[0].pgCertificate) {
       this.selectedFiles['pgCertificate']['uploadedFiles'] =
         this.loanleads[0].pgCertificate;
+    }
+    if (this.loanleads[0].newCarQuotationFile) {
+      this.selectedFiles['newCarQuotationFile']['uploadedFiles'] =
+        this.loanleads[0].newCarQuotationFile;
+    }
+    if (this.loanleads[0].rcCopy) {
+      this.selectedFiles['rcCopy']['uploadedFiles'] =
+        this.loanleads[0].rcCopy;
     }
     if (this.loanleads[0].gstCertificate) {
       this.selectedFiles['gstCertificate']['uploadedFiles'] =
@@ -1785,6 +1797,50 @@ export class LoanleaduploadsComponent implements OnInit {
           );
         }
       }
+      formData['newCarQuotationFile'] = [];
+      if (
+        this.selectedFiles['newCarQuotationFile'] &&
+        this.selectedFiles['newCarQuotationFile']['links']
+      ) {
+        for (
+          let i = 0;
+          i < this.selectedFiles['newCarQuotationFile']['links'].length;
+          i++
+        ) {
+          formData['newCarQuotationFile'].push(this.selectedFiles['newCarQuotationFile']['links'][i]);
+        }
+        for (
+          let i = 0;
+          i < this.selectedFiles['newCarQuotationFile']['uploadedFiles'].length;
+          i++
+        ) {
+          formData['newCarQuotationFile'].push(
+            this.selectedFiles['newCarQuotationFile']['uploadedFiles'][i]
+          );
+        }
+      }
+      formData['rcCopy'] = [];
+      if (
+        this.selectedFiles['rcCopy'] &&
+        this.selectedFiles['rcCopy']['links']
+      ) {
+        for (
+          let i = 0;
+          i < this.selectedFiles['rcCopy']['links'].length;
+          i++
+        ) {
+          formData['rcCopy'].push(this.selectedFiles['rcCopy']['links'][i]);
+        }
+        for (
+          let i = 0;
+          i < this.selectedFiles['rcCopy']['uploadedFiles'].length;
+          i++
+        ) {
+          formData['rcCopy'].push(
+            this.selectedFiles['rcCopy']['uploadedFiles'][i]
+          );
+        }
+      }
     // console.log(formData);
     // console.log(this.leadId);
     this.loading = true;
@@ -2079,6 +2135,50 @@ getemployeeType(userId: any): string {
     let formData = {
       financialReturns: this.financialReturns,
     };
+    formData['newCarQuotationFile'] = [];
+      if (
+        this.selectedFiles['newCarQuotationFile'] &&
+        this.selectedFiles['newCarQuotationFile']['links']
+      ) {
+        for (
+          let i = 0;
+          i < this.selectedFiles['newCarQuotationFile']['links'].length;
+          i++
+        ) {
+          formData['newCarQuotationFile'].push(this.selectedFiles['newCarQuotationFile']['links'][i]);
+        }
+        for (
+          let i = 0;
+          i < this.selectedFiles['newCarQuotationFile']['uploadedFiles'].length;
+          i++
+        ) {
+          formData['newCarQuotationFile'].push(
+            this.selectedFiles['newCarQuotationFile']['uploadedFiles'][i]
+          );
+        }
+      }
+      formData['rcCopy'] = [];
+      if (
+        this.selectedFiles['rcCopy'] &&
+        this.selectedFiles['rcCopy']['links']
+      ) {
+        for (
+          let i = 0;
+          i < this.selectedFiles['rcCopy']['links'].length;
+          i++
+        ) {
+          formData['rcCopy'].push(this.selectedFiles['rcCopy']['links'][i]);
+        }
+        for (
+          let i = 0;
+          i < this.selectedFiles['rcCopy']['uploadedFiles'].length;
+          i++
+        ) {
+          formData['rcCopy'].push(
+            this.selectedFiles['rcCopy']['uploadedFiles'][i]
+          );
+        }
+      }
     this.loading = true;
     this.leadsService.addLoanLeadsDocumentData(this.leadId, formData).subscribe(
       (data: any) => {

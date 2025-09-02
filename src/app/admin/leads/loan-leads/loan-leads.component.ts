@@ -38,6 +38,7 @@ export class LoanLeadsComponent {
   employmentStatus: any = projectConstantsLocal.EMPLOYMENT_STATUS;
   salaryedtype: any = projectConstantsLocal.SALARYED_OR_UNSALARYED;
   designationtype: any = projectConstantsLocal.DOCTOR_OR_CA;
+  cartype: any = projectConstantsLocal.CAR_TYPE;
   natureOfBusinessSuggestions: any;
   citySuggestions: any;
   userDetails: any;
@@ -45,6 +46,7 @@ export class LoanLeadsComponent {
   loading: any;
   leadData: any;
   steps: any[];
+  selectedCarType: any;
   stepsforBusiness: any[];
   activeIndex: number = 0;
   heading: any = 'Create Lead';
@@ -117,6 +119,7 @@ export class LoanLeadsComponent {
                 designationtype: this.leadData[0]?.designationtype,
                 employmentType: this.leadData[0]?.employmentType,
                 salary: this.leadData[0]?.salary,
+                newCarQuotation: this.leadData[0]?.newCarQuotation,
                 jobExperience: this.leadData[0]?.jobExperience,
                 companyAddress: this.leadData[0]?.companyAddress,
                 existingLoanDetails: this.leadData[0]?.existingLoanDetails,
@@ -143,6 +146,8 @@ export class LoanLeadsComponent {
               city: this.leadData[0]?.city,
               state: this.leadData[0]?.state,
               pincode: this.leadData[0]?.pincode,
+              cartype: this.leadData[0]?.cartype,
+              newCarQuotation: this.leadData[0]?.newCarQuotation,
               businessName: this.leadData[0]?.businessName,
               businessEntity: this.leadData[0]?.businessEntity,
               businessTurnover: this.leadData[0]?.businessTurnover,
@@ -226,6 +231,8 @@ export class LoanLeadsComponent {
       city: ['', Validators.compose([Validators.required])],
       state: [''],
       pincode: [''],
+      cartype: [],
+      newCarQuotation: [],
       companyName: ['', Validators.compose([Validators.required])],
       // designation: ['', Validators.compose([Validators.required])],
       // designationtype: ['', Validators.compose([Validators.required])],
@@ -260,7 +267,8 @@ export class LoanLeadsComponent {
       addressLine2: [''],
       city: ['', Validators.compose([Validators.required])],
       state: [''],
-      pincode: [''],
+      cartype: [],
+      newCarQuotation: [],
       businessName: ['', Validators.compose([Validators.required])],
       businessEntity: ['', Validators.compose([Validators.required])],
       businessTurnover: ['', Validators.compose([Validators.required])],
@@ -357,6 +365,9 @@ export class LoanLeadsComponent {
         this.loanType === "professionalLoans"
           ? formValues.designationtype
           : formValues.designation,
+      cartype: formValues.cartype,
+      newCarQuotation: formValues.newCarQuotation,
+                       
       // designation: formValues.designation,
       // designation: formValues.designationtype,
       salary: formValues.salary,
@@ -484,5 +495,8 @@ export class LoanLeadsComponent {
       );
     });
   }
+  onCarTypeChange(event: any) {
+  this.selectedCarType = event; // event will contain the selected carType object
+}
 }
 

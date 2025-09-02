@@ -74,7 +74,7 @@ export class BankSelectionComponent implements OnInit {
       if (!status) {
         this.getLeadById(this.leadId);
       } else {
-        const validStatuses = ['personalLoan', 'homeLoan', 'lap', 'professionalLoans'];
+        const validStatuses = ['personalLoan', 'homeLoan', 'lap', 'professionalLoans', 'carLoan'];
         if (validStatuses.includes(status)) {
           this.getLoanLeadById(this.leadId);
         } else {
@@ -161,7 +161,7 @@ export class BankSelectionComponent implements OnInit {
     };
     const loanType = this.leadData[0].loanType;
     console.log(this.leadData[0])
-    if (loanType == 'homeLoan' || loanType == 'lap') {
+    if (loanType == 'homeLoan' || loanType == 'lap' || loanType == 'carLoan') {
       formData.loanType = this.leadData[0].loanType;
       formData.employmentStatus = this.leadData[0].employmentStatus;
     }
@@ -172,7 +172,7 @@ export class BankSelectionComponent implements OnInit {
         this.loading = false;
         this.toastService.showSuccess('Login Info Saved Successfully');
         // this.changeLeadStatus(this.leadData[0].id, 12);
-        if (loanType === 'homeLoan' || loanType === 'lap') {
+        if (loanType === 'homeLoan' || loanType === 'lap' || loanType == 'carLoan') {
           this.changeLoanLeadStatus(this.leadData[0].leadId, 12);
         } else {
           this.changeLeadStatus(this.leadData[0].id, 12);
@@ -294,7 +294,7 @@ export class BankSelectionComponent implements OnInit {
     if (!lead) return false;
 
     const isSelfEmployedHomeOrLap =
-      (lead.loanType === 'homeLoan' || lead.loanType === 'lap') &&
+      (lead.loanType === 'homeLoan' || lead.loanType === 'lap' || lead.loanType === 'carLoan') &&
       lead.employmentStatus === 'self-employed';
 
     const loanTypeNotExists = !('loanType' in lead);

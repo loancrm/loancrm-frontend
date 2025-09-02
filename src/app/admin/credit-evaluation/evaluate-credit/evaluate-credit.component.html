@@ -312,6 +312,98 @@
                 <ng-template #noValue>-</ng-template>
               </div>
             </div>
+
+            <div *ngIf="leadData?.length 
+                    && leadData[0].loanType === 'carLoan' 
+                    && leadData[0].carType === 1">
+              <div class="label fw-bold mb-1">
+              <span
+                style="
+                  color: #101828;
+                  font-weight: 500;
+                  margin-left: 30px;
+                "
+                >RC Copy</span
+              >
+              </div>
+              <div class="value">
+                <div
+                  *ngIf="
+                    leadData &&
+                    leadData[0]?.rcCopy &&
+                    leadData[0]?.rcCopy?.length > 0
+                  "
+                >
+                  <span
+                    *ngFor="let file of leadData[0]?.rcCopy"
+                    class="me-2"
+                  >
+                    <a [href]="'//' + file" target="_blank">View</a>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3"
+              *ngIf="leadData?.length 
+                    && leadData[0].loanType === 'carLoan' 
+                    && leadData[0].carType === 2">
+              <!--New Car quotation -->
+              <div class="col-md-6 col-12">
+                <div
+                  class="info-line"
+                  *ngIf="leadData[0]?.newCarQuotation"
+                  style="margin-bottom: 1rem"
+                >
+                  <div
+                    class="label fw-bold mb-1"
+                    style="
+                      font-weight: 500;
+                      white-space: nowrap;
+                      color: #101828;
+                    "
+                  >
+                    <span style="color: #101828; font-weight: 500"
+                      >New Car quotation </span
+                    >
+                  </div>
+                  <div class="value" style="margin-top: 2px">
+                    {{ leadData[0]?.newCarQuotation | capitalizeFirst }}
+                  </div>
+                </div>
+              </div>
+
+              <!---New Car Quotation-->
+                <div class="col-md-6 col-12">
+                <div class="info-line">
+                  <div class="label fw-bold mb-1">
+                    <span
+                      style="
+                        color: #101828;
+                        font-weight: 500;
+                        margin-left: 30px;
+                      "
+                      >New Car Quotation File</span
+                    >
+                  </div>
+                  <div class="value">
+                    <div
+                      *ngIf="
+                        leadData &&
+                        leadData[0]?.newCarQuotationFile &&
+                        leadData[0]?.newCarQuotationFile?.length > 0
+                      "
+                    >
+                      <span
+                        *ngFor="let file of leadData[0]?.newCarQuotationFile"
+                        class="me-2"
+                      >
+                        <a [href]="'//' + file" target="_blank">View</a>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 

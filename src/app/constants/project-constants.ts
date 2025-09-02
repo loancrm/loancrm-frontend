@@ -105,7 +105,8 @@ export const projectConstantsLocal = {
     { id: 2, name: 'personalLoan', displayName: 'Personal Loan' },
     { id: 3, name: 'homeLoan', displayName: 'Home Loan' },
     { id: 4, name: 'lap', displayName: 'LAP' },
-    { id: 5, name: 'professionalLoans', displayName: 'Professional Loan' }
+    { id: 5, name: 'professionalLoans', displayName: 'Professional Loan' },
+     {id: 5, name: 'carLoan', displayName: 'car Loan'}
   ],
   LEAD_INTERNAL_STATUS: [
     { id: '1', status: 'new', displayName: 'New' },
@@ -258,6 +259,10 @@ export const projectConstantsLocal = {
   DOCTOR_OR_CA: [
     { id: 1, status: 'doctor', displayName: 'Doctor' },
     { id: 2, status: 'ca', displayName: 'CA' }
+  ],
+ CAR_TYPE:[
+    {id: 1, status: 'used', displayName: 'Used Car'},
+    {id: 2, status: 'new', displayName: 'New Car'}
   ],
 
   // RAZORPAY_KEY_ID: "rzp_test_OryiPavGPST3CU",

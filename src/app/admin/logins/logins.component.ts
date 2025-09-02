@@ -40,6 +40,7 @@ export class LoginsComponent {
   @ViewChild('personalleadsTable') personalleadsTable!: Table;
   @ViewChild('professionalleadsTable') professionalleadsTable!: Table;
   @ViewChild('HomeleadsTable') HomeleadsTable!: Table;
+  @ViewChild('CarleadsTable') CarleadsTable!: Table;
   @ViewChild('LapleadsTable') LapleadsTable!: Table;
   leadSources: any = [];
   leadUsers: any = [];
@@ -81,11 +82,16 @@ export class LoginsComponent {
   lapLeadsCount: any = 0;
   HomefilterConfig: any[] = [];
   SourcedByForHome: any;
+  SourcedByForCar: any;
   lapselfLeadsCount: any = 0;
   searchFilterForHomeSelf: any = {};
   searchFilterForHome: any = {};
+  searchFilterForCar: any = {};
+  searchFilterForCarSelf: any = {};
   appliedFilterHomeself: {};
   appliedFilterHome: {};
+  appliedFilterCarself: {};
+  appliedFilterCar: {};
   SourcedByForPersonal: any;
   SourcedByForProfessional: any;
   searchFilterPersonal: any = {};
@@ -184,20 +190,47 @@ export class LoginsComponent {
     const { name: itemName } = this.activeItem;
     // console.log(name);
     // console.log(itemName);
-    const loadLeadsFn =
-      name === 'employed'
-        ? itemName === 'homeLoan'
-          ? this.loadLeadsforHome
-          : this.loadLeadsforlap
-        : itemName === 'homeLoan'
-          ? this.loadLeadsforHomeself
-          : this.loadLeadsforlapself;
-    // console.log('loadLeadsFn', loadLeadsFn);
+    // const loadLeadsFn =
+    //   name === 'employed'
+    //     ? itemName === 'homeLoan'
+    //       ? this.loadLeadsforHome
+    //       : this.loadLeadsforlap
+    //     : itemName === 'homeLoan'
+    //       ? this.loadLeadsforHomeself
+    //       : this.loadLeadsforlapself;
+    // // console.log('loadLeadsFn', loadLeadsFn);
+    // loadLeadsFn.call(this, event);
+    // this.localStorageService.setItemOnLocalStorage(
+    //   'loginsEmploymentStatusActiveItem',
+    //   event.name
+    // );
+    let loadLeadsFn: Function | null = null;
+    if (name === 'employed') {
+    if (itemName === 'homeLoan') {
+      loadLeadsFn = this.loadLeadsforHome;
+    } else if (itemName === 'lap') {
+      loadLeadsFn = this.loadLeadsforlap;
+    } else if (itemName === 'carLoan') {
+      loadLeadsFn = this.loadLeadsforCar;
+    }
+  } else {
+    if (itemName === 'homeLoan') {
+      loadLeadsFn = this.loadLeadsforHomeself;
+    } else if (itemName === 'lap') {
+      loadLeadsFn = this.loadLeadsforlapself;
+    } else if (itemName === 'carLoan') {
+      loadLeadsFn = this.loadLeadsforCarself;
+    }
+  }
+
+  if (loadLeadsFn) {
     loadLeadsFn.call(this, event);
-    this.localStorageService.setItemOnLocalStorage(
-      'loginsEmploymentStatusActiveItem',
-      event.name
-    );
+  }
+
+  this.localStorageService.setItemOnLocalStorage(
+    'employmentStatusActiveItem',
+    event.name
+  );
   }
   handleInputChange(value: string): void {
     this.searchInputValue = value;
@@ -215,6 +248,11 @@ export class LoginsComponent {
           'loanId',
           this.personNameToSearchForHome
         );
+      } else if (this.activeItem.name === 'carLoan') {
+        this.inputValueChangeEventForCar(
+          'loanId',
+          this.personNameToSearchForHome
+        );
       }
     } else {
       this.businessNameToSearchForHome = value;
@@ -225,6 +263,11 @@ export class LoginsComponent {
         );
       } else if (this.activeItem.name === 'lap') {
         this.inputValueChangeEventForLAPSelf(
+          'loanId',
+          this.businessNameToSearchForHome
+        );
+      }  else if (this.activeItem.name === 'carLoan') {
+        this.inputValueChangeEventForCarSelf(
           'loanId',
           this.businessNameToSearchForHome
         );
@@ -255,10 +298,22 @@ export class LoginsComponent {
       this.HomeleadsTable.reset();
     }
   }
+   inputValueChangeEventForCar(dataType, value) {
+    if (value == '') {
+      this.searchFilterForCar = {};
+      this.CarleadsTable.reset();
+    }
+  }
   inputValueChangeEventForHomeSelf(dataType, value) {
     if (value == '') {
       this.searchFilterForHomeSelf = {};
-      this.HomeleadsTable.reset();
+      this.CarleadsTable.reset();
+    }
+  }
+  inputValueChangeEventForCarSelf(dataType, value) {
+    if (value == '') {
+      this.searchFilterForCarSelf = {};
+      this.CarleadsTable.reset();
     }
   }
   filterBasedOnEmploymentStatus(): void {
@@ -267,12 +322,16 @@ export class LoginsComponent {
         this.filterWithPersonNameForHome();
       } else if (this.activeItem.name === 'lap') {
         this.filterWithPersonNameForLAP();
+      } else if (this.activeItem.name === 'carLoan') {
+        this.filterWithPersonNameForCar();
       }
     } else {
       if (this.activeItem.name === 'homeLoan') {
         this.filterWithBusinessNameForHome();
       } else if (this.activeItem.name === 'lap') {
         this.filterWithBusinessNameForLAP();
+      } else if (this.activeItem.name === 'carLoan') {
+        this.filterWithBusinessNameForCar();
       }
     }
   }
@@ -309,13 +368,37 @@ export class LoginsComponent {
     };
     this.applyFiltersHome(searchFilterForHome);
   }
+  filterWithBusinessNameForCar() {
+    let searchFilterForCarSelf = {
+      'businessName-like': this.businessNameToSearchForHome,
+    };
+    this.applyFiltersCarSelf(searchFilterForCarSelf);
+  }
+
+  filterWithPersonNameForCar() {
+    let searchFilterForCar = {
+      'contactPerson-like': this.personNameToSearchForHome,
+    };
+    this.applyFiltersCar(searchFilterForCar);
+  }
+
   applyFiltersHomeSelf(searchFilterForHomeSelf = {}) {
     this.searchFilterForHomeSelf = searchFilterForHomeSelf;
     this.loadLoanLeads('homeself');
   }
+
   applyFiltersHome(searchFilterForHome = {}) {
     this.searchFilterForHome = searchFilterForHome;
     this.loadLoanLeads('home');
+  }
+
+   applyFiltersCarSelf(searchFilterForCarSelf = {}) {
+    this.searchFilterForCarSelf = searchFilterForCarSelf;
+    this.loadLoanLeads('carself');
+  }
+  applyFiltersCar(searchFilterForCar = {}) {
+    this.searchFilterForCar = searchFilterForCar;
+    this.loadLoanLeads('car');
   }
   onActiveItemChange(event) {
     this.activeItem = event;
@@ -331,6 +414,12 @@ export class LoginsComponent {
   }
   statusChangeForHomeSelf(event) {
     this.loadLoanLeads('homeself');
+  }
+  statusChangeForCar(event) {
+    this.loadLoanLeads('car');
+  }
+  statusChangeForCarSelf(event) {
+    this.loadLoanLeads('carself');
   }
   getEntityName(entity) {
     if (this.businessEntities && this.businessEntities.length > 0) {
@@ -434,8 +523,18 @@ export class LoginsComponent {
           name: 'self-employed',
         },
       ];
-    }
-
+    } else if (this.activeItem.name === 'carLoan') {
+      return [
+        {
+          label: `Employed (${this.totalStatusLeadsCountArray.LAPLoancount || 0})`,
+          name: 'employed',
+        },
+        {
+          label: `Self Employed (${this.totalStatusLeadsCountArray.LAPLoanSelfcount || 0})`,
+          name: 'self-employed',
+        },
+      ];
+    } 
     // Default case (if activeItem is neither homeLoan nor LAP)
     return [];
   }
@@ -806,6 +905,12 @@ export class LoginsComponent {
       case 'Lapself':
         this.loadLoanLeads('lapself');
         break;
+      case 'Car':
+        this.loadLoanLeads('car');
+        break;
+      case 'Carself':
+        this.loadLoanLeads('carself');
+        break;
       default:
         this.loadLeads(null);
         break;
@@ -861,6 +966,13 @@ export class LoginsComponent {
     // );
     this.loadLoanLeads('home');
   }
+  clloginstatusChange(event) {
+    // this.localStorageService.setItemOnLocalStorage(
+    //   'selectedLogins',
+    //   event.value
+    // );
+    this.loadLoanLeads('car');
+  }
   laploginstatusChange(event) {
     // this.localStorageService.setItemOnLocalStorage(
     //   'selectedLogins',
@@ -874,6 +986,13 @@ export class LoginsComponent {
     //   event.value
     // );
     this.loadLoanLeads('homeself');
+  }
+  clselfloginstatusChange(event) {
+    // this.localStorageService.setItemOnLocalStorage(
+    //   'selectedLogins',
+    //   event.value
+    // );
+    this.loadLoanLeads('carself');
   }
   lapselfloginstatusChange(event) {
     // this.localStorageService.setItemOnLocalStorage(
@@ -993,7 +1112,7 @@ export class LoginsComponent {
     console.log('Row clicked:', event.data);
     const lead = event.data
     const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
-    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans') {
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans' || loanType === 'carLoan') {
       this.routingService.handleRoute(`leads/profile/${loanType}/${lead.leadId}`, null);
     } else {
       // If no known loanType, omit status from the route
@@ -1006,7 +1125,7 @@ export class LoginsComponent {
 
   bankSelection(lead) {
     const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
-    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans') {
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans' || loanType === 'carLoan') {
       this.routingService.handleRoute(`logins/bankSelection/${loanType}/${lead.leadId}`, null);
     } else {
       // If no known loanType, omit status from the route
@@ -1201,6 +1320,12 @@ export class LoginsComponent {
         break;
       case 'professional':
         this.loadLeadsforprofessional(this.currentTableEvent);
+        break;
+      case 'car':
+        this.loadLeadsforCar(this.currentTableEvent);
+        break;
+      case 'carself':
+        this.loadLeadsforCarself(this.currentTableEvent);
         break;
       default:
         console.error('Unknown lead type');
@@ -1418,6 +1543,89 @@ export class LoginsComponent {
     console.log(api_filter);
     if (api_filter) {
       this.getHomeloanLeadsCount(api_filter);
+      this.getloanLeads(api_filter);
+    }
+  }
+  loadLeadsforCar(event) {
+    this.currentTableEvent = event;
+    let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
+    api_filter['loanType-eq'] = 'carLoan';
+    api_filter['employmentStatus-eq'] = 'employed';
+    // api_filter['leadInternalStatus-or'] = '11,12';
+    if (this.selectedhlLoginStatus) {
+      console.log(this.selectedhlLoginStatus)
+      if (this.selectedhlLoginStatus && this.selectedhlLoginStatus.name) {
+        if (this.selectedhlLoginStatus.name != 'all') {
+          api_filter['leadInternalStatus-eq'] = this.selectedhlLoginStatus.id;
+        } else {
+          api_filter['leadInternalStatus-or'] = '11,12';
+        }
+      }
+    }
+    if (this.SourcedByForCar && this.SourcedByForCar.name) {
+      if (this.SourcedByForCar.name != 'All') {
+        api_filter['sourcedBy-eq'] = this.SourcedByForCar.id;
+      }
+    }
+
+    api_filter = Object.assign(
+      {},
+      api_filter,
+      this.searchFilterForCar,
+      this.appliedFilterCar
+    );
+    if (
+      this.userDetails &&
+      this.userDetails.id &&
+      this.userDetails.userType &&
+      this.userDetails.userType == '3'
+    ) {
+      api_filter['sourcedBy-eq'] = this.userDetails.id;
+    }
+    console.log(api_filter);
+    if (api_filter) {
+      this.getHomeloanLeadsCount(api_filter);
+      this.getloanLeads(api_filter);
+    }
+  }
+  loadLeadsforCarself(event) {
+    this.currentTableEvent = event;
+    let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
+    api_filter['loanType-eq'] = 'carLoan';
+    api_filter['employmentStatus-eq'] = 'self-employed';
+    // api_filter['leadInternalStatus-or'] = '11,12';
+    if (this.selectedhlLoginStatus) {
+      // console.log(this.selectedhlLoginStatus)
+      if (this.selectedhlLoginStatus && this.selectedhlLoginStatus.name) {
+        if (this.selectedhlLoginStatus.name != 'all') {
+          api_filter['leadInternalStatus-eq'] = this.selectedhlLoginStatus.id;
+        } else {
+          api_filter['leadInternalStatus-or'] = '11,12';
+        }
+      }
+    }
+    if (this.SourcedByForCar && this.SourcedByForCar.name) {
+      if (this.SourcedByForCar.name != 'All') {
+        api_filter['sourcedBy-eq'] = this.SourcedByForCar.id;
+      }
+    }
+    api_filter = Object.assign(
+      {},
+      api_filter,
+      this.searchFilterForCarSelf,
+      this.appliedFilterCarself
+    );
+    if (
+      this.userDetails &&
+      this.userDetails.id &&
+      this.userDetails.userType &&
+      this.userDetails.userType == '3'
+    ) {
+      api_filter['sourcedBy-eq'] = this.userDetails.id;
+    }
+    if (api_filter) {
+      // console.log(api_filter);
+      this.getHomeloanselfLeadsCount(api_filter);
       this.getloanLeads(api_filter);
     }
   }

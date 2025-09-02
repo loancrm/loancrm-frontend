@@ -2101,8 +2101,8 @@
                 class="p-datatable-striped"
                 [totalRecords]="
                   activeEmploymentStatus.name == 'employed'
-                    ? homeloanLeadsCount
-                    : homeloanselfLeadsCount
+                    ? carloanLeadsCount
+                    : carloanselfLeadsCount
                 "
                 [loading]="loadleadsloading"
                 responsiveLayout="scroll"
@@ -2181,11 +2181,11 @@
                           [options]="leadUsers"
                           (onChange)="
                             activeEmploymentStatus.name === 'employed'
-                              ? statusChangeForHome($event)
-                              : statusChangeForHomeSelf($event)
+                              ? statusChangeForCar($event)
+                              : statusChangeForCarSelf($event)
                           "
                           [dropdownIcon]="'pi pi-chevron-down'"
-                          [(ngModel)]="SourcedByForHome"
+                          [(ngModel)]="SourcedByForCar"
                           optionLabel="name"
                           dataKey="name"
                           [filter]="true"
@@ -2204,11 +2204,11 @@
                             [options]="leadStatus"
                             (onChange)="
                               activeEmploymentStatus.name === 'employed'
-                                ? statusChangeForHome($event)
-                                : statusChangeForHomeSelf($event)
+                                ? statusChangeForCar($event)
+                                : statusChangeForCarSelf($event)
                             "
                             [dropdownIcon]="'pi pi-chevron-down'"
-                            [(ngModel)]="selectedHomeLeadStatus"
+                            [(ngModel)]="selectedCarLeadStatus"
                             optionLabel="displayName"
                             dataKey="name"
                             appendTo="body"
@@ -2282,7 +2282,7 @@
                       class="text-nowrap"
                       *ngIf="activeEmploymentStatus.name === 'employed'"
                     >
-                      Job Experience
+                      Car Type
                     </th>
                     <th
                       class="text-nowrap"
@@ -2358,9 +2358,16 @@
                       }}</span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'employed'">
-                      <span class="table-column-data">{{
-                        lead.jobExperience ? lead.jobExperience : "-"
-                      }}</span>
+                      <span class="table-column-data">
+                        <!-- {{
+                        lead.carType ? lead.carType : "-"
+                      }} -->
+                        {{
+                          lead.carType
+                            ? (getCarType(lead.carType) | capitalizeFirst)
+                            : "-"
+                        }}
+                    </span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'self-employed'">
                       <span class="table-column-data">{{

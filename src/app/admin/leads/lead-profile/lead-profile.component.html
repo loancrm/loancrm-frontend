@@ -722,6 +722,20 @@
                       </div>
                     </div>
                   </div>
+                  <div class="col-md-3 col-sm-4 col-6 mb-3 business" *ngIf = "loanType === 'carLoan'">
+                    <div>
+                      <div class="text-muted">CarType</div>
+                      <div class="fw-bold">
+                        {{
+                          leadsData.leadData?.carType
+                            ? (getCarType(
+                                leadsData.leadData?.carType
+                              ) | capitalizeFirst)
+                            : "-"
+                        }}
+                      </div>
+                    </div>
+                  </div>
                   <div class="col-md-3 col-sm-4 col-6 mb-3">
                     <div>
                       <div class="text-muted">
@@ -6144,6 +6158,21 @@
                     </div>
                   </div>
 
+                  <div class="col-md-3 col-sm-4 col-6 mb-3 business" *ngIf = "loanType === 'carLoan'">
+                    <div>
+                      <div class="text-muted">CarType</div>
+                      <div class="fw-bold">
+                        {{
+                          leadsData.leadData?.carType
+                            ? (getCarType(
+                                leadsData.leadData?.carType
+                              ) | capitalizeFirst)
+                            : "-"
+                        }}
+                      </div>
+                    </div>
+                  </div>
+
                   <div
                     class="col-md-3 col-sm-4 col-6 mb-3 business"
                     *ngIf="isdesignation()"
@@ -6550,12 +6579,12 @@
                       <!-- Bank Statements -->
                       <div *ngIf="leadsData?.documents == null">
                         <div class="text-center fw-bold">
-                          <img
+                          <!-- <img
                             alt="No Files"
                             src="../../../../assets/images/menu/no-files.gif"
                             width="200"
                             height="200"
-                          />
+                          /> -->
                           <p
                             style="
                               color: #535ab4;
@@ -7026,8 +7055,10 @@
                         <div
                           class="accordion-item"
                           *ngIf="
-                            employmentStatus === 'employed' &&
-                            loanType !== 'personalloan'
+                            ((employmentStatus === 'employed' &&
+                            loanType !== 'personalLoan') &&
+                            (loanType !== 'professionalLoans') &&
+                            (loanType !== 'carLoan'))
                           "
                         >
                           <h2 class="accordion-header" id="headingGST">

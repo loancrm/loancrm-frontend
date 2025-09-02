@@ -31,15 +31,19 @@ export class LeadsComponent implements OnInit {
   personalloanLeadsCount: any = 0;
   professionalloanLeadsCount: any = 0;
   homeloanselfLeadsCount: any = 0;
+  carloanselfLeadsCount: any = 0;
   lapselfLeadsCount: any = 0;
   lapLeadsCount: any = 0;
   homeloanLeadsCount: any = 0;
+  carloanLeadsCount: any = 0;
   leadIdToSearch: any;
   businessNameToSearch: any;
   businessNameToSearchForPersonal: any;
   businessNameToSearchForProfessional: any;
   personNameToSearchForHome: any;
+  // personNameToSearchForCar: any;
   businessNameToSearchForHome: any;
+  // businessNameToSearchForCar: any;
   sourcedByToSearch: any;
   selectedSourcedByStatus: any;
   SourcedByForPersonal: any;
@@ -63,6 +67,7 @@ export class LeadsComponent implements OnInit {
   searchFilterPersonal: any = {};
   searchFilterProfessional: any = {};
   searchFilterForHomeSelf: any = {};
+  searchFilterForCarSelf: any = {};
   searchFilterForLapSelf: any = {};
   @ViewChild('leadsTable') leadsTable!: Table;
   @ViewChild('personalleadsTable') personalleadsTable!: Table;
@@ -83,14 +88,18 @@ export class LeadsComponent implements OnInit {
   leadRemarksData: any = projectConstantsLocal.LEAD_REMARKS;
   designationType: any = projectConstantsLocal.DOCTOR_OR_CA;
   employmentType: any = projectConstantsLocal.SALARYED_OR_UNSALARYED;
+  carType: any = projectConstantsLocal.CAR_TYPE;
   appliedFilter: {};
   appliedFilterPersonal: {};
   appliedFilterProfessional: {};
   appliedFilterLap: {};
   appliedFilterLapself: {};
   appliedFilterHomeself: {};
+  appliedFilterCarself: {};
   appliedFilterHome: {};
+  appliedFilterCar: {};
   searchFilterForHome: any = {};
+  searchFilterForCar: any = {};
   searchFilterForLap: any = {};
   dropdownVisible = false;
   capabilities: any;
@@ -257,7 +266,7 @@ export class LeadsComponent implements OnInit {
         name: 'educationlLoans',
       },
       {
-        label: `Car loans (0)`,
+        label: `Car loans (${this.totalLeadsCountArray?.carLoancount || 0})`,
         name: 'carLoan',
       },
       {
@@ -298,11 +307,11 @@ export class LeadsComponent implements OnInit {
     } else if (this.activeItem.name === 'carLoan') {
       return [
         {
-          label: `Employed (${this.totalStatusLeadsCountArray.LAPLoancount || 0})`,
+          label: `Employed (${this.totalStatusLeadsCountArray.CarLoancount || 0})`,
           name: 'employed',
         },
         {
-          label: `Self Employed (${this.totalStatusLeadsCountArray.LAPLoanSelfcount || 0})`,
+          label: `Self Employed (${this.totalStatusLeadsCountArray.CarLoanSelfcount || 0})`,
           name: 'self-employed',
         },
       ];
@@ -834,8 +843,11 @@ export class LeadsComponent implements OnInit {
       case 'Lap':
         this.loadLoanLeads('lap');
         break;
-      case 'Lapself':
-        this.loadLoanLeads('lapself');
+      case 'car':
+        this.loadLoanLeads('car');
+        break;
+      case 'carself':
+        this.loadLoanLeads('carself');
         break;
       default:
         this.loadLeads(null);
@@ -1099,6 +1111,13 @@ export class LeadsComponent implements OnInit {
   }
   return '';
 }
+getCarType(userId: any): string {
+  if (this.carType && this.carType.length > 0) {
+    const carType = this.carType.find(user => String(user.id) === String(userId));
+    return carType?.displayName || '';
+  }
+  return '';
+}
 
   getEmploymentType(userId: any): string {
   if (this.employmentType && this.employmentType.length > 0) {
@@ -1238,6 +1257,11 @@ export class LeadsComponent implements OnInit {
           'loanId',
           this.personNameToSearchForHome
         );
+      }else if (this.activeItem.name === 'carLoan') {
+        this.inputValueChangeEventForCar(
+          'loanId',
+          this.personNameToSearchForHome
+        );
       }
     } else {
       this.businessNameToSearchForHome = value;
@@ -1248,6 +1272,11 @@ export class LeadsComponent implements OnInit {
         );
       } else if (this.activeItem.name === 'lap') {
         this.inputValueChangeEventForLAPSelf(
+          'loanId',
+          this.businessNameToSearchForHome
+        );
+      }else if (this.activeItem.name === 'carLoan') {
+        this.inputValueChangeEventForCarSelf(
           'loanId',
           this.businessNameToSearchForHome
         );
@@ -1262,11 +1291,16 @@ export class LeadsComponent implements OnInit {
       } else if (this.activeItem.name === 'lap') {
         this.filterWithPersonNameForLAP();
       }
+      else if (this.activeItem.name === 'carLoan') {
+        this.filterWithPersonNameForCar();
+      }
     } else {
       if (this.activeItem.name === 'homeLoan') {
         this.filterWithBusinessNameForHome();
       } else if (this.activeItem.name === 'lap') {
         this.filterWithBusinessNameForLAP();
+      } else if (this.activeItem.name === 'carLoan') {
+        this.filterWithBusinessNameForCar();
       }
     }
   }
@@ -1283,11 +1317,23 @@ export class LeadsComponent implements OnInit {
       this.HomeleadsTable.reset();
     }
   }
+  inputValueChangeEventForCar(dataType, value) {
+    if (value == '') {
+      this.searchFilterForCar = {};
+      this.CarleadsTable.reset();
+    }
+  }
 
   inputValueChangeEventForHomeSelf(dataType, value) {
     if (value == '') {
       this.searchFilterForHomeSelf = {};
       this.HomeleadsTable.reset();
+    }
+  }
+  inputValueChangeEventForCarSelf(dataType, value) {
+    if (value == '') {
+      this.searchFilterForCarSelf = {};
+      this.CarleadsTable.reset();
     }
   }
   inputValueChangeEventForLAP(dataType, value) {
@@ -1321,6 +1367,10 @@ export class LeadsComponent implements OnInit {
     this.searchFilterForHome = searchFilterForHome;
     this.loadLoanLeads('home');
   }
+  applyFiltersCar(searchFilterForCar = {}) {
+    this.searchFilterForCar = searchFilterForCar;
+    this.loadLoanLeads('car');
+  }
 
   applyFiltersLap(searchFilterForLap = {}) {
     this.searchFilterForLap = searchFilterForLap;
@@ -1329,6 +1379,10 @@ export class LeadsComponent implements OnInit {
   applyFiltersHomeSelf(searchFilterForHomeSelf = {}) {
     this.searchFilterForHomeSelf = searchFilterForHomeSelf;
     this.loadLoanLeads('homeself');
+  }
+  applyFiltersCarSelf(searchFilterForCarSelf = {}) {
+    this.searchFilterForCarSelf = searchFilterForCarSelf;
+    this.loadLoanLeads('carself');
   }
 
   applyFiltersLapSelf(searchFilterForLapSelf = {}) {
@@ -1369,6 +1423,12 @@ export class LeadsComponent implements OnInit {
     };
     this.applyFiltersHome(searchFilterForHome);
   }
+  filterWithPersonNameForCar() {
+    let searchFilterForCar = {
+      'contactPerson-like': this.personNameToSearchForHome,
+    };
+    this.applyFiltersCar(searchFilterForCar);
+  }
   filterWithPersonNameForLAP() {
     let searchFilterForLap = {
       'contactPerson-like': this.personNameToSearchForHome,
@@ -1382,6 +1442,12 @@ export class LeadsComponent implements OnInit {
       'businessName-like': this.businessNameToSearchForHome,
     };
     this.applyFiltersHomeSelf(searchFilterForHomeSelf);
+  }
+  filterWithBusinessNameForCar() {
+    let searchFilterForCarSelf = {
+      'businessName-like': this.businessNameToSearchForHome,
+    };
+    this.applyFiltersCarSelf(searchFilterForCarSelf);
   }
 
   filterWithBusinessNameForLAP() {
@@ -1414,12 +1480,19 @@ export class LeadsComponent implements OnInit {
     this.loadLoanLeads('home');
   }
 
+  statusChangeForCar(event) {
+    this.loadLoanLeads('car');
+  }
+
   statusChangeForLap(event) {
     this.loadLoanLeads('lap');
   }
 
   statusChangeForHomeSelf(event) {
     this.loadLoanLeads('homeself');
+  }
+  statusChangeForCarSelf(event) {
+    this.loadLoanLeads('carself');
   }
   statusChangeForLapSelf(event) {
     this.loadLoanLeads('lapself');
@@ -1462,7 +1535,7 @@ export class LeadsComponent implements OnInit {
     console.log('Row clicked:', event.data);
     const lead = event.data
     const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
-    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans') {
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans' || loanType === 'carLoan') {
       this.routingService.handleRoute(`leads/profile/${loanType}/${lead.leadId}`, null);
     } else {
       // If no known loanType, omit status from the route
@@ -1783,12 +1856,12 @@ export class LeadsComponent implements OnInit {
     api_filter = Object.assign(
       {},
       api_filter,
-      this.searchFilterForHome,
-      this.appliedFilterHome
+      this.searchFilterForCar,
+      this.appliedFilterCar
     );
     console.log(api_filter);
     if (api_filter) {
-      this.getHomeloanLeadsCount(api_filter);
+      this.getCarloanLeadsCount(api_filter);
       this.getloanLeads(api_filter);
     }
   }
@@ -1808,13 +1881,6 @@ export class LeadsComponent implements OnInit {
     } else {
       api_filter['leadInternalStatus-or'] = '1,2';
     }
-    // if (this.SourcedByForHome && this.SourcedByForHome.name) {
-    //   if (this.SourcedByForHome.name == 'All') {
-    //     api_filter['leadInternalStatus-or'] = '1,2';
-    //   } else {
-    //     api_filter['sourcedBy-eq'] = this.SourcedByForHome.id;
-    //   }
-    // }
     if (this.SourcedByForCar && this.SourcedByForCar.name) {
       if (this.SourcedByForCar.name != 'All') {
         api_filter['sourcedBy-eq'] = this.SourcedByForCar.id;
@@ -1831,12 +1897,12 @@ export class LeadsComponent implements OnInit {
     api_filter = Object.assign(
       {},
       api_filter,
-      this.searchFilterForHomeSelf,
-      this.appliedFilterHomeself
+      this.searchFilterForCarSelf,
+      this.appliedFilterCarself
     );
     if (api_filter) {
       console.log(api_filter);
-      this.getHomeloanselfLeadsCount(api_filter);
+      this.getCarloanselfLeadsCount(api_filter);
       this.getloanLeads(api_filter);
     }
   }
@@ -1873,11 +1939,31 @@ export class LeadsComponent implements OnInit {
       }
     );
   }
+  getCarloanLeadsCount(filter = {}) {
+    this.leadsService.getloanLeadsCount(filter).subscribe(
+      (response) => {
+        this.carloanLeadsCount = response;
+      },
+      (error: any) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
 
   getHomeloanselfLeadsCount(filter = {}) {
     this.leadsService.getloanLeadsCount(filter).subscribe(
       (response) => {
         this.homeloanselfLeadsCount = response;
+      },
+      (error: any) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
+  getCarloanselfLeadsCount(filter = {}) {
+    this.leadsService.getloanLeadsCount(filter).subscribe(
+      (response) => {
+        this.carloanselfLeadsCount = response;
       },
       (error: any) => {
         this.toastService.showError(error);
@@ -1918,4 +2004,24 @@ export class LeadsComponent implements OnInit {
       }
     );
   }
+//  getCarType(value: any): string {
+//   if (!value) return '';
+
+//   if (Array.isArray(this.carType) && this.carType.length > 0) {   // 👈 FIXED
+//     const found = this.carType.find(
+//       (user: any) => String(user.id) === String(value)
+//     );
+//     if (found) {
+//       console.log('Car Type found:', found.displayName);
+//       return found.displayName;
+//     }
+//   }
+
+//   if (typeof value === 'string') {
+//     console.log('Car Type string:', value);
+//     return value;
+//   }
+
+//   return '';
+// }
 }

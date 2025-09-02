@@ -40,6 +40,8 @@
           (loanleads[0]?.loanType === 'homeLoan' &&
             loanleads[0]?.employmentStatus === 'employed') ||
           (loanleads[0]?.loanType === 'lap' &&
+            loanleads[0]?.employmentStatus === 'employed') ||
+          (loanleads[0]?.loanType === 'carLoan' &&
             loanleads[0]?.employmentStatus === 'employed')
         "
       >
@@ -2357,10 +2359,16 @@
           loanleads?.length &&
           ((loanleads[0].loanType === 'personalLoan' &&
             loanleads[0].employmentStatus === 'employed') ||
+
             (loanleads[0].loanType === 'homeLoan' &&
               loanleads[0].employmentStatus === 'employed') ||
+
             (loanleads[0].loanType === 'lap' &&
+              loanleads[0].employmentStatus === 'employed') ||
+
+            (loanleads[0].loanType === 'carLoan' &&
               loanleads[0].employmentStatus === 'employed'))
+            
         "
       >
         <!-- <div *ngIf="activeItem.name == 'companydetails'">
@@ -2594,6 +2602,80 @@
               </div>
             </div>
           </div>
+          <!-- Used Car (RC Copy) -->
+          <div class="row" *ngIf="loanleads?.length 
+            && loanleads[0].loanType === 'carLoan' 
+            && loanleads[0].carType == 1">
+          <div class="col-md-3 mt-2">
+            <div class="my-1">
+              <label class="text-success my-1">RC Copy&nbsp;</label>
+            </div>
+            <div class="d-flex">
+              <button
+                pButton
+                pRipple
+                type="button"
+                class="p-button-info me-2"
+                (click)="uploadFiles('rcCopy', '*/*')"
+              >
+                <i class="pi pi-upload"></i>&nbsp;Upload Files
+              </button>
+            </div>
+
+            <div *ngIf="loanleads?.[0]?.rcCopy?.length" class="mt-2">
+              <ng-container *ngFor="let file of loanleads[0].rcCopy">
+                <a [href]="'//' + file" target="_blank" class="me-2">
+                  <i [class]="getFileIcon(file.split('.').pop())" class="file-icon"></i>
+                </a>
+              </ng-container>
+            </div>
+          </div>
+          </div>
+
+<!-- New Car (Quotation File) -->
+        <div class="row" *ngIf="loanleads?.length 
+            && loanleads[0].loanType === 'carLoan' 
+            && loanleads[0].carType == 2">
+        <div class="col-md-4 mt-2">
+          <label class="my-1">New Car Quotation File&nbsp;</label>
+          <input
+            pInputText
+            class="rounded-lg w-100"
+            type="text"
+            placeholder="Enter Person Name"
+            [(ngModel)]="newCarQuotation"
+            autocomplete="off"
+            required
+          />
+        </div>
+
+  <div class="col-md-3 mt-2">
+    <div class="my-1">
+      <label class="text-success my-1">Company Id&nbsp;</label>
+    </div>
+    <div class="d-flex">
+      <button
+        pButton
+        pRipple
+        type="button"
+        class="p-button-info me-2"
+        (click)="uploadFiles('newCarQuotationFile', '*/*')"
+      >
+        <i class="pi pi-upload"></i>&nbsp;Upload Files
+      </button>
+    </div>
+
+    <div *ngIf="loanleads?.[0]?.newCarQuotationFile?.length" class="mt-2">
+      <ng-container *ngFor="let file of loanleads[0].newCarQuotationFile">
+        <a [href]="'//' + file" target="_blank" class="me-2">
+          <i [class]="getFileIcon(file.split('.').pop())" class="file-icon"></i>
+        </a>
+      </ng-container>
+    </div>
+  </div>
+        </div>
+
+
 
           <!-- Payslips Section -->
           <div>
@@ -3122,6 +3204,8 @@
           ((loanleads[0].loanType === 'homeLoan' &&
             loanleads[0].employmentStatus === 'self-employed') ||
             (loanleads[0].loanType === 'lap' &&
+              loanleads[0].employmentStatus === 'self-employed') ||
+              (loanleads[0].loanType === 'carLoan' &&
               loanleads[0].employmentStatus === 'self-employed'))
         "
       >
@@ -3251,8 +3335,78 @@
                   </span>
                 </div>
               </div>
+              <div class="row" *ngIf="loanleads?.length 
+              && loanleads[0].loanType === 'carLoan' 
+              && loanleads[0].carType == 1">
+            <div class="col-md-3 mt-2">
+              <div class="my-1">
+                <label class="text-success my-1">RC Copy&nbsp;</label>
+              </div>
+              <div class="d-flex">
+                <button
+                  pButton
+                  pRipple
+                  type="button"
+                  class="p-button-info me-2"
+                  (click)="uploadFiles('rcCopy', '*/*')"
+                >
+                  <i class="pi pi-upload"></i>&nbsp;Upload Files
+                </button>
+              </div>
+
+              <div *ngIf="loanleads?.[0]?.rcCopy?.length" class="mt-2">
+                <ng-container *ngFor="let file of loanleads[0].rcCopy">
+                  <a [href]="'//' + file" target="_blank" class="me-2">
+                    <i [class]="getFileIcon(file.split('.').pop())" class="file-icon"></i>
+                  </a>
+                </ng-container>
+              </div>
+            </div>
+            </div>
+          <!-- New Car (Quotation File) -->
+          <div class="row" *ngIf="loanleads?.length 
+              && loanleads[0].loanType === 'carLoan' 
+              && loanleads[0].carType == 2">
+          <div class="col-md-4 mt-2">
+            <label class="my-1">New Car Quotation File&nbsp;</label>
+            <input
+              pInputText
+              class="rounded-lg w-100"
+              type="text"
+              placeholder="Enter Person Name"
+              [(ngModel)]="newCarQuotation"
+              autocomplete="off"
+              required
+            />
+          </div>
+
+          <div class="col-md-3 mt-2">
+            <div class="my-1">
+              <label class="text-success my-1">New Car Quotation File&nbsp;</label>
+            </div>
+            <div class="d-flex">
+              <button
+                pButton
+                pRipple
+                type="button"
+                class="p-button-info me-2"
+                (click)="uploadFiles('newCarQuotationFile', '*/*')"
+              >
+                <i class="pi pi-upload"></i>&nbsp;Upload Files
+              </button>
+            </div>
+
+            <div *ngIf="loanleads?.[0]?.newCarQuotationFile?.length" class="mt-2">
+              <ng-container *ngFor="let file of loanleads[0].newCarQuotationFile">
+                <a [href]="'//' + file" target="_blank" class="me-2">
+                  <i [class]="getFileIcon(file.split('.').pop())" class="file-icon"></i>
+                </a>
+              </ng-container>
             </div>
           </div>
+          </div>
+          </div>
+            </div>
           <div class="my-3 text-center">
             <button
               pButton

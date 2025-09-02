@@ -37,7 +37,7 @@
 </div>
 
 <div *ngIf="!loading">
-  <div class="p-fluid" *ngIf="loanType == 'lap' || loanType == 'homeLoan'">
+  <div class="p-fluid" *ngIf="loanType == 'lap' || loanType == 'homeLoan' || loanType == 'carLoan'">
     <!-- <div class="container p-3">
       <div class="row justify-content-center align-items-center mt-2">
         <div class="col-md-6 col-lg-4">
@@ -451,7 +451,7 @@
                             </div>
                           </div>
                         </div>
-                        <div class="col-md-4 mt-2" *ngIf="loanType == 'personalLoan'">
+                        <div class="col-md-4 mt-2" *ngIf="loanType != 'professionalLoans'">
                           <div>
                             <div class="my-1">
                               <label
@@ -703,6 +703,80 @@
                               autocomplete="off"
                               (keydown)="preventNonNumeric($event)"
                             />
+                          </div>
+                        </div>
+                        <div class="col-md-4 mt-2" *ngIf="loanType== 'carLoan'">
+                          <div>
+                            <div class="my-1">
+                              <label
+                                >Car Type&nbsp;<span
+                                  ><sup class="text-danger">*</sup></span
+                                ></label
+                              >
+                            </div>
+                            <p-dropdown
+                              [options]="cartype"
+                              formControlName="cartype"
+                              optionLabel="displayName"
+                              optionValue="id"
+                              [showClear]="true"
+                              appendTo="body"
+                              styleClass="w-100"
+                              appendTo="body"
+                              placeholder="CarType"
+                              [dropdownIcon]="'pi pi-chevron-down'"
+                              (onChange)="onCarTypeChange($event.value)"
+                            ></p-dropdown>
+                            <!-- Error message for invalid Designation -->
+                            <div
+                              *ngIf="
+                                leadForm.get('cartype')?.invalid &&
+                                (leadForm.get('cartype')?.touched ||
+                                  leadForm.get('cartype')?.dirty)
+                              "
+                            >
+                              <small
+                                class="text-danger"
+                                *ngIf="leadForm.get('cartype')?.errors?.['required']"
+                              >
+                                Car Type is required.
+                              </small>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4 mt-2" *ngIf="loanType== 'carLoan' && selectedCarType == 2">
+                          <div>
+                            <div class="my-1">
+                              <label
+                                >New Car Quotation&nbsp;<span
+                                  ><sup class="text-danger">*</sup></span
+                                ></label
+                              >
+                            </div>
+                             <input
+                              pInputText
+                              class="rounded-lg"
+                              type="number"
+                              placeholder="New Car Quotation"
+                              formControlName="newCarQuotation"
+                              autocomplete="off"
+                              (keydown)="preventNonNumeric($event)"
+                            />
+                            <!-- Error message for invalid Salary -->
+                            <div
+                              *ngIf="
+                                leadForm.get('newCarQuotation')?.invalid &&
+                                (leadForm.get('newCarQuotation')?.touched ||
+                                  leadForm.get('newCarQuotation')?.dirty)
+                              "
+                            >
+                              <small
+                                class="text-danger"
+                                *ngIf="leadForm.get('newCarQuotation')?.errors?.['required']"
+                              >
+                                loan Quotation  is required.
+                              </small>
+                            </div>
                           </div>
                         </div>
                         <div class="col-md-4 mt-2" *ngIf="loanType == 'lap'">
@@ -1688,6 +1762,80 @@
                             />
                           </div>
                         </div>
+                         <div class="col-md-4 mt-2" *ngIf="loanType== 'carLoan'">
+                          <div>
+                            <div class="my-1">
+                              <label
+                                >Car Type&nbsp;<span
+                                  ><sup class="text-danger">*</sup></span
+                                ></label
+                              >
+                            </div>
+                            <p-dropdown
+                              [options]="cartype"
+                              formControlName="cartype"
+                              optionLabel="displayName"
+                              optionValue="id"
+                              [showClear]="true"
+                              appendTo="body"
+                              styleClass="w-100"
+                              appendTo="body"
+                              placeholder="CarType"
+                              [dropdownIcon]="'pi pi-chevron-down'"
+                              (onChange)="onCarTypeChange($event.value)"
+                            ></p-dropdown>
+                            <!-- Error message for invalid Designation -->
+                            <div
+                              *ngIf="
+                                leadForm.get('cartype')?.invalid &&
+                                (leadForm.get('cartype')?.touched ||
+                                  leadForm.get('cartype')?.dirty)
+                              "
+                            >
+                              <small
+                                class="text-danger"
+                                *ngIf="leadForm.get('cartype')?.errors?.['required']"
+                              >
+                                Designation is required.
+                              </small>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4 mt-2" *ngIf="loanType== 'carLoan' && selectedCarType == 2">
+                          <div>
+                            <div class="my-1">
+                              <label
+                                >New Car Quotation&nbsp;<span
+                                  ><sup class="text-danger">*</sup></span
+                                ></label
+                              >
+                            </div>
+                             <input
+                              pInputText
+                              class="rounded-lg"
+                              type="number"
+                              placeholder="New Car Quotation"
+                              formControlName="newCarQuotation"
+                              autocomplete="off"
+                              (keydown)="preventNonNumeric($event)"
+                            />
+                            <!-- Error message for invalid Salary -->
+                            <div
+                              *ngIf="
+                                leadForm.get('newCarQuotation')?.invalid &&
+                                (leadForm.get('newCarQuotation')?.touched ||
+                                  leadForm.get('newCarQuotation')?.dirty)
+                              "
+                            >
+                              <small
+                                class="text-danger"
+                                *ngIf="leadForm.get('newCarQuotation')?.errors?.['required']"
+                              >
+                                loan Quotation  is required.
+                              </small>
+                            </div>
+                          </div>
+                        </div>
                         <div class="col-md-4 mt-2" *ngIf="loanType == 'lap'">
                           <div>
                             <div class="my-1">
@@ -1735,6 +1883,7 @@
                         </div>
                       </div>
                     </div>
+                 
                   </div>
                 </div>
               </div>

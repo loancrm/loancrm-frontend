@@ -180,7 +180,7 @@ export class EvaluateCreditComponent implements OnInit {
       if (!status) {
         this.getLeadById(this.leadId);
       } else {
-        const validStatuses = ['personalLoan', 'homeLoan', 'lap'];
+        const validStatuses = ['personalLoan', 'homeLoan', 'lap', 'carLoan'];
         if (validStatuses.includes(status)) {
           this.getLoanLeadById(this.leadId);
         } else {
@@ -393,7 +393,7 @@ export class EvaluateCreditComponent implements OnInit {
   sendLeadToReject(lead) {
     console.log('Row clicked:', lead);
     const loanType = lead[0].loanType; // e.g., 'personalloan', 'home loan', etc.
-    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'carLoan') {
       this.changeLoanLeadStatus(lead[0].leadId, 10);
       this.routingService.handleRoute(`rejects`, null);
     } else {
@@ -417,7 +417,7 @@ export class EvaluateCreditComponent implements OnInit {
 
     console.log('Row clicked:', lead);
     const loanType = lead[0].loanType; // e.g., 'personalloan', 'home loan', etc.
-    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'carLoan') {
       this.changeLoanLeadStatus(lead[0].leadId, 11);
       this.routingService.handleRoute(`logins/bankSelection/${loanType}/${lead[0].leadId}`, null);
     } else {

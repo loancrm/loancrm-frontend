@@ -38,6 +38,7 @@ export class LeadProfileComponent implements OnInit {
   leadInternalStatusList: any = projectConstantsLocal.LEAD_INTERNAL_STATUS;
   businessEntities: any = projectConstantsLocal.BUSINESS_ENTITIES;
   designationType: any = projectConstantsLocal.DOCTOR_OR_CA;
+  carType: any = projectConstantsLocal.CAR_TYPE
   timelineEvents: { date: Date | null; title: string; image: string; }[];
 
   constructor(
@@ -64,7 +65,7 @@ export class LeadProfileComponent implements OnInit {
       if (!status) {
         this.getAllLeadData(this.leadId);
       } else {
-        const validStatuses = ['personalLoan', 'homeLoan', 'lap', 'professionalLoans'];
+        const validStatuses = ['personalLoan', 'homeLoan', 'lap', 'professionalLoans', 'carLoan'];
         if (validStatuses.includes(status)) {
           this.getAllLoanLeadData(this.leadId);
         } else {
@@ -96,8 +97,8 @@ export class LeadProfileComponent implements OnInit {
       (response) => {
         this.leadsData = response;
         // console.log(this.leadsData);
-        this.loanType = (this.leadsData?.leadData?.loanType || '').toLowerCase();
-        this.employmentStatus = (this.leadsData?.leadData?.employmentStatus || '').toLowerCase();
+        this.loanType = (this.leadsData?.leadData?.loanType || '')
+        this.employmentStatus = (this.leadsData?.leadData?.employmentStatus || '')
         this.updateDisplayedItems();
         this.setTimelineDates();
         this.loading = false;
@@ -118,8 +119,8 @@ export class LeadProfileComponent implements OnInit {
         // console.log(this.leadsData);
         // console.log('Lead Status:', this.leadsData.leadStatusName);
         // console.log('Lead Internal Status:', this.leadsData.leadData?.leadInternalStatus);
-        this.loanType = (this.leadsData?.leadData?.loanType || '').toLowerCase();
-        this.employmentStatus = (this.leadsData?.leadData?.employmentStatus || '').toLowerCase();
+        this.loanType = (this.leadsData?.leadData?.loanType || '')
+        this.employmentStatus = (this.leadsData?.leadData?.employmentStatus || '')
         this.updateDisplayedItems();
         this.setTimelineDates();
         this.loading = false;
@@ -171,51 +172,60 @@ export class LeadProfileComponent implements OnInit {
   }
 
  isBusinessView(): boolean {
-  const lt = (this.loanType || '').toLowerCase();
-  const es = (this.employmentStatus || '').toLowerCase();
+  const lt = (this.loanType || '');
+  const es = (this.employmentStatus || '');
+  console.log(this.loanType);
+  console.log(this.employmentStatus);
+  
+  
   return (
-    (lt === 'homeloan' && es === 'self-employed') ||
+    (lt === 'homeLoan' && es === 'self-employed') ||
     (lt === 'lap' && es === 'self-employed') ||
-    (!['personalloan', 'homeloan', 'lap', 'professionalloans'].includes(lt))
+    (lt === 'carLoan' && es === 'self-employed') ||
+    (!['personalLoan', 'homeLoan', 'lap', 'professionalLoans', 'carLoan'].includes(lt))
   );
+ 
 }
+
 
 
   isPersonalView(): boolean {
-  const lt = (this.loanType || '').toLowerCase();
-  const es = (this.employmentStatus || '').toLowerCase();
+  const lt = (this.loanType || '');
+  const es = (this.employmentStatus || '');
   return (
-    (lt === 'personalloan' && es === 'employed') ||
-    (lt === 'homeloan' && es === 'employed') ||
+    (lt === 'personalLoan' && es === 'employed') ||
+    (lt === 'homeLoan' && es === 'employed') ||
     (lt === 'lap' && es === 'employed') ||
-    (lt === 'professionalloans' && es === 'employed')
+    (lt === 'carLoan' && es === 'employed') ||
+    (lt === 'professionalLoans' && es === 'employed')
   );
 }
 isdesignation():boolean {
-  const lt = (this.loanType || '').toLowerCase();
-  const es = (this.employmentStatus || '').toLowerCase();
+  const lt = (this.loanType || '')
+  const es = (this.employmentStatus || '')
   return (
-    (lt === 'personalloan' && es === 'employed') ||
-    (lt === 'homeloan' && es === 'employed') ||
-    (lt === 'lap' && es === 'employed')
+    (lt === 'personalLoan' && es === 'employed') ||
+    (lt === 'homeLoan' && es === 'employed') ||
+    (lt === 'lap' && es === 'employed') ||
+    (lt === 'carLoan' && es === 'employed')
   );
 }
 isdesignationtype():boolean {
-   const lt = (this.loanType || '').toLowerCase();
+   const lt = (this.loanType || '')
   return (
-    (lt === 'professionalloans')
+    (lt === 'professionalLoans')
   );
 }
   isProprietorPersonal(): boolean {
-  const lt = (this.loanType || '').toLowerCase();
-  const es = (this.employmentStatus || '').toLowerCase();
-  return ['personalloan', 'homeloan', 'lap', 'professionalloans'].includes(lt) && es === 'employed';
+  const lt = (this.loanType || '')
+  const es = (this.employmentStatus || '')
+  return ['personalLoan', 'homeLoan', 'lap', 'professionalLoans', 'carLoan'].includes(lt) && es === 'employed';
 }
 getDesignationValue(value: any, loanType: string): string {
   if (!value) return '';
 
   // Case 1: ProfessionalLoans → lookup by ID
-  if (loanType?.toLowerCase() === 'professionalloans') {
+  if (loanType === 'professionalLoans') {
     const found = this.designationType.find(user => user.id == value);
     return found?.displayName || '';
   }
@@ -425,6 +435,8 @@ getDesignationValue(value: any, loanType: string): string {
   // }
   updateDisplayedItems() {
     if (this.isBusinessView()) {
+      console.log("isBusinessView");
+      
       this.displayedItems = [
         {
           data: this.leadsData?.leadData,
@@ -433,6 +445,7 @@ getDesignationValue(value: any, loanType: string): string {
         }
       ];
     } else if (this.isPersonalView()) {
+      console.log("isPersonalView");
       this.displayedItems = [
         {
           data: this.leadsData?.leadData,
@@ -495,9 +508,26 @@ getDesignationValue(value: any, loanType: string): string {
   return '';
 }
 
+getCarType(value: any): string {
+  if (!value) return '';
 
+  if (Array.isArray(this.carType) && this.getCarType.length > 0) {
+    const found = this.carType.find(
+      user => String(user.id) === String(value)
+    );
+    if (found) {
+      console.log('Designation found:', found.displayName);  // 👈 Debug
+      return found.displayName;
+    }
+  }
 
+  if (typeof value === 'string') {
+    console.log('Designation string:', value);  // 👈 Debug
+    return value;
+  }
 
+  return '';
+}
   getStatusName(statusId) {
     if (this.leadInternalStatusList && this.leadInternalStatusList.length > 0) {
       let leadStatusName = this.leadInternalStatusList.filter(
