@@ -60,7 +60,9 @@ export class CreditEvaluationComponent implements OnInit {
   personalloanLeadsCount: any = 0;
   professionalloanLeadsCount: any =0;
   homeloanselfLeadsCount: any = 0;
+  carloanselfLeadsCount: any = 0;
   homeloanLeadsCount: any = 0;
+  carloanLeadsCount: any = 0;
   loanleadsLoading: any;
   appliedFilterHome: {};
   appliedFilterCar: {};
@@ -212,11 +214,11 @@ export class CreditEvaluationComponent implements OnInit {
     } else if (this.activeItem.name === 'carLoan') {
       return [
         {
-          label: `Employed (${this.totalStatusLeadsCountArray.LAPLoancount || 0})`,
+          label: `Employed (${this.totalStatusLeadsCountArray.CarLoancount || 0})`,
           name: 'employed',
         },
         {
-          label: `Self Employed (${this.totalStatusLeadsCountArray.LAPLoanSelfcount || 0})`,
+          label: `Self Employed (${this.totalStatusLeadsCountArray.CarLoanSelfcount || 0})`,
           name: 'self-employed',
         },
       ];
@@ -322,7 +324,7 @@ export class CreditEvaluationComponent implements OnInit {
         name: 'educationlLoans',
       },
       {
-        label: `Car loans (0)`,
+        label: `Car loans (${this.totalLeadsCountArray?.carLoancount || 0})`,
         name: 'carLoan',
       },
       {
@@ -974,7 +976,7 @@ export class CreditEvaluationComponent implements OnInit {
     }
     // console.log(api_filter);
     if (api_filter) {
-      this.getHomeloanLeadsCount(api_filter);
+      this.getCarloanLeadsCount(api_filter);
       this.getloanLeads(api_filter);
     }
   }
@@ -982,6 +984,16 @@ export class CreditEvaluationComponent implements OnInit {
     this.leadsService.getloanLeadsCount(filter).subscribe(
       (response) => {
         this.homeloanLeadsCount = response;
+      },
+      (error: any) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
+  getCarloanLeadsCount(filter = {}) {
+    this.leadsService.getloanLeadsCount(filter).subscribe(
+      (response) => {
+        this.carloanLeadsCount = response;
       },
       (error: any) => {
         this.toastService.showError(error);
@@ -1053,7 +1065,7 @@ export class CreditEvaluationComponent implements OnInit {
     }
     if (api_filter) {
       // console.log(api_filter);
-      this.getHomeloanselfLeadsCount(api_filter);
+      this.getCarloanselfLeadsCount(api_filter);
       this.getloanLeads(api_filter);
     }
   }
@@ -1061,6 +1073,16 @@ export class CreditEvaluationComponent implements OnInit {
     this.leadsService.getloanLeadsCount(filter).subscribe(
       (response) => {
         this.homeloanselfLeadsCount = response;
+      },
+      (error: any) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
+  getCarloanselfLeadsCount(filter = {}) {
+    this.leadsService.getloanLeadsCount(filter).subscribe(
+      (response) => {
+        this.carloanselfLeadsCount = response;
       },
       (error: any) => {
         this.toastService.showError(error);

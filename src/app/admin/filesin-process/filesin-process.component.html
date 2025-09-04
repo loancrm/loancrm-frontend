@@ -55,6 +55,7 @@
                 <div class="p-inputgroup">
                   <input
                     type="text"
+                    class="inputsearch"
                     pInputText
                     placeholder="Search File with Business Name"
                     [(ngModel)]="businessNameToSearch"
@@ -64,7 +65,7 @@
                     (keyup.enter)="filterWithBusinessName()"
                   />
                   <span
-                    class="input-group-text p-button-primary"
+                    class="input-group-text p-button-primaryimg"
                     (click)="filterWithBusinessName()"
                   >
                     <img
@@ -94,6 +95,7 @@
                 <div class="p-inputgroup">
                   <input
                     type="text"
+                    class="inputsearch"
                     pInputText
                     placeholder="Search File with Mobile Number"
                     [(ngModel)]="mobileNumberToSearch"
@@ -103,7 +105,7 @@
                     (keyup.enter)="filterWithMobileNumber()"
                   />
                   <span
-                    class="input-group-text p-button-primary"
+                    class="input-group-text p-button-primaryimg"
                     (click)="filterWithMobileNumber()"
                   >
                     <img
@@ -313,6 +315,7 @@
                   <div class="p-inputgroup">
                     <input
                       type="text"
+                      class="inputsearch"
                       pInputText
                       placeholder="Search File with Person Name"
                       [(ngModel)]="businessNameToSearchForPersonal"
@@ -325,7 +328,7 @@
                       (keyup.enter)="filterWithBusinessNameForPersonal()"
                     />
                     <span
-                      class="input-group-text p-button-primary"
+                      class="input-group-text p-button-primaryimg"
                       (click)="filterWithBusinessNameForPersonal()"
                     >
                       <img
@@ -582,6 +585,7 @@
                       <div class="p-inputgroup">
                         <input
                           type="text"
+                          class="inputsearch"
                           pInputText
                           [placeholder]="
                             activeEmploymentStatus.name === 'employed'
@@ -593,7 +597,7 @@
                           (keyup.enter)="filterBasedOnEmploymentStatus()"
                         />
                         <span
-                          class="input-group-text p-button-primary"
+                          class="input-group-text p-button-primaryimg"
                           (click)="filterBasedOnEmploymentStatus()"
                         >
                           <img
@@ -939,6 +943,7 @@
                       <div class="p-inputgroup">
                         <input
                           type="text"
+                          class="inputsearch"
                           pInputText
                           [placeholder]="
                             activeEmploymentStatus.name === 'employed'
@@ -950,7 +955,7 @@
                           (keyup.enter)="filterBasedOnEmploymentStatus()"
                         />
                         <span
-                          class="input-group-text p-button-primary"
+                          class="input-group-text p-button-primaryimg"
                           (click)="filterBasedOnEmploymentStatus()"
                         >
                           <img
@@ -1246,6 +1251,7 @@
                   <div class="p-inputgroup">
                     <input
                       type="text"
+                      class="inputsearch"
                       pInputText
                       placeholder="Search File with Person Name"
                       [(ngModel)]="businessNameToSearchForProfessional"
@@ -1258,7 +1264,7 @@
                       (keyup.enter)="filterWithBusinessNameForProfessional()"
                     />
                     <span
-                      class="input-group-text p-button-primary"
+                      class="input-group-text p-button-primaryimg"
                       (click)="filterWithBusinessNameForProfessional()"
                     >
                       <img
@@ -1493,8 +1499,8 @@
                 class="p-datatable-striped"
                 [totalRecords]="
                   activeEmploymentStatus.name == 'employed'
-                    ? homeloanLeadsCount
-                    : homeloanselfLeadsCount
+                    ? carloanLeadsCount
+                    : carloanselfLeadsCount
                 "
                 [loading]="loanleadsLoading"
                 responsiveLayout="scroll"
@@ -1514,6 +1520,7 @@
                       <div class="p-inputgroup">
                         <input
                           type="text"
+                          class="inputsearch"
                           pInputText
                           [placeholder]="
                             activeEmploymentStatus.name === 'employed'
@@ -1525,7 +1532,7 @@
                           (keyup.enter)="filterBasedOnEmploymentStatus()"
                         />
                         <span
-                          class="input-group-text p-button-primary"
+                          class="input-group-text p-button-primaryimg"
                           (click)="filterBasedOnEmploymentStatus()"
                         >
                           <img

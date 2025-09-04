@@ -63,9 +63,9 @@
 
     <!-- Right Panel Content -->
     <div class="col-md-9" *ngIf="leadData">
-      <div class="card card-section">
+      <div>
         <!-- Section: Business Information -->
-        <div *ngIf="selectedSection === 0">
+        <div *ngIf="selectedSection === 0" class="card card-section">
           <div class="row">
             <div class="col-md-3 g-3" *ngFor="let field of businessFields">
               <div class="field-box">
@@ -90,7 +90,7 @@
         </div>
 
         <!-- Section: Uploaded Documents -->
-        <div *ngIf="selectedSection === 1">
+        <div *ngIf="selectedSection === 1" class="card card-section">
           <div class="row">
             <!-- Proprietorship -->
             <div
@@ -408,25 +408,27 @@
         </div>
 
         <!-- Section: Existing Loans -->
-        <div *ngIf="selectedSection === 2">
+        <div *ngIf="selectedSection === 2" class="card card-section">
           <div *ngIf="leadDocuments?.existingLoans?.length > 0">
             <div
               *ngFor="let loan of leadDocuments.existingLoans; let i = index"
-              class="business-details mt-3"
+              class="business-details"
             >
-              <div class="label" style="text-decoration: underline">
+              
                 <input
+                  class="label"
                   type="checkbox"
                   [value]="loan.emiAmount"
                   (change)="calculateTotalEmi()"
                 />
-                Existing Loan - {{ i + 1 }}
-              </div>
+                <span class="label">Existing Loan - {{ i + 1 }}</span>
+                
+              
 
               <!-- Dynamic fields -->
               <div class="info-line" *ngFor="let field of existingLoanFields">
                 <div class="label d-flex justify-content-between">
-                  {{ field.label }} <b>:&nbsp;</b>
+                  {{ field.label }}
                 </div>
                 <div class="value">
                   <!-- Capitalize pipe -->
@@ -464,7 +466,6 @@
             <div
               class="p-3 mt-3 fw-bold"
               style="
-                background-color: #620897;
                 color: white;
                 border-radius: 3px;
               "
@@ -483,10 +484,10 @@
           <!-- <h5 class="text-primary fw-bold mb-3">DSCR Ratio</h5> -->
           <div>
             <!-- DSCR Accordion -->
-            <div class="accordion-item">
+            <div class="accordion-item card card-section">
               <div class="accordion-header">
                 <button
-                  class="accordion-button fw-semibold"
+                  class="accordion-button"
                   type="button"
                   data-bs-toggle="collapse"
                   data-bs-target="#kycCollapse"
@@ -503,7 +504,7 @@
                     <div class="col-md-6">
                       <div class="info-line mb-2">
                         <div class="label d-flex justify-content-between">
-                          Annual Year of ITR<b>:&nbsp;</b>
+                          Annual Year of ITR
                         </div>
                         <div class="value">
                           {{
@@ -513,7 +514,7 @@
                       </div>
                       <div class="info-line">
                         <div class="label d-flex justify-content-between">
-                          Attachment<b>:&nbsp;</b>
+                          Attachment
                         </div>
                         <div class="value">
                           <ng-container
@@ -537,10 +538,10 @@
                     </div>
 
                     <!-- Present ITR -->
-                    <div class="col-md-6">
+                    <div class="col-md-6 g-3">
                       <div class="info-line mb-2">
                         <div class="label d-flex justify-content-between">
-                          Annual Year of ITR<b>:&nbsp;</b>
+                          Annual Year of ITR
                         </div>
                         <div class="value">
                           {{
@@ -550,7 +551,7 @@
                       </div>
                       <div class="info-line">
                         <div class="label d-flex justify-content-between">
-                          Attachment<b>:&nbsp;</b>
+                          Attachment
                         </div>
                         <div class="value">
                           <ng-container
@@ -972,7 +973,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="d-flex justify-content-center mt-2">
+                  <div class="d-flex justify-content-center mt-3">
                     <button
                       pButton
                       pRipple
@@ -1041,12 +1042,13 @@
                   </div>
                 </div>
               </div>
+            </div>
 
               <!-- Balance Sheet Accordion -->
-              <div class="accordion-item">
+              <div class="accordion-item card card-section">
                 <h2 class="accordion-header">
                   <button
-                    class="accordion-button fw-semibold"
+                    class="accordion-button"
                     type="button"
                     data-bs-toggle="collapse"
                     data-bs-target="#supportingCollapse"
@@ -1202,7 +1204,6 @@
                   </div>
                 </div>
               </div>
-            </div>
           </div>
         </div>
 
@@ -1210,7 +1211,7 @@
         <div *ngIf="selectedSection === 4">
           <!-- <h5 class="text-primary">BTO Program</h5> -->
           <div>
-            <div class="accordion-item">
+            <div class="accordion-item card card-section">
               <h2 class="accordion-header">
                 <button
                   class="accordion-button fw-semibold"
@@ -1453,7 +1454,7 @@
               </div>
             </div>
 
-            <div class="accordion-item">
+            <div class="accordion-item card card-section">
               <h2 class="accordion-header">
                 <button
                   class="accordion-button fw-semibold"
@@ -1726,7 +1727,7 @@
                 </div>
               </div>
             </div>
-            <div class="accordion-item">
+            <div class="accordion-item card card-section">
               <h2 class="accordion-header">
                 <button
                   class="accordion-button fw-semibold"
@@ -1857,7 +1858,7 @@
         <div *ngIf="selectedSection === 5">
           <!-- <h5 class="text-primary">GST Program</h5> -->
           <div>
-            <div class="accordion-item">
+            <div class="accordion-item card card-section">
               <h2 class="accordion-header">
                 <button
                   class="accordion-button fw-semibold"
@@ -2080,7 +2081,7 @@
                 </div>
               </div>
             </div>
-            <div class="accordion-item">
+            <div class="accordion-item card card-section">
               <h2 class="accordion-header">
                 <button
                   class="accordion-button fw-semibold"
@@ -2097,7 +2098,7 @@
                 id="supportingCollapse"
                 class="accordion-collapse collapse show"
               >
-                <div class="accordion-body">
+                <div class="accordion-body gstcal">
                   <div>
                     <div class="row">
                       <div class="col-md-4 mt-2">
@@ -2229,7 +2230,7 @@
       <div class="text-center mt-3">
         <!-- <button class="btn btn-primary me-2">Ready to Login</button>
           <button class="btn btn-outline-primary">Inhouse Reject</button> -->
-        <div class="d-flex justify-content-center mt-3" *ngIf="leadData">
+        <div class="d-flex justify-content-center mt-3 readybutton" *ngIf="leadData">
           <div class="me-3" *ngIf="leadData[0].leadInternalStatus == 5">
             <button
               pButton
@@ -2241,7 +2242,7 @@
               Ready to Login
             </button>
           </div>
-          <div *ngIf="leadData[0].leadInternalStatus == 5">
+          <div *ngIf="leadData[0].leadInternalStatus == 5" class="raj">
             <button
               pButton
               pRipple

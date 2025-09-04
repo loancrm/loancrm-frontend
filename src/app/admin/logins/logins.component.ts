@@ -98,7 +98,9 @@ export class LoginsComponent {
   searchFilterProfessional: any={};
   appliedFilterPersonal: {};
   homeloanselfLeadsCount: any = 0;
+  carloanselfLeadsCount: any = 0;
   homeloanLeadsCount: any = 0;
+  carloanLeadsCount: any = 0;
   loanLeads: any = [];
   personalfilterConfig: any[] = [];
   businessNameToSearchForPersonal: any;
@@ -472,7 +474,7 @@ export class LoginsComponent {
         name: 'educationlLoans',
       },
       {
-        label: `Car loans (0)`,
+        label: `Car loans (${this.totalLeadsCountArray?.carLoancount || 0})`,
         name: 'carLoan',
       },
       {
@@ -526,11 +528,11 @@ export class LoginsComponent {
     } else if (this.activeItem.name === 'carLoan') {
       return [
         {
-          label: `Employed (${this.totalStatusLeadsCountArray.LAPLoancount || 0})`,
+          label: `Employed (${this.totalStatusLeadsCountArray.CarLoancount || 0})`,
           name: 'employed',
         },
         {
-          label: `Self Employed (${this.totalStatusLeadsCountArray.LAPLoanSelfcount || 0})`,
+          label: `Self Employed (${this.totalStatusLeadsCountArray.CarLoanSelfcount || 0})`,
           name: 'self-employed',
         },
       ];
@@ -1504,6 +1506,16 @@ export class LoginsComponent {
       }
     );
   }
+  getCarloanselfLeadsCount(filter = {}) {
+    this.leadsService.getloanLeadsCount(filter).subscribe(
+      (response) => {
+        this.carloanselfLeadsCount = response;
+      },
+      (error: any) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
   loadLeadsforHome(event) {
     this.currentTableEvent = event;
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
@@ -1584,7 +1596,7 @@ export class LoginsComponent {
     }
     console.log(api_filter);
     if (api_filter) {
-      this.getHomeloanLeadsCount(api_filter);
+      this.getCarloanLeadsCount(api_filter);
       this.getloanLeads(api_filter);
     }
   }
@@ -1625,7 +1637,7 @@ export class LoginsComponent {
     }
     if (api_filter) {
       // console.log(api_filter);
-      this.getHomeloanselfLeadsCount(api_filter);
+      this.getCarloanselfLeadsCount(api_filter);
       this.getloanLeads(api_filter);
     }
   }
@@ -1735,6 +1747,18 @@ export class LoginsComponent {
       }
     );
   }
+
+  getCarloanLeadsCount(filter = {}) {
+    this.leadsService.getloanLeadsCount(filter).subscribe(
+      (response) => {
+        this.carloanLeadsCount = response;
+      },
+      (error: any) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
+
   getpersonalloanLeadsCount(filter = {}) {
     this.leadsService.getloanLeadsCount(filter).subscribe(
       (response) => {

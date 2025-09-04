@@ -43,6 +43,7 @@
     <p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
   </div> -->
 </div>
+
 <div *ngIf="loading">
   <app-preloader></app-preloader>
 </div>
@@ -548,6 +549,7 @@
                       <div class="p-inputgroup">
                         <input
                           type="text"
+                          class="inputsearch"
                           pInputText
                           placeholder="Enter Business Name"
                           [(ngModel)]="businessNameToSearchfollowups"
@@ -560,13 +562,8 @@
                           (keyup.enter)="filterWithBusinessNamefollow()"
                         />
                         <span
-                          class="input-group-text p-button-primary"
+                          class="input-group-text p-button-primaryimg"
                           (click)="filterWithBusinessNamefollow()"
-                          style="
-                            background-color: #ffffff;
-                            border: none;
-                            border-left: 1px solid gray;
-                          "
                         >
                           <img
                             src="../../../assets/images/icons/search.svg"
@@ -604,6 +601,7 @@
                       <div class="p-inputgroup">
                         <input
                           type="text"
+                          class="inputsearch"
                           pInputText
                           placeholder="Enter Mobile Number"
                           [(ngModel)]="mobileNumberToSearchfollow"
@@ -616,7 +614,7 @@
                           (keyup.enter)="filterWithMobileNumberFollow()"
                         />
                         <span
-                          class="input-group-text p-button-primary"
+                          class="input-group-text p-button-primaryimg"
                           (click)="filterWithMobileNumberFollow()"
                           style="
                             background-color: #ffffff;
@@ -656,10 +654,10 @@
                         </button> -->
                       </div>
                     </div>
-                    <div class="col-md-3 mt-2 no-padding-small"></div>
+                    <!-- <div class="col-md-3 mt-2 no-padding-small"></div> -->
                     <div class="col-md-3 mt-2 no-padding-small text-right">
                       <div class="d-flex">
-                        <div class="flex-grow-1 me-2">
+                        <!-- <div class="flex-grow-1 me-2">
                           <div
                             class="p-inputgroup"
                             *ngIf="
@@ -670,7 +668,7 @@
                           >
                             <br class="d-lg-none d-md-none" />
                           </div>
-                        </div>
+                        </div> -->
                         <div class="d-flex align-items-center pointer-cursor">
                           <app-filter
                             [position]="'right'"
@@ -876,6 +874,7 @@
                       <div class="p-inputgroup">
                         <input
                           type="text"
+                          class="inputsearch"
                           pInputText
                           placeholder="Search with Business Name"
                           [(ngModel)]="businessNameToSearchfip"
@@ -888,7 +887,7 @@
                           (keyup.enter)="filterWithBusinessNamefip()"
                         />
                         <span
-                          class="input-group-text p-button-primary"
+                          class="input-group-text p-button-primaryimg"
                           (click)="filterWithBusinessNamefip()"
                           style="
                             background-color: #ffffff;
@@ -931,6 +930,7 @@
                       <div class="p-inputgroup">
                         <input
                           type="text"
+                          class="inputsearch"
                           pInputText
                           placeholder="Search with Mobile Number"
                           [(ngModel)]="mobileNumberToSearchfip"
@@ -943,7 +943,7 @@
                           (keyup.enter)="filterWithMobileNumberfip()"
                         />
                         <span
-                          class="input-group-text p-button-primary"
+                          class="input-group-text p-button-primaryimg"
                           (click)="filterWithMobileNumberfip()"
                           style="
                             background-color: #ffffff;
@@ -1151,6 +1151,7 @@
                       <div class="p-inputgroup">
                         <input
                           type="text"
+                          class="inputsearch"
                           pInputText
                           placeholder="Search with Business Name"
                           [(ngModel)]="businessNameToSearchSanctions"
@@ -1171,7 +1172,7 @@
                           (click)="filterWithBusinessNameSanctions()"
                         ></button> -->
 
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           class="p-button-primary"
@@ -1185,13 +1186,24 @@
                             height="16"
                             style="vertical-align: middle"
                           />
-                        </button>
+                        </button> -->
+                        <span
+                          class="input-group-text p-button-primaryimg"
+                          (click)="filterWithBusinessNameSanctions()"
+                        >
+                          <img
+                            src="../../../assets/images/icons/search.svg"
+                            alt="Search"
+                            style="width: 14px; height: 14px; cursor: pointer"
+                          />
+                        </span>
                       </div>
                     </div>
                     <div class="col-md-3 mt-2 no-padding-small">
                       <div class="p-inputgroup">
                         <input
                           type="text"
+                          class="inputsearch"
                           pInputText
                           placeholder="Search with Mobile Number"
                           [(ngModel)]="mobileNumberToSearchSanctions"
@@ -1211,7 +1223,7 @@
                           [disabled]="!mobileNumberToSearchSanctions"
                           (click)="filterWithMobileNumbersanctions()"
                         ></button> -->
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           class="p-button-primary"
@@ -1225,7 +1237,17 @@
                             height="16"
                             style="vertical-align: middle"
                           />
-                        </button>
+                        </button> -->
+                        <span
+                          class="input-group-text p-button-primaryimg"
+                          (click)="filterWithBusinessName()"
+                        >
+                          <img
+                            src="../../../assets/images/icons/search.svg"
+                            alt="Search"
+                            style="width: 14px; height: 14px; cursor: pointer"
+                          />
+                        </span>
                       </div>
                     </div>
                     <!-- <div class="col-md-3 mt-2 no-padding-small"></div> -->
@@ -1411,6 +1433,7 @@
                       <div class="p-inputgroup">
                         <input
                           type="text"
+                          class="inputsearch"
                           pInputText
                           placeholder="Search with Business Name"
                           [(ngModel)]="businessNameToSearch"
@@ -1430,7 +1453,7 @@
                           [disabled]="!businessNameToSearch"
                           (click)="filterWithBusinessName()"
                         ></button> -->
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           class="p-button-primary"
@@ -1444,13 +1467,24 @@
                             height="16"
                             style="vertical-align: middle"
                           />
-                        </button>
+                        </button> -->
+                        <span
+                          class="input-group-text p-button-primaryimg"
+                          (click)="filterWithBusinessName()"
+                        >
+                          <img
+                            src="../../../assets/images/icons/search.svg"
+                            alt="Search"
+                            style="width: 14px; height: 14px; cursor: pointer"
+                          />
+                        </span>
                       </div>
                     </div>
                     <div class="col-md-3 mt-2 no-padding-small">
                       <div class="p-inputgroup">
                         <input
                           type="text"
+                          class="inputsearch"
                           pInputText
                           placeholder="Search with Mobile Number"
                           [(ngModel)]="mobileNumberToSearch"
@@ -1469,7 +1503,8 @@
                           class="p-button-primary"
                           [disabled]="!mobileNumberToSearch"
                           (click)="filterWithMobileNumber()"
-                        ></button> --><button
+                        ></button> -->
+                        <!-- <button
                           type="button"
                           pButton
                           class="p-button-primary"
@@ -1483,7 +1518,18 @@
                             height="16"
                             style="vertical-align: middle"
                           />
-                        </button>
+                        </button> -->
+
+                        <span
+                          class="input-group-text p-button-primaryimg"
+                          (click)="filterWithMobileNumber()"
+                        >
+                          <img
+                            src="../../../assets/images/icons/search.svg"
+                            alt="Search"
+                            style="width: 14px; height: 14px; cursor: pointer"
+                          />
+                        </span>
                       </div>
                     </div>
                     <!-- <div class="col-md-3 mt-2 no-padding-small"></div> -->
@@ -1643,6 +1689,7 @@
                       <div class="p-inputgroup">
                         <input
                           type="text"
+                          class="inputsearch"
                           pInputText
                           placeholder="Search with Business Name"
                           [(ngModel)]="businessNameToSearchInHouseReject"
@@ -1662,7 +1709,7 @@
                           [disabled]="!businessNameToSearchInHouseReject"
                           (click)="filterWithBusinessNameInHouseReject()"
                         ></button> -->
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           class="p-button-primary"
@@ -1676,13 +1723,24 @@
                             height="16"
                             style="vertical-align: middle"
                           />
-                        </button>
+                        </button> -->
+                        <span
+                          class="input-group-text p-button-primaryimg"
+                          (click)="filterWithBusinessNameInHouseReject()"
+                        >
+                          <img
+                            src="../../../assets/images/icons/search.svg"
+                            alt="Search"
+                            style="width: 14px; height: 14px; cursor: pointer"
+                          />
+                        </span>
                       </div>
                     </div>
                     <div class="col-md-3 mt-2 no-padding-small">
                       <div class="p-inputgroup">
                         <input
                           type="text"
+                          class="inputsearch"
                           pInputText
                           placeholder="Search with Mobile Number"
                           [(ngModel)]="mobileNumberToSearchInHouseRejects"
@@ -1702,7 +1760,7 @@
                           [disabled]="!mobileNumberToSearchInHouseRejects"
                           (click)="filterWithMobileNumberInHouseReject()"
                         ></button> -->
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           class="p-button-primary"
@@ -1716,7 +1774,17 @@
                             height="16"
                             style="vertical-align: middle"
                           />
-                        </button>
+                        </button> -->
+                        <span
+                          class="input-group-text p-button-primaryimg"
+                          (click)="filterWithMobileNumberInHouseReject()"
+                        >
+                          <img
+                            src="../../../assets/images/icons/search.svg"
+                            alt="Search"
+                            style="width: 14px; height: 14px; cursor: pointer"
+                          />
+                        </span>
                       </div>
                     </div>
                     <!-- <div class="col-md-3 mt-2 no-padding-small"></div> -->
@@ -1881,6 +1949,7 @@
                       <div class="p-inputgroup">
                         <input
                           type="text"
+                          class="inputsearch"
                           pInputText
                           placeholder="Search with Business Name"
                           [(ngModel)]="businessNameToSearchforbank"
@@ -1900,7 +1969,8 @@
                           [disabled]="!businessNameToSearchforbank"
                           (click)="filterWithBusinessNameforBank()"
                         ></button> -->
-                        <button
+                        
+                        <!-- <button
                           type="button"
                           pButton
                           class="p-button-primary"
@@ -1914,13 +1984,24 @@
                             height="16"
                             style="vertical-align: middle"
                           />
-                        </button>
+                        </button> -->
+                        <span
+                          class="input-group-text p-button-primaryimg"
+                          (click)="filterWithBusinessNameforBank()"
+                        >
+                          <img
+                            src="../../../assets/images/icons/search.svg"
+                            alt="Search"
+                            style="width: 14px; height: 14px; cursor: pointer"
+                          />
+                        </span>
                       </div>
                     </div>
                     <div class="col-md-3 mt-2 no-padding-small">
                       <div class="p-inputgroup">
                         <input
                           type="text"
+                          class="inputsearch"
                           pInputText
                           placeholder="Search with Mobile Number"
                           [(ngModel)]="mobileNumberToSearchforbank"
@@ -1940,7 +2021,7 @@
                           [disabled]="!mobileNumberToSearchforbank"
                           (click)="filterWithMobileNumberforbank()"
                         ></button> -->
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           class="p-button-primary"
@@ -1954,7 +2035,17 @@
                             height="16"
                             style="vertical-align: middle"
                           />
-                        </button>
+                        </button> -->
+                        <span
+                          class="input-group-text p-button-primaryimg"
+                          (click)="filterWithMobileNumberforbank()"
+                        >
+                          <img
+                            src="../../../assets/images/icons/search.svg"
+                            alt="Search"
+                            style="width: 14px; height: 14px; cursor: pointer"
+                          />
+                        </span>
                       </div>
                     </div>
                     <!-- <div class="col-md-3 mt-2 no-padding-small"></div> -->
@@ -2029,7 +2120,7 @@
                     </td>
                     <td>
                       <div class="text-center">
-                        <div class="d-flex">
+                        <div class="d-flex tableimage">
                           <p-menu
                             appendTo="body"
                             #bankmenu
@@ -2120,6 +2211,7 @@
                       <div class="p-inputgroup">
                         <input
                           type="text"
+                          class="inputsearch"
                           pInputText
                           placeholder="Search with Business Name"
                           [(ngModel)]="businessNameToSearchcni"
@@ -2139,7 +2231,7 @@
                           [disabled]="!businessNameToSearchcni"
                           (click)="filterWithBusinessNameforCNI()"
                         ></button> -->
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           class="p-button-primary"
@@ -2153,13 +2245,24 @@
                             height="16"
                             style="vertical-align: middle"
                           />
-                        </button>
+                        </button> -->
+                        <span
+                          class="input-group-text p-button-primaryimg"
+                          (click)="filterWithBusinessNameforCNI()"
+                        >
+                          <img
+                            src="../../../assets/images/icons/search.svg"
+                            alt="Search"
+                            style="width: 14px; height: 14px; cursor: pointer"
+                          />
+                        </span>
                       </div>
                     </div>
                     <div class="col-md-3 mt-2 no-padding-small">
                       <div class="p-inputgroup">
                         <input
                           type="text"
+                          class="inputsearch"
                           pInputText
                           placeholder="Search with Mobile Number"
                           [(ngModel)]="mobileNumberToSearchcni"
@@ -2179,7 +2282,7 @@
                           [disabled]="!mobileNumberToSearchcni"
                           (click)="filterWithMobileNumbercni()"
                         ></button> -->
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           class="p-button-primary"
@@ -2193,7 +2296,17 @@
                             height="16"
                             style="vertical-align: middle"
                           />
-                        </button>
+                        </button> -->
+                        <span
+                          class="input-group-text p-button-primaryimg"
+                          (click)="filterWithMobileNumbercni()"
+                        >
+                          <img
+                            src="../../../assets/images/icons/search.svg"
+                            alt="Search"
+                            style="width: 14px; height: 14px; cursor: pointer"
+                          />
+                        </span>
                       </div>
                     </div>
                     <!-- <div class="col-md-3 mt-2 no-padding-small"></div> -->
@@ -2276,7 +2389,7 @@
                     </td>
                     <td>
                       <div class="text-center">
-                        <div class="d-flex">
+                        <div class="d-flex tableimage">
                           <p-menu
                             appendTo="body"
                             #cnimenu

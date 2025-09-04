@@ -80,8 +80,9 @@
                   <div class="p-inputgroup">
                     <input
                       type="text"
+                      class="inputsearch"
                       pInputText
-                      placeholder="Enter Business Name or Phone Number"
+                      placeholder="Search Lead With Business Name"
                       [(ngModel)]="businessNameToSearch"
                       (ngModelChange)="
                         inputValueChangeEvent('loanId', businessNameToSearch)
@@ -114,7 +115,7 @@
                     </button> -->
 
                     <span
-                      class="input-group-text p-button-primary"
+                      class="input-group-text p-button-primaryimg"
                       (click)="filterWithBusinessName()"
                     >
                       <img
@@ -305,7 +306,7 @@
                 </td>
                 <td>
                   <span
-                    class="d-inline-flex align-items-center justify-content-start gap-2"
+                    class="d-inline-flex align-items-center justify-content-start gap-2 text-nowrap"
                     [ngStyle]="{
                       backgroundColor: getStatusColor(
                         getStatusName(lead.leadInternalStatus)
@@ -485,7 +486,7 @@
                       [disabled]="!businessNameToSearchForPersonal"
                       (click)="filterWithBusinessNameForPersonal()"
                     ></button> -->
-                    <button
+                    <!-- <button
                       type="button"
                       pButton
                       class="p-button-primary"
@@ -499,7 +500,17 @@
                         height="16"
                         style="vertical-align: middle"
                       />
-                    </button>
+                    </button> -->
+                    <span
+                      class="input-group-text p-button-primaryimg"
+                      (click)="filterWithBusinessNameForPersonal()"
+                    >
+                      <img
+                        src="../../../assets/images/icons/search.svg"
+                        alt="Search"
+                        style="width: 14px; height: 14px; cursor: pointer"
+                      />
+                    </span>
                   </div>
                 </div>
                 <div
@@ -862,7 +873,7 @@
                           [disabled]="!searchInputValue"
                           (click)="filterBasedOnEmploymentStatus()"
                         ></button> -->
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           class="p-button-primary"
@@ -876,7 +887,17 @@
                             height="16"
                             style="vertical-align: middle"
                           />
-                        </button>
+                        </button> -->
+                        <span
+                          class="input-group-text p-button-primary"
+                          (click)="filterBasedOnEmploymentStatus()"
+                        >
+                          <img
+                            src="../../../assets/images/icons/search.svg"
+                            alt="Search"
+                            style="width: 14px; height: 14px; cursor: pointer"
+                          />
+                        </span>
                       </div>
                     </div>
                     <div
@@ -1333,7 +1354,7 @@
                           [disabled]="!searchInputValue"
                           (click)="filterBasedOnEmploymentStatus()"
                         ></button> -->
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           class="p-button-primary"
@@ -1347,7 +1368,17 @@
                             height="16"
                             style="vertical-align: middle"
                           />
-                        </button>
+                        </button> -->
+                        <span
+                            class="input-group-text p-button-primary"
+                            (click)="filterBasedOnEmploymentStatus()"
+                          >
+                            <img
+                              src="../../../assets/images/icons/search.svg"
+                              alt="Search"
+                              style="width: 14px; height: 14px; cursor: pointer"
+                            />
+                          </span>
                       </div>
                     </div>
                     <div
@@ -1745,7 +1776,7 @@
                       [disabled]="!businessNameToSearchForPersonal"
                       (click)="filterWithBusinessNameForPersonal()"
                     ></button> -->
-                    <button
+                    <!-- <button
                       type="button"
                       pButton
                       class="p-button-primary"
@@ -1759,7 +1790,17 @@
                         height="16"
                         style="vertical-align: middle"
                       />
-                    </button>
+                    </button> -->
+                    <span
+                      class="input-group-text p-button-primary"
+                      (click)="filterWithBusinessNameForProfessional()"
+                    >
+                      <img
+                        src="../../../assets/images/icons/search.svg"
+                        alt="Search"
+                        style="width: 14px; height: 14px; cursor: pointer"
+                      />
+                    </span>
                   </div>
                 </div>
                 <div
@@ -2140,7 +2181,7 @@
                           [disabled]="!searchInputValue"
                           (click)="filterBasedOnEmploymentStatus()"
                         ></button> -->
-                        <button
+                        <!-- <button
                           type="button"
                           pButton
                           class="p-button-primary"
@@ -2154,7 +2195,17 @@
                             height="16"
                             style="vertical-align: middle"
                           />
-                        </button>
+                        </button> -->
+                        <span
+                          class="input-group-text p-button-primary"
+                          (click)="filterBasedOnEmploymentStatus()"
+                        >
+                          <img
+                            src="../../../assets/images/icons/search.svg"
+                            alt="Search"
+                            style="width: 14px; height: 14px; cursor: pointer"
+                          />
+                        </span>
                       </div>
                     </div>
                     <div

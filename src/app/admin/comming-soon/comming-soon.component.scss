@@ -1,0 +1,119 @@
+
+// .coming {
+//   background-color: #ffffff;
+//   height: 450px;
+//   width: 900px;
+//   display: flex;
+//   justify-content: center;
+//   justify-self: center;
+//   align-items: flex-end;
+//   margin:  auto;  
+//   border-radius: 8px; 
+//   overflow: hidden;  
+//   box-shadow: 0 0 6px rgba(0,0,0,0.1);
+//   margin-top: 20px !important;
+// }
+
+// .comingsoonimg img {
+//   display: block;
+//   width: 100%;
+//   height: auto;
+// }
+
+// @media (max-width: 750px) {
+//   .coming {
+//     width: auto;
+//     // height: 100%;
+//     height: 250px;
+//     margin-top: 30px !important;
+//     margin: auto !important;    
+//   }
+
+//   .comingsoonimg img {
+//     width: 100%;
+//     height: auto;
+//     object-fit: contain; 
+//   }
+// }
+
+/* Card */
+.coming {
+  background-color: #ffffff;
+  height: 450px;
+  width: 900px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;    /* image touches bottom */
+  margin: 20px auto;        /* horizontal center + small top gap */
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 6px rgba(0,0,0,0.1);
+}
+
+/* Image inside */
+.comingsoonimg img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Mobile responsive */
+// @media (max-width: 750px) {
+//   body, html {
+//     height: 100%;            /* allow flex centering */
+//   }
+
+//   .coming {
+//     width: 90%;              /* responsive width */
+//     max-width: 400px;        /* prevent too wide */
+//     height: 250px;           /* responsive height */
+//     margin: auto;            /* center both X & Y */
+//     display: flex;
+//     justify-content: center;
+//     align-items: flex-end;   /* image stays bottom */
+//   }
+
+//   /* For vertical centering */
+//   body {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//   }
+
+//   .comingsoonimg img {
+//     width: 90%;
+//     height: auto;
+//     object-fit: contain;
+//   }
+// }
+
+@media (max-width: 800px) {
+  // body, html {
+  //   height: 100%;
+  // }
+
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;   /* start from top, not full center */
+    justify-self: center;
+    align-self: center;
+    padding-top: 40px;         /* 👈 top margin */
+  }
+
+  .coming {
+    width: 90%;
+    max-width: 400px;
+    height: 250px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  .comingsoonimg img {
+    width: 95%;
+    height: auto;
+    object-fit: contain;
+  }
+}

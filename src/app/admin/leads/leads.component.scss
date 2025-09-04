@@ -17,15 +17,15 @@
   box-shadow: none !important;
 }
 
-.p-button-primary {
-  background-color: #ffffff !important;
-  // border-color: lightgray !important;
-  border-bottom-right-radius: 8px !important;
-  border-top-right-radius: 8px !important;
-  border-bottom-left-radius: 0 !important;
-  border-top-left-radius: 0 !important;
-  border: none !important;
-}
+// .p-button-primary {
+//   background-color: #ffffff !important;
+//   // border-color: lightgray !important;
+//   border-bottom-right-radius: 8px !important;
+//   border-top-right-radius: 8px !important;
+//   border-bottom-left-radius: 0 !important;
+//   border-top-left-radius: 0 !important;
+//   border: none !important;
+// }
 
 :host ::ng-deep .p-dropdown-panel .p-dropdown-filter-container {
   width: 100% !important;
@@ -37,17 +37,17 @@
 }
 
 /* Existing input styles (don't change) */
-input {
-  position: relative;
-  overflow: hidden; /* Hide any overflow */
-  // width: 383px !important;
-  // height: 45px !important;
-  border-top-left-radius: 8px !important;
-  border-bottom-left-radius: 8px !important;
-  border: none !important;
-  color: #838383 !important;
-  // box-shadow: none !important;
-}
+// input {
+//   position: relative;
+//   overflow: hidden; /* Hide any overflow */
+//   // width: 383px !important;
+//   // height: 45px !important;
+//   border-top-left-radius: 8px !important;
+//   border-bottom-left-radius: 8px !important;
+//   border: none !important;
+//   color: #838383 !important;
+//   // box-shadow: none !important;
+// }
 
 .p-button-primary img {
   filter: brightness(0) saturate(100%) invert(46%) sepia(0%) saturate(0%)
@@ -75,19 +75,19 @@ input {
 }
 
 /* Wrapper to handle overflow */
-.p-inputgroup {
-  position: relative;
-  width: 100%;
-  overflow: hidden; /* Hide overflow to keep the placeholder within bounds */
-}
+// .p-inputgroup {
+//   position: relative;
+//   width: 100%;
+//   overflow: hidden; /* Hide overflow to keep the placeholder within bounds */
+// }
 
 /* Input field styling */
-.p-inputgroup input {
-  position: relative;
-  width: 100%;
-  padding-left: 10px; /* Add left padding to make room for the text */
-  font-size: 14px; /* Adjust font size to match your design */
-}
+// .p-inputgroup input {
+//   position: relative;
+//   width: 100%;
+//   padding-left: 10px; /* Add left padding to make room for the text */
+//   font-size: 14px; /* Adjust font size to match your design */
+// }
 /* Regular state */
 .custom-menu-item {
   padding: 8px 12px;
@@ -173,10 +173,35 @@ input {
 //   }
 // }
 
-.custom-icon-edit {
-  background-image: url("/assets/images/icons/edit.svg");
-  background-size: 16px 16px;
-  background-repeat: no-repeat;
-  padding-left: 20px;
-  display: inline-block;
+// .custom-icon-edit {
+//   background-image: url("/assets/images/icons/edit.svg");
+//   background-size: 16px 16px;
+//   background-repeat: no-repeat;
+//   padding-left: 20px;
+//   display: inline-block;
+// }
+
+.p-button-primary {
+  background-color:#fff !important;
+  // border-color: lightgray !important;
+  border-bottom-right-radius: 8px !important;
+  border-top-right-radius: 8px !important;
+  border-bottom-left-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+  border: none !important;
+  box-shadow: 0 0 4px 0 #00000040 !important;
 }
+.p-button-primary img{
+  filter: brightness(0) saturate(100%) invert(46%) sepia(0%) saturate(0%) hue-rotate(187deg) brightness(91%) contrast(86%);
+}
+input {
+  position: relative;
+  overflow: hidden; /* Hide any overflow */
+  // width: 383px !important;
+  // height: 45px !important;
+  border-top-left-radius: 8px !important;
+  border-bottom-left-radius: 8px !important;
+  border: none !important;
+  color: #838383 !important;
+  box-shadow: 0 0 4px 0 #00000040 !important;
+} 

@@ -110,12 +110,19 @@
   order: 2;            /* ensure it's at the end */
 }
 
-@media screen and (max-width: 620px) {
+@media screen and (max-width: 991px) {
   .info-line {
     display: block;
   }
   .card {
     margin: 0;
+  }
+
+  .banker-profile{
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    margin-bottom: 10px !important;
   }
 }
 .email {

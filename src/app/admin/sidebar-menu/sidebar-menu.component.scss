@@ -725,8 +725,9 @@
   }
 }
 .nav-link img {
-  filter: brightness(0) saturate(100%) invert(46%) sepia(0%) saturate(0%)
-    hue-rotate(187deg) brightness(91%) contrast(86%);
+  // filter: brightness(0) saturate(100%) invert(46%) sepia(0%) saturate(0%)
+  //   hue-rotate(187deg) brightness(91%) contrast(86%);
+  filter: brightness(0) saturate(100%) invert(47%) sepia(0%) saturate(2725%) hue-rotate(315deg) brightness(95%) contrast(94%);
 }
 
 .sidebar-footer {
@@ -783,8 +784,9 @@
   height: 32px !important;
 }
 .searchbtn img {
-  filter: brightness(0) saturate(100%) invert(46%) sepia(0%) saturate(0%)
-    hue-rotate(187deg) brightness(91%) contrast(86%);
+  // filter: brightness(0) saturate(100%) invert(46%) sepia(0%) saturate(0%)
+  //   hue-rotate(187deg) brightness(91%) contrast(86%);
+  filter: brightness(0) saturate(100%) invert(47%) sepia(0%) saturate(2725%) hue-rotate(315deg) brightness(95%) contrast(94%);
 }
 
 .searchField {

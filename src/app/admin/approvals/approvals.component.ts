@@ -59,6 +59,7 @@ export class ApprovalsComponent implements OnInit {
   searchFilterPersonal: any = {};
   searchFilterProfessional: any = {};
   personalloanLeadsCount: any = 0;
+  professionalloanLeadsCount: any = 0;
   appliedFilterHome: {};
   appliedFilterCar: {};
   searchFilterForHome: any = {};
@@ -69,8 +70,11 @@ export class ApprovalsComponent implements OnInit {
   lapLeadsCounttab: any = 0;
   lapselfLeadsCounttab: any = 0
   personalloanLeadsCounttab: any = 0
+  professionalloanLeadsCounttab: any = 0
   homeloanLeadsCounttab: any = 0
   homeloanselfLeadsCounttab: any = 0
+  carLeadsCounttab: any = 0;
+  carselfLeadsCounttab: any = 0
   searchFilterForLapSelf: any = {};
   @ViewChild('personalleadsTable') personalleadsTable!: Table;
   @ViewChild('professionalLoansTable') professionalLoansTable!: Table;
@@ -80,9 +84,11 @@ export class ApprovalsComponent implements OnInit {
   businessNameToSearchForPersonal: any;
   businessNameToSearchForProfessional: any;
   homeloanLeadsCount: any = 0;
+  carloanLeadsCount: any = 0;
   appliedFilterHomeself: {};
   appliedFilterCarself: {};
   homeloanselfLeadsCount: any = 0;
+  carloanselfLeadsCount: any = 0;
   SourcedByForLap: any;
   lapLeadsCount: any = 0;
   searchFilterForLap: any = {};
@@ -334,8 +340,7 @@ export class ApprovalsComponent implements OnInit {
       {
         // label: `Personal Loan (${this.totalLeadsCountArray?.personalcount || 0
         //   })`,
-        label: `Personal Loan (${this.personalloanLeadsCounttab || 0
-          })`,
+        label: `Personal Loan (${this.personalloanLeadsCounttab || 0})`,
         name: 'personalLoan',
       },
       {
@@ -347,7 +352,7 @@ export class ApprovalsComponent implements OnInit {
         name: 'lap',
       },
       {
-        label: `Professional Loans (0)`,
+        label: `Professional Loans (${this.professionalloanLeadsCounttab || 0})`,
         name: 'professionalLoans',
       },
       {
@@ -355,7 +360,7 @@ export class ApprovalsComponent implements OnInit {
         name: 'educationlLoans',
       },
       {
-        label: `Car loans (0)`,
+        label: `Car loans (${(this.carLeadsCounttab + this.carselfLeadsCounttab) || 0})`,
         name: 'carLoan',
       },
       {
@@ -395,11 +400,11 @@ export class ApprovalsComponent implements OnInit {
     } else if (this.activeItem.name === 'carLoan') {
       return [
         {
-          label: `Employed (${this.lapLeadsCounttab || 0})`,
+          label: `Employed (${this.carLeadsCounttab || 0})`,
           name: 'employed',
         },
         {
-          label: `Self Employed (${this.lapselfLeadsCounttab || 0})`,
+          label: `Self Employed (${this.carselfLeadsCounttab || 0})`,
           name: 'self-employed',
         },
       ];
@@ -442,7 +447,10 @@ export class ApprovalsComponent implements OnInit {
         this.getpersonalloanLeadsCountfortab(),
         this.getHomeloanLeadsCountfortab(),
         this.getHomeloanselfLeadsCountfortab(), this.getlapselfLeadsCountfortab(),
-        this.getlapLeadsCountfortab()
+        this.getlapLeadsCountfortab(),
+        this.getcarLeadsCountfortab(),
+        this.getcarselfLeadsCountfortab(),
+        this.getprofessionalloanLeadsCountfortab()
       ]);
     } catch (error) { }
   }
@@ -1005,7 +1013,7 @@ export class ApprovalsComponent implements OnInit {
     }
     // console.log(api_filter);
     if (api_filter) {
-      this.getHomeloanLeadsCount(api_filter);
+      this.getCarloanLeadsCount(api_filter);
       this.getloanLeads(api_filter);
     }
   }
@@ -1013,6 +1021,82 @@ export class ApprovalsComponent implements OnInit {
     this.leadsService.getplApprovedLeadCount(filter).subscribe(
       (response) => {
         this.homeloanLeadsCount = response;
+      },
+      (error: any) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
+  getcarLeadsCountfortab() {
+    let filter = {}
+    if (
+      this.userDetails &&
+      this.userDetails?.id &&
+      this.userDetails?.userType &&
+      this.userDetails?.userType == '3'
+    ) {
+      filter['sourcedBy-eq'] = this.userDetails.id;
+    }
+    filter['loanType-eq'] = 'carLoan';
+    filter['employmentStatus-eq'] = 'employed';
+    console.log(filter)
+    this.leadsService.getplApprovedLeadCount(filter).subscribe(
+      (response) => {
+        this.carLeadsCounttab = response;
+        // console.log(this.homeloanLeadsCounttab);
+        this.items = this.getFilteredItems();
+        // this.activeItem = this.items[0];
+        this.loadActiveItem();
+        this.employmentStatus = this.getStatusItems();
+        this.loadEmploymentActiveItem();
+      },
+      (error: any) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
+  getcarselfLeadsCountfortab() {
+    let filter = {}
+    if (
+      this.userDetails &&
+      this.userDetails?.id &&
+      this.userDetails?.userType &&
+      this.userDetails?.userType == '3'
+    ) {
+      filter['sourcedBy-eq'] = this.userDetails.id;
+    }
+    filter['loanType-eq'] = 'carLoan';
+    filter['employmentStatus-eq'] = 'self-employed';
+    console.log(filter)
+    this.leadsService.getplApprovedLeadCount(filter).subscribe(
+      (response) => {
+        this.carselfLeadsCounttab = response;
+        // console.log(this.homeloanLeadsCounttab);
+        this.items = this.getFilteredItems();
+        // this.activeItem = this.items[0];
+        this.loadActiveItem();
+        this.employmentStatus = this.getStatusItems();
+        this.loadEmploymentActiveItem();
+      },
+      (error: any) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
+   getCarloanLeadsCount(filter = {}) {
+    this.leadsService.getloanLeadsCount(filter).subscribe(
+      (response) => {
+        this.carloanLeadsCount = response;
+      },
+      (error: any) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
+  getCarloanselfLeadsCount(filter = {}) {
+    this.leadsService.getloanLeadsCount(filter).subscribe(
+      (response) => {
+        this.carloanselfLeadsCount = response;
       },
       (error: any) => {
         this.toastService.showError(error);
@@ -1075,7 +1159,7 @@ export class ApprovalsComponent implements OnInit {
     }
     if (api_filter) {
       // console.log(api_filter);
-      this.getHomeloanselfLeadsCount(api_filter);
+      this.getCarloanselfLeadsCount(api_filter);
       this.getloanLeads(api_filter);
     }
   }
@@ -1400,6 +1484,32 @@ export class ApprovalsComponent implements OnInit {
       (response) => {
         this.personalloanLeadsCounttab = response;
         console.log(this.personalloanLeadsCounttab);
+        this.items = this.getFilteredItems();
+        // this.activeItem = this.items[0];
+        this.loadActiveItem();
+      },
+      (error: any) => {
+        this.toastService.showError(error);
+      }
+    );
+  }
+  getprofessionalloanLeadsCountfortab() {
+    let filter = {}
+    if (
+      this.userDetails &&
+      this.userDetails?.id &&
+      this.userDetails?.userType &&
+      this.userDetails?.userType == '3'
+    ) {
+      filter['sourcedBy-eq'] = this.userDetails.id;
+    }
+    filter['loanType-eq'] = 'professionalLoans';
+    filter['employmentStatus-eq'] = 'employed';
+    console.log(filter)
+    this.leadsService.getplApprovedLeadCount(filter).subscribe(
+      (response) => {
+        this.professionalloanLeadsCounttab = response;
+        console.log(this.professionalloanLeadsCounttab);
         this.items = this.getFilteredItems();
         // this.activeItem = this.items[0];
         this.loadActiveItem();

@@ -113,6 +113,7 @@ export class CreateComponent {
     { label: 'Personal Loan', value: 'personalLoan' },
     { label: 'Home Loan', value: 'homeLoan' },
     { label: 'LAP', value: 'lap' },
+    { label: 'Professional Loans', value: 'professionalLoans' },
   ];
   employmentStatuses = [
     { label: 'Employed', value: 'employed' },
@@ -138,7 +139,7 @@ export class CreateComponent {
 
 
     if (this.reportType === 'LEADS') {
-      if (['personalLoan', 'homeLoan', 'lap'].includes(selected)) {
+      if (['personalLoan', 'homeLoan', 'lap', 'professionalLoans'].includes(selected)) {
         this.reportType = 'LOANLEADS';
         this.selectedReportConfig = null;
         this.reportData = {};
