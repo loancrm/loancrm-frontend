@@ -336,8 +336,8 @@ export const projectConstantsLocal = {
   ],
 
   // RAZORPAY_KEY_ID: "rzp_test_OryiPavGPST3CU",
-  // BASE_URL: 'http://localhost:5002/',
-  BASE_URL: 'https://rest.thefintalk.in:5002/',
+  BASE_URL: 'http://localhost:5002/',
+  // BASE_URL: 'https://rest.thefintalk.in:5002/',
   RAZORPAY_KEY_ID: "rzp_live_ZC5B0vsPZ7UxUs",
   VERSION_DESKTOP: '0.0.0',
 };

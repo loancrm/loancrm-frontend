@@ -167,6 +167,7 @@ import { Location } from '@angular/common';
 
 import { BsanalyzerService } from './bsanalyzer.service';
 import { RoutingService } from 'src/app/services/routing-service';
+import { ToastService } from 'src/app/services/toast.service';
 
 type ExtractResponseItem = {
   bankName: string;
@@ -194,7 +195,7 @@ export class BsanalyzerComponent implements OnInit {
   analyzing = false;
   analysisDone = false;
   newAccountRef?: string;
-
+  reportId: string;
 
   creatingOrUpdating = false;
   extractResult?: ExtractResponseItem[];
@@ -223,6 +224,7 @@ export class BsanalyzerComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private router: Router,
+    private toastService: ToastService
   ) { }
 
   ngOnInit() {
@@ -288,7 +290,7 @@ export class BsanalyzerComponent implements OnInit {
       return;
     }
     this.extracting = true;
-    this.bsaService.extractBankDetails(this.selectedFiles[0]).subscribe({
+    this.bsaService.extractBankDetails(this.selectedFiles).subscribe({
       next: (resp: ExtractResponseItem[]) => {
         this.extractResult = resp;
         const first = resp?.[0];
@@ -437,16 +439,9 @@ export class BsanalyzerComponent implements OnInit {
         next: (res: any) => {
           this.newAccountRef = res?.report?.reportId;
           const reportId = res?.report?.reportId;
-
+          this.reportId = reportId;
           this.analyzing = true;
-          this.bsaService.pollAnalysis(reportId).subscribe({
-            next: status => {
-              if (status === 'COMPLETED') {
-                this.analyzing = false;
-                this.analysisDone = true;
-              }
-            }
-          });
+          this.refreshStatus();
         },
         error: err => alert(err?.error?.error || 'Create failed'),
         complete: () => (this.creatingOrUpdating = false)
@@ -485,21 +480,28 @@ export class BsanalyzerComponent implements OnInit {
         next: (res: any) => {
           this.newAccountRef = res?.reportAccounts?.[0]?.account?.accountId || v.accountId;
           const reportId = res?.report?.reportId || v.reportId;
-
+          this.reportId = reportId;
           this.analyzing = true;
-          this.bsaService.pollAnalysis(reportId).subscribe({
-            next: status => {
-              if (status === 'COMPLETED') {
-                this.analyzing = false;
-                this.analysisDone = true;
-              }
-            }
-          });
+
         },
         error: err => alert(err?.error?.error || 'Update failed'),
         complete: () => (this.creatingOrUpdating = false)
       });
     }
+  }
+
+  refreshStatus() {
+    this.bsaService.pollAnalysis(this.reportId).subscribe({
+      next: status => {
+        if (status === 'COMPLETED') {
+          this.analyzing = false;
+          this.analysisDone = true;
+          this.toastService.showSuccess('Analysis completed successfully.');
+        } else {
+          this.toastService.showInfo('Analysis is still in progress. Please refresh again later.');
+        }
+      }
+    });
   }
 
   goBack() {
