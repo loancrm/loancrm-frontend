@@ -159,11 +159,14 @@
 // }
 
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { debounceTime, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { Location } from '@angular/common';
+
 import { BsanalyzerService } from './bsanalyzer.service';
+import { RoutingService } from 'src/app/services/routing-service';
 
 type ExtractResponseItem = {
   bankName: string;
@@ -188,6 +191,11 @@ export class BsanalyzerComponent implements OnInit {
   uploadedFiles: any[] = [];
   uploading = false;
   extracting = false;
+  analyzing = false;
+  analysisDone = false;
+  newAccountRef?: string;
+
+
   creatingOrUpdating = false;
   extractResult?: ExtractResponseItem[];
   banks: Array<{ id: string | number; name: string }> = [];
@@ -210,8 +218,11 @@ export class BsanalyzerComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private routingService: RoutingService,
     private bsaService: BsanalyzerService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -300,6 +311,95 @@ export class BsanalyzerComponent implements OnInit {
   }
 
   // Save report (create or update)
+  // saveReport() {
+  //   if (this.form.invalid) {
+  //     this.form.markAllAsTouched();
+  //     return;
+  //   }
+
+  //   const v = this.form.value;
+  //   this.creatingOrUpdating = true;
+
+  //   if (!this.isEditMode) {
+  //     // ✅ Create
+  //     const report = {
+  //       reportName: v.reportName,
+  //       reportId: v.reportId || '',
+  //       accountList: [
+  //         {
+  //           account: {
+  //             bankId: String(v.bankId),
+  //             accountType: Number(v.accountType),
+  //             accountNumber: String(v.accountNumber),
+  //             accountReferenceNumber: v.accountReferenceNumber || '',
+  //             analysisStartDate: v.analysisStartDate || null,
+  //             analysisEndDate: v.analysisEndDate || null,
+  //             startDate: v.analysisStartDate || null,
+  //             endDate: v.analysisEndDate || null
+  //           },
+  //           ...(v.password ? { password: v.password } : {}),
+  //           fileNames: this.fileNames
+  //         }
+  //       ],
+  //       gstList: []
+  //     };
+
+  //     this.bsaService.createReport(report, this.selectedFiles).subscribe({
+  //       next: res => {
+  //         alert('Report created successfully!');
+  //         this.newAccountRef = report.accountList[0].account.accountReferenceNumber;
+  //         this.analyzing = true;
+
+  //         // simulate waiting for backend analysis
+  //         this.bsaService.pollAnalysis(this.newAccountRef!).subscribe({
+  //           next: status => {
+  //             if (status === 'COMPLETED') {
+  //               this.analyzing = false;
+  //               this.analysisDone = true;
+  //             }
+  //           }
+  //         });
+  //       },
+  //       error: err => alert(err?.error?.error || 'Create failed'),
+  //       complete: () => (this.creatingOrUpdating = false)
+  //     });
+
+
+  //   } else {
+  //     // ✅ Update
+  //     console.log(this.uploadedFiles)
+  //     const updatePayload = {
+  //       reportDetails: {
+  //         reportId: v.reportId,
+  //         newReportId: v.newReportId || undefined,
+  //         newReportName: v.reportName
+  //       },
+  //       accountList: [
+  //         {
+  //           account: {
+  //             accountId: v.accountId,
+  //             bankId: v.bankId,
+  //             accountType: v.accountType,
+  //             accountNumber: v.accountNumber,
+  //             accountReferenceNumber: v.accountReferenceNumber,
+  //             analysisStartDate: v.analysisStartDate,
+  //             analysisEndDate: v.analysisEndDate
+  //           },
+  //           ...(v.password ? { password: v.password } : {}),
+  //           // In both Create and Update payloads:
+  //           fileNames: [...this.uploadedFiles.map(f => f.originalName), ...this.fileNames]
+  //         }
+  //       ],
+  //       fileIds: [] // if you want to delete old files
+  //     };
+
+  //     this.bsaService.updateReport(updatePayload, this.selectedFiles).subscribe({
+  //       next: res => alert('Report updated successfully!'),
+  //       error: err => alert(err?.error?.error || 'Update failed'),
+  //       complete: () => (this.creatingOrUpdating = false)
+  //     });
+  //   }
+  // }
   saveReport() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -310,7 +410,7 @@ export class BsanalyzerComponent implements OnInit {
     this.creatingOrUpdating = true;
 
     if (!this.isEditMode) {
-      // ✅ Create
+      // ---------------- CREATE ----------------
       const report = {
         reportName: v.reportName,
         reportId: v.reportId || '',
@@ -334,14 +434,26 @@ export class BsanalyzerComponent implements OnInit {
       };
 
       this.bsaService.createReport(report, this.selectedFiles).subscribe({
-        next: res => alert('Report created successfully!'),
+        next: (res: any) => {
+          this.newAccountRef = res?.report?.reportId;
+          const reportId = res?.report?.reportId;
+
+          this.analyzing = true;
+          this.bsaService.pollAnalysis(reportId).subscribe({
+            next: status => {
+              if (status === 'COMPLETED') {
+                this.analyzing = false;
+                this.analysisDone = true;
+              }
+            }
+          });
+        },
         error: err => alert(err?.error?.error || 'Create failed'),
         complete: () => (this.creatingOrUpdating = false)
       });
 
     } else {
-      // ✅ Update
-      console.log(this.uploadedFiles)
+      // ---------------- UPDATE ----------------
       const updatePayload = {
         reportDetails: {
           reportId: v.reportId,
@@ -360,18 +472,44 @@ export class BsanalyzerComponent implements OnInit {
               analysisEndDate: v.analysisEndDate
             },
             ...(v.password ? { password: v.password } : {}),
-            // In both Create and Update payloads:
-            fileNames: [...this.uploadedFiles.map(f => f.originalName), ...this.fileNames]
+            fileNames: [
+              ...this.uploadedFiles.map(f => f.originalName),
+              ...this.fileNames
+            ]
           }
         ],
-        fileIds: [] // if you want to delete old files
+        fileIds: []
       };
 
       this.bsaService.updateReport(updatePayload, this.selectedFiles).subscribe({
-        next: res => alert('Report updated successfully!'),
+        next: (res: any) => {
+          this.newAccountRef = res?.reportAccounts?.[0]?.account?.accountId || v.accountId;
+          const reportId = res?.report?.reportId || v.reportId;
+
+          this.analyzing = true;
+          this.bsaService.pollAnalysis(reportId).subscribe({
+            next: status => {
+              if (status === 'COMPLETED') {
+                this.analyzing = false;
+                this.analysisDone = true;
+              }
+            }
+          });
+        },
         error: err => alert(err?.error?.error || 'Update failed'),
         complete: () => (this.creatingOrUpdating = false)
       });
     }
+  }
+
+  goBack() {
+    this.location.back();
+  }
+  goToAnalysis(ref: string | undefined) {
+    if (!ref) return;
+    console.log(ref)
+    this.analysisDone = false;
+    this.routingService.handleRoute(`bsanalyzer/bank-report/${ref}`, null);
+    // this.router.navigate(['/analysis', ref]); // adapt route as per your app
   }
 }

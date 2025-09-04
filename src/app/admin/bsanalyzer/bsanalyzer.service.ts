@@ -121,11 +121,10 @@ export class BsanalyzerService {
   //     responseType: 'arraybuffer' // 👈 important for file download
   //   });
   // }
-  downloadCamFile(params): Observable<Blob> {
-    return this.http.get(`${this.baseUrl}api/camdownload`, {
-      params,
-      responseType: 'blob'  // MUST be 'blob'
-    });
+  downloadCamFile(accountReferenceNumber) {
+    console.log(accountReferenceNumber)
+    return `${this.baseUrl}api/camdownload?accountReferenceNumber=${accountReferenceNumber}`
+
   }
   extractBankDetails(file: File): Observable<any> {
     const formData = new FormData();
@@ -185,4 +184,26 @@ export class BsanalyzerService {
 
     return this.http.get<any>(`${this.baseUrl}api/fetch-report`, { params });
   }
+
+  pollAnalysis(reportId: string) {
+    return new Observable<string>(observer => {
+      const interval = setInterval(() => {
+        this.fetchReport({ reportId }).subscribe(res => {
+          const status = res?.report?.reportStatus;
+
+          if (status === 'ANALYSED') {
+            clearInterval(interval);
+            observer.next('COMPLETED');   // 🔹 signal to component
+            observer.complete();
+          } else if (status === 'IN PROGRESS' || status === 'IN_PROGRESS') {
+            // still working → do nothing
+          } else {
+            clearInterval(interval);
+            observer.error('Analysis failed or unexpected status: ' + status);
+          }
+        });
+      }, 3000); // every 3s
+    });
+  }
+
 }

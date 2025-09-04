@@ -1,5 +1,20 @@
+<div class="p-1 m-2">
+  <div class="d-flex justify-content-between">
+    <div
+      class="d-flex align-items-center justify-content-center pointer-cursor"
+      (click)="goBack()"
+    >
+      <span class="me-2 d-flex align-items-center">
+        <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
+      </span>
+      <b>
+        <span class="back-btn-text"> Create Report </span>
+      </b>
+    </div>
+  </div>
+</div>
 <div class="container mt-4">
-  <h2>Create Report (Upload → Extract → Submit)</h2>
+  <h2>Upload → Extract → Submit)</h2>
 
   <div class="card p-3 mt-3">
     <h5 class="mb-2">1) Upload Bank Statement (PDF)</h5>
@@ -23,7 +38,6 @@
     </button>
   </div>
 
-  <!-- ✅ Wrap with formGroup -->
   <form class="card p-3 mt-3" [formGroup]="form">
     <h5 class="mb-3">2) Verify / Fill Account Details</h5>
 
@@ -146,26 +160,16 @@
         <li *ngFor="let fn of fileNames">{{ fn }}</li>
       </ul>
     </div>
-    <!-- Existing uploaded files (edit mode) -->
     <div class="mt-3" *ngIf="uploadedFiles.length">
       <strong>Already Uploaded Files:</strong>
       <ul class="mb-0">
         <li *ngFor="let f of uploadedFiles">
           {{ f.originalName }}
           <span class="text-muted">({{ f.status }})</span>
-          <!-- Optional delete button -->
-          <!-- <button
-            type="button"
-            class="btn btn-sm btn-link text-danger"
-            (click)="markFileForDeletion(f.fileId)"
-          >
-            Remove
-          </button> -->
         </li>
       </ul>
     </div>
 
-    <!-- Newly selected files (from input) -->
     <div class="mt-3" *ngIf="fileNames.length">
       <strong>Newly Selected Files:</strong>
       <ul class="mb-0">
@@ -173,17 +177,6 @@
       </ul>
     </div>
   </form>
-  <!-- ✅ End formGroup wrapper -->
-
-  <!-- <div class="d-flex gap-2 mt-3">
-    <button
-      class="btn btn-success"
-      (click)="createReport()"
-      [disabled]="creating"
-    >
-      {{ creating ? "Creating…" : "Create Report" }}
-    </button>
-  </div> -->
 
   <div class="d-flex gap-2 mt-3">
     <button
@@ -208,3 +201,26 @@
     <pre class="small mb-0">{{ extractResult?.[0] | json }}</pre>
   </div>
 </div>
+
+<p-dialog
+  header="Bank Statement Analyzer"
+  [(visible)]="analyzing"
+  [modal]="true"
+  [closable]="false"
+>
+  <div class="text-center p-4">
+    <h4>Analyzing your bank statement...</h4>
+  </div>
+</p-dialog>
+
+<p-dialog header="Analysis Completed" [(visible)]="analysisDone" [modal]="true">
+  <div class="text-center p-4">
+    <h4>Analysis completed successfully!</h4>
+    <button
+      pButton
+      type="button"
+      label="View Analysis"
+      (click)="goToAnalysis(newAccountRef)"
+    ></button>
+  </div>
+</p-dialog>

@@ -6,6 +6,7 @@ import { ToastService } from 'src/app/services/toast.service';
 import { LeadsService } from '../../leads/leads.service';
 import { DateTimeProcessorService } from 'src/app/services/date-time-processor.service';
 import { RoutingService } from 'src/app/services/routing-service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
   selector: 'app-evaluate-credit',
@@ -21,7 +22,7 @@ export class EvaluateCreditComponent implements OnInit {
   dscrValues: any = {};
   breadCrumbItems: any = [];
   totalEmi: number;
-
+  userDetails: any;
   profitaftertaxAy1: number;
   depreciationAy1: number;
   interestonLoansAy2: number;
@@ -143,7 +144,7 @@ export class EvaluateCreditComponent implements OnInit {
     { key: 'to', label: 'Statement To', isDate: true },
     { key: 'currentAccountStatements', label: 'Statement Attachment' }
   ];
-
+  groupedGstData: { [key: string]: any[] } = {};
   odAccountFields = [
     { key: 'name', label: 'Bank Name', pipe: 'capitalize' }, // Optional: capitalize
     { key: 'from', label: 'Statement From', isDate: true },
@@ -157,6 +158,7 @@ export class EvaluateCreditComponent implements OnInit {
     private location: Location,
     private toastService: ToastService,
     private router: Router,
+    private localStorageService: LocalStorageService,
     private activatedRoute: ActivatedRoute,
     private leadsService: LeadsService,
     private routingService: RoutingService,
@@ -190,18 +192,29 @@ export class EvaluateCreditComponent implements OnInit {
       }
       this.getLeadDocumentsById(this.leadId).then((data) => {
         if (data) {
-          // console.log('Lead documents loaded');
-          if (this.leadDocuments?.gstDetails?.length > 0) {
-            this.totalGst3BSale = this.leadDocuments.gstDetails.reduce((sum, item) => {
-              return sum + (parseFloat(item.gst3BSale) || 0);
-            }, 0);
+          console.log(this.leadDocuments?.gstDetails);
+          // if (this.leadDocuments?.gstDetails?.length > 0) {
+          //   this.totalGst3BSale = this.leadDocuments.gstDetails.reduce((sum, item) => {
+          //     return sum + (parseFloat(item.gst3BSale) || 0);
+          //   }, 0);
+          // }
+
+          if (this.leadDocuments?.gstDetails?.length) {
+            this.groupedGstData = this.leadDocuments.gstDetails.reduce((acc, item) => {
+              const state = item.operatingState || "Unknown";
+              if (!acc[state]) {
+                acc[state] = [];
+              }
+              acc[state].push(item);
+              return acc;
+            }, {});
+            console.log(this.groupedGstData)
           }
         }
       });
       this.getDscrValuesById(this.leadId).then((data) => {
         if (data) {
           this.setDscrValuesData();
-
           if (this.btoValue) {
             console.log(this.btoValue);
             this.calculateBTOLoanAmount();
@@ -209,7 +222,6 @@ export class EvaluateCreditComponent implements OnInit {
           if (this.gstValue) {
             this.calculateGSTLoanAmount();
           }
-
         }
       });
     }
@@ -250,7 +262,8 @@ export class EvaluateCreditComponent implements OnInit {
     //     });
     //   }
     // });
-
+    const userDetails = this.localStorageService.getItemFromLocalStorage('userDetails');
+    this.userDetails = userDetails.user;
     this.breadCrumbItems = [
       {
         label: ' Home',
@@ -277,6 +290,25 @@ export class EvaluateCreditComponent implements OnInit {
       }
     );
   }
+  getStateTotal(stateData: any[]): number {
+    return stateData.reduce(
+      (sum, item) => sum + (parseFloat(item.gst3BSale) || 0),
+      0
+    );
+  }
+
+  getGrandTotal(): number {
+    return Object.values(this.groupedGstData).reduce(
+      (total, stateArr: any) =>
+        total +
+        stateArr.reduce(
+          (sum: number, item: any) => sum + (parseFloat(item.gst3BSale) || 0),
+          0
+        ),
+      0
+    );
+  }
+
   updateDisplayedItems() {
     const loanDisplayProperty =
       this.leadData && this.leadData[0].employmentStatus === 'employed'
@@ -287,6 +319,16 @@ export class EvaluateCreditComponent implements OnInit {
       { data: this.leadData[0], displayProperty: loanDisplayProperty },
     ];
   }
+  uploadLeadFiles(lead) {
+    const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans' || loanType === 'carLoan') {
+      this.routingService.handleRoute(`files/uploadloanleads/${lead.leadId}`, null);
+    } else {
+      // If no known loanType, omit status from the route
+      this.routingService.handleRoute(`files/upload/${lead.id}`, null);
+    }
+  }
+
   calculateBTOLoanAmount() {
     const R = this.btointerest / 12 / 100; // monthly rate
     const N = this.btotenure;

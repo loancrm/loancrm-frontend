@@ -7,7 +7,11 @@ import { projectConstantsLocal } from 'src/app/constants/project-constants';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { RoutingService } from 'src/app/services/routing-service';
 import { HttpClient } from '@angular/common/http';
-
+export interface FollowUpNote {
+  date: string;
+  remarks: string;
+  updatedBy: string;
+}
 @Component({
   selector: 'app-lead-profile',
   templateUrl: './lead-profile.component.html',
@@ -40,6 +44,8 @@ export class LeadProfileComponent implements OnInit {
   designationType: any = projectConstantsLocal.DOCTOR_OR_CA;
   carType: any = projectConstantsLocal.CAR_TYPE
   timelineEvents: { date: Date | null; title: string; image: string; }[];
+  notes: FollowUpNote[] = [];
+  newNote: FollowUpNote = { date: '', remarks: '', updatedBy: '' };
 
   constructor(
     private route: ActivatedRoute,
@@ -58,6 +64,7 @@ export class LeadProfileComponent implements OnInit {
   ngOnInit(): void {
     const userDetails = this.localStorageService.getItemFromLocalStorage('userDetails');
     this.userDetails = userDetails.user;
+    this.newNote.updatedBy = this.userDetails.name;
     this.accountId = this.userDetails?.accountId; // make sure accountId is available
     this.leadId = this.route.snapshot.paramMap.get('id');
     const status = this.route.snapshot.paramMap.get('status');
@@ -73,6 +80,7 @@ export class LeadProfileComponent implements OnInit {
           this.getAllLeadData(this.leadId);
         }
       }
+      this.loadNotes();
     }
     this.breadCrumbItems = [
       {
@@ -160,6 +168,27 @@ export class LeadProfileComponent implements OnInit {
   //   });
   // }
 
+  loadNotes() {
+    this.leadsService.getNotes(this.leadId).subscribe({
+      next: (res: any) => {
+        this.notes = res.notes || [];
+      },
+      error: (err) => console.error(err)
+    });
+  }
+
+  addNote() {
+    this.leadsService.addNote(this.leadId, this.newNote).subscribe({
+      next: (res: any) => {
+        console.log(this.notes)
+        this.notes = res.notes;
+        console.log(this.notes)
+        this.newNote = { date: '', remarks: '', updatedBy: this.userDetails.name }; // reset
+      },
+      error: (err) => console.error(err)
+    });
+  }
+
   onDownloadZip(applicantname): void {
     const name = applicantname
     console.log(name)
@@ -171,68 +200,68 @@ export class LeadProfileComponent implements OnInit {
     }
   }
 
- isBusinessView(): boolean {
-  const lt = (this.loanType || '');
-  const es = (this.employmentStatus || '');
-  console.log(this.loanType);
-  console.log(this.employmentStatus);
-  
-  
-  return (
-    (lt === 'homeLoan' && es === 'self-employed') ||
-    (lt === 'lap' && es === 'self-employed') ||
-    (lt === 'carLoan' && es === 'self-employed') ||
-    (!['personalLoan', 'homeLoan', 'lap', 'professionalLoans', 'carLoan'].includes(lt))
-  );
- 
-}
+  isBusinessView(): boolean {
+    const lt = (this.loanType || '');
+    const es = (this.employmentStatus || '');
+    console.log(this.loanType);
+    console.log(this.employmentStatus);
+
+
+    return (
+      (lt === 'homeLoan' && es === 'self-employed') ||
+      (lt === 'lap' && es === 'self-employed') ||
+      (lt === 'carLoan' && es === 'self-employed') ||
+      (!['personalLoan', 'homeLoan', 'lap', 'professionalLoans', 'carLoan'].includes(lt))
+    );
+
+  }
 
 
 
   isPersonalView(): boolean {
-  const lt = (this.loanType || '');
-  const es = (this.employmentStatus || '');
-  return (
-    (lt === 'personalLoan' && es === 'employed') ||
-    (lt === 'homeLoan' && es === 'employed') ||
-    (lt === 'lap' && es === 'employed') ||
-    (lt === 'carLoan' && es === 'employed') ||
-    (lt === 'professionalLoans' && es === 'employed')
-  );
-}
-isdesignation():boolean {
-  const lt = (this.loanType || '')
-  const es = (this.employmentStatus || '')
-  return (
-    (lt === 'personalLoan' && es === 'employed') ||
-    (lt === 'homeLoan' && es === 'employed') ||
-    (lt === 'lap' && es === 'employed') ||
-    (lt === 'carLoan' && es === 'employed')
-  );
-}
-isdesignationtype():boolean {
-   const lt = (this.loanType || '')
-  return (
-    (lt === 'professionalLoans')
-  );
-}
-  isProprietorPersonal(): boolean {
-  const lt = (this.loanType || '')
-  const es = (this.employmentStatus || '')
-  return ['personalLoan', 'homeLoan', 'lap', 'professionalLoans', 'carLoan'].includes(lt) && es === 'employed';
-}
-getDesignationValue(value: any, loanType: string): string {
-  if (!value) return '';
-
-  // Case 1: ProfessionalLoans → lookup by ID
-  if (loanType === 'professionalLoans') {
-    const found = this.designationType.find(user => user.id == value);
-    return found?.displayName || '';
+    const lt = (this.loanType || '');
+    const es = (this.employmentStatus || '');
+    return (
+      (lt === 'personalLoan' && es === 'employed') ||
+      (lt === 'homeLoan' && es === 'employed') ||
+      (lt === 'lap' && es === 'employed') ||
+      (lt === 'carLoan' && es === 'employed') ||
+      (lt === 'professionalLoans' && es === 'employed')
+    );
   }
+  isdesignation(): boolean {
+    const lt = (this.loanType || '')
+    const es = (this.employmentStatus || '')
+    return (
+      (lt === 'personalLoan' && es === 'employed') ||
+      (lt === 'homeLoan' && es === 'employed') ||
+      (lt === 'lap' && es === 'employed') ||
+      (lt === 'carLoan' && es === 'employed')
+    );
+  }
+  isdesignationtype(): boolean {
+    const lt = (this.loanType || '')
+    return (
+      (lt === 'professionalLoans')
+    );
+  }
+  isProprietorPersonal(): boolean {
+    const lt = (this.loanType || '')
+    const es = (this.employmentStatus || '')
+    return ['personalLoan', 'homeLoan', 'lap', 'professionalLoans', 'carLoan'].includes(lt) && es === 'employed';
+  }
+  getDesignationValue(value: any, loanType: string): string {
+    if (!value) return '';
 
-  // Case 2: Other loans → already text
-  return value;
-}
+    // Case 1: ProfessionalLoans → lookup by ID
+    if (loanType === 'professionalLoans') {
+      const found = this.designationType.find(user => user.id == value);
+      return found?.displayName || '';
+    }
+
+    // Case 2: Other loans → already text
+    return value;
+  }
 
 
 
@@ -436,7 +465,6 @@ getDesignationValue(value: any, loanType: string): string {
   updateDisplayedItems() {
     if (this.isBusinessView()) {
       console.log("isBusinessView");
-      
       this.displayedItems = [
         {
           data: this.leadsData?.leadData,
@@ -467,67 +495,67 @@ getDesignationValue(value: any, loanType: string): string {
     }
     return '';
   }
-//   getDesignationType(value: any): string {
-//   if (!value) return '';
+  //   getDesignationType(value: any): string {
+  //   if (!value) return '';
 
-//   // Ensure list exists
-//   if (Array.isArray(this.designationType) && this.designationType.length > 0) {
-//     // Convert both to string to avoid type mismatch
-//     const found = this.designationType.find(user => String(user.id) === String(value));
-//     if (found) {
-//       return found.displayName;
-//     }
-//   }
+  //   // Ensure list exists
+  //   if (Array.isArray(this.designationType) && this.designationType.length > 0) {
+  //     // Convert both to string to avoid type mismatch
+  //     const found = this.designationType.find(user => String(user.id) === String(value));
+  //     if (found) {
+  //       return found.displayName;
+  //     }
+  //   }
 
-//   // If nothing matched → fallback: show text as-is
-//   if (typeof value === 'string') {
-//     return value;
-//   }
+  //   // If nothing matched → fallback: show text as-is
+  //   if (typeof value === 'string') {
+  //     return value;
+  //   }
 
-//   return '';
-// }
+  //   return '';
+  // }
 
   getDesignationType(value: any): string {
-  if (!value) return '';
+    if (!value) return '';
 
-  if (Array.isArray(this.designationType) && this.designationType.length > 0) {
-    const found = this.designationType.find(
-      user => String(user.id) === String(value)
-    );
-    if (found) {
-      console.log('Designation found:', found.displayName);  // 👈 Debug
-      return found.displayName;
+    if (Array.isArray(this.designationType) && this.designationType.length > 0) {
+      const found = this.designationType.find(
+        user => String(user.id) === String(value)
+      );
+      if (found) {
+        console.log('Designation found:', found.displayName);  // 👈 Debug
+        return found.displayName;
+      }
     }
-  }
 
-  if (typeof value === 'string') {
-    console.log('Designation string:', value);  // 👈 Debug
-    return value;
-  }
-
-  return '';
-}
-
-getCarType(value: any): string {
-  if (!value) return '';
-
-  if (Array.isArray(this.carType) && this.getCarType.length > 0) {
-    const found = this.carType.find(
-      user => String(user.id) === String(value)
-    );
-    if (found) {
-      console.log('Designation found:', found.displayName);  // 👈 Debug
-      return found.displayName;
+    if (typeof value === 'string') {
+      console.log('Designation string:', value);  // 👈 Debug
+      return value;
     }
+
+    return '';
   }
 
-  if (typeof value === 'string') {
-    console.log('Designation string:', value);  // 👈 Debug
-    return value;
-  }
+  getCarType(value: any): string {
+    if (!value) return '';
 
-  return '';
-}
+    if (Array.isArray(this.carType) && this.getCarType.length > 0) {
+      const found = this.carType.find(
+        user => String(user.id) === String(value)
+      );
+      if (found) {
+        console.log('Designation found:', found.displayName);  // 👈 Debug
+        return found.displayName;
+      }
+    }
+
+    if (typeof value === 'string') {
+      console.log('Designation string:', value);  // 👈 Debug
+      return value;
+    }
+
+    return '';
+  }
   getStatusName(statusId) {
     if (this.leadInternalStatusList && this.leadInternalStatusList.length > 0) {
       let leadStatusName = this.leadInternalStatusList.filter(

@@ -780,7 +780,7 @@
                         tooltipPosition="top"
                       ></button> -->
 
-                      <img
+                      <!-- <img
                         alt="View Files"
                         src="../../../assets/images/icons/eye.svg"
                         width="24px"
@@ -789,7 +789,7 @@
                         (click)="viewLoanLead(lead.leadId)"
                         pTooltip="View Files"
                         tooltipPosition="top"
-                      />
+                      /> -->
                       <img
                         *ngIf="
                           userDetails?.userType && userDetails.userType !== '5'
@@ -863,6 +863,8 @@
                 [value]="loanLeads"
                 [sortOrder]="-1"
                 [lazy]="true"
+                (onRowSelect)="viewLeadProfile($event)"
+                selectionMode="single"
                 (onLazyLoad)="
                   activeEmploymentStatus.name == 'employed'
                     ? loadLeadsforHome($event)
@@ -1063,7 +1065,7 @@
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-lead>
-                  <tr>
+                  <tr [pSelectableRow]="lead">
                     <td class="leadid">
                       <span class="table-column-data singleline">{{
                         lead.customId ? lead.customId : "-"
@@ -1159,7 +1161,7 @@
                             icon="fas fa-eye"
                             tooltipPosition="top"
                           ></button> -->
-                          <img
+                          <!-- <img
                             alt="View Loan Lead"
                             src="../../../assets/images/icons/eye.svg"
                             width="24px"
@@ -1168,7 +1170,7 @@
                             (click)="viewLoanLead(lead.leadId)"
                             pTooltip="View"
                             tooltipPosition="top"
-                          />
+                          /> -->
                         </div>
                         <div
                           class="d-flex"
@@ -1189,7 +1191,7 @@
                             tooltipPosition="top"
                           ></button> -->
 
-                          <img
+                          <!-- <img
                             alt="View Files"
                             src="../../../assets/images/icons/eye.svg"
                             width="24px"
@@ -1198,7 +1200,7 @@
                             (click)="viewLoanLead(lead.leadId)"
                             pTooltip="View Files"
                             tooltipPosition="top"
-                          />
+                          /> -->
                           <!-- <button
                             *ngIf="
                               userDetails?.userType &&
@@ -1250,7 +1252,9 @@
                             height="24px"
                             pTooltip="Actions"
                             tooltipPosition="top"
-                            (click)="menuhome.toggle($event)"
+                            (click)="
+                              menuhome.toggle($event); $event.stopPropagation()
+                            "
                           />
                         </div>
                       </div>
@@ -1314,6 +1318,8 @@
                 [showCurrentPageReport]="true"
                 [rowsPerPageOptions]="[10, 25, 50]"
                 [paginator]="true"
+                (onRowSelect)="viewLeadProfile($event)"
+                selectionMode="single"
                 [rows]="10"
                 class="p-datatable-striped"
                 [totalRecords]="
@@ -1484,7 +1490,7 @@
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-lead>
-                  <tr>
+                  <tr [pSelectableRow]="lead">
                     <td class="leadid">
                       <span class="table-column-data singleline">{{
                         lead.customId ? lead.customId : "-"
@@ -1575,7 +1581,7 @@
                             icon="fas fa-eye"
                             tooltipPosition="top"
                           ></button> -->
-                          <img
+                          <!-- <img
                             alt="View Loan Lead"
                             src="../../../assets/images/icons/eye.svg"
                             width="24px"
@@ -1584,7 +1590,7 @@
                             (click)="viewLoanLead(lead.leadId)"
                             pTooltip="View"
                             tooltipPosition="top"
-                          />
+                          /> -->
                         </div>
                         <div
                           class="d-flex"
@@ -1604,7 +1610,7 @@
                             icon="fas fa-eye"
                             tooltipPosition="top"
                           ></button> -->
-                          <img
+                          <!-- <img
                             alt="View Files"
                             src="../../../assets/images/icons/eye.svg"
                             width="24px"
@@ -1613,7 +1619,7 @@
                             (click)="viewLoanLead(lead.leadId)"
                             pTooltip="View Files"
                             tooltipPosition="top"
-                          />
+                          /> -->
                           <!-- <button
                             *ngIf="
                               userDetails?.userType &&
@@ -1955,7 +1961,7 @@
                         tooltipPosition="top"
                       ></button> -->
 
-                      <img
+                      <!-- <img
                         alt="View Files"
                         src="../../../assets/images/icons/eye.svg"
                         width="24px"
@@ -1964,7 +1970,7 @@
                         (click)="viewLoanLead(lead.leadId)"
                         pTooltip="View Files"
                         tooltipPosition="top"
-                      />
+                      /> -->
                       <img
                         *ngIf="
                           userDetails?.userType && userDetails.userType !== '5'
@@ -2021,7 +2027,7 @@
       </div>
       <div *ngIf="activeItem.name == 'carLoan'">
         <!-- <app-comming-soon></app-comming-soon> -->
-         <p-tabMenu
+        <p-tabMenu
           [model]="employmentStatus"
           class="tabdesign"
           [activeItem]="activeEmploymentStatus"
@@ -2055,8 +2061,8 @@
                 class="p-datatable-striped"
                 [totalRecords]="
                   activeEmploymentStatus.name == 'employed'
-                    ? homeloanLeadsCount
-                    : homeloanselfLeadsCount
+                    ? carloanLeadsCount
+                    : carloanselfLeadsCount
                 "
                 [loading]="loanleadsLoading"
                 responsiveLayout="scroll"
@@ -2338,7 +2344,7 @@
                             icon="fas fa-eye"
                             tooltipPosition="top"
                           ></button> -->
-                          <img
+                          <!-- <img
                             alt="View Loan Lead"
                             src="../../../assets/images/icons/eye.svg"
                             width="24px"
@@ -2347,7 +2353,7 @@
                             (click)="viewLoanLead(lead.leadId)"
                             pTooltip="View"
                             tooltipPosition="top"
-                          />
+                          /> -->
                         </div>
                         <div
                           class="d-flex"
@@ -2368,7 +2374,7 @@
                             tooltipPosition="top"
                           ></button> -->
 
-                          <img
+                          <!-- <img
                             alt="View Files"
                             src="../../../assets/images/icons/eye.svg"
                             width="24px"
@@ -2377,7 +2383,7 @@
                             (click)="viewLoanLead(lead.leadId)"
                             pTooltip="View Files"
                             tooltipPosition="top"
-                          />
+                          /> -->
                           <!-- <button
                             *ngIf="
                               userDetails?.userType &&

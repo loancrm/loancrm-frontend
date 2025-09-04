@@ -8,6 +8,8 @@ import { CapitalizeFirstPipe } from "src/app/pipes/capitalize.pipe";
 import { TimelineModule } from "primeng/timeline";
 import { TableModule } from "primeng/table";
 import { PanelModule } from "primeng/panel";
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { CalendarModule } from 'primeng/calendar';
 import { DialogModule } from "primeng/dialog";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 const routes: Routes = [{ path: "", component: LeadProfileComponent }];
@@ -23,10 +25,12 @@ const routes: Routes = [{ path: "", component: LeadProfileComponent }];
     TableModule,
     DialogModule,
     FormsModule,
+    CalendarModule,
+    InputTextareaModule,
     ReactiveFormsModule,
     PanelModule,
     [RouterModule.forChild(routes)]
   ],
   exports: [LeadProfileComponent]
 })
-export class LeadProfileModule {}
+export class LeadProfileModule { }

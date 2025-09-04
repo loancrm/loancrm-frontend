@@ -151,7 +151,7 @@ export class LeadsComponent implements OnInit {
     this.setFilterConfig();
     this.capabilities = this.leadsService.getUserRbac();
     console.log(this.capabilities);
-    const loanTypes = ['', 'Personal', 'Home', 'Homeself', 'Lap', 'Lapself', 'professionalLoans','carLoan'];
+    const loanTypes = ['', 'Personal', 'Home', 'Homeself', 'Lap', 'Lapself', 'professionalLoans', 'carLoan'];
     loanTypes.forEach((type) => {
       const localStorageKey = `leadsAppliedFilter${type}`;
       const storedFilter =
@@ -315,7 +315,7 @@ export class LeadsComponent implements OnInit {
           name: 'self-employed',
         },
       ];
-    } 
+    }
 
     // Default case (if activeItem is neither homeLoan nor LAP)
     return [];
@@ -353,32 +353,32 @@ export class LeadsComponent implements OnInit {
     // );
     let loadLeadsFn: Function | null = null;
 
-  if (name === 'employed') {
-    if (itemName === 'homeLoan') {
-      loadLeadsFn = this.loadLeadsforHome;
-    } else if (itemName === 'lap') {
-      loadLeadsFn = this.loadLeadsforlap;
-    } else if (itemName === 'carLoan') {
-      loadLeadsFn = this.loadLeadsforCar;
+    if (name === 'employed') {
+      if (itemName === 'homeLoan') {
+        loadLeadsFn = this.loadLeadsforHome;
+      } else if (itemName === 'lap') {
+        loadLeadsFn = this.loadLeadsforlap;
+      } else if (itemName === 'carLoan') {
+        loadLeadsFn = this.loadLeadsforCar;
+      }
+    } else {
+      if (itemName === 'homeLoan') {
+        loadLeadsFn = this.loadLeadsforHomeself;
+      } else if (itemName === 'lap') {
+        loadLeadsFn = this.loadLeadsforlapself;
+      } else if (itemName === 'carLoan') {
+        loadLeadsFn = this.loadLeadsforCarself;
+      }
     }
-  } else {
-    if (itemName === 'homeLoan') {
-      loadLeadsFn = this.loadLeadsforHomeself;
-    } else if (itemName === 'lap') {
-      loadLeadsFn = this.loadLeadsforlapself;
-    } else if (itemName === 'carLoan') {
-      loadLeadsFn = this.loadLeadsforCarself;
+
+    if (loadLeadsFn) {
+      loadLeadsFn.call(this, event);
     }
-  }
 
-  if (loadLeadsFn) {
-    loadLeadsFn.call(this, event);
-  }
-
-  this.localStorageService.setItemOnLocalStorage(
-    'employmentStatusActiveItem',
-    event.name
-  );
+    this.localStorageService.setItemOnLocalStorage(
+      'employmentStatusActiveItem',
+      event.name
+    );
   }
   toggleDropdown() {
     this.dropdownVisible = !this.dropdownVisible;
@@ -461,7 +461,32 @@ export class LeadsComponent implements OnInit {
         icon: 'pi pi-sign-in',
         command: () => this.revertLeadToNew(lead),
       });
+    } else if (lead.leadInternalStatus === 16) {
+      menuItems[0].items.push({
+        label: 'Send To New Lead',
+        icon: 'pi pi-sign-in',
+        command: () => this.sendToLead(lead),
+      });
+      if (userTypeIsNot3) {
+        menuItems[0].items.push({
+          label: 'Send to Files',
+          icon: 'pi pi-sign-in',
+          command: () => {
+            // Check if businessEntity is filled before sending to files
+            if (!lead.businessEntity || lead.businessEntity.trim() === '') {
+              // Show error message if businessEntity is empty
+              this.toastService.showToast('error', 'Business Entity Required', 'Please fill in the Business Entity field.');
+              return;  // Exit the function to prevent sending the lead to files
+            }
+
+            // Proceed to send to files if businessEntity is filled
+            this.sendLeadToFiles(lead);
+          },
+        });
+      }
+      return menuItems;
     }
+
     if (this.capabilities?.delete) {
       menuItems[0].items.push({
         label: 'Delete',
@@ -484,6 +509,9 @@ export class LeadsComponent implements OnInit {
         this.deleteLoanLead(lead.leadId);
       },
     });
+  }
+  sendToLead(lead) {
+    this.changeLeadStatus(lead.id, 1);
   }
   deleteLoanLead(leadId) {
     this.loading = true;
@@ -990,9 +1018,9 @@ export class LeadsComponent implements OnInit {
 
   sendLeadToFollowUps(lead) {
     this.changeLeadStatus(lead.id, 16);
-    const targetUrl = 'user/followups';
-    const queryParams = { v: this.version };
-    this.router.navigate([targetUrl], { queryParams });
+    // const targetUrl = 'user/followups';
+    // const queryParams = { v: this.version };
+    // this.router.navigate([targetUrl], { queryParams });
   }
   createleadDocumentsTable(lead) {
     this.loading = true;
@@ -1014,35 +1042,37 @@ export class LeadsComponent implements OnInit {
   // }
 
   getStatusColor(status: string): {
-  textColor: string;
-  backgroundColor: string;
-  dotColor: string;
-  width: string;
-} {
-  switch (status) {
-    case 'New':
-      return {
-        textColor: '#037847',
-        backgroundColor: '#ECFDF3',
-        dotColor: '#14BA6D',
-        width: '54px'
-      };
-    case 'Archived':
-      return {
-        textColor: '#364254',
-        backgroundColor: '#F2F4F7',
-        dotColor: '#364254',
-        width: '81px'
-      };
-    default:
-      return {
-        textColor: 'black',
-        backgroundColor: 'white',
-        dotColor: 'gray',
-        width: '54px'
-      };
+    textColor: string;
+    backgroundColor: string;
+    dotColor: string;
+    width: string;
+  } {
+    switch (status) {
+      case 'New':
+        return {
+          textColor: '#037847',
+          backgroundColor: '#ECFDF3',
+          dotColor: '#14BA6D',
+          width: '54px'
+        };
+      case 'Archived':
+        return {
+          textColor: '#364254',
+          backgroundColor: '#F2F4F7',
+          dotColor: '#364254',
+          width: '81px'
+        };
+      case 'Follow Ups':
+        return { textColor: '#8E89D0', backgroundColor: '#EDF3FE', dotColor: '#8E89D0', width: '100px' }; // Purple theme
+      default:
+        return {
+          textColor: 'black',
+          backgroundColor: 'white',
+          dotColor: 'gray',
+          width: '54px'
+        };
+    }
   }
-}
 
   loadLeads(event) {
     this.currentTableEvent = event;
@@ -1052,7 +1082,7 @@ export class LeadsComponent implements OnInit {
         if (this.selectedLeadStatus.name != 'all') {
           api_filter['leadInternalStatus-eq'] = this.selectedLeadStatus.id;
         } else {
-          api_filter['leadInternalStatus-or'] = '1,2';
+          api_filter['leadInternalStatus-or'] = '1,2,16';
         }
       }
     }
@@ -1105,27 +1135,27 @@ export class LeadsComponent implements OnInit {
   }
 
   getDesignationType(userId: any): string {
-  if (this.designationType && this.designationType.length > 0) {
-    const designationType = this.designationType.find(user => user.id == userId);
-    return designationType?.displayName || '';
+    if (this.designationType && this.designationType.length > 0) {
+      const designationType = this.designationType.find(user => user.id == userId);
+      return designationType?.displayName || '';
+    }
+    return '';
   }
-  return '';
-}
-getCarType(userId: any): string {
-  if (this.carType && this.carType.length > 0) {
-    const carType = this.carType.find(user => String(user.id) === String(userId));
-    return carType?.displayName || '';
+  getCarType(userId: any): string {
+    if (this.carType && this.carType.length > 0) {
+      const carType = this.carType.find(user => String(user.id) === String(userId));
+      return carType?.displayName || '';
+    }
+    return '';
   }
-  return '';
-}
 
   getEmploymentType(userId: any): string {
-  if (this.employmentType && this.employmentType.length > 0) {
-    const employmentType = this.employmentType.find(user => user.id == userId);
-    return employmentType?.displayName || '';
+    if (this.employmentType && this.employmentType.length > 0) {
+      const employmentType = this.employmentType.find(user => user.id == userId);
+      return employmentType?.displayName || '';
+    }
+    return '';
   }
-  return '';
-}
 
   getTotalLeadsCount(filter = {}) {
     this.leadsService.getLeadsCount(filter).subscribe(
@@ -1257,7 +1287,7 @@ getCarType(userId: any): string {
           'loanId',
           this.personNameToSearchForHome
         );
-      }else if (this.activeItem.name === 'carLoan') {
+      } else if (this.activeItem.name === 'carLoan') {
         this.inputValueChangeEventForCar(
           'loanId',
           this.personNameToSearchForHome
@@ -1275,7 +1305,7 @@ getCarType(userId: any): string {
           'loanId',
           this.businessNameToSearchForHome
         );
-      }else if (this.activeItem.name === 'carLoan') {
+      } else if (this.activeItem.name === 'carLoan') {
         this.inputValueChangeEventForCarSelf(
           'loanId',
           this.businessNameToSearchForHome
@@ -1610,7 +1640,7 @@ getCarType(userId: any): string {
     }
   }
 
-  loapLeadsforprofessional(event){
+  loapLeadsforprofessional(event) {
     this.currentTableEvent = event;
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);
     api_filter['loanType-eq'] = 'professionalLoans';
@@ -2004,24 +2034,24 @@ getCarType(userId: any): string {
       }
     );
   }
-//  getCarType(value: any): string {
-//   if (!value) return '';
+  //  getCarType(value: any): string {
+  //   if (!value) return '';
 
-//   if (Array.isArray(this.carType) && this.carType.length > 0) {   // 👈 FIXED
-//     const found = this.carType.find(
-//       (user: any) => String(user.id) === String(value)
-//     );
-//     if (found) {
-//       console.log('Car Type found:', found.displayName);
-//       return found.displayName;
-//     }
-//   }
+  //   if (Array.isArray(this.carType) && this.carType.length > 0) {   // 👈 FIXED
+  //     const found = this.carType.find(
+  //       (user: any) => String(user.id) === String(value)
+  //     );
+  //     if (found) {
+  //       console.log('Car Type found:', found.displayName);
+  //       return found.displayName;
+  //     }
+  //   }
 
-//   if (typeof value === 'string') {
-//     console.log('Car Type string:', value);
-//     return value;
-//   }
+  //   if (typeof value === 'string') {
+  //     console.log('Car Type string:', value);
+  //     return value;
+  //   }
 
-//   return '';
-// }
+  //   return '';
+  // }
 }

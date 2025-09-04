@@ -536,7 +536,7 @@ export class LoginsComponent {
           name: 'self-employed',
         },
       ];
-    } 
+    }
     // Default case (if activeItem is neither homeLoan nor LAP)
     return [];
   }
@@ -1140,7 +1140,7 @@ export class LoginsComponent {
 
   savedBanks(lead) {
     const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
-    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap') {
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans') {
       this.routingService.handleRoute(`logins/banksSaved/${loanType}/${lead.leadId}`, null);
     } else {
       // If no known loanType, omit status from the route

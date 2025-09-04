@@ -66,7 +66,6 @@
         <div class="info-line">
           <div class="label">ID:</div>
           <div class="value">{{ selectLender.id ? selectLender.id : "-" }}</div>
-
           <div class="label">Surrogate:</div>
           <div class="value">
             {{
@@ -722,15 +721,17 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-3 col-sm-4 col-6 mb-3 business" *ngIf = "loanType === 'carLoan'">
+                  <div
+                    class="col-md-3 col-sm-4 col-6 mb-3 business"
+                    *ngIf="loanType === 'carLoan'"
+                  >
                     <div>
                       <div class="text-muted">CarType</div>
                       <div class="fw-bold">
                         {{
                           leadsData.leadData?.carType
-                            ? (getCarType(
-                                leadsData.leadData?.carType
-                              ) | capitalizeFirst)
+                            ? (getCarType(leadsData.leadData?.carType)
+                              | capitalizeFirst)
                             : "-"
                         }}
                       </div>
@@ -6018,6 +6019,74 @@
                   </ng-template>
                 </p-timeline>
               </div>
+
+              <div class="card" styleClass="mb-3 shadow-2">
+                <div *ngFor="let note of notes" class="mb-2">
+                  <p>
+                    <strong>{{ note.date | date : "dd-MMM-yyyy" }}</strong> -
+                    {{ note.remarks }}
+                    <span class="text-sm text-secondary"
+                      >(by {{ note.updatedBy }})</span
+                    >
+                  </p>
+                </div>
+
+                <div class="p-fluid p-formgrid p-grid mt-3">
+                  <div class="p-field p-col-12 p-md-4">
+                    <label for="date">Date</label>
+                    <!-- <p-calendar
+                      [(ngModel)]="newNote.date"
+                      inputId="date"
+                      dateFormat="yy-mm-dd"
+                      [showIcon]="true"
+                      appendTo="body"
+                    >
+                    </p-calendar> -->
+                    <div
+                      class="custom-calendar-wrapper w-100 position-relative"
+                    >
+                      <p-calendar
+                        #calendar
+                        [(ngModel)]="newNote.date"
+                        placeholder="Select Date"
+                        [showIcon]="false"
+                        appendTo="body"
+                        dateFormat="yy-mm-dd"
+                        [showButtonBar]="true"
+                        styleClass="w-100"
+                      ></p-calendar>
+                      <img
+                        src="../../../../assets/images/icons/calendar.svg"
+                        alt="Calendar Icon"
+                        class="calendar-custom-img"
+                        (click)="calendar.toggle()"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="p-field p-col-12 p-md-6">
+                    <label for="remarks">Remarks</label>
+                    <textarea
+                      pInputTextarea
+                      [style]="{ width: '100%' }"
+                      autocomplete="off"
+                      [(ngModel)]="newNote.remarks"
+                      placeholder="Enter remarks"
+                    ></textarea>
+                  </div>
+
+                  <div class="p-field p-col-12 p-md-2 flex align-items-end">
+                    <button
+                      pButton
+                      type="button"
+                      label="Add"
+                      icon="pi pi-plus"
+                      class="p-button-success"
+                      (click)="addNote()"
+                    ></button>
+                  </div>
+                </div>
+              </div>
             </div>
           </ng-container>
 
@@ -6158,15 +6227,17 @@
                     </div>
                   </div>
 
-                  <div class="col-md-3 col-sm-4 col-6 mb-3 business" *ngIf = "loanType === 'carLoan'">
+                  <div
+                    class="col-md-3 col-sm-4 col-6 mb-3 business"
+                    *ngIf="loanType === 'carLoan'"
+                  >
                     <div>
                       <div class="text-muted">CarType</div>
                       <div class="fw-bold">
                         {{
                           leadsData.leadData?.carType
-                            ? (getCarType(
-                                leadsData.leadData?.carType
-                              ) | capitalizeFirst)
+                            ? (getCarType(leadsData.leadData?.carType)
+                              | capitalizeFirst)
                             : "-"
                         }}
                       </div>
@@ -7055,10 +7126,10 @@
                         <div
                           class="accordion-item"
                           *ngIf="
-                            ((employmentStatus === 'employed' &&
-                            loanType !== 'personalLoan') &&
-                            (loanType !== 'professionalLoans') &&
-                            (loanType !== 'carLoan'))
+                            employmentStatus === 'employed' &&
+                            loanType !== 'personalLoan' &&
+                            loanType !== 'professionalLoans' &&
+                            loanType !== 'carLoan'
                           "
                         >
                           <h2 class="accordion-header" id="headingGST">

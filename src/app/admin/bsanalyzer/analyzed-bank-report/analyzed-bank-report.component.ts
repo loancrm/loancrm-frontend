@@ -88,13 +88,13 @@ export class AnalyzedBankReportComponent implements OnInit {
     { label: 'Salary', id: 'salary' },
     { label: 'OD/CC Utilization', id: 'od-cc-utilization' }
   ];
-  accountId = "HDFC_BANK_1";
+  accountId: any;
   accountReferenceNumber = 'HDFC_BANK_1';
   visibleTabs: TabItem[] = [];
   overflowTabs: TabItem[] = [];
   activeTabId: string = 'summary';
   monthList: string[] = [];
-  reportId = 1233333
+  reportId: any;
   dailyBalanceTable: any[] = [];
   report: any
   constructor(
@@ -105,6 +105,8 @@ export class AnalyzedBankReportComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.reportId = this.route.snapshot.paramMap.get('reportId');
+    console.log(this.reportId)
     this.fetchReport();
   }
 
@@ -125,7 +127,6 @@ export class AnalyzedBankReportComponent implements OnInit {
   editReport(reportId: string) {
     if (reportId) {
       this.routingService.handleRoute(`bsanalyzer/${reportId}`, null);
-
       // this.router.navigate(['/reports/edit', reportId]); // adjust route as per your routing config
     }
   }
@@ -297,10 +298,10 @@ export class AnalyzedBankReportComponent implements OnInit {
       // accountId: this.accountId,
       accountReferenceNumber: this.accountReferenceNumber
     };
-
     this.bankService.extractSummaryDetails(params).subscribe({
       next: (data: any[]) => {
-        this.reportData = data;
+        this.reportData = Array.isArray(data) ? data : [];
+        console.log('Table Data:', this.reportData);
         const bankAccountsSection = this.reportData.filter(
           sec => sec.sectionName === 'Bank Accounts'
         );
@@ -356,7 +357,7 @@ export class AnalyzedBankReportComponent implements OnInit {
     this.bankService.extractOverviewDetails(params) // replace with your API call
       .subscribe({
         next: (res) => {
-          this.overviewData = res;
+          this.overviewData = Array.isArray(res) ? res : [];
           this.overviewLoading = false;
         },
         error: () => {
@@ -904,31 +905,12 @@ export class AnalyzedBankReportComponent implements OnInit {
   }
   downloadCam() {
     const params = {
-      // accountId: this.accountId,
+      accountId: this.accountId,
       accountReferenceNumber: this.accountReferenceNumber
     };
-    this.bankService.downloadCamFile(params).subscribe({
-      next: (blob: Blob) => {
-        // Check if the blob is actually an Excel file
-
-
-        // Create Excel download
-        const file = new Blob([blob], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-        const url = window.URL.createObjectURL(file);
-        window.open(url, "_blank")
-        // const a = document.createElement('a');
-        // a.href = url;
-        // a.download = 'report.xlsx';
-        // document.body.appendChild(a);
-        // a.click();
-        // document.body.removeChild(a);
-        // window.URL.revokeObjectURL(url);
-      },
-      error: (err) => console.error('Download failed:', err)
-    });
+    const url = this.bankService.downloadCamFile(this.accountReferenceNumber);
+    window.open(url, '_blank');
   }
-
-
 
   loadAmlAnalysis() {
     this.overviewLoading = true;

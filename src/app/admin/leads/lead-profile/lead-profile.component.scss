@@ -129,12 +129,12 @@
   border-radius: 50%;
   width: 2.5rem;
   height: 2.5rem;
-  box-shadow: 0 0 0 2px #8E89D0;
+  box-shadow: 0 0 0 2px #8e89d0;
 }
 
 ::ng-deep .custom-marker i {
   font-size: 1.2rem;
-  color: #8E89D0;
+  color: #8e89d0;
 }
 
 /* Shared base for both filled and pending markers */
@@ -142,8 +142,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.2rem;    /* Change width here */
-  height: 2.2rem;   /* Change height here */
+  width: 2.2rem; /* Change width here */
+  height: 2.2rem; /* Change height here */
   /* Remove border-radius to make square */
   border-radius: 50%;
   border: 1px solid transparent; /* default, overridden below */
@@ -151,13 +151,13 @@
 
 /* Filled square (when event.date exists) */
 ::ng-deep .marker-filled {
-  background-color: #8E89D0;
+  background-color: #8e89d0;
 }
 
 /* Pending square (when event.date is null) */
 ::ng-deep .marker-pending {
   background-color: #ffffff;
-  border-color: #8E89D0;
+  border-color: #8e89d0;
 }
 
 /* Icon for filled state → white */
@@ -167,7 +167,8 @@
 
 /* Icon default purple color */
 ::ng-deep .timeline-icon {
-  filter: brightness(0) saturate(100%) invert(30%) sepia(45%) saturate(1693%) hue-rotate(211deg) brightness(94%) contrast(85%);
+  filter: brightness(0) saturate(100%) invert(30%) sepia(45%) saturate(1693%)
+    hue-rotate(211deg) brightness(94%) contrast(85%);
 }
 
 small {
@@ -176,7 +177,7 @@ small {
 .circle-initial {
   width: 25px;
   height: 25px;
-  background-color: #8E89D0; /* Choose any color */
+  background-color: #8e89d0; /* Choose any color */
   color: white;
   border-radius: 50%;
   display: flex;
@@ -187,12 +188,12 @@ small {
   text-transform: uppercase;
 }
 .sourced-by-outline {
-  border: 1px solid #8E89D0; /* light gray border */
+  border: 1px solid #8e89d0; /* light gray border */
   border-radius: 35px;
   width: max-content;
 }
 .custom-tabs {
-  background-color: #EDF3FE;
+  background-color: #edf3fe;
   border-bottom: 2px solid #ffffff33;
   border-radius: 0.5rem 0.5rem 0 0;
 }
@@ -208,17 +209,16 @@ small {
   transition: color 0.3s, background-color 0.3s;
 }
 
-
 .custom-tabs .nav-link:hover {
-  color: #535AB4;
-  background-color: #EDF3FE;
+  color: #535ab4;
+  background-color: #edf3fe;
 }
 
 .custom-tabs .nav-link.active {
-  color: #535AB4;
-  background-color: #EDF3FE;
+  color: #535ab4;
+  background-color: #edf3fe;
   font-size: medium;
-  border-bottom: 3px solid #535AB4;
+  border-bottom: 3px solid #535ab4;
 }
 .tab-content {
   background-color: #fff;
@@ -238,7 +238,7 @@ small {
 
 /* Accordion Button */
 .accordion-dark .accordion-button {
-  background-color: #EDF3FE;
+  background-color: #edf3fe;
   color: #101828;
   font-weight: 600;
   font-size: 20px;
@@ -248,7 +248,7 @@ small {
 }
 
 .accordion-dark .accordion-button:not(.collapsed) {
-  background-color: #EDF3FE;
+  background-color: #edf3fe;
   color: #101828;
   font-weight: 600;
   font-size: 20px;
@@ -291,7 +291,6 @@ small {
   background-color: #6366f1;
   color: #fff;
 }
-
 
 // ::ng-deep .custom-dark-table .p-datatable-thead > tr > th {
 //   background-color: #1b1b2f;
@@ -349,18 +348,21 @@ small {
 .tab-icon {
   width: 18px;
   height: 18px;
-  filter: brightness(0) saturate(100%) invert(44%) sepia(0%) saturate(0%) hue-rotate(179deg) brightness(91%) contrast(94%);
+  filter: brightness(0) saturate(100%) invert(44%) sepia(0%) saturate(0%)
+    hue-rotate(179deg) brightness(91%) contrast(94%);
   transition: filter 0.3s;
 }
 
 /* Hover or Active state color change */
 button.nav-link:hover .tab-icon,
 button.nav-link.active .tab-icon {
-  filter: brightness(0) saturate(100%) invert(30%) sepia(45%) saturate(1693%) hue-rotate(211deg) brightness(94%) contrast(85%);
+  filter: brightness(0) saturate(100%) invert(30%) sepia(45%) saturate(1693%)
+    hue-rotate(211deg) brightness(94%) contrast(85%);
 }
 
-.card-header img{
-  filter: brightness(0) saturate(100%) invert(30%) sepia(45%) saturate(1693%) hue-rotate(211deg) brightness(94%) contrast(85%);
+.card-header img {
+  filter: brightness(0) saturate(100%) invert(30%) sepia(45%) saturate(1693%)
+    hue-rotate(211deg) brightness(94%) contrast(85%);
 }
 
 .text-warning {
@@ -369,8 +371,9 @@ button.nav-link.active .tab-icon {
 // .timeline-icon {
 //   filter: brightness(0) saturate(100%) invert(30%) sepia(45%) saturate(1693%) hue-rotate(211deg) brightness(94%) contrast(85%);
 // }
-.file-icon{
-  filter: brightness(0) saturate(100%) invert(30%) sepia(45%) saturate(1693%) hue-rotate(211deg) brightness(94%) contrast(85%);
+.file-icon {
+  filter: brightness(0) saturate(100%) invert(30%) sepia(45%) saturate(1693%)
+    hue-rotate(211deg) brightness(94%) contrast(85%);
 }
 .fw-bold {
   font-size: 14px !important;
@@ -379,7 +382,7 @@ button.nav-link.active .tab-icon {
   font-size: 16px;
   margin-top: 5px;
 }
-.business .text-muted{
+.business .text-muted {
   color: #101828 !important;
   font-weight: 500 !important;
   font-size: 16px;
@@ -444,13 +447,13 @@ button.nav-link.active .tab-icon {
   // position: fixed;
 }
 
-.phone{
-  color:#737373;
+.phone {
+  color: #737373;
   font-weight: 500;
   font-size: 14px;
   letter-spacing: 0.15px;
 }
-.business{
+.business {
   color: #101828;
   font-weight: 500;
   font-size: 14px;
@@ -615,8 +618,23 @@ button.nav-link.active .tab-icon {
   cursor: pointer;
   z-index: 9999;
 }
-@media(max-width: 768px) {
+@media (max-width: 768px) {
   .edit-icon {
     right: 2rem;
   }
+}
+.custom-calendar-wrapper {
+  position: relative;
+}
+
+.calendar-custom-img {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+  filter: grayscale(100%) brightness(50%);
+  // z-index: 2; /* ensure it's above the input */
 }

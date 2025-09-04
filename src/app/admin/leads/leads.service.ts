@@ -953,7 +953,15 @@ export class LeadsService {
     const url = 'callbacks/' + leadId;
     return this.serviceMeta.httpPut(url, data);
   }
+  addNote(leadId, note: any) {
+    console.log(leadId)
+    console.log(note)
+    return this.serviceMeta.httpPost(`leads/followup-notes/${leadId}/notes`, note);
+  }
 
+  getNotes(leadId) {
+    return this.serviceMeta.httpGet(`leads/followup-notes/${leadId}/notes`);
+  }
   updateIpAddress(ipAddressId, data) {
     const url = 'ipAddress/' + ipAddressId;
     return this.serviceMeta.httpPut(url, data);

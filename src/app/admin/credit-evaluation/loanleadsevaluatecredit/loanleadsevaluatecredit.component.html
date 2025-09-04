@@ -633,156 +633,183 @@
 
                         <div>
                           <div *ngIf="leadData[0]?.designation === 1">
-                          <div class="label fw-bold mb-1">
-                          <span
-                            style="
-                              color: #101828;
-                              font-weight: 500;
-                              margin-left: 30px;
-                            "
-                            >Graduation Certificate</span
-                          >
-                        </div>
-                        <div class="value">
-                          <div
-                            *ngIf="
-                              leadData &&
-                              leadData[0]?.graduationCertificate &&
-                              leadData[0]?.graduationCertificate?.length > 0
-                            "
-                          >
-                            <span
-                              *ngFor="let file of leadData[0]?.graduationCertificate"
-                              class="me-2"
-                            >
-                              <a [href]="'//' + file" target="_blank">View</a>
-                            </span>
-                          </div>
-                        </div>
+                            <div class="label fw-bold mb-1">
+                              <span
+                                style="
+                                  color: #101828;
+                                  font-weight: 500;
+                                  margin-left: 30px;
+                                "
+                                >Graduation Certificate</span
+                              >
+                            </div>
+                            <div class="value">
+                              <div
+                                *ngIf="
+                                  leadData &&
+                                  leadData[0]?.graduationCertificate &&
+                                  leadData[0]?.graduationCertificate?.length > 0
+                                "
+                              >
+                                <span
+                                  *ngFor="
+                                    let file of leadData[0]
+                                      ?.graduationCertificate
+                                  "
+                                  class="me-2"
+                                >
+                                  <a [href]="'//' + file" target="_blank"
+                                    >View</a
+                                  >
+                                </span>
+                              </div>
+                            </div>
 
-                        <div class="label fw-bold mb-1">
-                          <span
-                            style="
-                              color: #101828;
-                              font-weight: 500;
-                              margin-left: 30px;
-                            "
-                            >Pg Certificate</span
-                          >
-                        </div>
-                        <div class="value">
-                          <div
-                            *ngIf="
-                              leadData &&
-                              leadData[0]?.pgCertificate &&
-                              leadData[0]?.pgCertificate?.length > 0
-                            "
-                          >
-                            <span
-                              *ngFor="let file of leadData[0]?.pgCertificate"
-                              class="me-2"
-                            >
-                              <a [href]="'//' + file" target="_blank">View</a>
-                            </span>
-                          </div>
-                        </div>
+                            <div class="label fw-bold mb-1">
+                              <span
+                                style="
+                                  color: #101828;
+                                  font-weight: 500;
+                                  margin-left: 30px;
+                                "
+                                >Pg Certificate</span
+                              >
+                            </div>
+                            <div class="value">
+                              <div
+                                *ngIf="
+                                  leadData &&
+                                  leadData[0]?.pgCertificate &&
+                                  leadData[0]?.pgCertificate?.length > 0
+                                "
+                              >
+                                <span
+                                  *ngFor="
+                                    let file of leadData[0]?.pgCertificate
+                                  "
+                                  class="me-2"
+                                >
+                                  <a [href]="'//' + file" target="_blank"
+                                    >View</a
+                                  >
+                                </span>
+                              </div>
+                            </div>
                           </div>
 
                           <div *ngIf="leadData[0]?.designation === 2">
                             <div class="label fw-bold mb-1">
-                            <span
-                              style="
-                                color: #101828;
-                                font-weight: 500;
-                                margin-left: 30px;
-                              "
-                              >Membership Certificate (COM)</span
-                            >
-                          </div>
-                          <div class="value">
-                            <div
-                              *ngIf="
-                                leadData &&
-                                leadData[0]?.membershipCertificate &&
-                                leadData[0]?.membershipCertificate?.length > 0
-                              "
-                            >
                               <span
-                                *ngFor="let file of leadData[0]?.membershipCertificate"
-                                class="me-2"
+                                style="
+                                  color: #101828;
+                                  font-weight: 500;
+                                  margin-left: 30px;
+                                "
+                                >Membership Certificate (COM)</span
                               >
-                                <a [href]="'//' + file" target="_blank">View</a>
-                              </span>
                             </div>
-                          </div>
+                            <div class="value">
+                              <div
+                                *ngIf="
+                                  leadData &&
+                                  leadData[0]?.membershipCertificate &&
+                                  leadData[0]?.membershipCertificate?.length > 0
+                                "
+                              >
+                                <span
+                                  *ngFor="
+                                    let file of leadData[0]
+                                      ?.membershipCertificate
+                                  "
+                                  class="me-2"
+                                >
+                                  <a [href]="'//' + file" target="_blank"
+                                    >View</a
+                                  >
+                                </span>
+                              </div>
+                            </div>
 
-                          <div class="label fw-bold mb-1">
-                            <span
-                              style="
-                                color: #101828;
-                                font-weight: 500;
-                                margin-left: 30px;
-                              "
-                              >Practicing Certificate(COP)</span
-                            >
-                          </div>
-                          <div class="value">
-                            <div
-                              *ngIf="
-                                leadData &&
-                                leadData[0]?.practicingCertificate &&
-                                leadData[0]?.practicingCertificate?.length > 0
-                              "
-                            >
+                            <div class="label fw-bold mb-1">
                               <span
-                                *ngFor="let file of leadData[0]?.practicingCertificate"
-                                class="me-2"
+                                style="
+                                  color: #101828;
+                                  font-weight: 500;
+                                  margin-left: 30px;
+                                "
+                                >Practicing Certificate(COP)</span
                               >
-                                <a [href]="'//' + file" target="_blank">View</a>
-                              </span>
                             </div>
-                          </div>
+                            <div class="value">
+                              <div
+                                *ngIf="
+                                  leadData &&
+                                  leadData[0]?.practicingCertificate &&
+                                  leadData[0]?.practicingCertificate?.length > 0
+                                "
+                              >
+                                <span
+                                  *ngFor="
+                                    let file of leadData[0]
+                                      ?.practicingCertificate
+                                  "
+                                  class="me-2"
+                                >
+                                  <a [href]="'//' + file" target="_blank"
+                                    >View</a
+                                  >
+                                </span>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <div *ngIf="leadData?.length 
-                    && leadData[0].loanType === 'carLoan' 
-                    && leadData[0].carType === 1">
+                  <div
+                    *ngIf="
+                      leadData?.length &&
+                      leadData[0].loanType === 'carLoan' &&
+                      leadData[0].carType === 1
+                    "
+                  >
                     <div class="label fw-bold mb-1">
-                    <span
-                      style="
-                        color: #101828;
-                        font-weight: 500;
-                        margin-left: 30px;
-                      "
-                      >RC Copy</span
-                    >
-                  </div>
-                  <div class="value">
-                    <div
-                      *ngIf="
-                        leadData &&
-                        leadData[0]?.rcCopy &&
-                        leadData[0]?.rcCopy?.length > 0
-                      "
-                    >
                       <span
-                        *ngFor="let file of leadData[0]?.rcCopy"
-                        class="me-2"
+                        style="
+                          color: #101828;
+                          font-weight: 500;
+                          margin-left: 30px;
+                        "
+                        >RC Copy</span
                       >
-                        <a [href]="'//' + file" target="_blank">View</a>
-                      </span>
+                    </div>
+                    <div class="value">
+                      <div
+                        *ngIf="
+                          leadData &&
+                          leadData[0]?.rcCopy &&
+                          leadData[0]?.rcCopy?.length > 0
+                        "
+                      >
+                        <span
+                          *ngFor="let file of leadData[0]?.rcCopy"
+                          class="me-2"
+                        >
+                          <a [href]="'//' + file" target="_blank">View</a>
+                        </span>
+                      </div>
                     </div>
                   </div>
-                  </div>
 
-                  <div class="row mb-3"
-                   *ngIf="leadData?.length 
-                          && leadData[0].loanType === 'carLoan' 
-                          && leadData[0].carType === 2">
+                  <div
+                    class="row mb-3"
+                    *ngIf="
+                      leadData?.length &&
+                      leadData[0].loanType === 'carLoan' &&
+                      leadData[0].carType === 2
+                    "
+                  >
                     <!--New Car quotation -->
                     <div class="col-md-6 col-12">
                       <div
@@ -799,8 +826,8 @@
                           "
                         >
                           <span style="color: #101828; font-weight: 500"
-                            >New Car quotation </span
-                          >
+                            >New Car quotation
+                          </span>
                         </div>
                         <div class="value" style="margin-top: 2px">
                           {{ leadData[0]?.newCarQuotation | capitalizeFirst }}
@@ -809,7 +836,7 @@
                     </div>
 
                     <!---New Car Quotation-->
-                     <div class="col-md-6 col-12">
+                    <div class="col-md-6 col-12">
                       <div class="info-line">
                         <div class="label fw-bold mb-1">
                           <span
@@ -830,7 +857,9 @@
                             "
                           >
                             <span
-                              *ngFor="let file of leadData[0]?.newCarQuotationFile"
+                              *ngFor="
+                                let file of leadData[0]?.newCarQuotationFile
+                              "
                               class="me-2"
                             >
                               <a [href]="'//' + file" target="_blank">View</a>
@@ -843,53 +872,58 @@
                   <!-- End Company Row -->
 
                   <!-- Payslips -->
-                  <div *ngIf="(leadData[0]?.employmentType === 1) 
-                              || (leadData[0]?.loanType === 'personalLoan') 
-                              || ((leadData[0]?.loanType === 'homeLoan') && (leadData[0]?.employmentStatus === 'employed'))">
+                  <div
+                    *ngIf="
+                      leadData[0]?.employmentType === 1 ||
+                      leadData[0]?.loanType === 'personalLoan' ||
+                      (leadData[0]?.loanType === 'homeLoan' &&
+                        leadData[0]?.employmentStatus === 'employed')
+                    "
+                  >
                     <div *ngIf="leadData[0]?.paySlips">
-                    <div
-                      *ngFor="let kyc of leadData[0]?.paySlips; let i = index"
-                      class="business-details mt-3"
-                    >
                       <div
-                        class="label fw-bold"
-                        style="text-decoration: underline"
+                        *ngFor="let kyc of leadData[0]?.paySlips; let i = index"
+                        class="business-details mt-3"
                       >
-                        PaySlips
-                      </div>
-                      <div class="info-line">
-                        <div class="label">Date<b>:&nbsp;</b></div>
-                        <div class="value">
-                          {{
-                            isValidDate(kyc.date)
-                              ? (kyc.date | date : "MMM dd, yyyy")
-                              : "-"
-                          }}
+                        <div
+                          class="label fw-bold"
+                          style="text-decoration: underline"
+                        >
+                          PaySlips
                         </div>
-                      </div>
-                      <div class="info-line">
-                        <div class="label">Salary<b>:&nbsp;</b></div>
-                        <div class="value">
-                          {{ kyc.salary | capitalizeFirst }}
+                        <div class="info-line">
+                          <div class="label">Date<b>:&nbsp;</b></div>
+                          <div class="value">
+                            {{
+                              isValidDate(kyc.date)
+                                ? (kyc.date | date : "MMM dd, yyyy")
+                                : "-"
+                            }}
+                          </div>
                         </div>
-                      </div>
-                      <div class="info-line">
-                        <div class="label">Payslip<b>:&nbsp;</b></div>
-                        <div class="value">
-                          <div
-                            *ngIf="kyc?.paySlips && kyc?.paySlips.length > 0"
-                          >
-                            <span
-                              *ngFor="let file of kyc?.paySlips"
-                              class="me-2"
+                        <div class="info-line">
+                          <div class="label">Salary<b>:&nbsp;</b></div>
+                          <div class="value">
+                            {{ kyc.salary | capitalizeFirst }}
+                          </div>
+                        </div>
+                        <div class="info-line">
+                          <div class="label">Payslip<b>:&nbsp;</b></div>
+                          <div class="value">
+                            <div
+                              *ngIf="kyc?.paySlips && kyc?.paySlips.length > 0"
                             >
-                              <a [href]="'//' + file" target="_blank">View</a>
-                            </span>
+                              <span
+                                *ngFor="let file of kyc?.paySlips"
+                                class="me-2"
+                              >
+                                <a [href]="'//' + file" target="_blank">View</a>
+                              </span>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
                   </div>
                   <!-- End Payslips -->
                 </div>
@@ -1139,40 +1173,111 @@
               class="mt-3 fw-bold d-flex justify-content-center mt-3"
               *ngIf="plEligibleEmi"
             >
-              <h5>
-                <b>Eligible Emi</b>:<span
-                  style="color: rgba(2, 5, 161, 0.91); font-weight: bold"
-                >
-                  {{ plEligibleEmi }}</span
-                >
-              </h5>
+              <div class="text-center">
+                <h5>
+                  <b>Eligible Emi</b>:
+                  <span style="color: #8e89d0; font-weight: bold">
+                    {{ plEligibleEmi }}
+                  </span>
+                </h5>
+
+                <!-- Personal Loan -->
+
+                <ng-container *ngIf="leadData[0].loanType === 'personalLoan'">
+                  <h6>
+                    Loan Amount:
+                    <span style="color: #8e89d0; font-weight: bold">
+                      {{ personalloanAmount }}
+                      <small class="text-muted"
+                        >({{ numberToWords(personalloanAmount) }})</small
+                      >
+                    </span>
+                  </h6>
+                  <h6>
+                    Tenure:
+                    <span style="color: #8e89d0; font-weight: bold">
+                      {{ personalloantenure }} months
+                    </span>
+                  </h6>
+                  <h6>
+                    Interest Rate:
+                    <span style="color: #8e89d0; font-weight: bold">
+                      {{ personalloaninterest }} %
+                    </span>
+                  </h6>
+                </ng-container>
+
+                <!-- Home Loan -->
+                <ng-container *ngIf="leadData[0].loanType === 'homeLoan'">
+                  <h6>
+                    Loan Amount:
+                    <span style="color: #8e89d0; font-weight: bold">
+                      {{ homeloanAmount }}
+                    </span>
+                  </h6>
+                  <h6>
+                    Tenure:
+                    <span style="color: #8e89d0; font-weight: bold">
+                      {{ homeloantenure }} months
+                    </span>
+                  </h6>
+                  <h6>
+                    Interest Rate:
+                    <span style="color: #8e89d0; font-weight: bold">
+                      {{ homeloaninterest }} %
+                    </span>
+                  </h6>
+                </ng-container>
+
+                <!-- LAP Loan -->
+                <ng-container *ngIf="leadData[0].loanType === 'lap'">
+                  <h6>
+                    Loan Amount:
+                    <span style="color: #8e89d0; font-weight: bold">
+                      {{ lapAmount }}
+                    </span>
+                  </h6>
+                  <h6>
+                    Tenure:
+                    <span style="color: #8e89d0; font-weight: bold">
+                      {{ lapTenure }} months
+                    </span>
+                  </h6>
+                  <h6>
+                    Interest Rate:
+                    <span style="color: #8e89d0; font-weight: bold">
+                      {{ lapInterest }} %
+                    </span>
+                  </h6>
+                </ng-container>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <!-- Buttons (bottom right) -->
-      <div class="d-flex justify-content-center mt-3" *ngIf="leadData">
-        <div class="me-3" *ngIf="leadData[0].leadInternalStatus == 5">
-          <button
-            pButton
-            pRipple
-            type="button"
-            class="btn btn-primary me-2"
-            (click)="sendLeadToReadyToLogin(leadData)"
-          >
-            Ready to Login
-          </button>
-        </div>
-        <div *ngIf="leadData[0].leadInternalStatus == 5">
-          <button
-            pButton
-            pRipple
-            type="button"
-            class="btn btn-outline-primary"
-            (click)="sendLeadToReject(leadData)"
-          >
-            In House Reject
-          </button>
+        <!-- Buttons (bottom right) -->
+        <div class="d-flex justify-content-center mt-3" *ngIf="leadData">
+          <div class="me-3" *ngIf="leadData[0].leadInternalStatus == 5">
+            <button
+              pButton
+              pRipple
+              type="button"
+              class="btn btn-primary me-2"
+              (click)="sendLeadToReadyToLogin(leadData)"
+            >
+              Ready to Login
+            </button>
+          </div>
+          <div *ngIf="leadData[0].leadInternalStatus == 5">
+            <button
+              pButton
+              pRipple
+              type="button"
+              class="btn btn-outline-primary"
+              (click)="sendLeadToReject(leadData)"
+            >
+              In House Reject
+            </button>
+          </div>
         </div>
       </div>
     </div>

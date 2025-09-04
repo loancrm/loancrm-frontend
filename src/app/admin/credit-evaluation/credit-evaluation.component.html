@@ -288,12 +288,12 @@
                         (click)="evaluateCredit(lead)"
                         pTooltip="Evaluate Credit"
                       />
-                      <p-menu
+                      <!-- <p-menu
                         appendTo="body"
                         #menu
                         [model]="actionItems(lead)"
                         [popup]="true"
-                      ></p-menu>
+                      ></p-menu> -->
                       <!-- <button
                   pButton
                   type="button"
@@ -303,7 +303,7 @@
                   pTooltip="Actions"
                   tooltipPosition="top"
                 ></button> -->
-                      <img
+                      <!-- <img
                         alt="Actions"
                         src="../../../assets/images/icons/menu.svg"
                         width="24px"
@@ -311,7 +311,31 @@
                         pTooltip="Actions"
                         tooltipPosition="top"
                         (click)="menu.toggle($event); $event.stopPropagation()"
-                      />
+                      /> -->
+                      <button
+                        [matMenuTriggerFor]="menu"
+                        aria-label="Actions"
+                        style="all: unset; cursor: pointer"
+                      >
+                        <img
+                          alt="Actions"
+                          src="assets/images/icons/menu.svg"
+                          width="24"
+                          height="24"
+                        />
+                      </button>
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="revertToFiles(lead)">
+                          <img
+                            alt="Actions"
+                            src="assets/images/icons/logins.svg"
+                            width="24"
+                            height="24"
+                            class="mr-2 image-icon"
+                          />
+                          <span>Send To Files</span>
+                        </button>
+                      </mat-menu>
                     </div>
                   </div>
                 </td>

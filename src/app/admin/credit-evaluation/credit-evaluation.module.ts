@@ -13,6 +13,8 @@ import { FilterModule } from 'src/app/filter/filter.module';
 import { CapitalizeFirstPipe } from 'src/app/pipes/capitalize.pipe';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { CommingSoonModule } from '../comming-soon/comming-soon.module';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 
 const routes: Routes = [
   { path: '', component: CreditEvaluationComponent },
@@ -53,6 +55,8 @@ const routes: Routes = [
     MenuModule,
     TabMenuModule,
     InputTextModule,
+    MatMenuModule,
+    MatButtonModule,
     CommingSoonModule,
     [RouterModule.forChild(routes)],
   ],

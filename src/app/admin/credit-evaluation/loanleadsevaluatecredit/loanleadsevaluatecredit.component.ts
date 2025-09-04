@@ -22,7 +22,18 @@ export class LoanleadsevaluatecreditComponent {
   plFoir: number;
   fiorValues: any = {};
   plEligibleEmi: number;
+  personalloantenure = 60;         // 60 months (5 years)
+  personalloaninterest = 12;
+  personalloanAmount: any;
 
+
+  homeloantenure = 180;         // 60 months (5 years)
+  homeloaninterest = 9;
+  homeloanAmount: any;
+
+  lapTenure = 180;         // 60 months (5 years)
+  lapInterest = 10;
+  lapAmount: any;
   breadCrumbItems: any = [];
   constructor(
     private location: Location,
@@ -42,12 +53,25 @@ export class LoanleadsevaluatecreditComponent {
           if (data) {
             this.setDscrValuesData();
             this.setAverageSalary();
+            if (this.plEligibleEmi) {
+
+              const loanTypeHandlers: { [key: string]: () => void } = {
+                personalLoan: () => this.calculatepersonalLoanAmount(),
+                homeLoan: () => this.calculatehomeLoanAmount(),
+                lap: () => this.calculateLapAmount()
+              };
+
+              const loanType = this.leadData[0]?.loanType;
+              loanTypeHandlers[loanType]?.(); // Executes the correct function if it exists
+
+            }
+
           }
         });
       }
     });
   }
-   // STEP LIST (Matches UI sidebar)
+  // STEP LIST (Matches UI sidebar)
   steps = [
     { label: 'Application Information' },
     { label: 'Company Details' },
@@ -77,6 +101,58 @@ export class LoanleadsevaluatecreditComponent {
         this.loading = false;
       }
     );
+  }
+
+  calculatepersonalLoanAmount() {
+    const R = this.personalloaninterest / 12 / 100; // monthly rate
+    const N = this.personalloantenure;
+    const numerator = this.plEligibleEmi * (Math.pow(1 + R, N) - 1);
+    const denominator = R * Math.pow(1 + R, N);
+    const loanAmount = numerator / denominator;
+    // ✅ Round off to nearest rupee
+    this.personalloanAmount = Math.round(loanAmount); // Loan Amount
+  }
+  calculateLapAmount() {
+    const R = this.lapInterest / 12 / 100; // monthly rate
+    const N = this.lapTenure;
+    const numerator = this.plEligibleEmi * (Math.pow(1 + R, N) - 1);
+    const denominator = R * Math.pow(1 + R, N);
+    const loanAmount = numerator / denominator;
+    // ✅ Round off to nearest rupee
+    this.lapAmount = Math.round(loanAmount); // Loan Amount
+  }
+  calculatehomeLoanAmount() {
+    const R = this.homeloaninterest / 12 / 100; // monthly rate
+    const N = this.homeloantenure;
+    const numerator = this.plEligibleEmi * (Math.pow(1 + R, N) - 1);
+    const denominator = R * Math.pow(1 + R, N);
+    const loanAmount = numerator / denominator;
+    // ✅ Round off to nearest rupee
+    this.homeloanAmount = Math.round(loanAmount); // Loan Amount
+  }
+  numberToWords(amount: number): string {
+    if (!amount) return '';
+
+    const a = [
+      '', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine',
+      'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen',
+      'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'
+    ];
+    const b = [
+      '', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty',
+      'Seventy', 'Eighty', 'Ninety'
+    ];
+
+    function inWords(num: number): string {
+      if (num < 20) return a[num];
+      if (num < 100) return b[Math.floor(num / 10)] + (num % 10 ? ' ' + a[num % 10] : '');
+      if (num < 1000) return a[Math.floor(num / 100)] + ' Hundred ' + (num % 100 ? inWords(num % 100) : '');
+      if (num < 100000) return inWords(Math.floor(num / 1000)) + ' Thousand ' + (num % 1000 ? inWords(num % 1000) : '');
+      if (num < 10000000) return inWords(Math.floor(num / 100000)) + ' Lakh ' + (num % 100000 ? inWords(num % 100000) : '');
+      return inWords(Math.floor(num / 10000000)) + ' Crore ' + (num % 10000000 ? inWords(num % 10000000) : '');
+    }
+
+    return inWords(amount).trim() + ' Only';
   }
   setAverageSalary(): void {
     const paySlips = this.leadData[0]?.paySlips;
@@ -162,6 +238,9 @@ export class LoanleadsevaluatecreditComponent {
       (data: any) => {
         this.loading = false;
         if (data?.success) {
+          if (this.leadData[0].loanType == 'personalLoan') {
+            this.calculatepersonalLoanAmount()
+          }
           this.toastService.showSuccess('Calculated and saved Successfully');
         }
       },
@@ -182,7 +261,7 @@ export class LoanleadsevaluatecreditComponent {
     this.changeLoanLeadStatus(lead[0].leadId, 11);
     const loanType = lead[0].loanType; // e.g., 'personalloan', 'home loan', etc.
     // console.log(loanType)
-    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans') {
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans' || loanType === 'carLoan') {
       this.routingService.handleRoute(`logins/bankSelection/${loanType}/${lead[0].leadId}`, null);
     }
   }

@@ -9,6 +9,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { MenuModule } from 'primeng/menu';
 import { TableModule } from 'primeng/table';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 import { FilterModule } from 'src/app/filter/filter.module';
 import { CapitalizeFirstPipe } from 'src/app/pipes/capitalize.pipe';
 import { TabMenuModule } from 'primeng/tabmenu';
@@ -56,6 +58,8 @@ const routes: Routes = [
     CapitalizeFirstPipe,
     FilterModule,
     TabMenuModule,
+     MatMenuModule,
+        MatButtonModule,
     CommingSoonModule,
     [RouterModule.forChild(routes)],
   ],

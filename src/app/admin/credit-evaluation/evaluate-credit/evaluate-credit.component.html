@@ -313,18 +313,18 @@
               </div>
             </div>
 
-            <div *ngIf="leadData?.length 
-                    && leadData[0].loanType === 'carLoan' 
-                    && leadData[0].carType === 1">
+            <div
+              *ngIf="
+                leadData?.length &&
+                leadData[0].loanType === 'carLoan' &&
+                leadData[0].carType === 1
+              "
+            >
               <div class="label fw-bold mb-1">
-              <span
-                style="
-                  color: #101828;
-                  font-weight: 500;
-                  margin-left: 30px;
-                "
-                >RC Copy</span
-              >
+                <span
+                  style="color: #101828; font-weight: 500; margin-left: 30px"
+                  >RC Copy</span
+                >
               </div>
               <div class="value">
                 <div
@@ -334,19 +334,20 @@
                     leadData[0]?.rcCopy?.length > 0
                   "
                 >
-                  <span
-                    *ngFor="let file of leadData[0]?.rcCopy"
-                    class="me-2"
-                  >
+                  <span *ngFor="let file of leadData[0]?.rcCopy" class="me-2">
                     <a [href]="'//' + file" target="_blank">View</a>
                   </span>
                 </div>
               </div>
             </div>
-            <div class="row mb-3"
-              *ngIf="leadData?.length 
-                    && leadData[0].loanType === 'carLoan' 
-                    && leadData[0].carType === 2">
+            <div
+              class="row mb-3"
+              *ngIf="
+                leadData?.length &&
+                leadData[0].loanType === 'carLoan' &&
+                leadData[0].carType === 2
+              "
+            >
               <!--New Car quotation -->
               <div class="col-md-6 col-12">
                 <div
@@ -363,8 +364,8 @@
                     "
                   >
                     <span style="color: #101828; font-weight: 500"
-                      >New Car quotation </span
-                    >
+                      >New Car quotation
+                    </span>
                   </div>
                   <div class="value" style="margin-top: 2px">
                     {{ leadData[0]?.newCarQuotation | capitalizeFirst }}
@@ -373,7 +374,7 @@
               </div>
 
               <!---New Car Quotation-->
-                <div class="col-md-6 col-12">
+              <div class="col-md-6 col-12">
                 <div class="info-line">
                   <div class="label fw-bold mb-1">
                     <span
@@ -409,21 +410,31 @@
 
         <!-- Section: Existing Loans -->
         <div *ngIf="selectedSection === 2" class="card card-section">
+          <img
+            *ngIf="userDetails?.userType != 3"
+            src="assets/images/icons/edit.svg"
+            alt="Edit"
+            width="18"
+            height="18"
+            pTooltip="Update"
+            tooltipPosition="top"
+            (click)="uploadLeadFiles(leadData[0])"
+            class="position-absolute me-2 edit-icon"
+            style="top: 1rem; right: 1rem; cursor: pointer"
+          />
+
           <div *ngIf="leadDocuments?.existingLoans?.length > 0">
             <div
               *ngFor="let loan of leadDocuments.existingLoans; let i = index"
               class="business-details"
             >
-              
-                <input
-                  class="label"
-                  type="checkbox"
-                  [value]="loan.emiAmount"
-                  (change)="calculateTotalEmi()"
-                />
-                <span class="label">Existing Loan - {{ i + 1 }}</span>
-                
-              
+              <input
+                class="label"
+                type="checkbox"
+                [value]="loan.emiAmount"
+                (change)="calculateTotalEmi()"
+              />
+              <span class="label">Existing Loan - {{ i + 1 }}</span>
 
               <!-- Dynamic fields -->
               <div class="info-line" *ngFor="let field of existingLoanFields">
@@ -463,13 +474,7 @@
             </div>
 
             <!-- Total EMI Display -->
-            <div
-              class="p-3 mt-3 fw-bold"
-              style="
-                color: white;
-                border-radius: 3px;
-              "
-            >
+            <div class="p-3 mt-3 fw-bold" style="border-radius: 3px">
               <div>Total Monthly EMI Payment: {{ totalEmi }}</div>
             </div>
           </div>
@@ -480,11 +485,24 @@
         </div>
 
         <!-- Section: DSCR Tabs -->
-        <div *ngIf="selectedSection === 3">
+        <div *ngIf="selectedSection === 3" class="card card-section">
+          <img
+            *ngIf="userDetails?.userType != 3"
+            src="assets/images/icons/edit.svg"
+            alt="Edit"
+            width="18"
+            height="18"
+            pTooltip="Update"
+            tooltipPosition="top"
+            (click)="uploadLeadFiles(leadData[0])"
+            class="position-absolute me-2 edit-icon"
+            style="top: 1rem; right: 1rem; cursor: pointer"
+          />
+
           <!-- <h5 class="text-primary fw-bold mb-3">DSCR Ratio</h5> -->
           <div>
             <!-- DSCR Accordion -->
-            <div class="accordion-item card card-section">
+            <div class="accordion-item">
               <div class="accordion-header">
                 <button
                   class="accordion-button"
@@ -1044,174 +1062,187 @@
               </div>
             </div>
 
-              <!-- Balance Sheet Accordion -->
-              <div class="accordion-item card card-section">
-                <h2 class="accordion-header">
-                  <button
-                    class="accordion-button"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#supportingCollapse"
-                    aria-expanded="true"
-                    aria-controls="supportingCollapse"
-                  >
-                    Balance Sheet
-                  </button>
-                </h2>
-                <div
-                  id="supportingCollapse"
-                  class="accordion-collapse collapse show"
+            <!-- Balance Sheet Accordion -->
+            <div class="accordion-item card card-section">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#supportingCollapse"
+                  aria-expanded="true"
+                  aria-controls="supportingCollapse"
                 >
-                  <div class="accordion-body">
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="defaultCheck1"
-                        [(ngModel)]="isFirstYearBalanceSheet"
-                      />
-                      <label class="form-check-label" for="defaultCheck1">
-                        {{ getFinancialYear() }}
-                      </label>
+                  Balance Sheet
+                </button>
+              </h2>
+              <div
+                id="supportingCollapse"
+                class="accordion-collapse collapse show"
+              >
+                <div class="accordion-body">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="defaultCheck1"
+                      [(ngModel)]="isFirstYearBalanceSheet"
+                    />
+                    <label class="form-check-label" for="defaultCheck1">
+                      {{ getFinancialYear() }}
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="defaultCheck2"
+                      [(ngModel)]="isSecondYearBalanceSheet"
+                    />
+                    <label class="form-check-label" for="defaultCheck2">
+                      {{ getFinancialYear(1) }}
+                    </label>
+                  </div>
+                  <div *ngIf="isFirstYearBalanceSheet">
+                    <div
+                      class="label fw-bold mt-3"
+                      style="text-decoration: underline"
+                    >
+                      {{ getFinancialYear() }}
                     </div>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="defaultCheck2"
-                        [(ngModel)]="isSecondYearBalanceSheet"
-                      />
-                      <label class="form-check-label" for="defaultCheck2">
-                        {{ getFinancialYear(1) }}
-                      </label>
-                    </div>
-                    <div *ngIf="isFirstYearBalanceSheet">
-                      <div
-                        class="label fw-bold mt-3"
-                        style="text-decoration: underline"
-                      >
-                        {{ getFinancialYear() }}
-                      </div>
-                      <div class="row">
-                        <div class="col-md-4 mt-2">
-                          <div class="input-container">
-                            <div class="my-1">
-                              <label>Sundry Debtors :&nbsp;</label>
-                            </div>
-                            <input
-                              pInputText
-                              class="rounded-lg"
-                              type="number"
-                              [(ngModel)]="sundryDebtorsAy1"
-                              class="custom-input"
-                              placeholder="Enter Sundry Debtors"
-                              autocomplete="off"
-                            />
+                    <div class="row">
+                      <div class="col-md-4 mt-2">
+                        <div class="input-container">
+                          <div class="my-1">
+                            <label>Sundry Debtors :&nbsp;</label>
                           </div>
-                        </div>
-                        <div class="col-md-4 mt-2">
-                          <div class="input-container">
-                            <div class="my-1">
-                              <label>Sundry Creditors :&nbsp;</label>
-                            </div>
-                            <input
-                              pInputText
-                              class="rounded-lg"
-                              type="number"
-                              [(ngModel)]="sundryCreditorsAy1"
-                              class="custom-input"
-                              placeholder="Enter Sundry Creditors"
-                              autocomplete="off"
-                            />
-                          </div>
+                          <input
+                            pInputText
+                            class="rounded-lg"
+                            type="number"
+                            [(ngModel)]="sundryDebtorsAy1"
+                            class="custom-input"
+                            placeholder="Enter Sundry Debtors"
+                            autocomplete="off"
+                          />
                         </div>
                       </div>
-                    </div>
-                    <div *ngIf="isSecondYearBalanceSheet">
-                      <div
-                        class="label fw-bold mt-3"
-                        style="text-decoration: underline"
-                      >
-                        {{ getFinancialYear(1) }}
-                      </div>
-                      <div class="row">
-                        <div class="col-md-4 mt-2">
-                          <div class="input-container">
-                            <div class="my-1">
-                              <label>Sundry Debtors :&nbsp;</label>
-                            </div>
-                            <input
-                              pInputText
-                              class="rounded-lg"
-                              type="number"
-                              [(ngModel)]="sundryDebtorsAy2"
-                              class="custom-input"
-                              placeholder="Enter Sundry Debtors"
-                              autocomplete="off"
-                            />
+                      <div class="col-md-4 mt-2">
+                        <div class="input-container">
+                          <div class="my-1">
+                            <label>Sundry Creditors :&nbsp;</label>
                           </div>
-                        </div>
-                        <div class="col-md-4 mt-2">
-                          <div class="input-container">
-                            <div class="my-1">
-                              <label>Sundry Creditors:&nbsp;</label>
-                            </div>
-                            <input
-                              pInputText
-                              class="rounded-lg"
-                              type="number"
-                              [(ngModel)]="sundryCreditorsAy2"
-                              class="custom-input"
-                              placeholder="Enter Sundry Creditors"
-                              autocomplete="off"
-                            />
-                          </div>
+                          <input
+                            pInputText
+                            class="rounded-lg"
+                            type="number"
+                            [(ngModel)]="sundryCreditorsAy1"
+                            class="custom-input"
+                            placeholder="Enter Sundry Creditors"
+                            autocomplete="off"
+                          />
                         </div>
                       </div>
                     </div>
+                  </div>
+                  <div *ngIf="isSecondYearBalanceSheet">
+                    <div
+                      class="label fw-bold mt-3"
+                      style="text-decoration: underline"
+                    >
+                      {{ getFinancialYear(1) }}
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4 mt-2">
+                        <div class="input-container">
+                          <div class="my-1">
+                            <label>Sundry Debtors :&nbsp;</label>
+                          </div>
+                          <input
+                            pInputText
+                            class="rounded-lg"
+                            type="number"
+                            [(ngModel)]="sundryDebtorsAy2"
+                            class="custom-input"
+                            placeholder="Enter Sundry Debtors"
+                            autocomplete="off"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-4 mt-2">
+                        <div class="input-container">
+                          <div class="my-1">
+                            <label>Sundry Creditors:&nbsp;</label>
+                          </div>
+                          <input
+                            pInputText
+                            class="rounded-lg"
+                            type="number"
+                            [(ngModel)]="sundryCreditorsAy2"
+                            class="custom-input"
+                            placeholder="Enter Sundry Creditors"
+                            autocomplete="off"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
-                    <div class="d-flex justify-content-center mt-3">
-                      <div class="me-3">
-                        <button
-                          pButton
-                          pRipple
-                          type="button"
-                          class="p-button-primary"
-                          (click)="calculateBalanceSheet()"
-                        >
-                          Calculate
-                        </button>
-                      </div>
+                  <div class="d-flex justify-content-center mt-3">
+                    <div class="me-3">
+                      <button
+                        pButton
+                        pRipple
+                        type="button"
+                        class="p-button-primary"
+                        (click)="calculateBalanceSheet()"
+                      >
+                        Calculate
+                      </button>
                     </div>
-                    <div class="mt-3 fw-bold">
-                      <h6 class="d-flex justify-content-center">
-                        Debtor Days for {{ getFinancialYear() }} :<span
-                          style="color: #8e89d0; font-weight: bold"
-                        >
-                          &nbsp; {{ debtor_daysFirstYear }}</span
-                        >
-                      </h6>
-                      <h6 class="d-flex justify-content-center">
-                        Creditor Days for {{ getFinancialYear() }} :<span
-                          style="color: #8e89d0; font-weight: bold"
-                        >
-                          &nbsp;{{ creditor_daysFirstYear }}</span
-                        >
-                      </h6>
-                    </div>
+                  </div>
+                  <div class="mt-3 fw-bold">
+                    <h6 class="d-flex justify-content-center">
+                      Debtor Days for {{ getFinancialYear() }} :<span
+                        style="color: #8e89d0; font-weight: bold"
+                      >
+                        &nbsp; {{ debtor_daysFirstYear }}</span
+                      >
+                    </h6>
+                    <h6 class="d-flex justify-content-center">
+                      Creditor Days for {{ getFinancialYear() }} :<span
+                        style="color: #8e89d0; font-weight: bold"
+                      >
+                        &nbsp;{{ creditor_daysFirstYear }}</span
+                      >
+                    </h6>
                   </div>
                 </div>
               </div>
+            </div>
           </div>
         </div>
 
         <!---Section: BTO Program-->
-        <div *ngIf="selectedSection === 4">
+        <div *ngIf="selectedSection === 4" class="card card-section">
+          <img
+            *ngIf="userDetails?.userType != 3"
+            src="assets/images/icons/edit.svg"
+            alt="Edit"
+            width="18"
+            height="18"
+            pTooltip="Update"
+            tooltipPosition="top"
+            (click)="uploadLeadFiles(leadData[0])"
+            class="position-absolute me-2 edit-icon"
+            style="top: 1rem; right: 1rem; cursor: pointer"
+          />
+
           <!-- <h5 class="text-primary">BTO Program</h5> -->
           <div>
-            <div class="accordion-item card card-section">
+            <div class="accordion-item">
               <h2 class="accordion-header">
                 <button
                   class="accordion-button fw-semibold"
@@ -1855,10 +1886,23 @@
         </div>
 
         <!---GST Program-->
-        <div *ngIf="selectedSection === 5">
+        <div *ngIf="selectedSection === 5" class="card card-section">
+          <img
+            *ngIf="userDetails?.userType != 3"
+            src="assets/images/icons/edit.svg"
+            alt="Edit"
+            width="18"
+            height="18"
+            pTooltip="Update"
+            tooltipPosition="top"
+            (click)="uploadLeadFiles(leadData[0])"
+            class="position-absolute me-2 edit-icon"
+            style="top: 1rem; right: 1rem; cursor: pointer"
+          />
+
           <!-- <h5 class="text-primary">GST Program</h5> -->
           <div>
-            <div class="accordion-item card card-section">
+            <div class="accordion-item">
               <h2 class="accordion-header">
                 <button
                   class="accordion-button fw-semibold"
@@ -1875,14 +1919,14 @@
                 <div class="accordion-body">
                   <div class="">
                     <div class="detail-card">
-                      <div class="info-line mt-2">
+                      <!-- <div class="info-line mt-2">
                         <div class="label d-flex justify-content-between">
                           Total GSTR-3B Sale<b>:&nbsp;</b>
                         </div>
                         <div class="value fw-bold text-primary">
                           {{ totalGst3BSale }}
                         </div>
-                      </div>
+                      </div> -->
 
                       <!-- <div *ngIf="leadDocuments?.gstDetails?.length > 0">
                 <div
@@ -2005,165 +2049,202 @@
                     <ng-template #noValue>-</ng-template>
                   </div>
                 </div> -->
-                      <div *ngIf="leadDocuments?.gstDetails?.length > 0">
-                        <p-table
-                          [value]="leadDocuments?.gstDetails"
-                          responsiveLayout="scroll"
-                          class="custom-dark-table"
-                        >
-                          <!-- Header Template -->
-                          <ng-template pTemplate="header">
-                            <tr>
-                              <th>Operating State</th>
-                              <th>Filing Period</th>
-                              <th>GSTR 3B Sale</th>
-                              <th>Attachments</th>
-                            </tr>
-                          </ng-template>
 
-                          <!-- Body Template -->
-                          <ng-template let-gst pTemplate="body">
-                            <tr>
-                              <td>{{ gst.operatingState }}</td>
-                              <td>
-                                {{
-                                  isValidDate(gst.filingPeriod)
-                                    ? (gst.filingPeriod | date : "MMM dd, yyyy")
-                                    : "-"
-                                }}
-                              </td>
-                              <td>
-                                {{ gst?.gst3BSale ? "₹" + gst.gst3BSale : "" }}
-                              </td>
-                              <td>
-                                <div class="d-flex flex-wrap gap-2">
-                                  <a
-                                    *ngFor="let file of gst.gstDetails"
-                                    [href]="'//' + file"
-                                    target="_blank"
-                                  >
-                                    <i
-                                      [class]="
-                                        getFileIcon(file.split('.').pop())
-                                      "
-                                      class="file-icon me-2"
-                                    ></i>
-                                  </a>
-                                </div>
-                              </td>
-                            </tr>
-                          </ng-template>
-                        </p-table>
+                      <div *ngIf="leadDocuments?.gstDetails?.length > 0">
+                        <!-- Group GST data by operatingState -->
+                        <div *ngFor="let state of groupedGstData | keyvalue">
+                          <h5 class="mt-3">{{ state.key | titlecase }}</h5>
+
+                          <p-table
+                            [value]="state.value"
+                            responsiveLayout="scroll"
+                            class="custom-dark-table"
+                          >
+                            <!-- Header Template -->
+                            <ng-template pTemplate="header">
+                              <tr>
+                                <th>Operating State</th>
+                                <th>Filing Period</th>
+                                <th>GSTR 3B Sale</th>
+                                <th>Attachments</th>
+                              </tr>
+                            </ng-template>
+
+                            <!-- Body Template -->
+                            <ng-template let-gst pTemplate="body">
+                              <tr>
+                                <td>{{ gst.operatingState }}</td>
+                                <td>
+                                  {{
+                                    isValidDate(gst.filingPeriod)
+                                      ? (gst.filingPeriod
+                                        | date : "MMM dd, yyyy")
+                                      : "-"
+                                  }}
+                                </td>
+                                <td>
+                                  {{
+                                    gst?.gst3BSale
+                                      ? "₹" + (gst.gst3BSale | number : "1.2-2")
+                                      : "-"
+                                  }}
+                                </td>
+                                <td>
+                                  <div class="d-flex flex-wrap gap-2">
+                                    <a
+                                      *ngFor="let file of gst.gstDetails"
+                                      [href]="'//' + file"
+                                      target="_blank"
+                                    >
+                                      <i
+                                        [class]="
+                                          getFileIcon(file.split('.').pop())
+                                        "
+                                        class="file-icon me-2"
+                                      ></i>
+                                    </a>
+                                  </div>
+                                </td>
+                              </tr>
+                            </ng-template>
+
+                            <!-- Footer Template (state-wise total) -->
+                            <ng-template pTemplate="footer">
+                              <tr>
+                                <td colspan="2" class="text-end fw-bold">
+                                  Total ({{ state.key }}):
+                                </td>
+                                <td colspan="2" class="fw-bold">
+                                  ₹{{
+                                    getStateTotal(state.value)
+                                      | number : "1.2-2"
+                                  }}
+                                </td>
+                              </tr>
+                            </ng-template>
+                          </p-table>
+                        </div>
+
+                        <!-- Grand Total -->
+                        <div
+                          class="p-3 mt-3 fw-bold"
+                          style="border-radius: 3px"
+                        >
+                          <div>
+                            Grand Total GST 3B Sale: ₹{{
+                              getGrandTotal() | number : "1.2-2"
+                            }}
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div *ngIf="leadDocuments?.gstDetails == null">
-                    <div class="text-center">
-                      <div colspan="10" class="text-center fw-bold">
-                        <!-- <img
+
+                      <div *ngIf="leadDocuments?.gstDetails == null">
+                        <div class="text-center">
+                          <div colspan="10" class="text-center fw-bold">
+                            <!-- <img
                       alt="No Data"
                       src="../../../../assets/images/menu/no-data.gif"
                       width="200"
                       height="200"
                     /> -->
-                        <p
-                          style="
-                            color: #535ab4;
-                            font-weight: 400;
-                            font-size: 18px;
-                          "
-                        >
-                          No GST Details Found
-                        </p>
+                            <p
+                              style="
+                                color: #535ab4;
+                                font-weight: 400;
+                                font-size: 18px;
+                              "
+                            >
+                              No GST Details Found
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div class="accordion-item card card-section">
-              <h2 class="accordion-header">
-                <button
-                  class="accordion-button fw-semibold"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#supportingCollapse"
-                  aria-expanded="true"
-                  aria-controls="supportingCollapse"
-                >
-                  Calculation for GST Program
-                </button>
-              </h2>
-              <div
-                id="supportingCollapse"
-                class="accordion-collapse collapse show"
-              >
-                <div class="accordion-body gstcal">
-                  <div>
-                    <div class="row">
-                      <div class="col-md-4 mt-2">
-                        <div class="input-container">
-                          <div class="my-1">
-                            <label>GST Turnover:&nbsp;</label>
+                <div class="accordion-item card card-section">
+                  <h2 class="accordion-header">
+                    <button
+                      class="accordion-button fw-semibold"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#supportingCollapse"
+                      aria-expanded="true"
+                      aria-controls="supportingCollapse"
+                    >
+                      Calculation for GST Program
+                    </button>
+                  </h2>
+                  <div
+                    id="supportingCollapse"
+                    class="accordion-collapse collapse show"
+                  >
+                    <div class="accordion-body gstcal">
+                      <div>
+                        <div class="row">
+                          <div class="col-md-4 mt-2">
+                            <div class="input-container">
+                              <div class="my-1">
+                                <label>GST Turnover:&nbsp;</label>
+                              </div>
+                              <input
+                                pInputText
+                                class="rounded-lg"
+                                type="number"
+                                [(ngModel)]="gstTurnover"
+                                class="custom-input"
+                                placeholder="Enter GST Turnover"
+                                autocomplete="off"
+                              />
+                            </div>
                           </div>
-                          <input
-                            pInputText
-                            class="rounded-lg"
-                            type="number"
-                            [(ngModel)]="gstTurnover"
-                            class="custom-input"
-                            placeholder="Enter GST Turnover"
-                            autocomplete="off"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-4 mt-2">
-                        <div class="input-container">
-                          <div class="my-1">
-                            <label>Margin Interest (%):&nbsp;</label>
+                          <div class="col-md-4 mt-2">
+                            <div class="input-container">
+                              <div class="my-1">
+                                <label>Margin Interest (%):&nbsp;</label>
+                              </div>
+                              <input
+                                pInputText
+                                class="rounded-lg"
+                                type="number"
+                                [(ngModel)]="margin"
+                                class="custom-input"
+                                placeholder="Enter Margin"
+                                autocomplete="off"
+                              />
+                            </div>
                           </div>
-                          <input
-                            pInputText
-                            class="rounded-lg"
-                            type="number"
-                            [(ngModel)]="margin"
-                            class="custom-input"
-                            placeholder="Enter Margin"
-                            autocomplete="off"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-4 mt-2">
-                        <div class="input-container">
-                          <div class="my-1">
-                            <label>FOIR (%):&nbsp;</label>
+                          <div class="col-md-4 mt-2">
+                            <div class="input-container">
+                              <div class="my-1">
+                                <label>FOIR (%):&nbsp;</label>
+                              </div>
+                              <input
+                                pInputText
+                                class="rounded-lg"
+                                type="number"
+                                [(ngModel)]="months"
+                                class="custom-input"
+                                placeholder="Enter FOIR"
+                                autocomplete="off"
+                              />
+                            </div>
                           </div>
-                          <input
-                            pInputText
-                            class="rounded-lg"
-                            type="number"
-                            [(ngModel)]="months"
-                            class="custom-input"
-                            placeholder="Enter FOIR"
-                            autocomplete="off"
-                          />
                         </div>
-                      </div>
-                    </div>
-                    <div class="d-flex justify-content-center mt-3">
-                      <div class="me-3">
-                        <button
-                          pButton
-                          pRipple
-                          type="button"
-                          class="p-button-primary"
-                          (click)="calculateGstProgram()"
-                        >
-                          Calculate
-                        </button>
-                      </div>
-                    </div>
-                    <!-- <div
+                        <div class="d-flex justify-content-center mt-3">
+                          <div class="me-3">
+                            <button
+                              pButton
+                              pRipple
+                              type="button"
+                              class="p-button-primary"
+                              (click)="calculateGstProgram()"
+                            >
+                              Calculate
+                            </button>
+                          </div>
+                        </div>
+                        <!-- <div
                       class="mt-3 fw-bold d-flex justify-content-center mt-3"
                       *ngIf="gstValue"
                     >
@@ -2176,35 +2257,37 @@
                       </h6>
                     </div> -->
 
-                    <div
-                      class="mt-3 fw-bold d-flex justify-content-center"
-                      *ngIf="gstValue"
-                    >
-                      <div class="text-center">
-                        <h6>
-                          Eligible EMI in GST Program:
-                          <span style="color: #8e89d0; font-weight: bold">{{
-                            gstValue
-                          }}</span>
-                        </h6>
-                        <h6>
-                          Loan Amount:
-                          <span style="color: #8e89d0; font-weight: bold">{{
-                            gstloanAmount
-                          }}</span>
-                        </h6>
-                        <h6>
-                          Tenure:
-                          <span style="color: #8e89d0; font-weight: bold"
-                            >{{ gstTenure }} months</span
-                          >
-                        </h6>
-                        <h6>
-                          Interest Rate:
-                          <span style="color: #8e89d0; font-weight: bold"
-                            >{{ gstInterest }} %</span
-                          >
-                        </h6>
+                        <div
+                          class="mt-3 fw-bold d-flex justify-content-center"
+                          *ngIf="gstValue"
+                        >
+                          <div class="text-center">
+                            <h6>
+                              Eligible EMI in GST Program:
+                              <span style="color: #8e89d0; font-weight: bold">{{
+                                gstValue
+                              }}</span>
+                            </h6>
+                            <h6>
+                              Loan Amount:
+                              <span style="color: #8e89d0; font-weight: bold">{{
+                                gstloanAmount
+                              }}</span>
+                            </h6>
+                            <h6>
+                              Tenure:
+                              <span style="color: #8e89d0; font-weight: bold"
+                                >{{ gstTenure }} months</span
+                              >
+                            </h6>
+                            <h6>
+                              Interest Rate:
+                              <span style="color: #8e89d0; font-weight: bold"
+                                >{{ gstInterest }} %</span
+                              >
+                            </h6>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -2213,7 +2296,6 @@
             </div>
           </div>
         </div>
-
         <!-- Section: Credit Summary -->
         <div *ngIf="selectedSection === 6">
           <label>Credit Summary</label>
@@ -2225,33 +2307,37 @@
             (blur)="onCreditSummaryChange()"
           ></textarea>
         </div>
-      </div>
-      <!-- Buttons (bottom right) -->
-      <div class="text-center mt-3">
-        <!-- <button class="btn btn-primary me-2">Ready to Login</button>
+
+        <!-- Buttons (bottom right) -->
+        <div class="text-center mt-3">
+          <!-- <button class="btn btn-primary me-2">Ready to Login</button>
           <button class="btn btn-outline-primary">Inhouse Reject</button> -->
-        <div class="d-flex justify-content-center mt-3 readybutton" *ngIf="leadData">
-          <div class="me-3" *ngIf="leadData[0].leadInternalStatus == 5">
-            <button
-              pButton
-              pRipple
-              type="button"
-              class="btn btn-primary me-2"
-              (click)="sendLeadToReadyToLogin(leadData)"
-            >
-              Ready to Login
-            </button>
-          </div>
-          <div *ngIf="leadData[0].leadInternalStatus == 5" class="raj">
-            <button
-              pButton
-              pRipple
-              type="button"
-              class="btn btn-outline-primary"
-              (click)="sendLeadToReject(leadData)"
-            >
-              In House Reject
-            </button>
+          <div
+            class="d-flex justify-content-center mt-3 readybutton"
+            *ngIf="leadData"
+          >
+            <div class="me-3" *ngIf="leadData[0].leadInternalStatus == 5">
+              <button
+                pButton
+                pRipple
+                type="button"
+                class="btn btn-primary me-2"
+                (click)="sendLeadToReadyToLogin(leadData)"
+              >
+                Ready to Login
+              </button>
+            </div>
+            <div *ngIf="leadData[0].leadInternalStatus == 5" class="raj">
+              <button
+                pButton
+                pRipple
+                type="button"
+                class="btn btn-outline-primary"
+                (click)="sendLeadToReject(leadData)"
+              >
+                In House Reject
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -230,14 +230,14 @@ export class SidebarMenuComponent implements OnChanges {
         thumbnail: 'callbacks.png',
         showOutside: true,
       },
-      {
-        name: 'Follow Ups',
-        condition: this.capabilities.followups,
-        routerLink: 'followups',
-        image: 'followups.gif',
-        thumbnail: 'followups.png',
-        showOutside: true,
-      },
+      // {
+      //   name: 'Follow Ups',
+      //   condition: this.capabilities.followups,
+      //   routerLink: 'followups',
+      //   image: 'followups.gif',
+      //   thumbnail: 'followups.png',
+      //   showOutside: true,
+      // },
       {
         name: 'Files',
         condition: this.capabilities.files,
@@ -350,7 +350,7 @@ export class SidebarMenuComponent implements OnChanges {
       { label: 'Home', icon: '../../../assets/images/icons/home.svg', route: 'dashboard', condition: true, },
       { label: 'Leads', icon: '../../../assets/images/icons/leads.svg', route: 'leads', condition: this.capabilities.leads, },
       { label: 'Callbacks', icon: '../../../assets/images/icons/callbacks.svg', route: 'callbacks', condition: this.capabilities.callbacks, },
-      { label: 'Follow Ups', icon: '../../../assets/images/icons/followups.svg', route: 'followups', condition: this.capabilities.followups, },
+      // { label: 'Follow Ups', icon: '../../../assets/images/icons/followups.svg', route: 'followups', condition: this.capabilities.followups, },
       { label: 'Files', icon: '../../../assets/images/icons/files.svg', route: 'files', condition: this.capabilities.files, },
       { label: 'Credit Evaluation', icon: '../../../assets/images/icons/credit.svg', route: 'credit', condition: this.capabilities.credit, },
       { label: 'Logins', icon: '../../../assets/images/icons/logins.svg', route: 'logins', condition: this.capabilities.logins, },
@@ -399,13 +399,13 @@ export class SidebarMenuComponent implements OnChanges {
   }
 
   ngOnChanges(changes) {
-  if (changes && changes.showSidebar) {
-    if (this.sidebarMenu && !this.sidebarMenu.visible) {
-      this.sidebarVisible = true;
-    } else {
-      this.sidebarVisible = false;
+    if (changes && changes.showSidebar) {
+      if (this.sidebarMenu && !this.sidebarMenu.visible) {
+        this.sidebarVisible = true;
+      } else {
+        this.sidebarVisible = false;
+      }
     }
-  }
   }
 
   showMenuSection() {
