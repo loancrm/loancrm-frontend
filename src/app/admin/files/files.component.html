@@ -1670,7 +1670,7 @@
                             height="24px"
                             pTooltip="Actions"
                             tooltipPosition="top"
-                            (click)="menu.toggle($event)"
+                            (click)="menu.toggle($event); $event.stopPropagation()"
                           />
                         </div>
                       </div>

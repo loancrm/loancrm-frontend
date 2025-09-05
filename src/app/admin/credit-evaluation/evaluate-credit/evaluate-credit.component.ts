@@ -82,15 +82,30 @@ export class EvaluateCreditComponent implements OnInit {
   displayedItems: any = [];
   turnoverChangeMessage: string = '';
   profitChangeMessage: string = '';
-  btotenure = 36;         // 60 months (5 years)
+  btotenure = 36;
   btointerest = 18;
   btoloanAmount: any;
 
-
-  gstTenure = 36;         // 60 months (5 years)
+  gstTenure = 36;
   gstInterest = 18;
   gstloanAmount: any;
-  activeTab: string = 'dscr'; // default tab
+
+  btohomeloantenure = 180;
+  btohomeloaninterest = 9;
+  btohomeloanAmount: any;
+
+  btolapTenure = 180;
+  btolapInterest = 10;
+  btolapAmount: any;
+
+  gsthomeloantenure = 180;         // 60 months (5 years)
+  gsthomeloaninterest = 9;
+  gsthomeloanAmount: any;
+
+  gstlapTenure = 180;         // 60 months (5 years)
+  gstlapInterest = 10;
+  gstlapAmount: any;
+  activeTab: string = 'dscr';
   version = projectConstantsLocal.VERSION_DESKTOP;
   documentTypes = [
     { key: 'gstCertificate', label: 'GST Certificate' },
@@ -192,7 +207,6 @@ export class EvaluateCreditComponent implements OnInit {
       }
       this.getLeadDocumentsById(this.leadId).then((data) => {
         if (data) {
-          console.log(this.leadDocuments?.gstDetails);
           // if (this.leadDocuments?.gstDetails?.length > 0) {
           //   this.totalGst3BSale = this.leadDocuments.gstDetails.reduce((sum, item) => {
           //     return sum + (parseFloat(item.gst3BSale) || 0);
@@ -217,10 +231,27 @@ export class EvaluateCreditComponent implements OnInit {
           this.setDscrValuesData();
           if (this.btoValue) {
             console.log(this.btoValue);
-            this.calculateBTOLoanAmount();
+            const loanTypeHandlers: { [key: string]: () => void } = {
+              homeLoan: () => this.calculateBTOhomeLoanAmount(),
+              lap: () => this.calculateBTOLapAmount()
+            };
+            // Usage:
+            const loanType = this.leadData[0]?.loanType;
+            console.log(loanType)
+            const handler = loanTypeHandlers[loanType] || (() => this.calculateBTOLoanAmount());
+            handler();
           }
           if (this.gstValue) {
-            this.calculateGSTLoanAmount();
+            console.log(this.btoValue);
+            const loanTypeHandlers: { [key: string]: () => void } = {
+              homeLoan: () => this.calculateGSThomeLoanAmount(),
+              lap: () => this.calculateGSTLapAmount()
+            };
+            // Usage:
+            const loanType = this.leadData[0]?.loanType;
+            console.log(loanType)
+            const handler = loanTypeHandlers[loanType] || (() => this.calculateGSTLoanAmount());
+            handler();
           }
         }
       });
@@ -290,6 +321,15 @@ export class EvaluateCreditComponent implements OnInit {
       }
     );
   }
+
+  calculateGSThomeLoanAmount() {
+    const R = this.gsthomeloaninterest / 12 / 100; // monthly rate
+    const N = this.gsthomeloantenure;
+    const numerator = this.gstValue * (Math.pow(1 + R, N) - 1);
+    const denominator = R * Math.pow(1 + R, N);
+    const loanAmount = numerator / denominator;
+    this.gsthomeloanAmount = Math.round(loanAmount); // Loan Amount
+  }
   getStateTotal(stateData: any[]): number {
     return stateData.reduce(
       (sum, item) => sum + (parseFloat(item.gst3BSale) || 0),
@@ -338,7 +378,24 @@ export class EvaluateCreditComponent implements OnInit {
     // ✅ Round off to nearest rupee
     this.btoloanAmount = Math.round(loanAmount); // Loan Amount
   }
-
+  calculateBTOhomeLoanAmount() {
+    const R = this.btohomeloaninterest / 12 / 100; // monthly rate
+    const N = this.btohomeloantenure;
+    const numerator = this.btoValue * (Math.pow(1 + R, N) - 1);
+    const denominator = R * Math.pow(1 + R, N);
+    const loanAmount = numerator / denominator;
+    // ✅ Round off to nearest rupee
+    this.btohomeloanAmount = Math.round(loanAmount); // Loan Amount
+  }
+  calculateBTOLapAmount() {
+    const R = this.btolapInterest / 12 / 100; // monthly rate
+    const N = this.btolapTenure;
+    const numerator = this.btoValue * (Math.pow(1 + R, N) - 1);
+    const denominator = R * Math.pow(1 + R, N);
+    const loanAmount = numerator / denominator;
+    // ✅ Round off to nearest rupee
+    this.btolapAmount = Math.round(loanAmount); // Loan Amount
+  }
   calculateGSTLoanAmount() {
     const R = this.gstInterest / 12 / 100; // monthly rate
     const N = this.gstTenure;
@@ -347,6 +404,16 @@ export class EvaluateCreditComponent implements OnInit {
     const loanAmount = numerator / denominator;
     // ✅ Round off to nearest rupee
     this.gstloanAmount = Math.round(loanAmount); // Loan Amount
+  }
+
+  calculateGSTLapAmount() {
+    const R = this.gstlapInterest / 12 / 100; // monthly rate
+    const N = this.gstlapTenure;
+    const numerator = this.gstValue * (Math.pow(1 + R, N) - 1);
+    const denominator = R * Math.pow(1 + R, N);
+    const loanAmount = numerator / denominator;
+    // ✅ Round off to nearest rupee
+    this.gstlapAmount = Math.round(loanAmount); // Loan Amount
   }
   changeLeadStatus(leadId, statusId) {
     this.loading = true;
@@ -655,7 +722,15 @@ export class EvaluateCreditComponent implements OnInit {
         if (data) {
           this.btoValue = data.btoValue;
           this.loading = false;
-          this.calculateBTOLoanAmount()
+          // this.calculateBTOLoanAmount()
+          const loanTypeHandlers: { [key: string]: () => void } = {
+            homeLoan: () => this.calculateBTOhomeLoanAmount(),
+            lap: () => this.calculateBTOLapAmount()
+          };
+          const loanType = this.leadData[0]?.loanType;
+          console.log(loanType)
+          const handler = loanTypeHandlers[loanType] || (() => this.calculateBTOLoanAmount());
+          handler();
           this.toastService.showSuccess('Calculated and saved Successfully');
         }
       },

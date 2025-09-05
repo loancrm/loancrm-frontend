@@ -503,19 +503,42 @@
           <div>
             <!-- DSCR Accordion -->
             <div class="accordion-item">
-              <div class="accordion-header">
+              <div
+                class="accordion-header d-flex justify-content-between align-items-center"
+              >
                 <button
-                  class="accordion-button"
+                  class="accordion-button collapsed"
                   type="button"
                   data-bs-toggle="collapse"
-                  data-bs-target="#kycCollapse"
+                  data-bs-target="#dscrCollapse"
                   aria-expanded="true"
-                  aria-controls="kycCollapse"
+                  aria-controls="dscrCollapse"
                 >
                   DSCR Calculation
                 </button>
+
+                <img
+                  src="assets/images/icons/downarrow.svg"
+                  alt="down"
+                  class="accordion-arrow arrow-down ms-2"
+                  role="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#dscrCollapse"
+                  aria-expanded="false"
+                  aria-controls="dscrCollapse"
+                />
+                <img
+                  src="assets/images/icons/toparrow.svg"
+                  alt="up"
+                  class="accordion-arrow arrow-up ms-2"
+                  role="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#dscrCollapse"
+                  aria-expanded="false"
+                  aria-controls="dscrCollapse"
+                />
               </div>
-              <div id="kycCollapse" class="accordion-collapse collapse show">
+              <div id="dscrCollapse" class="accordion-collapse collapse show">
                 <div class="accordion-body">
                   <div class="row" *ngIf="leadDocuments?.financialReturns">
                     <!-- Past ITR -->
@@ -1063,21 +1086,43 @@
             </div>
 
             <!-- Balance Sheet Accordion -->
-            <div class="accordion-item card card-section">
-              <h2 class="accordion-header">
+            <div class="accordion-item">
+              <div
+                class="accordion-header d-flex justify-content-between align-items-center"
+              >
                 <button
                   class="accordion-button"
                   type="button"
                   data-bs-toggle="collapse"
-                  data-bs-target="#supportingCollapse"
+                  data-bs-target="#balanceCollapse"
                   aria-expanded="true"
-                  aria-controls="supportingCollapse"
+                  aria-controls="balanceCollapse"
                 >
                   Balance Sheet
                 </button>
-              </h2>
+                <img
+                  src="assets/images/icons/downarrow.svg"
+                  alt="down"
+                  class="accordion-arrow arrow-down ms-2"
+                  role="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#balanceCollapse"
+                  aria-expanded="false"
+                  aria-controls="balanceCollapse"
+                />
+                <img
+                  src="assets/images/icons/toparrow.svg"
+                  alt="up"
+                  class="accordion-arrow arrow-up ms-2"
+                  role="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#balanceCollapse"
+                  aria-expanded="false"
+                  aria-controls="balanceCollapse"
+                />
+              </div>
               <div
-                id="supportingCollapse"
+                id="balanceCollapse"
                 class="accordion-collapse collapse show"
               >
                 <div class="accordion-body">
@@ -1849,34 +1894,87 @@
                     </h6>
                   </div> -->
                   <div
-                    class="mt-3 fw-bold d-flex justify-content-center"
+                    class="mt-3 fw-bold d-flex justify-content-center mt-3"
                     *ngIf="btoValue"
                   >
                     <div class="text-center">
-                      <h6>
-                        Eligible EMI in BTO Program:
-                        <span style="color: #8e89d0; font-weight: bold">{{
-                          btoValue
-                        }}</span>
-                      </h6>
-                      <h6>
-                        Loan Amount:
-                        <span style="color: #8e89d0; font-weight: bold">{{
-                          btoloanAmount
-                        }}</span>
-                      </h6>
-                      <h6>
-                        Tenure:
-                        <span style="color: #8e89d0; font-weight: bold"
-                          >{{ btotenure }} months</span
-                        >
-                      </h6>
-                      <h6>
-                        Interest Rate:
-                        <span style="color: #8e89d0; font-weight: bold"
-                          >{{ btointerest }} %</span
-                        >
-                      </h6>
+                      <h5>
+                        <b>Eligible EMI in BTO Program</b>:
+                        <span style="color: #8e89d0; font-weight: bold">
+                          {{ btoValue }}
+                        </span>
+                      </h5>
+
+                      <!-- Personal Loan (or any loan other than Home Loan & LAP) -->
+                      <ng-container
+                        *ngIf="
+                          leadData[0].loanType !== 'homeLoan' &&
+                          leadData[0].loanType !== 'lap'
+                        "
+                      >
+                        <h6>
+                          Loan Amount:
+                          <span style="color: #8e89d0; font-weight: bold">
+                            {{ btoloanAmount }}
+                          </span>
+                        </h6>
+                        <h6>
+                          Tenure:
+                          <span style="color: #8e89d0; font-weight: bold">
+                            {{ btotenure }} months
+                          </span>
+                        </h6>
+                        <h6>
+                          Interest Rate:
+                          <span style="color: #8e89d0; font-weight: bold">
+                            {{ btointerest }} %
+                          </span>
+                        </h6>
+                      </ng-container>
+
+                      <!-- Home Loan -->
+                      <ng-container *ngIf="leadData[0].loanType === 'homeLoan'">
+                        <h6>
+                          Loan Amount:
+                          <span style="color: #8e89d0; font-weight: bold">
+                            {{ btohomeloanAmount }}
+                          </span>
+                        </h6>
+                        <h6>
+                          Tenure:
+                          <span style="color: #8e89d0; font-weight: bold">
+                            {{ btohomeloantenure }} months
+                          </span>
+                        </h6>
+                        <h6>
+                          Interest Rate:
+                          <span style="color: #8e89d0; font-weight: bold">
+                            {{ btohomeloaninterest }} %
+                          </span>
+                        </h6>
+                      </ng-container>
+
+                      <!-- LAP Loan -->
+                      <ng-container *ngIf="leadData[0].loanType === 'lap'">
+                        <h6>
+                          Loan Amount:
+                          <span style="color: #8e89d0; font-weight: bold">
+                            {{ btolapAmount }}
+                          </span>
+                        </h6>
+                        <h6>
+                          Tenure:
+                          <span style="color: #8e89d0; font-weight: bold">
+                            {{ btolapTenure }} months
+                          </span>
+                        </h6>
+                        <h6>
+                          Interest Rate:
+                          <span style="color: #8e89d0; font-weight: bold">
+                            {{ btolapInterest }} %
+                          </span>
+                        </h6>
+                      </ng-container>
                     </div>
                   </div>
                 </div>
