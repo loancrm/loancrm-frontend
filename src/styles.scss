@@ -524,4 +524,12 @@ input {
 //   color: #721c24 !important;
 // }
 
-
+.matmenuimg:hover{
+  background-color: #DFE5EF;
+  color: #535AB4;
+  filter: brightness(0) saturate(100%) invert(30%) sepia(92%) saturate(629%) hue-rotate(204deg) brightness(94%) contrast(83%);
+}
+.matmenuimg img{
+  filter: brightness(0) saturate(100%) invert(47%) sepia(0%) saturate(2725%) hue-rotate(315deg) brightness(95%) contrast(94%);
+  transition: filter 0.3s ease;
+}

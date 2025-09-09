@@ -907,6 +907,11 @@ export class LeadsComponent implements OnInit {
       this.activeEmploymentStatus.name === 'employed' ? 'home' : 'homeself';
     return this.actionItemsForLead(lead, leadType);
   }
+  getCarActionItems(lead: any): MenuItem[] {
+    const leadType =
+      this.activeEmploymentStatus.name === 'employed' ? 'car' : 'carself';
+    return this.actionItemsForLead(lead, leadType);
+  }
 
   actionItemsForLead(lead: any, leadType: string): MenuItem[] {
     const menuItems: any = [{ label: 'Actions', items: [] }];

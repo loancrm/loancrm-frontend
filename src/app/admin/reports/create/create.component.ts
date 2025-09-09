@@ -52,6 +52,8 @@ export class CreateComponent {
   callbacksStatusList = projectConstantsLocal.CALLBACK_STATUS_REPORTS;
   loginsStatus = projectConstantsLocal.BANKSSAVED_STATUS;
   approvalStatus = projectConstantsLocal.APPROVALS_STATUS;
+  desigantionType = projectConstantsLocal.DOCTOR_OR_CA
+  carType = projectConstantsLocal.CAR_TYPE
   dateRange = [
     { field: 'date', title: 'Date From', type: 'date', filterType: 'ge' },
     { field: 'date', title: 'Date To', type: 'date', filterType: 'le' },
@@ -114,6 +116,7 @@ export class CreateComponent {
     { label: 'Home Loan', value: 'homeLoan' },
     { label: 'LAP', value: 'lap' },
     { label: 'Professional Loans', value: 'professionalLoans' },
+    { label: 'Car Loan', value: 'carLoan' },
   ];
   employmentStatuses = [
     { label: 'Employed', value: 'employed' },
@@ -122,11 +125,10 @@ export class CreateComponent {
 
   onLoanTypeChange(event: any) {
     const selected = event?.value;
+    // console.log(selected);
     if (!selected) return;
-
     this.selectedLoanType = selected;
-
-
+    console.log(this.selectedLoanType);
     Object.keys(this.reportData).forEach((key) => {
       if (key.startsWith('loanType-') || key.startsWith('employmentStatus-')) {
         delete this.reportData[key];
@@ -139,7 +141,7 @@ export class CreateComponent {
 
 
     if (this.reportType === 'LEADS') {
-      if (['personalLoan', 'homeLoan', 'lap', 'professionalLoans'].includes(selected)) {
+      if (['personalLoan', 'homeLoan', 'lap', 'professionalLoans', 'carLoan'].includes(selected)) {
         this.reportType = 'LOANLEADS';
         this.selectedReportConfig = null;
         this.reportData = {};
@@ -169,28 +171,42 @@ export class CreateComponent {
       'LEADS'
     ];
 
-    if (selected === 'personalLoan' && autoFillTypes.includes(this.reportType)) {
-      this.selectedEmploymentStatus = 'employed';
+    // if (selected === 'personalLoan' || selected === 'professionalLoans'&& autoFillTypes.includes(this.reportType)) {
+    //   this.selectedEmploymentStatus = 'employed';
 
-      setTimeout(() => {
-        this.setReportsList();
+    //   setTimeout(() => {
+    //     this.setReportsList();
+    //     const empField = this.selectedReportConfig?.fields?.find(f => f.field === 'employmentStatus');
+    //     if (empField) {
+    //       this.reportData[`${empField.field}-${empField.filterType}`] = 'employed';
+    //     }
+    //     const loanTypeField = this.selectedReportConfig?.fields?.find(f => f.field === 'loanType');
+    //     if (loanTypeField) {
+    //       this.reportData[`${loanTypeField.field}-${loanTypeField.filterType}`] = 'personalLoan';
+    //     }
+    //   });
 
+    //   return;
+    // }
 
-        const empField = this.selectedReportConfig?.fields?.find(f => f.field === 'employmentStatus');
-        if (empField) {
-          this.reportData[`${empField.field}-${empField.filterType}`] = 'employed';
-        }
+    if ((selected === 'personalLoan' || selected === 'professionalLoans')     
+      && autoFillTypes.includes(this.reportType)) {
+    this.selectedEmploymentStatus = 'employed';
 
+    setTimeout(() => {
+      this.setReportsList();
+      const empField = this.selectedReportConfig?.fields?.find(f => f.field === 'employmentStatus');
+      if (empField) {
+        this.reportData[`${empField.field}-${empField.filterType}`] = 'employed';
+      }
+      const loanTypeField = this.selectedReportConfig?.fields?.find(f => f.field === 'loanType');
+      if (loanTypeField) {
+        this.reportData[`${loanTypeField.field}-${loanTypeField.filterType}`] = selected; // <-- use selected here
+      }
+    });
 
-        const loanTypeField = this.selectedReportConfig?.fields?.find(f => f.field === 'loanType');
-        if (loanTypeField) {
-          this.reportData[`${loanTypeField.field}-${loanTypeField.filterType}`] = 'personalLoan';
-        }
-      });
-
-      return;
-    }
-
+    return;
+  }
 
     if (this.reportType === 'CALLBACKS') {
       const loanTypeField = this.selectedReportConfig?.fields?.find(f => f.field === 'loanType');
@@ -203,8 +219,6 @@ export class CreateComponent {
       }
       return;
     }
-
-
 
     const forcedTypes = [
       'FILESINPROCESS',
@@ -230,27 +244,46 @@ export class CreateComponent {
       this.setReportsList();
       return;
     }
-
-
-
-
-
     const loanTypeField = this.selectedReportConfig?.fields?.find(f => f.field === 'loanType');
     if (loanTypeField && selected !== 'businessLoan') {
       this.reportData['loanType-' + loanTypeField.filterType] = selected;
     }
 
-
-    if (['homeLoan', 'lap'].includes(selected)) {
+    if (['homeLoan', 'lap', 'carLoan'].includes(selected)) {
       this.showEmploymentSelector = true;
     }
   }
 
+//   onLoanTypeChange(event: any) {
+//   const selected = event.value;
+//   console.log("Loan type changed:", selected);
+
+//   this.selectedLoanType = selected;
+
+//   // --- refresh fields for reports that auto-depend on loanType ---
+//   if (this.autoFillTypes.includes(this.reportType)) {
+//     setTimeout(() => {
+//       this.setReportsList();
+
+//       // ensure loanType field value is synced
+//       const loanTypeField = this.selectedReportConfig?.fields?.find(
+//         (f: any) => f.field === 'loanType'
+//       );
+//       if (loanTypeField) {
+//         this.reportData[
+//           `${loanTypeField.field}-${loanTypeField.filterType}`
+//         ] = selected;
+//       }
+//     });
+//   }
+// }
 
   onEmploymentStatusSelect(status: string) {
 
     this.selectedEmploymentStatus = status;
-
+    console.log(this.selectedEmploymentStatus);
+    
+    
     if (this.reportType === 'LOANLEADS', 'FILESINPROCESS') {
       setTimeout(() => {
         this.setReportsList();
@@ -303,7 +336,8 @@ export class CreateComponent {
         reportName: 'Leads',
         reportType: 'LEADS',
         condition: true,
-        fields: [
+        fields:
+        [
           {
             field: 'leadInternalStatus',
             title: 'Lead Status',
@@ -379,99 +413,393 @@ export class CreateComponent {
             type: 'date',
             filterType: 'lte',
           },
-        ],
+        ]
       },
+      // {
+      //   reportName: 'Loan Leads',
+      //   reportType: 'LOANLEADS',
+      //   condition: true,
+      //   fields:
+      //     this.selectedEmploymentStatus === 'self-employed'
+      //       ? [
+      //         {
+      //           field: 'loanType',
+      //           title: 'Loan Type',
+      //           type: 'text',
+      //           filterType: 'eq',
+      //         },
+      //         {
+      //           field: 'leadInternalStatus',
+      //           title: 'Lead Status',
+      //           type: 'dropdown',
+      //           filterType: 'eq',
+      //           options: this.leadStatusList,
+      //           value: 'id',
+      //           label: 'displayName',
+      //         },
+      //         {
+      //           field: 'sourcedBy',
+      //           title: 'Sourced By',
+      //           type: 'dropdown',
+      //           filterType: 'eq',
+      //           options: this.leadUsers,
+      //           value: 'id',
+      //           label: 'name',
+      //         },
+      //         {
+      //           field: 'employmentStatus',
+      //           title: 'Employment Status',
+      //           type: 'text',
+      //           filterType: 'eq',
+      //         },
+      //         {
+      //           field: 'businessEntity',
+      //           title: 'Business Entity',
+      //           type: 'dropdown',
+      //           filterType: 'eq',
+      //           options: this.businessEntities,
+      //           value: 'name',
+      //           label: 'displayName',
+      //         },
+      //         {
+      //           field: 'natureOfBusiness',
+      //           title: 'Nature of Business',
+      //           type: 'dropdown',
+      //           filterType: 'eq',
+      //           options: this.natureofBusiness,
+      //           value: 'name',
+      //           label: 'displayName',
+      //         },
+      //         {
+      //           field: 'businessTurnover',
+      //           title: 'Business Turnover',
+      //           type: 'dropdown',
+      //           filterType: 'eq',
+      //           options: this.businessTurnover,
+      //           value: 'name',
+      //           label: 'displayName',
+      //         },
+      //         {
+      //           field: 'hadOwnHouse',
+      //           title: 'Property Type',
+      //           type: 'dropdown',
+      //           filterType: 'eq',
+      //           options: this.hadOwnHouse,
+      //           value: 'name',
+      //           label: 'displayName',
+      //         },
+      //         {
+      //           field: 'createdOn',
+      //           title: 'From Date',
+      //           type: 'date',
+      //           filterType: 'gte',
+      //         },
+      //         {
+      //           field: 'createdOn',
+      //           title: 'To Date',
+      //           type: 'date',
+      //           filterType: 'lte',
+      //         },
+      //       ]
+      //       : (this.selectedEmploymentStatus === 'employed' || this.selectedLoanType === 'personalLoan')
+      //         ? [
+      //           {
+      //             field: 'loanType',
+      //             title: 'Loan Type',
+      //             type: 'text',
+      //             filterType: 'eq',
+      //           },
+      //           {
+      //             field: 'leadInternalStatus',
+      //             title: 'Lead Status',
+      //             type: 'dropdown',
+      //             filterType: 'eq',
+      //             options: this.leadStatusList,
+      //             value: 'id',
+      //             label: 'displayName',
+      //           },
+      //           {
+      //             field: 'sourcedBy',
+      //             title: 'Sourced By',
+      //             type: 'dropdown',
+      //             filterType: 'eq',
+      //             options: this.leadUsers,
+      //             value: 'id',
+      //             label: 'name',
+      //           },
+      //           {
+      //             field: 'employmentStatus',
+      //             title: 'Employment Status',
+      //             type: 'text',
+      //             filterType: 'eq',
+      //           },
+      //           {
+      //             field: 'salary',
+      //             title: 'Salary',
+      //             type: 'text',
+      //             filterType: 'eq',
+      //           },
+      //           {
+      //             field: 'jobExperience',
+      //             title: 'Job Experience',
+      //             type: 'text',
+      //             filterType: 'eq',
+      //           },
+      //           {
+      //             field: 'hadOwnHouse',
+      //             title: 'Property Type',
+      //             type: 'dropdown',
+      //             filterType: 'eq',
+      //             options: this.hadOwnHouse,
+      //             value: 'name',
+      //             label: 'displayName',
+      //           },
+      //           {
+      //             field: 'createdOn',
+      //             title: 'From Date',
+      //             type: 'date',
+      //             filterType: 'gte',
+      //           },
+      //           {
+      //             field: 'createdOn',
+      //             title: 'To Date',
+      //             type: 'date',
+      //             filterType: 'lte',
+      //           },
+      //         ] 
+      //         : (this.selectedEmploymentStatus === 'employed' || this.selectedLoanType === 'professionalLoans')
+      //           ?[
+      //             {
+      //             field: 'loanType',
+      //             title: 'Loan Type',
+      //             type: 'text',
+      //             filterType: 'eq',
+      //           },
+      //           {
+      //             field: 'leadInternalStatus',
+      //             title: 'Lead Status',
+      //             type: 'dropdown',
+      //             filterType: 'eq',
+      //             options: this.leadStatusList,
+      //             value: 'id',
+      //             label: 'displayName',
+      //           },
+      //           {
+      //             field: 'sourcedBy',
+      //             title: 'Sourced By',
+      //             type: 'dropdown',
+      //             filterType: 'eq',
+      //             options: this.leadUsers,
+      //             value: 'id',
+      //             label: 'name',
+      //           },
+      //           {
+      //             field: 'employmentStatus',
+      //             title: 'Employment Status',
+      //             type: 'text',
+      //             filterType: 'eq',
+      //           },
+      //           {
+      //             field: 'designation',
+      //             title: 'Designation Type',
+      //             type: 'dropdown',
+      //             filterType: 'eq',
+      //             options: this.desigantionType,
+      //             value: 'id',
+      //             label: 'displayName',
+      //           },
+      //           {
+      //             field: 'salary',
+      //             title: 'Salary',
+      //             type: 'text',
+      //             filterType: 'eq',
+      //           },
+      //           {
+      //             field: 'jobExperience',
+      //             title: 'Job Experience',
+      //             type: 'text',
+      //             filterType: 'eq',
+      //           },
+      //           {
+      //             field: 'hadOwnHouse',
+      //             title: 'Property Type',
+      //             type: 'dropdown',
+      //             filterType: 'eq',
+      //             options: this.hadOwnHouse,
+      //             value: 'name',
+      //             label: 'displayName',
+      //           },
+      //           {
+      //             field: 'createdOn',
+      //             title: 'From Date',
+      //             type: 'date',
+      //             filterType: 'gte',
+      //           },
+      //           {
+      //             field: 'createdOn',
+      //             title: 'To Date',
+      //             type: 'date',
+      //             filterType: 'lte',
+      //           }                
+      //           ]
+      //         :[
+      //           {
+      //             field: 'loanType',
+      //             title: 'Loan Type',
+      //             type: 'text',
+      //             filterType: 'eq',
+      //           },
+      //           {
+      //             field: 'leadInternalStatus',
+      //             title: 'Lead Status',
+      //             type: 'dropdown',
+      //             filterType: 'eq',
+      //             options: this.leadStatusList,
+      //             value: 'id',
+      //             label: 'displayName',
+      //           },
+      //           {
+      //             field: 'sourcedBy',
+      //             title: 'Sourced By',
+      //             type: 'dropdown',
+      //             filterType: 'eq',
+      //             options: this.leadUsers,
+      //             value: 'id',
+      //             label: 'name',
+      //           },
+      //           {
+      //             field: 'employmentStatus',
+      //             title: 'Employment Status',
+      //             type: 'text',
+      //             filterType: 'eq',
+      //           },
+      //           {
+      //             field: 'createdOn',
+      //             title: 'From Date',
+      //             type: 'date',
+      //             filterType: 'gte',
+      //           },
+      //           {
+      //             field: 'createdOn',
+      //             title: 'To Date',
+      //             type: 'date',
+      //             filterType: 'lte',
+      //           },
+      //         ]
+      // },
       {
         reportName: 'Loan Leads',
         reportType: 'LOANLEADS',
         condition: true,
         fields:
-          this.selectedEmploymentStatus === 'self-employed'
+          this.selectedLoanType === 'professionalLoans'
             ? [
-              {
-                field: 'loanType',
-                title: 'Loan Type',
-                type: 'text',
-                filterType: 'eq',
-              },
-              {
-                field: 'leadInternalStatus',
-                title: 'Lead Status',
-                type: 'dropdown',
-                filterType: 'eq',
-                options: this.leadStatusList,
-                value: 'id',
-                label: 'displayName',
-              },
-              {
-                field: 'sourcedBy',
-                title: 'Sourced By',
-                type: 'dropdown',
-                filterType: 'eq',
-                options: this.leadUsers,
-                value: 'id',
-                label: 'name',
-              },
-              {
-                field: 'employmentStatus',
-                title: 'Employment Status',
-                type: 'text',
-                filterType: 'eq',
-              },
-              {
-                field: 'businessEntity',
-                title: 'Business Entity',
-                type: 'dropdown',
-                filterType: 'eq',
-                options: this.businessEntities,
-                value: 'name',
-                label: 'displayName',
-              },
-              {
-                field: 'natureOfBusiness',
-                title: 'Nature of Business',
-                type: 'dropdown',
-                filterType: 'eq',
-                options: this.natureofBusiness,
-                value: 'name',
-                label: 'displayName',
-              },
-              {
-                field: 'businessTurnover',
-                title: 'Business Turnover',
-                type: 'dropdown',
-                filterType: 'eq',
-                options: this.businessTurnover,
-                value: 'name',
-                label: 'displayName',
-              },
-              {
-                field: 'hadOwnHouse',
-                title: 'Property Type',
-                type: 'dropdown',
-                filterType: 'eq',
-                options: this.hadOwnHouse,
-                value: 'name',
-                label: 'displayName',
-              },
-              {
-                field: 'createdOn',
-                title: 'From Date',
-                type: 'date',
-                filterType: 'gte',
-              },
-              {
-                field: 'createdOn',
-                title: 'To Date',
-                type: 'date',
-                filterType: 'lte',
-              },
-            ]
-            : (this.selectedEmploymentStatus === 'employed' || this.selectedLoanType === 'personalLoan')
-              ? [
+                { field: 'loanType',
+                  title: 'Loan Type',
+                  type: 'text',
+                  filterType: 'eq'
+                },
+                { field: 'leadInternalStatus',
+                  title: 'Lead Status',
+                  type: 'dropdown',
+                  filterType: 'eq',
+                  options: this.leadStatusList,
+                  value: 'id',
+                  label: 'displayName'
+                },
+                { field: 'sourcedBy',
+                  title: 'Sourced By',
+                  type: 'dropdown',
+                  filterType: 'eq',
+                  options: this.leadUsers,
+                  value: 'id',
+                  label: 'name'
+                },
+                { field: 'employmentStatus',
+                  title: 'Employment Status',
+                  type: 'text',
+                  filterType: 'eq'
+                },
+                { field: 'designation',
+                  title: 'Designation Type',
+                  type: 'dropdown',
+                  filterType: 'eq',
+                  options: this.desigantionType,
+                  value: 'id',
+                  label: 'displayName'
+                },
+                { field: 'salary',
+                  title: 'Salary',
+                  type: 'text',
+                  filterType: 'eq'
+                },
+                { field: 'jobExperience',
+                  title: 'Job Experience',
+                  type: 'text',
+                  filterType: 'eq'
+                },
+                { field: 'hadOwnHouse',
+                  title: 'Property Type',
+                  type: 'dropdown',
+                  filterType: 'eq',
+                  options: this.hadOwnHouse,
+                  value: 'name',
+                  label: 'displayName'
+                },
+                { field: 'createdOn',
+                  title: 'From Date',
+                  type: 'date',
+                  filterType: 'gte'
+                },
+                { field: 'createdOn',
+                  title: 'To Date',
+                  type: 'date',
+                  filterType: 'lte'
+                },
+              ]
+          : this.selectedLoanType === 'personalLoan'
+            ? [
+                // ✅ PersonalLoan fields
+                { field: 'loanType',
+                  title: 'Loan Type',
+                  type: 'text',
+                  filterType: 'eq'
+                },
+                { field: 'leadInternalStatus',
+                  title: 'Lead Status',
+                  type: 'dropdown',
+                  filterType: 'eq',
+                  options: this.leadStatusList,
+                  value: 'id',
+                  label: 'displayName'
+                },
+                { field: 'sourcedBy',
+                  title: 'Sourced By',
+                  type: 'dropdown',
+                  filterType: 'eq',
+                  options: this.leadUsers,
+                  value: 'id',
+                  label: 'name'
+                },
+                { field: 'employmentStatus', title: 'Employment Status', type: 'text', filterType: 'eq' },
+                { field: 'salary', title: 'Salary', type: 'text', filterType: 'eq' },
+                { field: 'jobExperience', title: 'Job Experience', type: 'text', filterType: 'eq' },
+                { field: 'hadOwnHouse', title: 'Property Type', type: 'dropdown', filterType: 'eq',
+                  options: this.hadOwnHouse, value: 'name', label: 'displayName' },
+                { field: 'createdOn', title: 'From Date', type: 'date', filterType: 'gte' },
+                { field: 'createdOn', title: 'To Date', type: 'date', filterType: 'lte' },
+              ]
+            : (this.selectedLoanType === 'carLoan' && this.selectedEmploymentStatus === 'self-employed')
+              ?[
                 {
                   field: 'loanType',
                   title: 'Loan Type',
+                  type: 'text',
+                  filterType: 'eq',
+                },
+                {
+                  field: 'employmentStatus',
+                  title: 'Employment Status',
                   type: 'text',
                   filterType: 'eq',
                 },
@@ -494,22 +822,49 @@ export class CreateComponent {
                   label: 'name',
                 },
                 {
-                  field: 'employmentStatus',
-                  title: 'Employment Status',
-                  type: 'text',
+                  field: 'carType',
+                  title: 'Car Type',
+                  type: 'dropdown',
                   filterType: 'eq',
+                  options: this.carType,
+                  value: 'id',
+                  label: 'displayName',
                 },
                 {
-                  field: 'salary',
-                  title: 'Salary',
-                  type: 'text',
+                  field: 'fileRemarks',
+                  title: 'File Remarks',
+                  type: 'dropdown',
                   filterType: 'eq',
+                  options: this.fileRemarks,
+                  value: 'id',
+                  label: 'displayName',
                 },
                 {
-                  field: 'jobExperience',
-                  title: 'Job Experience',
-                  type: 'text',
+                  field: 'businessEntity',
+                  title: 'Business Entity',
+                  type: 'dropdown',
                   filterType: 'eq',
+                  options: this.businessEntities,
+                  value: 'name',
+                  label: 'displayName',
+                },
+                {
+                  field: 'natureOfBusiness',
+                  title: 'Nature of Business',
+                  type: 'dropdown',
+                  filterType: 'eq',
+                  options: this.natureofBusiness,
+                  value: 'name',
+                  label: 'displayName',
+                },
+                {
+                  field: 'businessTurnover',
+                  title: 'Business Turnover',
+                  type: 'dropdown',
+                  filterType: 'eq',
+                  options: this.businessTurnover,
+                  value: 'name',
+                  label: 'displayName',
                 },
                 {
                   field: 'hadOwnHouse',
@@ -533,52 +888,84 @@ export class CreateComponent {
                   filterType: 'lte',
                 },
               ]
-              : [
-                {
-                  field: 'loanType',
-                  title: 'Loan Type',
-                  type: 'text',
-                  filterType: 'eq',
-                },
-                {
-                  field: 'leadInternalStatus',
+            : (this.selectedLoanType === 'carLoan' && this.selectedEmploymentStatus === 'employed')
+            ? [
+              { field: 'loanType',
+                title: 'Loan Type',
+                type: 'text',
+                filterType: 'eq'},
+                { field: 'leadInternalStatus',
                   title: 'Lead Status',
                   type: 'dropdown',
                   filterType: 'eq',
                   options: this.leadStatusList,
                   value: 'id',
+                  label: 'displayName'
+                },
+                  {
+                  field: 'carType',
+                  title: 'Car Type',
+                  type: 'dropdown',
+                  filterType: 'eq',
+                  options: this.carType,
+                  value: 'id',
                   label: 'displayName',
                 },
-                {
-                  field: 'sourcedBy',
+                { field: 'sourcedBy',
                   title: 'Sourced By',
                   type: 'dropdown',
                   filterType: 'eq',
                   options: this.leadUsers,
                   value: 'id',
-                  label: 'name',
+                  label: 'name'
                 },
-                {
-                  field: 'employmentStatus',
+                { field: 'employmentStatus',
                   title: 'Employment Status',
                   type: 'text',
-                  filterType: 'eq',
+                  filterType: 'eq'
                 },
-                {
-                  field: 'createdOn',
+                { field: 'salary',
+                  title: 'Salary',
+                  type: 'text', 
+                  filterType: 'eq'
+                },
+                { field: 'jobExperience',
+                  title: 'Job Experience',
+                  type: 'text',
+                  filterType: 'eq' 
+                },
+                { field: 'hadOwnHouse',
+                  title: 'Property Type',
+                  type: 'dropdown',
+                  filterType: 'eq',
+                  options: this.hadOwnHouse,
+                  value: 'name',
+                  label: 'displayName'
+                },
+                { field: 'createdOn',
                   title: 'From Date',
                   type: 'date',
-                  filterType: 'gte',
+                  filterType: 'gte'
                 },
-                {
-                  field: 'createdOn',
+                { field: 'createdOn',
                   title: 'To Date',
                   type: 'date',
-                  filterType: 'lte',
+                  filterType: 'lte'
                 },
-              ],
-      },
+            ]
+            : [
+                { field: 'loanType', title: 'Loan Type', type: 'text', filterType: 'eq' },
+                { field: 'leadInternalStatus', title: 'Lead Status', type: 'dropdown', filterType: 'eq',
+                  options: this.leadStatusList, value: 'id', label: 'displayName' },
+                { field: 'sourcedBy', title: 'Sourced By', type: 'dropdown', filterType: 'eq',
+                  options: this.leadUsers, value: 'id', label: 'name' },
+                { field: 'employmentStatus', title: 'Employment Status', type: 'text', filterType: 'eq' },
+                { field: 'createdOn', title: 'From Date', type: 'date', filterType: 'gte' },
+                { field: 'createdOn', title: 'To Date', type: 'date', filterType: 'lte' },
+              ]
 
+            
+      },
       {
         reportName: 'Callbacks',
         reportType: 'CALLBACKS',
@@ -628,212 +1015,287 @@ export class CreateComponent {
           },
         ],
       },
-      {
-        reportName: 'Files In Process',
-        reportType: 'FILESINPROCESS',
-        condition: true,
-        fields:
-          (this.selectedEmploymentStatus === 'self-employed' || this.selectedLoanType === 'businessLoan')
-            ? [
-              {
-                field: 'sourcedBy',
-                title: 'Sourced By',
-                type: 'dropdown',
-                filterType: 'eq',
-                options: this.leadUsers,
-                value: 'id',
-                label: 'name',
-              },
-              {
-                field: 'businessEntity',
-                title: 'Business Entity',
-                type: 'dropdown',
-                filterType: 'eq',
-                options: this.businessEntities,
-                value: 'name',
-                label: 'displayName',
-              },
-              {
-                field: 'loanType',
-                title: 'Loan Type',
-                type: 'text',
-                filterType: 'eq',
-              },
-              {
-                field: 'employmentStatus',
-                title: 'Employment Status',
-                type: 'text',
-                filterType: 'eq',
-              },
-              {
-                field: 'natureOfBusiness',
-                title: 'Nature of Business',
-                type: 'dropdown',
-                filterType: 'eq',
-                options: this.natureofBusiness,
-                value: 'name',
-                label: 'displayName',
-              },
-              {
-                field: 'businessTurnover',
-                title: 'Business Turnover',
-                type: 'dropdown',
-                filterType: 'eq',
-                options: this.businessTurnover,
-                value: 'name',
-                label: 'displayName',
-              },
-              {
-                field: 'hadOwnHouse',
-                title: 'Property Type',
-                type: 'dropdown',
-                filterType: 'eq',
-                options: this.hadOwnHouse,
-                value: 'name',
-                label: 'displayName',
-              },
-              {
-                field: 'createdOn',
-                title: 'From Date',
-                type: 'date',
-                filterType: 'gte',
-              },
-              {
-                field: 'createdOn',
-                title: 'To Date',
-                type: 'date',
-                filterType: 'lte',
-              },
-            ]
-            : (this.selectedEmploymentStatus === 'employed' || this.selectedLoanType === 'personalLoan')
-              ? [
-                {
-                  field: 'sourcedBy',
-                  title: 'Sourced By',
-                  type: 'dropdown',
-                  filterType: 'eq',
-                  options: this.leadUsers,
-                  value: 'id',
-                  label: 'name',
-                },
-                {
-                  field: 'loanType',
-                  title: 'Loan Type',
-                  type: 'text',
-                  filterType: 'eq',
-                },
-                {
-                  field: 'employmentStatus',
-                  title: 'Employment Status',
-                  type: 'text',
-                  filterType: 'eq',
-                },
-                {
-                  field: 'salary',
-                  title: 'Salary',
-                  type: 'text',
-                  filterType: 'eq',
-                },
-                {
-                  field: 'jobExperience',
-                  title: 'Job Experience',
-                  type: 'text',
-                  filterType: 'eq',
-                },
-                {
-                  field: 'hadOwnHouse',
-                  title: 'Property Type',
-                  type: 'dropdown',
-                  filterType: 'eq',
-                  options: this.hadOwnHouse,
-                  value: 'name',
-                  label: 'displayName',
-                },
-                {
-                  field: 'createdOn',
-                  title: 'From Date',
-                  type: 'date',
-                  filterType: 'gte',
-                },
-                {
-                  field: 'createdOn',
-                  title: 'To Date',
-                  type: 'date',
-                  filterType: 'lte',
-                },
-              ]
-              : [
-                {
-                  field: 'sourcedBy',
-                  title: 'Sourced By',
-                  type: 'dropdown',
-                  filterType: 'eq',
-                  options: this.leadUsers,
-                  value: 'id',
-                  label: 'name',
-                },
-                {
-                  field: 'businessEntity',
-                  title: 'Business Entity',
-                  type: 'dropdown',
-                  filterType: 'eq',
-                  options: this.businessEntities,
-                  value: 'name',
-                  label: 'displayName',
-                },
-                {
-                  field: 'loanType',
-                  title: 'Loan Type',
-                  type: 'text',
-                  filterType: 'eq',
-                },
-                {
-                  field: 'employmentStatus',
-                  title: 'Employment Status',
-                  type: 'text',
-                  filterType: 'eq',
-                },
-                {
-                  field: 'natureOfBusiness',
-                  title: 'Nature of Business',
-                  type: 'dropdown',
-                  filterType: 'eq',
-                  options: this.natureofBusiness,
-                  value: 'name',
-                  label: 'displayName',
-                },
-                {
-                  field: 'businessTurnover',
-                  title: 'Business Turnover',
-                  type: 'dropdown',
-                  filterType: 'eq',
-                  options: this.businessTurnover,
-                  value: 'name',
-                  label: 'displayName',
-                },
-                {
-                  field: 'hadOwnHouse',
-                  title: 'Property Type',
-                  type: 'dropdown',
-                  filterType: 'eq',
-                  options: this.hadOwnHouse,
-                  value: 'name',
-                  label: 'displayName',
-                },
-                {
-                  field: 'createdOn',
-                  title: 'From Date',
-                  type: 'date',
-                  filterType: 'gte',
-                },
-                {
-                  field: 'createdOn',
-                  title: 'To Date',
-                  type: 'date',
-                  filterType: 'lte',
-                },
-              ],
-      },
+      // {
+      //   reportName: 'Files In Process',
+      //   reportType: 'FILESINPROCESS',
+      //   condition: true,
+      //   fields:
+      //     (this.selectedEmploymentStatus === 'self-employed' || this.selectedLoanType === 'businessLoan')
+      //       ? [
+      //         {
+      //           field: 'sourcedBy',
+      //           title: 'Sourced By',
+      //           type: 'dropdown',
+      //           filterType: 'eq',
+      //           options: this.leadUsers,
+      //           value: 'id',
+      //           label: 'name',
+      //         },
+      //         {
+      //           field: 'businessEntity',
+      //           title: 'Business Entity',
+      //           type: 'dropdown',
+      //           filterType: 'eq',
+      //           options: this.businessEntities,
+      //           value: 'name',
+      //           label: 'displayName',
+      //         },
+      //         {
+      //           field: 'loanType',
+      //           title: 'Loan Type',
+      //           type: 'text',
+      //           filterType: 'eq',
+      //         },
+      //         {
+      //           field: 'employmentStatus',
+      //           title: 'Employment Status',
+      //           type: 'text',
+      //           filterType: 'eq',
+      //         },
+      //         {
+      //           field: 'natureOfBusiness',
+      //           title: 'Nature of Business',
+      //           type: 'dropdown',
+      //           filterType: 'eq',
+      //           options: this.natureofBusiness,
+      //           value: 'name',
+      //           label: 'displayName',
+      //         },
+      //         {
+      //           field: 'businessTurnover',
+      //           title: 'Business Turnover',
+      //           type: 'dropdown',
+      //           filterType: 'eq',
+      //           options: this.businessTurnover,
+      //           value: 'name',
+      //           label: 'displayName',
+      //         },
+      //         {
+      //           field: 'hadOwnHouse',
+      //           title: 'Property Type',
+      //           type: 'dropdown',
+      //           filterType: 'eq',
+      //           options: this.hadOwnHouse,
+      //           value: 'name',
+      //           label: 'displayName',
+      //         },
+      //         {
+      //           field: 'createdOn',
+      //           title: 'From Date',
+      //           type: 'date',
+      //           filterType: 'gte',
+      //         },
+      //         {
+      //           field: 'createdOn',
+      //           title: 'To Date',
+      //           type: 'date',
+      //           filterType: 'lte',
+      //         },
+      //       ]
+      //       : (this.selectedEmploymentStatus === 'employed' || this.selectedLoanType === 'personalLoan')
+      //         ? [
+      //           {
+      //             field: 'sourcedBy',
+      //             title: 'Sourced By',
+      //             type: 'dropdown',
+      //             filterType: 'eq',
+      //             options: this.leadUsers,
+      //             value: 'id',
+      //             label: 'name',
+      //           },
+      //           {
+      //             field: 'loanType',
+      //             title: 'Loan Type',
+      //             type: 'text',
+      //             filterType: 'eq',
+      //           },
+      //           {
+      //             field: 'employmentStatus',
+      //             title: 'Employment Status',
+      //             type: 'text',
+      //             filterType: 'eq',
+      //           },
+      //           {
+      //             field: 'salary',
+      //             title: 'Salary',
+      //             type: 'text',
+      //             filterType: 'eq',
+      //           },
+      //           {
+      //             field: 'jobExperience',
+      //             title: 'Job Experience',
+      //             type: 'text',
+      //             filterType: 'eq',
+      //           },
+      //           {
+      //             field: 'hadOwnHouse',
+      //             title: 'Property Type',
+      //             type: 'dropdown',
+      //             filterType: 'eq',
+      //             options: this.hadOwnHouse,
+      //             value: 'name',
+      //             label: 'displayName',
+      //           },
+      //           {
+      //             field: 'createdOn',
+      //             title: 'From Date',
+      //             type: 'date',
+      //             filterType: 'gte',
+      //           },
+      //           {
+      //             field: 'createdOn',
+      //             title: 'To Date',
+      //             type: 'date',
+      //             filterType: 'lte',
+      //           },
+      //         ] 
+      //         : (this.selectedEmploymentStatus === 'employed' || this.selectedLoanType === 'professionalLoans')
+      //           ?[
+      //            {
+      //             field: 'loanType',
+      //             title: 'Loan Type',
+      //             type: 'text',
+      //             filterType: 'eq',
+      //           },
+      //           {
+      //             field: 'leadInternalStatus',
+      //             title: 'Lead Status',
+      //             type: 'dropdown',
+      //             filterType: 'eq',
+      //             options: this.leadStatusList,
+      //             value: 'id',
+      //             label: 'displayName',
+      //           },
+      //           {
+      //             field: 'sourcedBy',
+      //             title: 'Sourced By',
+      //             type: 'dropdown',
+      //             filterType: 'eq',
+      //             options: this.leadUsers,
+      //             value: 'id',
+      //             label: 'name',
+      //           },
+      //           {
+      //             field: 'employmentStatus',
+      //             title: 'Employment Status',
+      //             type: 'text',
+      //             filterType: 'eq',
+      //           },
+      //           {
+      //             field: 'designation',
+      //             title: 'Designation Type',
+      //             type: 'dropdown',
+      //             filterType: 'eq',
+      //             options: this.desigantionType,
+      //             value: 'id',
+      //             label: 'displayName',
+      //           },
+      //           {
+      //             field: 'salary',
+      //             title: 'Salary',
+      //             type: 'text',
+      //             filterType: 'eq',
+      //           },
+      //           {
+      //             field: 'jobExperience',
+      //             title: 'Job Experience',
+      //             type: 'text',
+      //             filterType: 'eq',
+      //           },
+      //           {
+      //             field: 'hadOwnHouse',
+      //             title: 'Property Type',
+      //             type: 'dropdown',
+      //             filterType: 'eq',
+      //             options: this.hadOwnHouse,
+      //             value: 'name',
+      //             label: 'displayName',
+      //           },
+      //           {
+      //             field: 'createdOn',
+      //             title: 'From Date',
+      //             type: 'date',
+      //             filterType: 'gte',
+      //           },
+      //           {
+      //             field: 'createdOn',
+      //             title: 'To Date',
+      //             type: 'date',
+      //             filterType: 'lte',
+      //           }  
+      //         ]
+      //         : [
+      //           {
+      //             field: 'sourcedBy',
+      //             title: 'Sourced By',
+      //             type: 'dropdown',
+      //             filterType: 'eq',
+      //             options: this.leadUsers,
+      //             value: 'id',
+      //             label: 'name',
+      //           },
+      //           {
+      //             field: 'businessEntity',
+      //             title: 'Business Entity',
+      //             type: 'dropdown',
+      //             filterType: 'eq',
+      //             options: this.businessEntities,
+      //             value: 'name',
+      //             label: 'displayName',
+      //           },
+      //           {
+      //             field: 'loanType',
+      //             title: 'Loan Type',
+      //             type: 'text',
+      //             filterType: 'eq',
+      //           },
+      //           {
+      //             field: 'employmentStatus',
+      //             title: 'Employment Status',
+      //             type: 'text',
+      //             filterType: 'eq',
+      //           },
+      //           {
+      //             field: 'natureOfBusiness',
+      //             title: 'Nature of Business',
+      //             type: 'dropdown',
+      //             filterType: 'eq',
+      //             options: this.natureofBusiness,
+      //             value: 'name',
+      //             label: 'displayName',
+      //           },
+      //           {
+      //             field: 'businessTurnover',
+      //             title: 'Business Turnover',
+      //             type: 'dropdown',
+      //             filterType: 'eq',
+      //             options: this.businessTurnover,
+      //             value: 'name',
+      //             label: 'displayName',
+      //           },
+      //           {
+      //             field: 'hadOwnHouse',
+      //             title: 'Property Type',
+      //             type: 'dropdown',
+      //             filterType: 'eq',
+      //             options: this.hadOwnHouse,
+      //             value: 'name',
+      //             label: 'displayName',
+      //           },
+      //           {
+      //             field: 'createdOn',
+      //             title: 'From Date',
+      //             type: 'date',
+      //             filterType: 'gte',
+      //           },
+      //           {
+      //             field: 'createdOn',
+      //             title: 'To Date',
+      //             type: 'date',
+      //             filterType: 'lte',
+      //           },
+      //         ],
+      // },
       {
         reportName: 'Sanction Files',
         reportType: 'SANCTIONFILES',
@@ -1040,6 +1502,391 @@ export class CreateComponent {
                 },
               ]
       },
+      {
+        reportName: 'Files In Process',
+        reportType: 'FILESINPROCESS',
+        condition: true,
+        fields:
+          // Business Loan OR self-employed
+          (this.selectedEmploymentStatus === 'self-employed' || this.selectedLoanType === 'businessLoan')
+            ? [
+                {
+                  field: 'sourcedBy',
+                  title: 'Sourced By',
+                  type: 'dropdown',
+                  filterType: 'eq',
+                  options: this.leadUsers,
+                  value: 'id',
+                  label: 'name',
+                },
+                {
+                  field: 'businessEntity',
+                  title: 'Business Entity',
+                  type: 'dropdown',
+                  filterType: 'eq',
+                  options: this.businessEntities,
+                  value: 'name',
+                  label: 'displayName',
+                },
+                {
+                  field: 'loanType',
+                  title: 'Loan Type',
+                  type: 'text',
+                  filterType: 'eq',
+                },
+                {
+                  field: 'employmentStatus',
+                  title: 'Employment Status',
+                  type: 'text',
+                  filterType: 'eq',
+                },
+                {
+                  field: 'natureOfBusiness',
+                  title: 'Nature of Business',
+                  type: 'dropdown',
+                  filterType: 'eq',
+                  options: this.natureofBusiness,
+                  value: 'name',
+                  label: 'displayName',
+                },
+                {
+                  field: 'businessTurnover',
+                  title: 'Business Turnover',
+                  type: 'dropdown',
+                  filterType: 'eq',
+                  options: this.businessTurnover,
+                  value: 'name',
+                  label: 'displayName',
+                },
+                {
+                  field: 'hadOwnHouse',
+                  title: 'Property Type',
+                  type: 'dropdown',
+                  filterType: 'eq',
+                  options: this.hadOwnHouse,
+                  value: 'name',
+                  label: 'displayName',
+                },
+                {
+                  field: 'createdOn',
+                  title: 'From Date',
+                  type: 'date',
+                  filterType: 'gte',
+                },
+                {
+                  field: 'createdOn',
+                  title: 'To Date',
+                  type: 'date',
+                  filterType: 'lte',
+                },
+              ]
+          // Personal Loan
+          : (this.selectedEmploymentStatus === 'employed' || this.selectedLoanType === 'personalLoan')
+            ? [
+                {
+                  field: 'sourcedBy',
+                  title: 'Sourced By',
+                  type: 'dropdown',
+                  filterType: 'eq',
+                  options: this.leadUsers,
+                  value: 'id',
+                  label: 'name',
+                },
+                {
+                  field: 'loanType',
+                  title: 'Loan Type',
+                  type: 'text',
+                  filterType: 'eq',
+                },
+                {
+                  field: 'employmentStatus',
+                  title: 'Employment Status',
+                  type: 'text',
+                  filterType: 'eq',
+                },
+                {
+                  field: 'salary',
+                  title: 'Salary',
+                  type: 'text',
+                  filterType: 'eq',
+                },
+                {
+                  field: 'jobExperience',
+                  title: 'Job Experience',
+                  type: 'text',
+                  filterType: 'eq',
+                },
+                {
+                  field: 'hadOwnHouse',
+                  title: 'Property Type',
+                  type: 'dropdown',
+                  filterType: 'eq',
+                  options: this.hadOwnHouse,
+                  value: 'name',
+                  label: 'displayName',
+                },
+                {
+                  field: 'createdOn',
+                  title: 'From Date',
+                  type: 'date',
+                  filterType: 'gte',
+                },
+                {
+                  field: 'createdOn',
+                  title: 'To Date',
+                  type: 'date',
+                  filterType: 'lte',
+                },
+              ]
+          // Professional Loans
+          : (this.selectedEmploymentStatus === 'employed' || this.selectedLoanType === 'professionalLoans')
+            ? [
+                {
+                  field: 'loanType',
+                  title: 'Loan Type',
+                  type: 'text',
+                  filterType: 'eq',
+                },
+                {
+                  field: 'leadInternalStatus',
+                  title: 'Lead Status',
+                  type: 'dropdown',
+                  filterType: 'eq',
+                  options: this.leadStatusList,
+                  value: 'id',
+                  label: 'displayName',
+                },
+                {
+                  field: 'sourcedBy',
+                  title: 'Sourced By',
+                  type: 'dropdown',
+                  filterType: 'eq',
+                  options: this.leadUsers,
+                  value: 'id',
+                  label: 'name',
+                },
+                {
+                  field: 'employmentStatus',
+                  title: 'Employment Status',
+                  type: 'text',
+                  filterType: 'eq',
+                },
+                {
+                  field: 'designation',
+                  title: 'Designation Type',
+                  type: 'dropdown',
+                  filterType: 'eq',
+                  options: this.desigantionType,
+                  value: 'id',
+                  label: 'displayName',
+                },
+                {
+                  field: 'salary',
+                  title: 'Salary',
+                  type: 'text',
+                  filterType: 'eq',
+                },
+                {
+                  field: 'jobExperience',
+                  title: 'Job Experience',
+                  type: 'text',
+                  filterType: 'eq',
+                },
+                {
+                  field: 'hadOwnHouse',
+                  title: 'Property Type',
+                  type: 'dropdown',
+                  filterType: 'eq',
+                  options: this.hadOwnHouse,
+                  value: 'name',
+                  label: 'displayName',
+                },
+                {
+                  field: 'createdOn',
+                  title: 'From Date',
+                  type: 'date',
+                  filterType: 'gte',
+                },
+                {
+                  field: 'createdOn',
+                  title: 'To Date',
+                  type: 'date',
+                  filterType: 'lte',
+                },
+              ]
+          // carLoan
+          : (this.selectedLoanType === 'carLoan' && this.selectedEmploymentStatus === 'employed')
+              ?[
+                {
+                  field: 'loanType',
+                  title: 'Loan Type',
+                  type: 'text',
+                  filterType: 'eq',
+                },
+                {
+                  field: 'employmentStatus',
+                  title: 'Employment Status',
+                  type: 'text',
+                  filterType: 'eq',
+                },
+                {
+                  field: 'leadInternalStatus',
+                  title: 'Lead Status',
+                  type: 'dropdown',
+                  filterType: 'eq',
+                  options: this.leadStatusList,
+                  value: 'id',
+                  label: 'displayName',
+                },
+                {
+                  field: 'sourcedBy',
+                  title: 'Sourced By',
+                  type: 'dropdown',
+                  filterType: 'eq',
+                  options: this.leadUsers,
+                  value: 'id',
+                  label: 'name',
+                },
+                {
+                  field: 'carType',
+                  title: 'Car Type',
+                  type: 'dropdown',
+                  filterType: 'eq',
+                  options: this.carType,
+                  value: 'id',
+                  label: 'displayName',
+                },
+                {
+                  field: 'fileRemarks',
+                  title: 'File Remarks',
+                  type: 'dropdown',
+                  filterType: 'eq',
+                  options: this.fileRemarks,
+                  value: 'id',
+                  label: 'displayName',
+                },
+                {
+                  field: 'businessEntity',
+                  title: 'Business Entity',
+                  type: 'dropdown',
+                  filterType: 'eq',
+                  options: this.businessEntities,
+                  value: 'name',
+                  label: 'displayName',
+                },
+                {
+                  field: 'natureOfBusiness',
+                  title: 'Nature of Business',
+                  type: 'dropdown',
+                  filterType: 'eq',
+                  options: this.natureofBusiness,
+                  value: 'name',
+                  label: 'displayName',
+                },
+                {
+                  field: 'businessTurnover',
+                  title: 'Business Turnover',
+                  type: 'dropdown',
+                  filterType: 'eq',
+                  options: this.businessTurnover,
+                  value: 'name',
+                  label: 'displayName',
+                },
+                {
+                  field: 'hadOwnHouse',
+                  title: 'Property Type',
+                  type: 'dropdown',
+                  filterType: 'eq',
+                  options: this.hadOwnHouse,
+                  value: 'name',
+                  label: 'displayName',
+                },
+                {
+                  field: 'createdOn',
+                  title: 'From Date',
+                  type: 'date',
+                  filterType: 'gte',
+                },
+                {
+                  field: 'createdOn',
+                  title: 'To Date',
+                  type: 'date',
+                  filterType: 'lte',
+                },
+              ]
+          // Default fallback
+          : [
+              {
+                field: 'sourcedBy',
+                title: 'Sourced By',
+                type: 'dropdown',
+                filterType: 'eq',
+                options: this.leadUsers,
+                value: 'id',
+                label: 'name',
+              },
+              {
+                field: 'businessEntity',
+                title: 'Business Entity',
+                type: 'dropdown',
+                filterType: 'eq',
+                options: this.businessEntities,
+                value: 'name',
+                label: 'displayName',
+              },
+              {
+                field: 'loanType',
+                title: 'Loan Type',
+                type: 'text',
+                filterType: 'eq',
+              },
+              {
+                field: 'employmentStatus',
+                title: 'Employment Status',
+                type: 'text',
+                filterType: 'eq',
+              },
+              {
+                field: 'natureOfBusiness',
+                title: 'Nature of Business',
+                type: 'dropdown',
+                filterType: 'eq',
+                options: this.natureofBusiness,
+                value: 'name',
+                label: 'displayName',
+              },
+              {
+                field: 'businessTurnover',
+                title: 'Business Turnover',
+                type: 'dropdown',
+                filterType: 'eq',
+                options: this.businessTurnover,
+                value: 'name',
+                label: 'displayName',
+              },
+              {
+                field: 'hadOwnHouse',
+                title: 'Property Type',
+                type: 'dropdown',
+                filterType: 'eq',
+                options: this.hadOwnHouse,
+                value: 'name',
+                label: 'displayName',
+              },
+              {
+                field: 'createdOn',
+                title: 'From Date',
+                type: 'date',
+                filterType: 'gte',
+              },
+              {
+                field: 'createdOn',
+                title: 'To Date',
+                type: 'date',
+                filterType: 'lte',
+              },
+            ],
+      },      
       // {
       //   reportName: 'Disbursed Files',
       //   reportType: 'DISBURSALFILES',
@@ -1239,6 +2086,7 @@ export class CreateComponent {
                   filterType: 'lte',
                 },
               ]
+            
               : [
                 {
                   field: 'sourcedBy',
