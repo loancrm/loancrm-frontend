@@ -523,7 +523,20 @@ input {
 //   border-left: 6px solid #dc3545 !important;
 //   color: #721c24 !important;
 // }
-
+.arrow-up {
+  display: none;
+}
+.accordion-arrow {
+  width: 24px;
+  height: 24px;
+}
+/* When expanded, hide down arrow and show up arrow */
+.accordion-button:not(.collapsed) ~ .arrow-down {
+  display: none;
+}
+.accordion-button:not(.collapsed) ~ .arrow-up {
+  display: inline-block;
+}
 .matmenuimg:hover{
   background-color: #DFE5EF;
   color: #535AB4;
