@@ -13,6 +13,8 @@ import { FilterModule } from 'src/app/filter/filter.module';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { CapitalizeFirstPipe } from 'src/app/pipes/capitalize.pipe';
 import { CommingSoonModule } from '../comming-soon/comming-soon.module';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 
 const routes: Routes = [
   { path: '', component: RejectsComponent },
@@ -67,6 +69,8 @@ const routes: Routes = [
     InputTextModule,
     FilterModule,
     CommingSoonModule,
+    MatMenuModule,
+    MatButtonModule,
     [RouterModule.forChild(routes)],
   ],
 })

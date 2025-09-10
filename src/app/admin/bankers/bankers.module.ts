@@ -10,6 +10,8 @@ import { MenuModule } from 'primeng/menu';
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import { PreloaderModule } from 'src/app/preloader/preloader.module';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 
 const routes: Routes = [
   { path: '', component: BankersComponent },
@@ -51,6 +53,8 @@ const routes: Routes = [
     InputTextModule,
     DropdownModule,
     MenuModule,
+    MatMenuModule,
+    MatButtonModule,
     [RouterModule.forChild(routes)],
   ],
 })

@@ -1140,7 +1140,7 @@ export class LoginsComponent {
 
   savedBanks(lead) {
     const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
-    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans') {
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans' || loanType === 'carLoan') {
       this.routingService.handleRoute(`logins/banksSaved/${loanType}/${lead.leadId}`, null);
     } else {
       // If no known loanType, omit status from the route

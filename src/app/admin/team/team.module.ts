@@ -11,7 +11,8 @@ import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import { FilterModule } from 'src/app/filter/filter.module';
 import { CapitalizeFirstPipe } from 'src/app/pipes/capitalize.pipe';
-
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 const routes: Routes = [
   { path: '', component: TeamComponent },
   {
@@ -43,6 +44,8 @@ const routes: Routes = [
     MenuModule,
     FilterModule,
     CapitalizeFirstPipe,
+    MatMenuModule,
+    MatButtonModule,
     [RouterModule.forChild(routes)],
   ],
 })

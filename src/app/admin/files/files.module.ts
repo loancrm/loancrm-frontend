@@ -15,6 +15,8 @@ import { TabMenuModule } from 'primeng/tabmenu';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { CalendarModule } from 'primeng/calendar';
 import { CommingSoonModule } from '../comming-soon/comming-soon.module';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 const routes: Routes = [
   { path: '', component: FilesComponent },
   {
@@ -58,6 +60,8 @@ const routes: Routes = [
     BreadcrumbModule,
     OverlayPanelModule,
     MenuModule,
+    MatMenuModule,
+    MatButtonModule,
     CommingSoonModule,
     CalendarModule,
     [RouterModule.forChild(routes)],

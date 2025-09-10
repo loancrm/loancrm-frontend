@@ -1605,6 +1605,11 @@ export class FilesComponent implements OnInit {
       this.activeEmploymentStatus.name === 'employed' ? 'home' : 'homeself';
     return this.actionItemsForLead(lead, leadType);
   }
+  getCarActionItems(lead: any): MenuItem[] {
+    const leadType =
+      this.activeEmploymentStatus.name === 'employed' ? 'car' : 'carself';
+    return this.actionItemsForLead(lead, leadType);
+  }
 
   loadLeadsforlap(event) {
     this.currentTableEvent = event;

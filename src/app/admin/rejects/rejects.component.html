@@ -262,7 +262,7 @@
                   <td>
                     <div class="text-center">
                       <div class="d-flex tableimage">
-                        <p-menu
+                        <!-- <p-menu
                           appendTo="body"
                           #menu
                           [model]="actionItems(lead)"
@@ -279,7 +279,52 @@
                           (click)="
                             menu.toggle($event); $event.stopPropagation()
                           "
+                        /> -->
+                        
+                        <button
+                        [matMenuTriggerFor]="menu"
+                        aria-label="Actions"
+                        style="all: unset; cursor: pointer"
+                      >
+                        <img
+                          alt="Actions"
+                          src="assets/images/icons/menu.svg"
+                          width="24"
+                          height="24"
                         />
+                      </button>
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="inhouserejectsDetails(lead.id)"  class="matmenuimg">
+                          <img
+                            alt="Actions"
+                            src="assets/images/icons/rejects.svg"
+                            width="24"
+                            height="24"
+                            class="mr-2 image-icon"
+                          />
+                          <span>Rejects Details</span>
+                        </button>
+                        <button mat-menu-item (click)="revertToFiles(lead)"  class="matmenuimg">
+                          <img
+                            alt="Actions"
+                            src="assets/images/icons/files.svg"
+                            width="24"
+                            height="24"
+                            class="mr-2 image-icon"
+                          />
+                          <span>Send to files</span>
+                        </button>
+                        <button mat-menu-item (click)="revertToCredit(lead)"  class="matmenuimg">
+                          <img
+                            alt="Actions"
+                            src="assets/images/icons/credit.svg"
+                            width="24"
+                            height="24"
+                            class="mr-2 image-icon"
+                          />
+                          <span>Send to Credit Evaluation</span>
+                        </button>
+                      </mat-menu>
                       </div>
                     </div>
                   </td>
@@ -825,7 +870,6 @@
             </p-table>
           </div>
         </div>
-
         <div *ngIf="activeItem.name == 'personalLoan'">
           <div style="position: relative">
             <div
@@ -1026,13 +1070,12 @@
                   <td>
                     <div class="text-center">
                       <div class="d-flex tableimage">
-                        <p-menu
+                        <!-- <p-menu
                           appendTo="body"
                           #menu
                           [model]="plactionItems(lead)"
                           [popup]="true"
                         ></p-menu>
-
                         <img
                           alt="Actions"
                           src="../../../assets/images/icons/menu.svg"
@@ -1043,7 +1086,31 @@
                           (click)="
                             menu.toggle($event); $event.stopPropagation()
                           "
-                        />
+                        /> -->
+                         <button
+                          [matMenuTriggerFor]="menu"
+                          aria-label="Actions"
+                          style="all: unset; cursor: pointer"
+                        >
+                          <img
+                            alt="Actions"
+                            src="assets/images/icons/menu.svg"
+                            width="24"
+                            height="24"
+                          />
+                        </button>
+                        <mat-menu #menu="matMenu">
+                          <button mat-menu-item (click)="revertToplCredit(lead)"  class="matmenuimg">
+                            <img
+                              alt="Actions"
+                              src="assets/images/icons/credit.svg"
+                              width="24"
+                              height="24"
+                              class="mr-2 image-icon"
+                            />
+                            <span>Send to Credit Evaluation</span>
+                          </button>
+                        </mat-menu>
                       </div>
                     </div>
                   </td>
@@ -1861,7 +1928,7 @@
                         <td (click)="$event.stopPropagation()">
                           <div class="text-center">
                             <div class="d-flex tableimage">
-                              <p-menu
+                              <!-- <p-menu
                                 appendTo="body"
                                 #menu
                                 [model]="plactionItems(lead)"
@@ -1877,7 +1944,31 @@
                                 (click)="
                                   menu.toggle($event); $event.stopPropagation()
                                 "
-                              />
+                              /> -->
+                              <button
+                                [matMenuTriggerFor]="menu"
+                                aria-label="Actions"
+                                style="all: unset; cursor: pointer"
+                              >
+                                <img
+                                  alt="Actions"
+                                  src="assets/images/icons/menu.svg"
+                                  width="24"
+                                  height="24"
+                                />
+                              </button>
+                              <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="revertToplCredit(lead)"  class="matmenuimg">
+                                  <img
+                                    alt="Actions"
+                                    src="assets/images/icons/credit.svg"
+                                    width="24"
+                                    height="24"
+                                    class="mr-2 image-icon"
+                                  />
+                                  <span>Send to Credit Evaluation</span>
+                                </button>
+                              </mat-menu>
                             </div>
                           </div>
                         </td>
@@ -2992,7 +3083,7 @@
                         <td>
                           <div class="text-center">
                             <div class="d-flex tableimage">
-                              <p-menu
+                              <!-- <p-menu
                                 appendTo="body"
                                 #menu
                                 [model]="plactionItems(lead)"
@@ -3009,7 +3100,31 @@
                                 (click)="
                                   menu.toggle($event); $event.stopPropagation()
                                 "
-                              />
+                              /> -->
+                              <button
+                                [matMenuTriggerFor]="menu"
+                                aria-label="Actions"
+                                style="all: unset; cursor: pointer"
+                              >
+                                <img
+                                  alt="Actions"
+                                  src="assets/images/icons/menu.svg"
+                                  width="24"
+                                  height="24"
+                                />
+                              </button>
+                              <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="revertToplCredit(lead)"  class="matmenuimg">
+                                  <img
+                                    alt="Actions"
+                                    src="assets/images/icons/credit.svg"
+                                    width="24"
+                                    height="24"
+                                    class="mr-2 image-icon"
+                                  />
+                                  <span>Send to Credit Evaluation</span>
+                                </button>
+                              </mat-menu>
                             </div>
                           </div>
                         </td>
@@ -3972,7 +4087,7 @@
                   <td>
                     <div class="text-center">
                       <div class="d-flex tableimage">
-                        <p-menu
+                        <!-- <p-menu
                           appendTo="body"
                           #menu
                           [model]="plactionItems(lead)"
@@ -3989,7 +4104,31 @@
                           (click)="
                             menu.toggle($event); $event.stopPropagation()
                           "
-                        />
+                        /> -->
+                        <button
+                          [matMenuTriggerFor]="menu"
+                          aria-label="Actions"
+                          style="all: unset; cursor: pointer"
+                        >
+                          <img
+                            alt="Actions"
+                            src="assets/images/icons/menu.svg"
+                            width="24"
+                            height="24"
+                          />
+                        </button>
+                        <mat-menu #menu="matMenu">
+                          <button mat-menu-item (click)="revertToplCredit(lead)"  class="matmenuimg">
+                            <img
+                              alt="Actions"
+                              src="assets/images/icons/credit.svg"
+                              width="24"
+                              height="24"
+                              class="mr-2 image-icon"
+                            />
+                            <span>Send to Credit Evaluation</span>
+                          </button>
+                        </mat-menu>
                       </div>
                     </div>
                   </td>
@@ -4813,7 +4952,7 @@
                         <td (click)="$event.stopPropagation()">
                           <div class="text-center">
                             <div class="d-flex tableimage">
-                              <p-menu
+                              <!-- <p-menu
                                 appendTo="body"
                                 #menu
                                 [model]="plactionItems(lead)"
@@ -4829,7 +4968,31 @@
                                 (click)="
                                   menu.toggle($event); $event.stopPropagation()
                                 "
-                              />
+                              /> -->
+                              <button
+                                [matMenuTriggerFor]="menu"
+                                aria-label="Actions"
+                                style="all: unset; cursor: pointer"
+                              >
+                                <img
+                                  alt="Actions"
+                                  src="assets/images/icons/menu.svg"
+                                  width="24"
+                                  height="24"
+                                />
+                              </button>
+                              <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="revertToplCredit(lead)"  class="matmenuimg">
+                                  <img
+                                    alt="Actions"
+                                    src="assets/images/icons/credit.svg"
+                                    width="24"
+                                    height="24"
+                                    class="mr-2 image-icon"
+                                  />
+                                  <span>Send to Credit Evaluation</span>
+                                </button>
+                              </mat-menu>
                             </div>
                           </div>
                         </td>

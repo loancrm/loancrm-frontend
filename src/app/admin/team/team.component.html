@@ -315,12 +315,12 @@
                   tooltipPosition="top"
                 />
               </div>
-              <p-menu
+              <!-- <p-menu
                 appendTo="body"
                 #menu
                 [model]="actionItems(team)"
                 [popup]="true"
-              ></p-menu>
+              ></p-menu> -->
               <!-- <button
                 pButton
                 type="button"
@@ -330,7 +330,7 @@
                 pTooltip="Actions"
                 tooltipPosition="top"
               ></button> -->
-              <img
+              <!-- <img
                 alt="Actions"
                 src="../../../assets/images/icons/menu.svg"
                 width="24px"
@@ -338,7 +338,51 @@
                 pTooltip="Actions"
                 tooltipPosition="top"
                 (click)="menu.toggle($event); $event.stopPropagation()"
-              />
+              /> -->
+              <button
+                [matMenuTriggerFor]="menu"
+                aria-label="Actions"
+                style="all: unset; cursor: pointer"
+              >
+                <img
+                  alt="Actions"
+                  src="assets/images/icons/menu.svg"
+                  width="24"
+                  height="24"
+                />
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="updateStatus(team.id, team.status)"  class="matmenuimg" *ngIf="team.status === 'Active'">
+                  <img
+                    alt="Actions"
+                    src="assets/images/Archive.svg"
+                    width="24"
+                    height="24"
+                    class="mr-2 image-icon"
+                  />
+                  <span>Deactivate</span>
+                </button>
+                <button mat-menu-item (click)="updateStatus(team.id, team.status)"  class="matmenuimg" *ngIf="team.status === 'Inactive'">
+                  <img
+                    alt="Actions"
+                    src="assets/images/icons/UserActive.svg"
+                    width="24"
+                    height="24"
+                    class="mr-2 image-icon"
+                  />
+                  <span>Activate</span>
+                </button>
+                <button mat-menu-item (click)="confirmDelete(team)"  class="matmenuimg" *ngIf="capabilities.delete">
+                  <img
+                    alt="Actions"
+                    src="assets/images/icons/delete.svg"
+                    width="24"
+                    height="24"
+                    class="mr-2 image-icon"
+                  />
+                  <span>Delete</span>
+                </button>
+              </mat-menu>
             </div>
           </td>
         </tr>

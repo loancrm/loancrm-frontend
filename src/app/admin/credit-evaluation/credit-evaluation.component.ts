@@ -1247,6 +1247,11 @@ export class CreditEvaluationComponent implements OnInit {
       this.activeEmploymentStatus.name === 'employed' ? 'lap' : 'lapself';
     return this.actionItemsForLead(lead, leadType);
   }
+  getCarActionItems(lead: any): MenuItem[] {
+    const leadType =
+      this.activeEmploymentStatus.name === 'employed' ? 'car' : 'carself';
+    return this.actionItemsForLead(lead, leadType);
+  }
   statusChangeForLap(event) {
     this.loadLoanLeads('lap');
   }

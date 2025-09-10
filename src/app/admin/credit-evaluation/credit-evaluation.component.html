@@ -325,10 +325,10 @@
                         />
                       </button>
                       <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="revertToFiles(lead)">
+                        <button mat-menu-item (click)="revertToFiles(lead)"  class="matmenuimg">
                           <img
                             alt="Actions"
-                            src="assets/images/icons/logins.svg"
+                            src="assets/images/icons/sendtofiles.svg"
                             width="24"
                             height="24"
                             class="mr-2 image-icon"
@@ -641,12 +641,12 @@
                         (click)="evaluateLoanCredit(lead.leadId)"
                         pTooltip="Evaluate Credit"
                       />
-                      <p-menu
+                      <!-- <p-menu
                         appendTo="body"
                         #menu
                         [model]="actionItemsForLead(lead, 'personal')"
                         [popup]="true"
-                      ></p-menu>
+                      ></p-menu> -->
                       <!-- <button
                         pButton
                         type="button"
@@ -656,7 +656,7 @@
                         pTooltip="Actions"
                         tooltipPosition="top"
                       ></button> -->
-                      <img
+                      <!-- <img
                         alt="Actions"
                         src="../../../assets/images/icons/menu.svg"
                         width="24px"
@@ -664,7 +664,31 @@
                         pTooltip="Actions"
                         tooltipPosition="top"
                         (click)="menu.toggle($event); $event.stopPropagation()"
-                      />
+                      /> -->
+                       <button
+                        [matMenuTriggerFor]="menu"
+                        aria-label="Actions"
+                        style="all: unset; cursor: pointer"
+                      >
+                        <img
+                          alt="Actions"
+                          src="assets/images/icons/menu.svg"
+                          width="24"
+                          height="24"
+                        />
+                      </button>
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="revertLoanLeadToFiles(lead, 'personal')"  class="matmenuimg">
+                          <img
+                            alt="Actions"
+                            src="assets/images/icons/sendtofiles.svg"
+                            width="24"
+                            height="24"
+                            class="mr-2 image-icon"
+                          />
+                          <span>Send To Files</span>
+                        </button>
+                      </mat-menu>
                     </div>
                   </div>
                 </td>
@@ -985,7 +1009,8 @@
 
                     <td>
                       <div class="text-center tableimage">
-                        <img
+                        <div class="d-flex">
+                          <img
                           *ngIf="activeEmploymentStatus.name === 'employed'"
                           alt="View Lead"
                           src="../../../assets/images/icons/credit.svg"
@@ -1010,15 +1035,15 @@
                           (click)="evaluateCredit(lead)"
                           pTooltip="Evaluate Credit"
                         />
-                        <p-menu
+                        <!-- <p-menu
                           appendTo="body"
                           #menu
                           [model]="actionItemsForLead(lead, 'home')"
                           [popup]="true"
                         >
-                        </p-menu>
+                        </p-menu> -->
 
-                        <img
+                        <!-- <img
                           alt="Actions"
                           src="../../../assets/images/icons/menu.svg"
                           width="24px"
@@ -1028,7 +1053,60 @@
                           (click)="
                             menu.toggle($event); $event.stopPropagation()
                           "
+                        /> -->
+                        <div *ngIf="activeEmploymentStatus.name === 'employed'">
+                          <button
+                            [matMenuTriggerFor]="menu"
+                            aria-label="Actions"
+                            style="all: unset; cursor: pointer"
+                          >
+                            <img
+                              alt="Actions"
+                              src="assets/images/icons/menu.svg"
+                              width="24"
+                              height="24"
+                            />
+                          </button>
+                          <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="revertLoanLeadToFiles(lead, 'home')"  class="matmenuimg">
+                              <img
+                                alt="Actions"
+                                src="assets/images/icons/sendtofiles.svg"
+                                width="24"
+                                height="24"
+                                class="mr-2 image-icon"
+                              />
+                              <span>Send To Files</span>
+                            </button>
+                          </mat-menu>
+                        </div>
+                        <div *ngIf="activeEmploymentStatus.name === 'self-employed'">
+                          <button
+                        [matMenuTriggerFor]="menu"
+                        aria-label="Actions"
+                        style="all: unset; cursor: pointer"
+                      >
+                        <img
+                          alt="Actions"
+                          src="assets/images/icons/menu.svg"
+                          width="24"
+                          height="24"
                         />
+                      </button>
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="revertLoanLeadToFiles(lead, 'homeself')"  class="matmenuimg">
+                          <img
+                            alt="Actions"
+                            src="assets/images/icons/sendtofiles.svg"
+                            width="24"
+                            height="24"
+                            class="mr-2 image-icon"
+                          />
+                          <span>Send To Files</span>
+                        </button>
+                      </mat-menu>
+                        </div>
+                        </div>
                       </div>
                     </td>
                   </tr>
@@ -1329,7 +1407,8 @@
 
                     <td>
                       <div class="text-center tableimage">
-                        <img
+                        <div class="d-flex">
+                          <img
                           *ngIf="activeEmploymentStatus.name === 'employed'"
                           alt="View Lead"
                           src="../../../assets/images/icons/credit.svg"
@@ -1340,7 +1419,6 @@
                           (click)="evaluateLoanCredit(lead.leadId)"
                           pTooltip="Evaluate Credit"
                         />
-
                         <img
                           *ngIf="
                             activeEmploymentStatus.name === 'self-employed'
@@ -1354,8 +1432,7 @@
                           (click)="evaluateCredit(lead)"
                           pTooltip="Evaluate Credit"
                         />
-
-                        <p-menu
+                        <!-- <p-menu
                           appendTo="body"
                           #menu
                           [model]="actionItemsForLead(lead, 'homeself')"
@@ -1373,7 +1450,60 @@
                           (click)="
                             menu.toggle($event); $event.stopPropagation()
                           "
+                        /> -->
+                        <div *ngIf="activeEmploymentStatus.name === 'employed'">
+                          <button
+                        [matMenuTriggerFor]="menu"
+                        aria-label="Actions"
+                        style="all: unset; cursor: pointer"
+                      >
+                        <img
+                          alt="Actions"
+                          src="assets/images/icons/menu.svg"
+                          width="24"
+                          height="24"
                         />
+                      </button>
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="revertLoanLeadToFiles(lead, 'lap')"  class="matmenuimg">
+                          <img
+                            alt="Actions"
+                            src="assets/images/icons/sendtofiles.svg"
+                            width="24"
+                            height="24"
+                            class="mr-2 image-icon"
+                          />
+                          <span>Send To Files</span>
+                        </button>
+                      </mat-menu>
+                        </div>
+                        <div *ngIf="activeEmploymentStatus.name === 'self-employed'">
+                          <button
+                        [matMenuTriggerFor]="menu"
+                        aria-label="Actions"
+                        style="all: unset; cursor: pointer"
+                      >
+                        <img
+                          alt="Actions"
+                          src="assets/images/icons/menu.svg"
+                          width="24"
+                          height="24"
+                        />
+                      </button>
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="revertLoanLeadToFiles(lead, 'lapself')"  class="matmenuimg">
+                          <img
+                            alt="Actions"
+                            src="assets/images/icons/sendtofiles.svg"
+                            width="24"
+                            height="24"
+                            class="mr-2 image-icon"
+                          />
+                          <span>Send To Files</span>
+                        </button>
+                      </mat-menu>
+                        </div>
+                        </div>
                       </div>
                     </td>
                   </tr>
@@ -1693,12 +1823,12 @@
                         (click)="evaluateLoanCredit(lead.leadId)"
                         pTooltip="Evaluate Credit"
                       />
-                      <p-menu
+                      <!-- <p-menu
                         appendTo="body"
                         #menu
                         [model]="actionItemsForLead(lead, 'personal')"
                         [popup]="true"
-                      ></p-menu>
+                      ></p-menu> -->
                       <!-- <button
                         pButton
                         type="button"
@@ -1708,7 +1838,7 @@
                         pTooltip="Actions"
                         tooltipPosition="top"
                       ></button> -->
-                      <img
+                      <!-- <img
                         alt="Actions"
                         src="../../../assets/images/icons/menu.svg"
                         width="24px"
@@ -1716,7 +1846,31 @@
                         pTooltip="Actions"
                         tooltipPosition="top"
                         (click)="menu.toggle($event); $event.stopPropagation()"
-                      />
+                      /> -->
+                      <button
+                        [matMenuTriggerFor]="menu"
+                        aria-label="Actions"
+                        style="all: unset; cursor: pointer"
+                      >
+                        <img
+                          alt="Actions"
+                          src="assets/images/icons/menu.svg"
+                          width="24"
+                          height="24"
+                        />
+                      </button>
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="revertLoanLeadToFiles(lead, 'professional')"  class="matmenuimg">
+                          <img
+                            alt="Actions"
+                            src="assets/images/icons/sendtofiles.svg"
+                            width="24"
+                            height="24"
+                            class="mr-2 image-icon"
+                          />
+                          <span>Send To Files</span>
+                        </button>
+                      </mat-menu>
                     </div>
                   </div>
                 </td>
@@ -2040,7 +2194,8 @@
 
                     <td>
                       <div class="text-center tableimage">
-                        <img
+                        <div class="d-flex">
+                          <img
                           *ngIf="activeEmploymentStatus.name === 'employed'"
                           alt="View Lead"
                           src="../../../assets/images/icons/credit.svg"
@@ -2051,7 +2206,6 @@
                           (click)="evaluateLoanCredit(lead.leadId)"
                           pTooltip="Evaluate Credit"
                         />
-
                         <img
                           *ngIf="
                             activeEmploymentStatus.name === 'self-employed'
@@ -2065,7 +2219,7 @@
                           (click)="evaluateCredit(lead)"
                           pTooltip="Evaluate Credit"
                         />
-                        <p-menu
+                        <!-- <p-menu
                           appendTo="body"
                           #menu
                           [model]="actionItemsForLead(lead, 'home')"
@@ -2083,7 +2237,60 @@
                           (click)="
                             menu.toggle($event); $event.stopPropagation()
                           "
+                        /> -->
+                        <div *ngIf="activeEmploymentStatus.name === 'employed'">
+                          <button
+                        [matMenuTriggerFor]="menu"
+                        aria-label="Actions"
+                        style="all: unset; cursor: pointer"
+                      >
+                        <img
+                          alt="Actions"
+                          src="assets/images/icons/menu.svg"
+                          width="24"
+                          height="24"
                         />
+                      </button>
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="revertLoanLeadToFiles(lead, 'car')"  class="matmenuimg">
+                          <img
+                            alt="Actions"
+                            src="assets/images/icons/sendtofiles.svg"
+                            width="24"
+                            height="24"
+                            class="mr-2 image-icon"
+                          />
+                          <span>Send To Files</span>
+                        </button>
+                      </mat-menu>
+                        </div>
+                        <div *ngIf="activeEmploymentStatus.name === 'self-employed'">
+                          <button
+                        [matMenuTriggerFor]="menu"
+                        aria-label="Actions"
+                        style="all: unset; cursor: pointer"
+                      >
+                        <img
+                          alt="Actions"
+                          src="assets/images/icons/menu.svg"
+                          width="24"
+                          height="24"
+                        />
+                      </button>
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="revertLoanLeadToFiles(lead, 'carself')"  class="matmenuimg">
+                          <img
+                            alt="Actions"
+                            src="assets/images/icons/sendtofiles.svg"
+                            width="24"
+                            height="24"
+                            class="mr-2 image-icon"
+                          />
+                          <span>Send To Files</span>
+                        </button>
+                      </mat-menu>
+                        </div>
+                        </div>
                       </div>
                     </td>
                   </tr>
