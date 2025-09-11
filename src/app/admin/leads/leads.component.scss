@@ -23,42 +23,43 @@
 // }
 
 ::ng-deep .custom-dropdown {
-  width: auto !important;
-  min-width: auto !important;
+  // width: auto !important;
+  // min-width: auto !important;
   height: 40px;
-  background-color: #8E89D0 !important;
+  background-color: #8e89d0 !important;
   border-radius: 8px !important;
-  display: inline-flex !important;
+  // display: inline-flex !important;
   align-items: center;
   justify-content: center;
   border: none !important;
-  padding: 0 10px !important;
+  // padding: 0 10px !important;
 }
 
 ::ng-deep .custom-dropdown .p-dropdown-label {
   color: #fff !important;
-  font-size: 16px;
-  font-weight: 500;
-  padding: 0 !important;
-  margin: 0 !important;
-  flex: unset !important;   /* stop label from expanding */
-  width: auto !important;
-  background: transparent !important;
+  // font-size: 16px;
+  // font-weight: 500;
+  // padding: 0 !important;
+  // margin: 0 !important;
+  // flex: unset !important;   /* stop label from expanding */
+  // width: auto !important;
+  // background: transparent !important;
+  padding-left: 10px !important;
 }
 
 ::ng-deep .custom-dropdown .p-dropdown-trigger {
   color: #fff !important;
-  background: transparent !important;
-  border: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  flex: unset !important;   /* stop trigger from floating right */
+  // background: transparent !important;
+  // border: none !important;
+  // margin: 0 !important;
+  // padding: 0 !important;
+  // flex: unset !important;   /* stop trigger from floating right */
 }
 
-::ng-deep .custom-dropdown .p-dropdown-trigger-icon {
-  font-size: 14px;
-  margin-left: 0px; /* just a tiny space like ▼ */
-}
+// ::ng-deep .custom-dropdown .p-dropdown-trigger-icon {
+//   font-size: 14px;
+//   margin-left: 0px; /* just a tiny space like ▼ */
+// }
 
 // .p-button-primary {
 //   background-color: #ffffff !important;
@@ -225,7 +226,7 @@
 // }
 
 .p-button-primary {
-  background-color:#fff !important;
+  background-color: #fff !important;
   // border-color: lightgray !important;
   border-bottom-right-radius: 8px !important;
   border-top-right-radius: 8px !important;
@@ -234,8 +235,9 @@
   border: none !important;
   box-shadow: 0 0 4px 0 #00000040 !important;
 }
-.p-button-primary img{
-  filter: brightness(0) saturate(100%) invert(46%) sepia(0%) saturate(0%) hue-rotate(187deg) brightness(91%) contrast(86%);
+.p-button-primary img {
+  filter: brightness(0) saturate(100%) invert(46%) sepia(0%) saturate(0%)
+    hue-rotate(187deg) brightness(91%) contrast(86%);
 }
 input {
   position: relative;
@@ -247,4 +249,4 @@ input {
   border: none !important;
   color: #838383 !important;
   box-shadow: 0 0 4px 0 #00000040 !important;
-} 
+}

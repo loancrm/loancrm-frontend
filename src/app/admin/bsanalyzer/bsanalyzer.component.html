@@ -5,7 +5,7 @@
       (click)="goBack()"
     >
       <span class="me-2 d-flex align-items-center">
-        <img src="../../../assets/images/icons/left-arrow.svg" alt="Back" />
+        <img src="../../../assets/images/icons/Vector.png" alt="Back" />
       </span>
       <b>
         <span class="back-btn-text"> Create Report </span>
@@ -38,16 +38,21 @@
     </button>
   </div>
 
-  <div class="card p-3 my-3" [class.disabled]="extracting || !extractResult?.length">
+  <div class="card p-3 my-3">
     <form [formGroup]="form">
       <h5 class="mb-3">2) Verify / Fill Account Details</h5>
 
       <div class="row g-3">
         <div class="col-md-6">
           <label class="form-label">Report Name *</label>
-          <input type="text" class="form-control" [class.is-invalid]="
-                form.get('reportName')?.invalid && form.get('reportName')?.touched
-              " formControlName="reportName" />
+          <input
+            type="text"
+            class="form-control"
+            [class.is-invalid]="
+              form.get('reportName')?.invalid && form.get('reportName')?.touched
+            "
+            formControlName="reportName"
+          />
         </div>
 
         <div class="col-md-6">
@@ -57,10 +62,19 @@
 
         <div class="col-md-6">
           <label class="form-label">Search Bank (min 3 chars)</label>
-          <input type="text" class="form-control" placeholder="e.g. HDFC" formControlName="bankSearch" />
+          <input
+            type="text"
+            class="form-control"
+            placeholder="e.g. HDFC"
+            formControlName="bankSearch"
+          />
           <div *ngIf="banks.length" class="list-group mt-1">
-            <button type="button" class="list-group-item list-group-item-action" *ngFor="let b of banks"
-              (click)="pickBank(b)">
+            <button
+              type="button"
+              class="list-group-item list-group-item-action"
+              *ngFor="let b of banks"
+              (click)="pickBank(b)"
+            >
               {{ b.name }} ({{ b.id }})
             </button>
           </div>
@@ -68,24 +82,39 @@
 
         <div class="col-md-6">
           <label class="form-label">Bank ID *</label>
-          <input type="text" class="form-control" [class.is-invalid]="
-                form.get('bankId')?.invalid && form.get('bankId')?.touched
-              " formControlName="bankId" />
+          <input
+            type="text"
+            class="form-control"
+            [class.is-invalid]="
+              form.get('bankId')?.invalid && form.get('bankId')?.touched
+            "
+            formControlName="bankId"
+          />
         </div>
 
         <div class="col-md-6">
           <label class="form-label">Account Number *</label>
-          <input type="text" class="form-control" [class.is-invalid]="
-                form.get('accountNumber')?.invalid &&
-                form.get('accountNumber')?.touched
-              " formControlName="accountNumber" />
+          <input
+            type="text"
+            class="form-control"
+            [class.is-invalid]="
+              form.get('accountNumber')?.invalid &&
+              form.get('accountNumber')?.touched
+            "
+            formControlName="accountNumber"
+          />
         </div>
 
         <div class="col-md-6">
           <label class="form-label">Account Type *</label>
-          <select class="form-select" [class.is-invalid]="
-                form.get('accountType')?.invalid && form.get('accountType')?.touched
-              " formControlName="accountType">
+          <select
+            class="form-select"
+            [class.is-invalid]="
+              form.get('accountType')?.invalid &&
+              form.get('accountType')?.touched
+            "
+            formControlName="accountType"
+          >
             <option value="" disabled>Select…</option>
             <option [value]="1">Savings</option>
             <option [value]="2">Current</option>
@@ -95,19 +124,122 @@
 
         <div class="col-md-6">
           <label class="form-label">Account Reference (optional)</label>
-          <input type="text" class="form-control" formControlName="accountReferenceNumber" placeholder="e.g. HDFC_BANK_1" />
+          <input
+            type="text"
+            class="form-control"
+            formControlName="accountReferenceNumber"
+            placeholder="Enter Account Reference"
+          />
         </div>
 
         <div class="col-md-3">
           <label class="form-label">Analysis Start Date</label>
-          <input type="date" class="form-control" formControlName="analysisStartDate" />
+          <input
+            type="date"
+            class="form-control"
+            formControlName="analysisStartDate"
+          />
         </div>
 
         <div class="col-md-3">
           <label class="form-label">Analysis End Date</label>
-          <input type="date" class="form-control" formControlName="analysisEndDate" />
+          <input
+            type="date"
+            class="form-control"
+            formControlName="analysisEndDate"
+          />
         </div>
 
+        <div class="col-md-3">
+          <label class="form-label">Statement Start Date</label>
+          <input
+            type="date"
+            class="form-control"
+            formControlName="statementStartDate"
+          />
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label">Statement End Date</label>
+          <input
+            type="date"
+            class="form-control"
+            formControlName="statementEndDate"
+          />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Account Status</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="accountStatus"
+            placeholder="Enter Account Status"
+          />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">IFSC Code</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="ifscCode"
+            placeholder="Enter IFSC Code"
+          />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">MICR Code</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="micrCode"
+            placeholder="Enter MICR Code"
+          />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">IFSC Branch Name</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="branchName"
+            placeholder="Enter IFSC Branch Name"
+          />
+        </div>
+        <!-- <div class="col-md-6">
+          <label class="form-label">IFSC Branch Address</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="branchAddress"
+            placeholder="e.g. HDFC_BANK_1"
+          />
+        </div> -->
+        <div class="col-md-6">
+          <label class="form-label">IFSC Branch Address</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="branchAddress"
+            placeholder="Enter IFSC Branch Address"
+          />
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Account Holder Name</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="accountName"
+            placeholder="Enter Account Holder Name"
+          />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Email Address</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="email"
+            placeholder="Enter Email Address"
+          />
+        </div>
         <div class="col-md-6">
           <label class="form-label">PDF Password (optional)</label>
           <input type="text" class="form-control" formControlName="password" />
@@ -139,23 +271,39 @@
     </form>
 
     <div class="d-flex gap-2 mt-3">
-      <button class="btn btn-success" (click)="!analyzing && saveReport()" [disabled]="creatingOrUpdating">
+      <button
+        class="btn btn-success"
+        (click)="!analyzing && saveReport()"
+        [disabled]="creatingOrUpdating"
+      >
         {{
-        analyzing ? 'Analysing...' : isEditMode
-        ? creatingOrUpdating
-        ? "Updating…"
-        : "Update Report"
-        : creatingOrUpdating
-        ? "Creating…"
-        : "Create Report"
+          analyzing
+            ? "Analysing..."
+            : isEditMode
+            ? creatingOrUpdating
+              ? "Updating…"
+              : "Update Report"
+            : creatingOrUpdating
+            ? "Creating…"
+            : "Create Report"
         }}
       </button>
 
-      <button class="btn btn-success" (click)="refreshStatus()" *ngIf="analyzing">
+      <button
+        class="btn btn-success"
+        (click)="refreshStatus()"
+        *ngIf="analyzing"
+      >
         Refresh Status
       </button>
 
-      <button pButton type="button" label="View Analysis" *ngIf="!analyzing && analysisDone" (click)="goToAnalysis(newAccountRef)"></button>
+      <button
+        pButton
+        type="button"
+        label="View Analysis"
+        *ngIf="!analyzing && analysisDone"
+        (click)="goToAnalysis(newAccountRef)"
+      ></button>
     </div>
   </div>
 

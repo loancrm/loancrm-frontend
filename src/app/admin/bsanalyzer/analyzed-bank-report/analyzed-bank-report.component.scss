@@ -110,3 +110,25 @@ h3 {
   left: auto !important;
   top: 50px !important; /* pushes it below the trigger */
 }
+
+/* Change ALL tab text color */
+::ng-deep .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  color: #737373; /* default gray text */
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+/* Active tab text color */
+::ng-deep .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  color: #535ab4 !important; /* blue text */
+}
+
+/* Hover tab text color */
+::ng-deep .p-tabview .p-tabview-nav li .p-tabview-nav-link:hover {
+  color: #535ab4; /* lighter blue on hover */
+}
+
+/* Change active line/ink bar color */
+::ng-deep .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  border-color: #535ab4 !important; /* underline/line color */
+}

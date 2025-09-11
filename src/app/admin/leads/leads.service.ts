@@ -119,8 +119,30 @@ export class LeadsService {
     const year = yearMatch ? yearMatch[1] : "";
 
     // ---------- Period (Month) ----------
-    const periodMatch = textContent.match(/Period\s+(\w+)/i);
-    const month = periodMatch ? periodMatch[1] : "";
+    //     const periodMatch = textContent.match(/Period\s+(\w+)/i);
+    // const month = periodMatch ? periodMatch[1] : "";
+    const periodMatch = textContent.match(/Period\s*([\s\S]*?)(?=GSTIN|Year|Form|$)/i);
+
+    let month = "";
+    if (periodMatch && periodMatch[1]) {
+      let cleaned = periodMatch[1]
+        .replace(/[\r\n]+/g, " ")   // collapse newlines
+        .replace(/\s*-\s*/g, "-")   // normalize dash like "Oct- Dec" → "Oct-Dec"
+        .trim();
+
+      // keep only letters and dashes (remove numbers, dots, etc.)
+      cleaned = cleaned.replace(/[^A-Za-z-]/g, "");
+
+      // split by dash if it's a range
+      const parts = cleaned.split("-").filter(Boolean);
+
+      if (parts.length >= 2) {
+        month = `${parts[0]}-${parts[1]}`;   // e.g. "Oct-Dec"
+      } else if (parts.length === 1) {
+        month = parts[0];                    // e.g. "March"
+      }
+    }
+    console.log("Period:", month);
 
     // ---------- Table 3.1 Extraction ----------
     function extractTotalTaxable(tableText: string) {

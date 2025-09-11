@@ -250,20 +250,20 @@ export class CallbacksComponent implements OnInit {
   getFilteredItems(): { label: string; name: string }[] {
     return [
       {
-        label: `Business Loan (${this.totalCallbacksCountArray?.businesscount})`,
+        label: `Business Loans (${this.totalCallbacksCountArray?.businesscount})`,
         name: 'businessLoan',
       },
       {
-        label: `Personal Loan (${this.totalCallbacksCountArray?.personalcount || 0
+        label: `Personal Loans (${this.totalCallbacksCountArray?.personalcount || 0
           })`,
         name: 'personalLoan',
       },
       {
-        label: `Home Loan (${this.totalCallbacksCountArray?.homeLoancount || 0})`,
+        label: `Home Loans (${this.totalCallbacksCountArray?.homeLoancount || 0})`,
         name: 'homeLoan',
       },
       {
-        label: `LAP (${this.totalCallbacksCountArray?.LAPLoancount || 0})`,
+        label: `Mortgage Loans (${this.totalCallbacksCountArray?.LAPLoancount || 0})`,
         name: 'lap',
       },
       {

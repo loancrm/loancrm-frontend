@@ -464,22 +464,22 @@ export class DisbursalsComponent implements OnInit {
   getFilteredItems(): { label: string; name: string }[] {
     return [
       {
-        label: `Business Loan (${this.totalActiveLeadsCount || 0})`,
+        label: `Business Loans (${this.totalActiveLeadsCount || 0})`,
         name: 'businessLoan',
       },
       {
         // label: `Personal Loan (${this.totalLeadsCountArray?.personalcount || 0
         //   })`,
-        label: `Personal Loan (${this.personalloanLeadsCounttab || 0
+        label: `Personal Loans (${this.personalloanLeadsCounttab || 0
           })`,
         name: 'personalLoan',
       },
       {
-        label: `Home Loan (${(this.homeloanselfLeadsCounttab + this.homeloanLeadsCounttab) || 0})`,
+        label: `Home Loans (${(this.homeloanselfLeadsCounttab + this.homeloanLeadsCounttab) || 0})`,
         name: 'homeLoan',
       },
       {
-        label: `LAP (${(this.lapLeadsCounttab + this.lapselfLeadsCounttab) || 0})`,
+        label: `Mortgage Loans (${(this.lapLeadsCounttab + this.lapselfLeadsCounttab) || 0})`,
         name: 'lap',
       },
       {
@@ -1117,7 +1117,7 @@ export class DisbursalsComponent implements OnInit {
       }
     );
   }
-  
+
   loadLeadsforPersonal(event) {
     this.currentTableEvent = event;
     let api_filter = this.leadsService.setFiltersFromPrimeTable(event);

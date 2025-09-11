@@ -60,12 +60,9 @@ export class LoanleadsevaluatecreditComponent {
                 homeLoan: () => this.calculatehomeLoanAmount(),
                 lap: () => this.calculateLapAmount()
               };
-
               const loanType = this.leadData[0]?.loanType;
               loanTypeHandlers[loanType]?.(); // Executes the correct function if it exists
-
             }
-
           }
         });
       }
@@ -238,9 +235,14 @@ export class LoanleadsevaluatecreditComponent {
       (data: any) => {
         this.loading = false;
         if (data?.success) {
-          if (this.leadData[0].loanType == 'personalLoan') {
-            this.calculatepersonalLoanAmount()
-          }
+          const loanTypeHandlers: { [key: string]: () => void } = {
+            personalLoan: () => this.calculatepersonalLoanAmount(),
+            homeLoan: () => this.calculatehomeLoanAmount(),
+            lap: () => this.calculateLapAmount()
+          };
+          // Usage:
+          const loanType = this.leadData[0]?.loanType;
+          loanTypeHandlers[loanType]?.();
           this.toastService.showSuccess('Calculated and saved Successfully');
         }
       },

@@ -198,6 +198,8 @@ export class UploadComponent implements OnInit {
   gstDetails: any = [
     {
       operatingState: '',
+      year: '',
+      month: '',
       filingPeriod: '',
       gst3BSale: '',
       gst3BSaleAttachment: [],
@@ -256,6 +258,8 @@ export class UploadComponent implements OnInit {
   totalEMIAmount: number | null = null;
   totalGSTR3Bscale: number | null = null;
   version = projectConstantsLocal.VERSION_DESKTOP;
+  accountId: any;
+  accountData: any;
   constructor(
     private toastService: ToastService,
     private activatedRoute: ActivatedRoute,
@@ -299,6 +303,12 @@ export class UploadComponent implements OnInit {
     const userDetails =
       this.localStorageService.getItemFromLocalStorage('userDetails');
     this.userDetails = userDetails.user;
+    this.accountId = userDetails.user.accountId;
+    console.log(this.accountId)
+    if (this.accountId) {
+      this.getAccountById(this.accountId)
+    }
+
     this.items = [
       { label: 'KYCs', name: 'kycs' },
       { label: 'Cibil', name: 'cibil' },
@@ -331,6 +341,18 @@ export class UploadComponent implements OnInit {
         this.totalGSTR3Bscale += parseFloat(gst['gst3BSale']);
       }
     }
+  }
+
+  getAccountById(accountId) {
+    this.leadsService?.getAccountById(accountId)?.subscribe(
+      (accountData: any) => {
+        this.accountData = accountData;
+        console.log('accountData', accountData);
+      },
+      (error) => {
+        this.toastService.showError(error);
+      }
+    );
   }
 
   getLeadById(leadId) {
@@ -1832,6 +1854,8 @@ export class UploadComponent implements OnInit {
   addGstDetailsRow() {
     let data = {
       operatingState: '',
+      year: '',
+      month: '',
       filingPeriod: '',
       gst3BSale: '',
       gst3BSaleAttachment: [],
@@ -2778,6 +2802,8 @@ export class UploadComponent implements OnInit {
                   this.gstDetails[index] = {
                     ...this.gstDetails[index],
                     operatingState: data.operatingState || '',
+                    year: data.year,
+                    month: data.month,
                     filingPeriod: parsedDate,   // ✅ Date object (works with p-calendar)
                     gst3BSale: data.totalTaxableValue || '',
                     // arn: data.arn || '',
@@ -2788,6 +2814,8 @@ export class UploadComponent implements OnInit {
                   this.gstDetails[0] = {
                     ...this.gstDetails[0],
                     operatingState: data.operatingState || '',
+                    year: data.year,
+                    month: data.month,
                     filingPeriod: parsedDate,   // ✅ Date object
                     gst3BSale: data.totalTaxableValue || '',
                     // arn: data.arn || '',
@@ -2795,7 +2823,7 @@ export class UploadComponent implements OnInit {
                     // taxableBreakdown: data.taxableBreakdown || {},
                   };
                 }
-
+                console.log(this.gstDetails[0])
                 this.toastService.showInfo('PDF Data Extracted & Filled');
               });
             }

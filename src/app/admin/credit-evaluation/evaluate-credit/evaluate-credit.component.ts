@@ -212,18 +212,24 @@ export class EvaluateCreditComponent implements OnInit {
           //     return sum + (parseFloat(item.gst3BSale) || 0);
           //   }, 0);
           // }
-
+          console.log(this.leadDocuments?.gstDetails)
           if (this.leadDocuments?.gstDetails?.length) {
             this.groupedGstData = this.leadDocuments.gstDetails.reduce((acc, item) => {
               const state = item.operatingState || "Unknown";
+              const year = item.year || "Unknown";
+
               if (!acc[state]) {
-                acc[state] = [];
+                acc[state] = {};
               }
-              acc[state].push(item);
+              if (!acc[state][year]) {
+                acc[state][year] = [];
+              }
+
+              acc[state][year].push(item);
               return acc;
             }, {});
-            console.log(this.groupedGstData)
           }
+
         }
       });
       this.getDscrValuesById(this.leadId).then((data) => {
@@ -330,24 +336,25 @@ export class EvaluateCreditComponent implements OnInit {
     const loanAmount = numerator / denominator;
     this.gsthomeloanAmount = Math.round(loanAmount); // Loan Amount
   }
-  getStateTotal(stateData: any[]): number {
-    return stateData.reduce(
-      (sum, item) => sum + (parseFloat(item.gst3BSale) || 0),
+  // ✅ State Total (sum of all years inside a state)
+  getYearTotal(records: any[]): number {
+    return records.reduce((sum, item) => sum + (parseFloat(item.gst3BSale) || 0), 0);
+  }
+
+  getStateTotal(years: any): number {
+    return Object.values(years).reduce(
+      (sum: number, yearArr: any) => sum + this.getYearTotal(yearArr as any[]),
       0
     );
   }
 
   getGrandTotal(): number {
-    return Object.values(this.groupedGstData).reduce(
-      (total, stateArr: any) =>
-        total +
-        stateArr.reduce(
-          (sum: number, item: any) => sum + (parseFloat(item.gst3BSale) || 0),
-          0
-        ),
+    return Object.values(this.groupedGstData || {}).reduce(
+      (sum, state: any) => sum + this.getStateTotal(state),
       0
     );
   }
+
 
   updateDisplayedItems() {
     const loanDisplayProperty =

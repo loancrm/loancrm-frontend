@@ -175,10 +175,18 @@ type ExtractResponseItem = {
   accountNumber: string;
   ifscCode: string;
   accountType: number | string;
+  startDate?: string;
   statementStartDate?: string;
   statementEndDate?: string;
+  endDate?: string;
   fileName: string;
   statusCode: number;
+  accountStatus?: string;
+  micrCode?: string;
+  branchName?: string;
+  branchAddress?: string;
+  accountName?: string;
+  email?: string;
 };
 
 @Component({
@@ -214,7 +222,16 @@ export class BsanalyzerComponent implements OnInit {
     analysisStartDate: [''],
     analysisEndDate: [''],
     password: [''],
-    accountId: ['']        // only in edit mode
+    accountId: [''],
+    statementStartDate: [''],
+    statementEndDate: [''],
+    accountStatus: [''],
+    ifscCode: [''],
+    micrCode: [''],
+    branchName: [''],
+    branchAddress: [''],
+    accountName: [''],
+    email: ['']
   });
 
   constructor(
@@ -236,15 +253,15 @@ export class BsanalyzerComponent implements OnInit {
     }
 
     // 🔎 live bank search
-    this.form.get('bankSearch')!.valueChanges
-      .pipe(
-        debounceTime(300),
-        switchMap(q => {
-          if (!q || ('' + q).length < 3) return of([]);
-          return this.bsaService.fetchBanks(q as string);
-        })
-      )
-      .subscribe(list => (this.banks = list || []));
+    // this.form.get('bankSearch')!.valueChanges
+    //   .pipe(
+    //     debounceTime(300),
+    //     switchMap(q => {
+    //       if (!q || ('' + q).length < 3) return of([]);
+    //       return this.bsaService.fetchBanks(q as string);
+    //     })
+    //   )
+    //   .subscribe(list => (this.banks = list || []));
   }
 
   loadReport(reportId: string) {
@@ -258,9 +275,18 @@ export class BsanalyzerComponent implements OnInit {
         accountType: acc.accountType,
         accountNumber: acc.accountNumber,
         accountReferenceNumber: acc.accountReferenceNumber,
-        analysisStartDate: acc.analysisStartDate,
-        analysisEndDate: acc.analysisEndDate,
-        accountId: acc.accountId
+        // analysisStartDate: acc.analysisStartDate,
+        // analysisEndDate: acc.analysisEndDate,
+        accountId: acc.accountId,
+        statementStartDate: acc.startDate,
+        statementEndDate: acc.endDate,
+        accountStatus: acc.accountStatus,
+        ifscCode: acc.ifscCode,
+        micrCode: acc.micrCode,
+        branchName: acc.branchName,
+        branchAddress: acc.branchAddress,
+        accountName: acc.accountName,
+        email: acc.email,
       });
 
       // ✅ store existing uploaded files
@@ -284,23 +310,167 @@ export class BsanalyzerComponent implements OnInit {
   }
 
   // Step 2: Extract
+  // extract() {
+  //   if (!this.selectedFiles.length) {
+  //     alert('Please choose at least one PDF file.');
+  //     return;
+  //   }
+  //   this.extracting = true;
+  //   const password = this.form.get('password')?.value || '';
+  //   console.log(password)
+  //   this.bsaService.extractBankDetails(this.selectedFiles, { password }).subscribe({
+  //     // next: (resp: ExtractResponseItem[]) => {
+  //     //   this.extractResult = resp;
+  //     //   const first = resp?.[0];
+  //     //   console.log(first)
+  //     //   if (first) {
+  //     //     this.form.patchValue({
+  //     //       bankId: first.bankId || '',
+  //     //       bankSearch: first.bankName,
+  //     //       accountNumber: first.accountNumber || '',
+  //     //       accountType: first.accountType ? String(first.accountType) : '',
+  //     //       analysisStartDate: first.statementStartDate || '',
+  //     //       analysisEndDate: first.statementEndDate || '',
+  //     //       statementStartDate: first.statementStartDate || '',
+  //     //       statementEndDate: first.statementEndDate || '',
+  //     //       accountStatus: first.accountStatus || '',
+  //     //       ifscCode: first.ifscCode || '',
+  //     //       micrCode: first.micrCode || '',
+  //     //       branchName: first.branchName || '',
+  //     //       branchAddress: first.branchAddress || '',
+  //     //       accountName: first.accountName || '',
+  //     //       email: first.email || '',
+  //     //     });
+  //     //   }
+  //     // },
+  //     next: (resp: ExtractResponseItem[]) => {
+  //       this.extractResult = resp;
+
+  //       if (resp && resp.length > 0) {
+  //         // Filter out invalid/null dates first
+  //         const startDates = resp
+  //           .filter(r => !!r.statementStartDate)
+  //           .map(r => new Date(r.statementStartDate!));
+
+  //         const endDates = resp
+  //           .filter(r => !!r.statementEndDate)
+  //           .map(r => new Date(r.statementEndDate!));
+
+  //         // Find earliest start date and latest end date
+  //         const analysisStartDate = startDates.length
+  //           ? new Date(Math.min(...startDates.map(d => d.getTime())))
+  //           : null;
+
+  //         const analysisEndDate = endDates.length
+  //           ? new Date(Math.max(...endDates.map(d => d.getTime())))
+  //           : null;
+
+  //         // Utility function for yyyy-MM-dd formatting
+  //         function formatDate(date: Date | null): string {
+  //           if (!date) return '';
+  //           const yyyy = date.getFullYear();
+  //           const mm = String(date.getMonth() + 1).padStart(2, '0');
+  //           const dd = String(date.getDate()).padStart(2, '0');
+  //           return `${yyyy}-${mm}-${dd}`;
+  //         }
+
+  //         // Take other details from the first response (common across files)
+  //         const first = resp[0];
+
+  //         this.form.patchValue({
+  //           bankId: first.bankId || '',
+  //           bankSearch: first.bankName,
+  //           accountNumber: first.accountNumber || '',
+  //           accountType: first.accountType ? String(first.accountType) : '',
+  //           // analysisStartDate: formatDate(analysisStartDate),  // e.g. 2025-01-01
+  //           // analysisEndDate: formatDate(analysisEndDate),      // e.g. 2025-02-28
+  //           statementStartDate: formatDate(analysisStartDate),
+  //           statementEndDate: formatDate(analysisEndDate),
+  //           accountStatus: first.accountStatus || '',
+  //           ifscCode: first.ifscCode || '',
+  //           micrCode: first.micrCode || '',
+  //           branchName: first.branchName || '',
+  //           branchAddress: first.branchAddress || '',
+  //           accountName: first.accountName || '',
+  //           email: first.email || '',
+  //         });
+  //       }
+  //     }
+  //     ,
+  //     error: err => {
+  //       console.error('Extract error:', err);
+  //       alert('Failed to extract details.');
+  //     },
+  //     complete: () => (this.extracting = false)
+  //   });
+  // }
+
+
+
+
   extract() {
     if (!this.selectedFiles.length) {
       alert('Please choose at least one PDF file.');
       return;
     }
     this.extracting = true;
-    this.bsaService.extractBankDetails(this.selectedFiles).subscribe({
+    const password = this.form.get('password')?.value || '';
+
+    this.bsaService.extractBankDetails(this.selectedFiles, { password }).subscribe({
       next: (resp: ExtractResponseItem[]) => {
         this.extractResult = resp;
-        const first = resp?.[0];
-        if (first) {
+
+        if (resp && resp.length > 0) {
+          // ✅ Collect start/end dates from extracted files
+          const startDates = resp
+            .filter(r => !!r.statementStartDate)
+            .map(r => new Date(r.statementStartDate!));
+
+          const endDates = resp
+            .filter(r => !!r.statementEndDate)
+            .map(r => new Date(r.statementEndDate!));
+
+          // ✅ Also include already existing dates (edit mode)
+          const existingStart = this.form.get('statementStartDate')?.value;
+          const existingEnd = this.form.get('statementEndDate')?.value;
+
+          if (existingStart) startDates.push(new Date(existingStart));
+          if (existingEnd) endDates.push(new Date(existingEnd));
+
+          // ✅ Final min/max calculation
+          const finalStartDate = startDates.length
+            ? new Date(Math.min(...startDates.map(d => d.getTime())))
+            : null;
+
+          const finalEndDate = endDates.length
+            ? new Date(Math.max(...endDates.map(d => d.getTime())))
+            : null;
+
+          // Utility: format yyyy-MM-dd
+          function formatDate(date: Date | null): string {
+            if (!date) return '';
+            const yyyy = date.getFullYear();
+            const mm = String(date.getMonth() + 1).padStart(2, '0');
+            const dd = String(date.getDate()).padStart(2, '0');
+            return `${yyyy}-${mm}-${dd}`;
+          }
+
+          const first = resp[0];
+
           this.form.patchValue({
             bankId: first.bankId || '',
+            bankSearch: first.bankName,
             accountNumber: first.accountNumber || '',
             accountType: first.accountType ? String(first.accountType) : '',
-            analysisStartDate: first.statementStartDate || '',
-            analysisEndDate: first.statementEndDate || ''
+            statementStartDate: formatDate(finalStartDate),
+            statementEndDate: formatDate(finalEndDate),
+            accountStatus: first.accountStatus || '',
+            ifscCode: first.ifscCode || '',
+            micrCode: first.micrCode || '',
+            branchName: first.branchName || '',
+            branchAddress: first.branchAddress || '',
+            accountName: first.accountName || '',
+            email: first.email || '',
           });
         }
       },
@@ -423,10 +593,10 @@ export class BsanalyzerComponent implements OnInit {
               accountType: Number(v.accountType),
               accountNumber: String(v.accountNumber),
               accountReferenceNumber: v.accountReferenceNumber || '',
-              analysisStartDate: v.analysisStartDate || null,
-              analysisEndDate: v.analysisEndDate || null,
-              startDate: v.analysisStartDate || null,
-              endDate: v.analysisEndDate || null
+              // analysisStartDate: v.analysisStartDate || null,
+              // analysisEndDate: v.analysisEndDate || null,
+              // startDate: v.analysisStartDate || null,
+              // endDate: v.analysisEndDate || null
             },
             ...(v.password ? { password: v.password } : {}),
             fileNames: this.fileNames
@@ -463,8 +633,8 @@ export class BsanalyzerComponent implements OnInit {
               accountType: v.accountType,
               accountNumber: v.accountNumber,
               accountReferenceNumber: v.accountReferenceNumber,
-              analysisStartDate: v.analysisStartDate,
-              analysisEndDate: v.analysisEndDate
+              // analysisStartDate: v.analysisStartDate,
+              // analysisEndDate: v.analysisEndDate
             },
             ...(v.password ? { password: v.password } : {}),
             fileNames: [
@@ -478,7 +648,7 @@ export class BsanalyzerComponent implements OnInit {
 
       this.bsaService.updateReport(updatePayload, this.selectedFiles).subscribe({
         next: (res: any) => {
-          this.newAccountRef = res?.reportAccounts?.[0]?.account?.accountId || v.accountId;
+          this.newAccountRef = res?.report?.reportId;
           const reportId = res?.report?.reportId || v.reportId;
           this.reportId = reportId;
           this.analyzing = true;

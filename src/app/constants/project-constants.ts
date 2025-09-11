@@ -107,7 +107,7 @@ export const projectConstantsLocal = {
     { id: 3, name: 'homeLoan', displayName: 'Home Loan' },
     { id: 4, name: 'lap', displayName: 'LAP' },
     { id: 5, name: 'professionalLoans', displayName: 'Professional Loan' },
-    { id: 5, name: 'carLoan', displayName: 'car Loan' }
+    { id: 6, name: 'carLoan', displayName: 'Car Loan' }
   ],
   LEAD_INTERNAL_STATUS: [
     { id: '1', status: 'new', displayName: 'New' },
@@ -336,8 +336,8 @@ export const projectConstantsLocal = {
   ],
 
   // RAZORPAY_KEY_ID: "rzp_test_OryiPavGPST3CU",
-  BASE_URL: 'http://localhost:5002/',
-  // BASE_URL: 'https://rest.thefintalk.in:5002/',
+  // BASE_URL: 'http://localhost:5002/',
+  BASE_URL: 'https://rest.thefintalk.in:5002/',
   RAZORPAY_KEY_ID: "rzp_live_ZC5B0vsPZ7UxUs",
   VERSION_DESKTOP: '0.0.0',
 };

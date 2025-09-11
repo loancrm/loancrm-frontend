@@ -409,117 +409,141 @@
                         pTooltip="Actions"
                         tooltipPosition="top"
                       ></button> -->
-                    
-                   
-                    <div>
+                      <div>
                         <div *ngIf="lead.leadInternalStatus === 1">
-                        <button
-                        [matMenuTriggerFor]="menu"
-                        aria-label="Actions"
-                        style="all: unset; cursor: pointer"
-                      >
-                        <img
-                          alt="Actions"
-                          src="assets/images/icons/menu.svg"
-                          width="24"
-                          height="24"
-                        />
-                      </button>
-                      <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="sendLeadToArchive(lead)" class="matmenuimg">
-                          <img
-                            alt="Actions"
-                            src="assets/images/Archive.svg"
-                            width="24"
-                            height="24"
-                            class="mr-2 image-icon"
-                          />
-                          <span>Send To Archive</span>
-                        </button>
-                        <button mat-menu-item (click)="sendLeadToFollowUps(lead)" class="matmenuimg">
-                          <img
-                            alt="Actions"
-                            src="assets/images/icons/Follow_Ups.svg"
-                            width="24"
-                            height="24"
-                            class="mr-2 image-icon"
-                          />
-                          <span>Send to Follow Ups</span>
-                        </button>
-                        <button mat-menu-item (click)="sendLeadToFiles(lead)" class="matmenuimg" *ngIf="userDetails.userType !== '3'">
-                          <img
-                            alt="Actions"
-                            src="assets/images/icons/sendtofiles.svg"
-                            width="24"
-                            height="24"
-                            class="mr-2 image-icon"
-                          />
-                          <span>Send To Files</span>
-                        </button>
-                      </mat-menu>
-                      </div>
-                      <div *ngIf="lead.leadInternalStatus === 2">
-                        <button
-                        [matMenuTriggerFor]="menu"
-                        aria-label="Actions"
-                        style="all: unset; cursor: pointer"
-                      >
-                        <img
-                          alt="Actions"
-                          src="assets/images/icons/menu.svg"
-                          width="24"
-                          height="24"
-                        />
-                      </button>
-                      <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="revertLeadToNew(lead)" class="matmenuimg">
-                          <img
-                            alt="Actions"
-                            src="assets/images/icons/leads.svg"
-                            width="24"
-                            height="24"
-                            class="mr-2 image-icon"
-                          />
-                          <span>Send to New Lead</span>
-                        </button>
-                      </mat-menu>
-                      </div>
-                      <div *ngIf="lead.leadInternalStatus === 16">
-                        <button
-                        [matMenuTriggerFor]="menu"
-                        aria-label="Actions"
-                        style="all: unset; cursor: pointer"
-                      >
-                        <img
-                          alt="Actions"
-                          src="assets/images/icons/menu.svg"
-                          width="24"
-                          height="24"
-                        />
-                      </button>
-                      <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="sendToLead(lead)" class="matmenuimg">
-                          <img
-                            alt="Actions"
-                            src="assets/images/icons/leads.svg"
-                            width="24"
-                            height="24"
-                            class="mr-2 image-icon"
-                          />
-                          <span>Send To New Lead</span>
-                        </button>
-                        <button mat-menu-item (click)="sendLeadToFiles(lead)" class="matmenuimg" *ngIf="userDetails.userType !== '3'">
-                          <img
-                            alt="Actions"
-                            src="assets/images/icons/sendtofiles.svg"
-                            width="24"
-                            height="24"
-                            class="mr-2 image-icon"
-                          />
-                          <span>Send to Files</span>
-                        </button>
-                      </mat-menu>
-                      </div>
+                          <button
+                            [matMenuTriggerFor]="menu"
+                            aria-label="Actions"
+                            style="all: unset; cursor: pointer"
+                          >
+                            <img
+                              alt="Actions"
+                              src="assets/images/icons/menu.svg"
+                              width="24"
+                              height="24"
+                            />
+                          </button>
+                          <mat-menu #menu="matMenu">
+                            <button
+                              mat-menu-item
+                              (click)="sendLeadToArchive(lead)"
+                              class="matmenuimg"
+                            >
+                              <img
+                                alt="Actions"
+                                src="assets/images/Archive.svg"
+                                width="24"
+                                height="24"
+                                class="mr-2 image-icon"
+                              />
+                              <span>Send To Archive</span>
+                            </button>
+                            <button
+                              mat-menu-item
+                              (click)="sendLeadToFollowUps(lead)"
+                              class="matmenuimg"
+                            >
+                              <img
+                                alt="Actions"
+                                src="assets/images/icons/Follow_Ups.svg"
+                                width="24"
+                                height="24"
+                                class="mr-2 image-icon"
+                              />
+                              <span>Send to Follow Ups</span>
+                            </button>
+                            <button
+                              mat-menu-item
+                              (click)="sendLeadToFiles(lead)"
+                              class="matmenuimg"
+                              *ngIf="userDetails.userType !== '3'"
+                            >
+                              <img
+                                alt="Actions"
+                                src="assets/images/icons/sendtofiles.svg"
+                                width="24"
+                                height="24"
+                                class="mr-2 image-icon"
+                              />
+                              <span>Send To Files</span>
+                            </button>
+                          </mat-menu>
+                        </div>
+                        <div *ngIf="lead.leadInternalStatus === 2">
+                          <button
+                            [matMenuTriggerFor]="menu"
+                            aria-label="Actions"
+                            style="all: unset; cursor: pointer"
+                          >
+                            <img
+                              alt="Actions"
+                              src="assets/images/icons/menu.svg"
+                              width="24"
+                              height="24"
+                            />
+                          </button>
+                          <mat-menu #menu="matMenu">
+                            <button
+                              mat-menu-item
+                              (click)="revertLeadToNew(lead)"
+                              class="matmenuimg"
+                            >
+                              <img
+                                alt="Actions"
+                                src="assets/images/icons/leads.svg"
+                                width="24"
+                                height="24"
+                                class="mr-2 image-icon"
+                              />
+                              <span>Send to New Lead</span>
+                            </button>
+                          </mat-menu>
+                        </div>
+                        <div *ngIf="lead.leadInternalStatus === 16">
+                          <button
+                            [matMenuTriggerFor]="menu"
+                            aria-label="Actions"
+                            style="all: unset; cursor: pointer"
+                          >
+                            <img
+                              alt="Actions"
+                              src="assets/images/icons/menu.svg"
+                              width="24"
+                              height="24"
+                            />
+                          </button>
+                          <mat-menu #menu="matMenu">
+                            <button
+                              mat-menu-item
+                              (click)="sendToLead(lead)"
+                              class="matmenuimg"
+                            >
+                              <img
+                                alt="Actions"
+                                src="assets/images/icons/leads.svg"
+                                width="24"
+                                height="24"
+                                class="mr-2 image-icon"
+                              />
+                              <span>Send To New Lead</span>
+                            </button>
+                            <button
+                              mat-menu-item
+                              (click)="sendLeadToFiles(lead)"
+                              class="matmenuimg"
+                              *ngIf="userDetails.userType !== '3'"
+                            >
+                              <img
+                                alt="Actions"
+                                src="assets/images/icons/sendtofiles.svg"
+                                width="24"
+                                height="24"
+                                class="mr-2 image-icon"
+                              />
+                              <span>Send to Files</span>
+                            </button>
+                          </mat-menu>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -886,71 +910,82 @@
                         tooltipPosition="top"
                         (click)="menu.toggle($event); $event.stopPropagation()"
                       /> -->
-                    
                       <div>
                         <div *ngIf="lead.leadInternalStatus === 1">
-                        <button
-                        [matMenuTriggerFor]="menu"
-                        aria-label="Actions"
-                        style="all: unset; cursor: pointer"
-                      >
-                        <img
-                          alt="Actions"
-                          src="assets/images/icons/menu.svg"
-                          width="24"
-                          height="24"
-                        />
-                      </button>
-                      <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="sendLoanLeadToArchive(lead, 'personal')" class="matmenuimg">
-                          <img
-                            alt="Actions"
-                            src="assets/images/Archive.svg"
-                            width="24"
-                            height="24"
-                            class="mr-2 image-icon"
-                          />
-                          <span>Send To Archive</span>
-                        </button>
-                        <button mat-menu-item (click)="sendLoanLeadToFiles(lead, 'personal')" class="matmenuimg"  *ngIf="userDetails.userType !== '3'">
-                          <img
-                            alt="Actions"
-                            src="assets/images/icons/sendtofiles.svg"
-                            width="24"
-                            height="24"
-                            class="mr-2 image-icon"
-                          />
-                          <span>Send To Files</span>
-                        </button>
-                      </mat-menu>
-
-                      </div>
-                      <div *ngIf="lead.leadInternalStatus === 2">
-                        <button
-                        [matMenuTriggerFor]="menu"
-                        aria-label="Actions"
-                        style="all: unset; cursor: pointer"
-                      >
-                        <img
-                          alt="Actions"
-                          src="assets/images/icons/menu.svg"
-                          width="24"
-                          height="24"
-                        />
-                      </button>
-                      <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="revertLoanLeadToNew(lead, 'personal')" class="matmenuimg">
-                          <img
-                            alt="Actions"
-                            src="assets/images/icons/leads.svg"
-                            width="24"
-                            height="24"
-                            class="mr-2 image-icon"
-                          />
-                          <span>Send to New Lead</span>
-                        </button>
-                      </mat-menu>
-                      </div>
+                          <button
+                            [matMenuTriggerFor]="menu"
+                            aria-label="Actions"
+                            style="all: unset; cursor: pointer"
+                          >
+                            <img
+                              alt="Actions"
+                              src="assets/images/icons/menu.svg"
+                              width="24"
+                              height="24"
+                            />
+                          </button>
+                          <mat-menu #menu="matMenu">
+                            <button
+                              mat-menu-item
+                              (click)="sendLoanLeadToArchive(lead, 'personal')"
+                              class="matmenuimg"
+                            >
+                              <img
+                                alt="Actions"
+                                src="assets/images/Archive.svg"
+                                width="24"
+                                height="24"
+                                class="mr-2 image-icon"
+                              />
+                              <span>Send To Archive</span>
+                            </button>
+                            <button
+                              mat-menu-item
+                              (click)="sendLoanLeadToFiles(lead, 'personal')"
+                              class="matmenuimg"
+                              *ngIf="userDetails.userType !== '3'"
+                            >
+                              <img
+                                alt="Actions"
+                                src="assets/images/icons/sendtofiles.svg"
+                                width="24"
+                                height="24"
+                                class="mr-2 image-icon"
+                              />
+                              <span>Send To Files</span>
+                            </button>
+                          </mat-menu>
+                        </div>
+                        <div *ngIf="lead.leadInternalStatus === 2">
+                          <button
+                            [matMenuTriggerFor]="menu"
+                            aria-label="Actions"
+                            style="all: unset; cursor: pointer"
+                          >
+                            <img
+                              alt="Actions"
+                              src="assets/images/icons/menu.svg"
+                              width="24"
+                              height="24"
+                            />
+                          </button>
+                          <mat-menu #menu="matMenu">
+                            <button
+                              mat-menu-item
+                              (click)="revertLoanLeadToNew(lead, 'personal')"
+                              class="matmenuimg"
+                            >
+                              <img
+                                alt="Actions"
+                                src="assets/images/icons/leads.svg"
+                                width="24"
+                                height="24"
+                                class="mr-2 image-icon"
+                              />
+                              <span>Send to New Lead</span>
+                            </button>
+                          </mat-menu>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1426,137 +1461,177 @@
                             "
                           /> -->
 
-                          <div *ngIf="activeEmploymentStatus.name === 'employed'">
+                          <div
+                            *ngIf="activeEmploymentStatus.name === 'employed'"
+                          >
                             <div>
-                            <div *ngIf="lead.leadInternalStatus === 1">
-                            <button
-                            [matMenuTriggerFor]="menu"
-                            aria-label="Actions"
-                            style="all: unset; cursor: pointer"
+                              <div *ngIf="lead.leadInternalStatus === 1">
+                                <button
+                                  [matMenuTriggerFor]="menu"
+                                  aria-label="Actions"
+                                  style="all: unset; cursor: pointer"
+                                >
+                                  <img
+                                    alt="Actions"
+                                    src="assets/images/icons/menu.svg"
+                                    width="24"
+                                    height="24"
+                                  />
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                  <button
+                                    mat-menu-item
+                                    (click)="
+                                      sendLoanLeadToArchive(lead, 'home')
+                                    "
+                                    class="matmenuimg"
+                                  >
+                                    <img
+                                      alt="Actions"
+                                      src="assets/images/Archive.svg"
+                                      width="24"
+                                      height="24"
+                                      class="mr-2 image-icon"
+                                    />
+                                    <span>Send To Archive</span>
+                                  </button>
+                                  <button
+                                    mat-menu-item
+                                    (click)="sendLoanLeadToFiles(lead, 'home')"
+                                    class="matmenuimg"
+                                    *ngIf="userDetails.userType !== '3'"
+                                  >
+                                    <img
+                                      alt="Actions"
+                                      src="assets/images/icons/sendtofiles.svg"
+                                      width="24"
+                                      height="24"
+                                      class="mr-2 image-icon"
+                                    />
+                                    <span>Send To Files</span>
+                                  </button>
+                                </mat-menu>
+                              </div>
+                              <div *ngIf="lead.leadInternalStatus === 2">
+                                <button
+                                  [matMenuTriggerFor]="menu"
+                                  aria-label="Actions"
+                                  style="all: unset; cursor: pointer"
+                                >
+                                  <img
+                                    alt="Actions"
+                                    src="assets/images/icons/menu.svg"
+                                    width="24"
+                                    height="24"
+                                  />
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                  <button
+                                    mat-menu-item
+                                    (click)="revertLoanLeadToNew(lead, 'home')"
+                                    class="matmenuimg"
+                                  >
+                                    <img
+                                      alt="Actions"
+                                      src="assets/images/icons/leads.svg"
+                                      width="24"
+                                      height="24"
+                                      class="mr-2 image-icon"
+                                    />
+                                    <span>Send to New Lead</span>
+                                  </button>
+                                </mat-menu>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            *ngIf="
+                              activeEmploymentStatus.name === 'self-employed'
+                            "
                           >
-                            <img
-                              alt="Actions"
-                              src="assets/images/icons/menu.svg"
-                              width="24"
-                              height="24"
-                            />
-                            </button>
-                            <mat-menu #menu="matMenu">
-                              <button mat-menu-item (click)="sendLoanLeadToArchive(lead, 'home')" class="matmenuimg">
-                                <img
-                                  alt="Actions"
-                                  src="assets/images/Archive.svg"
-                                  width="24"
-                                  height="24"
-                                  class="mr-2 image-icon"
-                                />
-                                <span>Send To Archive</span>
-                              </button>
-                              <button mat-menu-item (click)="sendLoanLeadToFiles(lead, 'home')" class="matmenuimg" *ngIf="userDetails.userType !== '3'">
-                                <img
-                                  alt="Actions"
-                                  src="assets/images/icons/sendtofiles.svg"
-                                  width="24"
-                                  height="24"
-                                  class="mr-2 image-icon"
-                                />
-                                <span>Send To Files</span>
-                              </button>
-                            </mat-menu>
+                            <div *ngIf="userDetails.userType !== 3">
+                              <div *ngIf="lead.leadInternalStatus === 1">
+                                <button
+                                  [matMenuTriggerFor]="menu"
+                                  aria-label="Actions"
+                                  style="all: unset; cursor: pointer"
+                                >
+                                  <img
+                                    alt="Actions"
+                                    src="assets/images/icons/menu.svg"
+                                    width="24"
+                                    height="24"
+                                  />
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                  <button
+                                    mat-menu-item
+                                    (click)="
+                                      sendLoanLeadToArchive(lead, 'homeself')
+                                    "
+                                    class="matmenuimg"
+                                  >
+                                    <img
+                                      alt="Actions"
+                                      src="assets/images/Archive.svg"
+                                      width="24"
+                                      height="24"
+                                      class="mr-2 image-icon"
+                                    />
+                                    <span>Send To Archive</span>
+                                  </button>
+                                  <button
+                                    mat-menu-item
+                                    (click)="
+                                      sendLoanLeadToFiles(lead, 'homeself')
+                                    "
+                                    class="matmenuimg"
+                                    *ngIf="userDetails.userType !== '3'"
+                                  >
+                                    <img
+                                      alt="Actions"
+                                      src="assets/images/icons/sendtofiles.svg"
+                                      width="24"
+                                      height="24"
+                                      class="mr-2 image-icon"
+                                    />
+                                    <span>Send To Files</span>
+                                  </button>
+                                </mat-menu>
+                              </div>
+                              <div *ngIf="lead.leadInternalStatus === 2">
+                                <button
+                                  [matMenuTriggerFor]="menu"
+                                  aria-label="Actions"
+                                  style="all: unset; cursor: pointer"
+                                >
+                                  <img
+                                    alt="Actions"
+                                    src="assets/images/icons/menu.svg"
+                                    width="24"
+                                    height="24"
+                                  />
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                  <button
+                                    mat-menu-item
+                                    (click)="
+                                      revertLoanLeadToNew(lead, 'homeself')
+                                    "
+                                    class="matmenuimg"
+                                  >
+                                    <img
+                                      alt="Actions"
+                                      src="assets/images/icons/leads.svg"
+                                      width="24"
+                                      height="24"
+                                      class="mr-2 image-icon"
+                                    />
+                                    <span>Send to New Lead</span>
+                                  </button>
+                                </mat-menu>
+                              </div>
                             </div>
-                            <div *ngIf="lead.leadInternalStatus === 2">
-                              <button
-                              [matMenuTriggerFor]="menu"
-                              aria-label="Actions"
-                              style="all: unset; cursor: pointer"
-                            >
-                              <img
-                                alt="Actions"
-                                src="assets/images/icons/menu.svg"
-                                width="24"
-                                height="24"
-                              />
-                            </button>
-                            <mat-menu #menu="matMenu">
-                              <button mat-menu-item (click)="revertLoanLeadToNew(lead, 'home')" class="matmenuimg">
-                                <img
-                                  alt="Actions"
-                                  src="assets/images/icons/leads.svg"
-                                  width="24"
-                                  height="24"
-                                  class="mr-2 image-icon"
-                                />
-                                <span>Send to New Lead</span>
-                              </button>
-                            </mat-menu>
-                            </div>
-                          </div>
-                          </div>
-                          <div *ngIf="activeEmploymentStatus.name === 'self-employed'">
-                            <div *ngIf="userDetails.userType !==3">
-                            <div *ngIf="lead.leadInternalStatus === 1">
-                            <button
-                            [matMenuTriggerFor]="menu"
-                            aria-label="Actions"
-                            style="all: unset; cursor: pointer"
-                          >
-                            <img
-                              alt="Actions"
-                              src="assets/images/icons/menu.svg"
-                              width="24"
-                              height="24"
-                            />
-                            </button>
-                            <mat-menu #menu="matMenu">
-                              <button mat-menu-item (click)="sendLoanLeadToArchive(lead, 'homeself')" class="matmenuimg">
-                                <img
-                                  alt="Actions"
-                                  src="assets/images/Archive.svg"
-                                  width="24"
-                                  height="24"
-                                  class="mr-2 image-icon"
-                                />
-                                <span>Send To Archive</span>
-                              </button>
-                              <button mat-menu-item (click)="sendLoanLeadToFiles(lead, 'homeself')" class="matmenuimg"  *ngIf="userDetails.userType !== '3'">
-                                <img
-                                  alt="Actions"
-                                  src="assets/images/icons/sendtofiles.svg"
-                                  width="24"
-                                  height="24"
-                                  class="mr-2 image-icon"
-                                />
-                                <span>Send To Files</span>
-                              </button>
-                            </mat-menu>
-                            </div>
-                            <div *ngIf="lead.leadInternalStatus === 2">
-                              <button
-                              [matMenuTriggerFor]="menu"
-                              aria-label="Actions"
-                              style="all: unset; cursor: pointer"
-                            >
-                              <img
-                                alt="Actions"
-                                src="assets/images/icons/menu.svg"
-                                width="24"
-                                height="24"
-                              />
-                            </button>
-                            <mat-menu #menu="matMenu">
-                              <button mat-menu-item (click)="revertLoanLeadToNew(lead, 'homeself')" class="matmenuimg">
-                                <img
-                                  alt="Actions"
-                                  src="assets/images/icons/leads.svg"
-                                  width="24"
-                                  height="24"
-                                  class="mr-2 image-icon"
-                                />
-                                <span>Send to New Lead</span>
-                              </button>
-                            </mat-menu>
-                            </div>
-                          </div>
                           </div>
                         </div>
                       </div>
@@ -1681,15 +1756,15 @@
                           />
                         </button> -->
                         <span
-                            class="input-group-text p-button-primary"
-                            (click)="filterBasedOnEmploymentStatus()"
-                          >
-                            <img
-                              src="../../../assets/images/icons/search.svg"
-                              alt="Search"
-                              style="width: 14px; height: 14px; cursor: pointer"
-                            />
-                          </span>
+                          class="input-group-text p-button-primary"
+                          (click)="filterBasedOnEmploymentStatus()"
+                        >
+                          <img
+                            src="../../../assets/images/icons/search.svg"
+                            alt="Search"
+                            style="width: 14px; height: 14px; cursor: pointer"
+                          />
+                        </span>
                       </div>
                     </div>
                     <div
@@ -2002,137 +2077,175 @@
                             pTooltip="Actions"
                             tooltipPosition="top"
                           /> -->
-                          <div *ngIf="activeEmploymentStatus.name === 'employed'">
+                          <div
+                            *ngIf="activeEmploymentStatus.name === 'employed'"
+                          >
                             <div>
-                            <div *ngIf="lead.leadInternalStatus === 1">
-                            <button
-                            [matMenuTriggerFor]="menu"
-                            aria-label="Actions"
-                            style="all: unset; cursor: pointer"
+                              <div *ngIf="lead.leadInternalStatus === 1">
+                                <button
+                                  [matMenuTriggerFor]="menu"
+                                  aria-label="Actions"
+                                  style="all: unset; cursor: pointer"
+                                >
+                                  <img
+                                    alt="Actions"
+                                    src="assets/images/icons/menu.svg"
+                                    width="24"
+                                    height="24"
+                                  />
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                  <button
+                                    mat-menu-item
+                                    (click)="sendLoanLeadToArchive(lead, 'lap')"
+                                    class="matmenuimg"
+                                  >
+                                    <img
+                                      alt="Actions"
+                                      src="assets/images/Archive.svg"
+                                      width="24"
+                                      height="24"
+                                      class="mr-2 image-icon"
+                                    />
+                                    <span>Send To Archive</span>
+                                  </button>
+                                  <button
+                                    mat-menu-item
+                                    (click)="sendLoanLeadToFiles(lead, 'lap')"
+                                    class="matmenuimg"
+                                    *ngIf="userDetails.userType !== '3'"
+                                  >
+                                    <img
+                                      alt="Actions"
+                                      src="assets/images/icons/sendtofiles.svg"
+                                      width="24"
+                                      height="24"
+                                      class="mr-2 image-icon"
+                                    />
+                                    <span>Send To Files</span>
+                                  </button>
+                                </mat-menu>
+                              </div>
+                              <div *ngIf="lead.leadInternalStatus === 2">
+                                <button
+                                  [matMenuTriggerFor]="menu"
+                                  aria-label="Actions"
+                                  style="all: unset; cursor: pointer"
+                                >
+                                  <img
+                                    alt="Actions"
+                                    src="assets/images/icons/menu.svg"
+                                    width="24"
+                                    height="24"
+                                  />
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                  <button
+                                    mat-menu-item
+                                    (click)="revertLoanLeadToNew(lead, 'lap')"
+                                    class="matmenuimg"
+                                  >
+                                    <img
+                                      alt="Actions"
+                                      src="assets/images/icons/leads.svg"
+                                      width="24"
+                                      height="24"
+                                      class="mr-2 image-icon"
+                                    />
+                                    <span>Send to New Lead</span>
+                                  </button>
+                                </mat-menu>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            *ngIf="
+                              activeEmploymentStatus.name === 'self-employed'
+                            "
                           >
-                            <img
-                              alt="Actions"
-                              src="assets/images/icons/menu.svg"
-                              width="24"
-                              height="24"
-                            />
-                            </button>
-                            <mat-menu #menu="matMenu">
-                              <button mat-menu-item (click)="sendLoanLeadToArchive(lead, 'lap')" class="matmenuimg">
-                                <img
-                                  alt="Actions"
-                                  src="assets/images/Archive.svg"
-                                  width="24"
-                                  height="24"
-                                  class="mr-2 image-icon"
-                                />
-                                <span>Send To Archive</span>
-                              </button>
-                              <button mat-menu-item (click)="sendLoanLeadToFiles(lead, 'lap')" class="matmenuimg"  *ngIf="userDetails.userType !== '3'">
-                                <img
-                                  alt="Actions"
-                                  src="assets/images/icons/sendtofiles.svg"
-                                  width="24"
-                                  height="24"
-                                  class="mr-2 image-icon"
-                                />
-                                <span>Send To Files</span>
-                              </button>
-                            </mat-menu>
+                            <div *ngIf="userDetails.userType !== 3">
+                              <div *ngIf="lead.leadInternalStatus === 1">
+                                <button
+                                  [matMenuTriggerFor]="menu"
+                                  aria-label="Actions"
+                                  style="all: unset; cursor: pointer"
+                                >
+                                  <img
+                                    alt="Actions"
+                                    src="assets/images/icons/menu.svg"
+                                    width="24"
+                                    height="24"
+                                  />
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                  <button
+                                    mat-menu-item
+                                    (click)="
+                                      sendLoanLeadToArchive(lead, 'lapself')
+                                    "
+                                    class="matmenuimg"
+                                  >
+                                    <img
+                                      alt="Actions"
+                                      src="assets/images/Archive.svg"
+                                      width="24"
+                                      height="24"
+                                      class="mr-2 image-icon"
+                                    />
+                                    <span>Send To Archive</span>
+                                  </button>
+                                  <button
+                                    mat-menu-item
+                                    (click)="
+                                      sendLoanLeadToFiles(lead, 'lapself')
+                                    "
+                                    class="matmenuimg"
+                                    *ngIf="userDetails.userType !== '3'"
+                                  >
+                                    <img
+                                      alt="Actions"
+                                      src="assets/images/icons/sendtofiles.svg"
+                                      width="24"
+                                      height="24"
+                                      class="mr-2 image-icon"
+                                    />
+                                    <span>Send To Files</span>
+                                  </button>
+                                </mat-menu>
+                              </div>
+                              <div *ngIf="lead.leadInternalStatus === 2">
+                                <button
+                                  [matMenuTriggerFor]="menu"
+                                  aria-label="Actions"
+                                  style="all: unset; cursor: pointer"
+                                >
+                                  <img
+                                    alt="Actions"
+                                    src="assets/images/icons/menu.svg"
+                                    width="24"
+                                    height="24"
+                                  />
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                  <button
+                                    mat-menu-item
+                                    (click)="
+                                      revertLoanLeadToNew(lead, 'lapself')
+                                    "
+                                    class="matmenuimg"
+                                  >
+                                    <img
+                                      alt="Actions"
+                                      src="assets/images/icons/leads.svg"
+                                      width="24"
+                                      height="24"
+                                      class="mr-2 image-icon"
+                                    />
+                                    <span>Send to New Lead</span>
+                                  </button>
+                                </mat-menu>
+                              </div>
                             </div>
-                            <div *ngIf="lead.leadInternalStatus === 2">
-                              <button
-                              [matMenuTriggerFor]="menu"
-                              aria-label="Actions"
-                              style="all: unset; cursor: pointer"
-                            >
-                              <img
-                                alt="Actions"
-                                src="assets/images/icons/menu.svg"
-                                width="24"
-                                height="24"
-                              />
-                            </button>
-                            <mat-menu #menu="matMenu">
-                              <button mat-menu-item (click)="revertLoanLeadToNew(lead, 'lap')" class="matmenuimg">
-                                <img
-                                  alt="Actions"
-                                  src="assets/images/icons/leads.svg"
-                                  width="24"
-                                  height="24"
-                                  class="mr-2 image-icon"
-                                />
-                                <span>Send to New Lead</span>
-                              </button>
-                            </mat-menu>
-                            </div>
-                          </div>
-                          </div>
-                          <div *ngIf="activeEmploymentStatus.name === 'self-employed'">
-                            <div *ngIf="userDetails.userType !==3">
-                            <div *ngIf="lead.leadInternalStatus === 1">
-                            <button
-                            [matMenuTriggerFor]="menu"
-                            aria-label="Actions"
-                            style="all: unset; cursor: pointer"
-                          >
-                            <img
-                              alt="Actions"
-                              src="assets/images/icons/menu.svg"
-                              width="24"
-                              height="24"
-                            />
-                            </button>
-                            <mat-menu #menu="matMenu">
-                              <button mat-menu-item (click)="sendLoanLeadToArchive(lead, 'lapself')" class="matmenuimg">
-                                <img
-                                  alt="Actions"
-                                  src="assets/images/Archive.svg"
-                                  width="24"
-                                  height="24"
-                                  class="mr-2 image-icon"
-                                />
-                                <span>Send To Archive</span>
-                              </button>
-                              <button mat-menu-item (click)="sendLoanLeadToFiles(lead, 'lapself')" class="matmenuimg"  *ngIf="userDetails.userType !== '3'">
-                                <img
-                                  alt="Actions"
-                                  src="assets/images/icons/sendtofiles.svg"
-                                  width="24"
-                                  height="24"
-                                  class="mr-2 image-icon"
-                                />
-                                <span>Send To Files</span>
-                              </button>
-                            </mat-menu>
-                            </div>
-                            <div *ngIf="lead.leadInternalStatus === 2">
-                              <button
-                              [matMenuTriggerFor]="menu"
-                              aria-label="Actions"
-                              style="all: unset; cursor: pointer"
-                            >
-                              <img
-                                alt="Actions"
-                                src="assets/images/icons/menu.svg"
-                                width="24"
-                                height="24"
-                              />
-                            </button>
-                            <mat-menu #menu="matMenu">
-                              <button mat-menu-item (click)="revertLoanLeadToNew(lead, 'lapself')" class="matmenuimg">
-                                <img
-                                  alt="Actions"
-                                  src="assets/images/icons/leads.svg"
-                                  width="24"
-                                  height="24"
-                                  class="mr-2 image-icon"
-                                />
-                                <span>Send to New Lead</span>
-                              </button>
-                            </mat-menu>
-                            </div>
-                          </div>
                           </div>
                         </div>
                       </div>
@@ -2523,70 +2636,88 @@
                         (click)="menu.toggle($event); $event.stopPropagation()"
                       /> -->
 
-                      <div *ngIf="userDetails.userType !==3">
+                      <div *ngIf="userDetails.userType !== 3">
                         <div *ngIf="lead.leadInternalStatus === 1">
-                        <button
-                        [matMenuTriggerFor]="menu"
-                        aria-label="Actions"
-                        style="all: unset; cursor: pointer"
-                      >
-                        <img
-                          alt="Actions"
-                          src="assets/images/icons/menu.svg"
-                          width="24"
-                          height="24"
-                        />
-                      </button>
-                      <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="sendLoanLeadToArchive(lead, 'professional')" class="matmenuimg">
-                          <img
-                            alt="Actions"
-                            src="assets/images/Archive.svg"
-                            width="24"
-                            height="24"
-                            class="mr-2 image-icon"
-                          />
-                          <span>Send To Archive</span>
-                        </button>
-                        <button mat-menu-item (click)="sendLoanLeadToFiles(lead, 'professional')" class="matmenuimg"  *ngIf="userDetails.userType !== '3'">
-                          <img
-                            alt="Actions"
-                            src="assets/images/icons/sendtofiles.svg"
-                            width="24"
-                            height="24"
-                            class="mr-2 image-icon"
-                          />
-                          <span>Send To Files</span>
-                        </button>
-                      </mat-menu>
-
-                      </div>
-                      <div *ngIf="lead.leadInternalStatus === 2">
-                        <button
-                        [matMenuTriggerFor]="menu"
-                        aria-label="Actions"
-                        style="all: unset; cursor: pointer"
-                      >
-                        <img
-                          alt="Actions"
-                          src="assets/images/icons/menu.svg"
-                          width="24"
-                          height="24"
-                        />
-                      </button>
-                      <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="revertLoanLeadToNew(lead, 'professional')" class="matmenuimg">
-                          <img
-                            alt="Actions"
-                            src="assets/images/icons/leads.svg"
-                            width="24"
-                            height="24"
-                            class="mr-2 image-icon"
-                          />
-                          <span>Send to New Lead</span>
-                        </button>
-                      </mat-menu>
-                      </div>
+                          <button
+                            [matMenuTriggerFor]="menu"
+                            aria-label="Actions"
+                            style="all: unset; cursor: pointer"
+                          >
+                            <img
+                              alt="Actions"
+                              src="assets/images/icons/menu.svg"
+                              width="24"
+                              height="24"
+                            />
+                          </button>
+                          <mat-menu #menu="matMenu">
+                            <button
+                              mat-menu-item
+                              (click)="
+                                sendLoanLeadToArchive(lead, 'professional')
+                              "
+                              class="matmenuimg"
+                            >
+                              <img
+                                alt="Actions"
+                                src="assets/images/Archive.svg"
+                                width="24"
+                                height="24"
+                                class="mr-2 image-icon"
+                              />
+                              <span>Send To Archive</span>
+                            </button>
+                            <button
+                              mat-menu-item
+                              (click)="
+                                sendLoanLeadToFiles(lead, 'professional')
+                              "
+                              class="matmenuimg"
+                              *ngIf="userDetails.userType !== '3'"
+                            >
+                              <img
+                                alt="Actions"
+                                src="assets/images/icons/sendtofiles.svg"
+                                width="24"
+                                height="24"
+                                class="mr-2 image-icon"
+                              />
+                              <span>Send To Files</span>
+                            </button>
+                          </mat-menu>
+                        </div>
+                        <div *ngIf="lead.leadInternalStatus === 2">
+                          <button
+                            [matMenuTriggerFor]="menu"
+                            aria-label="Actions"
+                            style="all: unset; cursor: pointer"
+                          >
+                            <img
+                              alt="Actions"
+                              src="assets/images/icons/menu.svg"
+                              width="24"
+                              height="24"
+                            />
+                          </button>
+                          <mat-menu #menu="matMenu">
+                            <button
+                              mat-menu-item
+                              (click)="
+                                revertLoanLeadToNew(lead, 'professional')
+                              "
+                              class="matmenuimg"
+                            >
+                              <img
+                                alt="Actions"
+                                src="assets/images/icons/leads.svg"
+                                width="24"
+                                height="24"
+                                class="mr-2 image-icon"
+                              />
+                              <span>Send to New Lead</span>
+                            </button>
+                          </mat-menu>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -2927,7 +3058,7 @@
                             ? (getCarType(lead.carType) | capitalizeFirst)
                             : "-"
                         }}
-                    </span>
+                      </span>
                     </td>
                     <td *ngIf="activeEmploymentStatus.name === 'self-employed'">
                       <span class="table-column-data">{{
@@ -3072,138 +3203,176 @@
                             "
                           /> -->
 
-                          <div *ngIf="activeEmploymentStatus.name === 'employed'">
-                            <div *ngIf="userDetails.userType !==3">
-                            <div *ngIf="lead.leadInternalStatus === 1">
-                            <button
-                            [matMenuTriggerFor]="menu"
-                            aria-label="Actions"
-                            style="all: unset; cursor: pointer"
+                          <div
+                            *ngIf="activeEmploymentStatus.name === 'employed'"
                           >
-                            <img
-                              alt="Actions"
-                              src="assets/images/icons/menu.svg"
-                              width="24"
-                              height="24"
-                            />
-                            </button>
-                            <mat-menu #menu="matMenu">
-                              <button mat-menu-item (click)="sendLoanLeadToArchive(lead, 'car')" class="matmenuimg">
-                                <img
-                                  alt="Actions"
-                                  src="assets/images/Archive.svg"
-                                  width="24"
-                                  height="24"
-                                  class="mr-2 image-icon"
-                                />
-                                <span>Send To Archive</span>
-                              </button>
-                              <button mat-menu-item (click)="sendLoanLeadToFiles(lead, 'car')" class="matmenuimg"  *ngIf="userDetails.userType !== '3'">
-                                <img
-                                  alt="Actions"
-                                  src="assets/images/icons/sendtofiles.svg"
-                                  width="24"
-                                  height="24"
-                                  class="mr-2 image-icon"
-                                />
-                                <span>Send To Files</span>
-                              </button>
-                            </mat-menu>
-                            </div>
-                            <div *ngIf="lead.leadInternalStatus === 2">
-                              <button
-                              [matMenuTriggerFor]="menu"
-                              aria-label="Actions"
-                              style="all: unset; cursor: pointer"
-                            >
-                              <img
-                                alt="Actions"
-                                src="assets/images/icons/menu.svg"
-                                width="24"
-                                height="24"
-                              />
-                            </button>
-                            <mat-menu #menu="matMenu">
-                              <button mat-menu-item (click)="revertLoanLeadToNew(lead, 'car')" class="matmenuimg">
-                                <img
-                                  alt="Actions"
-                                  src="assets/images/icons/leads.svg"
-                                  width="24"
-                                  height="24"
-                                  class="mr-2 image-icon"
-                                />
-                                <span>Send to New Lead</span>
-                              </button>
-                            </mat-menu>
+                            <div *ngIf="userDetails.userType !== 3">
+                              <div *ngIf="lead.leadInternalStatus === 1">
+                                <button
+                                  [matMenuTriggerFor]="menu"
+                                  aria-label="Actions"
+                                  style="all: unset; cursor: pointer"
+                                >
+                                  <img
+                                    alt="Actions"
+                                    src="assets/images/icons/menu.svg"
+                                    width="24"
+                                    height="24"
+                                  />
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                  <button
+                                    mat-menu-item
+                                    (click)="sendLoanLeadToArchive(lead, 'car')"
+                                    class="matmenuimg"
+                                  >
+                                    <img
+                                      alt="Actions"
+                                      src="assets/images/Archive.svg"
+                                      width="24"
+                                      height="24"
+                                      class="mr-2 image-icon"
+                                    />
+                                    <span>Send To Archive</span>
+                                  </button>
+                                  <button
+                                    mat-menu-item
+                                    (click)="sendLoanLeadToFiles(lead, 'car')"
+                                    class="matmenuimg"
+                                    *ngIf="userDetails.userType !== '3'"
+                                  >
+                                    <img
+                                      alt="Actions"
+                                      src="assets/images/icons/sendtofiles.svg"
+                                      width="24"
+                                      height="24"
+                                      class="mr-2 image-icon"
+                                    />
+                                    <span>Send To Files</span>
+                                  </button>
+                                </mat-menu>
+                              </div>
+                              <div *ngIf="lead.leadInternalStatus === 2">
+                                <button
+                                  [matMenuTriggerFor]="menu"
+                                  aria-label="Actions"
+                                  style="all: unset; cursor: pointer"
+                                >
+                                  <img
+                                    alt="Actions"
+                                    src="assets/images/icons/menu.svg"
+                                    width="24"
+                                    height="24"
+                                  />
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                  <button
+                                    mat-menu-item
+                                    (click)="revertLoanLeadToNew(lead, 'car')"
+                                    class="matmenuimg"
+                                  >
+                                    <img
+                                      alt="Actions"
+                                      src="assets/images/icons/leads.svg"
+                                      width="24"
+                                      height="24"
+                                      class="mr-2 image-icon"
+                                    />
+                                    <span>Send to New Lead</span>
+                                  </button>
+                                </mat-menu>
+                              </div>
                             </div>
                           </div>
-                          </div>
-                          <div *ngIf="activeEmploymentStatus.name === 'self-employed'">
-                            <div *ngIf="userDetails.userType !==3">
-                            <div *ngIf="lead.leadInternalStatus === 1">
-                            <button
-                            [matMenuTriggerFor]="menu"
-                            aria-label="Actions"
-                            style="all: unset; cursor: pointer"
+                          <div
+                            *ngIf="
+                              activeEmploymentStatus.name === 'self-employed'
+                            "
                           >
-                            <img
-                              alt="Actions"
-                              src="assets/images/icons/menu.svg"
-                              width="24"
-                              height="24"
-                            />
-                            </button>
-                            <mat-menu #menu="matMenu">
-                              <button mat-menu-item (click)="sendLoanLeadToArchive(lead, 'carself')" class="matmenuimg">
-                                <img
-                                  alt="Actions"
-                                  src="assets/images/Archive.svg"
-                                  width="24"
-                                  height="24"
-                                  class="mr-2 image-icon"
-                                />
-                                <span>Send To Archive</span>
-                              </button>
-                              <button mat-menu-item (click)="sendLoanLeadToFiles(lead, 'carself')" class="matmenuimg"  *ngIf="userDetails.userType !== '3'">
-                                <img
-                                  alt="Actions"
-                                  src="assets/images/icons/sendtofiles.svg"
-                                  width="24"
-                                  height="24"
-                                  class="mr-2 image-icon"
-                                />
-                                <span>Send To Files</span>
-                              </button>
-                            </mat-menu>
-                            </div>
-                            <div *ngIf="lead.leadInternalStatus === 2">
-                              <button
-                              [matMenuTriggerFor]="menu"
-                              aria-label="Actions"
-                              style="all: unset; cursor: pointer"
-                            >
-                              <img
-                                alt="Actions"
-                                src="assets/images/icons/menu.svg"
-                                width="24"
-                                height="24"
-                              />
-                            </button>
-                            <mat-menu #menu="matMenu">
-                              <button mat-menu-item (click)="revertLoanLeadToNew(lead, 'carself')" class="matmenuimg">
-                                <img
-                                  alt="Actions"
-                                  src="assets/images/icons/leads.svg"
-                                  width="24"
-                                  height="24"
-                                  class="mr-2 image-icon"
-                                />
-                                <span>Send to New Lead</span>
-                              </button>
-                            </mat-menu>
+                            <div *ngIf="userDetails.userType !== 3">
+                              <div *ngIf="lead.leadInternalStatus === 1">
+                                <button
+                                  [matMenuTriggerFor]="menu"
+                                  aria-label="Actions"
+                                  style="all: unset; cursor: pointer"
+                                >
+                                  <img
+                                    alt="Actions"
+                                    src="assets/images/icons/menu.svg"
+                                    width="24"
+                                    height="24"
+                                  />
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                  <button
+                                    mat-menu-item
+                                    (click)="
+                                      sendLoanLeadToArchive(lead, 'carself')
+                                    "
+                                    class="matmenuimg"
+                                  >
+                                    <img
+                                      alt="Actions"
+                                      src="assets/images/Archive.svg"
+                                      width="24"
+                                      height="24"
+                                      class="mr-2 image-icon"
+                                    />
+                                    <span>Send To Archive</span>
+                                  </button>
+                                  <button
+                                    mat-menu-item
+                                    (click)="
+                                      sendLoanLeadToFiles(lead, 'carself')
+                                    "
+                                    class="matmenuimg"
+                                    *ngIf="userDetails.userType !== '3'"
+                                  >
+                                    <img
+                                      alt="Actions"
+                                      src="assets/images/icons/sendtofiles.svg"
+                                      width="24"
+                                      height="24"
+                                      class="mr-2 image-icon"
+                                    />
+                                    <span>Send To Files</span>
+                                  </button>
+                                </mat-menu>
+                              </div>
+                              <div *ngIf="lead.leadInternalStatus === 2">
+                                <button
+                                  [matMenuTriggerFor]="menu"
+                                  aria-label="Actions"
+                                  style="all: unset; cursor: pointer"
+                                >
+                                  <img
+                                    alt="Actions"
+                                    src="assets/images/icons/menu.svg"
+                                    width="24"
+                                    height="24"
+                                  />
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                  <button
+                                    mat-menu-item
+                                    (click)="
+                                      revertLoanLeadToNew(lead, 'carself')
+                                    "
+                                    class="matmenuimg"
+                                  >
+                                    <img
+                                      alt="Actions"
+                                      src="assets/images/icons/leads.svg"
+                                      width="24"
+                                      height="24"
+                                      class="mr-2 image-icon"
+                                    />
+                                    <span>Send to New Lead</span>
+                                  </button>
+                                </mat-menu>
+                              </div>
                             </div>
                           </div>
-                          </div>                          
                         </div>
                       </div>
                     </td>
@@ -3234,7 +3403,6 @@
             </div>
           </ng-container>
         </ng-container>
-        
       </div>
       <div *ngIf="activeItem.name == 'commercialVehicleLoan'">
         <app-comming-soon></app-comming-soon>

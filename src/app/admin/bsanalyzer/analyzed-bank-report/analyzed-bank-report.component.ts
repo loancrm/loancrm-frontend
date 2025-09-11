@@ -89,7 +89,7 @@ export class AnalyzedBankReportComponent implements OnInit {
     { label: 'OD/CC Utilization', id: 'od-cc-utilization' }
   ];
   accountId: any;
-  accountReferenceNumber = 'HDFC_BANK_1';
+  accountReferenceNumber: any;
   visibleTabs: TabItem[] = [];
   overflowTabs: TabItem[] = [];
   activeTabId: string = 'summary';
@@ -139,6 +139,12 @@ export class AnalyzedBankReportComponent implements OnInit {
       next: (res: any) => {
         console.log('Fetched report:', res);
         this.report = res;
+        this.accountId = this.report?.reportAccounts[0]?.account?.accountId
+        this.accountReferenceNumber = this.report?.reportAccounts[0]?.account?.accountReferenceNumber
+        console.log(this.report?.reportAccounts[0]?.account?.accountId)
+        this.calculateTabs();
+        this.updateActiveIndex();
+        this.executeTabFunction(this.activeTabId);
       },
       error: (err) => {
         console.error('Error fetching report', err);
@@ -295,7 +301,7 @@ export class AnalyzedBankReportComponent implements OnInit {
   loadSummary() {
     this.loading = true;
     const params = {
-      // accountId: this.accountId,
+      accountId: this.accountId,
       accountReferenceNumber: this.accountReferenceNumber
     };
     this.bankService.extractSummaryDetails(params).subscribe({
@@ -351,13 +357,13 @@ export class AnalyzedBankReportComponent implements OnInit {
   loadOverviewData() {
     this.overviewLoading = true;
     const params = {
-      // accountId: this.accountId,
+      accountId: this.accountId,
       accountReferenceNumber: this.accountReferenceNumber
     };
     this.bankService.extractOverviewDetails(params) // replace with your API call
       .subscribe({
         next: (res) => {
-          this.overviewData = Array.isArray(res) ? res : [];
+          this.overviewData = res;
           this.overviewLoading = false;
         },
         error: () => {
@@ -397,7 +403,7 @@ export class AnalyzedBankReportComponent implements OnInit {
       rows,
       sortBy,
       order,
-      // accountId: this.accountId,
+      accountId: this.accountId,
       accountReferenceNumber: this.accountReferenceNumber
 
     };
@@ -422,7 +428,7 @@ export class AnalyzedBankReportComponent implements OnInit {
 
     this.overviewLoading = true;
     const params = {
-      // accountId: this.accountId,
+      accountId: this.accountId,
       accountReferenceNumber: this.accountReferenceNumber
     };
     this.bankService.extractIrregularities(params) // replace with your API call
@@ -441,7 +447,7 @@ export class AnalyzedBankReportComponent implements OnInit {
   loadCounterparty() {
     this.overviewLoading = true;
     const params = {
-      // accountId: this.accountId,
+      accountId: this.accountId,
       accountReferenceNumber: this.accountReferenceNumber
     };
     this.bankService.extractCounterparty(params) // replace with your API call
@@ -461,7 +467,7 @@ export class AnalyzedBankReportComponent implements OnInit {
     // console.log("daily balance")
     this.overviewLoading = true;
     const params = {
-      // accountId: this.accountId,
+      accountId: this.accountId,
       accountReferenceNumber: this.accountReferenceNumber
     };
     this.bankService.extractDailyBalance(params) // replace with your API call
@@ -500,7 +506,7 @@ export class AnalyzedBankReportComponent implements OnInit {
   loadCategories() {
     this.overviewLoading = true;
     const params = {
-      // accountId: this.accountId,
+      accountId: this.accountId,
       accountReferenceNumber: this.accountReferenceNumber
     };
     this.bankService.extractCategories(params) // replace with your API call
@@ -538,7 +544,7 @@ export class AnalyzedBankReportComponent implements OnInit {
   loadBouncedCheques() {
     this.overviewLoading = true;
     const params = {
-      // accountId: this.accountId,
+      accountId: this.accountId,
       accountReferenceNumber: this.accountReferenceNumber
     };
     this.bankService.extractBouncedChequeDetails(params) // replace with your API call
@@ -563,7 +569,7 @@ export class AnalyzedBankReportComponent implements OnInit {
   loadCashFlow() {
     this.overviewLoading = true;
     const params = {
-      // accountId: this.accountId,
+      accountId: this.accountId,
       accountReferenceNumber: this.accountReferenceNumber
     };
     this.bankService.extractCashFlowDetails(params) // replace with your API call
@@ -583,7 +589,7 @@ export class AnalyzedBankReportComponent implements OnInit {
   loadBizCashFlow() {
     this.overviewLoading = true;
     const params = {
-      // accountId: this.accountId,
+      accountId: this.accountId,
       accountReferenceNumber: this.accountReferenceNumber
     };
     this.bankService.extractBusinessCashFlowDetails(params) // replace with your API call
@@ -603,7 +609,7 @@ export class AnalyzedBankReportComponent implements OnInit {
   loadDuplicateTxns() {
     this.overviewLoading = true;
     const params = {
-      // accountId: this.accountId,
+      accountId: this.accountId,
       accountReferenceNumber: this.accountReferenceNumber
     };
     this.bankService.extractDuplicateTransactions(params) // replace with your API call
@@ -623,7 +629,7 @@ export class AnalyzedBankReportComponent implements OnInit {
   loadRecurringPayments() {
     this.overviewLoading = true;
     const params = {
-      // accountId: this.accountId,
+      accountId: this.accountId,
       accountReferenceNumber: this.accountReferenceNumber,
       type: "recurringPayments"
     };
@@ -642,7 +648,7 @@ export class AnalyzedBankReportComponent implements OnInit {
   loadLoans() {
     this.overviewLoading = true;
     const params = {
-      // accountId: this.accountId,
+      accountId: this.accountId,
       accountReferenceNumber: this.accountReferenceNumber,
       type: "loans"
     };
@@ -662,7 +668,7 @@ export class AnalyzedBankReportComponent implements OnInit {
   loadEmiPayments() {
     this.overviewLoading = true;
     const params = {
-      // accountId: this.accountId,
+      accountId: this.accountId,
       accountReferenceNumber: this.accountReferenceNumber,
       type: "emi"
     };
@@ -682,7 +688,7 @@ export class AnalyzedBankReportComponent implements OnInit {
   loadRecurringDeposits() {
     this.overviewLoading = true;
     const params = {
-      // accountId: this.accountId,
+      accountId: this.accountId,
       accountReferenceNumber: this.accountReferenceNumber,
       type: "recurringDeposits"
     };
@@ -702,7 +708,7 @@ export class AnalyzedBankReportComponent implements OnInit {
   loadSalary() {
     this.overviewLoading = true;
     const params = {
-      // accountId: this.accountId,
+      accountId: this.accountId,
       accountReferenceNumber: this.accountReferenceNumber,
       type: "salary"
     };
@@ -722,7 +728,7 @@ export class AnalyzedBankReportComponent implements OnInit {
   loadOdCcUtilization() {
     this.overviewLoading = true;
     const params = {
-      // accountId: this.accountId,
+      accountId: this.accountId,
       accountReferenceNumber: this.accountReferenceNumber
     };
     this.bankService.extractOdCCUtilization(params) // replace with your API call
@@ -740,7 +746,7 @@ export class AnalyzedBankReportComponent implements OnInit {
   loadAvailableBalance() {
     this.overviewLoading = true;
     const params = {
-      // accountId: this.accountId,
+      accountId: this.accountId,
       accountReferenceNumber: this.accountReferenceNumber
     };
     this.bankService.extractAvailableBalance(params) // replace with your API call
@@ -810,7 +816,7 @@ export class AnalyzedBankReportComponent implements OnInit {
   loadMonthlySummary() {
     this.overviewLoading = true;
     const params = {
-      // accountId: this.accountId,
+      accountId: this.accountId,
       accountReferenceNumber: this.accountReferenceNumber
     };
     this.bankService.extractTransactionSummary(params) // replace with your API call
@@ -915,7 +921,7 @@ export class AnalyzedBankReportComponent implements OnInit {
   loadAmlAnalysis() {
     this.overviewLoading = true;
     const params = {
-      // accountId: this.accountId,
+      accountId: this.accountId,
       accountReferenceNumber: this.accountReferenceNumber
     };
     this.bankService.extractAMLAnalysis(params) // replace with your API call
@@ -935,7 +941,7 @@ export class AnalyzedBankReportComponent implements OnInit {
   loadUpiTxnsAnalysis() {
     this.overviewLoading = true;
     const params = {
-      // accountId: this.accountId,
+      accountId: this.accountId,
       accountReferenceNumber: this.accountReferenceNumber
     };
     this.bankService.extractUPIAnalysis(params) // replace with your API call
@@ -955,7 +961,7 @@ export class AnalyzedBankReportComponent implements OnInit {
   loadCashFlowAnalysis() {
     this.overviewLoading = true;
     const params = {
-      // accountId: this.accountId,
+      accountId: this.accountId,
       accountReferenceNumber: this.accountReferenceNumber
     };
     this.bankService.extractCashFlowAnalysis(params) // replace with your API call

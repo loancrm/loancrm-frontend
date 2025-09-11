@@ -3766,16 +3766,17 @@
             <i class="pi pi-save"></i>&nbsp;Save
           </button>
           <button
+            *ngIf="accountId == '1234567'"
             pButton
             pRipple
             type="button"
-            class="p-button-success"
+            class="p-button-primary me-2"
             (click)="analyzeBankStatements()"
           >
             <i class="pi pi-chart-line"></i>&nbsp;Analyze Statement
           </button>
           <button
-
+            *ngIf="accountId == '1234567'"
             pButton
             pRipple
             type="button"
@@ -3795,7 +3796,7 @@
             <div class="col-md-3 mt-2">
               <div>
                 <div class="my-1">
-                  <label>Annual Year&nbsp; </label>
+                  <label>Assessment Year&nbsp; </label>
                 </div>
                 <input
                   pInputText
@@ -3867,7 +3868,7 @@
             <div class="col-md-3 mt-2">
               <div>
                 <div class="my-1">
-                  <label>Annual Year &nbsp; </label>
+                  <label>Assessment Year &nbsp; </label>
                 </div>
                 <input
                   pInputText
@@ -3965,133 +3966,162 @@
             </button>
           </div>
           <div class="row" *ngFor="let gstData of gstDetails; let i = index">
-            <div class="col-md-3 mt-2">
-              <div>
-                <div class="my-1">
-                  <label>Operating State&nbsp; </label>
-                </div>
-                <input
-                  pInputText
-                  class="rounded-lg"
-                  [style]="{ width: '100%' }"
-                  type="text"
-                  placeholder="Enter Operating State"
-                  [(ngModel)]="gstData['operatingState']"
-                  autocomplete="off"
-                />
-              </div>
-            </div>
-            <div class="col-md-3 mt-2">
-              <div>
-                <div class="my-1">
-                  <label>Filing Period&nbsp; </label>
-                </div>
-                <!-- <p-calendar
-                  placeholder="Select Filing Period"
-                  appendTo="body"
-                  [showIcon]="true"
-                  [(ngModel)]="gstData['filingPeriod']"
-                  [showButtonBar]="true"
-                ></p-calendar> -->
-                <div class="custom-calendar-wrapper w-100 position-relative">
-                  <p-calendar
-                    #filingcalendar
-                    [(ngModel)]="gstData['filingPeriod']"
-                    placeholder="Select Filing Period"
-                    [showIcon]="false"
-                    appendTo="body"
-                    [showButtonBar]="true"
-                    styleClass=" w-100"
-                  ></p-calendar>
-
-                  <!-- Custom Calendar Image Icon -->
-                  <img
-                    src="../../../../assets/images/icons/calendar.svg"
-                    alt="Calendar Icon"
-                    class="calendar-custom-img"
-                    (click)="filingcalendar.toggle()"
+            <div class="row">
+              <div class="col-md-3 mt-2">
+                <div>
+                  <div class="my-1">
+                    <label>Operating State&nbsp;</label>
+                  </div>
+                  <input
+                    pInputText
+                    class="rounded-lg"
+                    [style]="{ width: '100%' }"
+                    type="text"
+                    placeholder="Enter Operating State"
+                    [(ngModel)]="gstData['operatingState']"
+                    autocomplete="off"
                   />
                 </div>
               </div>
-            </div>
-            <div class="col-md-3 mt-2">
-              <div>
-                <div class="my-1">
-                  <label>GSTR-3B Sale&nbsp; </label>
-                </div>
-                <input
-                  pInputText
-                  class="rounded-lg"
-                  [style]="{ width: '100%' }"
-                  type="text"
-                  placeholder="Enter GSTR-3B Sale"
-                  [(ngModel)]="gstData['gst3BSale']"
-                  autocomplete="off"
-                  (input)="calculateTotalGSTR3BSale()"
-                />
-              </div>
-            </div>
-            <div class="col-md-3 mt-2">
-              <div>
-                <div class="my-1">
-                  <label class="">GSTR-3B Attachments</label>
-                </div>
-                <div class="d-flex">
-                  <button
-                    pButton
-                    pRipple
-                    type="button"
-                    class="p-button-info"
-                    (click)="uploadFiles('gstDetails', '*/*', i)"
-                  >
-                    <i class="pi pi-upload"></i>&nbsp;Upload Files
-                  </button>
-                  <button
-                    pButton
-                    pRipple
-                    type="button"
-                    class="p-button-danger ml-1"
-                    *ngIf="i > 0"
-                    (click)="deleteGstDetailsRow(i)"
-                  >
-                    <i class="pi pi-times"></i>
-                  </button>
+
+              <div class="col-md-3 mt-2">
+                <div>
+                  <div class="my-1">
+                    <label>Year&nbsp;</label>
+                  </div>
+                  <input
+                    pInputText
+                    class="rounded-lg"
+                    [style]="{ width: '100%' }"
+                    type="text"
+                    placeholder="Enter Year"
+                    [(ngModel)]="gstData['year']"
+                    autocomplete="off"
+                  />
                 </div>
               </div>
-              <div
-                *ngIf="
-                  leadDocuments &&
-                  leadDocuments.gstDetails &&
-                  leadDocuments.gstDetails[i] &&
-                  leadDocuments.gstDetails[i].gstDetails &&
-                  leadDocuments.gstDetails[i].gstDetails.length > 0
-                "
-                class="mt-2"
-              >
-                <span
-                  *ngFor="
-                    let file of leadDocuments.gstDetails[i].gstDetails;
-                    let fileIndex = index
+              <div class="col-md-3 mt-2">
+                <div>
+                  <div class="my-1">
+                    <label>Month&nbsp;</label>
+                  </div>
+                  <input
+                    pInputText
+                    class="rounded-lg"
+                    [style]="{ width: '100%' }"
+                    type="text"
+                    placeholder="Enter Month"
+                    [(ngModel)]="gstData['month']"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-3 mt-2">
+                <div>
+                  <div class="my-1">
+                    <label>Filing Period&nbsp;</label>
+                  </div>
+                  <div class="custom-calendar-wrapper w-100 position-relative">
+                    <p-calendar
+                      #filingcalendar
+                      [(ngModel)]="gstData['filingPeriod']"
+                      placeholder="Select Filing Period"
+                      [showIcon]="false"
+                      appendTo="body"
+                      [showButtonBar]="true"
+                      styleClass="w-100"
+                    ></p-calendar>
+                    <img
+                      src="../../../../assets/images/icons/calendar.svg"
+                      alt="Calendar Icon"
+                      class="calendar-custom-img"
+                      (click)="filingcalendar.toggle()"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3 mt-2">
+                <div>
+                  <div class="my-1">
+                    <label>GSTR-3B Sale&nbsp;</label>
+                  </div>
+                  <input
+                    pInputText
+                    class="rounded-lg"
+                    [style]="{ width: '100%' }"
+                    type="text"
+                    placeholder="Enter GSTR-3B Sale"
+                    [(ngModel)]="gstData['gst3BSale']"
+                    autocomplete="off"
+                    (input)="calculateTotalGSTR3BSale()"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-3 mt-2">
+                <div>
+                  <div class="my-1">
+                    <label class="">GSTR-3B Attachments</label>
+                  </div>
+                  <div class="d-flex">
+                    <button
+                      pButton
+                      pRipple
+                      type="button"
+                      class="p-button-info"
+                      (click)="uploadFiles('gstDetails', '*/*', i)"
+                    >
+                      <i class="pi pi-upload"></i>&nbsp;Upload Files
+                    </button>
+                    <button
+                      pButton
+                      pRipple
+                      type="button"
+                      class="p-button-danger ml-1"
+                      *ngIf="i > 0"
+                      (click)="deleteGstDetailsRow(i)"
+                    >
+                      <i class="pi pi-times"></i>
+                    </button>
+                  </div>
+                </div>
+                <div
+                  *ngIf="
+                    leadDocuments &&
+                    leadDocuments.gstDetails &&
+                    leadDocuments.gstDetails[i] &&
+                    leadDocuments.gstDetails[i].gstDetails &&
+                    leadDocuments.gstDetails[i].gstDetails.length > 0
                   "
-                  class="file-wrapper"
+                  class="mt-2"
                 >
-                  <a [href]="'//' + file" target="_blank">
-                    <i
-                      [class]="getFileIcon(file.split('.').pop())"
-                      class="file-icon me-2"
-                      [ngStyle]="{ color: '#8E89D0' }"
-                    ></i>
-                  </a>
-                  <button
-                    pButton
-                    *ngIf="this.capabilities.delete"
-                    type="button"
-                    class="delete-btn p-button-danger p-button-sm"
-                    (click)="confirmDelete(file, 'gstDetails', i, fileIndex)"
+                  <span
+                    *ngFor="
+                      let file of leadDocuments.gstDetails[i].gstDetails;
+                      let fileIndex = index
+                    "
+                    class="file-wrapper"
                   >
-                    <i class="pi pi-times"></i>
-                  </button>
-                </span>
+                    <a [href]="'//' + file" target="_blank">
+                      <i
+                        [class]="getFileIcon(file.split('.').pop())"
+                        class="file-icon me-2"
+                        [ngStyle]="{ color: '#8E89D0' }"
+                      ></i>
+                    </a>
+                    <button
+                      pButton
+                      *ngIf="this.capabilities.delete"
+                      type="button"
+                      class="delete-btn p-button-danger p-button-sm"
+                      (click)="confirmDelete(file, 'gstDetails', i, fileIndex)"
+                    >
+                      <i class="pi pi-times"></i>
+                    </button>
+                  </span>
+                </div>
               </div>
             </div>
           </div>

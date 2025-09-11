@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { projectConstantsLocal } from 'src/app/constants/project-constants';
 import { map, Observable } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
@@ -126,13 +127,30 @@ export class BsanalyzerService {
     return `${this.baseUrl}api/camdownload?accountReferenceNumber=${accountReferenceNumber}`
 
   }
-  extractBankDetails(files: File[]): Observable<any> {
+  // extractBankDetails(files: File[],params: { password: string }): Observable<any> {
+  //   const formData = new FormData();
+  //   files.forEach(file => {
+  //     formData.append('file', file);
+  //   });
+
+  //   return this.http.post<any>(`${this.baseUrl}api/extract-bank-details`, formData,  { params });
+  // }
+  extractBankDetails(files: File[], params?: { password?: string }): Observable<any> {
     const formData = new FormData();
     files.forEach(file => {
       formData.append('file', file);
     });
 
-    return this.http.post<any>(`${this.baseUrl}api/extract-bank-details`, formData);
+    let httpParams = new HttpParams();
+    if (params?.password) {
+      httpParams = httpParams.set('password', params.password); // ✅ only if exists
+    }
+
+    return this.http.post<any>(
+      `${this.baseUrl}api/extract-bank-details`,
+      formData,
+      { params: httpParams }
+    );
   }
 
   /**
@@ -190,21 +208,21 @@ export class BsanalyzerService {
   pollAnalysis(reportId: string) {
     return new Observable<string>(observer => {
       // const interval = setInterval(() => {
-        this.fetchReport({ reportId }).subscribe(res => {
-          const status = res?.report?.reportStatus;
+      this.fetchReport({ reportId }).subscribe(res => {
+        const status = res?.report?.reportStatus;
 
-          if (status === 'ANALYSED') {
-            // clearInterval(interval);
-            observer.next('COMPLETED');   // 🔹 signal to component
-            observer.complete();
-          } else if (status === 'IN PROGRESS' || status === 'IN_PROGRESS') {
-            observer.next('IN PROGRESS');   // 🔹 signal to component
-            observer.complete();
-          } else {
-            // clearInterval(interval);
-            observer.error('Analysis failed or unexpected status: ' + status);
-          }
-        });
+        if (status === 'ANALYSED') {
+          // clearInterval(interval);
+          observer.next('COMPLETED');   // 🔹 signal to component
+          observer.complete();
+        } else if (status === 'IN PROGRESS' || status === 'IN_PROGRESS') {
+          observer.next('IN PROGRESS');   // 🔹 signal to component
+          observer.complete();
+        } else {
+          // clearInterval(interval);
+          observer.error('Analysis failed or unexpected status: ' + status);
+        }
+      });
       // }, 3000); // every 3s
     });
   }

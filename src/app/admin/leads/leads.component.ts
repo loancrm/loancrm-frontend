@@ -241,20 +241,20 @@ export class LeadsComponent implements OnInit {
   getFilteredItems(): { label: string; name: string }[] {
     return [
       {
-        label: `Business Loan (${this.totalActiveLeadsCount || 0})`,
+        label: `Business Loans (${this.totalActiveLeadsCount || 0})`,
         name: 'businessLoan',
       },
       {
-        label: `Personal Loan (${this.totalLeadsCountArray?.personalcount || 0
+        label: `Personal Loans (${this.totalLeadsCountArray?.personalcount || 0
           })`,
         name: 'personalLoan',
       },
       {
-        label: `Home Loan (${this.totalLeadsCountArray?.homeLoancount || 0})`,
+        label: `Home Loans (${this.totalLeadsCountArray?.homeLoancount || 0})`,
         name: 'homeLoan',
       },
       {
-        label: `LAP (${this.totalLeadsCountArray?.LAPLoancount || 0})`,
+        label: `Mortgage Loans (${this.totalLeadsCountArray?.LAPLoancount || 0})`,
         name: 'lap',
       },
       {
