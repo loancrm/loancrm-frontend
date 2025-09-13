@@ -10,6 +10,8 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputTextModule } from 'primeng/inputtext';
 import { CapitalizeFirstPipe } from 'src/app/pipes/capitalize.pipe';
+import { DropdownModule } from 'primeng/dropdown';
+
 const routes: Routes = [{ path: '', component: BankSelectionComponent }];
 
 @NgModule({
@@ -24,6 +26,7 @@ const routes: Routes = [{ path: '', component: BankSelectionComponent }];
     FormsModule,
     CapitalizeFirstPipe,
     ButtonModule,
+    DropdownModule,
     [RouterModule.forChild(routes)],
   ],
 })

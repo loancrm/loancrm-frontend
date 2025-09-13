@@ -126,12 +126,19 @@
               <button
                 pButton
                 type="button"
-                icon="fa fa-trash"
                 pTooltip="Delete"
                 tooltipPosition="left"
-                class="p-button-danger me-2 delete-btn"
+                class="deletebtn p-button-sm"
                 (click)="confirmDelete(rowData)"
-              ></button>
+              >
+              <img
+                alt="Actions"
+                src="assets/images/icons/delete.svg"
+                width="24"
+                height="24"
+                class="image-icon "
+              />
+            </button>
             </td>
           </tr>
         </ng-template>

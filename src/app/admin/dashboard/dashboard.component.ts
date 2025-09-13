@@ -1241,106 +1241,222 @@ export class DashboardComponent implements OnInit {
     //   }
 
     // };
+    //--------------------------------------
+    // this.AgentWiseBarChartOptions = {
+    //   series: [
+    //     {
+    //       name: 'Count',
+    //       data: [
+    //         this.leadsCountforFilter,
+    //         this.followupsCountforFilter,
+    //         this.filesCountforFilter,
+    //         this.fiProcessCountforFilter,
+    //         this.approvalCountforFilter,
+    //         this.disbursalCountforFilter,
+    //       ],
+    //     },
+    //   ],
+    //   chart: {
+    //     height: 300,
+    //     type: 'bar',
+    //     toolbar: { show: false },
+    //     events: {
+    //       dataPointSelection: (event, chartContext, config) => {
+    //         const index = config.dataPointIndex;
+    //         switch (index) {
+    //           case 0:
+    //             this.router.navigate([`user/leads`], { queryParams: { id: this.userId, name: this.userName } });
+    //             break;
+    //           case 1:
+    //             this.router.navigate([`user/followups`], { queryParams: { id: this.userId, name: this.userName } });
+    //             break;
+    //           case 2:
+    //             this.router.navigate([`user/files`], { queryParams: { id: this.userId, name: this.userName } });
+    //             break;
+    //           case 3:
+    //             this.router.navigate([`user/filesinprocess`], { queryParams: { id: this.userId, name: this.userName } });
+    //             break;
+    //           case 4:
+    //             this.router.navigate([`user/approvals`], { queryParams: { id: this.userId, name: this.userName } });
+    //             break;
+    //           case 5:
+    //             this.router.navigate([`user/disbursals`], { queryParams: { id: this.userId, name: this.userName } });
+    //             break;
+    //         }
+    //       }
+    //     }
+    //   },
+    //   title: {
+    //     text: 'Agent-Based Metrics',
+    //     align: 'left',
+    //     style: { fontSize: '18px', color: '#1E1E1E', fontWeight: 400, letterSpacing: '0.15px' },
+    //   },
+    //   plotOptions: {
+    //     bar: {
+    //       distributed: true,
+    //       columnWidth: '50%',
+    //       borderRadius: 2
+    //     }
+    //   },
+    //   colors: ['#C7C2E8', '#ABA5DC', '#706EC4', '#706EC4', '#706EC4', '#3A42A7'],
+    //   // colors: ['#E3E0F4', '#C7C2E8', '#ABA5DC', '#8E89D0', '#706EC4', '#535AB4'],
+    //   dataLabels: {
+    //     enabled: true,
+    //   },
+    //   xaxis: {
+    //     categories: ['Leads', 'Follow Ups', 'Files', 'Files In Process', 'Sanctions', 'Disbursals'],
+    //     title: {
+    //       text: 'Metrics',
+    //       style: { fontWeight: 500 }
+    //     },
+    //     labels: {
+    //       style: {
+    //         fontSize: '10px',
+    //         fontWeight: 400
+    //       }
+    //     },
+    //   },
+    //   yaxis: {
+    //     title: {
+    //       text: 'Count',
+    //       style: { fontWeight: 500 }
+    //     },
+    //   },
+    //   legend: {
+    //     position: 'bottom',
+    //     horizontalAlign: 'center',
+    //     floating: false,
+    //     offsetY: 0,
+    //     offsetX: 0,
+    //     markers: {
+    //       width: 12,
+    //       height: 12,
+    //       radius: 12,
+    //     },
+    //     itemMargin: {
+    //       horizontal: 8,
+    //       vertical: 10
+    //     }
+    //   },
+    // };
 
     this.AgentWiseBarChartOptions = {
-      series: [
-        {
-          name: 'Count',
-          data: [
-            this.leadsCountforFilter,
-            this.followupsCountforFilter,
-            this.filesCountforFilter,
-            this.fiProcessCountforFilter,
-            this.approvalCountforFilter,
-            this.disbursalCountforFilter,
-          ],
-        },
+  series: [
+    {
+      name: 'Count',
+      data: [
+        this.leadsCountforFilter,
+        this.followupsCountforFilter,
+        this.filesCountforFilter,
+        this.fiProcessCountforFilter,
+        this.approvalCountforFilter,
+        this.disbursalCountforFilter,
       ],
-      chart: {
-        height: 300,
-        type: 'bar',
-        toolbar: { show: false },
-        events: {
-          dataPointSelection: (event, chartContext, config) => {
-            const index = config.dataPointIndex;
-            switch (index) {
-              case 0:
-                this.router.navigate([`user/leads`], { queryParams: { id: this.userId, name: this.userName } });
-                break;
-              case 1:
-                this.router.navigate([`user/followups`], { queryParams: { id: this.userId, name: this.userName } });
-                break;
-              case 2:
-                this.router.navigate([`user/files`], { queryParams: { id: this.userId, name: this.userName } });
-                break;
-              case 3:
-                this.router.navigate([`user/filesinprocess`], { queryParams: { id: this.userId, name: this.userName } });
-                break;
-              case 4:
-                this.router.navigate([`user/approvals`], { queryParams: { id: this.userId, name: this.userName } });
-                break;
-              case 5:
-                this.router.navigate([`user/disbursals`], { queryParams: { id: this.userId, name: this.userName } });
-                break;
+    },
+  ],
+  chart: {
+    height: 300,
+    type: 'bar',
+    toolbar: { show: false },
+  },
+  title: {
+    text: 'Agent-Based Metrics',
+    align: 'left',
+    style: { fontSize: '18px', color: '#1E1E1E', fontWeight: 400, letterSpacing: '0.15px' },
+  },
+  plotOptions: {
+    bar: {
+      distributed: true,
+      columnWidth: '50%',
+      borderRadius: 2
+    }
+  },
+  colors: ['#C7C2E8', '#ABA5DC', '#706EC4', '#706EC4', '#706EC4', '#3A42A7'],
+  dataLabels: {
+    enabled: true,
+  },
+  xaxis: {
+    categories: ['Leads', 'Follow Ups', 'Files', 'Files In Process', 'Sanctions', 'Disbursals'],
+    title: {
+      text: 'Metrics',
+      style: { fontWeight: 500 }
+    },
+    labels: {
+      rotate: -25,
+      trim: false,
+      style: {
+        fontSize: '10px',
+        fontWeight: 400,
+        whiteSpace: 'nowrap',   // ✅ force single line
+        margin: 0,              // ✅ remove extra margin
+        padding: 0              // ✅ remove extra padding
+      }
+    },
+  },
+  yaxis: {
+    title: {
+      text: 'Count',
+      style: { fontWeight: 500 }
+    },
+  },
+  legend: {
+    position: 'bottom',
+    horizontalAlign: 'center',
+    markers: {
+      width: 12,
+      height: 12,
+      radius: 12,
+    },
+    itemMargin: {
+      horizontal: 4,
+      vertical: 4
+    }
+  },
+  responsive: [
+    {
+      breakpoint: 768,
+      options: {
+        chart: { height: 350 },
+        xaxis: {
+          labels: {
+            rotate: -35,
+            style: {
+              fontSize: '8px',   // ✅ smaller font for mobile
+              whiteSpace: 'nowrap',
+              margin: 0,
+              padding: 0
             }
           }
-        }
-      },
-      title: {
-        text: 'Agent-Based Metrics',
-        align: 'left',
-        style: { fontSize: '18px', color: '#1E1E1E', fontWeight: 400, letterSpacing: '0.15px' },
-      },
-      plotOptions: {
-        bar: {
-          distributed: true,
-          columnWidth: '50%',
-          borderRadius: 2
-        }
-      },
-      colors: ['#C7C2E8', '#ABA5DC', '#706EC4', '#706EC4', '#706EC4', '#3A42A7'],
-      // colors: ['#E3E0F4', '#C7C2E8', '#ABA5DC', '#8E89D0', '#706EC4', '#535AB4'],
-      dataLabels: {
-        enabled: true,
-      },
-      xaxis: {
-        categories: ['Leads', 'Follow Ups', 'Files', 'Files In Process', 'Sanctions', 'Disbursals'],
-        title: {
-          text: 'Metrics',
-          style: { fontWeight: 500 }
         },
-        labels: {
-          style: {
-            fontSize: '10px',
-            fontWeight: 400
+        legend: {
+          fontSize: '9px',
+          itemMargin: { horizontal: 2, vertical: 2 }
+        }
+      }
+    },
+    {
+      breakpoint: 480,
+      options: {
+        chart: { height: 400 },
+        xaxis: {
+          labels: {
+            rotate: -45,
+            style: {
+              fontSize: '7px',   // ✅ even smaller on very small screens
+              whiteSpace: 'nowrap',
+              margin: 0,
+              padding: 0
+            }
           }
         },
-      },
-      yaxis: {
-        title: {
-          text: 'Count',
-          style: { fontWeight: 500 }
-        },
-      },
-      legend: {
-        position: 'bottom',
-        horizontalAlign: 'center',
-        floating: false,
-        offsetY: 0,
-        offsetX: 0,
-        markers: {
-          width: 12,
-          height: 12,
-          radius: 12,
-        },
-        itemMargin: {
-          horizontal: 8,
-          vertical: 10
+        plotOptions: {
+          bar: { columnWidth: '65%' }
         }
-      },
+      }
+    }
+  ]
+};
 
-
-    };
   }
   onBarClick(event: any) {
     const { chart, originalEvent } = event;

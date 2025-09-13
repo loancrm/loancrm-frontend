@@ -539,7 +539,7 @@
                 />
               </div>
               <div id="dscrCollapse" class="accordion-collapse collapse show">
-                <div class="accordion-body">
+                <div class="accordion-body card-bodysection">
                   <div class="row" *ngIf="leadDocuments?.financialReturns">
                     <!-- Past ITR -->
                     <div class="col-md-6">
@@ -1125,7 +1125,7 @@
                 id="balanceCollapse"
                 class="accordion-collapse collapse show"
               >
-                <div class="accordion-body">
+                <div class="accordion-body card-bodysection">
                   <div class="form-check">
                     <input
                       class="form-check-input"
@@ -1288,20 +1288,41 @@
           <!-- <h5 class="text-primary">BTO Program</h5> -->
           <div>
             <div class="accordion-item">
-              <h2 class="accordion-header">
+              <div class="accordion-header d-flex justify-content-between align-items-center">
                 <button
-                  class="accordion-button fw-semibold"
+                  class="accordion-button fw-semibold collapsed"
                   type="button"
                   data-bs-toggle="collapse"
-                  data-bs-target="#kycCollapse"
+                  data-bs-target="#BTOCollapse"
                   aria-expanded="true"
-                  aria-controls="kycCollapse"
+                  aria-controls="BTOCollapse"
                 >
                   BTO Calculation
                 </button>
-              </h2>
-              <div id="kycCollapse" class="accordion-collapse collapse show">
-                <div class="accordion-body">
+
+                <img
+                  src="assets/images/icons/downarrow.svg"
+                  alt="down"
+                  class="accordion-arrow arrow-down ms-2"
+                  role="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#BTOCollapse"
+                  aria-expanded="false"
+                  aria-controls="BTOCollapse"
+                />
+                <img
+                  src="assets/images/icons/toparrow.svg"
+                  alt="up"
+                  class="accordion-arrow arrow-up ms-2"
+                  role="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#BTOCollapse"
+                  aria-expanded="false"
+                  aria-controls="BTOCollapse"
+                />
+              </div>
+              <div id="BTOCollapse" class="accordion-collapse collapse show">
+                <div class="accordion-body card-bodysection">
                   <div>
                     <div class="detail-card">
                       <!-- <div *ngIf="leadDocuments?.currentAccountStatements?.length > 0">
@@ -1530,24 +1551,44 @@
               </div>
             </div>
 
-            <div class="accordion-item card card-section">
-              <h2 class="accordion-header">
+            <div class="accordion-item">
+              <div class="accordion-header d-flex justify-content-between align-items-center">
                 <button
-                  class="accordion-button fw-semibold"
+                  class="accordion-button fw-semibold collapsed"
                   type="button"
                   data-bs-toggle="collapse"
-                  data-bs-target="#supportingCollapse"
+                  data-bs-target="#odAccountCollapse"
                   aria-expanded="true"
-                  aria-controls="supportingCollapse"
+                  aria-controls="odAccountCollapse"
                 >
                   OD Account Details
                 </button>
-              </h2>
+                <img
+                  src="assets/images/icons/downarrow.svg"
+                  alt="down"
+                  class="accordion-arrow arrow-down ms-2"
+                  role="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#odAccountCollapse"
+                  aria-expanded="false"
+                  aria-controls="odAccountCollapse"
+                />
+                <img
+                  src="assets/images/icons/toparrow.svg"
+                  alt="up"
+                  class="accordion-arrow arrow-up ms-2"
+                  role="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#odAccountCollapse"
+                  aria-expanded="false"
+                  aria-controls="odAccountCollapse"
+                />
+              </div>
               <div
-                id="supportingCollapse"
+                id="odAccountCollapse"
                 class="accordion-collapse collapse show"
               >
-                <div class="accordion-body">
+                <div class="accordion-body card-bodysection">
                   <div>
                     <div class="detail-card">
                       <!-- <div *ngIf="leadDocuments?.odAccountStatements?.length > 0">
@@ -1803,21 +1844,42 @@
                 </div>
               </div>
             </div>
-            <div class="accordion-item card card-section">
-              <h2 class="accordion-header">
+            
+            <div class="accordion-item">
+              <div class="accordion-header d-flex justify-content-between align-items-center">
                 <button
-                  class="accordion-button fw-semibold"
+                  class="accordion-button fw-semibold collapsed"
                   type="button"
                   data-bs-toggle="collapse"
-                  data-bs-target="#kycCollapse"
+                  data-bs-target="#CalculateBTOCollapse"
                   aria-expanded="true"
                   aria-controls="kycCollapse"
                 >
                   Calculation for BTO Program
                 </button>
-              </h2>
-              <div id="kycCollapse" class="accordion-collapse collapse show">
-                <div class="accordion-body">
+                <img
+                  src="assets/images/icons/downarrow.svg"
+                  alt="down"
+                  class="accordion-arrow arrow-down ms-2"
+                  role="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#CalculateBTOCollapse"
+                  aria-expanded="false"
+                  aria-controls="dscrCollapse"
+                />
+                <img
+                  src="assets/images/icons/toparrow.svg"
+                  alt="up"
+                  class="accordion-arrow arrow-up ms-2"
+                  role="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#CalculateBTOCollapse"
+                  aria-expanded="false"
+                  aria-controls="dscrCollapse"
+                />
+              </div>
+              <div id="CalculateBTOCollapse" class="accordion-collapse collapse show">
+                <div class="accordion-body card-bodysection">
                   <div class="row">
                     <div class="col-md-4 mt-2">
                       <div class="input-container">
@@ -2001,20 +2063,40 @@
           <!-- <h5 class="text-primary">GST Program</h5> -->
           <div>
             <div class="accordion-item">
-              <h2 class="accordion-header">
+              <div class="accordion-header d-flex justify-content-between align-items-center">
                 <button
-                  class="accordion-button fw-semibold"
+                  class="accordion-button fw-semibold collapsed"
                   type="button"
                   data-bs-toggle="collapse"
-                  data-bs-target="#kycCollapse"
+                  data-bs-target="#GSTCollapse"
                   aria-expanded="true"
-                  aria-controls="kycCollapse"
+                  aria-controls="GSTCollapse"
                 >
                   GST Details
                 </button>
-              </h2>
-              <div id="kycCollapse" class="accordion-collapse collapse show">
-                <div class="accordion-body">
+                <img
+                  src="assets/images/icons/downarrow.svg"
+                  alt="down"
+                  class="accordion-arrow arrow-down ms-2"
+                  role="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#GSTCollapse"
+                  aria-expanded="false"
+                  aria-controls="GSTCollapse"
+                />
+                <img
+                  src="assets/images/icons/toparrow.svg"
+                  alt="up"
+                  class="accordion-arrow arrow-up ms-2"
+                  role="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#GSTCollapse"
+                  aria-expanded="false"
+                  aria-controls="GSTCollapse"
+                />
+              </div>
+              <div id="GSTCollapse" class="accordion-collapse collapse show">
+                <div class="accordion-body card-bodysection">
                   <div class="">
                     <div class="detail-card">
                       <!-- <div class="info-line mt-2">
@@ -2153,7 +2235,7 @@
                         <div *ngIf="groupedGstData | keyvalue as states">
                           <!-- Loop states -->
                           <div *ngFor="let state of states">
-                            <h4 class="mt-3">{{ state.key | titlecase }}</h4>
+                            <h5 class="mt-3">{{ state.key | titlecase }}</h5>
 
                             <!-- Loop years inside state -->
                             <div *ngFor="let year of state.value | keyvalue">
@@ -2273,132 +2355,153 @@
                     </div>
                   </div>
                 </div>
-                <div class="accordion-item card card-section">
-                  <h2 class="accordion-header">
-                    <button
-                      class="accordion-button fw-semibold"
-                      type="button"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#supportingCollapse"
-                      aria-expanded="true"
-                      aria-controls="supportingCollapse"
+                
+              </div>
+            </div>
+            <div class="accordion-item">
+              <div class="accordion-headed d-flex justify-content-between align-items-center ">
+                <button
+                  class="accordion-button fw-semibold collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#supportingCollapse"
+                  aria-expanded="true"
+                  aria-controls="supportingCollapse"
+                >
+                  Calculation for GST Program
+                </button>
+                <img
+                  src="assets/images/icons/downarrow.svg"
+                  alt="down"
+                  class="accordion-arrow arrow-down ms-2"
+                  role="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#supportingCollapse"
+                  aria-expanded="false"
+                  aria-controls="supportingCollapse"
+                />
+                <img
+                  src="assets/images/icons/toparrow.svg"
+                  alt="up"
+                  class="accordion-arrow arrow-up ms-2"
+                  role="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#supportingCollapse"
+                  aria-expanded="false"
+                  aria-controls="supportingCollapse"
+                />
+              </div>
+              <div
+                id="supportingCollapse"
+                class="accordion-collapse collapse show"
+              >
+                <div class="accordion-body card-bodysection">
+                  <div>
+                    <div class="row">
+                      <div class="col-md-4 mt-2">
+                        <div class="input-container">
+                          <div class="my-1">
+                            <label>GST Turnover:&nbsp;</label>
+                          </div>
+                          <input
+                            pInputText
+                            class="rounded-lg"
+                            type="number"
+                            [(ngModel)]="gstTurnover"
+                            class="custom-input"
+                            placeholder="Enter GST Turnover"
+                            autocomplete="off"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-4 mt-2">
+                        <div class="input-container">
+                          <div class="my-1">
+                            <label>Margin Interest (%):&nbsp;</label>
+                          </div>
+                          <input
+                            pInputText
+                            class="rounded-lg"
+                            type="number"
+                            [(ngModel)]="margin"
+                            class="custom-input"
+                            placeholder="Enter Margin"
+                            autocomplete="off"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-4 mt-2">
+                        <div class="input-container">
+                          <div class="my-1">
+                            <label>FOIR (%):&nbsp;</label>
+                          </div>
+                          <input
+                            pInputText
+                            class="rounded-lg"
+                            type="number"
+                            [(ngModel)]="months"
+                            class="custom-input"
+                            placeholder="Enter FOIR"
+                            autocomplete="off"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-center mt-3">
+                      <div class="me-3">
+                        <button
+                          pButton
+                          pRipple
+                          type="button"
+                          class="p-button-primary"
+                          (click)="calculateGstProgram()"
+                        >
+                          Calculate
+                        </button>
+                      </div>
+                    </div>
+                    <!-- <div
+                  class="mt-3 fw-bold d-flex justify-content-center mt-3"
+                  *ngIf="gstValue"
+                >
+                  <h6>
+                    Eligible Emi in GST Program:<span
+                      style="color: #8e89d0; font-weight: bold"
                     >
-                      Calculation for GST Program
-                    </button>
-                  </h2>
-                  <div
-                    id="supportingCollapse"
-                    class="accordion-collapse collapse show"
-                  >
-                    <div class="accordion-body gstcal">
-                      <div>
-                        <div class="row">
-                          <div class="col-md-4 mt-2">
-                            <div class="input-container">
-                              <div class="my-1">
-                                <label>GST Turnover:&nbsp;</label>
-                              </div>
-                              <input
-                                pInputText
-                                class="rounded-lg"
-                                type="number"
-                                [(ngModel)]="gstTurnover"
-                                class="custom-input"
-                                placeholder="Enter GST Turnover"
-                                autocomplete="off"
-                              />
-                            </div>
-                          </div>
-                          <div class="col-md-4 mt-2">
-                            <div class="input-container">
-                              <div class="my-1">
-                                <label>Margin Interest (%):&nbsp;</label>
-                              </div>
-                              <input
-                                pInputText
-                                class="rounded-lg"
-                                type="number"
-                                [(ngModel)]="margin"
-                                class="custom-input"
-                                placeholder="Enter Margin"
-                                autocomplete="off"
-                              />
-                            </div>
-                          </div>
-                          <div class="col-md-4 mt-2">
-                            <div class="input-container">
-                              <div class="my-1">
-                                <label>FOIR (%):&nbsp;</label>
-                              </div>
-                              <input
-                                pInputText
-                                class="rounded-lg"
-                                type="number"
-                                [(ngModel)]="months"
-                                class="custom-input"
-                                placeholder="Enter FOIR"
-                                autocomplete="off"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                        <div class="d-flex justify-content-center mt-3">
-                          <div class="me-3">
-                            <button
-                              pButton
-                              pRipple
-                              type="button"
-                              class="p-button-primary"
-                              (click)="calculateGstProgram()"
-                            >
-                              Calculate
-                            </button>
-                          </div>
-                        </div>
-                        <!-- <div
-                      class="mt-3 fw-bold d-flex justify-content-center mt-3"
+                      {{ gstValue }}</span
+                    >
+                  </h6>
+                </div> -->
+
+                    <div
+                      class="mt-3 fw-bold d-flex justify-content-center"
                       *ngIf="gstValue"
                     >
-                      <h6>
-                        Eligible Emi in GST Program:<span
-                          style="color: #8e89d0; font-weight: bold"
-                        >
-                          {{ gstValue }}</span
-                        >
-                      </h6>
-                    </div> -->
-
-                        <div
-                          class="mt-3 fw-bold d-flex justify-content-center"
-                          *ngIf="gstValue"
-                        >
-                          <div class="text-center">
-                            <h6>
-                              Eligible EMI in GST Program:
-                              <span style="color: #8e89d0; font-weight: bold">{{
-                                gstValue
-                              }}</span>
-                            </h6>
-                            <h6>
-                              Loan Amount:
-                              <span style="color: #8e89d0; font-weight: bold">{{
-                                gstloanAmount
-                              }}</span>
-                            </h6>
-                            <h6>
-                              Tenure:
-                              <span style="color: #8e89d0; font-weight: bold"
-                                >{{ gstTenure }} months</span
-                              >
-                            </h6>
-                            <h6>
-                              Interest Rate:
-                              <span style="color: #8e89d0; font-weight: bold"
-                                >{{ gstInterest }} %</span
-                              >
-                            </h6>
-                          </div>
-                        </div>
+                      <div class="text-center">
+                        <h6>
+                          Eligible EMI in GST Program:
+                          <span style="color: #8e89d0; font-weight: bold">{{
+                            gstValue
+                          }}</span>
+                        </h6>
+                        <h6>
+                          Loan Amount:
+                          <span style="color: #8e89d0; font-weight: bold">{{
+                            gstloanAmount
+                          }}</span>
+                        </h6>
+                        <h6>
+                          Tenure:
+                          <span style="color: #8e89d0; font-weight: bold"
+                            >{{ gstTenure }} months</span
+                          >
+                        </h6>
+                        <h6>
+                          Interest Rate:
+                          <span style="color: #8e89d0; font-weight: bold"
+                            >{{ gstInterest }} %</span
+                          >
+                        </h6>
                       </div>
                     </div>
                   </div>

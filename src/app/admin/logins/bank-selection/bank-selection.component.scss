@@ -1,11 +1,28 @@
 .bank {
   // width: 170px;
   // border: none;
-  text-align: center;
+  text-align: center !important;
   // border: none;
-  padding: 4px;
+  // padding: 4px;
   // box-shadow: 0px 2px 2px 0px rgb(154, 141, 206);
+  height: 100px !important;
+  width: 281px !important;
+  font-size: 18px;
+  font-weight: 600 !important;
+  color: #181818;
+  border: 1px solid #E9E9E9;
+  box-shadow: 0px 0px 2px 0px #0000004F;
+  background: #F7F7F7;
+  border-radius: 8px;
+  // cursor: pointer;
+  margin-right: 0%;
 }
+.bank::after{
+  color: #545AAE;
+  border: 3px solid #545AAE94
+  
+}
+
 
 .program {
   border: none;
@@ -36,4 +53,99 @@
 .search-btn img {
   filter: brightness(0) saturate(100%) invert(46%) sepia(0%) saturate(0%)
     hue-rotate(187deg) brightness(91%) contrast(86%);
+}
+
+// .bankscard{
+//   height: 100px !important;
+//   width: 281px !important;
+//    overflow-y: auto
+// }
+
+.raj{
+  margin-top: 10px !important;
+}
+.bhuh{
+  display: flex;
+  justify-content: space-between !important;
+}
+
+@media screen and (max-width: 576px) and (min-width: 0px) {
+  .bhuh{
+  display: flex;
+  justify-content: space-between !important;
+  flex-direction: column !important;
+  gap: 5px !important;
+}
+// .p-inputgroup{
+//   width: 100px !important;
+// }
+.inputsearch{
+  width: auto !important;
+}
+.custom-dropdown{
+  width: auto !important;
+  min-width: auto !important;
+}
+}
+
+.p-inputgroup{
+  width: 200px !important;
+}
+
+::ng-deep .custom-dropdown {
+  width: 290px !important;
+  min-width: auto !important;
+  height: 45px;
+  // background-color: #8E89D0 !important;
+  border-radius: 8px !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  // border: none !important;
+  padding: 0 10px !important;
+  // color: #ffffff !important;
+}
+
+// ::ng-deep .custom-dropdown .p-dropdown-label {
+//   color: #fff !important;
+//   font-size: 16px;
+//   font-weight: 500;
+//   padding: 0 !important;
+//   margin: 0 !important;
+//   flex: unset !important;   /* stop label from expanding */
+//   width: auto !important;
+//   background: transparent !important;
+// }
+
+// ::ng-deep .custom-dropdown .p-dropdown-trigger {
+//   color: #fff !important;
+//   background: transparent !important;
+//   border: none !important;
+//   margin: 0 !important;
+//   padding: 0 !important;
+//   flex: unset !important;   /* stop trigger from floating right */
+// }
+
+// ::ng-deep .custom-dropdown .p-dropdown-trigger-icon {
+//   font-size: 14px;
+//   margin-left: 0px; /* just a tiny space like ▼ */
+// }
+
+// .card.bank {
+//   cursor: pointer;
+//   transition: all 0.3s ease;
+// }
+
+.card.bank.selected-card { 
+  border: 3px solid #545AAE94;
+  margin-bottom: 0%;
+  gap: 0% !important;
+}
+
+.card.bank.selected-card .raj {
+  color: #545aae;
+  font-weight: 600; 
+}
+.bank:hover{
+  box-shadow: 0px 3px 10.5px 0px #8E89D040;
 }

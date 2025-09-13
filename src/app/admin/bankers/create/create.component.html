@@ -223,11 +223,17 @@
                     pButton
                     pRipple
                     type="button"
-                    class="p-button-danger ml-1"
+                    class="deletebut ml-1"
                     *ngIf="i > 0"
                     (click)="deleteBranchDetail(i)"
                   >
-                    <i class="pi pi-times"></i>
+                    <img
+                    alt="Actions"
+                    src="assets/images/icons/delete.svg"
+                    width="24"
+                    height="24"
+                    class="image-icon"
+                  />
                   </button>
                 </div>
               </div>

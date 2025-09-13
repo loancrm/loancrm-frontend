@@ -121,15 +121,29 @@ export class BankSelectionComponent implements OnInit {
       }
     );
   }
+  // toggleSelected(bank: Bank): void {
+  //   bank.selected = !bank.selected;
+  //   if (!bank.selected) {
+  //     this.selectedBanks.push({ id: bank.id, name: bank.name });
+  //   } else {
+  //     this.selectedBanks = this.selectedBanks.filter((b) => b.id !== bank.id);
+  //   }
+  //   // console.log('Selected Banks:', this.selectedBanks);
+  // }
   toggleSelected(bank: Bank): void {
-    bank.selected = !bank.selected;
-    if (!bank.selected) {
+  bank.selected = !bank.selected;
+
+  if (bank.selected) {
+    // add if not already in array
+    if (!this.selectedBanks.find((b) => b.id === bank.id)) {
       this.selectedBanks.push({ id: bank.id, name: bank.name });
-    } else {
-      this.selectedBanks = this.selectedBanks.filter((b) => b.id !== bank.id);
     }
-    // console.log('Selected Banks:', this.selectedBanks);
+  } else {
+    // remove if unselected
+    this.selectedBanks = this.selectedBanks.filter((b) => b.id !== bank.id);
   }
+}
+
   filterBanks(): void {
     this.filteredBanks = this.banks.filter((bank) =>
       bank.name.toLowerCase().includes(this.bankNameToSearch.toLowerCase())
@@ -317,4 +331,10 @@ export class BankSelectionComponent implements OnInit {
   goBack(): void {
     this.location.back();
   }
+  
+  onLoanTypeSelect(event: any) {
+  console.log('Selected Program:', this.selectedProgram);
+  console.log('Full Event:', event);
+}
+
 }

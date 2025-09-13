@@ -2881,12 +2881,12 @@
                             pTooltip="Upload Files"
                             tooltipPosition="top"
                           />
-                          <p-menu
+                          <!-- <p-menu
                             appendTo="body"
                             #menuhome
                             [model]="getHomeActionItems(lead)"
                             [popup]="true"
-                          ></p-menu>
+                          ></p-menu> -->
                           <!-- <button
                             pButton
                             type="button"
@@ -2896,7 +2896,7 @@
                             pTooltip="Actions"
                             tooltipPosition="top"
                           ></button> -->
-                          <img
+                          <!-- <img
                             alt="Actions"
                             src="../../../assets/images/icons/menu.svg"
                             width="24px"
@@ -2904,7 +2904,7 @@
                             pTooltip="Actions"
                             tooltipPosition="top"
                             (click)="menuhome.toggle($event)"
-                          />
+                          /> -->
                           <div>
                         <div *ngIf="lead.leadInternalStatus === 3">
                           <div *ngIf="activeEmploymentStatus.name === 'employed'">

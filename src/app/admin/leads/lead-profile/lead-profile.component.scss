@@ -245,17 +245,24 @@ small {
   padding: 1rem 1.25rem;
   border: none;
   transition: background 0.3s;
-}
+  box-shadow: 0px 0px 2px 0px #00000040;
+  
+  }
 
 .accordion-dark .accordion-button:not(.collapsed) {
   background-color: #edf3fe;
   color: #101828;
   font-weight: 600;
   font-size: 20px;
+  border-top-left-radius: 12px;  /* Top-left corner */
+  border-top-right-radius: 12px;
 }
 
 .accordion-dark .accordion-button::after {
-  filter: brightness(0) invert(1);
+  // filter: brightness(0) invert(1);
+  filter: brightness(0) saturate(100%) invert(38%) sepia(7%) saturate(73%) hue-rotate(314deg) brightness(108%) contrast(90%);
+  border-bottom-left-radius: 12px;  /* Top-left corner */
+  border-bottom-right-radius: 12px;
 }
 
 /* Accordion Body */

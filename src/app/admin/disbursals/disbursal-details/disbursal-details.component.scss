@@ -48,3 +48,19 @@
 //   background: #13003a !important;
 //   color: #fff !important;
 // }
+
+.uplodfileimg{
+  filter: brightness(0) saturate(100%) invert(66%) sepia(5%) saturate(4586%) hue-rotate(204deg) brightness(86%) contrast(86%);
+}
+.uploadbtn{
+  background-color: #ffffff;
+  color: #535ab4;
+}
+.uploadbtn:hover {
+  background-color: #535ab4 !important;
+  color: white !important;
+}
+
+.uploadbtn:hover .uplodfileimg {
+  filter: brightness(0) invert(1);
+}

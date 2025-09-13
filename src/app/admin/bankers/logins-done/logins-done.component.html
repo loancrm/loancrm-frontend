@@ -30,7 +30,7 @@
     <div
       *ngIf="bankers"
       class="text-center p-3 fw-bold"
-      style="color: #ee7846; font-size: 23px"
+      style="color: #535AB4; font-size: 23px"
     >
       <div class="">
         <span style="color: #000; font-size: 23px">Logins Done in </span
@@ -84,7 +84,7 @@
                   [disabled]="!businessNameToSearch"
                   (click)="filterWithBusinessName()"
                 ></button> -->
-                <button
+                <!-- <button
                   type="button"
                   pButton
                   class="p-button-primary"
@@ -98,7 +98,17 @@
                     height="16"
                     style="vertical-align: middle"
                   />
-                </button>
+                </button> -->
+                <span
+                  class="input-group-text search-btn"
+                  (click)="filterWithBusinessName()"
+                >
+                  <img
+                    src="../../../assets/images/icons/search.svg"
+                    alt="Search"
+                    style="width: 14px; height: 14px; cursor: pointer"
+                  />
+                </span>
               </div>
             </div>
           </div>

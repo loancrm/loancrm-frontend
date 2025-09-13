@@ -31,29 +31,38 @@ font-size: medium;
   position: absolute;
   top: -5px;
   right: -3px;
-  padding: 4px !important;
+  padding: 2px !important;
   border-radius: 50% !important;
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
+  width: 10px;
   height: 20px;
 }
 
-.delete-btn i {
-  font-size: 10px !important;
+// .delete-btn i {
+//   font-size: 10px !important;
+// }
+
+.deletebut{
+  background-color: white !important;
+  border-radius: 6px !important;
+  border: 1px solid #8E89D0;
+  // width: 50px !important;
+}
+.deletebut img{
+  
+  filter: brightness(0) saturate(100%) invert(63%) sepia(37%) saturate(757%) hue-rotate(204deg) brightness(85%) contrast(89%);
+}
+.deletebut:hover{
+  background-color: #8E89D0 !important;
+}
+.deletebut img :hover{
+  filter: brightness(0) invert(1);
 }
 
-.delete-btn:hover {
-  background-color: #ff4d4d !important;
+.file-icon{
+  color: #8E89D0 !important;
 }
-// .lead-form {
-//   background-color: #13003a;
-//   color: #fff;
-// }
-// .file-icon {
-// color: #fff !important; /* Icon color */
-//   font-size: 30px;
-// }

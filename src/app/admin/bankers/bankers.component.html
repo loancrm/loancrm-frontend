@@ -74,6 +74,7 @@
             <div class="p-inputgroup">
               <input
                 type="text"
+                class="inputsearch"
                 pInputText
                 placeholder="Search Lenders with Bank Name"
                 [(ngModel)]="bankersNameToSearch"
@@ -91,15 +92,15 @@
                 (click)="filterWithBankersName()"
               ></button> -->
               <span
-                        class="input-group-text search-btn"
-                        (click)="filterWithBankersName()"
-                      >
-                        <img
-                          src="../../../assets/images/icons/search.svg"
-                          alt="Search"
-                          style="width: 14px; height: 14px; cursor: pointer"
-                        />
-                    </span>
+                class="input-group-text search-btn"
+                (click)="filterWithBankersName()"
+              >
+                <img
+                  src="../../../assets/images/icons/search.svg"
+                  alt="Search"
+                  style="width: 14px; height: 14px; cursor: pointer"
+                />
+              </span>
               <!-- <button
                 type="button"
                 pButton

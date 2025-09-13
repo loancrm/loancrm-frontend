@@ -26,10 +26,10 @@
     <app-preloader></app-preloader>
   </div>
   <div class="m-2" *ngIf="!loading">
-    <div class="" *ngIf="shouldDisplayBlock()">
+    <!-- <div class="" *ngIf="shouldDisplayBlock()">
       <div class="fw-medium" style="color: #000; font-size: 16px">
         <p>Select Surrogate:</p>
-      </div>
+      </div> -->
       <!-- <div class="d-flex flex-wrap justify-content-center">
         <div
           *ngFor="let program of programs"
@@ -51,18 +51,18 @@
           </div>
         </div>
       </div> -->
-      <div class="container">
+      <!-- <div class="container">
         <div class="row justify-content-center">
           <div
             *ngFor="let program of programs"
             class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-content-center mb-3"
-          >
-            <div class="card program w-100 d-flex align-items-center">
+          > -->
+            <!-- <div class="card program w-100 d-flex align-items-center">
               <label
                 class="d-flex align-items-center w-100 px-3"
                 style="margin-bottom: 0"
-              >
-                <p-radioButton
+              > -->
+                <!-- <p-radioButton
                   type="radio"
                   name="program"
                   class="me-2"
@@ -71,13 +71,13 @@
                 ></p-radioButton>
                 <span class="fw-medium" style="font-size: 16px">
                   {{ program.heading }}
-                </span>
-              </label>
-            </div>
-          </div>
+                </span> -->
+              <!-- </label>
+            </div> -->
+          <!-- </div>
         </div>
-      </div>
-    </div>
+      </div> -->
+    <!-- </div> -->
     <!-- <div class="col-md-3 text-center">
         <div
           class="fw-bold m-2 p-2"
@@ -108,47 +108,74 @@
         </div>
       </div> -->
 
-    <div class="d-flex align-items-center justify-content-between p-2">
+    <!-- <div class="d-flex align-items-center justify-content-between p-2">
       <div class="fw-medium" style="color: #000; font-size: 16px">
         <p class="m-0">Select Banks</p>
       </div>
-    </div>
+    </div> -->
     <div class="card d-flex flex-wrap border-0">
       <!-- Search Input -->
-      <div class="p-inputgroup m-2" style="flex-grow: 1; max-width: 400px">
-        <input
-          type="text"
-          pInputText
-          placeholder="Search For Banks..."
-          [(ngModel)]="bankNameToSearch"
-          (input)="filterBanks()"
-          style="width: 100%"
-        />
-        <!-- <button
-          type="button"
-          pButton
-          icon="pi pi-search"
-          class="p-button-primary"
-          [disabled]="!bankNameToSearch"
-          (click)="filterWithBankName()"
-        ></button> -->
-        <button
-          type="button"
-          pButton
-          class="p-button-primary search-btn"
-          [disabled]="!bankNameToSearch"
-          (click)="filterWithBankName()"
-        >
-          <img
-            src="assets/images/icons/search.svg"
-            alt="Search"
-            width="16"
-            height="16"
-            style="vertical-align: middle"
-          />
-        </button>
+       <h4 style="font-size: 20px; font-weight: 600; letter-spacing: 0.15px; color: #000000;">Select Serogate And Banks</h4>
+      <div class="bhuh">
+        <div class="p-inputgroup m-2" >
+          <input
+            type="text"
+            pInputText
+            class="inputsearch"
+            placeholder="Search For Banks..."
+            [(ngModel)]="bankNameToSearch"
+            (input)="filterBanks()"
+            style="width: 100%"
+            />
+            <!-- <button
+              type="button"
+              pButton
+              icon="pi pi-search"
+              class="p-button-primary"
+              [disabled]="!bankNameToSearch"
+              (click)="filterWithBankName()"
+            ></button> -->
+            <!-- <button
+              type="button"
+              pButton
+              class="p-button-primary search-btn"
+              [disabled]="!bankNameToSearch"
+              (click)="filterWithBankName()"
+            >
+              <img
+                src="assets/images/icons/search.svg"
+                alt="Search"
+                width="16"
+                height="16"
+                style="vertical-align: middle"
+              />
+          </button> -->
+          <span
+            class="input-group-text p-button-primaryimg"
+            (click)="filterWithBankName()"
+          >
+            <img
+              src="../../../assets/images/icons/search.svg"
+              alt="Search"
+              style="width: 14px; height: 14px; cursor: pointer"
+            />
+          </span>
+        </div>
+        <div *ngIf="shouldDisplayBlock()">
+          <p-dropdown
+            [options]="programs"
+            class="drop"
+            [(ngModel)]="selectedProgram"
+            optionLabel="heading"
+            optionValue="name"
+            placeholder="Select Surrogate"
+            (onChange)="onLoanTypeSelect($event)"
+            appendTo="body"
+            styleClass="custom-dropdown"
+          ></p-dropdown>
+        </div>
       </div>
-
+      
       <!-- Bank Cards -->
       <!-- <div class="row w-100">
         <div
@@ -202,25 +229,17 @@
         <div class="row w-100">
           <div
             *ngFor="let bank of filteredBanks"
-            class="col-12 col-sm-6 col-md-3 my-4 d-flex justify-content-center"
+            class="col-12 col-sm-6 col-md-3 my-3 mx-0 d-flex justify-content-center"
           >
-            <div class="card bank w-100" style="max-width: 220px">
+            <div
+              class="card bank"
+              [ngClass]="{ 'selected-card': bank.selected }"
+              (click)="toggleSelected(bank)"
+            >
               <label class="d-flex flex-column align-items-center">
-                <div
-                  class="d-flex justify-content-center align-items-center mb-2"
-                >
-                  <input
-                    type="checkbox"
-                    class="styled-checkbox me-2"
-                    [(ngModel)]="bank.selected"
-                    (change)="toggleSelected(bank)"
-                  />
-
-                  <ng-container
-                    *ngIf="
-                      bank && bank.imageUrl && bank.imageUrl.length > 0;
-                      else defaultImage
-                    "
+                <div class="d-flex justify-content-center align-items-center mb-2">
+                  <!-- <ng-container
+                    *ngIf="bank && bank.imageUrl && bank.imageUrl.length > 0; else defaultImage"
                   >
                     <a>
                       <img
@@ -237,11 +256,11 @@
                       alt="No Image"
                       style="height: 60px; width: 116px"
                     />
-                  </ng-template>
+                  </ng-template> -->
                 </div>
-                <span class="text-center text-capitalize">{{
-                  bank.name | capitalizeFirst
-                }}</span>
+                <span class="raj text-capitalize">
+                  {{ bank.name | capitalizeFirst }}
+                </span>
               </label>
             </div>
           </div>

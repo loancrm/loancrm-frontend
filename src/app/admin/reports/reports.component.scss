@@ -20,3 +20,42 @@
    filter: brightness(0) saturate(100%) invert(54%) sepia(12%) saturate(899%) hue-rotate(211deg) brightness(94%) contrast(93%);
   transition: filter 0.3s ease;
 }
+
+
+/* Card styling */
+.testimonial-card {
+  border-radius: 16px;
+  background: #fff;
+  padding: 2rem;
+  text-align: left;
+  height: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Quote icon */
+.quote-icon {
+  font-size: 2rem;
+  color: #ccc;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+/* Quote text */
+.quote-text {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+/* Author name */
+.author {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+/* Author designation */
+.designation {
+  color: #777;
+  font-size: 0.85rem;
+}
