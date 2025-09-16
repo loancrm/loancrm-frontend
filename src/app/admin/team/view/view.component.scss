@@ -35,7 +35,7 @@
 }
 
 .card-title {
-  color: #535AB4;
+  color: #535ab4;
   font-weight: 500;
   font-size: 30px;
   text-transform: capitalize;
@@ -64,12 +64,12 @@
   border: none;
   // box-shadow: 0 1px 9px -3px grey;
 }
-.text-muted{
+.text-muted {
   color: #101828 !important;
   font-weight: 500 !important;
   font-size: 18px !important;
 }
-.fw-medium{
+.fw-medium {
   color: #737373 !important;
   font-weight: 400 !important;
   font-size: 16px !important;
@@ -86,13 +86,13 @@
 
 /* Active status styling */
 .active-status {
-  background-color: #ECFDF3 !important;
+  background-color: #ecfdf3 !important;
   color: #037847 !important;
 }
 
 /* Inactive status styling */
 .inactive-status {
-  background-color: #EDEFF1 !important;
+  background-color: #edeff1 !important;
   color: #364254 !important;
 }
 
@@ -124,8 +124,8 @@
         padding: 1rem;
 
         &:hover {
-          background-color: #DFE5EF;
-          color: #535AB4;
+          background-color: #dfe5ef;
+          color: #535ab4;
         }
 
         &:focus {
@@ -135,13 +135,13 @@
       }
 
       &.p-highlight {
-        background-color: #DFE5EF !important;
+        background-color: #dfe5ef !important;
         // border: 1px solid #535AB4 !important;
-        border-bottom: 3px solid #535ABA !important;
+        border-bottom: 3px solid #535aba !important;
         border-radius: 6px 6px 0 0 !important;
 
         a {
-          color: #535AB4 !important;
+          color: #535ab4 !important;
         }
       }
     }
@@ -214,8 +214,8 @@
 }
 
 .icon-box {
-  filter: brightness(0) saturate(100%) invert(30%) sepia(45%) saturate(1693%) hue-rotate(211deg) brightness(94%) contrast(85%);
-  
+  filter: brightness(0) saturate(100%) invert(30%) sepia(45%) saturate(1693%)
+    hue-rotate(211deg) brightness(94%) contrast(85%);
 }
 .metric-card .count-box p {
   font-size: 24px;
@@ -231,7 +231,7 @@
 .timeline-event h5 {
   font-size: 1.25rem;
   font-weight: bold;
-  color: #535AB4;
+  color: #535ab4;
   margin-bottom: 5px;
 }
 // .p-button-primary img{
@@ -244,7 +244,7 @@
 .timeline-event p {
   font-size: 1rem;
   font-weight: 400;
-  color: #1E1E1E;
+  color: #1e1e1e;
   margin: 0;
 }
 .p-shadow-3 {

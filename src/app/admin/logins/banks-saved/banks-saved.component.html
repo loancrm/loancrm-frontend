@@ -99,6 +99,31 @@
                 />
               </div>
             </td>
+            <!-- <td>
+              <p-dropdown
+                [options]="corporateDSA"
+                [style]="{ width: '100%' }"
+                optionLabel="name"
+                optionValue="id"
+                appendTo="body"
+                [showClear]="true"
+                [filter]="true"
+                filterPlaceholder="Search..."
+                placeholder="Select Corporate DSA"
+                [dropdownIcon]="'pi pi-chevron-down'"
+                [(ngModel)]="rowData.corporateDSA"
+              ></p-dropdown>
+            </td>
+            <td>
+              <input
+                type="text"
+                pInputText
+                class="w-100 mt-2 rounded-lg"
+                placeholder="Enter DSA Name"
+                [(ngModel)]="rowData.dsaName"
+              />
+            </td>-->
+
             <td>
               <p-dropdown
                 [options]="statusOptions"
@@ -131,14 +156,14 @@
                 class="deletebtn p-button-sm"
                 (click)="confirmDelete(rowData)"
               >
-              <img
-                alt="Actions"
-                src="assets/images/icons/delete.svg"
-                width="24"
-                height="24"
-                class="image-icon "
-              />
-            </button>
+                <img
+                  alt="Actions"
+                  src="assets/images/icons/delete.svg"
+                  width="24"
+                  height="24"
+                  class="image-icon"
+                />
+              </button>
             </td>
           </tr>
         </ng-template>
@@ -151,7 +176,9 @@
                 width="200"
                 height="200"
               /> -->
-             <p style="color: #535ab4; font-weight: 400; font-size: 18px">No Banks Saved</p>
+              <p style="color: #535ab4; font-weight: 400; font-size: 18px">
+                No Banks Saved
+              </p>
             </td>
           </tr>
         </ng-template>

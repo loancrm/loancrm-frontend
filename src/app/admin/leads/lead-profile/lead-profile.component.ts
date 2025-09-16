@@ -36,6 +36,7 @@ export class LeadProfileComponent implements OnInit {
   isFullscreen = false;
   bankMap = new Map<number, string>();
   banks: any = [];
+  groupedGstData: { [key: string]: any[] } = {};
   isEditingRemarks: boolean = false;
   showTableDialog: boolean = false;
   version = projectConstantsLocal.VERSION_DESKTOP;
@@ -46,6 +47,12 @@ export class LeadProfileComponent implements OnInit {
   timelineEvents: { date: Date | null; title: string; image: string; }[];
   notes: FollowUpNote[] = [];
   newNote: FollowUpNote = { date: '', remarks: '', updatedBy: '' };
+  messages: any[] = [];
+  newMessage = '';
+  receiver = '917331129435';
+  // receiver = '919959864301';
+
+
 
   constructor(
     private route: ActivatedRoute,
@@ -69,19 +76,27 @@ export class LeadProfileComponent implements OnInit {
     this.leadId = this.route.snapshot.paramMap.get('id');
     const status = this.route.snapshot.paramMap.get('status');
     if (this.leadId) {
-      if (!status) {
-        this.getAllLeadData(this.leadId);
+      // if (!status) {
+      //   this.getAllLeadData(this.leadId);
+      // } else {
+      //   const validStatuses = ['personalLoan', 'homeLoan', 'lap', 'professionalLoans', 'carLoan'];
+      //   if (validStatuses.includes(status)) {
+      //     this.getAllLoanLeadData(this.leadId);
+      //   } else {
+      //     console.warn('Unknown status:', status);
+      //     this.getAllLeadData(this.leadId);
+      //   }
+      // }
+      const validStatuses = ['personalLoan', 'homeLoan', 'lap', 'professionalLoans', 'carLoan'];
+
+      if (status && validStatuses.includes(status)) {
+        this.getAllLoanLeadData(this.leadId);
       } else {
-        const validStatuses = ['personalLoan', 'homeLoan', 'lap', 'professionalLoans', 'carLoan'];
-        if (validStatuses.includes(status)) {
-          this.getAllLoanLeadData(this.leadId);
-        } else {
-          console.warn('Unknown status:', status);
-          this.getAllLeadData(this.leadId);
-        }
+        this.getAllLeadData(this.leadId);
       }
       this.loadNotes();
     }
+    console.log(this.groupedGstData)
     this.breadCrumbItems = [
       {
         label: ' Home',
@@ -97,6 +112,15 @@ export class LeadProfileComponent implements OnInit {
     ];
     this.getLeadUsers();
     this.getLeadSourcesvalues();
+    this.leadsService.onMessageReceived().subscribe(msg => {
+      msg.status = "received"; // mark as received
+      this.messages.push(msg);
+    });
+
+    this.leadsService.onMessageSent().subscribe(msg => {
+      msg.status = "sent"; // single tick
+      this.messages.push(msg);
+    });
   }
 
   getAllLeadData(leadId: string) {
@@ -107,6 +131,7 @@ export class LeadProfileComponent implements OnInit {
         // console.log(this.leadsData);
         this.loanType = (this.leadsData?.leadData?.loanType || '')
         this.employmentStatus = (this.leadsData?.leadData?.employmentStatus || '')
+        this.gstDetailsGroupData();
         this.updateDisplayedItems();
         this.setTimelineDates();
         this.loading = false;
@@ -118,6 +143,25 @@ export class LeadProfileComponent implements OnInit {
     );
   }
 
+  gstDetailsGroupData() {
+    if (this.leadsData?.documents?.gstDetails?.length) {
+      console.log(this.leadsData?.documents?.gstDetails)
+      this.groupedGstData = this.leadsData?.documents?.gstDetails.reduce((acc, item) => {
+        const state = item.operatingState || "Unknown";
+        const year = item.year || "Unknown";
+
+        if (!acc[state]) {
+          acc[state] = {};
+        }
+        if (!acc[state][year]) {
+          acc[state][year] = [];
+        }
+
+        acc[state][year].push(item);
+        return acc;
+      }, {});
+    }
+  }
   getAllLoanLeadData(leadId: string) {
     this.loading = true;
     this.leadsService.getAllLoanLeadData(leadId).subscribe(
@@ -129,6 +173,7 @@ export class LeadProfileComponent implements OnInit {
         // console.log('Lead Internal Status:', this.leadsData.leadData?.leadInternalStatus);
         this.loanType = (this.leadsData?.leadData?.loanType || '')
         this.employmentStatus = (this.leadsData?.leadData?.employmentStatus || '')
+        this.gstDetailsGroupData();
         this.updateDisplayedItems();
         this.setTimelineDates();
         this.loading = false;
@@ -188,7 +233,23 @@ export class LeadProfileComponent implements OnInit {
       error: (err) => console.error(err)
     });
   }
+  getYearTotal(records: any[]): number {
+    return records.reduce((sum, item) => sum + (parseFloat(item.gst3BSale) || 0), 0);
+  }
 
+  getStateTotal(years: any): number {
+    return Object.values(years).reduce(
+      (sum: number, yearArr: any) => sum + this.getYearTotal(yearArr as any[]),
+      0
+    );
+  }
+
+  getGrandTotal(): number {
+    return Object.values(this.groupedGstData || {}).reduce(
+      (sum, state: any) => sum + this.getStateTotal(state),
+      0
+    );
+  }
   onDownloadZip(applicantname): void {
     const name = applicantname
     console.log(name)
@@ -203,21 +264,15 @@ export class LeadProfileComponent implements OnInit {
   isBusinessView(): boolean {
     const lt = (this.loanType || '');
     const es = (this.employmentStatus || '');
-    console.log(this.loanType);
-    console.log(this.employmentStatus);
-
-
+    // console.log(this.loanType);
+    // console.log(this.employmentStatus);
     return (
       (lt === 'homeLoan' && es === 'self-employed') ||
       (lt === 'lap' && es === 'self-employed') ||
       (lt === 'carLoan' && es === 'self-employed') ||
       (!['personalLoan', 'homeLoan', 'lap', 'professionalLoans', 'carLoan'].includes(lt))
     );
-
   }
-
-
-
   isPersonalView(): boolean {
     const lt = (this.loanType || '');
     const es = (this.employmentStatus || '');
@@ -464,7 +519,7 @@ export class LeadProfileComponent implements OnInit {
   // }
   updateDisplayedItems() {
     if (this.isBusinessView()) {
-      console.log("isBusinessView");
+      // console.log("isBusinessView");
       this.displayedItems = [
         {
           data: this.leadsData?.leadData,
@@ -657,5 +712,11 @@ export class LeadProfileComponent implements OnInit {
   }
   isValidDate(date: any): boolean {
     return date && !isNaN(new Date(date).getTime());
+  }
+  sendMessage() {
+    if (this.newMessage.trim()) {
+      this.leadsService.sendMessage(this.receiver, this.newMessage).subscribe();
+      this.newMessage = '';
+    }
   }
 }

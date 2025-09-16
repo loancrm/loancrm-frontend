@@ -268,6 +268,31 @@
       </div>
     </div>
   </p-dialog>
+<!-- 
+  <div class="chat-box">
+    <div
+      *ngFor="let msg of messages"
+      class="chat-message"
+      [ngClass]="{
+        sent: msg.sender !== receiver,
+        received: msg.sender === receiver
+      }"
+    >
+      <span>{{ msg.message }}</span>
+      <small>
+        <ng-container [ngSwitch]="msg.status">
+          <span *ngSwitchCase="'sent'">✔</span>
+          <span *ngSwitchCase="'delivered'">✔✔</span>
+          <span *ngSwitchCase="'read'">✔✔ (blue)</span>
+          <span *ngSwitchDefault>…</span>
+        </ng-container>
+      </small>
+    </div>
+  </div>
+
+  <input [(ngModel)]="newMessage" placeholder="Type a message" />
+  <button (click)="sendMessage()">Send</button> -->
+
   <div *ngIf="leadsData">
     <div class="profile-details background-radial-gradient">
       <div
@@ -1098,7 +1123,7 @@
                                 class="p-accordion-toggle-icon pi pi-chevron-right"
                               ></span> -->
                               <span class="p-accordion-header-text"
-                                >Business Documents</span
+                                >Bank Statements</span
                               >
                             </button>
                           </h2>
@@ -1154,6 +1179,7 @@
                                       <th>Bank Name</th>
                                       <th>From Date</th>
                                       <th>To Date</th>
+                                      <th>Password</th>
                                       <th>Files</th>
                                     </tr>
                                   </ng-template>
@@ -1177,6 +1203,7 @@
                                             : "-"
                                         }}
                                       </td>
+                                      <td>{{ stmt.password }}</td>
                                       <td>
                                         <div
                                           class="p-d-flex p-flex-wrap p-gap-2"
@@ -1226,6 +1253,7 @@
                                       <th>Bank Name</th>
                                       <th>From Date</th>
                                       <th>To Date</th>
+                                      <th>Password</th>
                                       <th>Files</th>
                                       <th>OD Limit</th>
                                       <th>Sanction Letter</th>
@@ -1251,6 +1279,8 @@
                                             : "-"
                                         }}
                                       </td>
+                                      <td>{{ stmt.password || "-" }}</td>
+
                                       <td>
                                         <div
                                           class="p-d-flex p-flex-wrap p-gap-2"
@@ -1567,7 +1597,7 @@
                                   No data available.
                                 </p>
                               </div>
-                              <div
+                              <!-- <div
                                 *ngIf="
                                   leadsData?.documents?.gstDetails?.length > 0
                                 "
@@ -1577,20 +1607,22 @@
                                   responsiveLayout="scroll"
                                   class="custom-dark-table"
                                 >
-                                  <!-- Header Template -->
                                   <ng-template pTemplate="header">
                                     <tr>
                                       <th>Operating State</th>
+                                      <th>Year</th>
+                                      <th>Month</th>
                                       <th>Filing Period</th>
                                       <th>GSTR 3B Sale</th>
                                       <th>Attachments</th>
                                     </tr>
                                   </ng-template>
 
-                                  <!-- Body Template -->
                                   <ng-template let-gst pTemplate="body">
                                     <tr>
                                       <td>{{ gst.operatingState }}</td>
+                                      <td>{{ gst.year }}</td>
+                                      <td>{{ gst.month }}</td>
                                       <td>
                                         {{
                                           isValidDate(gst.filingPeriod)
@@ -1627,6 +1659,130 @@
                                     </tr>
                                   </ng-template>
                                 </p-table>
+                              </div> -->
+
+                              <div
+                                *ngIf="
+                                  leadsData?.documents?.gstDetails?.length > 0
+                                "
+                              >
+                                <!-- Group GST data by operatingState -->
+                                <div
+                                  *ngIf="groupedGstData | keyvalue as states"
+                                >
+                                  <!-- Loop states -->
+                                  <div *ngFor="let state of states">
+                                    <h5 class="mt-3">
+                                      {{ state.key | titlecase }}
+                                    </h5>
+
+                                    <!-- Loop years inside state -->
+                                    <div
+                                      *ngFor="
+                                        let year of state.value | keyvalue
+                                      "
+                                    >
+                                      <h5 class="mt-2">Year: {{ year.key }}</h5>
+
+                                      <p-table
+                                        [value]="year.value"
+                                        responsiveLayout="scroll"
+                                        class="custom-dark-table"
+                                      >
+                                        <ng-template pTemplate="header">
+                                          <tr>
+                                            <th>Operating State</th>
+                                            <th>Year</th>
+                                            <th>Month</th>
+                                            <th>Filing Period</th>
+                                            <th>GSTR 3B Sale</th>
+                                            <th>Attachments</th>
+                                          </tr>
+                                        </ng-template>
+
+                                        <ng-template let-gst pTemplate="body">
+                                          <tr>
+                                            <td>{{ gst.operatingState }}</td>
+                                            <td>{{ gst.year }}</td>
+                                            <td>{{ gst.month }}</td>
+                                            <td>
+                                              {{
+                                                isValidDate(gst.filingPeriod)
+                                                  ? (gst.filingPeriod
+                                                    | date : "MMM dd, yyyy")
+                                                  : "-"
+                                              }}
+                                            </td>
+                                            <td>
+                                              {{
+                                                gst?.gst3BSale
+                                                  ? "₹" +
+                                                    (gst.gst3BSale
+                                                      | number : "1.2-2")
+                                                  : "-"
+                                              }}
+                                            </td>
+                                            <td>
+                                              <div
+                                                class="d-flex flex-wrap gap-2"
+                                              >
+                                                <a
+                                                  *ngFor="
+                                                    let file of gst.gstDetails
+                                                  "
+                                                  [href]="'//' + file"
+                                                  target="_blank"
+                                                >
+                                                  <i
+                                                    [class]="
+                                                      getFileIcon(
+                                                        file.split('.').pop()
+                                                      )
+                                                    "
+                                                    class="file-icon me-2"
+                                                  ></i>
+                                                </a>
+                                              </div>
+                                            </td>
+                                          </tr>
+                                        </ng-template>
+
+                                        <!-- Year total -->
+                                        <ng-template pTemplate="footer">
+                                          <tr>
+                                            <td
+                                              colspan="3"
+                                              class="text-end fw-bold"
+                                            >
+                                              Total ({{ year.key }}):
+                                            </td>
+                                            <td colspan="3" class="fw-bold">
+                                              ₹{{
+                                                getYearTotal(year.value)
+                                                  | number : "1.2-2"
+                                              }}
+                                            </td>
+                                          </tr>
+                                        </ng-template>
+                                      </p-table>
+                                    </div>
+
+                                    <!-- State total -->
+                                    <div class="fw-bold mt-2">
+                                      State Total ({{ state.key }}): ₹{{
+                                        getStateTotal(state.value)
+                                          | number : "1.2-2"
+                                      }}
+                                    </div>
+                                  </div>
+
+                                  <!-- Grand total -->
+                                  <div class="p-3 mt-3 fw-bold">
+                                    Grand Total GST 3B Sale: ₹{{
+                                      getGrandTotal() | number : "1.2-2"
+                                    }}
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -3069,12 +3225,12 @@
 
                             <ng-template #noPartnerData>
                               <div class="text-center fw-bold">
-                                <img
+                                <!-- <img
                                   alt="No Partner KYC"
                                   src="../../../../assets/images/menu/no-files.gif"
                                   width="200"
                                   height="200"
-                                />
+                                /> -->
                                 <p
                                   style="
                                     color: #535ab4;
@@ -4146,12 +4302,12 @@
 
                             <ng-template #noPartnerData>
                               <div class="text-center fw-bold">
-                                <img
+                                <!-- <img
                                   alt="No Partner KYC"
                                   src="../../../../assets/images/menu/no-files.gif"
                                   width="200"
                                   height="200"
-                                />
+                                /> -->
                                 <p
                                   style="
                                     color: #535ab4;
@@ -8145,12 +8301,12 @@
                             <!-- PARTNERS KYC SECTION -->
                             <ng-template #noPartnerData>
                               <div class="text-center fw-bold">
-                                <img
+                                <!-- <img
                                   alt="No Partner KYC"
                                   src="../../../../assets/images/menu/no-files.gif"
                                   width="200"
                                   height="200"
-                                />
+                                /> -->
                                 <p
                                   style="
                                     color: #535ab4;

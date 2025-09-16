@@ -180,6 +180,7 @@ export class UploadComponent implements OnInit {
       name: '',
       from: '',
       to: '',
+      password: '',
       currentAccountStatements: [],
     },
   ];
@@ -190,6 +191,7 @@ export class UploadComponent implements OnInit {
       from: '',
       to: '',
       odlimit: '',
+      password: '',
       odAccountStatements: [],
       odSactionLetter: [],
     },
@@ -1755,6 +1757,7 @@ export class UploadComponent implements OnInit {
       name: '',
       from: '',
       to: '',
+      password: '',
       currentAccountStatements: [],
     };
     let fileData = { filesData: [], links: [], uploadedFiles: [] };
@@ -1767,6 +1770,7 @@ export class UploadComponent implements OnInit {
       from: '',
       to: '',
       odlimit: '',
+      password: '',
       odAccountStatements: [],
       odSactionLetter: [],
     };

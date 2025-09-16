@@ -219,3 +219,15 @@ span img {
     hue-rotate(211deg) brightness(94%) contrast(93%) !important;
   transition: filter 0.3s ease;
 }
+
+:host ::ng-deep .custom-scrollbar .p-datatable-wrapper::-webkit-scrollbar {
+  width: 6px;
+}
+
+:host
+  ::ng-deep
+  .custom-scrollbar
+  .p-datatable-wrapper::-webkit-scrollbar-thumb {
+  background-color: lightgray;
+  border-radius: 10px;
+}

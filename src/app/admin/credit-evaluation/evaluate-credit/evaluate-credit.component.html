@@ -1288,7 +1288,9 @@
           <!-- <h5 class="text-primary">BTO Program</h5> -->
           <div>
             <div class="accordion-item">
-              <div class="accordion-header d-flex justify-content-between align-items-center">
+              <div
+                class="accordion-header d-flex justify-content-between align-items-center"
+              >
                 <button
                   class="accordion-button fw-semibold collapsed"
                   type="button"
@@ -1480,6 +1482,7 @@
                               <th>Bank Name</th>
                               <th>From Date</th>
                               <th>To Date</th>
+                              <th>Password</th>
                               <th>Files</th>
                             </tr>
                           </ng-template>
@@ -1502,6 +1505,7 @@
                                     : "-"
                                 }}
                               </td>
+                              <td>{{ stmt.password }}</td>
                               <td>
                                 <div class="p-d-flex p-flex-wrap p-gap-2">
                                   <a
@@ -1552,7 +1556,9 @@
             </div>
 
             <div class="accordion-item">
-              <div class="accordion-header d-flex justify-content-between align-items-center">
+              <div
+                class="accordion-header d-flex justify-content-between align-items-center"
+              >
                 <button
                   class="accordion-button fw-semibold collapsed"
                   type="button"
@@ -1759,6 +1765,7 @@
                               <th>Bank Name</th>
                               <th>From Date</th>
                               <th>To Date</th>
+                              <th>Password</th>
                               <th>Files</th>
                               <th>OD Limit</th>
                               <th>Sanction Letter</th>
@@ -1783,6 +1790,8 @@
                                     : "-"
                                 }}
                               </td>
+                              <td>{{ stmt.password || "-" }}</td>
+
                               <td>
                                 <div class="p-d-flex p-flex-wrap p-gap-2">
                                   <a
@@ -1844,9 +1853,10 @@
                 </div>
               </div>
             </div>
-            
             <div class="accordion-item">
-              <div class="accordion-header d-flex justify-content-between align-items-center">
+              <div
+                class="accordion-header d-flex justify-content-between align-items-center"
+              >
                 <button
                   class="accordion-button fw-semibold collapsed"
                   type="button"
@@ -1878,7 +1888,10 @@
                   aria-controls="dscrCollapse"
                 />
               </div>
-              <div id="CalculateBTOCollapse" class="accordion-collapse collapse show">
+              <div
+                id="CalculateBTOCollapse"
+                class="accordion-collapse collapse show"
+              >
                 <div class="accordion-body card-bodysection">
                   <div class="row">
                     <div class="col-md-4 mt-2">
@@ -2063,7 +2076,9 @@
           <!-- <h5 class="text-primary">GST Program</h5> -->
           <div>
             <div class="accordion-item">
-              <div class="accordion-header d-flex justify-content-between align-items-center">
+              <div
+                class="accordion-header d-flex justify-content-between align-items-center"
+              >
                 <button
                   class="accordion-button fw-semibold collapsed"
                   type="button"
@@ -2355,11 +2370,12 @@
                     </div>
                   </div>
                 </div>
-                
               </div>
             </div>
             <div class="accordion-item">
-              <div class="accordion-headed d-flex justify-content-between align-items-center ">
+              <div
+                class="accordion-headed d-flex justify-content-between align-items-center"
+              >
                 <button
                   class="accordion-button fw-semibold collapsed"
                   type="button"

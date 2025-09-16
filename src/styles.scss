@@ -207,7 +207,7 @@ body {
 }
 
 .file-icon {
-  color: #f05512; /* Icon color */
+  color: #8e89d0; /* Icon color */
   // background-color: #fff; /* Light background that pairs well */
   font-size: 24px;
   // border-radius: 50%; /* Makes it circular */
@@ -323,10 +323,19 @@ body {
 //   color: #fff !important;
 //   padding: 1rem !important;
 // }
-.outlined-table ::-webkit-scrollbar {
-  width: 10px; /* Decrease this value to reduce width */
-  color: #737373 transparent;
-}
+// .outlined-table::-webkit-scrollbar-thumb {
+//   // width: 10px; /* Decrease this value to reduce width */
+//   color: lightgray;
+//   border-radius: 5px;
+// }
+// .outlined-table::-webkit-scrollbar-thumb {
+//   background: lightgray !important; /* Scrollbar thumb color */
+//   border-radius: 5px;
+//   /* Optional: adds spacing around the thumb */
+// }
+// .outlined-table::-webkit-scrollbar {
+//   width: 6px; /* Decrease scrollbar width */
+// }
 .outlined-table .p-paginator .p-paginator-page,
 .outlined-table .p-paginator .p-paginator-current,
 .outlined-table .p-paginator .p-dropdown,
