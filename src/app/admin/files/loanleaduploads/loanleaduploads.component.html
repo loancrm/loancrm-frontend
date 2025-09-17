@@ -3736,6 +3736,38 @@
               <div class="col-md-3 mt-2">
                 <div>
                   <div class="my-1">
+                    <label>Year&nbsp;</label>
+                  </div>
+                  <input
+                    pInputText
+                    class="rounded-lg"
+                    [style]="{ width: '100%' }"
+                    type="text"
+                    placeholder="Enter Year"
+                    [(ngModel)]="gstData['year']"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+              <div class="col-md-3 mt-2">
+                <div>
+                  <div class="my-1">
+                    <label>Month&nbsp;</label>
+                  </div>
+                  <input
+                    pInputText
+                    class="rounded-lg"
+                    [style]="{ width: '100%' }"
+                    type="text"
+                    placeholder="Enter Month"
+                    [(ngModel)]="gstData['month']"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+              <div class="col-md-3 mt-2">
+                <div>
+                  <div class="my-1">
                     <label>Filing Period&nbsp; </label>
                   </div>
                   <!-- <p-calendar

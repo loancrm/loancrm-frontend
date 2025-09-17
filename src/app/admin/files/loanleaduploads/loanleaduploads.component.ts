@@ -51,10 +51,10 @@ export class LoanleaduploadsComponent implements OnInit {
     companyId: { filesData: [], links: [], uploadedFiles: [] },
     newCarQuotationFile: { filesData: [], links: [], uploadedFiles: [] },
     rcCopy: { filesData: [], links: [], uploadedFiles: [] },
-    membershipCertificate: {filesData: [], links: [], uploadedFiles: []},
-    practicingCertificate: {filesData: [], links: [], uploadedFiles: []},
-    graduationCertificate: {filesData: [], links: [], uploadedFiles: [] },
-    pgCertificate: {filesData: [], links: [], uploadedFiles: [] },
+    membershipCertificate: { filesData: [], links: [], uploadedFiles: [] },
+    practicingCertificate: { filesData: [], links: [], uploadedFiles: [] },
+    graduationCertificate: { filesData: [], links: [], uploadedFiles: [] },
+    pgCertificate: { filesData: [], links: [], uploadedFiles: [] },
     paySlips: [{ filesData: [], links: [], uploadedFiles: [] }],
     bankStatements: [{ filesData: [], links: [], uploadedFiles: [] }],
     residenceProof: { filesData: [], links: [], uploadedFiles: [] },
@@ -143,6 +143,8 @@ export class LoanleaduploadsComponent implements OnInit {
   gstDetails: any = [
     {
       operatingState: '',
+      year: '',
+      month: '',
       filingPeriod: '',
       gst3BSale: '',
       gstDetails: [],
@@ -236,7 +238,7 @@ export class LoanleaduploadsComponent implements OnInit {
     ];
     const isEmployed = employmentStatus === 'employed';
     const isSelfEmployed = employmentStatus === 'self-employed';
-    const isHomeOrLap = loanType === 'homeLoan' || loanType === 'lap' || loanType ==='carLoan';
+    const isHomeOrLap = loanType === 'homeLoan' || loanType === 'lap' || loanType === 'carLoan';
     if (isEmployed && (loanType === 'homeLoan' || loanType === 'lap')) {
       this.items.push({ label: 'Sale Details', name: 'saledetails' });
     }
@@ -657,7 +659,7 @@ export class LoanleaduploadsComponent implements OnInit {
     this.panNumber = this.loanleads[0].panNumber || '';
     this.cibilScore = this.loanleads[0].cibilScore || '';
     this.companyName = this.loanleads[0].companyName || '';
-    this.newCarQuotation = this. loanleads[0].newCarQuotation || '';
+    this.newCarQuotation = this.loanleads[0].newCarQuotation || '';
     if (this.loanleads[0].panCard) {
       this.selectedFiles['panCard']['uploadedFiles'] =
         this.loanleads[0].panCard;
@@ -1363,6 +1365,8 @@ export class LoanleaduploadsComponent implements OnInit {
   addGstDetailsRow() {
     let data = {
       operatingState: '',
+      year: '',
+      month: '',
       filingPeriod: '',
       gst3BSale: '',
       gstDetails: [],
@@ -1707,140 +1711,140 @@ export class LoanleaduploadsComponent implements OnInit {
         formData['companyId'].push(
           this.selectedFiles['companyId']['uploadedFiles'][i]
         );
-      }        
       }
-      formData['membershipCertificate'] = [];
-      if (
-        this.selectedFiles['membershipCertificate'] &&
-        this.selectedFiles['membershipCertificate']['links']
+    }
+    formData['membershipCertificate'] = [];
+    if (
+      this.selectedFiles['membershipCertificate'] &&
+      this.selectedFiles['membershipCertificate']['links']
+    ) {
+      for (
+        let i = 0;
+        i < this.selectedFiles['membershipCertificate']['links'].length;
+        i++
       ) {
-        for (
-          let i = 0;
-          i < this.selectedFiles['membershipCertificate']['links'].length;
-          i++
-        ) {
-          formData['membershipCertificate'].push(this.selectedFiles['membershipCertificate']['links'][i]);
-        }
-        for (
-          let i = 0;
-          i < this.selectedFiles['membershipCertificate']['uploadedFiles'].length;
-          i++
-        ) {
-          formData['membershipCertificate'].push(
-            this.selectedFiles['membershipCertificate']['uploadedFiles'][i]
-          );
-        }
+        formData['membershipCertificate'].push(this.selectedFiles['membershipCertificate']['links'][i]);
       }
-      formData['practicingCertificate'] = [];
-      if (
-        this.selectedFiles['practicingCertificate'] &&
-        this.selectedFiles['practicingCertificate']['links']
+      for (
+        let i = 0;
+        i < this.selectedFiles['membershipCertificate']['uploadedFiles'].length;
+        i++
       ) {
-        for (
-          let i = 0;
-          i < this.selectedFiles['practicingCertificate']['links'].length;
-          i++
-        ) {
-          formData['practicingCertificate'].push(this.selectedFiles['practicingCertificate']['links'][i]);
-        }
-        for (
-          let i = 0;
-          i < this.selectedFiles['practicingCertificate']['uploadedFiles'].length;
-          i++
-        ) {
-          formData['practicingCertificate'].push(
-            this.selectedFiles['practicingCertificate']['uploadedFiles'][i]
-          );
-        }
+        formData['membershipCertificate'].push(
+          this.selectedFiles['membershipCertificate']['uploadedFiles'][i]
+        );
       }
-      formData['graduationCertificate'] = [];
-      if (
-        this.selectedFiles['graduationCertificate'] &&
-        this.selectedFiles['graduationCertificate']['links']
+    }
+    formData['practicingCertificate'] = [];
+    if (
+      this.selectedFiles['practicingCertificate'] &&
+      this.selectedFiles['practicingCertificate']['links']
+    ) {
+      for (
+        let i = 0;
+        i < this.selectedFiles['practicingCertificate']['links'].length;
+        i++
       ) {
-        for (
-          let i = 0;
-          i < this.selectedFiles['graduationCertificate']['links'].length;
-          i++
-        ) {
-          formData['graduationCertificate'].push(this.selectedFiles['graduationCertificate']['links'][i]);
-        }
-        for (
-          let i = 0;
-          i < this.selectedFiles['graduationCertificate']['uploadedFiles'].length;
-          i++
-        ) {
-          formData['graduationCertificate'].push(
-            this.selectedFiles['graduationCertificate']['uploadedFiles'][i]
-          );
-        }
+        formData['practicingCertificate'].push(this.selectedFiles['practicingCertificate']['links'][i]);
       }
-      formData['pgCertificate'] = [];
-      if (
-        this.selectedFiles['pgCertificate'] &&
-        this.selectedFiles['pgCertificate']['links']
+      for (
+        let i = 0;
+        i < this.selectedFiles['practicingCertificate']['uploadedFiles'].length;
+        i++
       ) {
-        for (
-          let i = 0;
-          i < this.selectedFiles['pgCertificate']['links'].length;
-          i++
-        ) {
-          formData['pgCertificate'].push(this.selectedFiles['pgCertificate']['links'][i]);
-        }
-        for (
-          let i = 0;
-          i < this.selectedFiles['pgCertificate']['uploadedFiles'].length;
-          i++
-        ) {
-          formData['pgCertificate'].push(
-            this.selectedFiles['pgCertificate']['uploadedFiles'][i]
-          );
-        }
+        formData['practicingCertificate'].push(
+          this.selectedFiles['practicingCertificate']['uploadedFiles'][i]
+        );
       }
-      formData['newCarQuotationFile'] = [];
-      if (
-        this.selectedFiles['newCarQuotationFile'] &&
-        this.selectedFiles['newCarQuotationFile']['links']
+    }
+    formData['graduationCertificate'] = [];
+    if (
+      this.selectedFiles['graduationCertificate'] &&
+      this.selectedFiles['graduationCertificate']['links']
+    ) {
+      for (
+        let i = 0;
+        i < this.selectedFiles['graduationCertificate']['links'].length;
+        i++
       ) {
-        for (
-          let i = 0;
-          i < this.selectedFiles['newCarQuotationFile']['links'].length;
-          i++
-        ) {
-          formData['newCarQuotationFile'].push(this.selectedFiles['newCarQuotationFile']['links'][i]);
-        }
-        for (
-          let i = 0;
-          i < this.selectedFiles['newCarQuotationFile']['uploadedFiles'].length;
-          i++
-        ) {
-          formData['newCarQuotationFile'].push(
-            this.selectedFiles['newCarQuotationFile']['uploadedFiles'][i]
-          );
-        }
+        formData['graduationCertificate'].push(this.selectedFiles['graduationCertificate']['links'][i]);
       }
-      formData['rcCopy'] = [];
-      if (
-        this.selectedFiles['rcCopy'] &&
-        this.selectedFiles['rcCopy']['links']
+      for (
+        let i = 0;
+        i < this.selectedFiles['graduationCertificate']['uploadedFiles'].length;
+        i++
       ) {
-        for (
-          let i = 0;
-          i < this.selectedFiles['rcCopy']['links'].length;
-          i++
-        ) {
-          formData['rcCopy'].push(this.selectedFiles['rcCopy']['links'][i]);
-        }
-        for (
-          let i = 0;
-          i < this.selectedFiles['rcCopy']['uploadedFiles'].length;
-          i++
-        ) {
-          formData['rcCopy'].push(
-            this.selectedFiles['rcCopy']['uploadedFiles'][i]
-          );
-        }
+        formData['graduationCertificate'].push(
+          this.selectedFiles['graduationCertificate']['uploadedFiles'][i]
+        );
       }
+    }
+    formData['pgCertificate'] = [];
+    if (
+      this.selectedFiles['pgCertificate'] &&
+      this.selectedFiles['pgCertificate']['links']
+    ) {
+      for (
+        let i = 0;
+        i < this.selectedFiles['pgCertificate']['links'].length;
+        i++
+      ) {
+        formData['pgCertificate'].push(this.selectedFiles['pgCertificate']['links'][i]);
+      }
+      for (
+        let i = 0;
+        i < this.selectedFiles['pgCertificate']['uploadedFiles'].length;
+        i++
+      ) {
+        formData['pgCertificate'].push(
+          this.selectedFiles['pgCertificate']['uploadedFiles'][i]
+        );
+      }
+    }
+    formData['newCarQuotationFile'] = [];
+    if (
+      this.selectedFiles['newCarQuotationFile'] &&
+      this.selectedFiles['newCarQuotationFile']['links']
+    ) {
+      for (
+        let i = 0;
+        i < this.selectedFiles['newCarQuotationFile']['links'].length;
+        i++
+      ) {
+        formData['newCarQuotationFile'].push(this.selectedFiles['newCarQuotationFile']['links'][i]);
+      }
+      for (
+        let i = 0;
+        i < this.selectedFiles['newCarQuotationFile']['uploadedFiles'].length;
+        i++
+      ) {
+        formData['newCarQuotationFile'].push(
+          this.selectedFiles['newCarQuotationFile']['uploadedFiles'][i]
+        );
+      }
+    }
+    formData['rcCopy'] = [];
+    if (
+      this.selectedFiles['rcCopy'] &&
+      this.selectedFiles['rcCopy']['links']
+    ) {
+      for (
+        let i = 0;
+        i < this.selectedFiles['rcCopy']['links'].length;
+        i++
+      ) {
+        formData['rcCopy'].push(this.selectedFiles['rcCopy']['links'][i]);
+      }
+      for (
+        let i = 0;
+        i < this.selectedFiles['rcCopy']['uploadedFiles'].length;
+        i++
+      ) {
+        formData['rcCopy'].push(
+          this.selectedFiles['rcCopy']['uploadedFiles'][i]
+        );
+      }
+    }
     // console.log(formData);
     // console.log(this.leadId);
     this.loading = true;
@@ -1858,20 +1862,20 @@ export class LoanleaduploadsComponent implements OnInit {
     );
   }
   getDesignationType(userId: any): string {
-  if (this.designationType && this.designationType.length > 0) {
-    const designationType = this.designationType.find(user => user.id == userId);
-    return designationType?.displayName || '';
+    if (this.designationType && this.designationType.length > 0) {
+      const designationType = this.designationType.find(user => user.id == userId);
+      return designationType?.displayName || '';
+    }
+    return '';
   }
-  return '';
-}
 
-getemployeeType(userId: any): string {
-  if (this.employeeType && this.employeeType.length > 0) {
-    const employeeType = this.employeeType.find(user => user.id == userId);
-    return employeeType?.displayName || '';
+  getemployeeType(userId: any): string {
+    if (this.employeeType && this.employeeType.length > 0) {
+      const employeeType = this.employeeType.find(user => user.id == userId);
+      return employeeType?.displayName || '';
+    }
+    return '';
   }
-  return '';
-}
 
 
   saveBankStatementsSection() {
@@ -2136,49 +2140,49 @@ getemployeeType(userId: any): string {
       financialReturns: this.financialReturns,
     };
     formData['newCarQuotationFile'] = [];
-      if (
-        this.selectedFiles['newCarQuotationFile'] &&
-        this.selectedFiles['newCarQuotationFile']['links']
+    if (
+      this.selectedFiles['newCarQuotationFile'] &&
+      this.selectedFiles['newCarQuotationFile']['links']
+    ) {
+      for (
+        let i = 0;
+        i < this.selectedFiles['newCarQuotationFile']['links'].length;
+        i++
       ) {
-        for (
-          let i = 0;
-          i < this.selectedFiles['newCarQuotationFile']['links'].length;
-          i++
-        ) {
-          formData['newCarQuotationFile'].push(this.selectedFiles['newCarQuotationFile']['links'][i]);
-        }
-        for (
-          let i = 0;
-          i < this.selectedFiles['newCarQuotationFile']['uploadedFiles'].length;
-          i++
-        ) {
-          formData['newCarQuotationFile'].push(
-            this.selectedFiles['newCarQuotationFile']['uploadedFiles'][i]
-          );
-        }
+        formData['newCarQuotationFile'].push(this.selectedFiles['newCarQuotationFile']['links'][i]);
       }
-      formData['rcCopy'] = [];
-      if (
-        this.selectedFiles['rcCopy'] &&
-        this.selectedFiles['rcCopy']['links']
+      for (
+        let i = 0;
+        i < this.selectedFiles['newCarQuotationFile']['uploadedFiles'].length;
+        i++
       ) {
-        for (
-          let i = 0;
-          i < this.selectedFiles['rcCopy']['links'].length;
-          i++
-        ) {
-          formData['rcCopy'].push(this.selectedFiles['rcCopy']['links'][i]);
-        }
-        for (
-          let i = 0;
-          i < this.selectedFiles['rcCopy']['uploadedFiles'].length;
-          i++
-        ) {
-          formData['rcCopy'].push(
-            this.selectedFiles['rcCopy']['uploadedFiles'][i]
-          );
-        }
+        formData['newCarQuotationFile'].push(
+          this.selectedFiles['newCarQuotationFile']['uploadedFiles'][i]
+        );
       }
+    }
+    formData['rcCopy'] = [];
+    if (
+      this.selectedFiles['rcCopy'] &&
+      this.selectedFiles['rcCopy']['links']
+    ) {
+      for (
+        let i = 0;
+        i < this.selectedFiles['rcCopy']['links'].length;
+        i++
+      ) {
+        formData['rcCopy'].push(this.selectedFiles['rcCopy']['links'][i]);
+      }
+      for (
+        let i = 0;
+        i < this.selectedFiles['rcCopy']['uploadedFiles'].length;
+        i++
+      ) {
+        formData['rcCopy'].push(
+          this.selectedFiles['rcCopy']['uploadedFiles'][i]
+        );
+      }
+    }
     this.loading = true;
     this.leadsService.addLoanLeadsDocumentData(this.leadId, formData).subscribe(
       (data: any) => {
@@ -2294,6 +2298,42 @@ getemployeeType(userId: any): string {
       for (let file of files) {
         if (file && !file['fileuploaded']) {
           formData.append('files', file);
+          console.log(fileType)
+          if (fileType == 'gstDetails') {
+            if (file.type === 'application/pdf') {
+              this.leadsService.extractDataFromPdf(file).then((data) => {
+                console.log('📄 Extracted PDF Data:', data);
+                const parsedDate = this.parseDate(data.filingDate); // ✅ convert to Date for UI
+                if (index || index === 0) {
+                  this.gstDetails[index] = {
+                    ...this.gstDetails[index],
+                    operatingState: data.operatingState || '',
+                    year: data.year,
+                    month: data.month,
+                    filingPeriod: parsedDate,   // ✅ Date object (works with p-calendar)
+                    gst3BSale: data.totalTaxableValue || '',
+                    // arn: data.arn || '',
+                    // gstin: data.gstin || '',
+                    // taxableBreakdown: data.taxableBreakdown || {},
+                  };
+                } else {
+                  this.gstDetails[0] = {
+                    ...this.gstDetails[0],
+                    operatingState: data.operatingState || '',
+                    year: data.year,
+                    month: data.month,
+                    filingPeriod: parsedDate,   // ✅ Date object
+                    gst3BSale: data.totalTaxableValue || '',
+                    // arn: data.arn || '',
+                    // gstin: data.gstin || '',
+                    // taxableBreakdown: data.taxableBreakdown || {},
+                  };
+                }
+                console.log(this.gstDetails[0])
+                this.toastService.showInfo('PDF Data Extracted & Filled');
+              });
+            }
+          }
         }
       }
       const accountId = this.userDetails?.accountId || 'default';
@@ -2335,6 +2375,21 @@ getemployeeType(userId: any): string {
       );
     }
   }
+
+  parseDate(dateStr: string): Date | null {
+    if (!dateStr) return null;
+
+    // Expecting dd/MM/yyyy
+    const parts = dateStr.split('/');
+    if (parts.length === 3) {
+      const day = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10) - 1; // JS months are 0-based
+      const year = parseInt(parts[2], 10);
+      return new Date(year, month, day);
+    }
+    return null;
+  }
+
   getFileIcon(fileType) {
     return this.leadsService.getFileIcon(fileType);
   }
