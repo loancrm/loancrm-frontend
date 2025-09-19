@@ -6,7 +6,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   { path: '', component: IntegrationsComponent },
- 
 ];
 
 @NgModule({
@@ -15,7 +14,7 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
-     [RouterModule.forChild(routes)],
+    [RouterModule.forChild(routes)],
   ]
 })
 export class IntegrationsModule { }

@@ -67,6 +67,7 @@ export class AuthGuard implements CanActivate {
         // console.log("sub", sub)
         // ✅ Allow access if any plan is active (Free Trial, Basic, or Professional)
         if (sub?.status === 'Active' || sub?.status === 'Expired') {
+          // this.leadService.setPlanLimits(sub?.plan_limits || {});
           return true;
         } else {
           //   // ❌ Redirect to subscription page if not active

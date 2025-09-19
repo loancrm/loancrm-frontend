@@ -232,42 +232,20 @@
       </div> -->
       <div
         style="max-height: 500px; overflow-y: auto"
-        class="w-100 px-2 bankscard"
+        class="w-100 p-2 bankscard"
       >
         <div class="row w-100">
-          <div
-            *ngFor="let bank of filteredBanks"
-            class="col-12 col-sm-6 col-md-3 my-3 mx-0 d-flex justify-content-center"
-          >
+          <div class="bank-container">
             <div
               class="card bank"
+              *ngFor="let bank of filteredBanks"
               [ngClass]="{ 'selected-card': bank.selected }"
               (click)="toggleSelected(bank)"
             >
               <label class="d-flex flex-column align-items-center">
                 <div
-                  class="d-flex justify-content-center align-items-center mb-2"
-                >
-                  <!-- <ng-container
-                    *ngIf="bank && bank.imageUrl && bank.imageUrl.length > 0; else defaultImage"
-                  >
-                    <a>
-                      <img
-                        [src]="'//' + bank.imageUrl[0]"
-                        alt="Bank Logo"
-                        style="height: 60px; width: 116px"
-                      />
-                    </a>
-                  </ng-container>
-
-                  <ng-template #defaultImage>
-                    <img
-                      src="../../../../assets/images/menu/noImage.png"
-                      alt="No Image"
-                      style="height: 60px; width: 116px"
-                    />
-                  </ng-template> -->
-                </div>
+                  class="d-flex justify-content-center align-items-center"
+                ></div>
                 <span class="raj text-capitalize">
                   {{ bank.name | capitalizeFirst }}
                 </span>

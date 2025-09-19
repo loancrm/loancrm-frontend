@@ -96,6 +96,13 @@
           <div class="text-muted text-capitalize mb-4 small">
             {{ getUserRoleName(userDetails.userType) }}
           </div>
+          <!-- <div class="mb-3 card rounded" *ngIf="userDetails.userType == 1">
+            <h6 class="me-3">Wallet Balance: ₹{{ accountBalance }}</h6>
+
+            <button class="btn custom-primary-btn" (click)="goToWallet()">
+              <i class="fa fa-wallet me-2"></i> Add Money
+            </button>
+          </div> -->
           <div
             class="d-flex flex-column flex-sm-row justify-content-center gap-2"
           >

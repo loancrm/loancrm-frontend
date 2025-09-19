@@ -131,6 +131,20 @@ const routes: Routes = [
         loadChildren: () =>
           import('./bsanalyzer/bsanalyzer.module').then((m) => m.BsanalyzerModule),
       },
+      {
+        path: 'settings',
+        loadChildren: () =>
+          import('./settings/settings.module').then(
+            (m) => m.SettingsModule
+          ),
+      },
+      {
+        path: 'wallet',
+        loadChildren: () =>
+          import('./wallet/wallet.module').then(
+            (m) => m.WalletModule
+          ),
+      },
     ],
   },
 ];

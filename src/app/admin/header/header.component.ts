@@ -33,6 +33,7 @@ export class HeaderComponent implements OnInit {
   subscriptionPlanName: string = '';
   subscriptionStatus: any;
   upgradeMessage: any;
+  accountBalance = 0;
   subscriptionEndDate: string = '';
   dropdownOpen = false;
   displayPlanStatus: string = '';
@@ -70,6 +71,8 @@ export class HeaderComponent implements OnInit {
       this.userDetails = userDetails.user;
       this.fetchSubscription(this.userDetails.accountId);
       this.userDetails.userImage = JSON.parse(this.userDetails.userImage);
+      // ✅ Fetch account with balance
+      // this.getAccountDetails(this.userDetails.accountId);
     }
     // this.leadsService.connect(this.userDetails.id, this.userDetails.userType);
 
@@ -102,6 +105,18 @@ export class HeaderComponent implements OnInit {
   //     }
   //   });
   // }
+
+  getAccountDetails(accountId: number) {
+    this.leadsService.getAccountById(accountId).subscribe({
+      next: (res: any) => {
+        this.accountBalance = res.walletBalance || 0;
+      },
+      error: () => {
+        this.accountBalance = 0;
+      }
+    });
+  }
+
   toggleDropdown(): void {
     this.dropdownOpen = !this.dropdownOpen;
   }
@@ -137,7 +152,7 @@ export class HeaderComponent implements OnInit {
             this.showUpgradeButton = true;
           } else {
             // this.displayPlanStatus = `${sub.plan_name} - Active`;
-           this.displayPlanStatus = `${sub.plan_name}`;
+            this.displayPlanStatus = `${sub.plan_name}`;
             this.upgradeMessage = '';
             this.showUpgradeButton = false;
           }
@@ -151,6 +166,10 @@ export class HeaderComponent implements OnInit {
 
   upgradeSubscription() {
     this.router.navigate(['/user/choose-subscription']);
+  }
+
+  goToWallet() {
+    this.routingService.handleRoute(`wallet`, null);
   }
   userLogout() {
     this.authService

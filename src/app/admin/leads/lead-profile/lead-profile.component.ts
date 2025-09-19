@@ -677,8 +677,18 @@ export class LeadProfileComponent implements OnInit {
       }
     );
   }
-  updateLead(leadId) {
-    this.routingService.handleRoute('leads/update/' + leadId, null);
+  // updateLead(leadId) {
+  //   this.routingService.handleRoute('leads/update/' + leadId, null);
+  // }
+
+  updateLead(lead: any) {
+    console.log('Row clicked:', lead);
+    const loanType = lead.loanType; // e.g., 'personalloan', 'home loan', etc.
+    if (loanType === 'personalLoan' || loanType === 'homeLoan' || loanType === 'lap' || loanType === 'professionalLoans' || loanType === 'carLoan') {
+      this.routingService.handleRoute('leads/updateLoanLead/' + lead.leadId, null);
+    } else {
+      this.routingService.handleRoute('leads/update/' + lead.id, null);
+    }
   }
   goBack() {
     this.location.back();

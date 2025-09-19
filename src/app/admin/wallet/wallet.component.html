@@ -1,0 +1,130 @@
+<div *ngIf="isLoading">
+  <app-preloader></app-preloader>
+</div>
+
+<div>
+  <div *ngIf="!isLoading" class="wallet-container p-4 row">
+    <!-- Left Column: Balance + Add Funds -->
+    <div class="col-md-6 mb-4">
+      <div
+        class="wallet-summary p-4 shadow-2 border-round"
+        style="background: #f5f7fa"
+      >
+        <h3 class="text-primary mb-2">Wallet Balance</h3>
+        <h2 class="text-success mb-4">₹{{ balance }}</h2>
+
+        <h4 class="text-primary mb-3">Add Funds</h4>
+        <form
+          [formGroup]="walletForm"
+          (ngSubmit)="payWithRazorpay()"
+          class="p-fluid grid"
+        >
+          <!-- Amount Input -->
+          <div class="col-12 md:col-6 mb-2">
+            <label>Amount</label>
+            <input
+              pInputText
+              type="number"
+              formControlName="amount"
+              placeholder="Enter Amount"
+            />
+          </div>
+
+          <!-- Currency -->
+          <div class="col-12 md:col-6 mb-2">
+            <label>Currency</label>
+            <input pInputText type="text" value="INR" readonly />
+          </div>
+
+          <!-- Submit Button -->
+          <div class="col-12 text-right mt-3">
+            <button
+              pButton
+              type="submit"
+              label="Add Funds"
+              icon="pi pi-plus"
+              class="p-button-primary"
+            ></button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Right Column: Wallet Analytics Chart -->
+    <div class="col-md-6 mb-4">
+      <div class="wallet-chart shadow-2 border-round p-4">
+        <h4 class="text-primary mb-3">Wallet Activity Overview</h4>
+        <div *ngIf="walletDonutOptions">
+          <app-apex-charts
+            [chartOptions]="walletDonutOptions"
+          ></app-apex-charts>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Transaction History -->
+  <div class="shadow-2 border-round p-4">
+    <h3 class="text-primary mb-3">Transaction History</h3>
+
+    <p-table
+      [value]="transactions"
+      [paginator]="true"
+      [rows]="5"
+      responsiveLayout="scroll"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} transactions"
+    >
+      <!-- Header -->
+      <ng-template pTemplate="header">
+        <tr>
+          <th>ID</th>
+          <th>Type</th>
+          <th>Amount</th>
+          <th>GST %</th>
+          <th>GST Amt</th>
+          <th>Net Amt</th>
+          <th>Currency</th>
+          <th>Debit Category</th>
+          <th>Razorpay Order</th>
+          <th>Payment ID</th>
+          <th>Signature</th>
+          <th>Status</th>
+          <th>Description</th>
+          <th>Date</th>
+        </tr>
+      </ng-template>
+
+      <!-- Body -->
+      <ng-template pTemplate="body" let-tx>
+        <tr>
+          <td>{{ tx.id }}</td>
+          <td>{{ tx.transactionType }}</td>
+          <td>₹{{ tx.amount }}</td>
+          <td>{{ tx.gst_percentage }}</td>
+          <td>₹{{ tx.gstAmount }}</td>
+          <td>₹{{ tx.netAmount }}</td>
+          <td>{{ tx.currency }}</td>
+          <td>{{ tx.debitCategory || "-" }}</td>
+          <td>{{ tx.razorpayOrderId || "-" }}</td>
+          <td>{{ tx.razorpayPaymentId || "-" }}</td>
+          <td>{{ tx.razorpaySignature || "-" }}</td>
+          <td>
+            <span
+              class="p-tag"
+              [ngClass]="{
+                'p-tag-success': tx.paymentStatus === 'SUCCESS',
+                'p-tag-danger': tx.paymentStatus === 'FAILED',
+                'p-tag-warning': tx.paymentStatus === 'PENDING'
+              }"
+            >
+              {{ tx.paymentStatus }}
+            </span>
+          </td>
+          <td>{{ tx.description || "-" }}</td>
+          <td>{{ tx.createdOn | date : "short" }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

@@ -1,0 +1,98 @@
+/* Container */
+.wallet-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Left & Right Column Cards */
+.wallet-summary,
+.wallet-chart {
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* Add Funds Form */
+.wallet-summary form .p-inputtext {
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  padding: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.wallet-summary form label {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #29415b;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+/* Button */
+.wallet-summary form .p-button-success {
+  background-color: #8e89d0;
+  border-color: #8e89d0;
+  font-weight: 600;
+}
+
+.text-primary {
+  color: #535ab4 !important;
+}
+/* Wallet Balance */
+.wallet-summary h3.text-primary {
+  font-weight: 600;
+  color: #29415b;
+}
+
+.wallet-summary h2.text-success {
+  font-weight: 700;
+  font-size: 2rem;
+  color: #535ab4;
+}
+
+/* Chart Title */
+.wallet-chart h4.text-primary {
+  font-weight: 600;
+  color: #29415b;
+  margin-bottom: 1rem;
+}
+
+/* Transactions Table (optional below) */
+.p-datatable {
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.p-datatable th {
+  background-color: #f5f7fa;
+  color: #29415b;
+  font-weight: 600;
+}
+
+.p-datatable td {
+  color: #1f2937;
+}
+
+/* Tags */
+.p-tag-success {
+  background-color: #3cb371 !important;
+  color: #ffffff !important;
+}
+
+.p-tag-warning {
+  background-color: #f0ad4e !important;
+  color: #ffffff !important;
+}
+
+.p-tag-danger {
+  background-color: #d9534f !important;
+  color: #ffffff !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  .wallet-container .col-md-6 {
+    margin-bottom: 2rem;
+  }
+}

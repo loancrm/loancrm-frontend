@@ -5,7 +5,7 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
 import axios from 'axios';
 import { io, Socket } from 'socket.io-client';
 import { projectConstantsLocal } from 'src/app/constants/project-constants';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import * as pdfjsLib from 'pdfjs-dist';
 @Injectable({
@@ -13,9 +13,17 @@ import * as pdfjsLib from 'pdfjs-dist';
 })
 export class LeadsService {
   moment: any;
+  private planLimits: any = {};
+
   status: any;
   private sidebarVisible = new BehaviorSubject<boolean>(true);
   sidebarVisible$ = this.sidebarVisible.asObservable();
+  // private socket = io('http://localhost:5002'); // backend URL
+  // private API_URL = 'http://localhost:5002/webhook';
+
+  private socket = io(`${projectConstantsLocal.BASE_URL}`); // backend URL
+  private API_URL = `${projectConstantsLocal.BASE_URL}webhook`;
+
 
   // private socket: Socket;
   private readonly IP_CACHE_DURATION = 5 * 60 * 1000;
@@ -39,6 +47,17 @@ export class LeadsService {
   //     });
   // }
 
+  setPlanLimits(limits: any) {
+    this.planLimits = limits;
+    localStorage.setItem('planLimits', JSON.stringify(limits));
+  }
+
+  getPlanLimits() {
+    if (!this.planLimits || Object.keys(this.planLimits).length === 0) {
+      this.planLimits = JSON.parse(localStorage.getItem('planLimits') || '{}');
+    }
+    return this.planLimits;
+  }
   async extractDataFromPdf(file: File): Promise<any> {
     const arrayBuffer = await file.arrayBuffer();
     const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
@@ -603,6 +622,7 @@ export class LeadsService {
       reports: rbac.includes('reports'),
       ipAddress: rbac.includes('ipAddress'),
       integrations: rbac.includes('integrations'),
+      // settings: rbac.includes('settings'),
       followups: rbac.includes('followups'),
       delete: rbac.includes('delete'),
     };
@@ -620,6 +640,13 @@ export class LeadsService {
   getReportsCount(filter = {}) {
     const url = 'reports/reportsCount';
     return this.serviceMeta.httpGet(url, null, filter);
+  }
+  getWalletStatus(): Observable<any> {
+    return this.http.get(`/status`);
+  }
+
+  updateWalletStatus(status: 'active' | 'inactive'): Observable<any> {
+    return this.http.post(`/update-status`, { status });
   }
 
   changeLeadStatus(leadId, statusId) {
@@ -959,6 +986,22 @@ export class LeadsService {
     const url = 'callbacks';
     return this.serviceMeta.httpPost(url, data);
   }
+  createOrder(data) {
+    const url = 'wallet/order';
+    return this.serviceMeta.httpPost(url, data);
+  }
+  verifyPayment(data) {
+    const url = 'wallet/verify';
+    return this.serviceMeta.httpPost(url, data);
+  }
+  getBalance(accountId, filter = {}) {
+    const url = 'wallet/' + accountId;
+    return this.serviceMeta.httpGet(url, null, filter);
+  }
+  getTransactions(accountId, filter = {}) {
+    const url = 'wallet/transactions/' + accountId;
+    return this.serviceMeta.httpGet(url, null, filter);
+  }
   createLogin(data) {
     const url = 'logins';
     return this.serviceMeta.httpPost(url, data);
@@ -1194,5 +1237,18 @@ export class LeadsService {
       }
     }
     return api_filter;
+  }
+  sendMessage(to: string, message: string) {
+    return this.http.post(`${this.API_URL}/send`, { to, message });
+  }
+  onMessageReceived(): Observable<any> {
+    return new Observable(observer => {
+      this.socket.on('messageReceived', (data) => observer.next(data));
+    });
+  }
+  onMessageSent(): Observable<any> {
+    return new Observable(observer => {
+      this.socket.on('messageSent', (data) => observer.next(data));
+    });
   }
 }

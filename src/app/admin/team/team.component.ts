@@ -267,20 +267,26 @@ export class TeamComponent implements OnInit {
   } {
     switch (status) {
       case 'Active':
-        return { textColor: '#037847',
-        backgroundColor: '#ECFDF3',
-        dotColor: '#14BA6D',
-        width: '81px' };
+        return {
+          textColor: '#037847',
+          backgroundColor: '#ECFDF3',
+          dotColor: '#14BA6D',
+          width: '81px'
+        };
       case 'Inactive':
-        return { textColor: '#364254',
-        backgroundColor: '#F2F4F7',
-        dotColor: '#364254',
-        width: '81px' };
+        return {
+          textColor: '#364254',
+          backgroundColor: '#F2F4F7',
+          dotColor: '#364254',
+          width: '81px'
+        };
       default:
-        return { textColor: 'black',
-        backgroundColor: 'white',
-        dotColor: 'gray',
-        width: '54px' };
+        return {
+          textColor: 'black',
+          backgroundColor: 'white',
+          dotColor: 'gray',
+          width: '54px'
+        };
     }
   }
   applyConfigFilters(event) {
@@ -298,6 +304,16 @@ export class TeamComponent implements OnInit {
     this.loadTeam(null);
   }
   createUsers() {
+
+    // const planLimits = this.leadsService.getPlanLimits();
+    // const userLimit = planLimits?.user_limit || 0;
+    // const currentUsers = this.users.length;
+
+    // if (currentUsers >= userLimit) {
+    //   this.toastService.showWarn(`You have reached the user limit of ${userLimit}.`);
+    //   return;
+    // }
+
     this.routingService.handleRoute('team/create', null);
   }
   updateUsers(userId) {
